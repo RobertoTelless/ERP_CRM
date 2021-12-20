@@ -179,24 +179,36 @@
     <Compile Include="EntitiesServices\AgendaService.cs" />
     <Compile Include="EntitiesServices\AssinanteCnpjService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
+    <Compile Include="EntitiesServices\CategoriaTelefoneService.cs" />
     <Compile Include="EntitiesServices\ConfiguracaoService.cs" />
+    <Compile Include="EntitiesServices\FilialService.cs" />
     <Compile Include="EntitiesServices\LogService.cs" />
+    <Compile Include="EntitiesServices\NoticiaService.cs" />
     <Compile Include="EntitiesServices\NotificacaoService.cs" />
     <Compile Include="EntitiesServices\PerfilService.cs" />
+    <Compile Include="EntitiesServices\PeriodicidadeService.cs" />
     <Compile Include="EntitiesServices\PlanoService.cs" />
     <Compile Include="EntitiesServices\ServiceBase.cs" />
+    <Compile Include="EntitiesServices\TarefaService.cs" />
+    <Compile Include="EntitiesServices\TelefoneService.cs" />
     <Compile Include="EntitiesServices\TemplateService.cs" />
     <Compile Include="EntitiesServices\TipoPessoaService.cs" />
     <Compile Include="EntitiesServices\UsuarioService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAgendaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteCnpjService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ICategoriaTelefoneService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IConfiguracaoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IFilialService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ILogService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\INoticiaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\INotificacaoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IPerfilService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IPeriodicidadeService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IPlanoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IServiceBase.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ITarefaService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ITelefoneService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITemplateService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITipoPessoaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IUsuarioService.cs" />
@@ -210,17 +222,28 @@
     <Compile Include="Interfaces\Repositories\ICategoriaAgendaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaClienteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaNotificacaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaTelefoneRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaUsuarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IConfiguracaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFilialRepository.cs" />
     <Compile Include="Interfaces\Repositories\ILogRepository.cs" />
+    <Compile Include="Interfaces\Repositories\INoticiaComentarioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\INoticiaRepository.cs" />
     <Compile Include="Interfaces\Repositories\INotificacaoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\INotificacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPerfilRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPeriodicidadePlanoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPeriodicidadeRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPeriodicidadeTarefaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPlanoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryBase.cs" />
+    <Compile Include="Interfaces\Repositories\ITarefaAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITarefaNotificacaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITarefaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITelefoneRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITemplateRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoPessoaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoTarefaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUFRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioRepository.cs" />
@@ -479,6 +502,9 @@
     <Compile Include="Model\PERIODICIDADE.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\PERIODICIDADE_TAREFA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\PLANO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
@@ -518,6 +544,21 @@
     <Compile Include="Model\SUBGRUPO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\TAREFA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TAREFA_ACOMPANHAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TAREFA_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TAREFA_NOTIFICACAO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TAREFA_VINCULO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\TELEFONE.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
@@ -540,6 +581,9 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_PESSOA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TIPO_TAREFA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_TRANSPORTE.cs">

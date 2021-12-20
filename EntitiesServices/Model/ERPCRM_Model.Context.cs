@@ -135,5 +135,12 @@ namespace EntitiesServices.Model
         public virtual DbSet<USUARIO> USUARIO { get; set; }
         public virtual DbSet<USUARIO_ANEXO> USUARIO_ANEXO { get; set; }
         public virtual DbSet<USUARIO_FUNCIONARIO> USUARIO_FUNCIONARIO { get; set; }
+        public virtual DbSet<PERIODICIDADE_TAREFA> PERIODICIDADE_TAREFA { get; set; }
+        public virtual DbSet<TAREFA> TAREFA { get; set; }
+        public virtual DbSet<TAREFA_ACOMPANHAMENTO> TAREFA_ACOMPANHAMENTO { get; set; }
+        public virtual DbSet<TAREFA_ANEXO> TAREFA_ANEXO { get; set; }
+        public virtual DbSet<TAREFA_NOTIFICACAO> TAREFA_NOTIFICACAO { get; set; }
+        public virtual DbSet<TAREFA_VINCULO> TAREFA_VINCULO { get; set; }
+        public virtual DbSet<TIPO_TAREFA> TIPO_TAREFA { get; set; }
     }
 }

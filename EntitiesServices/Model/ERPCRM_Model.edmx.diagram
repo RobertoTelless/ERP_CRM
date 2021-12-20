@@ -320,6 +320,26 @@
         <AssociationConnector Association="ERP_CRMModel.FK_TRANSPORTADORA_ANEXO_TRANSPORTADORA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_ANEXO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_FUNCIONARIO_USUARIO" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PERIODICIDADE_TAREFA" Width="1.5" PointX="5.25" PointY="170.5" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA" Width="1.5" PointX="20.5" PointY="164.625" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_ACOMPANHAMENTO" Width="1.5" PointX="30.75" PointY="158.75" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_ANEXO" Width="1.5" PointX="22.75" PointY="173.375" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_NOTIFICACAO" Width="1.5" PointX="32.75" PointY="162.875" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_VINCULO" Width="1.5" PointX="33.75" PointY="154.875" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_TAREFA" Width="1.5" PointX="5.25" PointY="167.5" />
+        <AssociationConnector Association="ERP_CRMModel.FK_PERIODICIDADE_TAREFA_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TIPO_TAREFA_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_PERIODICIDADE_TAREFA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_TAREFA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ANEXO_TAREFA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_TAREFA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_TIPO_TAREFA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_VINCULO_TAREFA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_VINCULO_USUARIO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

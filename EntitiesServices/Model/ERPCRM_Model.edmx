@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ERP_CRMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ERP_CRMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AGENDA">
           <Key>
             <PropertyRef Name="AGEN_CD_ID" />
@@ -1248,6 +1248,16 @@
           <Property Name="PERI_NR_DIAS" Type="int" Nullable="false" />
           <Property Name="PERI_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="PERIODICIDADE_TAREFA">
+          <Key>
+            <PropertyRef Name="PETA_CD_ID" />
+          </Key>
+          <Property Name="PETA_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PETA_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PETA_NR_DIAS" Type="int" Nullable="false" />
+          <Property Name="PETA_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="PLANO">
           <Key>
             <PropertyRef Name="PLAN_CD_ID" />
@@ -1476,6 +1486,69 @@
           <Property Name="SUBG_NM_EXIBE" Type="varchar" MaxLength="63" StoreGeneratedPattern="Computed" />
           <Property Name="SUBG_DS_DESCRICAO" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="TAREFA">
+          <Key>
+            <PropertyRef Name="TARE_CD_ID" />
+          </Key>
+          <Property Name="TARE_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="TITR_CD_ID" Type="int" />
+          <Property Name="PETA_CD_ID" Type="int" />
+          <Property Name="TARE_DT_CADASTRO" Type="date" Nullable="false" />
+          <Property Name="TARE_NM_TITULO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TARE_DS_DESCRICAO" Type="varchar" MaxLength="1000" />
+          <Property Name="TARE_DT_ESTIMADA" Type="date" />
+          <Property Name="TARE_IN_STATUS" Type="int" Nullable="false" />
+          <Property Name="TARE_IN_PRIORIDADE" Type="int" Nullable="false" />
+          <Property Name="TARE_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="TARE_DT_REALIZADA" Type="date" />
+          <Property Name="TARE_TX_OBSERVACOES" Type="text" />
+          <Property Name="TARE_NM_LOCAL" Type="varchar" MaxLength="150" />
+          <Property Name="TARE_IN_AVISA" Type="int" />
+          <Property Name="TARE_NR_PERIODICIDADE_QUANTIDADE" Type="int" />
+        </EntityType>
+        <EntityType Name="TAREFA_ACOMPANHAMENTO">
+          <Key>
+            <PropertyRef Name="TAAC_CD_ID" />
+          </Key>
+          <Property Name="TAAC_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TARE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="TAAC_DS_ACOMPANHAMENTO" Type="varchar" MaxLength="5000" />
+          <Property Name="TAAC_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="TAAC_DT_ACOMPANHAMENTO" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TAREFA_ANEXO">
+          <Key>
+            <PropertyRef Name="TAAN_CD_ID" />
+          </Key>
+          <Property Name="TAAN_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TARE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="TAAN_NM_TITULO" Type="varchar" MaxLength="50" />
+          <Property Name="TAAN_DT_ANEXO" Type="date" />
+          <Property Name="TAAN_IN_TIPO" Type="int" />
+          <Property Name="TAAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" />
+          <Property Name="TAAN_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TAREFA_NOTIFICACAO">
+          <Key>
+            <PropertyRef Name="TANO_CD_ID" />
+          </Key>
+          <Property Name="TANO_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TARE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="TANO_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TAREFA_VINCULO">
+          <Key>
+            <PropertyRef Name="TAVI_CD_ID" />
+          </Key>
+          <Property Name="TAVI_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TARE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="TAVI_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TELEFONE">
           <Key>
             <PropertyRef Name="TELE_CD_ID" />
@@ -1564,6 +1637,15 @@
           <Property Name="TIPE_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TIPE_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="TIPE_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TIPO_TAREFA">
+          <Key>
+            <PropertyRef Name="TITR_CD_ID" />
+          </Key>
+          <Property Name="TITR_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="TITR_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TITR_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TIPO_TRANSPORTE">
           <Key>
@@ -3728,6 +3810,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PERIODICIDADE_TAREFA_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="PERIODICIDADE_TAREFA" Type="Self.PERIODICIDADE_TAREFA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="PERIODICIDADE_TAREFA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PLANO_PLANO_PERIODICIDADE">
           <End Role="PLANO_PERIODICIDADE" Type="Self.PLANO_PERIODICIDADE" Multiplicity="0..1" />
           <End Role="PLANO" Type="Self.PLANO" Multiplicity="*" />
@@ -3980,6 +4074,138 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TAREFA_ACOMPANHAMENTO_TAREFA">
+          <End Role="TAREFA" Type="Self.TAREFA" Multiplicity="1" />
+          <End Role="TAREFA_ACOMPANHAMENTO" Type="Self.TAREFA_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAREFA">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_ACOMPANHAMENTO">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_ACOMPANHAMENTO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="TAREFA_ACOMPANHAMENTO" Type="Self.TAREFA_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_ACOMPANHAMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_ANEXO_TAREFA">
+          <End Role="TAREFA" Type="Self.TAREFA" Multiplicity="1" />
+          <End Role="TAREFA_ANEXO" Type="Self.TAREFA_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAREFA">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_ANEXO">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
+          <End Role="TAREFA" Type="Self.TAREFA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_NOTIFICACAO_TAREFA">
+          <End Role="TAREFA" Type="Self.TAREFA" Multiplicity="1" />
+          <End Role="TAREFA_NOTIFICACAO" Type="Self.TAREFA_NOTIFICACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAREFA">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_NOTIFICACAO">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_NOTIFICACAO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="TAREFA_NOTIFICACAO" Type="Self.TAREFA_NOTIFICACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_NOTIFICACAO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_PERIODICIDADE_TAREFA">
+          <End Role="PERIODICIDADE_TAREFA" Type="Self.PERIODICIDADE_TAREFA" Multiplicity="0..1" />
+          <End Role="TAREFA" Type="Self.TAREFA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERIODICIDADE_TAREFA">
+              <PropertyRef Name="PETA_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA">
+              <PropertyRef Name="PETA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_TIPO_TAREFA">
+          <End Role="TIPO_TAREFA" Type="Self.TIPO_TAREFA" Multiplicity="0..1" />
+          <End Role="TAREFA" Type="Self.TAREFA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_TAREFA">
+              <PropertyRef Name="TITR_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA">
+              <PropertyRef Name="TITR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="TAREFA" Type="Self.TAREFA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_VINCULO_TAREFA">
+          <End Role="TAREFA" Type="Self.TAREFA" Multiplicity="1" />
+          <End Role="TAREFA_VINCULO" Type="Self.TAREFA_VINCULO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAREFA">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_VINCULO">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_VINCULO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="TAREFA_VINCULO" Type="Self.TAREFA_VINCULO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_VINCULO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TELEFONE_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
           <End Role="TELEFONE" Type="Self.TELEFONE" Multiplicity="*" />
@@ -4060,6 +4286,18 @@
               <PropertyRef Name="ASSI_CD_ID" />
             </Principal>
             <Dependent Role="TIPO_GRUPO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIPO_TAREFA_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="TIPO_TAREFA" Type="Self.TIPO_TAREFA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TIPO_TAREFA">
               <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -4277,6 +4515,7 @@
           <EntitySet Name="PEDIDO_VENDA_PARCELA" EntityType="Self.PEDIDO_VENDA_PARCELA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PERFIL" EntityType="Self.PERFIL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PERIODICIDADE" EntityType="Self.PERIODICIDADE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERIODICIDADE_TAREFA" EntityType="Self.PERIODICIDADE_TAREFA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PLANO" EntityType="Self.PLANO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PLANO_PERIODICIDADE" EntityType="Self.PLANO_PERIODICIDADE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="POSICAO" EntityType="Self.POSICAO" Schema="dbo" store:Type="Tables" />
@@ -4290,6 +4529,11 @@
           <EntitySet Name="RESUMO_VENDA" EntityType="Self.RESUMO_VENDA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUBCATEGORIA_PRODUTO" EntityType="Self.SUBCATEGORIA_PRODUTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUBGRUPO" EntityType="Self.SUBGRUPO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAREFA" EntityType="Self.TAREFA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAREFA_ACOMPANHAMENTO" EntityType="Self.TAREFA_ACOMPANHAMENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAREFA_ANEXO" EntityType="Self.TAREFA_ANEXO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAREFA_NOTIFICACAO" EntityType="Self.TAREFA_NOTIFICACAO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAREFA_VINCULO" EntityType="Self.TAREFA_VINCULO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TELEFONE" EntityType="Self.TELEFONE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TEMPLATE" EntityType="Self.TEMPLATE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_ACAO" EntityType="Self.TIPO_ACAO" Schema="dbo" store:Type="Tables" />
@@ -4298,6 +4542,7 @@
           <EntitySet Name="TIPO_CRM" EntityType="Self.TIPO_CRM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_GRUPO" EntityType="Self.TIPO_GRUPO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_PESSOA" EntityType="Self.TIPO_PESSOA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPO_TAREFA" EntityType="Self.TIPO_TAREFA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_TRANSPORTE" EntityType="Self.TIPO_TRANSPORTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_VEICULO" EntityType="Self.TIPO_VEICULO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TRANSPORTADORA" EntityType="Self.TRANSPORTADORA" Schema="dbo" store:Type="Tables" />
@@ -4971,6 +5216,10 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="PEDIDO_VENDA" EntitySet="PEDIDO_VENDA" />
           </AssociationSet>
+          <AssociationSet Name="FK_PERIODICIDADE_TAREFA_ASSINANTE" Association="Self.FK_PERIODICIDADE_TAREFA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="PERIODICIDADE_TAREFA" EntitySet="PERIODICIDADE_TAREFA" />
+          </AssociationSet>
           <AssociationSet Name="FK_PLANO_PLANO_PERIODICIDADE" Association="Self.FK_PLANO_PLANO_PERIODICIDADE">
             <End Role="PLANO_PERIODICIDADE" EntitySet="PLANO_PERIODICIDADE" />
             <End Role="PLANO" EntitySet="PLANO" />
@@ -5055,6 +5304,50 @@
             <End Role="GRUPO" EntitySet="GRUPO" />
             <End Role="SUBGRUPO" EntitySet="SUBGRUPO" />
           </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_ACOMPANHAMENTO_TAREFA" Association="Self.FK_TAREFA_ACOMPANHAMENTO_TAREFA">
+            <End Role="TAREFA" EntitySet="TAREFA" />
+            <End Role="TAREFA_ACOMPANHAMENTO" EntitySet="TAREFA_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_ACOMPANHAMENTO_USUARIO" Association="Self.FK_TAREFA_ACOMPANHAMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="TAREFA_ACOMPANHAMENTO" EntitySet="TAREFA_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_ANEXO_TAREFA" Association="Self.FK_TAREFA_ANEXO_TAREFA">
+            <End Role="TAREFA" EntitySet="TAREFA" />
+            <End Role="TAREFA_ANEXO" EntitySet="TAREFA_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_ASSINANTE" Association="Self.FK_TAREFA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TAREFA" EntitySet="TAREFA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_NOTIFICACAO_TAREFA" Association="Self.FK_TAREFA_NOTIFICACAO_TAREFA">
+            <End Role="TAREFA" EntitySet="TAREFA" />
+            <End Role="TAREFA_NOTIFICACAO" EntitySet="TAREFA_NOTIFICACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_NOTIFICACAO_USUARIO" Association="Self.FK_TAREFA_NOTIFICACAO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="TAREFA_NOTIFICACAO" EntitySet="TAREFA_NOTIFICACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_PERIODICIDADE_TAREFA" Association="Self.FK_TAREFA_PERIODICIDADE_TAREFA">
+            <End Role="PERIODICIDADE_TAREFA" EntitySet="PERIODICIDADE_TAREFA" />
+            <End Role="TAREFA" EntitySet="TAREFA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_TIPO_TAREFA" Association="Self.FK_TAREFA_TIPO_TAREFA">
+            <End Role="TIPO_TAREFA" EntitySet="TIPO_TAREFA" />
+            <End Role="TAREFA" EntitySet="TAREFA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_USUARIO" Association="Self.FK_TAREFA_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="TAREFA" EntitySet="TAREFA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_VINCULO_TAREFA" Association="Self.FK_TAREFA_VINCULO_TAREFA">
+            <End Role="TAREFA" EntitySet="TAREFA" />
+            <End Role="TAREFA_VINCULO" EntitySet="TAREFA_VINCULO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_VINCULO_USUARIO" Association="Self.FK_TAREFA_VINCULO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="TAREFA_VINCULO" EntitySet="TAREFA_VINCULO" />
+          </AssociationSet>
           <AssociationSet Name="FK_TELEFONE_ASSINANTE" Association="Self.FK_TELEFONE_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="TELEFONE" EntitySet="TELEFONE" />
@@ -5082,6 +5375,10 @@
           <AssociationSet Name="FK_TIPO_GRUPO_ASSINANTE" Association="Self.FK_TIPO_GRUPO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="TIPO_GRUPO" EntitySet="TIPO_GRUPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIPO_TAREFA_ASSINANTE" Association="Self.FK_TIPO_TAREFA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TIPO_TAREFA" EntitySet="TIPO_TAREFA" />
           </AssociationSet>
           <AssociationSet Name="FK_TRANSPORTADORA_ANEXO_TRANSPORTADORA" Association="Self.FK_TRANSPORTADORA_ANEXO_TRANSPORTADORA">
             <End Role="TRANSPORTADORA" EntitySet="TRANSPORTADORA" />
@@ -5128,8 +5425,7 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ERP_CRMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -5258,6 +5554,9 @@
           <NavigationProperty Name="TIPO_GRUPO" Relationship="Self.FK_TIPO_GRUPO_ASSINANTE" FromRole="ASSINANTE" ToRole="TIPO_GRUPO" />
           <NavigationProperty Name="TRANSPORTADORA" Relationship="Self.FK_TRANSPORTADORA_ASSINANTE" FromRole="ASSINANTE" ToRole="TRANSPORTADORA" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_ASSINANTE" FromRole="ASSINANTE" ToRole="USUARIO" />
+          <NavigationProperty Name="PERIODICIDADE_TAREFA" Relationship="ERP_CRMModel.FK_PERIODICIDADE_TAREFA_ASSINANTE" FromRole="ASSINANTE" ToRole="PERIODICIDADE_TAREFA" />
+          <NavigationProperty Name="TAREFA" Relationship="ERP_CRMModel.FK_TAREFA_ASSINANTE" FromRole="ASSINANTE" ToRole="TAREFA" />
+          <NavigationProperty Name="TIPO_TAREFA" Relationship="ERP_CRMModel.FK_TIPO_TAREFA_ASSINANTE" FromRole="ASSINANTE" ToRole="TIPO_TAREFA" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -7218,6 +7517,10 @@
           <NavigationProperty Name="PERFIL" Relationship="Self.FK_USUARIO_PERFIL" FromRole="USUARIO" ToRole="PERFIL" />
           <NavigationProperty Name="USUARIO_ANEXO" Relationship="Self.FK_USUARIO_ANEXO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_ANEXO" />
           <NavigationProperty Name="USUARIO_FUNCIONARIO" Relationship="Self.FK_USUARIO_FUNCIONARIO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_FUNCIONARIO" />
+          <NavigationProperty Name="TAREFA" Relationship="ERP_CRMModel.FK_TAREFA_USUARIO" FromRole="USUARIO" ToRole="TAREFA" />
+          <NavigationProperty Name="TAREFA_ACOMPANHAMENTO" Relationship="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_USUARIO" FromRole="USUARIO" ToRole="TAREFA_ACOMPANHAMENTO" />
+          <NavigationProperty Name="TAREFA_NOTIFICACAO" Relationship="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_USUARIO" FromRole="USUARIO" ToRole="TAREFA_NOTIFICACAO" />
+          <NavigationProperty Name="TAREFA_VINCULO" Relationship="ERP_CRMModel.FK_TAREFA_VINCULO_USUARIO" FromRole="USUARIO" ToRole="TAREFA_VINCULO" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -10665,7 +10968,323 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="USUARIO_FUNCIONARIO" EntitySet="USUARIO_FUNCIONARIO" />
           </AssociationSet>
+          <EntitySet Name="PERIODICIDADE_TAREFA" EntityType="ERP_CRMModel.PERIODICIDADE_TAREFA" />
+          <EntitySet Name="TAREFA" EntityType="ERP_CRMModel.TAREFA" />
+          <EntitySet Name="TAREFA_ACOMPANHAMENTO" EntityType="ERP_CRMModel.TAREFA_ACOMPANHAMENTO" />
+          <EntitySet Name="TAREFA_ANEXO" EntityType="ERP_CRMModel.TAREFA_ANEXO" />
+          <EntitySet Name="TAREFA_NOTIFICACAO" EntityType="ERP_CRMModel.TAREFA_NOTIFICACAO" />
+          <EntitySet Name="TAREFA_VINCULO" EntityType="ERP_CRMModel.TAREFA_VINCULO" />
+          <EntitySet Name="TIPO_TAREFA" EntityType="ERP_CRMModel.TIPO_TAREFA" />
+          <AssociationSet Name="FK_PERIODICIDADE_TAREFA_ASSINANTE" Association="ERP_CRMModel.FK_PERIODICIDADE_TAREFA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="PERIODICIDADE_TAREFA" EntitySet="PERIODICIDADE_TAREFA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_ASSINANTE" Association="ERP_CRMModel.FK_TAREFA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TAREFA" EntitySet="TAREFA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIPO_TAREFA_ASSINANTE" Association="ERP_CRMModel.FK_TIPO_TAREFA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TIPO_TAREFA" EntitySet="TIPO_TAREFA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_PERIODICIDADE_TAREFA" Association="ERP_CRMModel.FK_TAREFA_PERIODICIDADE_TAREFA">
+            <End Role="PERIODICIDADE_TAREFA" EntitySet="PERIODICIDADE_TAREFA" />
+            <End Role="TAREFA" EntitySet="TAREFA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_ACOMPANHAMENTO_TAREFA" Association="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_TAREFA">
+            <End Role="TAREFA" EntitySet="TAREFA" />
+            <End Role="TAREFA_ACOMPANHAMENTO" EntitySet="TAREFA_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_ANEXO_TAREFA" Association="ERP_CRMModel.FK_TAREFA_ANEXO_TAREFA">
+            <End Role="TAREFA" EntitySet="TAREFA" />
+            <End Role="TAREFA_ANEXO" EntitySet="TAREFA_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_NOTIFICACAO_TAREFA" Association="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_TAREFA">
+            <End Role="TAREFA" EntitySet="TAREFA" />
+            <End Role="TAREFA_NOTIFICACAO" EntitySet="TAREFA_NOTIFICACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_TIPO_TAREFA" Association="ERP_CRMModel.FK_TAREFA_TIPO_TAREFA">
+            <End Role="TIPO_TAREFA" EntitySet="TIPO_TAREFA" />
+            <End Role="TAREFA" EntitySet="TAREFA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_USUARIO" Association="ERP_CRMModel.FK_TAREFA_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="TAREFA" EntitySet="TAREFA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_VINCULO_TAREFA" Association="ERP_CRMModel.FK_TAREFA_VINCULO_TAREFA">
+            <End Role="TAREFA" EntitySet="TAREFA" />
+            <End Role="TAREFA_VINCULO" EntitySet="TAREFA_VINCULO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_ACOMPANHAMENTO_USUARIO" Association="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="TAREFA_ACOMPANHAMENTO" EntitySet="TAREFA_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_NOTIFICACAO_USUARIO" Association="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="TAREFA_NOTIFICACAO" EntitySet="TAREFA_NOTIFICACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAREFA_VINCULO_USUARIO" Association="ERP_CRMModel.FK_TAREFA_VINCULO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="TAREFA_VINCULO" EntitySet="TAREFA_VINCULO" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="PERIODICIDADE_TAREFA">
+          <Key>
+            <PropertyRef Name="PETA_CD_ID" />
+          </Key>
+          <Property Name="PETA_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PETA_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PETA_NR_DIAS" Type="Int32" Nullable="false" />
+          <Property Name="PETA_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_PERIODICIDADE_TAREFA_ASSINANTE" FromRole="PERIODICIDADE_TAREFA" ToRole="ASSINANTE" />
+          <NavigationProperty Name="TAREFA" Relationship="ERP_CRMModel.FK_TAREFA_PERIODICIDADE_TAREFA" FromRole="PERIODICIDADE_TAREFA" ToRole="TAREFA" />
+        </EntityType>
+        <EntityType Name="TAREFA">
+          <Key>
+            <PropertyRef Name="TARE_CD_ID" />
+          </Key>
+          <Property Name="TARE_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="TITR_CD_ID" Type="Int32" />
+          <Property Name="PETA_CD_ID" Type="Int32" />
+          <Property Name="TARE_DT_CADASTRO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TARE_NM_TITULO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TARE_DS_DESCRICAO" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="TARE_DT_ESTIMADA" Type="DateTime" Precision="0" />
+          <Property Name="TARE_IN_STATUS" Type="Int32" Nullable="false" />
+          <Property Name="TARE_IN_PRIORIDADE" Type="Int32" Nullable="false" />
+          <Property Name="TARE_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="TARE_DT_REALIZADA" Type="DateTime" Precision="0" />
+          <Property Name="TARE_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TARE_NM_LOCAL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="TARE_IN_AVISA" Type="Int32" />
+          <Property Name="TARE_NR_PERIODICIDADE_QUANTIDADE" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_TAREFA_ASSINANTE" FromRole="TAREFA" ToRole="ASSINANTE" />
+          <NavigationProperty Name="PERIODICIDADE_TAREFA" Relationship="ERP_CRMModel.FK_TAREFA_PERIODICIDADE_TAREFA" FromRole="TAREFA" ToRole="PERIODICIDADE_TAREFA" />
+          <NavigationProperty Name="TAREFA_ACOMPANHAMENTO" Relationship="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_TAREFA" FromRole="TAREFA" ToRole="TAREFA_ACOMPANHAMENTO" />
+          <NavigationProperty Name="TAREFA_ANEXO" Relationship="ERP_CRMModel.FK_TAREFA_ANEXO_TAREFA" FromRole="TAREFA" ToRole="TAREFA_ANEXO" />
+          <NavigationProperty Name="TAREFA_NOTIFICACAO" Relationship="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_TAREFA" FromRole="TAREFA" ToRole="TAREFA_NOTIFICACAO" />
+          <NavigationProperty Name="TIPO_TAREFA" Relationship="ERP_CRMModel.FK_TAREFA_TIPO_TAREFA" FromRole="TAREFA" ToRole="TIPO_TAREFA" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_TAREFA_USUARIO" FromRole="TAREFA" ToRole="USUARIO" />
+          <NavigationProperty Name="TAREFA_VINCULO" Relationship="ERP_CRMModel.FK_TAREFA_VINCULO_TAREFA" FromRole="TAREFA" ToRole="TAREFA_VINCULO" />
+        </EntityType>
+        <EntityType Name="TAREFA_ACOMPANHAMENTO">
+          <Key>
+            <PropertyRef Name="TAAC_CD_ID" />
+          </Key>
+          <Property Name="TAAC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TARE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="TAAC_DS_ACOMPANHAMENTO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="TAAC_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="TAAC_DT_ACOMPANHAMENTO" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TAREFA" Relationship="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_TAREFA" FromRole="TAREFA_ACOMPANHAMENTO" ToRole="TAREFA" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_USUARIO" FromRole="TAREFA_ACOMPANHAMENTO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="TAREFA_ANEXO">
+          <Key>
+            <PropertyRef Name="TAAN_CD_ID" />
+          </Key>
+          <Property Name="TAAN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TARE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="TAAN_NM_TITULO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TAAN_DT_ANEXO" Type="DateTime" Precision="0" />
+          <Property Name="TAAN_IN_TIPO" Type="Int32" />
+          <Property Name="TAAN_AQ_ARQUIVO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="TAAN_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TAREFA" Relationship="ERP_CRMModel.FK_TAREFA_ANEXO_TAREFA" FromRole="TAREFA_ANEXO" ToRole="TAREFA" />
+        </EntityType>
+        <EntityType Name="TAREFA_NOTIFICACAO">
+          <Key>
+            <PropertyRef Name="TANO_CD_ID" />
+          </Key>
+          <Property Name="TANO_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TARE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="TANO_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TAREFA" Relationship="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_TAREFA" FromRole="TAREFA_NOTIFICACAO" ToRole="TAREFA" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_USUARIO" FromRole="TAREFA_NOTIFICACAO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="TAREFA_VINCULO">
+          <Key>
+            <PropertyRef Name="TAVI_CD_ID" />
+          </Key>
+          <Property Name="TAVI_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TARE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="TAVI_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TAREFA" Relationship="ERP_CRMModel.FK_TAREFA_VINCULO_TAREFA" FromRole="TAREFA_VINCULO" ToRole="TAREFA" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_TAREFA_VINCULO_USUARIO" FromRole="TAREFA_VINCULO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="TIPO_TAREFA">
+          <Key>
+            <PropertyRef Name="TITR_CD_ID" />
+          </Key>
+          <Property Name="TITR_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="TITR_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TITR_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_TIPO_TAREFA_ASSINANTE" FromRole="TIPO_TAREFA" ToRole="ASSINANTE" />
+          <NavigationProperty Name="TAREFA" Relationship="ERP_CRMModel.FK_TAREFA_TIPO_TAREFA" FromRole="TIPO_TAREFA" ToRole="TAREFA" />
+        </EntityType>
+        <Association Name="FK_PERIODICIDADE_TAREFA_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.PERIODICIDADE_TAREFA" Role="PERIODICIDADE_TAREFA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="PERIODICIDADE_TAREFA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.TAREFA" Role="TAREFA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIPO_TAREFA_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.TIPO_TAREFA" Role="TIPO_TAREFA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TIPO_TAREFA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_PERIODICIDADE_TAREFA">
+          <End Type="ERP_CRMModel.PERIODICIDADE_TAREFA" Role="PERIODICIDADE_TAREFA" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.TAREFA" Role="TAREFA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERIODICIDADE_TAREFA">
+              <PropertyRef Name="PETA_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA">
+              <PropertyRef Name="PETA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_ACOMPANHAMENTO_TAREFA">
+          <End Type="ERP_CRMModel.TAREFA" Role="TAREFA" Multiplicity="1" />
+          <End Type="ERP_CRMModel.TAREFA_ACOMPANHAMENTO" Role="TAREFA_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAREFA">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_ACOMPANHAMENTO">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_ANEXO_TAREFA">
+          <End Type="ERP_CRMModel.TAREFA" Role="TAREFA" Multiplicity="1" />
+          <End Type="ERP_CRMModel.TAREFA_ANEXO" Role="TAREFA_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAREFA">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_ANEXO">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_NOTIFICACAO_TAREFA">
+          <End Type="ERP_CRMModel.TAREFA" Role="TAREFA" Multiplicity="1" />
+          <End Type="ERP_CRMModel.TAREFA_NOTIFICACAO" Role="TAREFA_NOTIFICACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAREFA">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_NOTIFICACAO">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_TIPO_TAREFA">
+          <End Type="ERP_CRMModel.TIPO_TAREFA" Role="TIPO_TAREFA" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.TAREFA" Role="TAREFA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_TAREFA">
+              <PropertyRef Name="TITR_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA">
+              <PropertyRef Name="TITR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.TAREFA" Role="TAREFA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_VINCULO_TAREFA">
+          <End Type="ERP_CRMModel.TAREFA" Role="TAREFA" Multiplicity="1" />
+          <End Type="ERP_CRMModel.TAREFA_VINCULO" Role="TAREFA_VINCULO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAREFA">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_VINCULO">
+              <PropertyRef Name="TARE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_ACOMPANHAMENTO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.TAREFA_ACOMPANHAMENTO" Role="TAREFA_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_ACOMPANHAMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_NOTIFICACAO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.TAREFA_NOTIFICACAO" Role="TAREFA_NOTIFICACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_NOTIFICACAO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAREFA_VINCULO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.TAREFA_VINCULO" Role="TAREFA_VINCULO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="TAREFA_VINCULO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12510,6 +13129,95 @@
                 <ScalarProperty Name="USFU_DT_CNH_VALIDADE" ColumnName="USFU_DT_CNH_VALIDADE" />
                 <ScalarProperty Name="USFU_NM_CNH_CATEGORIA" ColumnName="USFU_NM_CNH_CATEGORIA" />
                 <ScalarProperty Name="USFU_NR_CNS" ColumnName="USFU_NR_CNS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERIODICIDADE_TAREFA">
+            <EntityTypeMapping TypeName="ERP_CRMModel.PERIODICIDADE_TAREFA">
+              <MappingFragment StoreEntitySet="PERIODICIDADE_TAREFA">
+                <ScalarProperty Name="PETA_IN_ATIVO" ColumnName="PETA_IN_ATIVO" />
+                <ScalarProperty Name="PETA_NR_DIAS" ColumnName="PETA_NR_DIAS" />
+                <ScalarProperty Name="PETA_NM_NOME" ColumnName="PETA_NM_NOME" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="PETA_CD_ID" ColumnName="PETA_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAREFA">
+            <EntityTypeMapping TypeName="ERP_CRMModel.TAREFA">
+              <MappingFragment StoreEntitySet="TAREFA">
+                <ScalarProperty Name="TARE_NR_PERIODICIDADE_QUANTIDADE" ColumnName="TARE_NR_PERIODICIDADE_QUANTIDADE" />
+                <ScalarProperty Name="TARE_IN_AVISA" ColumnName="TARE_IN_AVISA" />
+                <ScalarProperty Name="TARE_NM_LOCAL" ColumnName="TARE_NM_LOCAL" />
+                <ScalarProperty Name="TARE_TX_OBSERVACOES" ColumnName="TARE_TX_OBSERVACOES" />
+                <ScalarProperty Name="TARE_DT_REALIZADA" ColumnName="TARE_DT_REALIZADA" />
+                <ScalarProperty Name="TARE_IN_ATIVO" ColumnName="TARE_IN_ATIVO" />
+                <ScalarProperty Name="TARE_IN_PRIORIDADE" ColumnName="TARE_IN_PRIORIDADE" />
+                <ScalarProperty Name="TARE_IN_STATUS" ColumnName="TARE_IN_STATUS" />
+                <ScalarProperty Name="TARE_DT_ESTIMADA" ColumnName="TARE_DT_ESTIMADA" />
+                <ScalarProperty Name="TARE_DS_DESCRICAO" ColumnName="TARE_DS_DESCRICAO" />
+                <ScalarProperty Name="TARE_NM_TITULO" ColumnName="TARE_NM_TITULO" />
+                <ScalarProperty Name="TARE_DT_CADASTRO" ColumnName="TARE_DT_CADASTRO" />
+                <ScalarProperty Name="PETA_CD_ID" ColumnName="PETA_CD_ID" />
+                <ScalarProperty Name="TITR_CD_ID" ColumnName="TITR_CD_ID" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="TARE_CD_ID" ColumnName="TARE_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAREFA_ACOMPANHAMENTO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.TAREFA_ACOMPANHAMENTO">
+              <MappingFragment StoreEntitySet="TAREFA_ACOMPANHAMENTO">
+                <ScalarProperty Name="TAAC_DT_ACOMPANHAMENTO" ColumnName="TAAC_DT_ACOMPANHAMENTO" />
+                <ScalarProperty Name="TAAC_IN_ATIVO" ColumnName="TAAC_IN_ATIVO" />
+                <ScalarProperty Name="TAAC_DS_ACOMPANHAMENTO" ColumnName="TAAC_DS_ACOMPANHAMENTO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="TARE_CD_ID" ColumnName="TARE_CD_ID" />
+                <ScalarProperty Name="TAAC_CD_ID" ColumnName="TAAC_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAREFA_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.TAREFA_ANEXO">
+              <MappingFragment StoreEntitySet="TAREFA_ANEXO">
+                <ScalarProperty Name="TAAN_IN_ATIVO" ColumnName="TAAN_IN_ATIVO" />
+                <ScalarProperty Name="TAAN_AQ_ARQUIVO" ColumnName="TAAN_AQ_ARQUIVO" />
+                <ScalarProperty Name="TAAN_IN_TIPO" ColumnName="TAAN_IN_TIPO" />
+                <ScalarProperty Name="TAAN_DT_ANEXO" ColumnName="TAAN_DT_ANEXO" />
+                <ScalarProperty Name="TAAN_NM_TITULO" ColumnName="TAAN_NM_TITULO" />
+                <ScalarProperty Name="TARE_CD_ID" ColumnName="TARE_CD_ID" />
+                <ScalarProperty Name="TAAN_CD_ID" ColumnName="TAAN_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAREFA_NOTIFICACAO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.TAREFA_NOTIFICACAO">
+              <MappingFragment StoreEntitySet="TAREFA_NOTIFICACAO">
+                <ScalarProperty Name="TANO_IN_ATIVO" ColumnName="TANO_IN_ATIVO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="TARE_CD_ID" ColumnName="TARE_CD_ID" />
+                <ScalarProperty Name="TANO_CD_ID" ColumnName="TANO_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAREFA_VINCULO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.TAREFA_VINCULO">
+              <MappingFragment StoreEntitySet="TAREFA_VINCULO">
+                <ScalarProperty Name="TAVI_IN_ATIVO" ColumnName="TAVI_IN_ATIVO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="TARE_CD_ID" ColumnName="TARE_CD_ID" />
+                <ScalarProperty Name="TAVI_CD_ID" ColumnName="TAVI_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO_TAREFA">
+            <EntityTypeMapping TypeName="ERP_CRMModel.TIPO_TAREFA">
+              <MappingFragment StoreEntitySet="TIPO_TAREFA">
+                <ScalarProperty Name="TITR_IN_ATIVO" ColumnName="TITR_IN_ATIVO" />
+                <ScalarProperty Name="TITR_NM_NOME" ColumnName="TITR_NM_NOME" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="TITR_CD_ID" ColumnName="TITR_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

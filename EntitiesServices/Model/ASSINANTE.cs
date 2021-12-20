@@ -67,6 +67,9 @@ namespace EntitiesServices.Model
             this.TIPO_GRUPO = new HashSet<TIPO_GRUPO>();
             this.TRANSPORTADORA = new HashSet<TRANSPORTADORA>();
             this.USUARIO = new HashSet<USUARIO>();
+            this.PERIODICIDADE_TAREFA = new HashSet<PERIODICIDADE_TAREFA>();
+            this.TAREFA = new HashSet<TAREFA>();
+            this.TIPO_TAREFA = new HashSet<TIPO_TAREFA>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -194,5 +197,11 @@ namespace EntitiesServices.Model
         public virtual ICollection<TRANSPORTADORA> TRANSPORTADORA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USUARIO> USUARIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PERIODICIDADE_TAREFA> PERIODICIDADE_TAREFA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TAREFA> TAREFA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TIPO_TAREFA> TIPO_TAREFA { get; set; }
     }
 }
