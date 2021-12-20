@@ -6,7 +6,7 @@ using System.Web;
 using EntitiesServices.Model;
 using EntitiesServices.Attributes;
 
-namespace PlatMensagem_Solution.ViewModels
+namespace ERP_CRM_Solution.ViewModels
 {
     public class UsuarioViewModel
     {

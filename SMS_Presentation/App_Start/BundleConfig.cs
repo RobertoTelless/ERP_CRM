@@ -1,7 +1,7 @@
 using System.Web;
 using System.Web.Optimization;
 
-namespace PlatMensagem_Solution
+namespace ERPCRM_Solution
 {
     public class BundleConfig
     {

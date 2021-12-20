@@ -6,7 +6,7 @@ using EntitiesServices.Model;
 using System.Web;
 using EntitiesServices.Attributes;
 
-namespace PlatMensagem_Solution.ViewModels
+namespace ERP_CRM_Solution.ViewModels
 {
     public class AssinanteViewModel
     {
