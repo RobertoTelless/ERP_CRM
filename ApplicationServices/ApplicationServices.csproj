@@ -166,15 +166,42 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IAgendaAppService.cs" />
+    <Compile Include="Interfaces\IAppServiceBase.cs" />
+    <Compile Include="Interfaces\IAssinanteAppService.cs" />
+    <Compile Include="Interfaces\IAssinanteCnpjAppService.cs" />
+    <Compile Include="Interfaces\IConfiguracaoAppService.cs" />
+    <Compile Include="Interfaces\ILogAppService.cs" />
+    <Compile Include="Interfaces\INotificacaoAppService.cs" />
+    <Compile Include="Interfaces\IPlanoAppService.cs" />
+    <Compile Include="Interfaces\ITemplateAppService.cs" />
+    <Compile Include="Interfaces\IUsuarioAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AgendaAppService.cs" />
+    <Compile Include="Services\AppServiceBase.cs" />
+    <Compile Include="Services\AssinanteAppService.cs" />
+    <Compile Include="Services\AssinanteCnpjAppService.cs" />
+    <Compile Include="Services\ConfiguracaoAppService.cs" />
+    <Compile Include="Services\LogAppService.cs" />
+    <Compile Include="Services\NotificacaoAppService.cs" />
+    <Compile Include="Services\PlanoAppService.cs" />
+    <Compile Include="Services\TemplateAppService.cs" />
+    <Compile Include="Services\UsuarioAppService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrossCutting\CrossCutting.csproj">
+      <Project>{e59c5bd2-e664-40b0-b6a7-334a284cbde5}</Project>
+      <Name>CrossCutting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntitiesServices\EntitiesServices.csproj">
+      <Project>{121fe529-0975-4bf3-99a9-fa5a11c8b466}</Project>
+      <Name>EntitiesServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

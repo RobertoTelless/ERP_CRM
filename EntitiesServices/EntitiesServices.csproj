@@ -119,6 +119,8 @@
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.2.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
     </Reference>
@@ -169,20 +171,445 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ChechTimeAttribute.cs" />
+    <Compile Include="Attributes\CheckTimeAttributeMain.cs" />
+    <Compile Include="Attributes\CustomValidationCNPJAttribute .cs" />
+    <Compile Include="Attributes\CustomValidationCPFAttribute.cs" />
+    <Compile Include="Attributes\DataAnteriorAttribute.cs" />
+    <Compile Include="EntitiesServices\AgendaService.cs" />
+    <Compile Include="EntitiesServices\AssinanteCnpjService.cs" />
+    <Compile Include="EntitiesServices\AssinanteService.cs" />
+    <Compile Include="EntitiesServices\ConfiguracaoService.cs" />
+    <Compile Include="EntitiesServices\LogService.cs" />
+    <Compile Include="EntitiesServices\NotificacaoService.cs" />
+    <Compile Include="EntitiesServices\PerfilService.cs" />
+    <Compile Include="EntitiesServices\PlanoService.cs" />
+    <Compile Include="EntitiesServices\ServiceBase.cs" />
+    <Compile Include="EntitiesServices\TemplateService.cs" />
+    <Compile Include="EntitiesServices\TipoPessoaService.cs" />
+    <Compile Include="EntitiesServices\UsuarioService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IAgendaService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IAssinanteCnpjService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IAssinanteService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IConfiguracaoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ILogService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\INotificacaoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IPerfilService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IPlanoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IServiceBase.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ITemplateService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ITipoPessoaService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IUsuarioService.cs" />
+    <Compile Include="Interfaces\Repositories\IAgendaAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAgendaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAssinanteAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAssinanteCnpjRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAssinantePagamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICargoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaAgendaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaClienteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaNotificacaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaUsuarioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IConfiguracaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ILogRepository.cs" />
+    <Compile Include="Interfaces\Repositories\INotificacaoAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\INotificacaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPerfilRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPeriodicidadePlanoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPlanoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IRepositoryBase.cs" />
+    <Compile Include="Interfaces\Repositories\ITemplateRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoPessoaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IUFRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IUsuarioAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IUsuarioRepository.cs" />
+    <Compile Include="Model\AGENDA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AGENDA_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AGENDA_VINCULO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ASSINANTE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ASSINANTE_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ASSINANTE_CONSUMO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ASSINANTE_PAGAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ASSINANTE_PLANO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ASSINANTE_QUADRO_SOCIETARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BANCO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CARGO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CATEGORIA_AGENDA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CATEGORIA_CLIENTE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CATEGORIA_EQUIPAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CATEGORIA_FORNECEDOR.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CATEGORIA_NOTIFICACAO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CATEGORIA_PRODUTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CATEGORIA_TELEFONE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CATEGORIA_USUARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CENTRO_CUSTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CLIENTE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CLIENTE_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CLIENTE_CONTATO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CLIENTE_QUADRO_SOCIETARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONFIGURACAO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_BANCO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_BANCO_CONTATO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_BANCO_LANCAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_PAGAR.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_PAGAR_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_PAGAR_PARCELA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_PAGAR_RATEIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_RECEBER.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_RECEBER_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_RECEBER_PARCELA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_RECEBER_RATEIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_ACAO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_COMENTARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_CONTATO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_ORIGEM.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EMAIL_AGENDAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EQUIPAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EQUIPAMENTO_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EQUIPAMENTO_MANUTENCAO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ERPCRM_Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ERPCRM_Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ERPCRM_Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ERPCRM_Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ERPCRM_Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FILIAL.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FORMA_ENVIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FORMA_FRETE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FORMA_PAGAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FORNECEDOR.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FORNECEDOR_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FORNECEDOR_COMENTARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FORNECEDOR_CONTATO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FORNECEDOR_MENSAGEM.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FORNECEDOR_QUADRO_SOCIETARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GRUPO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GRUPO_CLIENTE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ITEM_PEDIDO_COMPRA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ITEM_PEDIDO_VENDA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LOG.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MENSAGEM_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MENSAGENS.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MENSAGENS_DESTINOS.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MOTIVO_CANCELAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MOTIVO_ENCERRAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MOVIMENTO_ESTOQUE_PRODUTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NOTICIA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NOTICIA_COMENTARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NOTIFICACAO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NOTIFICACAO_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PEDIDO_COMPRA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PEDIDO_COMPRA_ACOMPANHAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PEDIDO_COMPRA_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PEDIDO_VENDA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PEDIDO_VENDA_ACOMPANHAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PEDIDO_VENDA_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PEDIDO_VENDA_PARCELA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PERFIL.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PERIODICIDADE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PLANO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PLANO_PERIODICIDADE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\POSICAO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PRECO_PRODUTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PRODUTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PRODUTO_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PRODUTO_ESTOQUE_FILIAL.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PRODUTO_FORNECEDOR.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PRODUTO_ORIGEM.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PRODUTO_TABELA_PRECO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\RESUMO_VENDA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SUBCATEGORIA_PRODUTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SUBGRUPO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TELEFONE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TEMPLATE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TIPO_ACAO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TIPO_CONTA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TIPO_CONTRIBUINTE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TIPO_CRM.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TIPO_GRUPO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TIPO_PESSOA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TIPO_TRANSPORTE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TIPO_VEICULO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TRANSPORTADORA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TRANSPORTADORA_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UF.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UNIDADE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\USUARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\USUARIO_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\USUARIO_FUNCIONARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkClasses\CNPJ.cs" />
+    <Compile Include="WorkClasses\Endereco.cs" />
+    <Compile Include="WorkClasses\FileQueue.cs" />
+    <Compile Include="WorkClasses\Login.cs" />
+    <Compile Include="WorkClasses\TrocaSenha.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Attributes\" />
-    <Folder Include="EntitiesServices\" />
-    <Folder Include="Interfaces\EntitiesServices\" />
     <Folder Include="Interfaces\ExternalServices\" />
-    <Folder Include="Interfaces\Repositories\" />
-    <Folder Include="Model\" />
-    <Folder Include="WorkClasses\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="Model\ERPCRM_Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ERPCRM_Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\ERPCRM_Model.edmx.diagram">
+      <DependentUpon>ERPCRM_Model.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\ERPCRM_Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ERPCRM_Model.edmx</DependentUpon>
+      <LastGenOutput>ERPCRM_Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\ERPCRM_Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ERPCRM_Model.edmx</DependentUpon>
+      <LastGenOutput>ERPCRM_Model.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrossCutting\CrossCutting.csproj">
+      <Project>{e59c5bd2-e664-40b0-b6a7-334a284cbde5}</Project>
+      <Name>CrossCutting</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
