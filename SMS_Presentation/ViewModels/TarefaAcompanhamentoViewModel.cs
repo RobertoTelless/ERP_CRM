@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using EntitiesServices.Model;
 
-namespace SMS_Solution.ViewModels
+namespace ERP_CRM_Solution.ViewModels
 {
     public class TarefaAcompanhamentoViewModel
     {

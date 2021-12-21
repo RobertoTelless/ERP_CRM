@@ -33,6 +33,12 @@ namespace MvcMapping.Mappers
             CreateMap<PLANO, PlanoViewModel>();
             CreateMap<ASSINANTE, AssinanteViewModel>();
             CreateMap<ASSINANTE_PAGAMENTO, AssinantePagamentoViewModel>();
+            CreateMap<FILIAL, FilialViewModel>();
+            CreateMap<NOTICIA, NoticiaViewModel>();
+            CreateMap<NOTICIA_COMENTARIO, NoticiaComentarioViewModel>();
+            CreateMap<TELEFONE, TelefoneViewModel>();
+            CreateMap<TAREFA, TarefaViewModel>();
+            CreateMap<TAREFA_ACOMPANHAMENTO, TarefaAcompanhamentoViewModel>();
 
         }
     }
