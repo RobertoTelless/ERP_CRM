@@ -3,10 +3,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>ERP Condomínios</title>
+    <title>ERPSys</title>
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
     <!-- Add local styles, mostly for plugins css file -->
@@ -15,7 +15,7 @@
 
     <!-- Add jQuery Style direct - used for jQGrid plugin -->
     <link href="@Url.Content("~/Scripts/plugins/jquery-ui/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
-    <link rel="shortcut icon" href="~/Images/Favicon_ERP_Condominio.png">
+    <link rel="shortcut icon" href="~/Images/favicon_SystemBR.jpg">
 
     <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
@@ -53,7 +53,7 @@
             @RenderBody()
 
             <!-- Footer -->
-            @Html.Partial("_Footer")
+            @*@Html.Partial("_Footer")*@
 
         </div>
         <!-- End page wrapper-->
@@ -84,7 +84,7 @@
     @RenderSection("scripts", required: false)
 
     <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
         (function () {
             var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
@@ -94,7 +94,7 @@
             s1.setAttribute('crossorigin', '*');
             s0.parentNode.insertBefore(s1, s0);
         })();
-    </script>
+    </script>*@
     <!--End of Tawk.to Script-->
 </body>
 </html>

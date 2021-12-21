@@ -170,22 +170,36 @@
     <Compile Include="Interfaces\IAppServiceBase.cs" />
     <Compile Include="Interfaces\IAssinanteAppService.cs" />
     <Compile Include="Interfaces\IAssinanteCnpjAppService.cs" />
+    <Compile Include="Interfaces\ICategoriaTelefoneAppService.cs" />
     <Compile Include="Interfaces\IConfiguracaoAppService.cs" />
+    <Compile Include="Interfaces\IFilialAppService.cs" />
     <Compile Include="Interfaces\ILogAppService.cs" />
+    <Compile Include="Interfaces\INoticiaAppService.cs" />
     <Compile Include="Interfaces\INotificacaoAppService.cs" />
+    <Compile Include="Interfaces\IPeriodicidadeAppService.cs" />
     <Compile Include="Interfaces\IPlanoAppService.cs" />
+    <Compile Include="Interfaces\ITarefaAppService.cs" />
+    <Compile Include="Interfaces\ITelefoneAppService.cs" />
     <Compile Include="Interfaces\ITemplateAppService.cs" />
+    <Compile Include="Interfaces\ITipoPessoaAppService.cs" />
     <Compile Include="Interfaces\IUsuarioAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AgendaAppService.cs" />
     <Compile Include="Services\AppServiceBase.cs" />
     <Compile Include="Services\AssinanteAppService.cs" />
     <Compile Include="Services\AssinanteCnpjAppService.cs" />
+    <Compile Include="Services\CategoriaTelefoneAppService.cs" />
     <Compile Include="Services\ConfiguracaoAppService.cs" />
+    <Compile Include="Services\FilialAppService.cs" />
     <Compile Include="Services\LogAppService.cs" />
+    <Compile Include="Services\NoticiaAppService.cs" />
     <Compile Include="Services\NotificacaoAppService.cs" />
+    <Compile Include="Services\PeriodicidadeAppService.cs" />
     <Compile Include="Services\PlanoAppService.cs" />
+    <Compile Include="Services\TarefaAppService.cs" />
+    <Compile Include="Services\TelefoneAppService.cs" />
     <Compile Include="Services\TemplateAppService.cs" />
+    <Compile Include="Services\TipoPessoaAppService.cs" />
     <Compile Include="Services\UsuarioAppService.cs" />
   </ItemGroup>
   <ItemGroup />

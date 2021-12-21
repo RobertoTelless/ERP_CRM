@@ -129,7 +129,6 @@ namespace ApplicationServices.Services
                 {
                     return 1;
                 }
-
                 if (item.CLIENTE != null)
                 {
                     item.CLIENTE = null;

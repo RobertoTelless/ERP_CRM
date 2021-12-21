@@ -13,6 +13,7 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEdit(PERIODICIDADE item, PERIODICIDADE itemAntes, USUARIO usuario);
         Int32 ValidateDelete(PERIODICIDADE item, USUARIO usuario);
         Int32 ValidateReativar(PERIODICIDADE item, USUARIO usuario);
+
         List<PERIODICIDADE> GetAllItens(Int32 idAss);
         PERIODICIDADE GetItemById(Int32 id);
         List<PERIODICIDADE> GetAllItensAdm(Int32 idAss);

@@ -340,6 +340,8 @@
         <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_USUARIO" />
         <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_USUARIO" />
         <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_VINCULO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_FILIAL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_FILIAL" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

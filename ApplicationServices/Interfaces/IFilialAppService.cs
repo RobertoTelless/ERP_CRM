@@ -20,5 +20,6 @@ namespace ApplicationServices.Interfaces
         FILIAL CheckExist(FILIAL filial, Int32 idAss);
         List<UF> GetAllUF();
         UF GetUFbySigla(String sigla);
+
     }
 }

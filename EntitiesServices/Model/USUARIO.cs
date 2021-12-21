@@ -80,6 +80,9 @@ namespace EntitiesServices.Model
         public string USUA_NR_CPF { get; set; }
         public string USUA_NR_RG { get; set; }
         public string USUA_TX_OBSERVACOES { get; set; }
+        public Nullable<int> FILI_CD_ID { get; set; }
+        public Nullable<System.TimeSpan> USUA_TM_INICIO { get; set; }
+        public Nullable<System.TimeSpan> USUA_TM_FINAL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA> AGENDA { get; set; }
@@ -141,5 +144,6 @@ namespace EntitiesServices.Model
         public virtual ICollection<TAREFA_NOTIFICACAO> TAREFA_NOTIFICACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TAREFA_VINCULO> TAREFA_VINCULO { get; set; }
+        public virtual FILIAL FILIAL { get; set; }
     }
 }

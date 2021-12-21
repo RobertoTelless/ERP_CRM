@@ -127,6 +127,7 @@ namespace ApplicationServices.Services
             }
         }
 
+
         public Int32 ValidateEdit(NOTICIA item, NOTICIA itemAntes)
         {
             try

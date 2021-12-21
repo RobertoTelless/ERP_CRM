@@ -24,5 +24,6 @@ namespace ApplicationServices.Interfaces
         Int32 ExecuteFilter(Int32? catId, String nome, String telefone, String cidade, Int32? uf, String celular, String email, Int32 idAss, out List<TELEFONE> objeto);
         List<UF> GetAllUF();
         UF GetUFbySigla(String sigla);
+
     }
 }

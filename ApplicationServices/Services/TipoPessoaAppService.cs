@@ -12,49 +12,51 @@ using System.Text.RegularExpressions;
 
 namespace ApplicationServices.Services
 {
-    public class PeriodicidadeAppService : AppServiceBase<PERIODICIDADE>, IPeriodicidadeAppService
+    public class TipoPessoaAppService : AppServiceBase<TIPO_PESSOA>, ITipoPessoaAppService
     {
-        private readonly IPeriodicidadeService _baseService;
+        private readonly ITipoPessoaService _baseService;
 
-        public PeriodicidadeAppService(IPeriodicidadeService baseService) : base(baseService)
+        public TipoPessoaAppService(ITipoPessoaService baseService): base(baseService)
         {
             _baseService = baseService;
         }
 
-        public List<PERIODICIDADE> GetAllItens(Int32 idAss)
+        public List<TIPO_PESSOA> GetAllItens()
         {
-            List<PERIODICIDADE> lista = _baseService.GetAllItens(idAss);
+            List<TIPO_PESSOA> lista = _baseService.GetAllItens();
             return lista;
         }
 
-        public List<PERIODICIDADE> GetAllItensAdm(Int32 idAss)
+        public List<TIPO_PESSOA> GetAllItensAdm()
         {
-            List<PERIODICIDADE> lista = _baseService.GetAllItensAdm(idAss);
+            List<TIPO_PESSOA> lista = _baseService.GetAllItensAdm();
             return lista;
         }
 
-        public PERIODICIDADE GetItemById(Int32 id)
+        public TIPO_PESSOA GetItemById(Int32 id)
         {
-            PERIODICIDADE item = _baseService.GetItemById(id);
+            TIPO_PESSOA item = _baseService.GetItemById(id);
             return item;
         }
 
-        public Int32 ValidateCreate(PERIODICIDADE item, USUARIO usuario)
+        public Int32 ValidateCreate(TIPO_PESSOA item, USUARIO usuario)
         {
             try
             {
+                // Verifica existencia prévia
+
                 // Completa objeto
-                item.PERI_IN_ATIVO = 1;
+                item.TIPE_IN_ATIVO = 1;
 
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    LOG_NM_OPERACAO = "AddPERI",
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
+                    LOG_NM_OPERACAO = "AddTIPE",
                     LOG_IN_ATIVO = 1,
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<PERIODICIDADE>(item)
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<TIPO_PESSOA>(item)
                 };
 
                 // Persiste
@@ -67,7 +69,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateEdit(PERIODICIDADE item, PERIODICIDADE itemAntes, USUARIO usuario)
+        public Int32 ValidateEdit(TIPO_PESSOA item, TIPO_PESSOA itemAntes, USUARIO usuario)
         {
             try
             {
@@ -75,12 +77,12 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    LOG_NM_OPERACAO = "EditPERI",
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
+                    LOG_NM_OPERACAO = "EditTIPE",
                     LOG_IN_ATIVO = 1,
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<PERIODICIDADE>(item),
-                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<PERIODICIDADE>(itemAntes)
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<TIPO_PESSOA>(item),
+                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<TIPO_PESSOA>(itemAntes)
                 };
 
                 // Persiste
@@ -92,33 +94,45 @@ namespace ApplicationServices.Services
             }
         }
 
-
-        public Int32 ValidateDelete(PERIODICIDADE item, USUARIO usuario)
+        public Int32 ValidateEdit(TIPO_PESSOA item, TIPO_PESSOA itemAntes)
         {
             try
             {
-                // Checa integridade
-                if (item.CONTA_PAGAR.Count > 0)
-                {
-                    return 1;
-                }
+                // Persiste
+                return _baseService.Edit(item);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ValidateDelete(TIPO_PESSOA item, USUARIO usuario)
+        {
+            try
+            {
+                // Verifica integridade referencial
+                //if (item.USUARIO.Count > 0)
+                //{
+                //    return 1;
+                //}
 
                 // Acerta campos
-                item.PERI_IN_ATIVO = 0;
+                item.TIPE_IN_ATIVO = 0;
 
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_IN_ATIVO = 1,
-                    LOG_NM_OPERACAO = "DelPERI",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<PERIODICIDADE>(item)
+                    LOG_NM_OPERACAO = "DeleTIPE",
+                    LOG_TX_REGISTRO = "Tipo de Pessoa: " + item.TIPE_NM_NOME
                 };
 
                 // Persiste
-                return _baseService.Edit(item, log);
+                return _baseService.Edit(item);
             }
             catch (Exception ex)
             {
@@ -126,28 +140,28 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateReativar(PERIODICIDADE item, USUARIO usuario)
+        public Int32 ValidateReativar(TIPO_PESSOA item, USUARIO usuario)
         {
             try
             {
                 // Verifica integridade referencial
 
                 // Acerta campos
-                item.PERI_IN_ATIVO = 1;
+                item.TIPE_IN_ATIVO = 1;
 
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_IN_ATIVO = 1,
-                    LOG_NM_OPERACAO = "ReatPERI",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<PERIODICIDADE>(item)
+                    LOG_NM_OPERACAO = "ReatTIPE",
+                    LOG_TX_REGISTRO = "Tipo de Pessoa: " + item.TIPE_NM_NOME
                 };
 
                 // Persiste
-                return _baseService.Edit(item, log);
+                return _baseService.Edit(item);
             }
             catch (Exception ex)
             {

@@ -244,6 +244,7 @@
           <Property Name="CACL_CD_ID" Type="int" />
           <Property Name="USUA_CD_ID" Type="int" />
           <Property Name="TIPE_CD_ID" Type="int" />
+          <Property Name="FILI_CD_ID" Type="int" />
           <Property Name="CLIE_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CLIE_NM_RAZAO" Type="varchar" MaxLength="100" />
           <Property Name="CLIE_NR_CPF" Type="varchar" MaxLength="20" />
@@ -1736,6 +1737,7 @@
           <Property Name="PERF_CD_ID" Type="int" Nullable="false" />
           <Property Name="CAUS_CD_ID" Type="int" />
           <Property Name="CARG_CD_ID" Type="int" />
+          <Property Name="FILI_CD_ID" Type="int" />
           <Property Name="USUA_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="USUA_NM_LOGIN" Type="varchar" MaxLength="50" />
           <Property Name="USUA_NM_EMAIL" Type="varchar" MaxLength="150" />
@@ -1764,6 +1766,8 @@
           <Property Name="USUA_NR_CPF" Type="varchar" MaxLength="50" />
           <Property Name="USUA_NR_RG" Type="varchar" MaxLength="50" />
           <Property Name="USUA_TX_OBSERVACOES" Type="text" />
+          <Property Name="USUA_TM_INICIO" Type="time" Precision="7" />
+          <Property Name="USUA_TM_FINAL" Type="time" Precision="7" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -2151,6 +2155,18 @@
             </Principal>
             <Dependent Role="CLIENTE_CONTATO">
               <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE_FILIAL">
+          <End Role="FILIAL" Type="Self.FILIAL" Multiplicity="0..1" />
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="FILI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4410,6 +4426,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_USUARIO_FILIAL">
+          <End Role="FILIAL" Type="Self.FILIAL" Multiplicity="0..1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_USUARIO_FUNCIONARIO_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="USUARIO_FUNCIONARIO" Type="Self.USUARIO_FUNCIONARIO" Multiplicity="*" />
@@ -4663,6 +4691,10 @@
           <AssociationSet Name="FK_CLIENTE_CONTATO_CLIENTE" Association="Self.FK_CLIENTE_CONTATO_CLIENTE">
             <End Role="CLIENTE" EntitySet="CLIENTE" />
             <End Role="CLIENTE_CONTATO" EntitySet="CLIENTE_CONTATO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE_FILIAL" Association="Self.FK_CLIENTE_FILIAL">
+            <End Role="FILIAL" EntitySet="FILIAL" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
           </AssociationSet>
           <AssociationSet Name="FK_CLIENTE_POSICAO" Association="Self.FK_CLIENTE_POSICAO">
             <End Role="POSICAO" EntitySet="POSICAO" />
@@ -5416,6 +5448,10 @@
             <End Role="CATEGORIA_USUARIO" EntitySet="CATEGORIA_USUARIO" />
             <End Role="USUARIO" EntitySet="USUARIO" />
           </AssociationSet>
+          <AssociationSet Name="FK_USUARIO_FILIAL" Association="Self.FK_USUARIO_FILIAL">
+            <End Role="FILIAL" EntitySet="FILIAL" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
           <AssociationSet Name="FK_USUARIO_FUNCIONARIO_USUARIO" Association="Self.FK_USUARIO_FUNCIONARIO_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="USUARIO_FUNCIONARIO" EntitySet="USUARIO_FUNCIONARIO" />
@@ -5812,6 +5848,8 @@
           <NavigationProperty Name="GRUPO_CLIENTE" Relationship="Self.FK_GRUPO_CLIENTE_CLIENTE" FromRole="CLIENTE" ToRole="GRUPO_CLIENTE" />
           <NavigationProperty Name="MENSAGENS_DESTINOS" Relationship="Self.FK_MENSAGENS_DESTINOS_CLIENTE" FromRole="CLIENTE" ToRole="MENSAGENS_DESTINOS" />
           <NavigationProperty Name="PEDIDO_VENDA" Relationship="Self.FK_PEDIDO_VENDA_CLIENTE" FromRole="CLIENTE" ToRole="PEDIDO_VENDA" />
+          <Property Name="FILI_CD_ID" Type="Int32" />
+          <NavigationProperty Name="FILIAL" Relationship="ERP_CRMModel.FK_CLIENTE_FILIAL" FromRole="CLIENTE" ToRole="FILIAL" />
         </EntityType>
         <EntityType Name="CLIENTE_ANEXO">
           <Key>
@@ -6380,6 +6418,8 @@
           <NavigationProperty Name="PRODUTO" Relationship="Self.FK_PRODUTO_FILIAL" FromRole="FILIAL" ToRole="PRODUTO" />
           <NavigationProperty Name="PRODUTO_TABELA_PRECO" Relationship="Self.FK_PRODUTO_TABELA_PRECO_FILIAL" FromRole="FILIAL" ToRole="PRODUTO_TABELA_PRECO" />
           <NavigationProperty Name="TRANSPORTADORA" Relationship="Self.FK_TRANSPORTADORA_FILIAL" FromRole="FILIAL" ToRole="TRANSPORTADORA" />
+          <NavigationProperty Name="CLIENTE" Relationship="ERP_CRMModel.FK_CLIENTE_FILIAL" FromRole="FILIAL" ToRole="CLIENTE" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_USUARIO_FILIAL" FromRole="FILIAL" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="FORMA_ENVIO">
           <Key>
@@ -7521,6 +7561,10 @@
           <NavigationProperty Name="TAREFA_ACOMPANHAMENTO" Relationship="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_USUARIO" FromRole="USUARIO" ToRole="TAREFA_ACOMPANHAMENTO" />
           <NavigationProperty Name="TAREFA_NOTIFICACAO" Relationship="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_USUARIO" FromRole="USUARIO" ToRole="TAREFA_NOTIFICACAO" />
           <NavigationProperty Name="TAREFA_VINCULO" Relationship="ERP_CRMModel.FK_TAREFA_VINCULO_USUARIO" FromRole="USUARIO" ToRole="TAREFA_VINCULO" />
+          <Property Name="FILI_CD_ID" Type="Int32" />
+          <Property Name="USUA_TM_INICIO" Type="Time" Precision="7" />
+          <Property Name="USUA_TM_FINAL" Type="Time" Precision="7" />
+          <NavigationProperty Name="FILIAL" Relationship="ERP_CRMModel.FK_USUARIO_FILIAL" FromRole="USUARIO" ToRole="FILIAL" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -11027,6 +11071,14 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="TAREFA_VINCULO" EntitySet="TAREFA_VINCULO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE_FILIAL" Association="ERP_CRMModel.FK_CLIENTE_FILIAL">
+            <End Role="FILIAL" EntitySet="FILIAL" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIO_FILIAL" Association="ERP_CRMModel.FK_USUARIO_FILIAL">
+            <End Role="FILIAL" EntitySet="FILIAL" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -11282,6 +11334,30 @@
             </Principal>
             <Dependent Role="TAREFA_VINCULO">
               <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE_FILIAL">
+          <End Type="ERP_CRMModel.FILIAL" Role="FILIAL" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CLIENTE" Role="CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIO_FILIAL">
+          <End Type="ERP_CRMModel.FILIAL" Role="FILIAL" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="FILI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11544,6 +11620,7 @@
           <EntitySetMapping Name="CLIENTE">
             <EntityTypeMapping TypeName="ERP_CRMModel.CLIENTE">
               <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />
                 <ScalarProperty Name="CLIE_CD_ID" ColumnName="CLIE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CACL_CD_ID" ColumnName="CACL_CD_ID" />
@@ -13041,6 +13118,9 @@
           <EntitySetMapping Name="USUARIO">
             <EntityTypeMapping TypeName="ERP_CRMModel.USUARIO">
               <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="USUA_TM_FINAL" ColumnName="USUA_TM_FINAL" />
+                <ScalarProperty Name="USUA_TM_INICIO" ColumnName="USUA_TM_INICIO" />
+                <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="PERF_CD_ID" ColumnName="PERF_CD_ID" />

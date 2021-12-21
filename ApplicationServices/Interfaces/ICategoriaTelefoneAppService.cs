@@ -17,5 +17,6 @@ namespace ApplicationServices.Interfaces
         List<CATEGORIA_TELEFONE> GetAllItens(Int32 idAss);
         CATEGORIA_TELEFONE GetItemById(Int32 id);
         List<CATEGORIA_TELEFONE> GetAllItensAdm(Int32 idAss);
+
     }
 }

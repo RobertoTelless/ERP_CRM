@@ -67,6 +67,7 @@ namespace ApplicationServices.Services
             }
         }
 
+
         public Int32 ValidateEdit(CATEGORIA_TELEFONE item, CATEGORIA_TELEFONE itemAntes, USUARIO usuario)
         {
             try
