@@ -29,6 +29,7 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IConfiguracaoAppService confApp;
         private readonly ITipoPessoaAppService tpApp;
         //private readonly IClienteAppService cliApp;
+        private readonly ITelefoneAppService telApp;
 
         private String msg;
         private Exception exception;
@@ -36,7 +37,7 @@ namespace ERP_CRM_Solution.Controllers
         USUARIO objetoAntes = new USUARIO();
         List<USUARIO> listaMaster = new List<USUARIO>();
 
-        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps)
+        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, ITelefoneAppService telApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -47,6 +48,7 @@ namespace ERP_CRM_Solution.Controllers
             ageApp = ageApps;
             confApp = confApps;
             tpApp = tpApps;
+            telApp = telApps;
             //cliApp = cliApps;
         }
 
@@ -111,6 +113,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["Perfis"] = baseApp.GetAllPerfis();
                 Session["Usuarios"] = usuApp.GetAllUsuarios(idAss);
                 Session["TiposPessoas"] = tpApp.GetAllItens();
+                Session["UFs"] = telApp.GetAllUF();
             }
 
             Session["MensTarefa"] = 0;
@@ -193,6 +196,8 @@ namespace ERP_CRM_Solution.Controllers
             Session["AgendasHoje"] = ((List<AGENDA>)Session["Agendas"]).Where(p => p.AGEN_DT_DATA == DateTime.Today.Date).ToList();
             Session["NumAgendasHoje"] = ((List<AGENDA>)Session["AgendasHoje"]).Count;
 
+            Session["Telefones"] = telApp.GetAllItens(usu.ASSI_CD_ID);
+            Session["NumTelefones"] = ((List<TELEFONE>)Session["Telefones"]).Count;
             Session["Logs"] = usu.LOG.Count;
 
             String frase = String.Empty;

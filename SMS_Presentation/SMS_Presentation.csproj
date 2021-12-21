@@ -51,8 +51,8 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
-    <Reference Include="Canducci.Zip, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CanducciCep.4.0.0\lib\netstandard1.6\Canducci.Zip.dll</HintPath>
+    <Reference Include="Canducci.Zip, Version=3.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CanducciCep.3.0.1\lib\net451\Canducci.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
@@ -306,6 +306,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
+    <Compile Include="Controllers\TarefaController.cs" />
+    <Compile Include="Controllers\TelefoneController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Extensions\HMTLHelperExtensions.cs" />
     <Compile Include="Extensions\MVCButtonExtensions.cs" />
     <Compile Include="Extensions\WebMvcExtensions.cs" />
@@ -2930,6 +2933,22 @@
     <Content Include="Views\Agenda\EditarAgenda.cshtml" />
     <Content Include="Views\Agenda\VerAnexoAgenda.cshtml" />
     <Content Include="Views\Agenda\VerTimelineAgenda.cshtml" />
+    <Content Include="Views\Tarefa\MontarTelaTarefaKanban.cshtml" />
+    <Content Include="Views\Tarefa\MontarTelaTarefa.cshtml" />
+    <Content Include="Views\Tarefa\IncluirTarefa.cshtml" />
+    <Content Include="Views\Tarefa\EditarTarefa.cshtml" />
+    <Content Include="Views\Tarefa\VerAnexoTarefa.cshtml" />
+    <Content Include="Views\Tarefa\IncluirAcompanhamento.cshtml" />
+    <Content Include="Views\Telefone\MontarTelaTelefone.cshtml" />
+    <Content Include="Views\Telefone\IncluirTelefone.cshtml" />
+    <Content Include="Views\Telefone\EditarTelefone.cshtml" />
+    <Content Include="Views\Telefone\VerTelefone.cshtml" />
+    <Content Include="Views\Telefone\VerCardsTelefone.cshtml" />
+    <Content Include="Views\Usuario\MontarTelaUsuario.cshtml" />
+    <Content Include="Views\Usuario\VerAnexoUsuario.cshtml" />
+    <Content Include="Views\Usuario\VerUsuario.cshtml" />
+    <Content Include="Views\Usuario\IncluirUsuario.cshtml" />
+    <Content Include="Views\Usuario\EditarUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
