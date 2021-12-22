@@ -26,6 +26,8 @@ namespace EntitiesServices.Model
             this.GRUPO_CLIENTE = new HashSet<GRUPO_CLIENTE>();
             this.MENSAGENS_DESTINOS = new HashSet<MENSAGENS_DESTINOS>();
             this.PEDIDO_VENDA = new HashSet<PEDIDO_VENDA>();
+            this.CLIENTE_REFERENCIA = new HashSet<CLIENTE_REFERENCIA>();
+            this.CLIENTE_TAG = new HashSet<CLIENTE_TAG>();
         }
     
         public int CLIE_CD_ID { get; set; }
@@ -67,6 +69,7 @@ namespace EntitiesServices.Model
         public string CLIE_NM_SITUACAO { get; set; }
         public Nullable<int> CLIE_IN_STATUS { get; set; }
         public Nullable<int> FILI_CD_ID { get; set; }
+        public Nullable<int> TICR_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CATEGORIA_CLIENTE CATEGORIA_CLIENTE { get; set; }
@@ -93,5 +96,10 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PEDIDO_VENDA> PEDIDO_VENDA { get; set; }
         public virtual FILIAL FILIAL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CLIENTE_REFERENCIA> CLIENTE_REFERENCIA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CLIENTE_TAG> CLIENTE_TAG { get; set; }
+        public virtual TIPO_CONTRIBUINTE TIPO_CONTRIBUINTE { get; set; }
     }
 }

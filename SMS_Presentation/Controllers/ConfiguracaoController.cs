@@ -74,7 +74,7 @@ namespace ERP_CRM_Solution.Controllers
         [HttpPost]
         public JsonResult GetConfiguracao()
         {
-            var config = baseApp.GetItemById(1);
+            var config = baseApp.GetItemById(2);
             var serialConfig = new CONFIGURACAO
             {
                 CONF_CD_ID = config.CONF_CD_ID,

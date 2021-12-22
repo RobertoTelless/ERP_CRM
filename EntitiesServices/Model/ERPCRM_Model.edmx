@@ -245,6 +245,7 @@
           <Property Name="USUA_CD_ID" Type="int" />
           <Property Name="TIPE_CD_ID" Type="int" />
           <Property Name="FILI_CD_ID" Type="int" />
+          <Property Name="TICR_CD_ID" Type="int" />
           <Property Name="CLIE_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CLIE_NM_RAZAO" Type="varchar" MaxLength="100" />
           <Property Name="CLIE_NR_CPF" Type="varchar" MaxLength="20" />
@@ -316,6 +317,27 @@
           <Property Name="CLQS_NM_QUALIFICACAO_REP_LEGAL" Type="varchar" MaxLength="100" />
           <Property Name="CLQS_NM_NOME" Type="varchar" MaxLength="150" />
           <Property Name="CLQS_IN_ATIVO" Type="int" />
+        </EntityType>
+        <EntityType Name="CLIENTE_REFERENCIA">
+          <Key>
+            <PropertyRef Name="CLRE_CD_ID" />
+          </Key>
+          <Property Name="CLRE_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CLIE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CLRE_NM_NOME" Type="varchar" MaxLength="50" />
+          <Property Name="CLRE_NR_TELEFONE" Type="varchar" MaxLength="50" />
+          <Property Name="CLRE_NM_EMAIL" Type="varchar" MaxLength="100" />
+          <Property Name="CLRE_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CLIENTE_TAG">
+          <Key>
+            <PropertyRef Name="CLTA_CD_ID" />
+          </Key>
+          <Property Name="CLTA_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CLIE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CLTA_NM_TAG" Type="varchar" MaxLength="50" />
+          <Property Name="CLTA_IN_ATIVO" Type="int" />
+          <Property Name="CLTA_IN_TIPO" Type="int" />
         </EntityType>
         <EntityType Name="CONFIGURACAO">
           <Key>
@@ -1282,6 +1304,12 @@
           <Property Name="PLAN_TX_SITE" Type="varchar" MaxLength="5000" />
           <Property Name="PLAN_IN_BLOCO" Type="int" />
           <Property Name="PLAN_IN_NIVEL" Type="int" />
+          <Property Name="PLAN_IN_MENSAGENS" Type="int" />
+          <Property Name="PLAN_IN_CRM" Type="int" />
+          <Property Name="PLAN_IN_POSVENDA" Type="int" />
+          <Property Name="PLAN_IN_FINANCEIRO" Type="int" />
+          <Property Name="PLAN_IN_FATURA" Type="int" />
+          <Property Name="PLAN_IN_ESTOQUE" Type="int" />
         </EntityType>
         <EntityType Name="PLANO_PERIODICIDADE">
           <Key>
@@ -2191,6 +2219,42 @@
             </Principal>
             <Dependent Role="CLIENTE_QUADRO_SOCIETARIO">
               <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE_REFERENCIA_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="CLIENTE_REFERENCIA" Type="Self.CLIENTE_REFERENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE_REFERENCIA">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE_TAG_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="CLIENTE_TAG" Type="Self.CLIENTE_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE_TAG">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE_TIPO_CONTRIBUINTE">
+          <End Role="TIPO_CONTRIBUINTE" Type="Self.TIPO_CONTRIBUINTE" Multiplicity="0..1" />
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_CONTRIBUINTE">
+              <PropertyRef Name="TICO_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="TICR_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4487,6 +4551,8 @@
           <EntitySet Name="CLIENTE_ANEXO" EntityType="Self.CLIENTE_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CLIENTE_CONTATO" EntityType="Self.CLIENTE_CONTATO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CLIENTE_QUADRO_SOCIETARIO" EntityType="Self.CLIENTE_QUADRO_SOCIETARIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENTE_REFERENCIA" EntityType="Self.CLIENTE_REFERENCIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENTE_TAG" EntityType="Self.CLIENTE_TAG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONFIGURACAO" EntityType="Self.CONFIGURACAO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONTA_BANCO" EntityType="Self.CONTA_BANCO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONTA_BANCO_CONTATO" EntityType="Self.CONTA_BANCO_CONTATO" Schema="dbo" store:Type="Tables" />
@@ -4703,6 +4769,18 @@
           <AssociationSet Name="FK_CLIENTE_QUADRO_SOCIETARIO_CLIENTE" Association="Self.FK_CLIENTE_QUADRO_SOCIETARIO_CLIENTE">
             <End Role="CLIENTE" EntitySet="CLIENTE" />
             <End Role="CLIENTE_QUADRO_SOCIETARIO" EntitySet="CLIENTE_QUADRO_SOCIETARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE_REFERENCIA_CLIENTE" Association="Self.FK_CLIENTE_REFERENCIA_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="CLIENTE_REFERENCIA" EntitySet="CLIENTE_REFERENCIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE_TAG_CLIENTE" Association="Self.FK_CLIENTE_TAG_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="CLIENTE_TAG" EntitySet="CLIENTE_TAG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE_TIPO_CONTRIBUINTE" Association="Self.FK_CLIENTE_TIPO_CONTRIBUINTE">
+            <End Role="TIPO_CONTRIBUINTE" EntitySet="TIPO_CONTRIBUINTE" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
           </AssociationSet>
           <AssociationSet Name="FK_CLIENTE_TIPO_PESSOA" Association="Self.FK_CLIENTE_TIPO_PESSOA">
             <End Role="TIPO_PESSOA" EntitySet="TIPO_PESSOA" />
@@ -5850,6 +5928,10 @@
           <NavigationProperty Name="PEDIDO_VENDA" Relationship="Self.FK_PEDIDO_VENDA_CLIENTE" FromRole="CLIENTE" ToRole="PEDIDO_VENDA" />
           <Property Name="FILI_CD_ID" Type="Int32" />
           <NavigationProperty Name="FILIAL" Relationship="ERP_CRMModel.FK_CLIENTE_FILIAL" FromRole="CLIENTE" ToRole="FILIAL" />
+          <NavigationProperty Name="CLIENTE_REFERENCIA" Relationship="ERP_CRMModel.FK_CLIENTE_REFERENCIA_CLIENTE" FromRole="CLIENTE" ToRole="CLIENTE_REFERENCIA" />
+          <NavigationProperty Name="CLIENTE_TAG" Relationship="ERP_CRMModel.FK_CLIENTE_TAG_CLIENTE" FromRole="CLIENTE" ToRole="CLIENTE_TAG" />
+          <Property Name="TICR_CD_ID" Type="Int32" />
+          <NavigationProperty Name="TIPO_CONTRIBUINTE" Relationship="ERP_CRMModel.FK_CLIENTE_TIPO_CONTRIBUINTE" FromRole="CLIENTE" ToRole="TIPO_CONTRIBUINTE" />
         </EntityType>
         <EntityType Name="CLIENTE_ANEXO">
           <Key>
@@ -7056,6 +7138,12 @@
           <NavigationProperty Name="ASSINANTE_PAGAMENTO" Relationship="Self.FK_ASSINANTE_PAGAMENTO_PLANO" FromRole="PLANO" ToRole="ASSINANTE_PAGAMENTO" />
           <NavigationProperty Name="ASSINANTE_PLANO" Relationship="Self.FK_ASSINANTE_PLANO_PLANO" FromRole="PLANO" ToRole="ASSINANTE_PLANO" />
           <NavigationProperty Name="PLANO_PERIODICIDADE" Relationship="Self.FK_PLANO_PLANO_PERIODICIDADE" FromRole="PLANO" ToRole="PLANO_PERIODICIDADE" />
+          <Property Name="PLAN_IN_MENSAGENS" Type="Int32" />
+          <Property Name="PLAN_IN_CRM" Type="Int32" />
+          <Property Name="PLAN_IN_POSVENDA" Type="Int32" />
+          <Property Name="PLAN_IN_FINANCEIRO" Type="Int32" />
+          <Property Name="PLAN_IN_FATURA" Type="Int32" />
+          <Property Name="PLAN_IN_ESTOQUE" Type="Int32" />
         </EntityType>
         <EntityType Name="PLANO_PERIODICIDADE">
           <Key>
@@ -7363,6 +7451,7 @@
           <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
           <Property Name="TICO_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TICO_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="CLIENTE" Relationship="ERP_CRMModel.FK_CLIENTE_TIPO_CONTRIBUINTE" FromRole="TIPO_CONTRIBUINTE" ToRole="CLIENTE" />
         </EntityType>
         <EntityType Name="TIPO_CRM">
           <Key>
@@ -11079,6 +11168,20 @@
             <End Role="FILIAL" EntitySet="FILIAL" />
             <End Role="USUARIO" EntitySet="USUARIO" />
           </AssociationSet>
+          <EntitySet Name="CLIENTE_REFERENCIA" EntityType="ERP_CRMModel.CLIENTE_REFERENCIA" />
+          <EntitySet Name="CLIENTE_TAG" EntityType="ERP_CRMModel.CLIENTE_TAG" />
+          <AssociationSet Name="FK_CLIENTE_REFERENCIA_CLIENTE" Association="ERP_CRMModel.FK_CLIENTE_REFERENCIA_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="CLIENTE_REFERENCIA" EntitySet="CLIENTE_REFERENCIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE_TAG_CLIENTE" Association="ERP_CRMModel.FK_CLIENTE_TAG_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="CLIENTE_TAG" EntitySet="CLIENTE_TAG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE_TIPO_CONTRIBUINTE" Association="ERP_CRMModel.FK_CLIENTE_TIPO_CONTRIBUINTE">
+            <End Role="TIPO_CONTRIBUINTE" EntitySet="TIPO_CONTRIBUINTE" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -11361,6 +11464,65 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CLIENTE_REFERENCIA">
+          <Key>
+            <PropertyRef Name="CLRE_CD_ID" />
+          </Key>
+          <Property Name="CLRE_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CLIE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CLRE_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CLRE_NR_TELEFONE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CLRE_NM_EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CLRE_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CLIENTE" Relationship="ERP_CRMModel.FK_CLIENTE_REFERENCIA_CLIENTE" FromRole="CLIENTE_REFERENCIA" ToRole="CLIENTE" />
+        </EntityType>
+        <EntityType Name="CLIENTE_TAG">
+          <Key>
+            <PropertyRef Name="CLTA_CD_ID" />
+          </Key>
+          <Property Name="CLTA_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CLIE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CLTA_NM_TAG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CLTA_IN_ATIVO" Type="Int32" />
+          <Property Name="CLTA_IN_TIPO" Type="Int32" />
+          <NavigationProperty Name="CLIENTE" Relationship="ERP_CRMModel.FK_CLIENTE_TAG_CLIENTE" FromRole="CLIENTE_TAG" ToRole="CLIENTE" />
+        </EntityType>
+        <Association Name="FK_CLIENTE_REFERENCIA_CLIENTE">
+          <End Type="ERP_CRMModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CLIENTE_REFERENCIA" Role="CLIENTE_REFERENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE_REFERENCIA">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE_TAG_CLIENTE">
+          <End Type="ERP_CRMModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CLIENTE_TAG" Role="CLIENTE_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE_TAG">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE_TIPO_CONTRIBUINTE">
+          <End Type="ERP_CRMModel.TIPO_CONTRIBUINTE" Role="TIPO_CONTRIBUINTE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CLIENTE" Role="CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_CONTRIBUINTE">
+              <PropertyRef Name="TICO_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="TICR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11620,6 +11782,7 @@
           <EntitySetMapping Name="CLIENTE">
             <EntityTypeMapping TypeName="ERP_CRMModel.CLIENTE">
               <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="TICR_CD_ID" ColumnName="TICR_CD_ID" />
                 <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />
                 <ScalarProperty Name="CLIE_CD_ID" ColumnName="CLIE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12694,6 +12857,12 @@
           <EntitySetMapping Name="PLANO">
             <EntityTypeMapping TypeName="ERP_CRMModel.PLANO">
               <MappingFragment StoreEntitySet="PLANO">
+                <ScalarProperty Name="PLAN_IN_ESTOQUE" ColumnName="PLAN_IN_ESTOQUE" />
+                <ScalarProperty Name="PLAN_IN_FATURA" ColumnName="PLAN_IN_FATURA" />
+                <ScalarProperty Name="PLAN_IN_FINANCEIRO" ColumnName="PLAN_IN_FINANCEIRO" />
+                <ScalarProperty Name="PLAN_IN_POSVENDA" ColumnName="PLAN_IN_POSVENDA" />
+                <ScalarProperty Name="PLAN_IN_CRM" ColumnName="PLAN_IN_CRM" />
+                <ScalarProperty Name="PLAN_IN_MENSAGENS" ColumnName="PLAN_IN_MENSAGENS" />
                 <ScalarProperty Name="PLAN_CD_ID" ColumnName="PLAN_CD_ID" />
                 <ScalarProperty Name="PLAN_NM_NOME" ColumnName="PLAN_NM_NOME" />
                 <ScalarProperty Name="PLAN_DT_CRIACAO" ColumnName="PLAN_DT_CRIACAO" />
@@ -13298,6 +13467,29 @@
                 <ScalarProperty Name="TITR_NM_NOME" ColumnName="TITR_NM_NOME" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="TITR_CD_ID" ColumnName="TITR_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTE_REFERENCIA">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CLIENTE_REFERENCIA">
+              <MappingFragment StoreEntitySet="CLIENTE_REFERENCIA">
+                <ScalarProperty Name="CLRE_IN_ATIVO" ColumnName="CLRE_IN_ATIVO" />
+                <ScalarProperty Name="CLRE_NM_EMAIL" ColumnName="CLRE_NM_EMAIL" />
+                <ScalarProperty Name="CLRE_NR_TELEFONE" ColumnName="CLRE_NR_TELEFONE" />
+                <ScalarProperty Name="CLRE_NM_NOME" ColumnName="CLRE_NM_NOME" />
+                <ScalarProperty Name="CLIE_CD_ID" ColumnName="CLIE_CD_ID" />
+                <ScalarProperty Name="CLRE_CD_ID" ColumnName="CLRE_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTE_TAG">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CLIENTE_TAG">
+              <MappingFragment StoreEntitySet="CLIENTE_TAG">
+                <ScalarProperty Name="CLTA_IN_TIPO" ColumnName="CLTA_IN_TIPO" />
+                <ScalarProperty Name="CLTA_IN_ATIVO" ColumnName="CLTA_IN_ATIVO" />
+                <ScalarProperty Name="CLTA_NM_TAG" ColumnName="CLTA_NM_TAG" />
+                <ScalarProperty Name="CLIE_CD_ID" ColumnName="CLIE_CD_ID" />
+                <ScalarProperty Name="CLTA_CD_ID" ColumnName="CLTA_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

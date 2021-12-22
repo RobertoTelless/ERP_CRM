@@ -675,6 +675,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagens\Assinantes\1\Foto\FotoBase.jpg" />
     <Content Include="Imagens\Base\FotoBase.jpg" />
     <Content Include="Imagens\Base\icone_imagem.jpg" />
     <Content Include="Images\1.jpg" />
@@ -2973,6 +2974,7 @@
     <Folder Include="Imagens\1\Produtos\" />
     <Folder Include="Imagens\1\Tarefa\" />
     <Folder Include="Imagens\1\Usuario\" />
+    <Folder Include="Imagens\Assinantes\1\Anexos\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

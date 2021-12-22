@@ -40,6 +40,12 @@ namespace EntitiesServices.Model
         public string PLAN_TX_SITE { get; set; }
         public Nullable<int> PLAN_IN_BLOCO { get; set; }
         public Nullable<int> PLAN_IN_NIVEL { get; set; }
+        public Nullable<int> PLAN_IN_MENSAGENS { get; set; }
+        public Nullable<int> PLAN_IN_CRM { get; set; }
+        public Nullable<int> PLAN_IN_POSVENDA { get; set; }
+        public Nullable<int> PLAN_IN_FINANCEIRO { get; set; }
+        public Nullable<int> PLAN_IN_FATURA { get; set; }
+        public Nullable<int> PLAN_IN_ESTOQUE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ASSINANTE_PAGAMENTO> ASSINANTE_PAGAMENTO { get; set; }

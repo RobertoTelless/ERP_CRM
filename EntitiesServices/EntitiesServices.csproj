@@ -180,6 +180,8 @@
     <Compile Include="EntitiesServices\AssinanteCnpjService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
     <Compile Include="EntitiesServices\CategoriaTelefoneService.cs" />
+    <Compile Include="EntitiesServices\ClienteCnpjService.cs" />
+    <Compile Include="EntitiesServices\ClienteService.cs" />
     <Compile Include="EntitiesServices\ConfiguracaoService.cs" />
     <Compile Include="EntitiesServices\FilialService.cs" />
     <Compile Include="EntitiesServices\LogService.cs" />
@@ -198,6 +200,8 @@
     <Compile Include="Interfaces\EntitiesServices\IAssinanteCnpjService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaTelefoneService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IClienteCnpjService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IClienteService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IConfiguracaoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFilialService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ILogService.cs" />
@@ -224,6 +228,12 @@
     <Compile Include="Interfaces\Repositories\ICategoriaNotificacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaTelefoneRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaUsuarioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IClienteAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IClienteCnpjRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IClienteContatoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IClienteReferenciaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IClienteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IClienteTagRepository.cs" />
     <Compile Include="Interfaces\Repositories\IConfiguracaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFilialRepository.cs" />
     <Compile Include="Interfaces\Repositories\ILogRepository.cs" />
@@ -243,6 +253,7 @@
     <Compile Include="Interfaces\Repositories\ITelefoneRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITemplateRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoPessoaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoContribuinteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoTarefaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUFRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioAnexoRepository.cs" />
@@ -317,6 +328,12 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CLIENTE_QUADRO_SOCIETARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CLIENTE_REFERENCIA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CLIENTE_TAG.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONFIGURACAO.cs">
