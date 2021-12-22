@@ -43,6 +43,9 @@ namespace MvcMapping.Mappers
             CreateMap<ClienteContatoViewModel, CLIENTE_CONTATO>();
             CreateMap<ClienteReferenciaViewModel, CLIENTE_REFERENCIA>();
             CreateMap<ClienteTagViewModel, CLIENTE_TAG>();
+            CreateMap<FornecedorViewModel, FORNECEDOR>();
+            CreateMap<FornecedorContatoViewModel, FORNECEDOR_CONTATO>();
+            CreateMap<FornecedorComentarioViewModel, FORNECEDOR_COMENTARIO>();
 
         }
     }

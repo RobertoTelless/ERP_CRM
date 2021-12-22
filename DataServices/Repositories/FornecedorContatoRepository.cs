@@ -23,6 +23,7 @@ namespace DataServices.Repositories
             IQueryable<FORNECEDOR_CONTATO> query = Db.FORNECEDOR_CONTATO.Where(p => p.FOCO_CD_ID == id);
             return query.FirstOrDefault();
         }
+
     }
 }
  

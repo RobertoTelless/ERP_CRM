@@ -12,5 +12,6 @@ namespace ApplicationServices.Interfaces
         List<FORNECEDOR_QUADRO_SOCIETARIO> GetAllItens(Int32 idAss);
         List<FORNECEDOR_QUADRO_SOCIETARIO> GetByFornecedor(FORNECEDOR fornecedor);
         Int32 ValidateCreate(FORNECEDOR_QUADRO_SOCIETARIO item, USUARIO usuario);
+
     }
 }

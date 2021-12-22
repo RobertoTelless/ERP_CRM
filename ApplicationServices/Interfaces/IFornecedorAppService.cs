@@ -32,5 +32,6 @@ namespace ApplicationServices.Interfaces
         FORNECEDOR_CONTATO GetContatoById(Int32 id);
         Int32 ValidateEditContato(FORNECEDOR_CONTATO item);
         Int32 ValidateCreateContato(FORNECEDOR_CONTATO item);
+
     }
 }

@@ -33,5 +33,6 @@ namespace DataServices.Repositories
             query = query.Where(p => p.FORN_CD_ID == fornecedor.FORN_CD_ID);
             return query.ToList();
         }
+
     }
 }

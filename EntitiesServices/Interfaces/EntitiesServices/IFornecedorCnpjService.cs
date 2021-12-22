@@ -16,5 +16,6 @@ namespace ModelServices.Interfaces.EntitiesServices
 
         Int32 Create(FORNECEDOR_QUADRO_SOCIETARIO fqs, LOG log);
         Int32 Create(FORNECEDOR_QUADRO_SOCIETARIO fqs);
+
     }
 }

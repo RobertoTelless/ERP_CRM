@@ -29,6 +29,7 @@ namespace DataServices.Repositories
             IQueryable<CATEGORIA_FORNECEDOR> query = Db.CATEGORIA_FORNECEDOR;
             return query.ToList();
         }
+
     }
 }
  

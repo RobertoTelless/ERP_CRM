@@ -25,7 +25,7 @@ namespace ModelServices.EntitiesServices
         private readonly ITipoPessoaRepository _pesRepository;
         private readonly IFornecedorContatoRepository _contRepository;
         private readonly IUFRepository _ufRepository;
-        protected DUO_DatabaseEntities Db = new DUO_DatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public FornecedorService(IFornecedorRepository baseRepository, ILogRepository logRepository, ICategoriaFornecedorRepository tipoRepository, IFornecedorAnexoRepository anexoRepository, ITipoPessoaRepository pesRepository, IFornecedorContatoRepository contRepository, IUFRepository ufRepository) : base(baseRepository)
         {

@@ -308,6 +308,7 @@
     <Compile Include="Controllers\ConfiguracaoController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
     <Compile Include="Controllers\FilialController.cs" />
+    <Compile Include="Controllers\FornecedorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
@@ -331,6 +332,9 @@
     <Compile Include="ViewModels\ClienteViewModel.cs" />
     <Compile Include="ViewModels\ConfiguracaoViewModel.cs" />
     <Compile Include="ViewModels\FilialViewModel.cs" />
+    <Compile Include="ViewModels\FornecedorComentarioViewModel.cs" />
+    <Compile Include="ViewModels\FornecedorContatoViewModel.cs" />
+    <Compile Include="ViewModels\FornecedorViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\ModeloViewModel.cs" />
     <Compile Include="ViewModels\NoticiaComentarioViewModel.cs" />
@@ -2978,6 +2982,18 @@
     <Content Include="Views\Cliente\IncluirReferencia.cshtml" />
     <Content Include="Views\Cliente\IncluirTag.cshtml" />
     <Content Include="Views\Cliente\VerClientesInativos.cshtml" />
+    <Content Include="Views\Fornecedor\MontarTelaFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\IncluirFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\EditarFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\VerFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\ExcluirFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\ReativarFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\VerCardsFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\VerAnexoFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\EditarContatoFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\IncluirContatoFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\VerFornecedorInativos.cshtml" />
+    <Content Include="Views\Fornecedor\IncluirComentarioFornecedor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

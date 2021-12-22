@@ -184,6 +184,8 @@
     <Compile Include="EntitiesServices\ClienteService.cs" />
     <Compile Include="EntitiesServices\ConfiguracaoService.cs" />
     <Compile Include="EntitiesServices\FilialService.cs" />
+    <Compile Include="EntitiesServices\FornecedorCnpjService.cs" />
+    <Compile Include="EntitiesServices\FornecedorService.cs" />
     <Compile Include="EntitiesServices\LogService.cs" />
     <Compile Include="EntitiesServices\NoticiaService.cs" />
     <Compile Include="EntitiesServices\NotificacaoService.cs" />
@@ -204,6 +206,8 @@
     <Compile Include="Interfaces\EntitiesServices\IClienteService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IConfiguracaoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFilialService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IFornecedorCnpjService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IFornecedorService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ILogService.cs" />
     <Compile Include="Interfaces\EntitiesServices\INoticiaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\INotificacaoService.cs" />
@@ -223,6 +227,11 @@
     <Compile Include="Interfaces\Repositories\IAssinantePagamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICargoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFornecedorAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFornecedorCnpjRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFornecedorContatoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRegimeTributarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaAgendaRepository.cs" />

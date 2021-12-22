@@ -12,6 +12,5 @@ namespace ModelServices.Interfaces.Repositories
         FORNECEDOR_QUADRO_SOCIETARIO CheckExist(FORNECEDOR_QUADRO_SOCIETARIO fqs, Int32 idAss);
         List<FORNECEDOR_QUADRO_SOCIETARIO> GetAllItens(Int32 idAss);
         List<FORNECEDOR_QUADRO_SOCIETARIO> GetByFornecedor(FORNECEDOR fornecedor);
-
     }
 }

@@ -11,5 +11,6 @@ namespace ModelServices.Interfaces.Repositories
     {
         List<FORNECEDOR_CONTATO> GetAllItens(Int32 idAss);
         FORNECEDOR_CONTATO GetItemById(Int32 id);
+
     }
 }

@@ -17,4 +17,5 @@ namespace ModelServices.Interfaces.Repositories
         List<FORNECEDOR> ExecuteFilter(Int32? catId, String razao, String nome, String cpf, String cnpj, String email, String cidade, Int32? uf, String rede, Int32? ativo, Int32 idAss);
         List<FORNECEDOR> ExecuteFilterSemPedido(String nome, String cidade, Int32? uf, Int32 idAss);
     }
+
 }

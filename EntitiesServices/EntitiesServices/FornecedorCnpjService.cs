@@ -20,7 +20,7 @@ namespace ModelServices.EntitiesServices
     {
         private readonly IFornecedorCnpjRepository _baseRepository;
         private readonly ILogRepository _logRepository;
-        protected DUO_DatabaseEntities Db = new DUO_DatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public FornecedorCnpjService(IFornecedorCnpjRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
         {

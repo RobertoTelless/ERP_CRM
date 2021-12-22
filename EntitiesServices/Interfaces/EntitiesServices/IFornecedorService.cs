@@ -33,5 +33,6 @@ namespace ModelServices.Interfaces.EntitiesServices
         FORNECEDOR_CONTATO GetContatoById(Int32 id);
         Int32 EditContato(FORNECEDOR_CONTATO item);
         Int32 CreateContato(FORNECEDOR_CONTATO item);
+
     }
 }

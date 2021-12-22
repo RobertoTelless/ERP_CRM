@@ -175,6 +175,8 @@
     <Compile Include="Interfaces\IClienteCnpjAppService.cs" />
     <Compile Include="Interfaces\IConfiguracaoAppService.cs" />
     <Compile Include="Interfaces\IFilialAppService.cs" />
+    <Compile Include="Interfaces\IFornecedorAppService.cs" />
+    <Compile Include="Interfaces\IFornecedorCnpjAppService.cs" />
     <Compile Include="Interfaces\ILogAppService.cs" />
     <Compile Include="Interfaces\INoticiaAppService.cs" />
     <Compile Include="Interfaces\INotificacaoAppService.cs" />
@@ -195,6 +197,8 @@
     <Compile Include="Services\ClienteCnpjAppService.cs" />
     <Compile Include="Services\ConfiguracaoAppService.cs" />
     <Compile Include="Services\FilialAppService.cs" />
+    <Compile Include="Services\FornecedorAppService.cs" />
+    <Compile Include="Services\FornecedorCnpjAppService.cs" />
     <Compile Include="Services\LogAppService.cs" />
     <Compile Include="Services\NoticiaAppService.cs" />
     <Compile Include="Services\NotificacaoAppService.cs" />
