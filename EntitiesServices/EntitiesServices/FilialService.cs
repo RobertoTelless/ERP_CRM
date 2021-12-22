@@ -21,7 +21,7 @@ namespace ModelServices.EntitiesServices
         private readonly IFilialRepository _baseRepository;
         private readonly ILogRepository _logRepository;
         private readonly IUFRepository _ufRepository;
-        protected DUO_DatabaseEntities Db = new DUO_DatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public FilialService(IFilialRepository baseRepository, ILogRepository logRepository, IUFRepository ufRepository) : base(baseRepository)
         {

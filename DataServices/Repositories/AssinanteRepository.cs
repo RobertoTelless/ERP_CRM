@@ -24,7 +24,7 @@ namespace DataServices.Repositories
             IQueryable<ASSINANTE> query = Db.ASSINANTE;
             query = query.Where(p => p.ASSI_CD_ID == id);
             query = query.Include(p => p.USUARIO);
-            query = query.Include(p => p.PLANO);
+            query = query.Include(p => p.ASSINANTE_PLANO);
             return query.FirstOrDefault();
         }
 

@@ -41,7 +41,7 @@ namespace ERP_CRM_Solution.ViewModels
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Deve ser um e-mail válido")]
         public string CLIE_NM_EMAIL { get; set; }
         [StringLength(50, ErrorMessage = "O TELEFONE deve conter no máximo 50.")]
-        public string CLIE_NR_TELEFONES { get; set; }
+        public string CLIE_NR_TELEFONE { get; set; }
         [StringLength(50, ErrorMessage = "AS REDES SOCIAIS deve conter no máximo 50.")]
         public string CLIE_NM_REDES_SOCIAIS { get; set; }
         public System.DateTime CLIE_DT_CADASTRO { get; set; }

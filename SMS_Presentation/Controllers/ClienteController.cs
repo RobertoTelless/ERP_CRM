@@ -26,11 +26,9 @@ using EntitiesServices.Attributes;
 using OfficeOpenXml.Table;
 using EntitiesServices.WorkClasses;
 using System.Threading.Tasks;
-using SystemBRPresentation.Filters;
 
 namespace ERP_CRM_Solution.Controllers
 {
-    [LoginAuthenticationFilter(new String[] { "ADM", "GER", "USU" })]
     public class ClienteController : Controller
     {
         private readonly IClienteAppService baseApp;

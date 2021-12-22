@@ -159,7 +159,7 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica integridade referencial
-                if (item.ASSINANTE.Count > 0)
+                if (item.ASSINANTE_PLANO.Count > 0)
                 {
                     return 1;
                 }

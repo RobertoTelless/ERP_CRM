@@ -13,7 +13,7 @@ namespace DataServices.Repositories
 {
     public class RepositoryBase<TEntity> : IDisposable, IRepositoryBase<TEntity> where TEntity : class
     {
-        protected PlatMensagensEntities Db = new PlatMensagensEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public void Add(TEntity obj)
         {
