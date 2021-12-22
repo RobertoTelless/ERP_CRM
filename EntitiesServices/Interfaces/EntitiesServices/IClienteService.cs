@@ -23,9 +23,11 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<CLIENTE> GetAllItensAdm(Int32 idAss);
         List<CATEGORIA_CLIENTE> GetAllTipos(Int32 idAss);
         List<TIPO_PESSOA> GetAllTiposPessoa();
-        List<TIPO_CONTRIBUINTE> GetAllContribuinte();
+        List<TIPO_CONTRIBUINTE> GetAllContribuinte(Int32 idAss);
         List<UF> GetAllUF();
         UF GetUFbySigla(String sigla);
+        List<REGIME_TRIBUTARIO> GetAllRegimes(Int32 idAss);
+        List<SEXO> GetAllSexo();
 
         CLIENTE_ANEXO GetAnexoById(Int32 id);
         CLIENTE_CONTATO GetContatoById(Int32 id);

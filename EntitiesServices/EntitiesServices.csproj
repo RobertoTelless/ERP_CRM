@@ -223,6 +223,8 @@
     <Compile Include="Interfaces\Repositories\IAssinantePagamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICargoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ISexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IRegimeTributarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaAgendaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaClienteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaNotificacaoRepository.cs" />
@@ -552,7 +554,13 @@
     <Compile Include="Model\PRODUTO_TABELA_PRECO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\REGIME_TRIBUTARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\RESUMO_VENDA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SEXO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SUBCATEGORIA_PRODUTO.cs">

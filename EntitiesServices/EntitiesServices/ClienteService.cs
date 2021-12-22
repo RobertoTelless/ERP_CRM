@@ -25,11 +25,14 @@ namespace ModelServices.EntitiesServices
         private readonly IClienteContatoRepository _contRepository;
         private readonly IClienteTagRepository _tagRepository;
         private readonly ITipoPessoaRepository _pesRepository;
+        private readonly ITipoContribuinteRepository _tcRepository;
         private readonly IClienteReferenciaRepository _refRepository;
         private readonly IUFRepository _ufRepository;
-        protected DUO_DatabaseEntities Db = new DUO_DatabaseEntities();
+        private readonly IRegimeTributarioRepository _rtRepository;
+        private readonly ISexoRepository _sxRepository;
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
-        public ClienteService(IClienteRepository baseRepository, ILogRepository logRepository, ICategoriaClienteRepository tipoRepository, IClienteAnexoRepository anexoRepository, ITipoPessoaRepository pesRepository, IClienteTagRepository tagRepository, IClienteContatoRepository contRepository, IClienteReferenciaRepository refRepository, IUFRepository ufRepository) : base(baseRepository)
+        public ClienteService(IClienteRepository baseRepository, ILogRepository logRepository, ICategoriaClienteRepository tipoRepository, IClienteAnexoRepository anexoRepository, ITipoPessoaRepository pesRepository, IClienteTagRepository tagRepository, IClienteContatoRepository contRepository, IClienteReferenciaRepository refRepository, IUFRepository ufRepository, ITipoContribuinteRepository tcRepository, IRegimeTributarioRepository rtRepository, ISexoRepository sxRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
@@ -40,6 +43,9 @@ namespace ModelServices.EntitiesServices
             _tagRepository = tagRepository;
             _refRepository = refRepository;
             _ufRepository = ufRepository;
+            _tcRepository = tcRepository;
+            _rtRepository = rtRepository;
+            _sxRepository = sxRepository;
         }
 
         public CLIENTE CheckExist(CLIENTE conta, Int32 idAss)
@@ -80,6 +86,16 @@ namespace ModelServices.EntitiesServices
             return _baseRepository.GetAllItensAdm(idAss);
         }
 
+        public List<REGIME_TRIBUTARIO> GetAllRegimes(Int32 idAss)
+        {
+            return _rtRepository.GetAllItens(idAss);
+        }
+
+        public List<SEXO> GetAllSexo()
+        {
+            return _sxRepository.GetAllItens();
+        }
+
         public List<CATEGORIA_CLIENTE> GetAllTipos(Int32 idAss)
         {
             return _tipoRepository.GetAllItens(idAss);
@@ -93,6 +109,11 @@ namespace ModelServices.EntitiesServices
         public CLIENTE_ANEXO GetAnexoById(Int32 id)
         {
             return _anexoRepository.GetItemById(id);
+        }
+
+        public List<TIPO_CONTRIBUINTE> GetAllContribuinte(Int32 idAss)
+        {
+            return _tcRepository.GetAllItens(idAss);
         }
 
         public CLIENTE_CONTATO GetContatoById(Int32 id)

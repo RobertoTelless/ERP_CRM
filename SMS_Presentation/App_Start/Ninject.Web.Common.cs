@@ -75,8 +75,8 @@ namespace Presentation.Start
             kernel.Bind<INotificacaoAppService>().To<NotificacaoAppService>();
             kernel.Bind<ITemplateAppService>().To<TemplateAppService>();
             kernel.Bind<IAssinanteAppService>().To<AssinanteAppService>();
-            //kernel.Bind<IClienteAppService>().To<ClienteAppService>();
-            //kernel.Bind<IClienteCnpjAppService>().To<ClienteCnpjAppService>();
+            kernel.Bind<IClienteAppService>().To<ClienteAppService>();
+            kernel.Bind<IClienteCnpjAppService>().To<ClienteCnpjAppService>();
             //kernel.Bind<IMensagemAppService>().To<MensagemAppService>();
             //kernel.Bind<IGrupoAppService>().To<GrupoAppService>();
             //kernel.Bind<ICategoriaClienteAppService>().To<CategoriaClienteAppService>();
@@ -94,8 +94,8 @@ namespace Presentation.Start
             kernel.Bind<INotificacaoService>().To<NotificacaoService>();
             kernel.Bind<ITemplateService>().To<TemplateService>();
             kernel.Bind<IAssinanteService>().To<AssinanteService>();
-            //kernel.Bind<IClienteService>().To<ClienteService>();
-            //kernel.Bind<IClienteCnpjService>().To<ClienteCnpjService>();
+            kernel.Bind<IClienteService>().To<ClienteService>();
+            kernel.Bind<IClienteCnpjService>().To<ClienteCnpjService>();
             //kernel.Bind<IMensagemService>().To<MensagemService>();
             //kernel.Bind<IGrupoService>().To<GrupoService>();
             //kernel.Bind<ICategoriaClienteService>().To<CategoriaClienteService>();
@@ -120,11 +120,11 @@ namespace Presentation.Start
             kernel.Bind<IUFRepository>().To<UFRepository>();
             kernel.Bind<IAssinanteRepository>().To<AssinanteRepository>();
             kernel.Bind<IAssinanteAnexoRepository>().To<AssinanteAnexoRepository>();
-            //kernel.Bind<ICategoriaClienteRepository>().To<CategoriaClienteRepository>();
-            //kernel.Bind<IClienteRepository>().To<ClienteRepository>();
-            //kernel.Bind<IClienteAnexoRepository>().To<ClienteAnexoRepository>();
-            //kernel.Bind<IClienteContatoRepository>().To<ClienteContatoRepository>();
-            //kernel.Bind<IClienteCnpjRepository>().To<ClienteCnpjRepository>();
+            kernel.Bind<ICategoriaClienteRepository>().To<CategoriaClienteRepository>();
+            kernel.Bind<IClienteRepository>().To<ClienteRepository>();
+            kernel.Bind<IClienteAnexoRepository>().To<ClienteAnexoRepository>();
+            kernel.Bind<IClienteContatoRepository>().To<ClienteContatoRepository>();
+            kernel.Bind<IClienteCnpjRepository>().To<ClienteCnpjRepository>();
             kernel.Bind<ICargoRepository>().To<CargoRepository>();
             //kernel.Bind<IMensagemRepository>().To<MensagemRepository>();
             //kernel.Bind<IMensagemDestinoRepository>().To<MensagemDestinoRepository>();
@@ -150,6 +150,9 @@ namespace Presentation.Start
             kernel.Bind<IPeriodicidadePlanoRepository>().To<PeriodicidadePlanoRepository>();
             kernel.Bind<IAssinantePagamentoRepository>().To<AssinantePagamentoRepository>();
             kernel.Bind<IAssinanteCnpjRepository>().To<AssinanteCnpjRepository>();
+            kernel.Bind<ITipoContribuinteRepository>().To<TipoContribuinteRepository>();
+            kernel.Bind<IRegimeTributarioRepository>().To<RegimeTributarioRepository>();
+            kernel.Bind<ISexoRepository>().To<SexoRepository>();
 
         }
     }

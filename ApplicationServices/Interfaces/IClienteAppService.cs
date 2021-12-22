@@ -26,6 +26,9 @@ namespace ApplicationServices.Interfaces
         CLIENTE_ANEXO GetAnexoById(Int32 id);
         CLIENTE_CONTATO GetContatoById(Int32 id);
         CLIENTE_REFERENCIA GetReferenciaById(Int32 id);
+        List<TIPO_CONTRIBUINTE> GetAllContribuinte(Int32 idAss);
+        List<REGIME_TRIBUTARIO> GetAllRegimes(Int32 idAss);
+        List<SEXO> GetAllSexo();
 
         Int32 ExecuteFilter(Int32? id,  Int32? catId, String razao, String nome, String cpf, String cnpj, String email, String cidade, Int32? uf, Int32? ativo, Int32 idAss, out List<CLIENTE> objeto);
         //Int32 ExecuteFilterSemPedido(String nome, String cidade, Int32? uf, out List<CLIENTE> objeto);

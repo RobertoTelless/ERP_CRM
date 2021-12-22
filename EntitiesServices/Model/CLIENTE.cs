@@ -70,6 +70,19 @@ namespace EntitiesServices.Model
         public Nullable<int> CLIE_IN_STATUS { get; set; }
         public Nullable<int> FILI_CD_ID { get; set; }
         public Nullable<int> TICR_CD_ID { get; set; }
+        public Nullable<int> SEXO_CD_ID { get; set; }
+        public string CLIE_NM_EMAIL_DANFE { get; set; }
+        public string CLIE_NM_ENDERECO_ENTREGA { get; set; }
+        public string CLIE_NM_BAIRRO_ENTREGA { get; set; }
+        public string CLIE_NM_CIDADE_ENTREGA { get; set; }
+        public string CLIE_NR_CEP_ENTREGA { get; set; }
+        public Nullable<decimal> CLIE_VL_LIMITE_CREDITO { get; set; }
+        public Nullable<decimal> CLIE_VL_SALDO { get; set; }
+        public string CLIE_NR_SUFRAMA { get; set; }
+        public Nullable<int> CLIE_UF_CD_ENTREGA { get; set; }
+        public string CLIE_NM_COMPLEMENTO_ENTREGA { get; set; }
+        public string CLIE_NR_NUMERO_ENTREGA { get; set; }
+        public Nullable<int> RETR_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CATEGORIA_CLIENTE CATEGORIA_CLIENTE { get; set; }
@@ -101,5 +114,8 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CLIENTE_TAG> CLIENTE_TAG { get; set; }
         public virtual TIPO_CONTRIBUINTE TIPO_CONTRIBUINTE { get; set; }
+        public virtual SEXO SEXO { get; set; }
+        public virtual UF UF1 { get; set; }
+        public virtual REGIME_TRIBUTARIO REGIME_TRIBUTARIO { get; set; }
     }
 }

@@ -144,5 +144,7 @@ namespace EntitiesServices.Model
         public virtual DbSet<TIPO_TAREFA> TIPO_TAREFA { get; set; }
         public virtual DbSet<CLIENTE_REFERENCIA> CLIENTE_REFERENCIA { get; set; }
         public virtual DbSet<CLIENTE_TAG> CLIENTE_TAG { get; set; }
+        public virtual DbSet<SEXO> SEXO { get; set; }
+        public virtual DbSet<REGIME_TRIBUTARIO> REGIME_TRIBUTARIO { get; set; }
     }
 }

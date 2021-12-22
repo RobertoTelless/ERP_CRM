@@ -246,6 +246,8 @@
           <Property Name="TIPE_CD_ID" Type="int" />
           <Property Name="FILI_CD_ID" Type="int" />
           <Property Name="TICR_CD_ID" Type="int" />
+          <Property Name="SEXO_CD_ID" Type="int" />
+          <Property Name="RETR_CD_ID" Type="int" />
           <Property Name="CLIE_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CLIE_NM_RAZAO" Type="varchar" MaxLength="100" />
           <Property Name="CLIE_NR_CPF" Type="varchar" MaxLength="20" />
@@ -279,6 +281,17 @@
           <Property Name="CLIE_IN_SEXO" Type="int" />
           <Property Name="CLIE_NM_SITUACAO" Type="varchar" MaxLength="100" />
           <Property Name="CLIE_IN_STATUS" Type="int" />
+          <Property Name="CLIE_NM_EMAIL_DANFE" Type="varchar" MaxLength="100" />
+          <Property Name="CLIE_NM_ENDERECO_ENTREGA" Type="varchar" MaxLength="100" />
+          <Property Name="CLIE_NM_BAIRRO_ENTREGA" Type="varchar" MaxLength="50" />
+          <Property Name="CLIE_NM_CIDADE_ENTREGA" Type="varchar" MaxLength="50" />
+          <Property Name="CLIE_NR_CEP_ENTREGA" Type="varchar" MaxLength="10" />
+          <Property Name="CLIE_VL_LIMITE_CREDITO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CLIE_VL_SALDO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CLIE_NR_SUFRAMA" Type="varchar" MaxLength="50" />
+          <Property Name="CLIE_UF_CD_ENTREGA" Type="int" />
+          <Property Name="CLIE_NM_COMPLEMENTO_ENTREGA" Type="varchar" MaxLength="50" />
+          <Property Name="CLIE_NR_NUMERO_ENTREGA" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CLIENTE_ANEXO">
           <Key>
@@ -1482,6 +1495,15 @@
           <Property Name="PRTP_NR_MARKUP" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PRTP_VL_CUSTO" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="REGIME_TRIBUTARIO">
+          <Key>
+            <PropertyRef Name="RETR_CD_ID" />
+          </Key>
+          <Property Name="RETR_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="RETR_NM_NOME" Type="varchar" MaxLength="50" />
+          <Property Name="RETR_IN_ATIVO" Type="int" />
+        </EntityType>
         <EntityType Name="RESUMO_VENDA">
           <Key>
             <PropertyRef Name="REVE_CD_ID" />
@@ -1491,6 +1513,13 @@
           <Property Name="REVE_DT_DATA" Type="date" />
           <Property Name="REVE_NR_NUMERO" Type="int" />
           <Property Name="REVE_VL_VALOR" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="SEXO">
+          <Key>
+            <PropertyRef Name="SEXO_CD_ID" />
+          </Key>
+          <Property Name="SEXO_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SEXO_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="SUBCATEGORIA_PRODUTO">
           <Key>
@@ -2234,6 +2263,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CLIENTE_REGIME_TRIBUTARIO">
+          <End Role="REGIME_TRIBUTARIO" Type="Self.REGIME_TRIBUTARIO" Multiplicity="0..1" />
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REGIME_TRIBUTARIO">
+              <PropertyRef Name="RETR_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="RETR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE_SEXO">
+          <End Role="SEXO" Type="Self.SEXO" Multiplicity="0..1" />
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SEXO">
+              <PropertyRef Name="SEXO_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="SEXO_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CLIENTE_TAG_CLIENTE">
           <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
           <End Role="CLIENTE_TAG" Type="Self.CLIENTE_TAG" Multiplicity="*" />
@@ -2279,6 +2332,18 @@
             </Principal>
             <Dependent Role="CLIENTE">
               <PropertyRef Name="UF_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE_UF1">
+          <End Role="UF" Type="Self.UF" Multiplicity="0..1" />
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UF">
+              <PropertyRef Name="UF_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="CLIE_UF_CD_ENTREGA" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4620,7 +4685,9 @@
           <EntitySet Name="PRODUTO_FORNECEDOR" EntityType="Self.PRODUTO_FORNECEDOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUTO_ORIGEM" EntityType="Self.PRODUTO_ORIGEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUTO_TABELA_PRECO" EntityType="Self.PRODUTO_TABELA_PRECO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REGIME_TRIBUTARIO" EntityType="Self.REGIME_TRIBUTARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RESUMO_VENDA" EntityType="Self.RESUMO_VENDA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SEXO" EntityType="Self.SEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUBCATEGORIA_PRODUTO" EntityType="Self.SUBCATEGORIA_PRODUTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUBGRUPO" EntityType="Self.SUBGRUPO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TAREFA" EntityType="Self.TAREFA" Schema="dbo" store:Type="Tables" />
@@ -4774,6 +4841,14 @@
             <End Role="CLIENTE" EntitySet="CLIENTE" />
             <End Role="CLIENTE_REFERENCIA" EntitySet="CLIENTE_REFERENCIA" />
           </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE_REGIME_TRIBUTARIO" Association="Self.FK_CLIENTE_REGIME_TRIBUTARIO">
+            <End Role="REGIME_TRIBUTARIO" EntitySet="REGIME_TRIBUTARIO" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE_SEXO" Association="Self.FK_CLIENTE_SEXO">
+            <End Role="SEXO" EntitySet="SEXO" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
           <AssociationSet Name="FK_CLIENTE_TAG_CLIENTE" Association="Self.FK_CLIENTE_TAG_CLIENTE">
             <End Role="CLIENTE" EntitySet="CLIENTE" />
             <End Role="CLIENTE_TAG" EntitySet="CLIENTE_TAG" />
@@ -4787,6 +4862,10 @@
             <End Role="CLIENTE" EntitySet="CLIENTE" />
           </AssociationSet>
           <AssociationSet Name="FK_CLIENTE_UF" Association="Self.FK_CLIENTE_UF">
+            <End Role="UF" EntitySet="UF" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE_UF1" Association="Self.FK_CLIENTE_UF1">
             <End Role="UF" EntitySet="UF" />
             <End Role="CLIENTE" EntitySet="CLIENTE" />
           </AssociationSet>
@@ -5932,6 +6011,22 @@
           <NavigationProperty Name="CLIENTE_TAG" Relationship="ERP_CRMModel.FK_CLIENTE_TAG_CLIENTE" FromRole="CLIENTE" ToRole="CLIENTE_TAG" />
           <Property Name="TICR_CD_ID" Type="Int32" />
           <NavigationProperty Name="TIPO_CONTRIBUINTE" Relationship="ERP_CRMModel.FK_CLIENTE_TIPO_CONTRIBUINTE" FromRole="CLIENTE" ToRole="TIPO_CONTRIBUINTE" />
+          <Property Name="SEXO_CD_ID" Type="Int32" />
+          <NavigationProperty Name="SEXO" Relationship="ERP_CRMModel.FK_CLIENTE_SEXO" FromRole="CLIENTE" ToRole="SEXO" />
+          <Property Name="CLIE_NM_EMAIL_DANFE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CLIE_NM_ENDERECO_ENTREGA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CLIE_NM_BAIRRO_ENTREGA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CLIE_NM_CIDADE_ENTREGA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CLIE_NR_CEP_ENTREGA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CLIE_VL_LIMITE_CREDITO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CLIE_VL_SALDO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CLIE_NR_SUFRAMA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CLIE_UF_CD_ENTREGA" Type="Int32" />
+          <Property Name="CLIE_NM_COMPLEMENTO_ENTREGA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CLIE_NR_NUMERO_ENTREGA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UF1" Relationship="ERP_CRMModel.FK_CLIENTE_UF1" FromRole="CLIENTE" ToRole="UF" />
+          <Property Name="RETR_CD_ID" Type="Int32" />
+          <NavigationProperty Name="REGIME_TRIBUTARIO" Relationship="ERP_CRMModel.FK_CLIENTE_REGIME_TRIBUTARIO" FromRole="CLIENTE" ToRole="REGIME_TRIBUTARIO" />
         </EntityType>
         <EntityType Name="CLIENTE_ANEXO">
           <Key>
@@ -7566,6 +7661,7 @@
           <NavigationProperty Name="FILIAL" Relationship="Self.FK_FILIAL_UF" FromRole="UF" ToRole="FILIAL" />
           <NavigationProperty Name="FORNECEDOR" Relationship="Self.FK_FORNECEDOR_UF" FromRole="UF" ToRole="FORNECEDOR" />
           <NavigationProperty Name="TELEFONE" Relationship="Self.FK_TELEFONE_UF" FromRole="UF" ToRole="TELEFONE" />
+          <NavigationProperty Name="CLIENTE1" Relationship="ERP_CRMModel.FK_CLIENTE_UF1" FromRole="UF" ToRole="CLIENTE" />
         </EntityType>
         <EntityType Name="UNIDADE">
           <Key>
@@ -11182,6 +11278,20 @@
             <End Role="TIPO_CONTRIBUINTE" EntitySet="TIPO_CONTRIBUINTE" />
             <End Role="CLIENTE" EntitySet="CLIENTE" />
           </AssociationSet>
+          <EntitySet Name="SEXO" EntityType="ERP_CRMModel.SEXO" />
+          <AssociationSet Name="FK_CLIENTE_SEXO" Association="ERP_CRMModel.FK_CLIENTE_SEXO">
+            <End Role="SEXO" EntitySet="SEXO" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <EntitySet Name="REGIME_TRIBUTARIO" EntityType="ERP_CRMModel.REGIME_TRIBUTARIO" />
+          <AssociationSet Name="FK_CLIENTE_UF1" Association="ERP_CRMModel.FK_CLIENTE_UF1">
+            <End Role="UF" EntitySet="UF" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE_REGIME_TRIBUTARIO" Association="ERP_CRMModel.FK_CLIENTE_REGIME_TRIBUTARIO">
+            <End Role="REGIME_TRIBUTARIO" EntitySet="REGIME_TRIBUTARIO" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -11523,6 +11633,60 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SEXO">
+          <Key>
+            <PropertyRef Name="SEXO_CD_ID" />
+          </Key>
+          <Property Name="SEXO_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SEXO_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CLIENTE" Relationship="ERP_CRMModel.FK_CLIENTE_SEXO" FromRole="SEXO" ToRole="CLIENTE" />
+        </EntityType>
+        <Association Name="FK_CLIENTE_SEXO">
+          <End Type="ERP_CRMModel.SEXO" Role="SEXO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CLIENTE" Role="CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SEXO">
+              <PropertyRef Name="SEXO_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="SEXO_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="REGIME_TRIBUTARIO">
+          <Key>
+            <PropertyRef Name="RETR_CD_ID" />
+          </Key>
+          <Property Name="RETR_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="RETR_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RETR_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="CLIENTE" Relationship="ERP_CRMModel.FK_CLIENTE_REGIME_TRIBUTARIO" FromRole="REGIME_TRIBUTARIO" ToRole="CLIENTE" />
+        </EntityType>
+        <Association Name="FK_CLIENTE_UF1">
+          <End Type="ERP_CRMModel.UF" Role="UF" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CLIENTE" Role="CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UF">
+              <PropertyRef Name="UF_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="CLIE_UF_CD_ENTREGA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE_REGIME_TRIBUTARIO">
+          <End Type="ERP_CRMModel.REGIME_TRIBUTARIO" Role="REGIME_TRIBUTARIO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CLIENTE" Role="CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REGIME_TRIBUTARIO">
+              <PropertyRef Name="RETR_CD_ID" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="RETR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11782,6 +11946,19 @@
           <EntitySetMapping Name="CLIENTE">
             <EntityTypeMapping TypeName="ERP_CRMModel.CLIENTE">
               <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="RETR_CD_ID" ColumnName="RETR_CD_ID" />
+                <ScalarProperty Name="CLIE_NR_NUMERO_ENTREGA" ColumnName="CLIE_NR_NUMERO_ENTREGA" />
+                <ScalarProperty Name="CLIE_NM_COMPLEMENTO_ENTREGA" ColumnName="CLIE_NM_COMPLEMENTO_ENTREGA" />
+                <ScalarProperty Name="CLIE_UF_CD_ENTREGA" ColumnName="CLIE_UF_CD_ENTREGA" />
+                <ScalarProperty Name="CLIE_NR_SUFRAMA" ColumnName="CLIE_NR_SUFRAMA" />
+                <ScalarProperty Name="CLIE_VL_SALDO" ColumnName="CLIE_VL_SALDO" />
+                <ScalarProperty Name="CLIE_VL_LIMITE_CREDITO" ColumnName="CLIE_VL_LIMITE_CREDITO" />
+                <ScalarProperty Name="CLIE_NR_CEP_ENTREGA" ColumnName="CLIE_NR_CEP_ENTREGA" />
+                <ScalarProperty Name="CLIE_NM_CIDADE_ENTREGA" ColumnName="CLIE_NM_CIDADE_ENTREGA" />
+                <ScalarProperty Name="CLIE_NM_BAIRRO_ENTREGA" ColumnName="CLIE_NM_BAIRRO_ENTREGA" />
+                <ScalarProperty Name="CLIE_NM_ENDERECO_ENTREGA" ColumnName="CLIE_NM_ENDERECO_ENTREGA" />
+                <ScalarProperty Name="CLIE_NM_EMAIL_DANFE" ColumnName="CLIE_NM_EMAIL_DANFE" />
+                <ScalarProperty Name="SEXO_CD_ID" ColumnName="SEXO_CD_ID" />
                 <ScalarProperty Name="TICR_CD_ID" ColumnName="TICR_CD_ID" />
                 <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />
                 <ScalarProperty Name="CLIE_CD_ID" ColumnName="CLIE_CD_ID" />
@@ -13490,6 +13667,24 @@
                 <ScalarProperty Name="CLTA_NM_TAG" ColumnName="CLTA_NM_TAG" />
                 <ScalarProperty Name="CLIE_CD_ID" ColumnName="CLIE_CD_ID" />
                 <ScalarProperty Name="CLTA_CD_ID" ColumnName="CLTA_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SEXO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.SEXO">
+              <MappingFragment StoreEntitySet="SEXO">
+                <ScalarProperty Name="SEXO_NM_NOME" ColumnName="SEXO_NM_NOME" />
+                <ScalarProperty Name="SEXO_CD_ID" ColumnName="SEXO_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REGIME_TRIBUTARIO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.REGIME_TRIBUTARIO">
+              <MappingFragment StoreEntitySet="REGIME_TRIBUTARIO">
+                <ScalarProperty Name="RETR_IN_ATIVO" ColumnName="RETR_IN_ATIVO" />
+                <ScalarProperty Name="RETR_NM_NOME" ColumnName="RETR_NM_NOME" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="RETR_CD_ID" ColumnName="RETR_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

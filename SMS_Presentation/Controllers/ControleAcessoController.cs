@@ -157,6 +157,45 @@ namespace ERP_CRM_Solution.Controllers
                 Session["IdFilial"] = usuario.FILI_CD_ID;
                 Session["IdUsuario"] = usuario.USUA_CD_ID;
 
+                // Recupera Planos do assinante
+                Session["PermMens"] = 0;
+                Session["PermCRM"] = 0;
+                Session["PermPosVenda"] = 0;
+                Session["PermFatura"] = 0;
+                Session["PermFinanceiro"] = 0;
+                Session["PermEstoque"] = 0;
+                List<ASSINANTE_PLANO> plAss = usuario.ASSINANTE.ASSINANTE_PLANO.ToList();
+                List<PLANO> planos = new List<PLANO>();
+                foreach (var item in plAss)
+                {
+                    planos.Add(item.PLANO);
+                    if (item.PLANO.PLAN_IN_MENSAGENS == 1)
+                    {
+                        Session["PermMens"] = 1;
+                    }
+                    if (item.PLANO.PLAN_IN_CRM == 1)
+                    {
+                        Session["PermCRM"] = 1;
+                    }
+                    if (item.PLANO.PLAN_IN_POSVENDA == 1)
+                    {
+                        Session["PermPosVenda"] = 1;
+                    }
+                    if (item.PLANO.PLAN_IN_FATURA == 1)
+                    {
+                        Session["PermFatura"] = 1;
+                    }
+                    if (item.PLANO.PLAN_IN_FINANCEIRO == 1)
+                    {
+                        Session["PermFinanceiro"] = 1;
+                    }
+                    if (item.PLANO.PLAN_IN_ESTOQUE == 1)
+                    {
+                        Session["PermEstoque"] = 1;
+                    }
+                }
+                Session["Planos"] = planos;
+
                 // Route
                 if (usuario.USUA_IN_PROVISORIO == 1)
                 {

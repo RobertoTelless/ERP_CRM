@@ -39,6 +39,10 @@ namespace MvcMapping.Mappers
             CreateMap<TELEFONE, TelefoneViewModel>();
             CreateMap<TAREFA, TarefaViewModel>();
             CreateMap<TAREFA_ACOMPANHAMENTO, TarefaAcompanhamentoViewModel>();
+            CreateMap<CLIENTE, ClienteViewModel>();
+            CreateMap<CLIENTE_CONTATO, ClienteContatoViewModel>();
+            CreateMap<CLIENTE_REFERENCIA, ClienteReferenciaViewModel>();
+            CreateMap<CLIENTE_TAG, ClienteTagViewModel>();
 
         }
     }

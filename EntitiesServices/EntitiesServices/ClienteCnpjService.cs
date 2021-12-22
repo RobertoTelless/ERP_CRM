@@ -20,7 +20,7 @@ namespace ModelServices.EntitiesServices
     {
         private readonly IClienteCnpjRepository _baseRepository;
         private readonly ILogRepository _logRepository;
-        protected DUO_DatabaseEntities Db = new DUO_DatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public ClienteCnpjService(IClienteCnpjRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
         {

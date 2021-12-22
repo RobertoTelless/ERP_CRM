@@ -171,6 +171,8 @@
     <Compile Include="Interfaces\IAssinanteAppService.cs" />
     <Compile Include="Interfaces\IAssinanteCnpjAppService.cs" />
     <Compile Include="Interfaces\ICategoriaTelefoneAppService.cs" />
+    <Compile Include="Interfaces\IClienteAppService.cs" />
+    <Compile Include="Interfaces\IClienteCnpjAppService.cs" />
     <Compile Include="Interfaces\IConfiguracaoAppService.cs" />
     <Compile Include="Interfaces\IFilialAppService.cs" />
     <Compile Include="Interfaces\ILogAppService.cs" />
@@ -189,6 +191,8 @@
     <Compile Include="Services\AssinanteAppService.cs" />
     <Compile Include="Services\AssinanteCnpjAppService.cs" />
     <Compile Include="Services\CategoriaTelefoneAppService.cs" />
+    <Compile Include="Services\ClienteAppService.cs" />
+    <Compile Include="Services\ClienteCnpjAppService.cs" />
     <Compile Include="Services\ConfiguracaoAppService.cs" />
     <Compile Include="Services\FilialAppService.cs" />
     <Compile Include="Services\LogAppService.cs" />

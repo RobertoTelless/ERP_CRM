@@ -347,6 +347,11 @@
         <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_REFERENCIA_CLIENTE" />
         <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_TAG_CLIENTE" />
         <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_TIPO_CONTRIBUINTE" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SEXO" Width="1.5" PointX="0.75" PointY="3.875" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_SEXO" />
+        <EntityTypeShape EntityType="ERP_CRMModel.REGIME_TRIBUTARIO" Width="1.5" PointX="3.375" PointY="3.75" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_UF1" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_REGIME_TRIBUTARIO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

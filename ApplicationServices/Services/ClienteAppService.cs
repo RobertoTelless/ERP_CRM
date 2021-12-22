@@ -46,6 +46,24 @@ namespace ApplicationServices.Services
             return lista;
         }
 
+        public List<TIPO_CONTRIBUINTE> GetAllContribuinte(Int32 idAss)
+        {
+            List<TIPO_CONTRIBUINTE> lista = _baseService.GetAllContribuinte(idAss);
+            return lista;
+        }
+
+        public List<REGIME_TRIBUTARIO> GetAllRegimes(Int32 idAss)
+        {
+            List<REGIME_TRIBUTARIO> lista = _baseService.GetAllRegimes(idAss);
+            return lista;
+        }
+
+        public List<SEXO> GetAllSexo()
+        {
+            List<SEXO> lista = _baseService.GetAllSexo();
+            return lista;
+        }
+
         public CLIENTE GetItemById(Int32 id)
         {
             CLIENTE item = _baseService.GetItemById(id);
@@ -198,10 +216,6 @@ namespace ApplicationServices.Services
                 if (itemAntes.UF != null)
                 {
                     itemAntes.UF = null;
-                }
-                if (itemAntes.UF1 != null)
-                {
-                    itemAntes.UF1 = null;
                 }
                 if (itemAntes.USUARIO != null)
                 {

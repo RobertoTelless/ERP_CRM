@@ -15,7 +15,7 @@ namespace DataServices.Repositories
         public CONFIGURACAO GetItemById(Int32 id)
         {
             IQueryable<CONFIGURACAO> query = Db.CONFIGURACAO;
-            query = query.Where(p => p.ASSI_CD_ID == 1);
+            query = query.Where(p => p.ASSI_CD_ID == 2);
             return query.FirstOrDefault();
         }
 

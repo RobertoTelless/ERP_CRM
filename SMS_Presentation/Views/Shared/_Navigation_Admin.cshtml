@@ -33,6 +33,38 @@
                 </div>
             </li>
 
+            @*Mensageria*@
+            @if ((Int32)Session["PermMens"] == 1)
+            {
+                <li>
+                    <a href="@Url.Action("MontarTelaDashboardMensagens", "Mensagem")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Mensageria</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
+                        <li>
+                            <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
+                                <li class="@Html.IsSelected(action: "MontarTelaCliente")"><a href="@Url.Action("MontarTelaCliente", "Cliente")">Clientes</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaFornecedor")"><a href="@Url.Action("MontarTelaFornecedor", "Fornecedor")">Fornecedores</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaGrupo")"><a href="@Url.Action("MontarTelaGrupo", "Grupo")">Grupos</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Modelos</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
+                                <li class="@Html.IsSelected(action: "MontarTelaTemplateEMail")"><a href="@Url.Action("MontarTelaTemplateEMail", "Template")">E-Mails</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaTemplateSMS")"><a href="@Url.Action("MontarTelaTemplateSMS", "Template")">SMS</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Mensagens</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
+                                <li class="@Html.IsSelected(action: "MontarTelaTemplateEMail")"><a href="@Url.Action("MontarTelaEnvioEmail", "Mensagem")">E-Mails</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaTemplateSMS")"><a href="@Url.Action("MontarTelaEnvioSMS", "Mensagens")">SMS</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            }
+
             @*Administração*@
             @if (((EntitiesServices.Model.PERFIL)Session["Perfil"]).PERF_SG_SIGLA  == "ADM" || ((EntitiesServices.Model.PERFIL)Session["Perfil"]).PERF_SG_SIGLA  == "GER")
             {
