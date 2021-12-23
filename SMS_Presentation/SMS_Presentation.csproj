@@ -335,6 +335,8 @@
     <Compile Include="ViewModels\FornecedorComentarioViewModel.cs" />
     <Compile Include="ViewModels\FornecedorContatoViewModel.cs" />
     <Compile Include="ViewModels\FornecedorViewModel.cs" />
+    <Compile Include="ViewModels\GrupoContatoViewModel.cs" />
+    <Compile Include="ViewModels\GrupoViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\ModeloViewModel.cs" />
     <Compile Include="ViewModels\NoticiaComentarioViewModel.cs" />

@@ -179,6 +179,8 @@
     <Compile Include="Repositories\FornecedorCnpjRepository.cs" />
     <Compile Include="Repositories\FornecedorContatoRepository.cs" />
     <Compile Include="Repositories\FornecedorRepository.cs" />
+    <Compile Include="Repositories\GrupoContatoRepository.cs" />
+    <Compile Include="Repositories\GrupoRepository.cs" />
     <Compile Include="Repositories\SexoRepository.cs" />
     <Compile Include="Repositories\RegimeTributarioRepository.cs" />
     <Compile Include="Repositories\CategoriaAgendaRepository.cs" />
