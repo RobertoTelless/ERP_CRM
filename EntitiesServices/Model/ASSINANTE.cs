@@ -70,6 +70,7 @@ namespace EntitiesServices.Model
             this.PERIODICIDADE_TAREFA = new HashSet<PERIODICIDADE_TAREFA>();
             this.TAREFA = new HashSet<TAREFA>();
             this.TIPO_TAREFA = new HashSet<TIPO_TAREFA>();
+            this.TEMPLATE_SMS = new HashSet<TEMPLATE_SMS>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -203,5 +204,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<TAREFA> TAREFA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TIPO_TAREFA> TIPO_TAREFA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TEMPLATE_SMS> TEMPLATE_SMS { get; set; }
     }
 }

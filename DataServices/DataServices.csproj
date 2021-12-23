@@ -181,6 +181,9 @@
     <Compile Include="Repositories\FornecedorRepository.cs" />
     <Compile Include="Repositories\GrupoContatoRepository.cs" />
     <Compile Include="Repositories\GrupoRepository.cs" />
+    <Compile Include="Repositories\MensagemAnexoRepository.cs" />
+    <Compile Include="Repositories\MensagemDestinoRepository.cs" />
+    <Compile Include="Repositories\MensagemRepository.cs" />
     <Compile Include="Repositories\SexoRepository.cs" />
     <Compile Include="Repositories\RegimeTributarioRepository.cs" />
     <Compile Include="Repositories\CategoriaAgendaRepository.cs" />
@@ -211,6 +214,7 @@
     <Compile Include="Repositories\TarefaNotificacaoRepository.cs" />
     <Compile Include="Repositories\TarefaRepository.cs" />
     <Compile Include="Repositories\TelefoneRepository.cs" />
+    <Compile Include="Repositories\TemplateSMSRepository.cs" />
     <Compile Include="Repositories\TemplateRepository.cs" />
     <Compile Include="Repositories\TipoPessoaRepository.cs" />
     <Compile Include="Repositories\TipoContribuinteRepository.cs" />

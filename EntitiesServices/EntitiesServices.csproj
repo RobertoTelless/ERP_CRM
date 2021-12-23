@@ -188,6 +188,7 @@
     <Compile Include="EntitiesServices\FornecedorService.cs" />
     <Compile Include="EntitiesServices\GrupoService.cs" />
     <Compile Include="EntitiesServices\LogService.cs" />
+    <Compile Include="EntitiesServices\MensagemService.cs" />
     <Compile Include="EntitiesServices\NoticiaService.cs" />
     <Compile Include="EntitiesServices\NotificacaoService.cs" />
     <Compile Include="EntitiesServices\PerfilService.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="EntitiesServices\ServiceBase.cs" />
     <Compile Include="EntitiesServices\TarefaService.cs" />
     <Compile Include="EntitiesServices\TelefoneService.cs" />
+    <Compile Include="EntitiesServices\TemplateSMSService.cs" />
     <Compile Include="EntitiesServices\TemplateService.cs" />
     <Compile Include="EntitiesServices\TipoPessoaService.cs" />
     <Compile Include="EntitiesServices\UsuarioService.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="Interfaces\EntitiesServices\IFornecedorService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IGrupoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ILogService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IMensagemService.cs" />
     <Compile Include="Interfaces\EntitiesServices\INoticiaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\INotificacaoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IPerfilService.cs" />
@@ -219,6 +222,7 @@
     <Compile Include="Interfaces\EntitiesServices\IServiceBase.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITarefaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITelefoneService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ITemplateSMSService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITemplateService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITipoPessoaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IUsuarioService.cs" />
@@ -236,6 +240,9 @@
     <Compile Include="Interfaces\Repositories\IFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoContatoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMensagemAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMensagemDestinoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMensagemRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRegimeTributarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaAgendaRepository.cs" />
@@ -266,6 +273,7 @@
     <Compile Include="Interfaces\Repositories\ITarefaNotificacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITarefaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITelefoneRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITemplateSMSRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITemplateRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoPessoaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoContribuinteRepository.cs" />
@@ -601,6 +609,9 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TEMPLATE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TEMPLATE_SMS.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_ACAO.cs">

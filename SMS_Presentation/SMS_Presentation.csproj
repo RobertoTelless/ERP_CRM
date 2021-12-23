@@ -315,6 +315,7 @@
     <Compile Include="Controllers\NotificacaoController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
     <Compile Include="Controllers\TelefoneController.cs" />
+    <Compile Include="Controllers\TemplateSMSController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Extensions\HMTLHelperExtensions.cs" />
     <Compile Include="Extensions\MVCButtonExtensions.cs" />
@@ -339,6 +340,7 @@
     <Compile Include="ViewModels\GrupoContatoViewModel.cs" />
     <Compile Include="ViewModels\GrupoViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
+    <Compile Include="ViewModels\MensagemViewModel.cs" />
     <Compile Include="ViewModels\ModeloViewModel.cs" />
     <Compile Include="ViewModels\NoticiaComentarioViewModel.cs" />
     <Compile Include="ViewModels\NoticiaViewModel.cs" />
@@ -348,6 +350,7 @@
     <Compile Include="ViewModels\TarefaAcompanhamentoViewModel.cs" />
     <Compile Include="ViewModels\TarefaViewModel.cs" />
     <Compile Include="ViewModels\TelefoneViewModel.cs" />
+    <Compile Include="ViewModels\TemplateSMSViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="ViewModels\UsuarioAnexoViewModel.cs" />
     <Compile Include="ViewModels\UsuarioLoginViewModel.cs" />
@@ -3001,6 +3004,10 @@
     <Content Include="Views\Grupo\IncluirGrupo.cshtml" />
     <Content Include="Views\Grupo\EditarGrupo.cshtml" />
     <Content Include="Views\Grupo\IncluirContatoGrupo.cshtml" />
+    <Content Include="Views\TemplateSMS\MontarTelaTemplateSMS.cshtml" />
+    <Content Include="Views\TemplateSMS\IncluirTemplateSMS.cshtml" />
+    <Content Include="Views\TemplateSMS\EditarTemplateSMS.cshtml" />
+    <Content Include="Views\TemplateSMS\VerTemplateSMS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3014,6 +3021,7 @@
     <Folder Include="Imagens\1\Notificacao\" />
     <Folder Include="Imagens\1\Produtos\" />
     <Folder Include="Imagens\1\Tarefa\" />
+    <Folder Include="Imagens\1\TemplatesHTML\" />
     <Folder Include="Imagens\1\Usuario\" />
     <Folder Include="Imagens\Assinantes\1\Anexos\" />
     <Folder Include="Models\" />

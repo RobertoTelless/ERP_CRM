@@ -88,6 +88,7 @@ namespace Presentation.Start
             kernel.Bind<IAssinanteCnpjAppService>().To<AssinanteCnpjAppService>();
             kernel.Bind<IFornecedorAppService>().To<FornecedorAppService>();
             kernel.Bind<IFornecedorCnpjAppService>().To<FornecedorCnpjAppService>();
+            kernel.Bind<ITemplateSMSAppService>().To<TemplateSMSAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -109,6 +110,7 @@ namespace Presentation.Start
             kernel.Bind<IAssinanteCnpjService>().To<AssinanteCnpjService>();
             kernel.Bind<IFornecedorService>().To<FornecedorService>();
             kernel.Bind<IFornecedorCnpjService>().To<FornecedorCnpjService>();
+            kernel.Bind<ITemplateSMSService>().To<TemplateSMSService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -162,6 +164,7 @@ namespace Presentation.Start
             kernel.Bind<IFornecedorContatoRepository>().To<FornecedorContatoRepository>();
             kernel.Bind<IFornecedorAnexoRepository>().To<FornecedorAnexoRepository>();
             kernel.Bind<IFornecedorCnpjRepository>().To<FornecedorCnpjRepository>();
+            kernel.Bind<ITemplateSMSRepository>().To<TemplateSMSRepository>();
 
         }
     }

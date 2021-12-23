@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using EntitiesServices.Model;
 
-namespace ERP_CRM_Solution.ViewModels
+namespace PlatMensagem_Solution.ViewModels
 {
     public class ModeloViewModel
     {
