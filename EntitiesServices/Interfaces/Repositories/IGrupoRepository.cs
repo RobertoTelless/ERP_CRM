@@ -13,5 +13,6 @@ namespace ModelServices.Interfaces.Repositories
         GRUPO GetItemById(Int32 id);
         List<GRUPO> GetAllItens(Int32 idAss);
         List<GRUPO> GetAllItensAdm(Int32 idAss);
+
     }
 }

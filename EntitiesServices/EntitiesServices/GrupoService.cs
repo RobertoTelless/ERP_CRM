@@ -21,7 +21,7 @@ namespace ModelServices.EntitiesServices
         private readonly IGrupoRepository _baseRepository;
         private readonly ILogRepository _logRepository;
         private readonly IGrupoContatoRepository _contRepository;
-        protected PlatMensagensEntities Db = new PlatMensagensEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public GrupoService(IGrupoRepository baseRepository, ILogRepository logRepository, IGrupoContatoRepository contRepository) : base(baseRepository)
         {

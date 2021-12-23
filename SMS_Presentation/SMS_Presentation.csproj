@@ -309,6 +309,7 @@
     <Compile Include="Controllers\ControleAcessoController.cs" />
     <Compile Include="Controllers\FilialController.cs" />
     <Compile Include="Controllers\FornecedorController.cs" />
+    <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
@@ -2996,6 +2997,10 @@
     <Content Include="Views\Fornecedor\IncluirContatoFornecedor.cshtml" />
     <Content Include="Views\Fornecedor\VerFornecedorInativos.cshtml" />
     <Content Include="Views\Fornecedor\IncluirComentarioFornecedor.cshtml" />
+    <Content Include="Views\Grupo\MontarTelaGrupo.cshtml" />
+    <Content Include="Views\Grupo\IncluirGrupo.cshtml" />
+    <Content Include="Views\Grupo\EditarGrupo.cshtml" />
+    <Content Include="Views\Grupo\IncluirContatoGrupo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

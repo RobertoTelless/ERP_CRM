@@ -78,7 +78,7 @@ namespace Presentation.Start
             kernel.Bind<IClienteAppService>().To<ClienteAppService>();
             kernel.Bind<IClienteCnpjAppService>().To<ClienteCnpjAppService>();
             //kernel.Bind<IMensagemAppService>().To<MensagemAppService>();
-            //kernel.Bind<IGrupoAppService>().To<GrupoAppService>();
+            kernel.Bind<IGrupoAppService>().To<GrupoAppService>();
             //kernel.Bind<ICategoriaClienteAppService>().To<CategoriaClienteAppService>();
             //kernel.Bind<IPosicaoAppService>().To<PosicaoAppService>();
             //kernel.Bind<IEMailAgendaAppService>().To<EMailAgendaAppService>();
@@ -99,7 +99,7 @@ namespace Presentation.Start
             kernel.Bind<IClienteService>().To<ClienteService>();
             kernel.Bind<IClienteCnpjService>().To<ClienteCnpjService>();
             //kernel.Bind<IMensagemService>().To<MensagemService>();
-            //kernel.Bind<IGrupoService>().To<GrupoService>();
+            kernel.Bind<IGrupoService>().To<GrupoService>();
             //kernel.Bind<ICategoriaClienteService>().To<CategoriaClienteService>();
             //kernel.Bind<IPosicaoService>().To<PosicaoService>();
             //kernel.Bind<IEMailAgendaService>().To<EmailAgendaService>();
@@ -133,8 +133,8 @@ namespace Presentation.Start
             //kernel.Bind<IMensagemRepository>().To<MensagemRepository>();
             //kernel.Bind<IMensagemDestinoRepository>().To<MensagemDestinoRepository>();
             //kernel.Bind<IMensagemAnexoRepository>().To<MensagemAnexoRepository>();
-            //kernel.Bind<IGrupoRepository>().To<GrupoRepository>();
-            //kernel.Bind<IGrupoContatoRepository>().To<GrupoContatoRepository>();
+            kernel.Bind<IGrupoRepository>().To<GrupoRepository>();
+            kernel.Bind<IGrupoContatoRepository>().To<GrupoContatoRepository>();
             //kernel.Bind<IPosicaoRepository>().To<PosicaoRepository>();
             //kernel.Bind<IEmailAgendaRepository>().To<EMailAgendaRepository>();
             //kernel.Bind<ICRMRepository>().To<CRMRepository>();

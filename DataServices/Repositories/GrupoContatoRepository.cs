@@ -31,6 +31,7 @@ namespace DataServices.Repositories
             IQueryable<GRUPO_CLIENTE> query = Db.GRUPO_CLIENTE.Where(p => p.GRCL_CD_ID == id);
             return query.FirstOrDefault();
         }
+
     }
 }
  

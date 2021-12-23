@@ -19,6 +19,7 @@ namespace ApplicationServices.Interfaces
         List<GRUPO> GetAllItensAdm(Int32 idAss);
         GRUPO GetItemById(Int32 id);
         GRUPO CheckExist(GRUPO conta, Int32 idAss);
+
         GRUPO_CLIENTE GetContatoById(Int32 id);
         Int32 ValidateCreateContato(GRUPO_CLIENTE item);
         Int32 ValidateEditContato(GRUPO_CLIENTE item);

@@ -231,6 +231,5 @@ namespace ApplicationServices.Services
                 throw;
             }
         }
-
     }
 }

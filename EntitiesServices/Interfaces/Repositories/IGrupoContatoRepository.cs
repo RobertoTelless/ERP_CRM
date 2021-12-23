@@ -12,5 +12,6 @@ namespace ModelServices.Interfaces.Repositories
         List<GRUPO_CLIENTE> GetAllItens();
         GRUPO_CLIENTE GetItemById(Int32 id);
         GRUPO_CLIENTE CheckExist(GRUPO_CLIENTE item);
+
     }
 }
