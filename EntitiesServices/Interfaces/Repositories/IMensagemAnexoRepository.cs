@@ -11,5 +11,6 @@ namespace ModelServices.Interfaces.Repositories
     {
         List<MENSAGEM_ANEXO> GetAllItens();
         MENSAGEM_ANEXO GetItemById(Int32 id);
+
     }
 }

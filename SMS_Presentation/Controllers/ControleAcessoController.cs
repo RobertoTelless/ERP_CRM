@@ -164,6 +164,10 @@ namespace ERP_CRM_Solution.Controllers
                 Session["PermFatura"] = 0;
                 Session["PermFinanceiro"] = 0;
                 Session["PermEstoque"] = 0;
+                Session["NumSMS"] = 0;
+                Session["NumEMail"] = 0;
+                Session["NumZap"] = 0;
+                Session["NumClientes"] = 0;
                 List<ASSINANTE_PLANO> plAss = usuario.ASSINANTE.ASSINANTE_PLANO.ToList();
                 List<PLANO> planos = new List<PLANO>();
                 foreach (var item in plAss)
@@ -172,6 +176,10 @@ namespace ERP_CRM_Solution.Controllers
                     if (item.PLANO.PLAN_IN_MENSAGENS == 1)
                     {
                         Session["PermMens"] = 1;
+                        Session["NumSMS"] = item.PLANO.PLAN_NR_SMS;
+                        Session["NumEMail"] = item.PLANO.PLAN_NR_EMAIL;
+                        Session["NumZap"] = item.PLANO.PLAN_NR_WHATSAPP;
+                        Session["NumClientes"] = item.PLANO.PLAN_NR_CONTATOS;
                     }
                     if (item.PLANO.PLAN_IN_CRM == 1)
                     {

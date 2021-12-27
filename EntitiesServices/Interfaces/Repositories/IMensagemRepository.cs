@@ -13,6 +13,7 @@ namespace ModelServices.Interfaces.Repositories
         MENSAGENS GetItemById(Int32 id);
         List<MENSAGENS> GetAllItens(Int32 idAss);
         List<MENSAGENS> GetAllItensAdm(Int32 idAss);
-        List<MENSAGENS> ExecuteFilter(DateTime? criacao, DateTime? envio, String campanha, String texto, Int32? tipo, Int32 idAss);
+        List<MENSAGENS> ExecuteFilterSMS(DateTime? envio, Int32 cliente, String texto, Int32 idAss);
+    
     }
 }

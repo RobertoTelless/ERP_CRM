@@ -11,5 +11,6 @@ namespace ModelServices.Interfaces.Repositories
     {
         List<MENSAGENS_DESTINOS> GetAllItens();
         MENSAGENS_DESTINOS GetItemById(Int32 id);
+
     }
 }

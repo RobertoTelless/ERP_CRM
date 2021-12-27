@@ -21,13 +21,13 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<MENSAGENS> GetAllItens(Int32 idAss);
         List<MENSAGENS> GetAllItensAdm(Int32 idAss);
         MENSAGEM_ANEXO GetAnexoById(Int32 id);
-        List<MENSAGENS> ExecuteFilter(DateTime? criacao, DateTime? envio, String campanha, String texto, Int32? tipo, Int32 idAss);
+        List<MENSAGENS> ExecuteFilterSMS(DateTime? envio, Int32 cliente, String texto, Int32 idAss);
 
-        List<TEMPLATE> GetAllTemplates(Int32 idAss);
+        List<TEMPLATE_SMS> GetAllTemplatesSMS(Int32 idAss);
         List<UF> GetAllUF();
         UF GetUFbySigla(String sigla);
-        List<CATEGORIA_CLIENTE> GetAllTipos();
-        List<POSICAO> GetAllPosicao();
+        List<CATEGORIA_CLIENTE> GetAllTipos(Int32 idAss);
+        //List<POSICAO> GetAllPosicao();
 
         MENSAGENS_DESTINOS GetDestinoById(Int32 id);
         Int32 EditDestino(MENSAGENS_DESTINOS item);

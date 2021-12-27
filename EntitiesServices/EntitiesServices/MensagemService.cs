@@ -24,11 +24,11 @@ namespace ModelServices.EntitiesServices
         private readonly ICategoriaClienteRepository _tipoRepository;
         private readonly IUFRepository _ufRepository;
         private readonly IMensagemAnexoRepository _anexoRepository;
-        private readonly IPosicaoRepository _posRepository;
         private readonly IMensagemDestinoRepository _destRepository;
-        protected PlatMensagensEntities Db = new PlatMensagensEntities();
+        private readonly ITemplateSMSRepository _tsmsRepository;
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
-        public MensagemService(IMensagemRepository baseRepository, ILogRepository logRepository, ITemplateRepository tempRepository, ICategoriaClienteRepository tipoRepository, IUFRepository ufRepository, IMensagemAnexoRepository anexoRepository, IPosicaoRepository posRepository, IMensagemDestinoRepository destRepository) : base(baseRepository)
+        public MensagemService(IMensagemRepository baseRepository, ILogRepository logRepository, ITemplateRepository tempRepository, ICategoriaClienteRepository tipoRepository, IUFRepository ufRepository, IMensagemAnexoRepository anexoRepository, IMensagemDestinoRepository destRepository, ITemplateSMSRepository tsmsRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
@@ -36,7 +36,7 @@ namespace ModelServices.EntitiesServices
             _tipoRepository = tipoRepository;
             _ufRepository = ufRepository;
             _anexoRepository = anexoRepository;
-            _posRepository = posRepository;
+            _tsmsRepository = tsmsRepository;
             _destRepository = destRepository;
         }
 
@@ -82,14 +82,9 @@ namespace ModelServices.EntitiesServices
             return _baseRepository.GetAllItensAdm(idAss);
         }
 
-        public List<CATEGORIA_CLIENTE> GetAllTipos()
+        public List<CATEGORIA_CLIENTE> GetAllTipos(Int32 idAss)
         {
-            return _tipoRepository.GetAllItens();
-        }
-
-        public List<POSICAO> GetAllPosicao()
-        {
-            return _posRepository.GetAllItens();
+            return _tipoRepository.GetAllItens(idAss);
         }
 
         public List<TEMPLATE> GetAllTemplates(Int32 idAss)
@@ -97,9 +92,14 @@ namespace ModelServices.EntitiesServices
             return _tempRepository.GetAllItens(idAss);
         }
 
-        public List<MENSAGENS> ExecuteFilter(DateTime? criacao, DateTime? envio, String campanha, String texto, Int32? tipo, Int32 idAss)
+        public List<TEMPLATE_SMS> GetAllTemplatesSMS(Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(criacao, envio, campanha, texto, tipo, idAss);
+            return _tsmsRepository.GetAllItens(idAss);
+        }
+
+        public List<MENSAGENS> ExecuteFilterSMS(DateTime? envio, Int32 cliente, String texto, Int32 idAss)
+        {
+            return _baseRepository.ExecuteFilterSMS(envio, cliente, texto, idAss);
         }
 
         public Int32 Create(MENSAGENS item, LOG log)

@@ -70,25 +70,19 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public List<CATEGORIA_CLIENTE> GetAllTipos()
+        public List<CATEGORIA_CLIENTE> GetAllTipos(Int32 idAss)
         {
-            List<CATEGORIA_CLIENTE> lista = _baseService.GetAllTipos();
+            List<CATEGORIA_CLIENTE> lista = _baseService.GetAllTipos(idAss);
             return lista;
         }
 
-        public List<POSICAO> GetAllPosicao()
+        public List<TEMPLATE_SMS> GetAllTemplatesSMS(Int32 idAss)
         {
-            List<POSICAO> lista = _baseService.GetAllPosicao();
+            List<TEMPLATE_SMS> lista = _baseService.GetAllTemplatesSMS(idAss);
             return lista;
         }
 
-        public List<TEMPLATE> GetAllTemplates(Int32 idAss)
-        {
-            List<TEMPLATE> lista = _baseService.GetAllTemplates(idAss);
-            return lista;
-        }
-
-        public Int32 ExecuteFilter(DateTime? criacao, DateTime? envio, String campanha, String texto, Int32? tipo, Int32 idAss, out List<MENSAGENS> objeto)
+        public Int32 ExecuteFilterSMS(DateTime? envio, Int32 cliente, String texto, Int32 idAss, out List<MENSAGENS> objeto)
         {
             try
             {
@@ -96,7 +90,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(criacao, envio, campanha, texto, tipo, idAss);
+                objeto = _baseService.ExecuteFilterSMS(envio, cliente, texto, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;

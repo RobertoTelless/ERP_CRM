@@ -46,34 +46,27 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<MENSAGENS> ExecuteFilter(DateTime? criacao, DateTime? envio, String campanha, String texto, Int32? tipo, Int32 idAss)
+
+        public List<MENSAGENS> ExecuteFilterSMS(DateTime? envio, Int32 cliente, String texto, Int32 idAss)
         {
             List<MENSAGENS> lista = new List<MENSAGENS>();
             IQueryable<MENSAGENS> query = Db.MENSAGENS;
-            if (tipo != null)
-            {
-                query = query.Where(p => p.MENS_IN_TIPO == tipo);
-            }
-            if (!String.IsNullOrEmpty(campanha))
-            {
-                query = query.Where(p => p.MENS_NM_CAMPANHA.Contains(campanha));
-            }
             if (!String.IsNullOrEmpty(texto))
             {
                 query = query.Where(p => p.MENS_TX_TEXTO.Contains(texto));
-            }
-            if (criacao != null)
-            {
-                query = query.Where(p => DbFunctions.TruncateTime(p.MENS_DT_CRIACAO) == DbFunctions.TruncateTime(criacao));
             }
             if (envio != null)
             {
                 query = query.Where(p => DbFunctions.TruncateTime(p.MENS_DT_ENVIO) == DbFunctions.TruncateTime(envio));
             }
+            if (cliente > 0)
+            {
+
+            }
             if (query != null)
             {
                 query = query.Where(p => p.ASSI_CD_ID == idAss);
-                query = query.OrderBy(a => a.MENS_DT_CRIACAO);
+                query = query.OrderBy(a => a.MENS_DT_ENVIO);
                 lista = query.ToList<MENSAGENS>();
             }
             return lista;

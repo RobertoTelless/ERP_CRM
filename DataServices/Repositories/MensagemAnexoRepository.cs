@@ -23,6 +23,7 @@ namespace DataServices.Repositories
             IQueryable<MENSAGEM_ANEXO> query = Db.MENSAGEM_ANEXO.Where(p => p.MEAN_CD_ID == id);
             return query.FirstOrDefault();
         }
+
     }
 }
  

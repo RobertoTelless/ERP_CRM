@@ -20,13 +20,12 @@ namespace ApplicationServices.Interfaces
         MENSAGENS GetItemById(Int32 id);
         MENSAGENS CheckExist(MENSAGENS conta, Int32 idAss);
         MENSAGEM_ANEXO GetAnexoById(Int32 id);
-        Int32 ExecuteFilter(DateTime? criacao, DateTime? envio, String campanha, String texto, Int32? tipo, Int32 idAss, out List<MENSAGENS> objeto);
+        Int32 ExecuteFilterSMS(DateTime? envio, Int32 cliente, String texto, Int32 idAss, out List<MENSAGENS> objeto);
 
-        List<CATEGORIA_CLIENTE> GetAllTipos();
-        List<POSICAO> GetAllPosicao();
+        List<CATEGORIA_CLIENTE> GetAllTipos(Int32 idAss);
         List<UF> GetAllUF();
         UF GetUFbySigla(String sigla);
-        List<TEMPLATE> GetAllTemplates(Int32 idAss);
+        List<TEMPLATE_SMS> GetAllTemplatesSMS(Int32 idAss);
 
         MENSAGENS_DESTINOS GetDestinoById(Int32 id);
         Int32 ValidateEditDestino(MENSAGENS_DESTINOS item);

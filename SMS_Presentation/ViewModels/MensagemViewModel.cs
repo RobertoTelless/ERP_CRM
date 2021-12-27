@@ -6,7 +6,7 @@ using System.Web;
 using EntitiesServices.Model;
 using EntitiesServices.Attributes;
 
-namespace PlatMensagem_Solution.ViewModels
+namespace ERP_CRM_Solution.ViewModels
 {
     public class MensagemViewModel
     {
@@ -36,6 +36,7 @@ namespace PlatMensagem_Solution.ViewModels
         public string MENS_NM_LINK { get; set; }
         [StringLength(250, ErrorMessage = "O TEXTO DO SMS deve conter no máximo 250 caracteres.")]
         public string MENS_TX_SMS { get; set; }
+        public Nullable<int> TSMS_CD_ID { get; set; }
 
         public Int32? SEXO { get; set; }
         public string NOME { get; set; }
@@ -51,9 +52,15 @@ namespace PlatMensagem_Solution.ViewModels
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM> CRM { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EMAIL_AGENDAMENTO> EMAIL_AGENDAMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MENSAGEM_ANEXO> MENSAGEM_ANEXO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MENSAGENS_DESTINOS> MENSAGENS_DESTINOS { get; set; }
         public virtual TEMPLATE TEMPLATE { get; set; }
         public virtual USUARIO USUARIO { get; set; }
-        public virtual ICollection<MENSAGEM_ANEXO> MENSAGEM_ANEXO { get; set; }
+        public virtual TEMPLATE_SMS TEMPLATE_SMS { get; set; }
     }
 }

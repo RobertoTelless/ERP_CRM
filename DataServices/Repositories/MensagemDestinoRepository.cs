@@ -23,6 +23,7 @@ namespace DataServices.Repositories
             IQueryable<MENSAGENS_DESTINOS> query = Db.MENSAGENS_DESTINOS.Where(p => p.MEDE_IN_ATIVO == id);
             return query.FirstOrDefault();
         }
+
     }
 }
  
