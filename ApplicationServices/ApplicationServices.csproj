@@ -186,6 +186,7 @@
     <Compile Include="Interfaces\IPlanoAppService.cs" />
     <Compile Include="Interfaces\ITarefaAppService.cs" />
     <Compile Include="Interfaces\ITelefoneAppService.cs" />
+    <Compile Include="Interfaces\ITemplateEMailAppService.cs" />
     <Compile Include="Interfaces\ITemplateSMSAppService.cs" />
     <Compile Include="Interfaces\ITemplateAppService.cs" />
     <Compile Include="Interfaces\ITipoPessoaAppService.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Services\PlanoAppService.cs" />
     <Compile Include="Services\TarefaAppService.cs" />
     <Compile Include="Services\TelefoneAppService.cs" />
+    <Compile Include="Services\TemplateEMailAppService.cs" />
     <Compile Include="Services\TemplateSMSAppService.cs" />
     <Compile Include="Services\TemplateAppService.cs" />
     <Compile Include="Services\TipoPessoaAppService.cs" />

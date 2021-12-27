@@ -40,6 +40,7 @@ namespace EntitiesServices.Model
         public string MENS_NM_LINK { get; set; }
         public string MENS_TX_SMS { get; set; }
         public Nullable<int> TSMS_CD_ID { get; set; }
+        public Nullable<int> TEEM_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -53,5 +54,6 @@ namespace EntitiesServices.Model
         public virtual TEMPLATE TEMPLATE { get; set; }
         public virtual USUARIO USUARIO { get; set; }
         public virtual TEMPLATE_SMS TEMPLATE_SMS { get; set; }
+        public virtual TEMPLATE_EMAIL TEMPLATE_EMAIL { get; set; }
     }
 }

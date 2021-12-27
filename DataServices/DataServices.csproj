@@ -214,6 +214,7 @@
     <Compile Include="Repositories\TarefaNotificacaoRepository.cs" />
     <Compile Include="Repositories\TarefaRepository.cs" />
     <Compile Include="Repositories\TelefoneRepository.cs" />
+    <Compile Include="Repositories\TemplateEMailRepository.cs" />
     <Compile Include="Repositories\TemplateSMSRepository.cs" />
     <Compile Include="Repositories\TemplateRepository.cs" />
     <Compile Include="Repositories\TipoPessoaRepository.cs" />

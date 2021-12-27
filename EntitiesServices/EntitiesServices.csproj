@@ -197,6 +197,7 @@
     <Compile Include="EntitiesServices\ServiceBase.cs" />
     <Compile Include="EntitiesServices\TarefaService.cs" />
     <Compile Include="EntitiesServices\TelefoneService.cs" />
+    <Compile Include="EntitiesServices\TemplateEMailService.cs" />
     <Compile Include="EntitiesServices\TemplateSMSService.cs" />
     <Compile Include="EntitiesServices\TemplateService.cs" />
     <Compile Include="EntitiesServices\TipoPessoaService.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="Interfaces\EntitiesServices\IServiceBase.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITarefaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITelefoneService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ITemplateEMailService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITemplateSMSService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITemplateService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITipoPessoaService.cs" />
@@ -273,6 +275,7 @@
     <Compile Include="Interfaces\Repositories\ITarefaNotificacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITarefaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITelefoneRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITemplateEMailRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITemplateSMSRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITemplateRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoPessoaRepository.cs" />
@@ -609,6 +612,9 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TEMPLATE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TEMPLATE_EMAIL.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TEMPLATE_SMS.cs">

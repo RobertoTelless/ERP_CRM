@@ -147,5 +147,6 @@ namespace EntitiesServices.Model
         public virtual DbSet<SEXO> SEXO { get; set; }
         public virtual DbSet<REGIME_TRIBUTARIO> REGIME_TRIBUTARIO { get; set; }
         public virtual DbSet<TEMPLATE_SMS> TEMPLATE_SMS { get; set; }
+        public virtual DbSet<TEMPLATE_EMAIL> TEMPLATE_EMAIL { get; set; }
     }
 }

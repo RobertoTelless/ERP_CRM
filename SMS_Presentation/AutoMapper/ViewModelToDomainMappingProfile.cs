@@ -43,6 +43,7 @@ namespace MvcMapping.Mappers
             CreateMap<FornecedorContatoViewModel, FORNECEDOR_CONTATO>();
             CreateMap<FornecedorComentarioViewModel, FORNECEDOR_COMENTARIO>();
             CreateMap<TemplateSMSViewModel, TEMPLATE_SMS>();
+            CreateMap<TemplateEMailViewModel, TEMPLATE_EMAIL>();
 
         }
     }

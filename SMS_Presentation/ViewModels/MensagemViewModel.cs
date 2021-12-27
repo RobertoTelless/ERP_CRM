@@ -37,6 +37,7 @@ namespace ERP_CRM_Solution.ViewModels
         [StringLength(250, ErrorMessage = "O TEXTO DO SMS deve conter no máximo 250 caracteres.")]
         public string MENS_TX_SMS { get; set; }
         public Nullable<int> TSMS_CD_ID { get; set; }
+        public Nullable<int> TEEM_CD_ID { get; set; }
 
         public Int32? SEXO { get; set; }
         public string NOME { get; set; }
@@ -62,5 +63,6 @@ namespace ERP_CRM_Solution.ViewModels
         public virtual TEMPLATE TEMPLATE { get; set; }
         public virtual USUARIO USUARIO { get; set; }
         public virtual TEMPLATE_SMS TEMPLATE_SMS { get; set; }
+        public virtual TEMPLATE_EMAIL TEMPLATE_EMAIL { get; set; }
     }
 }

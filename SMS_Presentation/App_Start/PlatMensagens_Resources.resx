@@ -270,6 +270,12 @@
   <data name="M0059" xml:space="preserve">
     <value>Não é possível excluir essa Filial. Existem informações vinculadas a ela</value>
   </data>
+  <data name="M0060" xml:space="preserve">
+    <value>Deve ser especificado um arquivo template HTML ou o corpo da mensagem</value>
+  </data>
+  <data name="M0061" xml:space="preserve">
+    <value>Corpo de mansagem especificado sem cabeçalho e área de dados (rodapé)</value>
+  </data>
   <data name="M0073" xml:space="preserve">
     <value>A Senha não pode ficar em branco</value>
   </data>

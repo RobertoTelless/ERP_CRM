@@ -316,6 +316,7 @@
     <Compile Include="Controllers\NotificacaoController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
     <Compile Include="Controllers\TelefoneController.cs" />
+    <Compile Include="Controllers\TemplateEmailController.cs" />
     <Compile Include="Controllers\TemplateSMSController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Extensions\HMTLHelperExtensions.cs" />
@@ -351,6 +352,7 @@
     <Compile Include="ViewModels\TarefaAcompanhamentoViewModel.cs" />
     <Compile Include="ViewModels\TarefaViewModel.cs" />
     <Compile Include="ViewModels\TelefoneViewModel.cs" />
+    <Compile Include="ViewModels\TemplateEmailViewModel.cs" />
     <Compile Include="ViewModels\TemplateSMSViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="ViewModels\UsuarioAnexoViewModel.cs" />
@@ -3013,6 +3015,10 @@
     <Content Include="Views\Mensagem\IncluirMensagemSMS.cshtml" />
     <Content Include="Views\Mensagem\VerAnexoMensagemSMS.cshtml" />
     <Content Include="Views\Mensagem\VerMensagemSMS.cshtml" />
+    <Content Include="Views\TemplateEmail\MontarTelaTemplateEMail.cshtml" />
+    <Content Include="Views\TemplateEmail\IncluirTemplateEMail.cshtml" />
+    <Content Include="Views\TemplateEmail\EditarTemplateEMail.cshtml" />
+    <Content Include="Views\TemplateEmail\VerTemplateEMail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

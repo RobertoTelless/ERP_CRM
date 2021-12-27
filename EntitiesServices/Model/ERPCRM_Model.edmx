@@ -1004,6 +1004,7 @@
           <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
           <Property Name="TEMP_CD_ID" Type="int" />
           <Property Name="TSMS_CD_ID" Type="int" />
+          <Property Name="TEEM_CD_ID" Type="int" />
           <Property Name="MENS_IN_ATIVO" Type="int" />
           <Property Name="MENS_DT_CRIACAO" Type="datetime" />
           <Property Name="MENS_NM_CAMPANHA" Type="varchar" MaxLength="50" />
@@ -1646,6 +1647,21 @@
           <Property Name="TEMP_TX_DADOS" Type="text" />
           <Property Name="TEMP_DT_CRIACAO" Type="date" />
         </EntityType>
+        <EntityType Name="TEMPLATE_EMAIL">
+          <Key>
+            <PropertyRef Name="TEEM_CD_ID" />
+          </Key>
+          <Property Name="TEEM_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" />
+          <Property Name="TEEM_NM_NOME" Type="varchar" MaxLength="50" />
+          <Property Name="TEEM_SG_SIGLA" Type="varchar" MaxLength="10" />
+          <Property Name="TEEM_LK_LINK" Type="varchar" MaxLength="500" />
+          <Property Name="TEEM_IN_ATIVO" Type="int" />
+          <Property Name="TEEM_TX_CABECALHO" Type="text" />
+          <Property Name="TEEM_TX_CORPO" Type="text" />
+          <Property Name="TEEM_TX_DADOS" Type="text" />
+          <Property Name="TEEM_AQ_ARQUIVO" Type="varchar" MaxLength="300" />
+        </EntityType>
         <EntityType Name="TEMPLATE_SMS">
           <Key>
             <PropertyRef Name="TSMS_CD_ID" />
@@ -1655,7 +1671,7 @@
           <Property Name="TSMS_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TSMS_SG_SIGLA" Type="varchar" MaxLength="10" />
           <Property Name="TSMS_TX_CORPO" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="TSMS_LK_LINK" Type="varchar" MaxLength="50" />
+          <Property Name="TSMS_LK_LINK" Type="varchar" MaxLength="500" />
           <Property Name="TSMS_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TIPO_ACAO">
@@ -3536,6 +3552,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MENSAGENS_TEMPLATE_EMAIL">
+          <End Role="TEMPLATE_EMAIL" Type="Self.TEMPLATE_EMAIL" Multiplicity="0..1" />
+          <End Role="MENSAGENS" Type="Self.MENSAGENS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE_EMAIL">
+              <PropertyRef Name="TEEM_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGENS">
+              <PropertyRef Name="TEEM_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MENSAGENS_TEMPLATE_SMS">
           <End Role="TEMPLATE_SMS" Type="Self.TEMPLATE_SMS" Multiplicity="0..1" />
           <End Role="MENSAGENS" Type="Self.MENSAGENS" Multiplicity="*" />
@@ -4424,6 +4452,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TEMPLATE_EMAIL_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
+          <End Role="TEMPLATE_EMAIL" Type="Self.TEMPLATE_EMAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TEMPLATE_EMAIL">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TEMPLATE_SMS_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="TEMPLATE_SMS" Type="Self.TEMPLATE_SMS" Multiplicity="*" />
@@ -4734,6 +4774,7 @@
           <EntitySet Name="TAREFA_VINCULO" EntityType="Self.TAREFA_VINCULO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TELEFONE" EntityType="Self.TELEFONE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TEMPLATE" EntityType="Self.TEMPLATE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TEMPLATE_EMAIL" EntityType="Self.TEMPLATE_EMAIL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TEMPLATE_SMS" EntityType="Self.TEMPLATE_SMS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_ACAO" EntityType="Self.TIPO_ACAO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_CONTA" EntityType="Self.TIPO_CONTA" Schema="dbo" store:Type="Tables" />
@@ -5299,6 +5340,10 @@
             <End Role="TEMPLATE" EntitySet="TEMPLATE" />
             <End Role="MENSAGENS" EntitySet="MENSAGENS" />
           </AssociationSet>
+          <AssociationSet Name="FK_MENSAGENS_TEMPLATE_EMAIL" Association="Self.FK_MENSAGENS_TEMPLATE_EMAIL">
+            <End Role="TEMPLATE_EMAIL" EntitySet="TEMPLATE_EMAIL" />
+            <End Role="MENSAGENS" EntitySet="MENSAGENS" />
+          </AssociationSet>
           <AssociationSet Name="FK_MENSAGENS_TEMPLATE_SMS" Association="Self.FK_MENSAGENS_TEMPLATE_SMS">
             <End Role="TEMPLATE_SMS" EntitySet="TEMPLATE_SMS" />
             <End Role="MENSAGENS" EntitySet="MENSAGENS" />
@@ -5595,6 +5640,10 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="TEMPLATE" EntitySet="TEMPLATE" />
           </AssociationSet>
+          <AssociationSet Name="FK_TEMPLATE_EMAIL_ASSINANTE" Association="Self.FK_TEMPLATE_EMAIL_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TEMPLATE_EMAIL" EntitySet="TEMPLATE_EMAIL" />
+          </AssociationSet>
           <AssociationSet Name="FK_TEMPLATE_SMS_ASSINANTE" Association="Self.FK_TEMPLATE_SMS_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="TEMPLATE_SMS" EntitySet="TEMPLATE_SMS" />
@@ -5797,6 +5846,7 @@
           <NavigationProperty Name="TAREFA" Relationship="ERP_CRMModel.FK_TAREFA_ASSINANTE" FromRole="ASSINANTE" ToRole="TAREFA" />
           <NavigationProperty Name="TIPO_TAREFA" Relationship="ERP_CRMModel.FK_TIPO_TAREFA_ASSINANTE" FromRole="ASSINANTE" ToRole="TIPO_TAREFA" />
           <NavigationProperty Name="TEMPLATE_SMS" Relationship="ERP_CRMModel.FK_TEMPLATE_SMS_ASSINANTE" FromRole="ASSINANTE" ToRole="TEMPLATE_SMS" />
+          <NavigationProperty Name="TEMPLATE_EMAIL" Relationship="ERP_CRMModel.FK_TEMPLATE_EMAIL_ASSINANTE" FromRole="ASSINANTE" ToRole="TEMPLATE_EMAIL" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -6933,6 +6983,8 @@
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_MENSAGENS_USUARIO" FromRole="MENSAGENS" ToRole="USUARIO" />
           <Property Name="TSMS_CD_ID" Type="Int32" />
           <NavigationProperty Name="TEMPLATE_SMS" Relationship="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_SMS" FromRole="MENSAGENS" ToRole="TEMPLATE_SMS" />
+          <Property Name="TEEM_CD_ID" Type="Int32" />
+          <NavigationProperty Name="TEMPLATE_EMAIL" Relationship="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_EMAIL" FromRole="MENSAGENS" ToRole="TEMPLATE_EMAIL" />
         </EntityType>
         <EntityType Name="MENSAGENS_DESTINOS">
           <Key>
@@ -11350,6 +11402,15 @@
             <End Role="TEMPLATE_SMS" EntitySet="TEMPLATE_SMS" />
             <End Role="MENSAGENS" EntitySet="MENSAGENS" />
           </AssociationSet>
+          <EntitySet Name="TEMPLATE_EMAIL" EntityType="ERP_CRMModel.TEMPLATE_EMAIL" />
+          <AssociationSet Name="FK_TEMPLATE_EMAIL_ASSINANTE" Association="ERP_CRMModel.FK_TEMPLATE_EMAIL_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TEMPLATE_EMAIL" EntitySet="TEMPLATE_EMAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MENSAGENS_TEMPLATE_EMAIL" Association="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_EMAIL">
+            <End Role="TEMPLATE_EMAIL" EntitySet="TEMPLATE_EMAIL" />
+            <End Role="MENSAGENS" EntitySet="MENSAGENS" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -11753,7 +11814,7 @@
           <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
           <Property Name="TSMS_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TSMS_TX_CORPO" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="TSMS_LK_LINK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TSMS_LK_LINK" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="TSMS_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_TEMPLATE_SMS_ASSINANTE" FromRole="TEMPLATE_SMS" ToRole="ASSINANTE" />
           <Property Name="TSMS_SG_SIGLA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -11780,6 +11841,47 @@
             </Principal>
             <Dependent Role="MENSAGENS">
               <PropertyRef Name="TSMS_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TEMPLATE_EMAIL">
+          <Key>
+            <PropertyRef Name="TEEM_CD_ID" />
+          </Key>
+          <Property Name="TEEM_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" />
+          <Property Name="TEEM_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TEEM_SG_SIGLA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TEEM_LK_LINK" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TEEM_IN_ATIVO" Type="Int32" />
+          <Property Name="TEEM_TX_CABECALHO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TEEM_TX_CORPO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TEEM_TX_DADOS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TEEM_AQ_ARQUIVO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_TEMPLATE_EMAIL_ASSINANTE" FromRole="TEMPLATE_EMAIL" ToRole="ASSINANTE" />
+          <NavigationProperty Name="MENSAGENS" Relationship="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_EMAIL" FromRole="TEMPLATE_EMAIL" ToRole="MENSAGENS" />
+        </EntityType>
+        <Association Name="FK_TEMPLATE_EMAIL_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.TEMPLATE_EMAIL" Role="TEMPLATE_EMAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TEMPLATE_EMAIL">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MENSAGENS_TEMPLATE_EMAIL">
+          <End Type="ERP_CRMModel.TEMPLATE_EMAIL" Role="TEMPLATE_EMAIL" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.MENSAGENS" Role="MENSAGENS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE_EMAIL">
+              <PropertyRef Name="TEEM_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGENS">
+              <PropertyRef Name="TEEM_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12823,6 +12925,7 @@
           <EntitySetMapping Name="MENSAGENS">
             <EntityTypeMapping TypeName="ERP_CRMModel.MENSAGENS">
               <MappingFragment StoreEntitySet="MENSAGENS">
+                <ScalarProperty Name="TEEM_CD_ID" ColumnName="TEEM_CD_ID" />
                 <ScalarProperty Name="TSMS_CD_ID" ColumnName="TSMS_CD_ID" />
                 <ScalarProperty Name="MENS_CD_ID" ColumnName="MENS_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -13795,6 +13898,22 @@
                 <ScalarProperty Name="TSMS_NM_NOME" ColumnName="TSMS_NM_NOME" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="TSMS_CD_ID" ColumnName="TSMS_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TEMPLATE_EMAIL">
+            <EntityTypeMapping TypeName="ERP_CRMModel.TEMPLATE_EMAIL">
+              <MappingFragment StoreEntitySet="TEMPLATE_EMAIL">
+                <ScalarProperty Name="TEEM_AQ_ARQUIVO" ColumnName="TEEM_AQ_ARQUIVO" />
+                <ScalarProperty Name="TEEM_TX_DADOS" ColumnName="TEEM_TX_DADOS" />
+                <ScalarProperty Name="TEEM_TX_CORPO" ColumnName="TEEM_TX_CORPO" />
+                <ScalarProperty Name="TEEM_TX_CABECALHO" ColumnName="TEEM_TX_CABECALHO" />
+                <ScalarProperty Name="TEEM_IN_ATIVO" ColumnName="TEEM_IN_ATIVO" />
+                <ScalarProperty Name="TEEM_LK_LINK" ColumnName="TEEM_LK_LINK" />
+                <ScalarProperty Name="TEEM_SG_SIGLA" ColumnName="TEEM_SG_SIGLA" />
+                <ScalarProperty Name="TEEM_NM_NOME" ColumnName="TEEM_NM_NOME" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="TEEM_CD_ID" ColumnName="TEEM_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
