@@ -21,6 +21,7 @@ namespace ApplicationServices.Interfaces
         MENSAGENS CheckExist(MENSAGENS conta, Int32 idAss);
         MENSAGEM_ANEXO GetAnexoById(Int32 id);
         Int32 ExecuteFilterSMS(DateTime? envio, Int32 cliente, String texto, Int32 idAss, out List<MENSAGENS> objeto);
+        Int32 ExecuteFilterEMail(DateTime? envio, Int32 cliente, String texto, Int32 idAss, out List<MENSAGENS> objeto);
 
         List<CATEGORIA_CLIENTE> GetAllTipos(Int32 idAss);
         List<UF> GetAllUF();

@@ -102,6 +102,11 @@ namespace ModelServices.EntitiesServices
             return _baseRepository.ExecuteFilterSMS(envio, cliente, texto, idAss);
         }
 
+        public List<MENSAGENS> ExecuteFilterEMail(DateTime? envio, Int32 cliente, String texto, Int32 idAss)
+        {
+            return _baseRepository.ExecuteFilterEMail(envio, cliente, texto, idAss);
+        }
+
         public Int32 Create(MENSAGENS item, LOG log)
         {
             using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))

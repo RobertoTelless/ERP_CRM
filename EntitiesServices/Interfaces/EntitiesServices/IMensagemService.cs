@@ -22,6 +22,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<MENSAGENS> GetAllItensAdm(Int32 idAss);
         MENSAGEM_ANEXO GetAnexoById(Int32 id);
         List<MENSAGENS> ExecuteFilterSMS(DateTime? envio, Int32 cliente, String texto, Int32 idAss);
+        List<MENSAGENS> ExecuteFilterEMail(DateTime? envio, Int32 cliente, String texto, Int32 idAss);
 
         List<TEMPLATE_SMS> GetAllTemplatesSMS(Int32 idAss);
         List<UF> GetAllUF();

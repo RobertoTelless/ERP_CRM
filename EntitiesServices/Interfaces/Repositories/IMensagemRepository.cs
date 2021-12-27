@@ -14,6 +14,7 @@ namespace ModelServices.Interfaces.Repositories
         List<MENSAGENS> GetAllItens(Int32 idAss);
         List<MENSAGENS> GetAllItensAdm(Int32 idAss);
         List<MENSAGENS> ExecuteFilterSMS(DateTime? envio, Int32 cliente, String texto, Int32 idAss);
-    
+        List<MENSAGENS> ExecuteFilterEMail(DateTime? envio, Int32 cliente, String texto, Int32 idAss);
+
     }
 }

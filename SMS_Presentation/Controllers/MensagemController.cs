@@ -1076,6 +1076,300 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VoltarAnexoMensagemSMS");
         }
 
+        [HttpGet]
+        public ActionResult MontarTelaMensagemEMail()
+        {
+
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+                if ((Int32)Session["PermMens"] == 0)
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+
+            // Carrega listas
+            if ((List<MENSAGENS>)Session["ListaMensagem"] == null)
+            {
+                listaMaster = baseApp.GetAllItens(idAss).Where(p => p.MENS_IN_TIPO == 1 & p.MENS_DT_ENVIO.Value.Month == DateTime.Today.Date.Month).OrderByDescending(m => m.MENS_DT_ENVIO).ToList();
+                Session["ListaMensagem"] = listaMaster;
+            }
+            ViewBag.Listas = (List<MENSAGENS>)Session["ListaMensagem"];
+            Session["Mensagem"] = null;
+            Session["IncluirMensagem"] = 0;
+
+            // Indicadores
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
+            if (Session["MensMensagem"] != null)
+            {
+                if ((Int32)Session["MensMensagem"] == 2)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensMensagem"] == 51)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0054", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // Abre view
+            Session["VoltaMensagem"] = 1;
+            objeto = new MENSAGENS();
+            if (Session["FiltroMensagem"] != null)
+            {
+                objeto = (MENSAGENS)Session["FiltroMensagem"];
+            }
+            return View(objeto);
+        }
+
+        public ActionResult RetirarFiltroMensagemEMail()
+        {
+
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PermMens"] == 0)
+            {
+                Session["MensPermissao"] = 2;
+                return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Session["ListaMensagem"] = null;
+            Session["FiltroMensagem"] = null;
+            return RedirectToAction("MontarTelaMensagemEMail");
+        }
+
+        public ActionResult MostrarTudoMensagemEMail()
+        {
+
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PermMens"] == 0)
+            {
+                Session["MensPermissao"] = 2;
+                return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            listaMaster = baseApp.GetAllItensAdm(idAss).Where(p => p.MENS_IN_TIPO == 2 & p.MENS_DT_ENVIO.Value.Month == DateTime.Today.Date.Month).OrderByDescending(m => m.MENS_DT_ENVIO).ToList();
+            Session["ListaMensagem"] = null;
+            Session["FiltroMensagem"] = listaMaster;
+            return RedirectToAction("MontarTelaMensagemEMail");
+        }
+
+        public ActionResult MostrarMesesMensagemEMail()
+        {
+
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PermMens"] == 0)
+            {
+                Session["MensPermissao"] = 2;
+                return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            listaMaster = baseApp.GetAllItens(idAss).Where(p => p.MENS_IN_TIPO == 1).OrderByDescending(m => m.MENS_DT_ENVIO).ToList();
+            Session["ListaMensagem"] = null;
+            Session["FiltroMensagem"] = listaMaster;
+            return RedirectToAction("MontarTelaMensagemEMail");
+        }
+
+        [HttpPost]
+        public ActionResult FiltrarMensagemEMail(MENSAGENS item)
+        {
+
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PermMens"] == 0)
+            {
+                Session["MensPermissao"] = 2;
+                return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            try
+            {
+                // Executa a operação
+                List<MENSAGENS> listaObj = new List<MENSAGENS>();
+                Session["FiltroMensagem"] = item;
+                Int32 volta = baseApp.ExecuteFilterEMail(item.MENS_DT_ENVIO, item.MENS_IN_ATIVO.Value, item.MENS_TX_TEXTO, idAss, out listaObj);
+
+                // Verifica retorno
+                if (volta == 1)
+                {
+                }
+
+                // Sucesso
+                listaMaster = listaObj;
+                Session["ListaMensagem"] = listaObj;
+                return RedirectToAction("MontarTelaMensagemSMS");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return RedirectToAction("MontarTelaMensagem");
+            }
+        }
+
+        public ActionResult VoltarBaseMensagemEMail()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PermMens"] == 0)
+            {
+                Session["MensPermissao"] = 2;
+                return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            return RedirectToAction("MontarTelaMensagemEMail");
+        }
+
+        public ActionResult VoltarMensagemAnexoEMail()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PermMens"] == 0)
+            {
+                Session["MensPermissao"] = 2;
+                return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Int32 volta = (Int32)Session["VoltaMensagem"];
+            if (volta == 1)
+            {
+                return RedirectToAction("MontarTelaMensagemEMail");
+            }
+            else if (volta == 2)
+            {
+                return RedirectToAction("VoltarAnexoCliente", "Cliente");
+            }
+            else if (volta == 3)
+            {
+                return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            return RedirectToAction("MontarTelaMensagemEMail");
+        }
+
+        [HttpGet]
+        public ActionResult ExcluirMensagemEMail(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PermMens"] == 0)
+            {
+                Session["MensPermissao"] = 2;
+                return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensMensagem"] = 2;
+                    return RedirectToAction("VoltarBaseMensagemEMail");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            MENSAGENS item = baseApp.GetItemById(id);
+            item.MENS_IN_ATIVO = 0;
+            Int32 volta = baseApp.ValidateDelete(item, usuario);
+            Session["ListaMensagem"] = null;
+            return RedirectToAction("VoltarBaseMensagemEMail");
+        }
+
+        [HttpGet]
+        public ActionResult ReativarMensagemEMail(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PermMens"] == 0)
+            {
+                Session["MensPermissao"] = 2;
+                return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensMensagem"] = 2;
+                    return RedirectToAction("VoltarBaseMensagemEMail");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            MENSAGENS item = baseApp.GetItemById(id);
+            item.MENS_IN_ATIVO = 1;
+            Int32 volta = baseApp.ValidateReativar(item, usuario);
+            Session["ListaMensagem"] = null;
+            return RedirectToAction("VoltarBaseMensagemEMail");
+        }
+
+        public JsonResult PesquisaTemplateEMail(String temp)
+        {
+            // Recupera Template
+            TEMPLATE_EMAIL tmp = temApp.GetItemById(Convert.ToInt32(temp));
+
+            // Atualiza
+            var hash = new Hashtable();
+            hash.Add("TSMS_TX_CORPO", tmp.TSMS_TX_CORPO);
+            hash.Add("TSMS_LK_LINK", tmp.TSMS_LK_LINK);
+
+            // Retorna
+            return Json(hash);
+        }
 
 
 

@@ -103,6 +103,27 @@ namespace ApplicationServices.Services
             }
         }
 
+        public Int32 ExecuteFilterEMail(DateTime? envio, Int32 cliente, String texto, Int32 idAss, out List<MENSAGENS> objeto)
+        {
+            try
+            {
+                objeto = new List<MENSAGENS>();
+                Int32 volta = 0;
+
+                // Processa filtro
+                objeto = _baseService.ExecuteFilterSMS(envio, cliente, texto, idAss);
+                if (objeto.Count == 0)
+                {
+                    volta = 1;
+                }
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public Int32 ValidateCreate(MENSAGENS item, USUARIO usuario)
         {
             try
