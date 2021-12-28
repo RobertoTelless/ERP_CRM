@@ -170,6 +170,7 @@
     <Compile Include="Interfaces\IAppServiceBase.cs" />
     <Compile Include="Interfaces\IAssinanteAppService.cs" />
     <Compile Include="Interfaces\IAssinanteCnpjAppService.cs" />
+    <Compile Include="Interfaces\ICRMAppService.cs" />
     <Compile Include="Interfaces\IEMailAgendaAppService.cs" />
     <Compile Include="Interfaces\ICategoriaTelefoneAppService.cs" />
     <Compile Include="Interfaces\IClienteAppService.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Services\AppServiceBase.cs" />
     <Compile Include="Services\AssinanteAppService.cs" />
     <Compile Include="Services\AssinanteCnpjAppService.cs" />
+    <Compile Include="Services\CRMAppService.cs" />
     <Compile Include="Services\EMailAgendaAppService.cs" />
     <Compile Include="Services\CategoriaTelefoneAppService.cs" />
     <Compile Include="Services\ClienteAppService.cs" />

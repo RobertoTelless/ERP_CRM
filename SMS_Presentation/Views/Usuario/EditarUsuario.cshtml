@@ -470,7 +470,206 @@
                             @*Indicadores*@
                             <div id="tab-5" class="tab-pane">
                                 <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5>Mensagens Enviadas</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    <h1 class="no-margins">@Model.MENSAGENS.Count</h1>
+                                                    <small>E-Mails e SMS</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5><a href="@Url.Action("MontarTelaNotificacao", "Notificacao")" class="pull-left btn-link"><u>Últimas Notificações</u></a></h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.NOTIFICACAO.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Data</th>
+                                                                    <th>Título</th>
+                                                                    <th>Categoria</th>
+                                                                    <th>Lida</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.NOTIFICACAO.OrderByDescending(a => a.NOTI_DT_EMISSAO).Take(5)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.NOTI_DT_EMISSAO.Value.ToShortDateString()</td>
+                                                                        <td>@cond.NOTI_NM_TITULO</td>
+                                                                        <td>@cond.CATEGORIA_NOTIFICACAO.CANO_NM_NOME</td>
+                                                                        @if (cond.NOTI_IN_VISTA == 1)
+                                                                        {
+                                                                            <td><span class="badge badge-success">Lida</span></td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td><span class="badge badge-warning">Não Lida</span></td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5><a href="@Url.Action("MontarTelaCRM", "CRM")" class="pull-left btn-link"><u>Últimos Processos CRM</u></a></h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.CRM.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Data</th>
+                                                                    <th>Nome</th>
+                                                                    <th>Status</th>
+                                                                    <th>Situação</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.CRM.OrderByDescending(a => a.NOTI_DT_EMISSAO).Take(5)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.NOTI_DT_EMISSAO.Value.ToShortDateString()</td>
+                                                                        <td>@cond.NOTI_NM_TITULO</td>
+                                                                        <td>@cond.CATEGORIA_NOTIFICACAO.CANO_NM_NOME</td>
+                                                                        @if (cond.NOTI_IN_VISTA == 1)
+                                                                        {
+                                                                            <td><span class="badge badge-success">Lida</span></td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td><span class="badge badge-warning">Não Lida</span></td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5><a href="@Url.Action("MontarTelaAgendaCalendario", "Agenda")" class="pull-left btn-link"><u>Últimos Agendamentos</u></a></h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.AGENDA.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Data</th>
+                                                                    <th>Título</th>
+                                                                    <th>Categoria</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.AGENDA.OrderByDescending(a => a.AGEN_DT_DATA).Take(5)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.AGEN_DT_DATA.ToShortDateString()</td>
+                                                                        <td>@cond.AGEN_NM_TITULO</td>
+                                                                        <td>@cond.CATEGORIA_AGENDA.CAAG_NM_NOME</td>
+                                                                        @if (cond.AGEN_IN_STATUS == 1)
+                                                                        {
+                                                                            <td><span class="badge badge-primary">Ativo</span></td>
+                                                                        }
+                                                                        else if (cond.AGEN_IN_STATUS == 2)
+                                                                        {
+                                                                            <td><span class="badge badge-warning">Suspenso</span></td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td><span class="badge badge-sucess">Encerrado</span></td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5><a href="@Url.Action("MontarTelaTarefaKanban", "Tarefa")" class="pull-left btn-link"><u>Últimas Tarefas</u></a></h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.TAREFA.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Data Prevista</th>
+                                                                    <th>Título</th>
+                                                                    <th>Tipo</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.TAREFA.OrderByDescending(a => a.TARE_DT_ESTIMADA).Take(5)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.TARE_DT_ESTIMADA.Value.ToShortDateString()</td>
+                                                                        <td>@cond.TARE_NM_TITULO</td>
+                                                                        <td>@cond.TIPO_TAREFA.TITR_NM_NOME</td>
+                                                                        @if (cond.TARE_IN_STATUS == 1)
+                                                                        {
+                                                                            <td><span class="badge badge-warning">Pendente</span></td>
+                                                                        }
+                                                                        else if (cond.TARE_IN_STATUS == 2)
+                                                                        {
+                                                                            <td><span class="badge badge-primary">Em Andamento</span></td>
+                                                                        }
+                                                                        else if (cond.TARE_IN_STATUS == 3)
+                                                                        {
+                                                                            <td><span class="badge badge-warning">Suspensa</span></td>
+                                                                        }
+                                                                        else if (cond.TARE_IN_STATUS == 4)
+                                                                        {
+                                                                            <td><span class="badge badge-danger">Cancelada</span></td>
+                                                                        }
+                                                                        else if (cond.TARE_IN_STATUS == 5)
+                                                                        {
+                                                                            <td><span class="badge badge-success">Encerrada</span></td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
 
+
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -21,10 +21,10 @@ namespace MvcMapping.Mappers
             CreateMap<GrupoViewModel, GRUPO>();
             CreateMap<GrupoContatoViewModel, GRUPO_CLIENTE>();
             CreateMap<TemplateViewModel, TEMPLATE>();
-            //CreateMap<CRMViewModel, CRM>();
-            //CreateMap<CRMContatoViewModel, CRM_CONTATO>();
-            //CreateMap<CRMComentarioViewModel, CRM_COMENTARIO>();
-            //CreateMap<CRMAcaoViewModel, CRM_ACAO>();
+            CreateMap<CRMViewModel, CRM>();
+            CreateMap<CRMContatoViewModel, CRM_CONTATO>();
+            CreateMap<CRMComentarioViewModel, CRM_COMENTARIO>();
+            CreateMap<CRMAcaoViewModel, CRM_ACAO>();
             CreateMap<AgendaViewModel, AGENDA>();
             CreateMap<PlanoViewModel, PLANO>();
             CreateMap<AssinanteViewModel, ASSINANTE>();

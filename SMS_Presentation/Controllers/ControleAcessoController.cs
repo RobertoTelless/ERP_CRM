@@ -184,6 +184,8 @@ namespace ERP_CRM_Solution.Controllers
                     if (item.PLANO.PLAN_IN_CRM == 1)
                     {
                         Session["PermCRM"] = 1;
+                        Session["NumProc"] = item.PLANO.PLAN_NR_PROCESSOS;
+                        Session["NumAcoes"] = item.PLANO.PLAN_NR_ACOES;
                     }
                     if (item.PLANO.PLAN_IN_POSVENDA == 1)
                     {

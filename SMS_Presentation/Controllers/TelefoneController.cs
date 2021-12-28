@@ -22,6 +22,7 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using Canducci.Zip;
+using CrossCutting;
 
 namespace ERP_CRM_Solution.Controllers
 {
@@ -108,47 +109,33 @@ namespace ERP_CRM_Solution.Controllers
 
                 // Monta texto
                 String texto = mensagem;
-                //texto = texto.Replace("{Cliente}", clie.CLIE_NM_NOME);
+                String resposta = String.Empty;
 
                 // inicia processo
-                List<String> resposta = new List<string>();
-                WebRequest request = WebRequest.Create("https://api.smsfire.com.br/v1/sms/send");
-                request.Headers["Authorization"] = auth;
-                request.Method = "POST";
-                request.ContentType = "application/json";
-
-                // Monta destinatarios
                 String listaDest = "55" + Regex.Replace(forn.TELE_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
+                httpWebRequest.Headers["Authorization"] = auth;
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+                String customId = Cryptography.GenerateRandomPassword(8);
+                String data = String.Empty;
+                String json = String.Empty;
 
-                // Processa lista
-                String responseFromServer = null;
-                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    String campanha = "ERP";
-
-                    String json = null;
-                    json = "{\"to\":[\"" + listaDest + "\"]," +
-                            "\"from\":\"SMSFire\", " +
-                            "\"campaignName\":\"" + campanha + "\", " +
-                            "\"text\":\"" + texto + "\"} ";
-
+                    json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
                     streamWriter.Write(json);
-                    streamWriter.Close();
-                    streamWriter.Dispose();
                 }
 
-                WebResponse response = request.GetResponse();
-                resposta.Add(response.ToString());
-
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                responseFromServer = reader.ReadToEnd();
-                resposta.Add(responseFromServer);
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    resposta = result;
+                }
 
                 // Saída
-                reader.Close();
-                response.Close();
-                Session["MensSMSForn"] = 200;
+                    Session["MensSMSForn"] = 200;
                 return RedirectToAction("MontarTelaTelefone");
             }
             catch (Exception ex)

@@ -307,6 +307,7 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ConfiguracaoController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
+    <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Controllers\FilialController.cs" />
     <Compile Include="Controllers\FornecedorController.cs" />
     <Compile Include="Controllers\GrupoController.cs" />
@@ -335,6 +336,11 @@
     <Compile Include="ViewModels\ClienteTagViewModel.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
     <Compile Include="ViewModels\ConfiguracaoViewModel.cs" />
+    <Compile Include="ViewModels\CRMAcaoViewModel.cs" />
+    <Compile Include="ViewModels\CRMComentarioViewModel.cs" />
+    <Compile Include="ViewModels\CRMContatoViewModel.cs" />
+    <Compile Include="ViewModels\CRMDTOViewModel.cs" />
+    <Compile Include="ViewModels\CRMViewModel.cs" />
     <Compile Include="ViewModels\FilialViewModel.cs" />
     <Compile Include="ViewModels\FornecedorComentarioViewModel.cs" />
     <Compile Include="ViewModels\FornecedorContatoViewModel.cs" />
@@ -3024,12 +3030,34 @@
     <Content Include="Views\Mensagem\VerEMailAgendados.cshtml" />
     <Content Include="Views\Mensagem\VerAnexoMensagem.cshtml" />
     <Content Include="Views\Mensagem\VerMensagemEMail.cshtml" />
+    <Content Include="Views\CRM\MontarTelaCRM.cshtml" />
+    <Content Include="Views\CRM\MontarTelaKanbanCRM.cshtml" />
+    <Content Include="Views\CRM\IncluirProcessoCRM.cshtml" />
+    <Content Include="Views\CRM\VerAnexoCRM.cshtml" />
+    <Content Include="Views\CRM\CancelarProcessoCRM.cshtml" />
+    <Content Include="Views\CRM\EncerrarProcessoCRM.cshtml" />
+    <Content Include="Views\CRM\EditarProcessoCRM.cshtml" />
+    <Content Include="Views\CRM\VisualizarProcessoCRM.cshtml" />
+    <Content Include="Views\CRM\EditarContato.cshtml" />
+    <Content Include="Views\CRM\IncluirContato.cshtml" />
+    <Content Include="Views\CRM\AcompanhamentoProcessoCRM.cshtml" />
+    <Content Include="Views\CRM\EnviarEMailContato.cshtml" />
+    <Content Include="Views\CRM\EnviarSMSContato.cshtml" />
+    <Content Include="Views\CRM\IncluirComentarioCRM.cshtml" />
+    <Content Include="Views\CRM\EditarAcao.cshtml" />
+    <Content Include="Views\CRM\VerAcao.cshtml" />
+    <Content Include="Views\CRM\VerAcoesUsuarioCRM.cshtml" />
+    <Content Include="Views\CRM\IncluirAcao.cshtml" />
+    <Content Include="Views\CRM\VerCRMExpansao.cshtml" />
+    <Content Include="Views\CRM\VerProcessosStatusExpansao.cshtml" />
+    <Content Include="Views\CRM\EnviarEMailCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
     <Folder Include="Imagens\1\Agenda\" />
     <Folder Include="Imagens\1\Clientes\" />
+    <Folder Include="Imagens\1\CRM\" />
     <Folder Include="Imagens\1\Equipamento\" />
     <Folder Include="Imagens\1\Filial\" />
     <Folder Include="Imagens\1\Fornecedores\" />

@@ -99,7 +99,7 @@ namespace ERP_CRM_Solution.Controllers
 
             if (Session["FiltroAgendaCalendario"] == null)
             {
-                listaMasterCalendario = baseApp.GetByUser(usuario.USUA_CD_ID, idAss);
+                listaMasterCalendario = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).Where(p => p.AGEN_IN_CORPORATIVA == 0).ToList();
                 Session["FiltroAgendaCalendario"] = listaMaster;
             }
 
@@ -115,7 +115,7 @@ namespace ERP_CRM_Solution.Controllers
 
             if (Session["ListaAgenda"] == null)
             {
-                listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss);
+                listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).Where(p => p.AGEN_IN_CORPORATIVA == 0).ToList();
                 Session["ListaAgenda"] = listaMaster;
             }
 
@@ -184,7 +184,14 @@ namespace ERP_CRM_Solution.Controllers
             // Carrega listas
             if (Session["ListaAgenda"] == null)
             {
-                listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss);
+                if ((Int32)Session["AgendaCorp"] == 0)
+                {
+                    listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).Where(p => p.AGEN_IN_CORPORATIVA == 0).ToList();
+                }
+                else
+                {
+                    listaMaster = baseApp.GetAllItens(idAss).Where(p => p.AGEN_IN_CORPORATIVA == 1).ToList();
+                }
                 Session["ListaAgenda"] = listaMaster;
             }
             ViewBag.Listas = ((List<AGENDA>)Session["ListaAgenda"]).OrderBy(x => x.AGEN_DT_DATA.Date).ThenBy(x => x.AGEN_HR_HORA).ToList<AGENDA>();
@@ -203,6 +210,13 @@ namespace ERP_CRM_Solution.Controllers
             objeto.AGEN_DT_DATA = DateTime.Today.Date;
             Session["VoltaAgenda"] = 1;
             return View(objeto);
+        }
+
+        [HttpGet]
+        public ActionResult MontarTelaAgendaCorp() 
+        {
+            Session["AgendaCorp"] = 1;
+            return RedirectToAction("MontarTelaAgenda");
         }
 
         public ActionResult RetirarFiltroAgenda()
@@ -228,7 +242,14 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             USUARIO usuario = (USUARIO)Session["UserCredentials"];
 
-            listaMaster = baseApp.GetAllItensAdm(idAss).Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID).ToList();
+            if ((Int32)Session["AgendaCorp"] == 0)
+            {
+                listaMaster = baseApp.GetAllItensAdm(idAss).Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID & p.AGEN_IN_CORPORATIVA == 0).ToList();
+            }
+            else
+            {
+                listaMaster = baseApp.GetAllItensAdm(idAss).Where(p => p.AGEN_IN_CORPORATIVA == 1).ToList();
+            }
             Session["ListaAgenda"] = listaMaster;
             if ((Int32)Session["VoltaAgenda"] == 2)
             {
@@ -251,7 +272,7 @@ namespace ERP_CRM_Solution.Controllers
                 USUARIO usuario = (USUARIO)Session["UserCredentials"];
                 List<AGENDA> listaObj = new List<AGENDA>();
                 Session["FiltroAgenda"] = item;
-                Int32 volta = baseApp.ExecuteFilter(item.AGEN_DT_DATA, item.CAAG_CD_ID, item.AGEN_NM_TITULO, item.AGEN_DS_DESCRICAO, idAss, usuario.USUA_CD_ID, out listaObj);
+                Int32 volta = baseApp.ExecuteFilter(item.AGEN_DT_DATA, item.CAAG_CD_ID, item.AGEN_NM_TITULO, item.AGEN_DS_DESCRICAO, idAss, usuario.USUA_CD_ID, item.AGEN_IN_CORPORATIVA, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)
@@ -322,6 +343,7 @@ namespace ERP_CRM_Solution.Controllers
             vm.AGEN_IN_ATIVO = 1;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             vm.AGEN_IN_STATUS = 1;
+            vm.AGEN_IN_CORPORATIVA = (Int32)Session["AgendaCorp"];
             return View(vm);
         }
 
@@ -409,6 +431,7 @@ namespace ERP_CRM_Solution.Controllers
                 item.AGEN_CD_USUARIO = obj.AGEN_CD_USUARIO;
                 item.AGEN_TX_OBSERVACOES = obj.AGEN_TX_OBSERVACOES;
                 item.AGEN_IN_STATUS = obj.AGEN_IN_STATUS;
+                item.AGEN_IN_CORPORATIVA = obj.AGEN_IN_CORPORATIVA;
 
                 Int32 volta = baseApp.ValidateEdit(item, obj, usu);
 
@@ -756,11 +779,11 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "CAAG_CD_ID", "CAAG_NM_NOME");
             if (Session["ListaAgendaTimeLine"] == null)
             {
-                Session["ListaAgendaTimeLine"] = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).Where(x => x.AGEN_DT_DATA.Date == DateTime.Now.Date).ToList<AGENDA>();
+                Session["ListaAgendaTimeLine"] = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).Where(x => x.AGEN_DT_DATA.Date == DateTime.Now.Date & x.AGEN_IN_CORPORATIVA == 0).ToList<AGENDA>();
             }
             if (((List<AGENDA>)Session["ListaAgendaTimeLine"]).Count == 0)
             {
-                Session["ListaAgendaTimeLine"] = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).Where(x => x.AGEN_DT_DATA.Date == DateTime.Now.Date).ToList<AGENDA>();
+                Session["ListaAgendaTimeLine"] = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).Where(x => x.AGEN_DT_DATA.Date == DateTime.Now.Date  & x.AGEN_IN_CORPORATIVA == 0).ToList<AGENDA>();
             }
 
             if (Session["ListaAgendaTimeLine"] == null || ((List<AGENDA>)Session["ListaAgendaTimeLine"]).Count == 0)

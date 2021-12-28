@@ -179,6 +179,7 @@
     <Compile Include="EntitiesServices\AgendaService.cs" />
     <Compile Include="EntitiesServices\AssinanteCnpjService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
+    <Compile Include="EntitiesServices\CRMService.cs" />
     <Compile Include="EntitiesServices\EMailAgendaService.cs" />
     <Compile Include="EntitiesServices\CategoriaTelefoneService.cs" />
     <Compile Include="EntitiesServices\ClienteCnpjService.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Interfaces\EntitiesServices\IAgendaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteCnpjService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ICRMService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IEMailAgendaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaTelefoneService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IClienteCnpjService.cs" />
@@ -238,6 +240,12 @@
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICargoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMAcaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMComentarioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMContatoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMOrigemRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEMailAgendaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorCnpjRepository.cs" />
@@ -248,6 +256,8 @@
     <Compile Include="Interfaces\Repositories\IMensagemAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMensagemDestinoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMensagemRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMotivoCancelamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMotivoEncerramentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRegimeTributarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaAgendaRepository.cs" />
@@ -281,6 +291,8 @@
     <Compile Include="Interfaces\Repositories\ITemplateEMailRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITemplateSMSRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITemplateRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoAcaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoCRMRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoPessoaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoContribuinteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoTarefaRepository.cs" />

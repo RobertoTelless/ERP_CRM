@@ -21,6 +21,7 @@
           <Property Name="AGEN_CD_USUARIO" Type="int" />
           <Property Name="AGEN_TX_OBSERVACOES" Type="text" />
           <Property Name="AGEN_IN_STATUS" Type="int" />
+          <Property Name="AGEN_IN_CORPORATIVA" Type="int" />
         </EntityType>
         <EntityType Name="AGENDA_ANEXO">
           <Key>
@@ -5739,6 +5740,7 @@
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_AGENDA_USUARIO" FromRole="AGENDA" ToRole="USUARIO" />
           <NavigationProperty Name="USUARIO1" Relationship="Self.FK_AGENDA_USUARIO1" FromRole="AGENDA" ToRole="USUARIO" />
           <NavigationProperty Name="AGENDA_VINCULO" Relationship="Self.FK_AGENDA_VINCULO_AGENDA" FromRole="AGENDA" ToRole="AGENDA_VINCULO" />
+          <Property Name="AGEN_IN_CORPORATIVA" Type="Int32" />
         </EntityType>
         <EntityType Name="AGENDA_ANEXO">
           <Key>
@@ -11894,6 +11896,7 @@
           <EntitySetMapping Name="AGENDA">
             <EntityTypeMapping TypeName="ERP_CRMModel.AGENDA">
               <MappingFragment StoreEntitySet="AGENDA">
+                <ScalarProperty Name="AGEN_IN_CORPORATIVA" ColumnName="AGEN_IN_CORPORATIVA" />
                 <ScalarProperty Name="AGEN_CD_ID" ColumnName="AGEN_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
