@@ -44,7 +44,8 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IConfiguracaoAppService confApp;
         private readonly ITemplateSMSAppService temApp;
         private readonly IGrupoAppService gruApp;
-        //private readonly IEMailAgendaAppService emApp;
+        private readonly ITemplateEMailAppService temaApp;
+        private readonly IEMailAgendaAppService emApp;
         //private readonly ICRMAppService crmApp;
 
         private String msg;
@@ -55,7 +56,7 @@ namespace ERP_CRM_Solution.Controllers
         List<MENSAGENS> listaMaster = new List<MENSAGENS>();
         String extensao;
 
-        public MensagemController(IMensagemAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IClienteAppService cliApps, IConfiguracaoAppService confApps, ITemplateSMSAppService temApps, IGrupoAppService gruApps)
+        public MensagemController(IMensagemAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IClienteAppService cliApps, IConfiguracaoAppService confApps, ITemplateSMSAppService temApps, IGrupoAppService gruApps, ITemplateEMailAppService temaApps, IEMailAgendaAppService emApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -64,7 +65,8 @@ namespace ERP_CRM_Solution.Controllers
             confApp = confApps;
             temApp = temApps;
             gruApp = gruApps;
-            //emApp = emApps;
+            temaApp = temaApps;
+            emApp = emApps;
             //crmApp = crmApps;
         }
 
@@ -487,6 +489,7 @@ namespace ERP_CRM_Solution.Controllers
             vm.MENS_IN_ATIVO = 1;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             vm.MENS_IN_TIPO = 2;
+            vm.MENS_TX_SMS = body;
             return View(vm);
         }
 
@@ -991,7 +994,7 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpGet]
-        public ActionResult ConverterMensagemCRM(Int32 id)
+        public ActionResult ConverterMensagemCRMSMS(Int32 id)
         {
             // Recupera Mensagem e contato
             MENSAGENS_DESTINOS dest = baseApp.GetDestinoById(id);
@@ -1020,6 +1023,38 @@ namespace ERP_CRM_Solution.Controllers
             // Retorno
             Session["MensMensagem"] = 40;
             return RedirectToAction("VoltarAnexoMensagemSMS");
+        }
+
+        [HttpGet]
+        public ActionResult ConverterMensagemCRMEMail(Int32 id)
+        {
+            // Recupera Mensagem e contato
+            MENSAGENS_DESTINOS dest = baseApp.GetDestinoById(id);
+            MENSAGENS mensagem = baseApp.GetItemById(dest.MENS_CD_ID);
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Cria CRM
+            CRM crm = new CRM();
+            crm.ASSI_CD_ID = mensagem.ASSI_CD_ID;
+            crm.CLIE_CD_ID = (Int32)Session["IdCliente"];
+            crm.CRM1_DS_DESCRICAO = "Processo criado a partir de mensagem";
+            crm.CRM1_DT_CRIACAO = DateTime.Today.Date;
+            crm.CRM1_IN_ATIVO = 1;
+            crm.CRM1_IN_STATUS = 1;
+            crm.CRM1_NM_NOME = "Processo criado a partir de mensagem";
+            crm.TICR_CD_ID = 1;
+            crm.USUA_CD_ID = usuario.USUA_CD_ID;
+            crm.MENS_CD_ID = mensagem.MENS_CD_ID;
+            crm.ORIG_CD_ID = 1;
+            //Int32 volta = crmApp.ValidateCreate(crm, usuario);
+
+            // Atualiza mensagem
+            dest.MEDE_IN_POSICAO = 4;
+            Int32 volta1 = baseApp.ValidateEditDestino(dest);
+
+            // Retorno
+            Session["MensMensagem"] = 40;
+            return RedirectToAction("VoltarAnexoMensagemEMail");
         }
 
         [HttpGet]
@@ -1121,7 +1156,7 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("CarregarBase", "BaseAdmin");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            listaMaster = baseApp.GetAllItensAdm(idAss).Where(p => p.MENS_IN_TIPO == 2 & p.MENS_DT_ENVIO.Value.Month == DateTime.Today.Date.Month).OrderByDescending(m => m.MENS_DT_ENVIO).ToList();
+            listaMaster = baseApp.GetAllItensAdm(idAss).Where(p => p.MENS_IN_TIPO == 1 & p.MENS_DT_ENVIO.Value.Month == DateTime.Today.Date.Month).OrderByDescending(m => m.MENS_DT_ENVIO).ToList();
             Session["ListaMensagem"] = null;
             Session["FiltroMensagem"] = listaMaster;
             return RedirectToAction("MontarTelaMensagemEMail");
@@ -1175,12 +1210,12 @@ namespace ERP_CRM_Solution.Controllers
                 // Sucesso
                 listaMaster = listaObj;
                 Session["ListaMensagem"] = listaObj;
-                return RedirectToAction("MontarTelaMensagemSMS");
+                return RedirectToAction("MontarTelaMensagemEmail");
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction("MontarTelaMensagem");
+                return RedirectToAction("MontarTelaMensagemEmail");
             }
         }
 
@@ -1306,18 +1341,1002 @@ namespace ERP_CRM_Solution.Controllers
         public JsonResult PesquisaTemplateEMail(String temp)
         {
             // Recupera Template
-            TEMPLATE_EMAIL tmp = temApp.GetItemById(Convert.ToInt32(temp));
+            TEMPLATE_EMAIL tmp = temaApp.GetItemById(Convert.ToInt32(temp));
 
             // Atualiza
             var hash = new Hashtable();
-            hash.Add("TSMS_TX_CORPO", tmp.TSMS_TX_CORPO);
-            hash.Add("TSMS_LK_LINK", tmp.TSMS_LK_LINK);
+            hash.Add("TEEM_TX_CORPO", tmp.TEEM_TX_CORPO);
+            hash.Add("TEMM_TX_CABECALHO", tmp.TEEM_TX_CABECALHO);
+            hash.Add("TEEM_TX_DADOS", tmp.TEEM_TX_DADOS);
+            hash.Add("TEEM_LK_LINK", tmp.TEEM_LK_LINK);
 
             // Retorna
             return Json(hash);
         }
 
+        [HttpGet]
+        [ValidateInput(false)]
+        public ActionResult IncluirMensagemEMail()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
 
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensMensagem"] = 2;
+                    return RedirectToAction("VoltarBaseMensagemEMail");
+                }
+                if ((Int32)Session["PermMens"] == 0)
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica possibilidade
+            Int32 num = baseApp.GetAllItens(idAss).Where(p => p.MENS_IN_TIPO.Value == 1 & p.MENS_DT_ENVIO.Value.Month == DateTime.Today.Date.Month & p.MENS_DT_ENVIO.Value.Year == DateTime.Today.Date.Year).ToList().Count;
+            if ((Int32)Session["NumEMail"] <= num)
+            {
+                Session["MensMensagem"] = 51;
+                return RedirectToAction("VoltarBaseMensagemEMail");
+            }
+
+            // Prepara listas   
+            ViewBag.Clientes = new SelectList(cliApp.GetAllItens(idAss).OrderBy(p => p.CLIE_NM_NOME), "CLIE_CD_ID", "CLIE_NM_NOME");
+            ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(p => p.GRUP_NM_NOME), "GRUP_CD_ID", "GRUP_NM_NOME");
+            Session["Mensagem"] = null;
+            ViewBag.Temp = new SelectList(temaApp.GetAllItens(idAss).Where(p => p.TEEM_AQ_ARQUIVO == null).ToList().OrderBy(p => p.TEEM_NM_NOME), "TEEM_CD_ID", "TEEM_NM_NOME");
+
+            String caminho = "/TemplatesHTML/";
+            String path = Path.Combine(Server.MapPath(caminho));
+            String[] files = Directory.GetFiles(path, "*.html");
+            List<SelectListItem> mod = new List<SelectListItem>();
+            foreach (String file in files)
+            {
+                mod.Add(new SelectListItem() { Text = System.IO.Path.GetFileNameWithoutExtension(file), Value = file });
+            }
+            ViewBag.Modelos = new SelectList(mod, "Value", "Text");
+
+            // Prepara view
+
+            // Mensagens
+            if (Session["MensMensagem"] != null)
+            {
+                if ((Int32)Session["MensMensagem"] == 3)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0026", CultureInfo.CurrentCulture));
+                }
+            }
+
+            Session["MensagemNovo"] = 0;
+            MENSAGENS item = new MENSAGENS();
+            MensagemViewModel vm = Mapper.Map<MENSAGENS, MensagemViewModel>(item);
+            vm.ASSI_CD_ID = idAss;
+            vm.MENS_DT_CRIACAO = DateTime.Now;
+            vm.MENS_IN_ATIVO = 1;
+            vm.USUA_CD_ID = usuario.USUA_CD_ID;
+            vm.MENS_IN_TIPO = 1;
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult IncluirMensagemEMail(MensagemViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PermMens"] == 0)
+            {
+                Session["MensPermissao"] = 2;
+                return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            ViewBag.Clientes = new SelectList(cliApp.GetAllItens(idAss).OrderBy(p => p.CLIE_NM_NOME), "CLIE_CD_ID", "CLIE_NM_NOME");
+            ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(p => p.GRUP_NM_NOME), "GRUP_CD_ID", "GRUP_NM_NOME");
+            Session["Mensagem"] = null;
+            ViewBag.Temp = new SelectList(temaApp.GetAllItens(idAss).Where(p => p.TEEM_AQ_ARQUIVO == null).ToList().OrderBy(p => p.TEEM_NM_NOME), "TEEM_CD_ID", "TEEM_NM_NOME");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Checa mensagens
+                    if (String.IsNullOrEmpty(vm.MENS_TX_TEXTO) & vm.TEEM_CD_ID == null)
+                    {
+                        Session["MensMensagem"] = 3;
+                        return RedirectToAction("IncluirMensagemEmail");
+                    }
+
+                    // Executa a operação
+                    MENSAGENS item = Mapper.Map<MensagemViewModel, MENSAGENS>(vm);
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = baseApp.ValidateCreate(item, usuario);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                    }
+
+                    // Cria pastas
+                    String caminho = "/Imagens/" + idAss.ToString() + "/Mensagem/" + item.MENS_CD_ID.ToString() + "/Anexos/";
+                    Directory.CreateDirectory(Server.MapPath(caminho));
+
+                    Session["IdMensagem"] = item.MENS_CD_ID;
+                    if (Session["FileQueueMensagem"] != null)
+                    {
+                        List<FileQueue> fq = (List<FileQueue>)Session["FileQueueMensagem"];
+
+                        foreach (var file in fq)
+                        {
+                            if (file.Profile == null)
+                            {
+                                UploadFileQueueMensagem(file);
+                            }
+                        }
+                        Session["FileQueueMensagem"] = null;
+                    }
+
+                    // Processa
+                    if (item.MENS_DT_AGENDAMENTO == null)
+                    {
+                        MENSAGENS mens = baseApp.GetItemById(item.MENS_CD_ID);
+                        Session["IdMensagem"] = mens.MENS_CD_ID;
+                        vm.MENS_CD_ID = mens.MENS_CD_ID;
+                        vm.MENSAGEM_ANEXO = mens.MENSAGEM_ANEXO;
+                        Int32 retGrava = ProcessarEnvioMensagemEMail(vm, usuario);
+                        if (retGrava > 0)
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        MENSAGENS mens = baseApp.GetItemById(item.MENS_CD_ID);
+                        Session["IdMensagem"] = mens.MENS_CD_ID;
+                        vm.MENS_CD_ID = mens.MENS_CD_ID;
+                        vm.MENSAGEM_ANEXO = mens.MENSAGEM_ANEXO;
+                        Int32 retGrava = ProcessarAgendamentoMensagemEMail(vm, usuario);
+                        if (retGrava > 0)
+                        {
+
+                        }
+                    }
+
+                    // Sucesso
+                    listaMaster = new List<MENSAGENS>();
+                    Session["ListaMensagem"] = null;
+                    Session["MensagemNovo"] = item.MENS_CD_ID;
+                    return RedirectToAction("MontarTelaMensagemEMail");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult VerEMailAgendados()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            MENSAGENS mens = new MENSAGENS();
+            ViewBag.Listas = (List<EMAIL_AGENDAMENTO>)Session["EMailAgenda"];
+            Session["VoltaMensagem"] = 3;
+            return View(mens);
+        }
+
+        [ValidateInput(false)]
+        public Int32 ProcessarEnvioMensagemEMail(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera contatos
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            CLIENTE cliente = null;
+            GRUPO grupo = null;
+            List<CLIENTE> listaCli = new List<CLIENTE>();
+            Int32 escopo = 0;
+            String erro = null;
+            Int32 volta = 0;
+            ERP_CRMEntities Db = new ERP_CRMEntities();
+            MENSAGENS mens = baseApp.GetItemById(vm.MENS_CD_ID);
+
+            // Nome
+            if (vm.ID > 0)
+            {                
+                cliente = cliApp.GetItemById(vm.ID.Value);
+                escopo = 1;
+            }
+            else if (vm.GRUPO > 0)
+            {
+                listaCli = new List<CLIENTE>();
+                grupo = gruApp.GetItemById(vm.GRUPO.Value);
+                foreach (GRUPO_CLIENTE item in grupo.GRUPO_CLIENTE)
+                {
+                    listaCli.Add(item.CLIENTE);
+                }
+                escopo = 2;
+            }
+
+            // Processa e-mail
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+            if (escopo == 1)
+            {
+                // Template HTML
+                if (vm.TEEM_CD_ID != null & vm.TEMPLATE_EMAIL.TEEM_AQ_ARQUIVO != null)
+                {
+                    // Prepara corpo do e-mail e trata link
+                    String corpo = String.Empty;
+                    TEMPLATE_EMAIL temp = temaApp.GetItemById(vm.TEEM_CD_ID.Value);
+                    String caminho = "/Imagens/" + idAss.ToString() + "/TemplatesHTML/" + temp.TEEM_CD_ID.ToString() + "/Arquivos/" + temp.TEEM_AQ_ARQUIVO;
+                    String path = Path.Combine(Server.MapPath(caminho));
+                    using (StreamReader reader = new System.IO.StreamReader(path))
+                    {
+                        corpo = reader.ReadToEnd();
+                    }
+                    StringBuilder str = new StringBuilder();
+                    str.AppendLine(corpo);
+                    String body = str.ToString();                  
+                    String emailBody = body;
+
+                    // Checa e monta anexos
+                    List<System.Net.Mail.Attachment> listaAnexo = new List<System.Net.Mail.Attachment>();
+                    if (vm.MENSAGEM_ANEXO.Count > 0)
+                    {
+                        foreach (MENSAGEM_ANEXO item in vm.MENSAGEM_ANEXO)
+                        {
+                            String fn = Server.MapPath(item.MEAN_AQ_ARQUIVO);
+                            System.Net.Mail.Attachment anexo = new System.Net.Mail.Attachment(fn);
+                            listaAnexo.Add(anexo);
+                        }
+                    }
+
+                    //List<SendGrid.Helpers.Mail.Attachment> listaAnexo1 = new List<SendGrid.Helpers.Mail.Attachment>();
+                    //if (vm.MENSAGEM_ANEXO.Count > 0)
+                    //{
+                    //    foreach (MENSAGEM_ANEXO item in vm.MENSAGEM_ANEXO)
+                    //    {
+                    //        SendGrid.Helpers.Mail.Attachment anexo = new SendGrid.Helpers.Mail.Attachment();
+                    //        anexo.Filename = Server.MapPath(item.MEAN_AQ_ARQUIVO);
+                    //        listaAnexo1.Add(anexo);
+                    //    }
+                    //}
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = vm.MENS_NM_CAMPANHA != null ? vm.MENS_NM_CAMPANHA : "Assunto Diverso";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = cliente.CLIE_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = cliente.ASSINANTE.ASSI_NM_NOME;
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.IS_HTML = true;
+                    mensagem.NETWORK_CREDENTIAL = net;
+                    mensagem.ATTACHMENT = listaAnexo;
+
+                    // Envia mensagem
+                    try
+                    {
+                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                    }
+                    catch (Exception ex)
+                    {
+                        erro = ex.Message;
+                        if (ex.InnerException != null)
+                        {
+                            erro += ex.InnerException.Message;
+                        }
+                        if (ex.GetType() == typeof(SmtpFailedRecipientException))
+                        {
+                            var se = (SmtpFailedRecipientException)ex;
+                            erro += se.FailedRecipient;
+                        }
+                    }
+
+                    // Grava mensagem/destino e erros
+                    if (erro == null)
+                    {
+                        MENSAGENS_DESTINOS dest = new MENSAGENS_DESTINOS();
+                        dest.MEDE_IN_ATIVO = 1;
+                        dest.MEDE_IN_POSICAO = 1;
+                        dest.MEDE_IN_STATUS = 1;
+                        dest.CLIE_CD_ID = cliente.CLIE_CD_ID;
+                        dest.MEDE_DS_ERRO_ENVIO = erro;
+                        dest.MENS_CD_ID = mens.MENS_CD_ID;
+                        mens.MENSAGENS_DESTINOS.Add(dest);
+                        mens.MENS_DT_ENVIO = DateTime.Now;
+                        mens.MENS_TX_TEXTO = corpo;
+                        volta = baseApp.ValidateEdit(mens, mens);
+                    }
+                    else
+                    {
+                        mens.MENS_TX_RETORNO = erro;
+                        volta = baseApp.ValidateEdit(mens, mens);
+                    }
+
+                    // Envia assincrono
+
+                    erro = null;
+                    return volta;
+                }
+                // Normal
+                else
+                {
+                    // Prepara inicial
+                    String body = String.Empty;
+                    String header = String.Empty;
+                    String footer = String.Empty;
+                    String link = String.Empty;
+                    if (vm.TEEM_CD_ID != null)
+                    {
+                        TEMPLATE_EMAIL temp = temaApp.GetItemById(vm.TEEM_CD_ID.Value);
+                        body = temp.TEEM_TX_CORPO;
+                        header = temp.TEEM_TX_CABECALHO;
+                        footer = temp.TEEM_TX_DADOS;
+                        link = temp.TEEM_LK_LINK;                    }
+                    else
+                    {
+                        body = vm.MENS_TX_TEXTO;
+                        header = vm.MENS_NM_CABECALHO;
+                        footer = vm.MENS_NM_RODAPE;
+                        link = vm.MENS_NM_LINK;
+                    }
+
+                    // Prepara cabeçalho
+                    header = header.Replace("{Nome}", cliente.CLIE_NM_NOME);
+
+                    // Prepara rodape
+                    ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+                    footer = footer.Replace("{NomeRemetente}", assi.ASSI_NM_NOME);
+                    //String api = conf.CONF_NM_SENDGRID_APIKEY;
+                    
+                    // Trata corpo
+                    StringBuilder str = new StringBuilder();
+                    str.AppendLine(body);
+
+                    // Trata link
+                    if (!String.IsNullOrEmpty(link))
+                    {
+                        if (!link.Contains("www."))
+                        {
+                            link = "www." + link;
+                        }
+                        if (!link.Contains("http://"))
+                        {
+                            link = "http://" + link;
+                        }
+                        str.AppendLine("<a href='" + link + "'>Clique aqui para maiores informações</a>");
+                    }
+                    body = str.ToString();                  
+                    String emailBody = header + body + footer;
+
+                    // Checa e monta anexos
+                    List<System.Net.Mail.Attachment> listaAnexo = new List<System.Net.Mail.Attachment>();
+                    if (vm.MENSAGEM_ANEXO.Count > 0)
+                    {
+                        foreach (MENSAGEM_ANEXO item in vm.MENSAGEM_ANEXO)
+                        {
+                            String fn = Server.MapPath(item.MEAN_AQ_ARQUIVO);
+                            System.Net.Mail.Attachment anexo = new System.Net.Mail.Attachment(fn);
+                            listaAnexo.Add(anexo);
+                        }
+                    }
+
+                    //List<SendGrid.Helpers.Mail.Attachment> listaAnexo1 = new List<SendGrid.Helpers.Mail.Attachment>();
+                    //if (vm.MENSAGEM_ANEXO.Count > 0)
+                    //{
+                    //    foreach (MENSAGEM_ANEXO item in vm.MENSAGEM_ANEXO)
+                    //    {
+                    //        SendGrid.Helpers.Mail.Attachment anexo = new SendGrid.Helpers.Mail.Attachment();
+                    //        anexo.Filename = Server.MapPath(item.MEAN_AQ_ARQUIVO);
+                    //        listaAnexo1.Add(anexo);
+                    //    }
+                    //}
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = vm.MENS_NM_CAMPANHA != null ? vm.MENS_NM_CAMPANHA : "Assunto Diverso";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = cliente.CLIE_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = cliente.ASSINANTE.ASSI_NM_NOME;
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.IS_HTML = true;
+                    mensagem.NETWORK_CREDENTIAL = net;
+                    mensagem.ATTACHMENT = listaAnexo;
+
+                    // Envia mensagem
+                    try
+                    {
+                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                    }
+                    catch (Exception ex)
+                    {
+                        erro = ex.Message;
+                        if (ex.InnerException != null)
+                        {
+                            erro += ex.InnerException.Message;
+                        }
+                        if (ex.GetType() == typeof(SmtpFailedRecipientException))
+                        {
+                            var se = (SmtpFailedRecipientException)ex;
+                            erro += se.FailedRecipient;
+                        }
+                    }
+
+                    // Grava mensagem/destino e erros
+                    if (erro == null)
+                    {
+                        MENSAGENS_DESTINOS dest = new MENSAGENS_DESTINOS();
+                        dest.MEDE_IN_ATIVO = 1;
+                        dest.MEDE_IN_POSICAO = 1;
+                        dest.MEDE_IN_STATUS = 1;
+                        dest.CLIE_CD_ID = cliente.CLIE_CD_ID;
+                        dest.MEDE_DS_ERRO_ENVIO = erro;
+                        dest.MENS_CD_ID = mens.MENS_CD_ID;
+                        mens.MENSAGENS_DESTINOS.Add(dest);
+                        mens.MENS_DT_ENVIO = DateTime.Now;
+                        mens.MENS_TX_TEXTO = body;
+                        volta = baseApp.ValidateEdit(mens, mens);
+                    }
+                    else
+                    {
+                        mens.MENS_TX_RETORNO = erro;
+                        volta = baseApp.ValidateEdit(mens, mens);
+                    }
+
+                    // Envia assincrono
+                    erro = null;
+                    return volta;
+                }
+            }
+            else
+            {
+                // Template HTML
+                if (vm.TEEM_CD_ID != null & vm.TEMPLATE_EMAIL.TEEM_AQ_ARQUIVO != null)
+                {
+                    // Prepara corpo do e-mail e trata link
+                    String corpo1 = String.Empty;
+                    TEMPLATE_EMAIL temp1 = temaApp.GetItemById(vm.TEEM_CD_ID.Value);
+                    String caminho = "/Imagens/" + idAss.ToString() + "/TemplatesHTML/" + temp1.TEEM_CD_ID.ToString() + "/Arquivos/" + temp1.TEEM_AQ_ARQUIVO;
+                    String path = Path.Combine(Server.MapPath(caminho));
+                    using (StreamReader reader = new System.IO.StreamReader(path))
+                    {
+                        corpo1 = reader.ReadToEnd();
+                    }
+                    StringBuilder str1 = new StringBuilder();
+                    str1.AppendLine(corpo1);
+                    String body1 = str1.ToString();
+                    String emailBody = body1;
+
+                    // Checa e monta anexos
+                    List<System.Net.Mail.Attachment> listaAnexo1 = new List<System.Net.Mail.Attachment>();
+                    if (vm.MENSAGEM_ANEXO.Count > 0)
+                    {
+                        foreach (MENSAGEM_ANEXO item in vm.MENSAGEM_ANEXO)
+                        {
+                            String fn = Server.MapPath(item.MEAN_AQ_ARQUIVO);
+                            System.Net.Mail.Attachment anexo = new System.Net.Mail.Attachment(fn);
+                            listaAnexo1.Add(anexo);
+                        }
+                    }
+
+                    // Loop de envio
+                    foreach (CLIENTE item in listaCli)
+                    {
+                        // Prepara cabeçalho
+                        String emailBody1 = body1;
+
+                        // Monta e-mail
+                        NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                        Email mensagem = new Email();
+                        mensagem.ASSUNTO = vm.MENS_NM_CAMPANHA != null ? vm.MENS_NM_CAMPANHA : "Assunto Diverso";
+                        mensagem.CORPO = emailBody;
+                        mensagem.DEFAULT_CREDENTIALS = false;
+                        mensagem.EMAIL_DESTINO = item.CLIE_NM_EMAIL;
+                        mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                        mensagem.ENABLE_SSL = true;
+                        mensagem.NOME_EMISSOR = item.ASSINANTE.ASSI_NM_NOME;
+                        mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                        mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                        mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                        mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                        mensagem.NETWORK_CREDENTIAL = net;
+                        mensagem.ATTACHMENT = listaAnexo1;
+
+                        // Envia mensagem
+                        try
+                        {
+                            Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                        }
+                        catch (Exception ex)
+                        {
+                            erro = ex.Message;
+                            if (ex.GetType() == typeof(SmtpFailedRecipientException))
+                            {
+                                var se = (SmtpFailedRecipientException)ex;
+                                erro += se.FailedRecipient;
+                            }
+                        }
+
+                        // Grava mensagem/destino e erros
+                        if (erro == null)
+                        {
+                            MENSAGENS_DESTINOS dest = new MENSAGENS_DESTINOS();
+                            dest.MEDE_IN_ATIVO = 1;
+                            dest.MEDE_IN_POSICAO = 1;
+                            dest.MEDE_IN_STATUS = 1;
+                            dest.CLIE_CD_ID = item.CLIE_CD_ID;
+                            dest.MEDE_DS_ERRO_ENVIO = erro;
+                            dest.MENS_CD_ID = mens.MENS_CD_ID;
+                            mens.MENSAGENS_DESTINOS.Add(dest);
+                            mens.MENS_DT_ENVIO = DateTime.Now;
+                            volta = baseApp.ValidateEdit(mens, mens);
+                        }
+                        else
+                        {
+                            mens.MENS_TX_RETORNO = erro;
+                            volta = baseApp.ValidateEdit(mens, mens);
+                        }
+                        erro = null;
+                    }
+                    return volta;
+                }
+                // Normal
+                else
+                {
+                    // Prepara inicial
+                    String body = String.Empty;
+                    String header = String.Empty;
+                    String footer = String.Empty;
+                    String link = String.Empty;
+                    if (vm.TEEM_CD_ID != null)
+                    {
+                        TEMPLATE_EMAIL temp = temaApp.GetItemById(vm.TEEM_CD_ID.Value);
+                        body = temp.TEEM_TX_CORPO;
+                        header = temp.TEEM_TX_CABECALHO;
+                        footer = temp.TEEM_TX_DADOS;
+                        link = temp.TEEM_LK_LINK;
+                    }
+                    else
+                    {
+                        body = vm.MENS_TX_TEXTO;
+                        header = vm.MENS_NM_CABECALHO;
+                        footer = vm.MENS_NM_RODAPE;
+                        link = vm.MENS_NM_LINK;
+                    }
+
+                    // Prepara rodape
+                    ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+                    footer = footer.Replace("{NomeRemetente}", assi.ASSI_NM_NOME);
+                    //String api = conf.CONF_NM_SENDGRID_APIKEY;
+
+                    // Trata corpo
+                    StringBuilder str = new StringBuilder();
+                    str.AppendLine(body);
+
+                    // Trata link
+                    if (!String.IsNullOrEmpty(link))
+                    {
+                        if (!link.Contains("www."))
+                        {
+                            link = "www." + link;
+                        }
+                        if (!link.Contains("http://"))
+                        {
+                            link = "http://" + link;
+                        }
+                        str.AppendLine("<a href='" + link + "'>Clique aqui para maiores informações</a>");
+                    }
+                    body = str.ToString();
+                    String emailBody = header + body + footer;
+
+                    // Checa e monta anexos
+                    List<System.Net.Mail.Attachment> listaAnexo = new List<System.Net.Mail.Attachment>();
+                    if (vm.MENSAGEM_ANEXO.Count > 0)
+                    {
+                        foreach (MENSAGEM_ANEXO item in vm.MENSAGEM_ANEXO)
+                        {
+                            String fn = Server.MapPath(item.MEAN_AQ_ARQUIVO);
+                            System.Net.Mail.Attachment anexo = new System.Net.Mail.Attachment(fn);
+                            listaAnexo.Add(anexo);
+                        }
+                    }
+
+                    // Loop de envio
+                    foreach (CLIENTE item in listaCli)
+                    {
+                        // Prepara cabeçalho
+                        String cab = header.Replace("{Nome}", item.CLIE_NM_NOME);
+                        String emailBody1 = cab + body + footer;
+
+                        // Monta e-mail
+                        NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                        Email mensagem = new Email();
+                        mensagem.ASSUNTO = vm.MENS_NM_CAMPANHA != null ? vm.MENS_NM_CAMPANHA : "Assunto Diverso";
+                        mensagem.CORPO = emailBody;
+                        mensagem.DEFAULT_CREDENTIALS = false;
+                        mensagem.EMAIL_DESTINO = item.CLIE_NM_EMAIL;
+                        mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                        mensagem.ENABLE_SSL = true;
+                        mensagem.NOME_EMISSOR = item.ASSINANTE.ASSI_NM_NOME;
+                        mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                        mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                        mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                        mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                        mensagem.NETWORK_CREDENTIAL = net;
+                        mensagem.ATTACHMENT = listaAnexo;
+
+                        // Envia mensagem
+                        try
+                        {
+                            Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                        }
+                        catch (Exception ex)
+                        {
+                            erro = ex.Message;
+                            if (ex.GetType() == typeof(SmtpFailedRecipientException))
+                            {
+                                var se = (SmtpFailedRecipientException)ex;
+                                erro += se.FailedRecipient;
+                            }
+                        }
+
+                        // Grava mensagem/destino e erros
+                        if (erro == null)
+                        {
+                            MENSAGENS_DESTINOS dest = new MENSAGENS_DESTINOS();
+                            dest.MEDE_IN_ATIVO = 1;
+                            dest.MEDE_IN_POSICAO = 1;
+                            dest.MEDE_IN_STATUS = 1;
+                            dest.CLIE_CD_ID = item.CLIE_CD_ID;
+                            dest.MEDE_DS_ERRO_ENVIO = erro;
+                            dest.MENS_CD_ID = mens.MENS_CD_ID;
+                            mens.MENSAGENS_DESTINOS.Add(dest);
+                            mens.MENS_DT_ENVIO = DateTime.Now;
+                            mens.MENS_TX_TEXTO = body;
+                            volta = baseApp.ValidateEdit(mens, mens);
+                        }
+                        else
+                        {
+                            mens.MENS_TX_RETORNO = erro;
+                            volta = baseApp.ValidateEdit(mens, mens);
+                        }
+                        erro = null;
+                    }
+                    return volta;
+
+
+                }
+            }
+            return 0;
+        }
+
+        //private async Task<int> SendEmail(List<CLIENTE> listaCli, MensagemViewModel vm, CONFIGURACAO conf, MENSAGENS mens)
+        //{
+        //    String erro = null;
+        //    Int32 volta = 0;
+        //    foreach (CLIENTE item in listaCli)
+        //    {
+        //        // Prepara cabeçalho
+        //        String cab = vm.MENS_NM_CABECALHO.Replace("{Nome}", item.CLIE_NM_NOME);
+
+        //        // Prepara rodape
+        //        ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+        //        String rod = vm.MENS_NM_RODAPE;
+
+        //        // Prepara corpo do e-mail e trata link
+        //        StringBuilder str = new StringBuilder();
+        //        str.AppendLine(vm.MENS_TX_TEXTO);
+        //        if (!String.IsNullOrEmpty(vm.MENS_NM_LINK))
+        //        {
+        //            if (!vm.MENS_NM_LINK.Contains("www."))
+        //            {
+        //                vm.MENS_NM_LINK = "www." + vm.MENS_NM_LINK;
+        //            }
+        //            if (!vm.MENS_NM_LINK.Contains("http://"))
+        //            {
+        //                vm.MENS_NM_LINK = "http://" + vm.MENS_NM_LINK;
+        //            }
+        //            str.AppendLine("<a href='" + vm.MENS_NM_LINK + "'>Clique aqui para maiores informações</a>");
+        //        }
+        //        String body = str.ToString();
+        //        String emailBody = cab + body + rod;
+
+        //        // Checa e monta anexos
+        //        List<System.Net.Mail.Attachment> listaAnexo = new List<System.Net.Mail.Attachment>();
+        //        if (vm.MENSAGEM_ANEXO.Count > 0)
+        //        {
+        //            foreach (MENSAGEM_ANEXO ane in vm.MENSAGEM_ANEXO)
+        //            {
+        //                System.Net.Mail.Attachment anexo = new System.Net.Mail.Attachment(Server.MapPath(ane.MEAN_AQ_ARQUIVO));
+        //                listaAnexo.Add(anexo);
+        //            }
+        //        }
+
+        //        // Monta e-mail
+        //        NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+        //        MailMessage mensagem = new MailMessage();
+        //        SmtpClient smtp = new SmtpClient();
+        //        mensagem.From = new MailAddress(conf.CONF_NM_EMAIL_EMISSOO, item.ASSINANTE.ASSI_NM_NOME);
+        //        mensagem.To.Add(item.CLIE_NM_EMAIL);
+        //        mensagem.Subject = vm.MENS_NM_CAMPANHA != null ? vm.MENS_NM_CAMPANHA : "Assunto Diverso";
+        //        mensagem.IsBodyHtml = true;
+        //        mensagem.Body = emailBody;
+        //        mensagem.Priority = System.Net.Mail.MailPriority.High;
+        //        if (listaAnexo != null)
+        //        {
+        //            foreach (var attachment in listaAnexo)
+        //            {
+        //                mensagem.Attachments.Add(attachment);
+        //            }
+        //        }
+        //        smtp.EnableSsl = true;
+        //        smtp.Port = Convert.ToInt32(conf.CONF_NM_PORTA_SMTP);
+        //        smtp.Host = conf.CONF_NM_HOST_SMTP;
+        //        smtp.UseDefaultCredentials = false;
+        //        smtp.Credentials = new System.Net.NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+
+        //        // Envia mensagem
+        //        try
+        //        {
+        //            await smtp.SendMailAsync(mensagem).ConfigureAwait(false);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            erro = ex.Message;
+        //            if (ex.GetType() == typeof(SmtpFailedRecipientException))
+        //            {
+        //                var se = (SmtpFailedRecipientException)ex;
+        //                erro += se.FailedRecipient;
+        //            }
+        //        }
+
+        //        // Grava mensagem/destino e erros
+        //        if (erro == null)
+        //        {
+        //            MENSAGENS_DESTINOS dest = new MENSAGENS_DESTINOS();
+        //            dest.MEDE_IN_ATIVO = 1;
+        //            dest.MEDE_IN_POSICAO = 1;
+        //            dest.MEDE_IN_STATUS = 1;
+        //            dest.CLIE_CD_ID = item.CLIE_CD_ID;
+        //            dest.MEDE_DS_ERRO_ENVIO = erro;
+        //            dest.MENS_CD_ID = mens.MENS_CD_ID;
+        //            mens.MENSAGENS_DESTINOS.Add(dest);
+        //            mens.MENS_DT_ENVIO = DateTime.Now;
+        //            volta = baseApp.ValidateEdit(mens, mens);
+        //        }
+        //        else
+        //        {
+        //            mens.MENS_TX_RETORNO = erro;
+        //            volta = baseApp.ValidateEdit(mens, mens);
+        //        }
+        //        erro = null;
+        //    }
+        //    return 0;
+        //}
+        
+        [ValidateInput(false)]
+        public Int32 ProcessarAgendamentoMensagemEMail(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera contatos
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            CLIENTE cliente = null;
+            GRUPO grupo = null;
+            List<CLIENTE> listaCli = new List<CLIENTE>();
+            Int32 escopo = 0;
+            String erro = null;
+            Int32 volta = 0;
+            ERP_CRMEntities Db = new ERP_CRMEntities();
+            MENSAGENS mens = baseApp.GetItemById(vm.MENS_CD_ID);
+
+            // Nome
+            if (vm.ID > 0)
+            {                
+                cliente = cliApp.GetItemById(vm.ID.Value);
+                escopo = 1;
+            }
+            else if (vm.GRUPO > 0)
+            {
+                listaCli = new List<CLIENTE>();
+                grupo = gruApp.GetItemById(vm.GRUPO.Value);
+                foreach (GRUPO_CLIENTE item in grupo.GRUPO_CLIENTE)
+                {
+                    listaCli.Add(item.CLIENTE);
+                }
+                escopo = 2;
+            }
+
+            // Processa e-mail
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+            if (escopo == 1)
+            {
+                // Grava Agendamento
+                EMAIL_AGENDAMENTO ag = new EMAIL_AGENDAMENTO();
+                ag.ASSI_CD_ID = idAss;
+                ag.CLIE_CD_ID = cliente.CLIE_CD_ID;
+                ag.MENS_CD_ID = vm.MENS_CD_ID;
+                ag.EMAG_DT_AGENDAMENTO = vm.MENS_DT_AGENDAMENTO;
+                ag.EMAG_IN_ENVIADO = 0;
+                Int32 volta1 = emApp.ValidateCreate(ag);
+                return volta;
+            }
+            else
+            {
+                foreach (CLIENTE item in listaCli)
+                {
+
+                    // Grava Agendamento
+                    EMAIL_AGENDAMENTO ag = new EMAIL_AGENDAMENTO();
+                    ag.ASSI_CD_ID = idAss;
+                    ag.CLIE_CD_ID = item.CLIE_CD_ID;
+                    ag.MENS_CD_ID = vm.MENS_CD_ID;
+                    ag.EMAG_DT_AGENDAMENTO = vm.MENS_DT_AGENDAMENTO;
+                    ag.EMAG_IN_ENVIADO = 0;
+                    Int32 volta1 = emApp.ValidateCreate(ag);
+                }
+                return volta;
+            }
+            return 0;
+        }
+
+        [HttpGet]
+        public ActionResult VerAnexoMensagem(Int32 id)
+        {
+
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("MontarTelaMensagem", "Mensagem");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara view
+            MENSAGEM_ANEXO item = baseApp.GetAnexoById(id);
+            return View(item);
+        }
+
+        public ActionResult VoltarAnexoMensagem()
+        {
+
+            return RedirectToAction("VerMensagem", new { id = (Int32)Session["IdMensagem"] });
+        }
+
+        public FileResult DownloadMensagem(Int32 id)
+        {
+            MENSAGEM_ANEXO item = baseApp.GetAnexoById(id);
+            String arquivo = item.MEAN_AQ_ARQUIVO;
+            Int32 pos = arquivo.LastIndexOf("/") + 1;
+            String nomeDownload = arquivo.Substring(pos);
+            String contentType = string.Empty;
+            if (arquivo.Contains(".pdf"))
+            {
+                contentType = "application/pdf";
+            }
+            else if (arquivo.Contains(".jpg"))
+            {
+                contentType = "image/jpg";
+            }
+            else if (arquivo.Contains(".png"))
+            {
+                contentType = "image/png";
+            }
+            return File(arquivo, contentType, nomeDownload);
+        }
+
+        [HttpGet]
+        public ActionResult VerMensagemEMail(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensMensagem"] = 2;
+                    return RedirectToAction("MontarTelaMensagem", "Mensagem");
+                }
+                if ((Int32)Session["PermMens"] == 0)
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (Session["MensMensagem"] != null)
+            {
+                if ((Int32)Session["MensMensagem"] == 40)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0034", CultureInfo.CurrentCulture));
+                }
+            }
+            Session["IdMensagem"] = id;
+            Session["VoltaMensagem"] = 1;
+            MENSAGENS item = baseApp.GetItemById(id);
+            MensagemViewModel vm = Mapper.Map<MENSAGENS, MensagemViewModel>(item);
+            return View(vm);
+        }
 
 
     }

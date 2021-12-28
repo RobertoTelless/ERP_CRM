@@ -3019,6 +3019,11 @@
     <Content Include="Views\TemplateEmail\IncluirTemplateEMail.cshtml" />
     <Content Include="Views\TemplateEmail\EditarTemplateEMail.cshtml" />
     <Content Include="Views\TemplateEmail\VerTemplateEMail.cshtml" />
+    <Content Include="Views\Mensagem\MontarTelaMensagemEMail.cshtml" />
+    <Content Include="Views\Mensagem\IncluirMensagemEMail.cshtml" />
+    <Content Include="Views\Mensagem\VerEMailAgendados.cshtml" />
+    <Content Include="Views\Mensagem\VerAnexoMensagem.cshtml" />
+    <Content Include="Views\Mensagem\VerMensagemEMail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

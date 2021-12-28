@@ -179,6 +179,7 @@
     <Compile Include="EntitiesServices\AgendaService.cs" />
     <Compile Include="EntitiesServices\AssinanteCnpjService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
+    <Compile Include="EntitiesServices\EMailAgendaService.cs" />
     <Compile Include="EntitiesServices\CategoriaTelefoneService.cs" />
     <Compile Include="EntitiesServices\ClienteCnpjService.cs" />
     <Compile Include="EntitiesServices\ClienteService.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Interfaces\EntitiesServices\IAgendaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteCnpjService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IEMailAgendaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaTelefoneService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IClienteCnpjService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IClienteService.cs" />
@@ -236,6 +238,7 @@
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICargoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEMailAgendaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorCnpjRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorContatoRepository.cs" />

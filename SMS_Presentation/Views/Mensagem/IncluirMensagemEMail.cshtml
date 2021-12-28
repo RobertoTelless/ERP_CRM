@@ -1,21 +1,21 @@
 ﻿@using Presentation.Extensions
-@model ERP_CRM_Solution.ViewModels.TemplateEMailViewModel
+@model ERP_CRM_Solution.ViewModels.MensagemViewModel
 @{
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="page-title">
-        <h3 class="title">Modelos de Mensagens E-Mail</h3>
+        <h3 class="title">Mensagens</h3>
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
             </li>
             <li>
-                <a href="@Url.Action("MontarTelaTemplateEMail", "TemplateEMail")">Modelos de Mensagens E-Mail</a>
+                <a href="@Url.Action("MontarTelaMensagem", "Mensagem")">Mensagens E-Mails</a>
             </li>
             <li class="active">
-                <strong>Modelos de Mensagens E-Mail - Edição</strong>
+                <strong>Mensagens - E-Mails - Criação</strong>
             </li>
         </ol>
         <br />
@@ -24,10 +24,9 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Modelos de Mensagens  E-Mail - Edição</h5>
+                    <h5>Mensagens - E-Mails - Criação</h5>
                 </div>
                 <div class="ibox-content">
-                    @Html.AntiForgeryToken()
                     @if (!ViewData.ModelState.IsValid)
                     {
                         <div class="alert alert-danger">
@@ -36,20 +35,20 @@
                         </div>
                     }
                     <div class="tabs-container">
-                        @using (Html.BeginForm("EditarTemplateEMail", "TemplateEMail", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                        @using (Html.BeginForm("IncluirMensagemEMail", "Mensagem", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                         {
                             <div class="form-group">
                                 <br />
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
-                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Edição do Modelo</button>
-                                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseTemplateEMail", controller: "TemplateEMail")
-                                    @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "TemplateEMail")
+                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Envio do E-Mail</button>
+                                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMensagemEMail", controller: "Mensagem")
+                                    @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "Mensagem")
                                 </div>
                             </div>
                             
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Montagem do E-Mail</a></li>
                             </ul>
 
                             <div class="tab-content">
@@ -58,54 +57,98 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                            @Html.HiddenFor(m => m.TEEM_IN_ATIVO)
-                                            @Html.HiddenFor(m => m.TEEM_CD_ID)
+                                            @Html.HiddenFor(m => m.MENS_IN_ATIVO)
+                                            @Html.HiddenFor(m => m.MENS_DT_CRIACAO)
+                                            @Html.HiddenFor(m => m.USUA_CD_ID)
+                                            @Html.HiddenFor(m => m.MENS_IN_TIPO)
+                                            <h4 style="color:navy">Seleção dos Destinos da Mensagem</h4>
+                                            <h5>Selecione um nome de contato ou um grupo de contatos para enviar a mensagem</h5>
+                                            <h5 style="color: green">Ao escolher um nome de contato, ela terá prevalência sobre o grupo</h5>
+                                            <br />
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-2 col-md-2 col-xs-12" style="margin-left: 6px">
-                                                    Sigla*
-                                                    @Html.TextBoxFor(m => m.TEEM_SG_SIGLA, new { @class = "form-control", autofocus = true, @id = "sigla" })
-                                                    @Html.ValidationMessageFor(m => m.TEEM_SG_SIGLA, "", new { @style = "color:red" })
-                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Nome do Contato
+                                                    <select name="ID" id="lstCliente" class="form-control" data-val="true" style="display: none;">
+                                                        @*<option>Selecionar</option>*@
+                                                    </select>
+                                                </div> 
                                                 <div class="col-lg-4 col-md-4 col-xs-12" style="margin-left: 6px">
-                                                    Nome*
-                                                    @Html.TextBoxFor(m => m.TEEM_NM_NOME, new { @class = "form-control", autofocus = true, @id = "nome" })
-                                                    @Html.ValidationMessageFor(m => m.TEEM_NM_NOME, "", new { @style = "color:red" })
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 col-xs-12" style="margin-left: 6px">
-                                                    Link
-                                                    @Html.TextBoxFor(m => m.TEEM_LK_LINK, new { @class = "form-control", autofocus = true, @id = "link" })
-                                                    @Html.ValidationMessageFor(m => m.TEEM_LK_LINK, "", new { @style = "color:red" })
+                                                    Grupo
+                                                    @Html.DropDownListFor(m => m.GRUPO, (SelectList)ViewBag.Grupos, "Selecionar", new { @class = "form-control", autofocus = true  })
                                                 </div>
                                             </div>
                                         </div>
                                         <hr />
-                                        <div class="row" id="Email1">
+                                        <div class="row">
+                                            <h4 style="color:navy">Parâmetros do E-Mail</h4>
+                                            <h5>Se a Data de Agendamento não for preenchida o envio será imediato</h5>
+                                            <h5>Se for escolhido um modelo (Comum ou HTML) o campo Corpo da Mensagem ficará desabilitado</h5>
+                                            <br />
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                Arquivo HTML
-                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    @Html.TextBoxFor(m => m.TEEM_AQ_ARQUIVO, new { @class = "form-control", autofocus = true, @id = "link", @readonly="readonly" })
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Campanha
+                                                    @Html.TextBoxFor(m => m.MENS_NM_CAMPANHA, new { @class = "form-control", autofocus = true })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Agendar para
+                                                    @Html.TextBoxFor(m => m.MENS_DT_AGENDAMENTO, new { @class = "form-control", autofocus = true, @id = "saida", @style = "font-weight:bold" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12" id="EM">
+                                                    Link a ser incluído na mensagem
+                                                    @Html.TextBoxFor(m => m.MENS_NM_LINK, new { @class = "form-control", autofocus = true, @id="link" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Modelos 
+                                                    @Html.DropDownListFor(m => m.TEEM_CD_ID, (SelectList)ViewBag.Temp, "Selecionar", new { @class = "form-control", autofocus = true, @id = "temp", onchange = "ValidaDiv($(this).val())"})
                                                 </div>
                                             </div>
-                                            <hr />
+                                        </div>
+                                        <hr />
+                                        <div class="row" id="EM1">
+                                            <h4 style="color:navy">Conteúdo da Mensagem</h4>
+                                            <h5>No Cabeçalho deverá existir o bloco {Nome} onde será incluído o nome do contato</h5>
+                                            <h5 style="color: green">Na inexistência desse bloco, as informações acima não serão incluídas na mensagem</h5>
+                                            <br />
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    Cabeçalho da Mensagem
-                                                    @Html.TextAreaFor(m => m.TEEM_TX_CABECALHO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
+                                                <div class="col-lg-12 col-md-11 col-xs-12">
+                                                    Cabeçalho
+                                                    @Html.TextAreaFor(m => m.MENS_NM_CABECALHO, new { @class = "form-control summernote", style = "width: 100%; height: 200px;", autofocus = true,  @id = "cab"})
                                                 </div>
-                                            </div>                                       
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="CORPO">
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     Corpo da Mensagem
-                                                    @Html.TextAreaFor(m => m.TEEM_TX_CORPO, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
+                                                    @Html.TextAreaFor(m => m.MENS_TX_TEXTO, new { @class = "form-control summernote", style = "width: 100%; height: 600px;", autofocus = true,  @id = "cor" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <h5>A tag {Assinatura} está disponível no rodapé e se usada será exibido o nome do assinante</h5>
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    Rodapé da Mensagem
-                                                    @Html.TextAreaFor(m => m.TEEM_TX_DADOS, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
+                                                    Rodapé
+                                                    @Html.TextAreaFor(m => m.MENS_NM_RODAPE, new { @class = "form-control summernote", style = "width: 100%; height: 200px;", autofocus = true,  @id = "rod" })
                                                 </div>
-                                            </div>                                       
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row" id="EM2">
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <h4>Anexos</h4><input class="btn btn-sm btn-warning" id="inputFile" type="file" multiple />
+                                                <br />
+                                                <div class="form-group">
+                                                    <div>
+                                                        <hr />
+                                                        <table style="width: 100%;" class="table table-striped table-bordered table-hover" id="myFiles">
+                                                            <thead style="background-color:lightsteelblue">
+                                                                <tr>
+                                                                    <td>Nome</td>
+                                                                    <td>Tipo</td>
+                                                                    <td>Ações</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -113,8 +156,9 @@
                                     <br />
                                     <div class="col-lg-12 col-md-12 col-xs-12">
                                         @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
-                                        <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Edição de Modelo</button>
-                                        @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseTemplateEMail", controller: "TemplateEMail")
+                                        <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Envio do E-Mail</button>
+                                        @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMensagemEMail", controller: "Mensagem")
+                                        @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "Mensagem")
                                     </div>
                                 </div>
                             </div>
@@ -133,9 +177,10 @@
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
     @Styles.Render("~/plugins/toastrStyles")
-    @Styles.Render("~/Content/plugins/summernote/summernote.css")
+    @*@Styles.Render("~/Content/plugins/summernote/summernote.css")*@
     <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
     <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+    @Styles.Render("~/plugins/summernoteStyles")
 }
 @section Scripts {
     <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
@@ -149,10 +194,11 @@
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
     @Scripts.Render("~/plugins/sparkline")
-    @Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")
+    @*@Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")*@
     <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>    
     <script src="~/Scripts/uploadAnexo.js"></script>
+    @Scripts.Render("~/plugins/summernote")
 
     <script type="text/javascript">
         $(function () {
@@ -277,29 +323,15 @@
     </script>
     <script type="text/javascript">
         function ValidaDiv(valTipo) {
-            if (valTipo == '1') {
-                $("#EM").show();
+            if (valTipo = 0) {
                 $("#EM1").show();
-                $("#EM2").show();
-                $("#SMS1").hide();
-                $("#WHT1").hide();
-            } else if (valTipo == '2') { 
-                $("#EM").hide();
-                $("#EM1").hide();
-                $("#EM2").hide();
-                $("#SMS1").show();
-                $("#WHT1").hide();
             } else { //Se não for 1, 2 ou 4 esconde as duas
-                $("#EM").hide();
                 $("#EM1").hide();
-                $("#EM2").hide();
-                $("#SMS1").hide();
-                $("#WHT1").show();
             }
         }
 
         $(document).ready(function () {
-            ValidaDiv($('#tipo').val());
+            ValidaDiv($('#temp').val());
         });
 
         function LimpaPJ() {
@@ -316,6 +348,26 @@
             $('#cpf').val('');
         }
     </script>
+    <script>
+        function PesquisaTemplate(temp, btn, tipo) {
+            data = {
+                temp: temp
+            }
+            $.ajax({
+                url: '../Mensagem/PesquisaTemplateEMail'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    $('#cab').val(r.TEEM_TX_CABECALHO);
+                    $('#cor').val(r.TEEM_TX_CORPO);
+                    $('#rod').val(r.TEEM_TX_DADOS);
+                    $('#link').val(r.TEEM_LK_LINK);
+                }
+            });
+        }
+    </script>
+
+
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -329,7 +381,7 @@
 
             $('#basictoast').click(function () {
                 // Display a success toast, with a title
-                toastr.success('Inclusão em andamento!')
+                toastr.success('Envio de Mensagem em andamento!')
             });
             $('#showtoast').click(function () {
                 var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();

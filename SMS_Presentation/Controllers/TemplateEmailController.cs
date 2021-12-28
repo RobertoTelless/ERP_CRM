@@ -295,7 +295,7 @@ namespace SMS_Presentation.Controllers
                     if (item.TEEM_AQ_ARQUIVO != null)
                     {
                         // Cria pasta
-                        String caminho = "/Imagens/" + idAss.ToString() + "/TemplatesHTML/" + item.TEEM_CD_ID.ToString() + "/Arquivo/";
+                        String caminho = "/Imagens/" + idAss.ToString() + "/TemplatesHTML/" + item.TEEM_CD_ID.ToString() + "/Arquivos/";
                         Directory.CreateDirectory(Server.MapPath(caminho));
 
                         // Copia arquivo
