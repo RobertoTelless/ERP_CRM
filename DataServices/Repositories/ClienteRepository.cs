@@ -140,6 +140,55 @@ namespace DataServices.Repositories
         //    }
         //    return lista;
         //}
+
+        public List<CLIENTE> FiltrarContatos(MontagemGrupo grupo, Int32 idAss)
+        {
+            List<CLIENTE> lista = new List<CLIENTE>();
+            IQueryable<CLIENTE> query = Db.CLIENTE;
+            if (grupo.SEXO != null)
+            {
+                query = query.Where(p => p.SEXO_CD_ID == grupo.SEXO);
+            }
+            if (grupo.CATEGORIA != null)
+            {
+                query = query.Where(p => p.CATEGORIA_CLIENTE.CACL_CD_ID == grupo.CATEGORIA);
+            }
+            if (!String.IsNullOrEmpty(grupo.CIDADE))
+            {
+                query = query.Where(p => p.CLIE_NM_CIDADE.Contains(grupo.CIDADE));
+            }
+            if (grupo.UF != null)
+            {
+                query = query.Where(p => p.UF_CD_ID == grupo.UF);
+            }
+            if (grupo.DATA_NASC != null)
+            {
+                query = query.Where(p => p.CLIE_DT_NASCIMENTO == grupo.DATA_NASC);
+            }
+            else
+            {
+                if (grupo.DIA != null)
+                {
+                    query = query.Where(p => DbFunctions.TruncateTime(p.CLIE_DT_NASCIMENTO).Value.Day == Convert.ToInt32(grupo.DIA));
+                }
+                if (grupo.MES != null)
+                {
+                    query = query.Where(p => DbFunctions.TruncateTime(p.CLIE_DT_NASCIMENTO).Value.Month == Convert.ToInt32(grupo. MES));
+                }
+                if (grupo.ANO != null)
+                {
+                    query = query.Where(p => DbFunctions.TruncateTime(p.CLIE_DT_NASCIMENTO).Value.Year == Convert.ToInt32(grupo.ANO));
+                }
+            }
+            if (query != null)
+            {
+                query = query.Where(p => p.ASSI_CD_ID == idAss);
+                query = query.OrderBy(a => a.CLIE_NM_NOME);
+                lista = query.ToList<CLIENTE>();
+            }
+            return lista;
+        }
+
     }
 }
  

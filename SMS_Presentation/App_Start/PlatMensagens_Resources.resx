@@ -276,6 +276,12 @@
   <data name="M0061" xml:space="preserve">
     <value>Corpo de mansagem especificado sem cabeçalho e área de dados (rodapé)</value>
   </data>
+  <data name="M0062" xml:space="preserve">
+    <value>Nenhum filtro foi definido para montagem do grupo.</value>
+  </data>
+  <data name="M0063" xml:space="preserve">
+    <value>Nenhum contato obedeceu ao filtro especificado</value>
+  </data>
   <data name="M0073" xml:space="preserve">
     <value>A Senha não pode ficar em branco</value>
   </data>

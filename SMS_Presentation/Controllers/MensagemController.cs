@@ -465,9 +465,6 @@ namespace ERP_CRM_Solution.Controllers
             // Prepara listas   
             ViewBag.Clientes = new SelectList(cliApp.GetAllItens(idAss).OrderBy(p => p.CLIE_NM_NOME), "CLIE_CD_ID", "CLIE_NM_NOME");
             ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(p => p.GRUP_NM_NOME), "GRUP_CD_ID", "GRUP_NM_NOME");
-            ViewBag.Cats = new SelectList(baseApp.GetAllTipos(idAss).OrderBy(p => p.CACL_NM_NOME), "CACL_CD_ID", "CACL_NM_NOME");
-            ViewBag.UF = new SelectList(baseApp.GetAllUF().OrderBy(p => p.UF_SG_SIGLA), "UF_CD_ID", "UF_NM_NOME");
-            ViewBag.Sexo = new SelectList(cliApp.GetAllSexo().OrderBy(p => p.SEXO_NM_NOME), "SEXO_CD_ID", "SEXO_NM_NOME");
             Session["Mensagem"] = null;
             ViewBag.Temp = new SelectList(temApp.GetAllItens(idAss).ToList().OrderBy(p => p.TSMS_NM_NOME), "TSMS_CD_ID", "TSMS_NM_NOME");
 
@@ -510,9 +507,6 @@ namespace ERP_CRM_Solution.Controllers
 
             ViewBag.Clientes = new SelectList(cliApp.GetAllItens(idAss).OrderBy(p => p.CLIE_NM_NOME), "CLIE_CD_ID", "CLIE_NM_NOME");
             ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(p => p.GRUP_NM_NOME), "GRUP_CD_ID", "GRUP_NM_NOME");
-            ViewBag.Cats = new SelectList(baseApp.GetAllTipos(idAss).OrderBy(p => p.CACL_NM_NOME), "CACL_CD_ID", "CACL_NM_NOME");
-            ViewBag.UF = new SelectList(baseApp.GetAllUF().OrderBy(p => p.UF_SG_SIGLA), "UF_CD_ID", "UF_NM_NOME");
-            ViewBag.Sexo = new SelectList(cliApp.GetAllSexo().OrderBy(p => p.SEXO_NM_NOME), "SEXO_CD_ID", "SEXO_NM_NOME");
             Session["Mensagem"] = null;
             ViewBag.Temp = new SelectList(temApp.GetAllItens(idAss).ToList().OrderBy(p => p.TSMS_NM_NOME), "TSMS_CD_ID", "TSMS_NM_NOME");
 
@@ -825,54 +819,6 @@ namespace ERP_CRM_Solution.Controllers
                     listaCli.Add(item.CLIENTE);
                 }
                 escopo = 2;
-            }
-            else
-            {
-                IQueryable<CLIENTE> query = Db.CLIENTE;
-                escopo = 2;
-
-                // Sexo
-                if (vm.SEXO > 0)
-                {
-                    query = query.Where(p => p.CLIE_IN_SEXO == vm.SEXO);
-                }
-
-                // Cidade
-                if (!String.IsNullOrEmpty(vm.CIDADE))
-                {
-                    query = query.Where(p => p.CLIE_NM_CIDADE.Contains(vm.CIDADE));
-                }
-
-                // UF
-                if (vm.UF > 0)
-                {
-                    query = query.Where(p => p.UF_CD_ID == vm.UF);
-                }
-
-                // Categoria
-                if (vm.CATEGORIA > 0)
-                {
-                    query = query.Where(p => p.CACL_CD_ID == vm.CATEGORIA);
-                }
-
-                // Status
-                if (vm.STATUS > 0)
-                {
-                    query = query.Where(p => p.CLIE_IN_STATUS == vm.STATUS);
-                }
-
-                // Data Nascimento
-                if (vm.DATA_NASC != null)
-                {
-                    query = query.Where(p => p.CLIE_DT_NASCIMENTO == vm.DATA_NASC);
-                }
-
-                // Processa filtro
-                if (query != null)
-                {
-                    query = query.Where(p => p.ASSI_CD_ID == idAss);
-                    listaCli = query.ToList<CLIENTE>();
-                }
             }
 
             // Processa SMS

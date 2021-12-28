@@ -59,14 +59,22 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public Int32 ValidateCreate(GRUPO item, USUARIO usuario)
+        public Int32 ValidateCreate(GRUPO item, MontagemGrupo grupo, USUARIO usuario)
         {
             try
             {
+                // Checa existencia
                 var conf = usuario.USUA_CD_ID;
                 if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
                     return 1;
+                }
+
+                // Checa contatos
+                List<CLIENTE> lista = _baseService.FiltrarContatos(grupo, usuario.ASSI_CD_ID);
+                if (lista.Count == 0)
+                {
+                    return 2;
                 }
 
                 // Completa objeto
@@ -84,8 +92,19 @@ namespace ApplicationServices.Services
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<GRUPO>(item)
                 };
 
-                // Persiste
+                // Persiste grupo
                 Int32 volta = _baseService.Create(item, log);
+
+                // Processa contatos
+                GRUPO grupoCriado = _baseService.GetItemById(item.GRUP_CD_ID);
+                GRUPO_CLIENTE gru = new GRUPO_CLIENTE();
+                foreach (CLIENTE cli in lista)
+                {
+                    gru.CLIE_CD_ID = cli.CLIE_CD_ID;
+                    gru.GRCL_IN_ATIVO = 1;
+                    gru.GRUP_CD_ID = item.GRUP_CD_ID;
+                    grupoCriado.GRUPO_CLIENTE.Add(gru);
+                }
                 return volta;
             }
             catch (Exception ex)

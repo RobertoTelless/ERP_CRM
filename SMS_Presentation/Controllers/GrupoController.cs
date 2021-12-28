@@ -36,6 +36,7 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IUsuarioAppService usuApp;
         private readonly IConfiguracaoAppService confApp;
         private readonly IClienteAppService cliApp;
+        private readonly IMensagemAppService menApp;
 
         private String msg;
         private Exception exception;
@@ -44,13 +45,14 @@ namespace ERP_CRM_Solution.Controllers
         List<GRUPO> listaMaster = new List<GRUPO>();
         String extensao;
 
-        public GrupoController(IGrupoAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IClienteAppService cliApps)
+        public GrupoController(IGrupoAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IClienteAppService cliApps, IMensagemAppService menApps)
         {
             baseApp = baseApps;
             logApp = logApps;
             usuApp = usuApps;
             confApp = confApps;
             cliApp = cliApps;
+            menApp = menApps;
         }
 
         [HttpGet]
@@ -121,6 +123,14 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0025", CultureInfo.CurrentCulture));
                 }
+                if ((Int32)Session["MensGrupo"] == 10)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0062", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensGrupo"] == 11)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0063", CultureInfo.CurrentCulture));
+                }
             }
 
             // Abre view
@@ -189,6 +199,29 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara listas
+            ViewBag.Cats = new SelectList(menApp.GetAllTipos(idAss).OrderBy(p => p.CACL_NM_NOME), "CACL_CD_ID", "CACL_NM_NOME");
+            ViewBag.UF = new SelectList(menApp.GetAllUF().OrderBy(p => p.UF_SG_SIGLA), "UF_CD_ID", "UF_NM_NOME");
+            ViewBag.Sexo = new SelectList(cliApp.GetAllSexo().OrderBy(p => p.SEXO_NM_NOME), "SEXO_CD_ID", "SEXO_NM_NOME");
+            List<SelectListItem> dias = new List<SelectListItem>();
+            for (int i = 1; i < 32; i++)
+            {
+                dias.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString() });
+            }
+            ViewBag.Dias = new SelectList(dias, "Value", "Text");
+            List<SelectListItem> meses = new List<SelectListItem>();
+            meses.Add(new SelectListItem() { Text = "Janeiro", Value = "1" });
+            meses.Add(new SelectListItem() { Text = "Fevereiro", Value = "2" });
+            meses.Add(new SelectListItem() { Text = "Março", Value = "3" });
+            meses.Add(new SelectListItem() { Text = "Abril", Value = "4" });
+            meses.Add(new SelectListItem() { Text = "Maio", Value = "5" });
+            meses.Add(new SelectListItem() { Text = "Junho", Value = "6" });
+            meses.Add(new SelectListItem() { Text = "Julho", Value = "7" });
+            meses.Add(new SelectListItem() { Text = "Agosto", Value = "8" });
+            meses.Add(new SelectListItem() { Text = "Setembro", Value = "9" });
+            meses.Add(new SelectListItem() { Text = "Outubro", Value = "10" });
+            meses.Add(new SelectListItem() { Text = "Novembro", Value = "11" });
+            meses.Add(new SelectListItem() { Text = "Dezembro", Value = "12" });
+            ViewBag.Meses = new SelectList(meses, "Value", "Text");
 
             // Prepara view
             Session["GrupoNovo"] = 0;
@@ -213,15 +246,46 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
+                    // Crítica
+                    if (vm.SEXO == null & vm.CATEGORIA == null & vm.CIDADE == null & vm.UF == null & vm.DATA_NASC == null & vm.DIA == null & vm.MES == null & vm.ANO == null)
+                    {
+                        Session["MensGrupo"] = 10;
+                        return RedirectToAction("MontarTelaGrupo");
+                    }
+
                     // Executa a operação
                     GRUPO item = Mapper.Map<GrupoViewModel, GRUPO>(vm);
+                    MontagemGrupo grupo = new MontagemGrupo();
+                    grupo.ANO = vm.ANO;
+                    grupo.ASSI_CD_ID = vm.ASSI_CD_ID;
+                    grupo.CATEGORIA = vm.CATEGORIA;
+                    grupo.DATA_NASC = vm.DATA_NASC;
+                    grupo.DIA = vm.DIA;
+                    grupo.GRUP_DT_CADASTRO = vm.GRUP_DT_CADASTRO;
+                    grupo.GRUP_IN_ATIVO = vm.GRUP_IN_ATIVO;
+                    grupo.USUA_CD_ID = vm.USUA_CD_ID;
+                    grupo.GRUPO = vm.GRUPO;
+                    grupo.GRUP_NM_NOME = vm.GRUP_NM_NOME;
+                    grupo.ID = vm.ID;
+                    grupo.LINK = vm.LINK;
+                    grupo.MODELO = vm.MODELO;
+                    grupo.NOME = vm.NOME;
+                    grupo.MES = vm.MES;
+                    grupo.SEXO = vm.SEXO;
+                    grupo.STATUS = vm.STATUS;
+                    grupo.UF = vm.UF;
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
-                    Int32 volta = baseApp.ValidateCreate(item, usuario);
+                    Int32 volta = baseApp.ValidateCreate(item, grupo, usuario);
 
                     // Verifica retorno
                     if (volta == 1)
                     {
                         Session["MensGrupo"] = 3;
+                        return RedirectToAction("MontarTelaGrupo");
+                    }
+                    if (volta == 2)
+                    {
+                        Session["MensGrupo"] = 11;
                         return RedirectToAction("MontarTelaGrupo");
                     }
 

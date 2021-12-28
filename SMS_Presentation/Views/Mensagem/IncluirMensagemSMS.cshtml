@@ -63,8 +63,8 @@
                                             @Html.HiddenFor(m => m.USUA_CD_ID)
                                             @Html.HiddenFor(m => m.MENS_IN_TIPO)
                                             <h4 style="color:navy">Seleção dos Destinos da Mensagem</h4>
-                                            <h5>Selecione um nome de contato na lista ou espeficique as condições para filtrar os contatos e enviar a mensagem</h5>
-                                            <h5 style="color: green">Ao escolher um nome de contato, ela terá prevalência sobre os filtros</h5>
+                                            <h5>Selecione um nome de contato ou um grupo de contatos para enviar a mensagem</h5>
+                                            <h5 style="color: green">Ao escolher um nome de contato, ela terá prevalência sobre o grupo</h5>
                                             <br />
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-4 col-md-4 col-xs-12">
@@ -76,32 +76,6 @@
                                                 <div class="col-lg-4 col-md-4 col-xs-12" style="margin-left: 6px">
                                                     Grupo
                                                     @Html.DropDownListFor(m => m.GRUPO, (SelectList)ViewBag.Grupos, "Selecionar", new { @class = "form-control", autofocus = true  })
-                                                </div>
-                                            </div>
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Gênero
-                                                    @Html.DropDownListFor(m => m.SEXO, (SelectList)ViewBag.Sexo, "Selecionar", new { @class = "form-control", autofocus = true  })
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Categoria
-                                                    @Html.DropDownListFor(m => m.CATEGORIA, (SelectList)ViewBag.Cats, "Selecionar", new { @class = "form-control", autofocus = true  })
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Posição
-                                                    @Html.DropDownListFor(m => m.STATUS, (SelectList)ViewBag.Status, "Selecionar", new { @class = "form-control", autofocus = true  })
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Cidade
-                                                    @Html.TextBoxFor(m => m.CIDADE, new { @class = "form-control", autofocus = true })
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    UF
-                                                    @Html.DropDownListFor(m => m.UF, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control", autofocus = true  })
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Data Nascimento
-                                                    @Html.TextBoxFor(m => m.DATA_NASC, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "dn" })
                                                 </div>
                                             </div>
                                         </div>

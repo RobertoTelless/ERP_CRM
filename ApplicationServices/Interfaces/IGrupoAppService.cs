@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EntitiesServices.Work_Classes;
 using EntitiesServices.Model;
 
 namespace ApplicationServices.Interfaces
 {
     public interface IGrupoAppService : IAppServiceBase<GRUPO>
     {
-        Int32 ValidateCreate(GRUPO item, USUARIO usuario);
+        Int32 ValidateCreate(GRUPO item, MontagemGrupo grupo, USUARIO usuario);
         Int32 ValidateEdit(GRUPO item, GRUPO perfilAntes, USUARIO usuario);
         Int32 ValidateEdit(GRUPO item, GRUPO itemAntes);
         Int32 ValidateDelete(GRUPO item, USUARIO usuario);

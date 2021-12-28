@@ -670,6 +670,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkClasses\CNPJ.cs" />
+    <Compile Include="WorkClasses\MontagemGrupo.cs" />
     <Compile Include="WorkClasses\Endereco.cs" />
     <Compile Include="WorkClasses\FileQueue.cs" />
     <Compile Include="WorkClasses\Login.cs" />

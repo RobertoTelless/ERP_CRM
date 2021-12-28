@@ -25,5 +25,6 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 CreateContato(GRUPO_CLIENTE item);
         Int32 EditContato(GRUPO_CLIENTE item);
         GRUPO_CLIENTE CheckExistContato(GRUPO_CLIENTE item);
+        List<CLIENTE> FiltrarContatos(MontagemGrupo grupo, Int32 idAss);
     }
 }

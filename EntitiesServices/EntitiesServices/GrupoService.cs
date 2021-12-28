@@ -21,13 +21,15 @@ namespace ModelServices.EntitiesServices
         private readonly IGrupoRepository _baseRepository;
         private readonly ILogRepository _logRepository;
         private readonly IGrupoContatoRepository _contRepository;
+        private readonly IClienteRepository _cliRepository;
         protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
-        public GrupoService(IGrupoRepository baseRepository, ILogRepository logRepository, IGrupoContatoRepository contRepository) : base(baseRepository)
+        public GrupoService(IGrupoRepository baseRepository, ILogRepository logRepository, IGrupoContatoRepository contRepository, IClienteRepository cliRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
             _contRepository = contRepository;
+            _cliRepository = cliRepository;
         }
 
         public GRUPO CheckExist(GRUPO conta, Int32 idAss)
@@ -56,6 +58,11 @@ namespace ModelServices.EntitiesServices
         public List<GRUPO> GetAllItens(Int32 idAss)
         {
             return _baseRepository.GetAllItens(idAss);
+        }
+
+        public List<CLIENTE> FiltrarContatos(MontagemGrupo grupo, Int32 idAss)
+        {
+            return _cliRepository.FiltrarContatos(grupo, idAss);
         }
 
         public List<GRUPO> GetAllItensAdm(Int32 idAss)
