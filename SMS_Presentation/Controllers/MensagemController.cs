@@ -2338,6 +2338,431 @@ namespace ERP_CRM_Solution.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        public ActionResult MontarTelaDashboardMensagens(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensMensagem"] = 2;
+                    return RedirectToAction("MontarTelaMensagem", "Mensagem");
+                }
+                if ((Int32)Session["PermMens"] == 0)
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
+            List<MENSAGENS> lt = baseApp.GetAllItens(idAss);
+            List<MENSAGENS> lm = lt.Where(p => p.MENS_DT_ENVIO != null).ToList();
+            lm = lm.Where(p => p.MENS_DT_ENVIO.Value.Month == DateTime.Today.Date.Month & p.MENS_DT_ENVIO.Value.Year == DateTime.Today.Date.Year).ToList();
+            ViewBag.SMS = lm.Where(p => p.MENS_IN_TIPO == 2).ToList().Count;
+            ViewBag.Emails = lm.Where(p => p.MENS_IN_TIPO == 1).ToList().Count;
+            ViewBag.Total = lm.Count;
+            ViewBag.Falhas = lt.Where(p => p.MENS_TX_RETORNO != null).ToList().Count;
+
+            List<MENSAGENS> agSMS = lm.Where(p => p.MENS_DT_AGENDAMENTO > DateTime.Now).ToList();
+            Session["SMSAgenda"] = agSMS;
+            ViewBag.SMSAgenda = agSMS.Count;
+
+            List<EMAIL_AGENDAMENTO> emAg = emApp.GetAllItens(idAss).Where(p => p.EMAG_IN_ENVIADO == 0 & p.EMAG_DT_AGENDAMENTO > DateTime.Now).ToList();
+            Session["EMailAgenda"] = emAg;
+            ViewBag.SMSEmail = emAg.Count;
+            return View(vm);
+        }
+
+        public ActionResult VerTotalExpansao()
+        {
+            // Prepara grid
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            List<MENSAGENS> listaBase1 = baseApp.GetAllItens(idAss).Where(p => p.MENS_DT_ENVIO != null).ToList();
+            List<MENSAGENS> listaBase = listaBase1.Where(p => p.MENS_DT_ENVIO.Value.Month == DateTime.Today.Month).ToList();
+            List<DateTime> datas = listaBase.Select(p => p.MENS_DT_ENVIO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32 conta = listaBase.Where(p => p.MENS_DT_ENVIO.Value.Date == item).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.DataEmissao = item;
+                mod.Valor = conta;
+                lista.Add(mod);
+            }
+            ViewBag.Lista = lista;
+            ViewBag.Conta = listaBase.Count;
+            Session["ListaTotal"] = listaBase;
+            Session["ListaDatasTotal"] = datas;
+            return View();
+        }
+
+        public JsonResult GetDadosGraficoTotal()
+        {
+            List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaTotalTodas"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatasTotalTodas"];
+            List<MENSAGENS> listaDia = new List<MENSAGENS>();
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (DateTime item in datas)
+            {
+                listaDia = listaCP1.Where(p => p.MENS_DT_ENVIO.Value.Date == item).ToList();
+                Int32 contaDia = listaDia.Count();
+                dias.Add(item.ToShortDateString());
+                valor.Add(contaDia);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoTotalTodos()
+        {
+            List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaTotal"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatasTotal"];
+            List<MENSAGENS> listaDia = new List<MENSAGENS>();
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (DateTime item in datas)
+            {
+                listaDia = listaCP1.Where(p => p.MENS_DT_ENVIO.Value.Date == item).ToList();
+                Int32 contaDia = listaDia.Count();
+                dias.Add(item.ToShortDateString());
+                valor.Add(contaDia);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public ActionResult VerTotalExpansaoTodos()
+        {
+            // Prepara grid
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            List<MENSAGENS> listaBase = baseApp.GetAllItens(idAss).Where(p => p.MENS_DT_ENVIO != null).ToList();
+            List<DateTime> datas = listaBase.Select(p => p.MENS_DT_ENVIO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32 conta = listaBase.Where(p => p.MENS_DT_ENVIO.Value.Date == item).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.DataEmissao = item;
+                mod.Valor = conta;
+                lista.Add(mod);
+            }
+            ViewBag.Lista = lista;
+            ViewBag.Conta = listaBase.Count;
+            Session["ListaTotalTodas"] = listaBase;
+            Session["ListaDatasTotalTodas"] = datas;
+            return View();
+        }
+
+        public ActionResult VerEMailExpansao()
+        {
+            // Prepara grid
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            List<MENSAGENS> listaBase1 = baseApp.GetAllItens(idAss).Where(p => p.MENS_IN_TIPO == 1 & p.MENS_DT_ENVIO != null).ToList();
+            List<MENSAGENS> listaBase = listaBase1.Where(p => p.MENS_DT_ENVIO.Value.Month == DateTime.Today.Month).ToList();
+            List<DateTime> datas = listaBase.Select(p => p.MENS_DT_ENVIO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32 conta = listaBase.Where(p => p.MENS_DT_ENVIO.Value.Date == item).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.DataEmissao = item;
+                mod.Valor = conta;
+                lista.Add(mod);
+            }
+            ViewBag.Lista = lista;
+            ViewBag.Conta = listaBase.Count;
+            Session["ListaEMail"] = listaBase;
+            Session["ListaDatas"] = datas;
+            return View();
+        }
+
+        public JsonResult GetDadosGraficoEmail()
+        {
+            List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaEMail"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatas"];
+            List<MENSAGENS> listaDia = new List<MENSAGENS>();
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (DateTime item in datas)
+            {
+                listaDia = listaCP1.Where(p => p.MENS_DT_ENVIO.Value.Date == item).ToList();
+                Int32 contaDia = listaDia.Count();
+                dias.Add(item.ToShortDateString());
+                valor.Add(contaDia);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoEmailTodos()
+        {
+            List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaEMailTodas"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatasTodas"];
+            List<MENSAGENS> listaDia = new List<MENSAGENS>();
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (DateTime item in datas)
+            {
+                listaDia = listaCP1.Where(p => p.MENS_DT_ENVIO.Value.Date == item).ToList();
+                Int32 contaDia = listaDia.Count();
+                dias.Add(item.ToShortDateString());
+                valor.Add(contaDia);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public ActionResult VerEMailExpansaoTodos()
+        {
+            // Prepara grid
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            List<MENSAGENS> listaBase = baseApp.GetAllItens(idAss).Where(p => p.MENS_IN_TIPO == 1 & p.MENS_DT_ENVIO != null).ToList();
+            List<DateTime> datas = listaBase.Select(p => p.MENS_DT_ENVIO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32 conta = listaBase.Where(p => p.MENS_DT_ENVIO.Value.Date == item).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.DataEmissao = item;
+                mod.Valor = conta;
+                lista.Add(mod);
+            }
+            ViewBag.Lista = lista;
+            ViewBag.Conta = listaBase.Count;
+            Session["ListaEMailTodas"] = listaBase;
+            Session["ListaDatasTodas"] = datas;
+            return View();
+        }
+
+        public ActionResult VerSMSExpansao()
+        {
+            // Prepara grid
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            List<MENSAGENS> listaBase1 = baseApp.GetAllItens(idAss).Where(p => p.MENS_IN_TIPO == 2 & p.MENS_DT_ENVIO != null).ToList();
+            List<MENSAGENS> listaBase = listaBase1.Where(p => p.MENS_DT_ENVIO.Value.Month == DateTime.Today.Month).ToList();
+            List<DateTime> datas = listaBase.Select(p => p.MENS_DT_ENVIO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32 conta = listaBase.Where(p => p.MENS_DT_ENVIO.Value.Date == item).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.DataEmissao = item;
+                mod.Valor = conta;
+                lista.Add(mod);
+            }
+            ViewBag.Lista = lista;
+            ViewBag.Conta = listaBase.Count;
+            Session["ListaSMS"] = listaBase;
+            Session["ListaDatasSMS"] = datas;
+            return View();
+        }
+
+        public JsonResult GetDadosGraficoSMS()
+        {
+            List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaSMS"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatasSMS"];
+            List<MENSAGENS> listaDia = new List<MENSAGENS>();
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (DateTime item in datas)
+            {
+                listaDia = listaCP1.Where(p => p.MENS_DT_ENVIO.Value.Date == item).ToList();
+                Int32 contaDia = listaDia.Count();
+                dias.Add(item.ToShortDateString());
+                valor.Add(contaDia);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoSMSTodos()
+        {
+            List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaSMSTodas"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatasSMSTodas"];
+            List<MENSAGENS> listaDia = new List<MENSAGENS>();
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (DateTime item in datas)
+            {
+                listaDia = listaCP1.Where(p => p.MENS_DT_ENVIO.Value.Date == item).ToList();
+                Int32 contaDia = listaDia.Count();
+                dias.Add(item.ToShortDateString());
+                valor.Add(contaDia);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public ActionResult VerSMSExpansaoTodos()
+        {
+            // Prepara grid
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            List<MENSAGENS> listaBase = baseApp.GetAllItens(idAss).Where(p => p.MENS_IN_TIPO == 2 & p.MENS_DT_ENVIO != null).ToList();
+            List<DateTime> datas = listaBase.Select(p => p.MENS_DT_ENVIO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32 conta = listaBase.Where(p => p.MENS_DT_ENVIO.Value.Date == item).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.DataEmissao = item;
+                mod.Valor = conta;
+                lista.Add(mod);
+            }
+            ViewBag.Lista = lista;
+            ViewBag.Conta = listaBase.Count;
+            Session["ListaSMSTodas"] = listaBase;
+            Session["ListaDatasSMSTodas"] = datas;
+            return View();
+        }
+
+        public ActionResult VerFalhasExpansao()
+        {
+            // Prepara grid
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            List<MENSAGENS> listaBase1 = baseApp.GetAllItens(idAss).Where(p => p.MENS_TX_RETORNO != null).ToList();
+            List<MENSAGENS> listaBase = listaBase1.Where(p => p.MENS_DT_CRIACAO.Value.Month == DateTime.Today.Month).ToList();
+            List<DateTime> datas = listaBase.Select(p => p.MENS_DT_CRIACAO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32 conta = listaBase.Where(p => p.MENS_DT_CRIACAO.Value.Date == item).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.DataEmissao = item;
+                mod.Valor = conta;
+                lista.Add(mod);
+            }
+            ViewBag.Lista = lista;
+            ViewBag.Conta = listaBase.Count;
+            Session["ListaFalha"] = listaBase;
+            Session["ListaDatasFalha"] = datas;
+            return View();
+        }
+
+        public JsonResult GetDadosGraficoFalhas()
+        {
+            List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaFalha"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatasFalha"];
+            List<MENSAGENS> listaDia = new List<MENSAGENS>();
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (DateTime item in datas)
+            {
+                listaDia = listaCP1.Where(p => p.MENS_DT_CRIACAO.Value.Date == item).ToList();
+                Int32 contaDia = listaDia.Count();
+                dias.Add(item.ToShortDateString());
+                valor.Add(contaDia);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoFalhasTodos()
+        {
+            List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaFalhaTodas"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatasFalhaTodas"];
+            List<MENSAGENS> listaDia = new List<MENSAGENS>();
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (DateTime item in datas)
+            {
+                listaDia = listaCP1.Where(p => p.MENS_DT_CRIACAO.Value.Date == item).ToList();
+                Int32 contaDia = listaDia.Count();
+                dias.Add(item.ToShortDateString());
+                valor.Add(contaDia);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public ActionResult VerFalhasExpansaoTodos()
+        {
+            // Prepara grid
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            List<MENSAGENS> listaBase = baseApp.GetAllItens(idAss).Where(p => p.MENS_TX_RETORNO != null).ToList();
+            List<DateTime> datas = listaBase.Select(p => p.MENS_DT_CRIACAO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32 conta = listaBase.Where(p => p.MENS_DT_CRIACAO.Value.Date == item).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.DataEmissao = item;
+                mod.Valor = conta;
+                lista.Add(mod);
+            }
+            ViewBag.Lista = lista;
+            ViewBag.Conta = listaBase.Count;
+            Session["ListaFalha"] = listaBase;
+            Session["ListaDatasFalha"] = datas;
+            return View();
+        }
+
+
+
+
 
     }
 }

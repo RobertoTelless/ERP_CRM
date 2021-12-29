@@ -43,7 +43,8 @@
                                     @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
                                     <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Envio do E-Mail</button>
                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMensagemEMail", controller: "Mensagem")
-                                    @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "Mensagem")
+                                    @Html.ButtonLinkIndex(text: "Dashboard Mensagens", controller: "Mensagem", action: "MontarTelaDashboardMensagens")
+                                    @Html.ButtonLinkIndex(text: "Início", controller: "Mensagem", action: "Voltar")
                                 </div>
                             </div>
                             
@@ -158,7 +159,8 @@
                                         @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
                                         <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Envio do E-Mail</button>
                                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMensagemEMail", controller: "Mensagem")
-                                        @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "Mensagem")
+                                        @Html.ButtonLinkIndex(text: "Dashboard Mensagens", controller: "Mensagem", action: "MontarTelaDashboardMensagens")
+                                        @Html.ButtonLinkIndex(text: "Início", controller: "Mensagem", action: "Voltar")
                                     </div>
                                 </div>
                             </div>

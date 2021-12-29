@@ -1,0 +1,417 @@
+﻿@using EntitiesServices.Work_Classes;
+@using Presentation.Extensions
+@using CrossCutting
+@model ERP_CRM_Solution.ViewModels.UsuarioViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div style="z-index: 999;" class="dotContainer">
+    <div style="top: 500px" class="dotWrapper">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="shadow"></div>
+        <div class="shadow"></div>
+        <div class="shadow"></div>
+    </div>
+</div>
+
+<div id="content" style="filter: blur(4px);" class="wraper container-fluid">
+    <div id="containerModalDesc">
+        <div class="modal fade" id="modalDesc" tabindex="-1" role="dialog" aria-labelledby="modalDesc" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalDesc">Descrição</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modalDescBody" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+    
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="ibox-content text-center">
+                        <h1>@Model.USUA_NM_NOME.Substring(0, Model.USUA_NM_NOME.IndexOf(" "))</h1>
+                        <div class="m-b-sm">
+                            <img alt="image" class="img-circle" src="@Url.Content(Model.USUA_AQ_FOTO)" style="width: 90px; height: 90px; max-height: 90px; max-width: 90px;">
+                        </div>
+                        <p class="font-bold">@((String)Session["NomeGreeting"])</p>
+
+                        <div class="text-center">
+                            @Html.ButtonLinkIndex(text: "Ver Perfil", action: "EditarPerfilUsuario", controller: "Usuario", buttonClass: "btn btn-xs btn-white")
+                            @Html.ButtonLinkIndex(text: "Início", action: "CarregarBase", controller: "BaseAdmin", buttonClass: "btn btn-xs btn-primary")
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-warning pull-right">Hoje</span>
+                            <h5>Atividade do usuário</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Acessos</small>
+                                    <h4>@Model.USUA_NR_ACESSOS</h4>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Falhas de Login</small>
+                                    <h4>@Model.USUA_NR_FALHAS</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Transações</small>
+                                    <h4>@((Int32)Session["Logs"])</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Último Acesso</small>
+                                    <h4>@Model.USUA_DT_ACESSO.Value.ToShortDateString()</h4>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Última Alteração</small>
+                                    @if (Model.USUA_DT_ALTERACAO == null)
+                                    {
+                                        <h4>Não há</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4>@Model.USUA_DT_ALTERACAO.Value.ToShortDateString()</h4>
+                                    }
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Última Falha</small>
+                                    @if (Model.USUA_DT_ULTIMA_FALHA == null)
+                                    {
+                                        <h4>Não há</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4>@Model.USUA_DT_ULTIMA_FALHA.Value.ToShortDateString()</h4>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-warning pull-right">Hoje</span>
+                            <h5>Resumo de Envio de Mensagens (Mês)</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Total</small>
+                                    <h4>@ViewBag.Total</h4>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <small class="stats-label">E-Mails</small>
+                                    <h4>@ViewBag.Emails</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">SMS</small>
+                                    <h4>@ViewBag.SMS</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stats-label">WhatsApp</small>
+                                    <h4>-</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Falhas</small>
+                                    <h4>@ViewBag.Falhas</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    @Html.ButtonLinkIndex(text: "Mensagens", action: "MontarTelaMensagemEMail", controller: "Mensagem")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <br />
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Indicadores</h5>
+                        </div>
+                        <div class="ibox-content ibox-heading">
+                            <h3><i class="fa fa-line-chart"></i> Indicadores</h3>
+                            <small><i class="fa fa-tim"></i> Valores acumulados/atualizados até hoje</small>
+                        </div>
+
+                        <div class="ibox-content"  style="height: 800px">
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-4">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; background-color: azure" >
+                                        <div class="ibox-title">
+                                            <span class="label label-success pull-right">Hoje</span>
+                                            <h5>Total Enviado</h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <h2 class="no-margins">@ViewBag.Total</h2>
+                                            <br />
+                                            <br />
+                                            @Html.ButtonLinkIndex(text: "Mês", controller: "Mensagem", action: "VerTotalExpansao", buttonClass: "white")
+                                            @Html.ButtonLinkIndex(text: "Todos", controller: "Mensagem", action: "VerTotalExpansaoTodos", buttonClass: "white")
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; background-color: azure" >
+                                        <div class="ibox-title">
+                                            <span class="label label-success pull-right">Hoje</span>
+                                            <h5>E-Mails enviados</h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <h2 class="no-margins">@ViewBag.Emails</h2>
+                                            <br />
+                                            <br />
+                                            @Html.ButtonLinkIndex(text: "Mês", controller: "Mensagem", action: "VerEMailExpansao", buttonClass: "white")
+                                            @Html.ButtonLinkIndex(text: "Todos", controller: "Mensagem", action: "VerEmailExpansaoTodos", buttonClass: "white")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; background-color: azure" >
+                                        <div class="ibox-title">
+                                            <span class="label label-success pull-right">Hoje</span>
+                                            <h5>SMS enviados</h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <h2 class="no-margins">@ViewBag.SMS</h2>
+                                            <br />
+                                            <br />
+                                            @Html.ButtonLinkIndex(text: "Mês", controller: "Mensagem", action: "VerSMSExpansao", buttonClass: "white")
+                                            @Html.ButtonLinkIndex(text: "Todos", controller: "Mensagem", action: "VerSMSExpansaoTodos", buttonClass: "white")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-4">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; background-color: azure" >
+                                        <div class="ibox-title">
+                                            <span class="label label-success pull-right">Hoje</span>
+                                            <h5>Falhas de Envio</h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <h2 class="no-margins">@ViewBag.Falhas</h2>
+                                            <br />
+                                            <br />
+                                            @Html.ButtonLinkIndex(text: "Mês", controller: "Mensagem", action: "VerFalhasExpansao", buttonClass: "white")
+                                            @Html.ButtonLinkIndex(text: "Todos", controller: "Mensagem", action: "VerFalhasExpansaoTodos", buttonClass: "white")
+                                        </div>
+                                    </div>
+                                </div>                            
+                                <div class="col-lg-4">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; background-color: azure" >
+                                        <div class="ibox-title">
+                                            <span class="label label-success pull-right">Hoje</span>
+                                            <h5>E-Mails Agend.</h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <h2 class="no-margins">@ViewBag.EmailAgenda</h2>
+                                            <br />
+                                            <br />
+                                            @Html.ButtonLinkIndex(text: "Ver", controller: "Mensagem", action: "VerEMailAgendados", buttonClass: "white")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; background-color: azure" >
+                                        <div class="ibox-title">
+                                            <span class="label label-success pull-right">Hoje</span>
+                                            <h5>SMS Agendados</h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <h2 class="no-margins">@ViewBag.SMSAgenda</h2>
+                                            <br />
+                                            <br />
+                                            @Html.ButtonLinkIndex(text: "Ver", controller: "Mensagem", action: "VerSMSAgendados", buttonClass: "white")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/ionRangeSlider/ionRangeStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/ionRange")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script>
+        function mostrarDesc(desc) {
+            $('#modalDescBody').html(desc);
+            $('#modalDesc').modal('show');
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'Excel' },
+                    { extend: 'pdf', title: 'PDF' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            $("#sparkline1").sparkline([5, 12, 6, 4, 15, 1, 11, 8], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            $("#sparkline2").sparkline([1, 3, 6, 2, 7, 1, 5, 3], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
+            });
+
+        });
+    </script>
+
+    <script>
+        $.ajax({
+            url: '../BaseAdmin/GetRefreshTime'
+            , type: 'POST'
+            , success: function (r) {
+                window.setInterval(function () {
+                    window.location.href = "../BaseAdmin/CarregarBase"
+                }, r * 1000);
+
+                //clearInterval()
+            }
+        });
+    </script>
+
+    @*Notification Sound*@
+    <script>
+        $.ajax({
+            url: '../BaseAdmin/GetConfigNotificacoes'
+            , type: 'POST'
+            , success: function (e) {
+                console.log(e);
+
+                var audio = {};
+                audio["msg"] = new Audio();
+                audio["msg"].src = "../Sounds/" + e.CONF_NM_ARQUIVO_ALARME;
+
+                function PlayNotificationChime() {
+                    audio["msg"].play();
+                }
+
+                if (e.NOTIFICACAO) {
+                    PlayNotificationChime();
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(window).on("load", function () {
+            $('.dotContainer').fadeOut("slow");
+            $('#title').css("filter", "blur(0)");
+            $('#content').css("filter", "blur(0)");
+        });
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

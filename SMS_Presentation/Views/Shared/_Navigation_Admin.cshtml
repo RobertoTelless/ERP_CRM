@@ -61,6 +61,15 @@
                                 <li class="@Html.IsSelected(action: "VerEMailAgendados")"><a href="@Url.Action("VerEMailAgendados", "Mensagem")">E-Mails Agendados</a></li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
+                                <li class="@Html.IsSelected(action: "MontarTelaCatCliente")"><a href="@Url.Action("MontarTelaCatCliente", "Auxiliar")">Cat.Cliente</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaCatAgenda")"><a href="@Url.Action("MontarTelaCatAgenda", "Auxiliar")">Cat.Agenda</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaCargo")"><a href="@Url.Action("MontarTelaCargo", "Auxiliar")">Cargo</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaCatTelefone")"><a href="@Url.Action("MontarTelaCatTelefone", "Auxiliar")">Cat.Telefone</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             }

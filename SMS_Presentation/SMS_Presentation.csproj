@@ -3051,6 +3051,15 @@
     <Content Include="Views\CRM\VerCRMExpansao.cshtml" />
     <Content Include="Views\CRM\VerProcessosStatusExpansao.cshtml" />
     <Content Include="Views\CRM\EnviarEMailCliente.cshtml" />
+    <Content Include="Views\Mensagem\MontarTelaDashboardMensagens.cshtml" />
+    <Content Include="Views\Mensagem\VerTotalExpansao.cshtml" />
+    <Content Include="Views\Mensagem\VerTotalExpansaoTodos.cshtml" />
+    <Content Include="Views\Mensagem\VerEMailExpansao.cshtml" />
+    <Content Include="Views\Mensagem\VerEMailExpansaoTodos.cshtml" />
+    <Content Include="Views\Mensagem\VerSMSExpansao.cshtml" />
+    <Content Include="Views\Mensagem\VerSMSExpansaoTodos.cshtml" />
+    <Content Include="Views\Mensagem\VerFalhasExpansao.cshtml" />
+    <Content Include="Views\Mensagem\VerFalhasExpansaoTodos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

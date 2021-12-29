@@ -46,7 +46,8 @@
                         </div>
                         <div class="form-group">
                             @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAnexoMensagemEMail", controller: "Mensagem")
-                            @Html.ButtonLinkIndex(text: "Dashboard", controller: "Mensagem", action: "Voltar")
+                            @Html.ButtonLinkIndex(text: "Dashboard Mensagens", controller: "Mensagem", action: "MontarTelaDashboardMensagens")
+                            @Html.ButtonLinkIndex(text: "Início", controller: "Mensagem", action: "Voltar")
                         </div>
                         <div class="form-group">
                             @if (Model.MEAN_IN_TIPO == 1)
