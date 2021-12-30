@@ -63,7 +63,7 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(DateTime? data, Int32 ? cat, String titulo, String descricao, Int32 idAss, Int32 idUser, out List<AGENDA> objeto)
+        public Int32 ExecuteFilter(DateTime? data, Int32 ? cat, String titulo, String descricao, Int32 idAss, Int32 idUser, Int32 corp, out List<AGENDA> objeto)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(data, cat, titulo, descricao, idAss, idUser);
+                objeto = _baseService.ExecuteFilter(data, cat, titulo, descricao, idAss, idUser, corp);
                 if (objeto.Count == 0)
                 {
                     volta = 1;

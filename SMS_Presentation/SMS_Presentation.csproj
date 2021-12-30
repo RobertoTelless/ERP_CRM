@@ -697,9 +697,17 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Imagens\Assinantes\1\Foto\FotoBase.jpg" />
+    <Content Include="Imagens\2\Filial\1\Foto\FotoBase.jpg" />
+    <Content Include="Imagens\2\Filial\1\Foto\Logo_RTI.png" />
+    <Content Include="Imagens\2\Usuario\1\Foto\FotoBase.jpg" />
+    <Content Include="Imagens\2\Usuario\1\Foto\FotoOficial_2.jpeg" />
+    <Content Include="Imagens\Assinantes\2\Foto\FotoBase.jpg" />
+    <Content Include="Imagens\Assinantes\2\Foto\FotoOficial_2.jpeg" />
+    <Content Include="Imagens\Assinantes\2\Foto\Logo_RTI.png" />
     <Content Include="Imagens\Base\FotoBase.jpg" />
+    <Content Include="Imagens\Base\FotoOficial_2.jpeg" />
     <Content Include="Imagens\Base\icone_imagem.jpg" />
+    <Content Include="Imagens\Base\Logo_RTI.png" />
     <Content Include="Images\1.jpg" />
     <Content Include="Images\1.png" />
     <Content Include="Images\5.png" />
@@ -3065,20 +3073,20 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
-    <Folder Include="Imagens\1\Agenda\" />
-    <Folder Include="Imagens\1\Clientes\" />
-    <Folder Include="Imagens\1\CRM\" />
-    <Folder Include="Imagens\1\Equipamento\" />
-    <Folder Include="Imagens\1\Filial\" />
-    <Folder Include="Imagens\1\Fornecedores\" />
-    <Folder Include="Imagens\1\Mensagem\" />
-    <Folder Include="Imagens\1\Noticias\" />
-    <Folder Include="Imagens\1\Notificacao\" />
-    <Folder Include="Imagens\1\Produtos\" />
-    <Folder Include="Imagens\1\Tarefa\" />
-    <Folder Include="Imagens\1\TemplatesHTML\" />
-    <Folder Include="Imagens\1\Usuario\" />
-    <Folder Include="Imagens\Assinantes\1\Anexos\" />
+    <Folder Include="Imagens\2\Agenda\" />
+    <Folder Include="Imagens\2\Clientes\" />
+    <Folder Include="Imagens\2\CRM\" />
+    <Folder Include="Imagens\2\Equipamento\" />
+    <Folder Include="Imagens\2\Filial\1\Anexos\" />
+    <Folder Include="Imagens\2\Fornecedores\" />
+    <Folder Include="Imagens\2\Mensagem\" />
+    <Folder Include="Imagens\2\Noticias\" />
+    <Folder Include="Imagens\2\Notificacao\" />
+    <Folder Include="Imagens\2\Produtos\" />
+    <Folder Include="Imagens\2\Tarefa\" />
+    <Folder Include="Imagens\2\TemplatesHTML\" />
+    <Folder Include="Imagens\2\Usuario\1\Anexos\" />
+    <Folder Include="Imagens\Assinantes\2\Anexos\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
