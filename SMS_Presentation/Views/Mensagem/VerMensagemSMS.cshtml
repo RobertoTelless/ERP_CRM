@@ -27,6 +27,10 @@
                 <div class="ibox-title">
                     <h5>Mensagens SMS - Consulta</h5>&nbsp;&nbsp;&nbsp;
                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarMensagemAnexoSMS", controller: "Mensagem", buttonClass: "primary")
+                    @if ((Int32)Session["PermCRM"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Criar Processo CRM", controller: "Mensagem", action: "ConverterMensagemCRMSMS")
+                    }
                     @Html.ButtonLinkIndex(text: "Dashboard Mensagens", controller: "Mensagem", action: "MontarTelaDashboardMensagens")
                     @Html.ButtonLinkIndex(text: "Início", controller: "Mensagem", action: "Voltar")
                 </div>

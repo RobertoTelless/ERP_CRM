@@ -282,6 +282,12 @@
   <data name="M0063" xml:space="preserve">
     <value>Nenhum contato obedeceu ao filtro especificado</value>
   </data>
+  <data name="M0064" xml:space="preserve">
+    <value>Este plano de assinatura não tem acesso às funcionalidades de CRM</value>
+  </data>
+  <data name="M0065" xml:space="preserve">
+    <value>Essa mensagem já foi convertida em processo CRM</value>
+  </data>
   <data name="M0073" xml:space="preserve">
     <value>A Senha não pode ficar em branco</value>
   </data>

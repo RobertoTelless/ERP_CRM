@@ -46,7 +46,7 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IGrupoAppService gruApp;
         private readonly ITemplateEMailAppService temaApp;
         private readonly IEMailAgendaAppService emApp;
-        //private readonly ICRMAppService crmApp;
+        private readonly ICRMAppService crmApp;
 
         private String msg;
         private Exception exception;
@@ -56,7 +56,7 @@ namespace ERP_CRM_Solution.Controllers
         List<MENSAGENS> listaMaster = new List<MENSAGENS>();
         String extensao;
 
-        public MensagemController(IMensagemAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IClienteAppService cliApps, IConfiguracaoAppService confApps, ITemplateSMSAppService temApps, IGrupoAppService gruApps, ITemplateEMailAppService temaApps, IEMailAgendaAppService emApps)
+        public MensagemController(IMensagemAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IClienteAppService cliApps, IConfiguracaoAppService confApps, ITemplateSMSAppService temApps, IGrupoAppService gruApps, ITemplateEMailAppService temaApps, IEMailAgendaAppService emApps, ICRMAppService crmApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -67,7 +67,7 @@ namespace ERP_CRM_Solution.Controllers
             gruApp = gruApps;
             temaApp = temaApps;
             emApp = emApps;
-            //crmApp = crmApps;
+            crmApp = crmApps;
         }
 
         [HttpGet]
@@ -184,6 +184,22 @@ namespace ERP_CRM_Solution.Controllers
                 if ((Int32)Session["MensMensagem"] == 51)
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0054", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensMensagem"] == 40)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0034", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensMensagem"] == 50)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0055", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensMensagem"] == 60)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0064", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensMensagem"] == 61)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0065", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -1000,25 +1016,54 @@ namespace ERP_CRM_Solution.Controllers
             MENSAGENS_DESTINOS dest = baseApp.GetDestinoById(id);
             MENSAGENS mensagem = baseApp.GetItemById(dest.MENS_CD_ID);
             USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica possibilidade
+            if ((Int32)Session["PermCRM"] == 1)
+            {
+                if (mensagem.MENS_IN_CRM == 0)
+                {
+                    Int32 num = crmApp.GetAllItens(idAss).Count;
+                    if ((Int32)Session["NumProc"] <= num)
+                    {
+                        Session["MensMensagem"] = 50;
+                        return RedirectToAction("VoltarAnexoMensagemSMS");
+                    }
+                }
+                else
+                {
+                    Session["MensMensagem"] = 60;
+                    return RedirectToAction("VoltarAnexoMensagemSMS");
+                }
+            }
+            else
+            {
+                Session["MensMensagem"] = 61;
+                return RedirectToAction("VoltarVoltarAnexoMensagemSMSAnexoMensagemEMail");
+            }
 
             // Cria CRM
             CRM crm = new CRM();
             crm.ASSI_CD_ID = mensagem.ASSI_CD_ID;
             crm.CLIE_CD_ID = (Int32)Session["IdCliente"];
-            crm.CRM1_DS_DESCRICAO = "Processo criado a partir de mensagem";
+            crm.CRM1_DS_DESCRICAO = "Processo criado a partir de SMS";
             crm.CRM1_DT_CRIACAO = DateTime.Today.Date;
             crm.CRM1_IN_ATIVO = 1;
             crm.CRM1_IN_STATUS = 1;
-            crm.CRM1_NM_NOME = "Processo criado a partir de mensagem";
+            crm.CRM1_NM_NOME = "Processo criado a partir de SMS";
             crm.TICR_CD_ID = 1;
             crm.USUA_CD_ID = usuario.USUA_CD_ID;
             crm.MENS_CD_ID = mensagem.MENS_CD_ID;
             crm.ORIG_CD_ID = 1;
-            //Int32 volta = crmApp.ValidateCreate(crm, usuario);
+            Int32 volta = crmApp.ValidateCreate(crm, usuario);
 
-            // Atualiza mensagem
+            // Atualiza destino
             dest.MEDE_IN_POSICAO = 4;
             Int32 volta1 = baseApp.ValidateEditDestino(dest);
+
+            // Atualiza mensagem
+            mensagem.MENS_IN_CRM = 1;
+            Int32 volta2 = baseApp.ValidateEdit(mensagem, mensagem);
 
             // Retorno
             Session["MensMensagem"] = 40;
@@ -1027,30 +1072,59 @@ namespace ERP_CRM_Solution.Controllers
 
         [HttpGet]
         public ActionResult ConverterMensagemCRMEMail(Int32 id)
-        {
+        {         
             // Recupera Mensagem e contato
             MENSAGENS_DESTINOS dest = baseApp.GetDestinoById(id);
             MENSAGENS mensagem = baseApp.GetItemById(dest.MENS_CD_ID);
             USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica possibilidade
+            if ((Int32)Session["PermCRM"] == 1)
+            {
+                if (mensagem.MENS_IN_CRM == 0)
+                {
+                    Int32 num = crmApp.GetAllItens(idAss).Count;
+                    if ((Int32)Session["NumProc"] <= num)
+                    {
+                        Session["MensMensagem"] = 50;
+                        return RedirectToAction("VoltarAnexoMensagemEMail");
+                    }
+                }
+                else
+                {
+                    Session["MensMensagem"] = 60;
+                    return RedirectToAction("VoltarAnexoMensagemEMail");
+                }
+            }
+            else
+            {
+                Session["MensMensagem"] = 61;
+                return RedirectToAction("VoltarAnexoMensagemEMail");
+            }
 
             // Cria CRM
             CRM crm = new CRM();
             crm.ASSI_CD_ID = mensagem.ASSI_CD_ID;
             crm.CLIE_CD_ID = (Int32)Session["IdCliente"];
-            crm.CRM1_DS_DESCRICAO = "Processo criado a partir de mensagem";
+            crm.CRM1_DS_DESCRICAO = "Processo criado a partir de E-Mail";
             crm.CRM1_DT_CRIACAO = DateTime.Today.Date;
             crm.CRM1_IN_ATIVO = 1;
             crm.CRM1_IN_STATUS = 1;
-            crm.CRM1_NM_NOME = "Processo criado a partir de mensagem";
+            crm.CRM1_NM_NOME = "Processo criado a partir de E-Mail";
             crm.TICR_CD_ID = 1;
             crm.USUA_CD_ID = usuario.USUA_CD_ID;
             crm.MENS_CD_ID = mensagem.MENS_CD_ID;
             crm.ORIG_CD_ID = 1;
-            //Int32 volta = crmApp.ValidateCreate(crm, usuario);
+            Int32 volta = crmApp.ValidateCreate(crm, usuario);
 
-            // Atualiza mensagem
+            // Atualiza destino
             dest.MEDE_IN_POSICAO = 4;
             Int32 volta1 = baseApp.ValidateEditDestino(dest);
+
+            // Atualiza mensagem
+            mensagem.MENS_IN_CRM = 1;
+            Int32 volta2 = baseApp.ValidateEdit(mensagem, mensagem);
 
             // Retorno
             Session["MensMensagem"] = 40;
@@ -1112,6 +1186,22 @@ namespace ERP_CRM_Solution.Controllers
                 if ((Int32)Session["MensMensagem"] == 51)
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0054", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensMensagem"] == 40)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0034", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensMensagem"] == 50)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0055", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensMensagem"] == 60)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0064", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensMensagem"] == 61)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0065", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -1234,7 +1324,7 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("MontarTelaMensagemEMail");
         }
 
-        public ActionResult VoltarMensagemAnexoEMail()
+        public ActionResult VoltarAnexoMensagemEMail()
         {
             if ((String)Session["Ativa"] == null)
             {

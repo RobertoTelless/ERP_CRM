@@ -1018,6 +1018,7 @@
           <Property Name="MENS_NM_RODAPE" Type="text" />
           <Property Name="MENS_NM_LINK" Type="varchar" MaxLength="500" />
           <Property Name="MENS_TX_SMS" Type="varchar" MaxLength="250" />
+          <Property Name="MENS_IN_CRM" Type="int" />
         </EntityType>
         <EntityType Name="MENSAGENS_DESTINOS">
           <Key>
@@ -6987,6 +6988,7 @@
           <NavigationProperty Name="TEMPLATE_SMS" Relationship="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_SMS" FromRole="MENSAGENS" ToRole="TEMPLATE_SMS" />
           <Property Name="TEEM_CD_ID" Type="Int32" />
           <NavigationProperty Name="TEMPLATE_EMAIL" Relationship="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_EMAIL" FromRole="MENSAGENS" ToRole="TEMPLATE_EMAIL" />
+          <Property Name="MENS_IN_CRM" Type="Int32" />
         </EntityType>
         <EntityType Name="MENSAGENS_DESTINOS">
           <Key>
@@ -12928,6 +12930,7 @@
           <EntitySetMapping Name="MENSAGENS">
             <EntityTypeMapping TypeName="ERP_CRMModel.MENSAGENS">
               <MappingFragment StoreEntitySet="MENSAGENS">
+                <ScalarProperty Name="MENS_IN_CRM" ColumnName="MENS_IN_CRM" />
                 <ScalarProperty Name="TEEM_CD_ID" ColumnName="TEEM_CD_ID" />
                 <ScalarProperty Name="TSMS_CD_ID" ColumnName="TSMS_CD_ID" />
                 <ScalarProperty Name="MENS_CD_ID" ColumnName="MENS_CD_ID" />

@@ -195,6 +195,10 @@
                                                     {   
                                                         <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Mensagem/ReativarMensagemSMS/@cond.MENS_CD_ID')" title="Reativar"></span>
                                                     }
+                                                    if ((Int32)Session["PermCRM"] == 1)
+                                                    {
+                                                        @Html.TableLinkDetails(cond.MENS_CD_ID, "ConverterMensagemCRMSMS", "fa-fork", "Criar Processo CRM")
+                                                    }
                                                 }
                                                 else
                                                 {
