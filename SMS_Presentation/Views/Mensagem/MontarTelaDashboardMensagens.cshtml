@@ -110,6 +110,10 @@
                             </div>
                         </div>
                     </div>
+                    @if (ViewBag.Perfil != "VIS")
+                    {
+                        @Html.ButtonLinkIndex(text: "Inclusão de Clientes", action: "IncluirClienteRapido", controller: "Cliente", buttonClass: "btn btn-xs btn-success")
+                    }
                 </div>
 
                 <div class="col-lg-4 col-md-4 col-sm-12">

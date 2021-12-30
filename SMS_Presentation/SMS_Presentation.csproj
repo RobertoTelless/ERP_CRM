@@ -3060,6 +3060,7 @@
     <Content Include="Views\Mensagem\VerSMSExpansaoTodos.cshtml" />
     <Content Include="Views\Mensagem\VerFalhasExpansao.cshtml" />
     <Content Include="Views\Mensagem\VerFalhasExpansaoTodos.cshtml" />
+    <Content Include="Views\Cliente\IncluirClienteRapido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
