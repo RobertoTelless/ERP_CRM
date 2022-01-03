@@ -7,7 +7,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using MvcMapping.Mappers;
 
-namespace ERPCRM_Solution
+namespace SMS_Presentation
 {
     public class MvcApplication : System.Web.HttpApplication
     {

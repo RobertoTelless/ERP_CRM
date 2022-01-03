@@ -152,6 +152,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["IdVoltaTab"] = 0;
             Session["SMSEMailEnvio"] = 0;
             Session["MensTemplateSMS"] = 0;
+            Session["MensPermissao"] = 0;
 
             Session["VoltaNotificacao"] = 3;
             Session["VoltaNoticia"] = 1;

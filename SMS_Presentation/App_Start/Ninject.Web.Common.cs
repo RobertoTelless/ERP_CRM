@@ -89,6 +89,11 @@ namespace Presentation.Start
             kernel.Bind<IFornecedorCnpjAppService>().To<FornecedorCnpjAppService>();
             kernel.Bind<ITemplateSMSAppService>().To<TemplateSMSAppService>();
             kernel.Bind<ITemplateEMailAppService>().To<TemplateEMailAppService>();
+            kernel.Bind<INoticiaAppService>().To<NoticiaAppService>();
+            kernel.Bind<ITarefaAppService>().To<TarefaAppService>();
+            kernel.Bind<ITipoPessoaAppService>().To<TipoPessoaAppService>();
+            kernel.Bind<ITelefoneAppService>().To<TelefoneAppService>();
+            kernel.Bind<ICategoriaTelefoneAppService>().To<CategoriaTelefoneAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -111,6 +116,11 @@ namespace Presentation.Start
             kernel.Bind<IFornecedorCnpjService>().To<FornecedorCnpjService>();
             kernel.Bind<ITemplateSMSService>().To<TemplateSMSService>();
             kernel.Bind<ITemplateEMailService>().To<TemplateEMailService>();
+            kernel.Bind<INoticiaService>().To<NoticiaService>();
+            kernel.Bind<ITarefaService>().To<TarefaService>();
+            kernel.Bind<ITipoPessoaService>().To<TipoPessoaService>();
+            kernel.Bind<ITelefoneService>().To<TelefoneService>();
+            kernel.Bind<ICategoriaTelefoneService>().To<CategoriaTelefoneService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -165,7 +175,14 @@ namespace Presentation.Start
             kernel.Bind<IFornecedorCnpjRepository>().To<FornecedorCnpjRepository>();
             kernel.Bind<ITemplateSMSRepository>().To<TemplateSMSRepository>();
             kernel.Bind<ITemplateEMailRepository>().To<TemplateEMailRepository>();
-
+            kernel.Bind<INoticiaRepository>().To<NoticiaRepository>();
+            kernel.Bind<INoticiaComentarioRepository>().To<NoticiaComentarioRepository>();
+            kernel.Bind<ITarefaRepository>().To<TarefaRepository>();
+            kernel.Bind<ITarefaAnexoRepository>().To<TarefaAnexoRepository>();
+            kernel.Bind<ITarefaNotificacaoRepository>().To<TarefaNotificacaoRepository>();
+            kernel.Bind<ITipoTarefaRepository>().To<TipoTarefaRepository>();
+            kernel.Bind<ITelefoneRepository>().To<TelefoneRepository>();
+            kernel.Bind<ICategoriaTelefoneRepository>().To<CategoriaTelefoneRepository>();
         }
     }
 }

@@ -3081,7 +3081,11 @@
     <Folder Include="Imagens\2\Fornecedores\" />
     <Folder Include="Imagens\2\Mensagem\" />
     <Folder Include="Imagens\2\Noticias\" />
-    <Folder Include="Imagens\2\Notificacao\" />
+    <Folder Include="Imagens\2\Notificacao\1\Anexos\" />
+    <Folder Include="Imagens\2\Notificacao\2\Anexos\" />
+    <Folder Include="Imagens\2\Notificacao\3\Anexos\" />
+    <Folder Include="Imagens\2\Notificacao\4\Anexos\" />
+    <Folder Include="Imagens\2\Notificacao\5\Anexos\" />
     <Folder Include="Imagens\2\Produtos\" />
     <Folder Include="Imagens\2\Tarefa\" />
     <Folder Include="Imagens\2\TemplatesHTML\" />

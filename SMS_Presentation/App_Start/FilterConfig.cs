@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace ERPCRM_Solution
+namespace SMS_Presentation
 {
     public class FilterConfig
     {
@@ -9,5 +9,6 @@ namespace ERPCRM_Solution
         {
             filters.Add(new HandleErrorAttribute());
         }
+
     }
 }
