@@ -237,7 +237,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensFilial"] = 2;
                     return RedirectToAction("MontarTelaFilial", "Filial");
@@ -339,7 +339,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensFilial"] = 2;
                     return RedirectToAction("MontarTelaFilial", "Filial");
@@ -425,7 +425,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensFilial"] = 2;
                     return RedirectToAction("MontarTelaFilial", "Filial");
@@ -467,7 +467,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensFilial"] = 2;
                     return RedirectToAction("MontarTelaFilial", "Filial");
@@ -544,7 +544,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["MensFilial"] = 6;
                 return RedirectToAction("VoltarAnexoFilial");
             }
-            String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/Filial/" + item.FILI_CD_ID.ToString() + "/Fotos/";
+            String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/Filial/" + item.FILI_CD_ID.ToString() + "/Logo/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
             System.IO.File.WriteAllBytes(path, file.Contents);
 
@@ -584,7 +584,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["MensFilial"] = 6;
                 return RedirectToAction("VoltarAnexoFilial");
             }
-            String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/Filial/" + item.FILI_CD_ID.ToString() + "/Fotos/";
+            String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/Filial/" + item.FILI_CD_ID.ToString() + "/Logo/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
             file.SaveAs(path);
 

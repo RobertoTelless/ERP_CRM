@@ -70,7 +70,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensPermissao"] = 2;
                     return RedirectToAction("CarregarBase", "BaseAdmin");
@@ -93,7 +93,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["ListaUsuario"] = listaMaster;
                 Session["FiltroUsuario"] = null;
             }
-            List<USUARIO> listaUsu = listaMaster;
+            List<USUARIO> listaUsu = (List<USUARIO>)Session["ListaUsuario"];
             ViewBag.Listas = listaUsu;
             ViewBag.Usuarios = listaUsu.Count;
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
@@ -216,7 +216,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             USUARIO usuario = (USUARIO)Session["UserCredentials"];
-            listaMaster = baseApp.GetAllUsuariosAdm(idAss);
+            listaMaster = baseApp.GetAllUsuarios(idAss);
             Session["ListaUsuario"] = listaMaster;
             return RedirectToAction("MontarTelaUsuario");
         }
@@ -301,7 +301,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 usuario = (USUARIO)Session["UserCredentials"];
 
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensUsuario"] = 2;
                     return RedirectToAction("MontarTelaUsuario", "Usuario");
@@ -440,7 +440,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensUsuario"] = 2;
                     return RedirectToAction("MontarTelaUsuario", "Usuario");
@@ -543,7 +543,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 usuario = (USUARIO)Session["UserCredentials"];
 
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensUsuario"] = 2;
                     return RedirectToAction("MontarTelaUsuario", "Usuario");
@@ -612,7 +612,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensUsuario"] = 2;
                     return RedirectToAction("MontarTelaUsuario", "Usuario");
@@ -681,7 +681,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensUsuario"] = 2;
                     return RedirectToAction("MontarTelaUsuario", "Usuario");
@@ -748,7 +748,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensUsuario"] = 2;
                     return RedirectToAction("MontarTelaUsuario", "Usuario");

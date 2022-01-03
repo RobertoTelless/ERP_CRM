@@ -15,7 +15,6 @@ namespace ERP_CRM_Solution.ViewModels
         public int ASSI_CD_ID { get; set; }
         [Required(ErrorMessage = "Campo PERFIL obrigatorio")]
         public int PERF_CD_ID { get; set; }
-        [Required(ErrorMessage = "Campo CATEGORIA obrigatorio")]
         public Nullable<int> CAUS_CD_ID { get; set; }
         public Nullable<int> CARG_CD_ID { get; set; }
         [Required(ErrorMessage = "Campo NOME obrigatorio")]

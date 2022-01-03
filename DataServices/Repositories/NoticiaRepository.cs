@@ -41,6 +41,7 @@ namespace DataServices.Repositories
             query = query.Where(p => DbFunctions.TruncateTime(p.NOTC_DT_VALIDADE) >= DbFunctions.TruncateTime(DateTime.Today));
             query = query.Include(p => p.NOTICIA_COMENTARIO);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
+            query = query.Where(p => p.NOTC_IN_ATIVO == 1);
             query = query.OrderByDescending(p => p.NOTC_DT_DATA_AUTOR);
             return query.ToList();
         }

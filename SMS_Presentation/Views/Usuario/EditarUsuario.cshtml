@@ -65,19 +65,24 @@
         <div class="col-lg-3">
             <div class="widget style1 blue-bg">
                 <div class="row vertical-align">
-                    <div class="col-xs-3">
-                        <i class="fa fa-thumbs-o-up fa-3x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        @if (Model.USUA_IN_BLOQUEADO == 1)
-	                    {
+                    @if (Model.USUA_IN_BLOQUEADO == 1)
+                    {
+                        <div class="col-xs-3">
+                            <i class="fa fa-thumbs-o-down fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
                             <h3 class="font-normal">Bloqueado</h3>
-                        }
-                        else
-                        {
-                            <h3 class="font-normal">Desbloqueado</h3>
-                        }
-                    </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-3">
+                            <i class="fa fa-thumbs-o-up fa-3x"></i>
+                        </div>
+                        <h3 class="font-normal">Desbloqueado</h3>
+                        <div class="col-xs-9 text-right">
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -85,7 +90,7 @@
             <div class="widget style1 yellow-bg">
                 <div class="row vertical-align">
                     <div class="col-xs-3">
-                        <i class="fa fa-thumbs-o-up fa-3x"></i>
+                        <i class="fa fa-calendar fa-3x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <h3 class="font-normal">Último Acesso: @Model.USUA_DT_ACESSO.Value.ToShortDateString()</h3>
@@ -119,7 +124,7 @@
                             <button alt="Desativar" class="btn btn-sm btn-warning demo2" onclick="ShowModalReativar('/Usuario/ReativarUsuario/@Model.USUA_CD_ID', '@Model.USUA_NM_NOME')" title="Desbloquear">Reativar</button>
                         }
                     }
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBase", controller: "Usuario", buttonClass: "primary")
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBase", controller: "Usuario", buttonClass: "warning")
                     @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "Usuario", buttonClass: "warning")
                 </div>
 
@@ -186,7 +191,26 @@
                                             </div>
                                             <div class="col-md-10">
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    <div class="col-lg-5 col-md-5 col-xs-12">
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                        @Html.HiddenFor(m => m.USUA_DT_ACESSO)
+                                                        @Html.HiddenFor(m => m.USUA_DT_BLOQUEADO)
+                                                        @Html.HiddenFor(m => m.USUA_DT_CADASTRO)
+                                                        @Html.HiddenFor(m => m.USUA_DT_TROCA_SENHA)
+                                                        @Html.HiddenFor(m => m.USUA_DT_ULTIMA_FALHA)
+                                                        @Html.HiddenFor(m => m.USUA_IN_ATIVO)
+                                                        @Html.HiddenFor(m => m.USUA_IN_BLOQUEADO)
+                                                        @Html.HiddenFor(m => m.USUA_IN_LOGADO)
+                                                        @Html.HiddenFor(m => m.USUA_IN_LOGIN_PROVISORIO)
+                                                        @Html.HiddenFor(m => m.USUA_IN_PROVISORIO)
+                                                        @Html.HiddenFor(m => m.USUA_IN_SISTEMA)
+                                                        @Html.HiddenFor(m => m.USUA_NM_NOVA_SENHA)
+                                                        @Html.HiddenFor(m => m.USUA_NM_SENHA)
+                                                        @Html.HiddenFor(m => m.USUA_NM_SENHA_CONFIRMA)
+                                                        @Html.HiddenFor(m => m.USUA_NR_ACESSOS)
+                                                        @Html.HiddenFor(m => m.USUA_NR_FALHAS)
+                                                        @Html.HiddenFor(m => m.PERF_CD_ID)                                                        
                                                         Nome*
                                                         @Html.TextBoxFor(m => m.USUA_NM_NOME, new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.USUA_NM_NOME, "", new { @style = "color:red" })

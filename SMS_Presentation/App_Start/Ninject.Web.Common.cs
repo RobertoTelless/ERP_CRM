@@ -94,6 +94,7 @@ namespace Presentation.Start
             kernel.Bind<ITipoPessoaAppService>().To<TipoPessoaAppService>();
             kernel.Bind<ITelefoneAppService>().To<TelefoneAppService>();
             kernel.Bind<ICategoriaTelefoneAppService>().To<CategoriaTelefoneAppService>();
+            kernel.Bind<IFilialAppService>().To<FilialAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -121,6 +122,7 @@ namespace Presentation.Start
             kernel.Bind<ITipoPessoaService>().To<TipoPessoaService>();
             kernel.Bind<ITelefoneService>().To<TelefoneService>();
             kernel.Bind<ICategoriaTelefoneService>().To<CategoriaTelefoneService>();
+            kernel.Bind<IFilialService>().To<FilialService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -183,6 +185,9 @@ namespace Presentation.Start
             kernel.Bind<ITipoTarefaRepository>().To<TipoTarefaRepository>();
             kernel.Bind<ITelefoneRepository>().To<TelefoneRepository>();
             kernel.Bind<ICategoriaTelefoneRepository>().To<CategoriaTelefoneRepository>();
+            kernel.Bind<IFilialRepository>().To<FilialRepository>();
+
+
         }
     }
 }

@@ -253,7 +253,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensPermissao"] = 2;
                     return RedirectToAction("CarregarBase", "BaseAdmin");
@@ -384,7 +384,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensPermissao"] = 2;
                     return RedirectToAction("MontarTelaNoticia", "Noticia");
@@ -472,7 +472,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensPermissao"] = 2;
                     return RedirectToAction("MontarTelaNoticia", "Noticia");
@@ -554,7 +554,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensPermissao"] = 2;
                     return RedirectToAction("MontarTelaNoticia", "Noticia");
@@ -613,7 +613,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensPermissao"] = 2;
                     return RedirectToAction("MontarTelaNoticia", "Noticia");

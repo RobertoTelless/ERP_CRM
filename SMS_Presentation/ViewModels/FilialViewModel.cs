@@ -12,6 +12,7 @@ namespace ERP_CRM_Solution.ViewModels
     {
         [Key]
         public int FILI_CD_ID { get; set; }
+        public int ASSI_CD_ID { get; set; }
         [Required(ErrorMessage = "Campo NOME obrigatorio")]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "O NOME deve conter no minimo 1 caracteres e no máximo 50.")]
         public string FILI_NM_NOME { get; set; }

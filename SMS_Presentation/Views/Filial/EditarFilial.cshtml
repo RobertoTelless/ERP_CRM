@@ -75,46 +75,52 @@
                                             </div>
                                         </div>
                                         <div class="col-md-10">
-                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                CNPJ
-                                                @*<div class="input-group">*@
-                                                    @Html.TextBoxFor(m => m.FILI_NR_CNPJ, new { @class = "form-control", autofocus = true, @id = "cnpj", @readonly = "readonly" })
-                                                    @Html.ValidationMessageFor(m => m.FILI_NR_CNPJ, "", new { @style = "color:red" })
-                                                    @*<span class="input-group-btn">
-                                                        <span class="btn btn-success" onclick="PesquisaCNPJ($('#cnpj').val())">Buscar CNPJ</span>
-                                                    </span>*@
-                                                @*</div>*@
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.FILI_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.FILI_IN_IE_ISENTO)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    CNPJ
+                                                    @*<div class="input-group">*@
+                                                        @Html.TextBoxFor(m => m.FILI_NR_CNPJ, new { @class = "form-control", autofocus = true, @id = "cnpj", @readonly = "readonly" })
+                                                        @Html.ValidationMessageFor(m => m.FILI_NR_CNPJ, "", new { @style = "color:red" })
+                                                        @*<span class="input-group-btn">
+                                                            <span class="btn btn-success" onclick="PesquisaCNPJ($('#cnpj').val())">Buscar CNPJ</span>
+                                                        </span>*@
+                                                    @*</div>*@
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Inscrição Municipal
+                                                    @Html.TextBoxFor(m => m.FILI_NR_INSCRICAO_ESTADUAL, new { @class = "form-control", autofocus = true, @id = "ie", @readonly = "readonly" })
+                                                    @Html.ValidationMessageFor(m => m.FILI_NR_INSCRICAO_ESTADUAL, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Inscrição Estadual
+                                                    @Html.TextBoxFor(m => m.FILI_NR_INSCRICAO_MUNICIPAL, new { @class = "form-control", autofocus = true, @id = "im", @readonly = "readonly" })
+                                                    @Html.ValidationMessageFor(m => m.FILI_NR_INSCRICAO_MUNICIPAL, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    CNAE
+                                                    @Html.TextBoxFor(m => m.FILI_NR_CNAE, new { @class = "form-control", autofocus = true, @id = "cnae", @readonly = "readonly" })
+                                                    @Html.ValidationMessageFor(m => m.FILI_NR_CNAE, "", new { @style = "color:red" })
+                                                </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-xs-12">
-                                                Inscrição Municipal
-                                                @Html.TextBoxFor(m => m.FILI_NR_INSCRICAO_ESTADUAL, new { @class = "form-control", autofocus = true, @id = "ie", @readonly = "readonly" })
-                                                @Html.ValidationMessageFor(m => m.FILI_NR_INSCRICAO_ESTADUAL, "", new { @style = "color:red" })
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-xs-12">
-                                                Inscrição Estadual
-                                                @Html.TextBoxFor(m => m.FILI_NR_INSCRICAO_MUNICIPAL, new { @class = "form-control", autofocus = true, @id = "im", @readonly = "readonly" })
-                                                @Html.ValidationMessageFor(m => m.FILI_NR_INSCRICAO_MUNICIPAL, "", new { @style = "color:red" })
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                CNAE
-                                                @Html.TextBoxFor(m => m.FILI_NR_CNAE, new { @class = "form-control", autofocus = true, @id = "cnae", @readonly = "readonly" })
-                                                @Html.ValidationMessageFor(m => m.FILI_NR_CNAE, "", new { @style = "color:red" })
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                                    Razão Social
+                                                    @Html.TextBoxFor(m => m.FILI_NM_RAZAO, new { @class = "form-control", autofocus = true, id = "razao", @readonly = "readonly" })
+                                                    @Html.ValidationMessageFor(m => m.FILI_NM_RAZAO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                                    Nome Fantasia*
+                                                    @Html.TextBoxFor(m => m.FILI_NM_NOME, new { @class = "form-control", autofocus = true, id = "nome" })
+                                                    @Html.ValidationMessageFor(m => m.FILI_NM_NOME, "", new { @style = "color:red" })
+                                                </div>
                                             </div>
                                         </div>
                                         <br />
-                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                            <div class="col-lg-6 col-md-6 col-xs-12">
-                                                Razão Social
-                                                @Html.TextBoxFor(m => m.FILI_NM_RAZAO, new { @class = "form-control", autofocus = true, id = "razao", @readonly = "readonly" })
-                                                @Html.ValidationMessageFor(m => m.FILI_NM_RAZAO, "", new { @style = "color:red" })
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-xs-12">
-                                                Nome Fantasia*
-                                                @Html.TextBoxFor(m => m.FILI_NM_NOME, new { @class = "form-control", autofocus = true, id = "nome" })
-                                                @Html.ValidationMessageFor(m => m.FILI_NM_NOME, "", new { @style = "color:red" })
-                                            </div>
-                                        </div>
-
                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                             <div class="col-lg-4 col-md-4 col-xs-12">
                                                 E-Mail*
@@ -186,7 +192,7 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-10 col-md-10 col-xs-12 ibox float-e-margins">
-                                        @using (Html.BeginForm("UploadLogoFilial", "MatrizFilial", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container4" }))
+                                        @using (Html.BeginForm("UploadLogoFilial", "Filial", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container4" }))
                                         {
                                         <input style="float: left; margin-right: 5px;" type="file" name="file" accept=".jpg, .png, .jpeg, .gif|images/*" id="file" class="btn btn-sm btn-warning" />
                                             <input style="float: left;" type="submit" value="Incluir Logotipo na Filial" class="btn btn-sm btn-success" />

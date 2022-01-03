@@ -60,7 +60,7 @@ namespace ERP_CRM_Solution.Controllers
         public JsonResult GetNotificacaoRefreshTime()
         {
             Int32 idAss = (Int32)Session["IdAssinante"];
-            var refresh = confApp.GetById(idAss).CONF_NR_REFRESH_NOTIFICACAO;
+            var refresh = confApp.GetItemById(idAss).CONF_NR_REFRESH_NOTIFICACAO;
 
             if (refresh == null)
             {
@@ -225,7 +225,6 @@ namespace ERP_CRM_Solution.Controllers
             Session["MensNotificacao"] = 0;
             Session["VoltaNotificacao"] = 1;
             objeto = new NOTIFICACAO();
-            objeto.NOTI_DT_EMISSAO = DateTime.Today.Date;
             return View(objeto);
         }
 
@@ -378,7 +377,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Nots = ((List<NOTIFICACAO>)Session["ListaNotificacao"]).Count;
 
             // Mensagem
-            if ((Int32)Session["MensPermissao"] == 2)
+            if ((Int32)Session["MensNotificacao"] == 2)
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
@@ -576,9 +575,9 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
-                    Session["MensPermissao"] = 2;
+                    Session["MensNotificacao"] = 2;
                     return RedirectToAction("MontarTelaNotificacaoGeral", "Notificacao");
                 }
             }
@@ -890,7 +889,7 @@ namespace ERP_CRM_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.png"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.jpg"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);
@@ -1163,7 +1162,7 @@ namespace ERP_CRM_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.png"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.jpg"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);
