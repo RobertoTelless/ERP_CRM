@@ -95,7 +95,7 @@ namespace ERP_CRM_Solution.Controllers
 
 
             // Carrega listas
-            if ((List<TEMPLATE_SMS>)Session["ListaTemplateSMS"] == null || ((List<TEMPLATE_SMS>)Session["ListaTemplate"]).Count == 0)
+            if ((List<TEMPLATE_SMS>)Session["ListaTemplateSMS"] == null)
             {
                 listaMaster = baseApp.GetAllItens(idAss).ToList();
                 Session["ListaTemplateSMS"] = listaMaster;

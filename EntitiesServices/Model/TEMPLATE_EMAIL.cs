@@ -30,6 +30,8 @@ namespace EntitiesServices.Model
         public string TEEM_TX_CORPO { get; set; }
         public string TEEM_TX_DADOS { get; set; }
         public string TEEM_AQ_ARQUIVO { get; set; }
+        public string TEEM_TX_COMPLETO { get; set; }
+        public Nullable<int> TEEM_IN_HTML { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -83,6 +83,7 @@ namespace EntitiesServices.Model
         public string CLIE_NM_COMPLEMENTO_ENTREGA { get; set; }
         public string CLIE_NR_NUMERO_ENTREGA { get; set; }
         public Nullable<int> RETR_CD_ID { get; set; }
+        public string CLIE_CM_END1 { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CATEGORIA_CLIENTE CATEGORIA_CLIENTE { get; set; }

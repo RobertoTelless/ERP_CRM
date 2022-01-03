@@ -124,18 +124,17 @@
                                                     <address>
                                                         <strong>@cond.CLIE_NM_RAZAO</strong><br>
                                                         @cond.CLIE_NM_ENDERECO<br>
-                                                        @cond.CLIE_NR_NUMERO<br />
-                                                        @cond.CLIE_NM_COMPLEMENTO<br />
+                                                        @cond.CLIE_NR_NUMERO  @cond.CLIE_NM_COMPLEMENTO<br />
                                                         @if (cond.UF != null)
                                                         {
-                                                            @cond.CLIE_NM_BAIRRO @cond.CLIE_NM_CIDADE @cond.UF.UF_SG_SIGLA<br>
+                                                            @cond.CLIE_NM_BAIRRO  @cond.CLIE_NM_CIDADE   @cond.UF.UF_SG_SIGLA<br>
                                                         }
                                                         else
                                                         {
-                                                            @cond.CLIE_NM_BAIRRO @cond.CLIE_NM_CIDADE<br>
+                                                            @cond.CLIE_NM_BAIRRO   @cond.CLIE_NM_CIDADE<br>
                                                         }
                                                         @cond.CLIE_NR_CEP<br>
-                                                        <abbr title="Phone">P:</abbr> @cond.CLIE_NR_TELEFONE
+                                                        <abbr title="Phone">P:</abbr> @cond.CLIE_NR_TELEFONE <br />
                                                         <abbr title="Cell">C:</abbr> @cond.CLIE_NR_CELULAR
                                                     </address>
                                                 </div>

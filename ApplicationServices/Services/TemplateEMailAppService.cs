@@ -84,6 +84,7 @@ namespace ApplicationServices.Services
 
                 // Completa objeto
                 item.TEEM_IN_ATIVO = 1;
+                item.TEEM_TX_COMPLETO = item.TEEM_TX_CABECALHO +  item.TEEM_TX_CORPO + item.TEEM_TX_DADOS;
 
                 // Monta Log
                 LOG log = new LOG
@@ -118,8 +119,8 @@ namespace ApplicationServices.Services
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "EditTEEM",
                     LOG_IN_ATIVO = 1,
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<TEMPLATE_EMAIL>(item),
-                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<TEMPLATE_EMAIL>(itemAntes)
+                    LOG_TX_REGISTRO = item.TEEM_SG_SIGLA + "|" + item.TEEM_NM_NOME,
+                    LOG_TX_REGISTRO_ANTES = String.Empty
                 };
 
                 // Persiste

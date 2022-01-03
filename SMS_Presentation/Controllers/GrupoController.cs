@@ -199,6 +199,7 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara listas
+            ViewBag.Clientes = new SelectList(cliApp.GetAllItens(idAss).OrderBy(p => p.CLIE_NM_NOME), "CLIE_CD_ID", "CLIE_NM_NOME");
             ViewBag.Cats = new SelectList(menApp.GetAllTipos(idAss).OrderBy(p => p.CACL_NM_NOME), "CACL_CD_ID", "CACL_NM_NOME");
             ViewBag.UF = new SelectList(menApp.GetAllUF().OrderBy(p => p.UF_SG_SIGLA), "UF_CD_ID", "UF_NM_NOME");
             ViewBag.Sexo = new SelectList(cliApp.GetAllSexo().OrderBy(p => p.SEXO_NM_NOME), "SEXO_CD_ID", "SEXO_NM_NOME");
@@ -242,12 +243,13 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            ViewBag.Clientes = new SelectList(cliApp.GetAllItens(idAss).OrderBy(p => p.CLIE_NM_NOME), "CLIE_CD_ID", "CLIE_NM_NOME");
             if (ModelState.IsValid)
             {
                 try
                 {
                     // Crítica
-                    if (vm.SEXO == null & vm.CATEGORIA == null & vm.CIDADE == null & vm.UF == null & vm.DATA_NASC == null & vm.DIA == null & vm.MES == null & vm.ANO == null)
+                    if (vm.SEXO == null & vm.CATEGORIA == null & vm.CIDADE == null & vm.UF == null & vm.DATA_NASC == null & vm.DIA == null & vm.MES == null & vm.ANO == null & vm.ID == null)
                     {
                         Session["MensGrupo"] = 10;
                         return RedirectToAction("MontarTelaGrupo");

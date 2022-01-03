@@ -3080,6 +3080,8 @@
     <Content Include="Views\Mensagem\VerFalhasExpansao.cshtml" />
     <Content Include="Views\Mensagem\VerFalhasExpansaoTodos.cshtml" />
     <Content Include="Views\Cliente\IncluirClienteRapido.cshtml" />
+    <Content Include="Views\TemplateEmail\IncluirModeloHTMLEMail.cshtml" />
+    <Content Include="Views\TemplateEmail\EditarTemplateHTMLEMail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3091,7 +3093,10 @@
     <Folder Include="Imagens\2\Agenda\6\Anexos\" />
     <Folder Include="Imagens\2\Agenda\7\Anexos\" />
     <Folder Include="Imagens\2\Agenda\8\Anexos\" />
-    <Folder Include="Imagens\2\Clientes\" />
+    <Folder Include="Imagens\2\Clientes\5\Anexos\" />
+    <Folder Include="Imagens\2\Clientes\5\Fotos\" />
+    <Folder Include="Imagens\2\Clientes\6\Anexos\" />
+    <Folder Include="Imagens\2\Clientes\6\Fotos\" />
     <Folder Include="Imagens\2\CRM\" />
     <Folder Include="Imagens\2\Equipamento\" />
     <Folder Include="Imagens\2\Filial\1\Anexos\" />
@@ -3110,7 +3115,7 @@
     <Folder Include="Imagens\2\Produtos\" />
     <Folder Include="Imagens\2\Tarefa\2\Anexos\" />
     <Folder Include="Imagens\2\Tarefa\3\Anexos\" />
-    <Folder Include="Imagens\2\TemplatesHTML\" />
+    <Folder Include="Imagens\2\TemplatesHTML\4\Arquivos\" />
     <Folder Include="Imagens\2\Usuario\1\Anexos\" />
     <Folder Include="Imagens\2\Usuario\3\Anexos\" />
     <Folder Include="Imagens\2\Usuario\4\Anexos\" />

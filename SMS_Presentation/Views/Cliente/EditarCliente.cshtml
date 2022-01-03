@@ -184,7 +184,7 @@
                                                         </div>
                                                         <div class=" col-lg-3 col-md-3 col-xs-12">
                                                             Tipo de Contribuinte
-                                                            @Html.DropDownListFor(m => m.TICO_CD_ID, (SelectList)ViewBag.TiposContribuinte, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                            @Html.DropDownListFor(m => m.TICO_CD_ID, (SelectList)ViewBag.TiposCont, "Selecionar", new { @class = "form-control", autofocus = true })
                                                             @Html.ValidationMessageFor(m => m.TICO_CD_ID, "", new { @style = "color:red" })
                                                         </div>
                                                         <div class="col-lg-3 col-md-3 col-xs-12">
@@ -202,12 +202,12 @@
                                                         </div>
                                                         @if (Model.TIPE_CD_ID == 2)
                                                         {
-                                                            <div class="col-lg-4 col-md-4 col-xs-12">
+                                                            <div class="col-lg-3 col-md-3 col-xs-12">
                                                                 CNPJ
                                                                 @Html.TextBoxFor(m => m.CLIE_NR_CNPJ, new { @class = "form-control", @id = "cnpj", autofocus = true, @readonly = "readonly" })
                                                                 @Html.ValidationMessageFor(m => m.CLIE_NR_CNPJ, "", new { @style = "color:red" })
                                                             </div>
-                                                            <div class="col-lg-4 col-md-4 col-xs-12" id="RS">
+                                                            <div class="col-lg-5 col-md-5 col-xs-12" id="RS">
                                                                 Razão Social
                                                                 @Html.TextBoxFor(m => m.CLIE_NM_RAZAO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                                 @Html.ValidationMessageFor(m => m.CLIE_NM_RAZAO, "", new { @style = "color:red" })
@@ -380,7 +380,7 @@
                                                     </div>
                                                     <div class=" col-lg-3 col-md-3 col-xs-12">
                                                         Tipo de Contribuinte
-                                                        @Html.DropDownListFor(m => m.TICO_CD_ID, (SelectList)ViewBag.TiposContribuinte, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                        @Html.DropDownListFor(m => m.TICO_CD_ID, (SelectList)ViewBag.TiposCont, "Selecionar", new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.TICO_CD_ID, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
@@ -398,12 +398,12 @@
                                                     </div>
                                                     @if (Model.TIPE_CD_ID == 2)
                                                     {
-                                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                                          <div class="col-lg-3 col-md-3 col-xs-12">
                                                             CNPJ
                                                             @Html.TextBoxFor(m => m.CLIE_NR_CNPJ, new { @class = "form-control", @id = "cnpj", autofocus = true, @readonly = "readonly" })
                                                             @Html.ValidationMessageFor(m => m.CLIE_NR_CNPJ, "", new { @style = "color:red" })
                                                         </div>
-                                                        <div class="col-lg-4 col-md-4 col-xs-12" id="RS">
+                                                        <div class="col-lg-5 col-md-5 col-xs-12" id="RS">
                                                             Razão Social
                                                             @Html.TextBoxFor(m => m.CLIE_NM_RAZAO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                             @Html.ValidationMessageFor(m => m.CLIE_NM_RAZAO, "", new { @style = "color:red" })
@@ -510,7 +510,7 @@
                                                         <div class="form-group">
                                                             <div class="col-lg-12 col-md-12 col-xs-12">
                                                                 <input style="float: left; margin-right: 5px;" type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="file" class="btn btn-sm btn-warning" />
-                                                                <input style="float: left;" type="submit" value="Incluir Logotipo/Foto do Cliente" class="btn btn-sm btn-success" />
+                                                                <input style="float: left;" type="submit" value="Incluir Logotipo/Foto" class="btn btn-sm btn-success" />
                                                             </div>
                                                         </div>
                                                     }
@@ -585,7 +585,7 @@
                                                             <div class="form-group">
                                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                                     <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
-                                                                    <input style="float: left; margin-right: 5px;" type="submit" value="Incluir Anexo do Cliente" class="btn btn-sm btn-success" />
+                                                                    <input style="float: left; margin-right: 5px;" type="submit" value="Incluir Anexo" class="btn btn-sm btn-success" />
                                                                 </div>
                                                             </div>
                                                         </div>

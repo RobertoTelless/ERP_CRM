@@ -97,7 +97,6 @@
                                                             <thead style="background-color:lightsteelblue">
                                                                 <tr>
                                                                     <th>Nome/Razão Social</th>
-                                                                    <th style="width: auto">Status</th>
                                                                     <th style="width: auto">CPF</th>
                                                                     <th style="width: auto">CNPJ</th>
                                                                     <th style="width: auto">E-Mail</th>
@@ -120,30 +119,6 @@
                                                                         else
                                                                         {
                                                                             <td>@cond.CLIENTE.CLIE_NM_NOME</td>
-                                                                        }
-                                                                        @if (cond.CLIENTE.CLIE_IN_STATUS == 1)
-	                                                                    {
-                                                                            <td><span class="badge badge-warning">Prospecção</span></td>
-                                                                        }
-                                                                        else if (cond.CLIENTE.CLIE_IN_STATUS == 2)
-                                                                        {
-                                                                            <td><span class="badge badge-warning">Oportunidade</span></td>
-                                                                        }
-                                                                        else if (cond.CLIENTE.CLIE_IN_STATUS == 3)
-                                                                        {
-                                                                            <td><span class="badge badge-primary">Proposta</span></td>
-                                                                        }
-                                                                        else if (cond.CLIENTE.CLIE_IN_STATUS == 4)
-                                                                        {
-                                                                            <td><span class="badge badge-success">Engajado</span></td>
-                                                                        }
-                                                                        else if (cond.CLIENTE.CLIE_IN_STATUS == 5)
-                                                                        {
-                                                                            <td><span class="badge badge-danger">Descartado</span></td>
-                                                                        }
-                                                                        else if (cond.CLIENTE.CLIE_IN_STATUS == 6)
-                                                                        {
-                                                                            <td><span class="badge badge-warning-light">Suspenso</span></td>
                                                                         }
                                                                         <td style="width: auto">@cond.CLIENTE.CLIE_NR_CPF</td>
                                                                         <td style="width: auto">@cond.CLIENTE.CLIE_NR_CNPJ</td>

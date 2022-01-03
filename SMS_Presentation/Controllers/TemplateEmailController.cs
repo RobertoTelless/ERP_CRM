@@ -95,12 +95,12 @@ namespace SMS_Presentation.Controllers
 
 
             // Carrega listas
-            if ((List<TEMPLATE_SMS>)Session["ListaTemplateEMail"] == null || ((List<TEMPLATE_SMS>)Session["ListaTemplateEMail"]).Count == 0)
+            if ((List<TEMPLATE_EMAIL>)Session["ListaTemplateEMail"] == null)
             {
                 listaMaster = baseApp.GetAllItens(idAss).ToList();
                 Session["ListaTemplateEMail"] = listaMaster;
             }
-            ViewBag.Listas = (List<TEMPLATE_SMS>)Session["ListaTemplateEMail"];
+            ViewBag.Listas = (List<TEMPLATE_EMAIL>)Session["ListaTemplateEMail"];
             ViewBag.Title = "Template";
             Session["TemplateEMail"] = null;
             Session["IncluirTemplateEMail"] = 0;
@@ -231,7 +231,11 @@ namespace SMS_Presentation.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara listas
-            
+            List<SelectListItem> ativo = new List<SelectListItem>();
+            ativo.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            ativo.Add(new SelectListItem() { Text = "Não", Value = "0" });
+            ViewBag.Ativos = new SelectList(ativo, "Value", "Text");
+
             // Prepara view
             TEMPLATE_EMAIL item = new TEMPLATE_EMAIL();
             TemplateEMailViewModel vm = Mapper.Map<TEMPLATE_EMAIL, TemplateEMailViewModel>(item);
@@ -249,32 +253,32 @@ namespace SMS_Presentation.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            List<SelectListItem> ativo = new List<SelectListItem>();
+            ativo.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            ativo.Add(new SelectListItem() { Text = "Não", Value = "0" });
+            ViewBag.Ativos = new SelectList(ativo, "Value", "Text");
             if (ModelState.IsValid)
             {
                 try
                 {
                     // Preparação
-                    if (vm.file != null)
-                    {
-                        vm.TEEM_AQ_ARQUIVO = vm.file;
-                    }
                     TEMPLATE_EMAIL item = Mapper.Map<TemplateEMailViewModel, TEMPLATE_EMAIL>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
 
                     // Critica
-                    if (item.TEEM_AQ_ARQUIVO == null & item.TEEM_TX_CORPO == null)
+                    if (item.TEEM_IN_HTML == 0 & item.TEEM_TX_CORPO == null)
                     {
                         Session["MensTemplateEMail"] = 10;
                         return RedirectToAction("MontarTelaTemplateEMail");
                     }
-                    if (item.TEEM_AQ_ARQUIVO == null & (item.TEEM_TX_CORPO != null & (item.TEEM_TX_CABECALHO == null | item.TEEM_TX_DADOS == null)))
+                    if (item.TEEM_IN_HTML == 0 & (item.TEEM_TX_CORPO != null & (item.TEEM_TX_CABECALHO == null | item.TEEM_TX_DADOS == null)))
                     {
                         Session["MensTemplateEMail"] = 11;
                         return RedirectToAction("MontarTelaTemplateEMail");
                     }
 
                     // Acertos
-                    if (item.TEEM_AQ_ARQUIVO != null)
+                    if (item.TEEM_IN_HTML == 1)
                     {
                         item.TEEM_TX_CABECALHO = null;
                         item.TEEM_TX_CORPO = null;
@@ -292,27 +296,22 @@ namespace SMS_Presentation.Controllers
                     }
 
                     // Cria Pasta e copia arquivo HTML
-                    if (item.TEEM_AQ_ARQUIVO != null)
+                    if (item.TEEM_IN_HTML == 1)
                     {
-                        // Cria pasta
+                        //Cria pasta
                         String caminho = "/Imagens/" + idAss.ToString() + "/TemplatesHTML/" + item.TEEM_CD_ID.ToString() + "/Arquivos/";
                         Directory.CreateDirectory(Server.MapPath(caminho));
-
-                        // Copia arquivo
-                        String filePath = item.TEEM_AQ_ARQUIVO;
-                        String fileName = Path.GetFileName(filePath);
-                        String path = Path.Combine(Server.MapPath(caminho), fileName);
-                        System.IO.File.Copy(filePath, path);
-
-                        // Atualiza registro
-                        item.TEEM_AQ_ARQUIVO = path;
-                        volta = baseApp.ValidateEdit(item, item, usuario);
                     }
 
                     // Sucesso
                     listaMaster = new List<TEMPLATE_EMAIL>();
                     Session["ListaTemplateEMail"] = null;
                     Session["IdTemplateEMail"] = item.TEEM_CD_ID;
+                    Session["IdTemplate"] = item.TEEM_CD_ID;
+                    if (item.TEEM_IN_HTML == 1)
+                    {
+                        return RedirectToAction("VoltarAnexoTemplateEMail");
+                    }
                     return RedirectToAction("MontarTelaTemplateEMail");
                 }
                 catch (Exception ex)
@@ -362,8 +361,15 @@ namespace SMS_Presentation.Controllers
             // Mensagens
             if (Session["MensTemplateEMail"] != null)
             {
-
-
+                // Mensagem
+                if ((Int32)Session["MensTemplateEMail"] == 5)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensTemplateEMail"] == 6)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                }
             }
 
             Session["VoltaTemplateEMail"] = 1;
@@ -406,10 +412,17 @@ namespace SMS_Presentation.Controllers
             }
         }
 
+
         public ActionResult VoltarAnexoTemplateEMail()
         {
 
             return RedirectToAction("EditarTemplateEMail", new { id = (Int32)Session["IdTemplateEMail"] });
+        }
+
+        public ActionResult VoltarAnexoTemplateHTML()
+        {
+
+            return RedirectToAction("EditarTemplateHTMLEMail", new { id = (Int32)Session["IdTemplateEMail"] });
         }
 
         [HttpGet]
@@ -516,5 +529,46 @@ namespace SMS_Presentation.Controllers
             TemplateEMailViewModel vm = Mapper.Map<TEMPLATE_EMAIL, TemplateEMailViewModel>(item);
             return View(vm);
         }
+
+        [HttpPost]
+        public ActionResult UploadModeloHTMLEMail(HttpPostedFileBase file)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdTemplate"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (file == null)
+            {
+                Session["MensTemplateEMail"] = 5;
+                return RedirectToAction("VoltarAnexoTemplateEMail");
+            }
+
+            TEMPLATE_EMAIL item = baseApp.GetById(idNot);
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
+            var fileName = Path.GetFileName(file.FileName);
+            if (fileName.Length > 250)
+            {
+                Session["MensTemplateEMail"] = 6;
+                return RedirectToAction("VoltarAnexoTemplateEMail");
+            }
+            String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/TemplatesHTML/" + item.TEEM_CD_ID.ToString() + "/Arquivos/";
+            String path = Path.Combine(Server.MapPath(caminho), fileName);
+            file.SaveAs(path);
+
+            //Recupera tipo de arquivo
+            extensao = Path.GetExtension(fileName);
+            String a = extensao;
+
+            // Gravar registro
+            item.TEEM_IN_HTML = 1;
+            item.TEEM_AQ_ARQUIVO = "~" + caminho + fileName;
+            objetoAntes = item;
+            Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usu);
+            return RedirectToAction("MontarTelaTemplateEMail");
+        }
+
     }
 }

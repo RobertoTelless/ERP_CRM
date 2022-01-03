@@ -166,6 +166,7 @@
                                 @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Cliente", action: "MostrarTudoCliente")
                                 @Html.ButtonLinkIndex(text: "Novo Cliente", controller: "Cliente", action: "IncluirCliente")
                                 @Html.ButtonLinkIndex(text: "Inclusão Rápida", action: "IncluirClienteRapido", controller: "Cliente")
+                                @Html.ButtonLinkIndex(text: "Importar Planilha", action: "IncluirClientePlanilha", controller: "Cliente")
                                 @Html.ButtonLinkIndex(text: "Exibir Cards", controller: "Cliente", action: "VerCardsCliente")
                                 @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Cliente", action: "GerarRelatorioLista")
                                 @Html.ButtonLinkIndex(text: "Voltar", controller: "Cliente", action: "Voltar")
@@ -201,7 +202,7 @@
                                         <th style="width: auto">CPF</th>
                                         <th>CNPJ</th>
                                         <th>E-Mail</th>
-                                        <th>Telefone</th>
+                                        <th>Celular</th>
                                         <th>Cidade</th>
                                         <th>UF</th>
                                         <th></th>
@@ -225,7 +226,7 @@
                                                 <td style="width: auto">@cond.CLIE_NR_CPF</td>
                                                 <td>@cond.CLIE_NR_CNPJ</td>
                                                 <td>@cond.CLIE_NM_EMAIL</td>
-                                                <td>@cond.CLIE_NR_TELEFONE</td>
+                                                <td>@cond.CLIE_NR_CELULAR</td>
                                                 <td>@cond.CLIE_NM_CIDADE</td>
                                                 @if (cond.UF != null)
                                                 {
@@ -271,7 +272,7 @@
                                                 <td style="width: auto">@cond.CLIE_NR_CPF</td>
                                                 <td>@cond.CLIE_NR_CNPJ</td>
                                                 <td>@cond.CLIE_NM_EMAIL</td>
-                                                <td>@cond.CLIE_NR_TELEFONE</td>
+                                                <td>@cond.CLIE_NR_CELULAR</td>
                                                 <td>@cond.CLIE_NM_CIDADE</td>
                                                 @if (cond.UF != null)
                                                 {

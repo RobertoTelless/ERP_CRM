@@ -105,6 +105,7 @@ namespace ApplicationServices.Services
                     gru.GRUP_CD_ID = item.GRUP_CD_ID;
                     grupoCriado.GRUPO_CLIENTE.Add(gru);
                 }
+                Int32 volta1 = _baseService.Edit(grupoCriado, log);
                 return volta;
             }
             catch (Exception ex)

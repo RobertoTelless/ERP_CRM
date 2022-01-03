@@ -126,7 +126,9 @@
                                         <th style="width: auto">Sigla</th>
                                         <th style="width: auto">Nome</th>
                                         <th style="width: auto">Tipo</th>
+                                        <th style="width: auto">É HTML?</th>
                                         <th style="width: auto">Arquivo</th>
+                                        <th style="width: auto">Link</th>
                                         <th class="td-one-action">Ações</th>
                                     </tr>
                                 </thead>
@@ -137,14 +139,23 @@
                                             <td>@cond.TEEM_SG_SIGLA</td>
                                             @if (cond.TEEM_TX_CORPO != null)
                                             {
-                                                <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.TEEM_TX_CORPO')">@cond.TEEM_NM_NOME</td>
+                                                <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.TEEM_TX_COMPLETO')">@cond.TEEM_NM_NOME</td>
                                             }
                                             else
                                             {
                                                 <td>@cond.TEEM_NM_NOME</td>
                                             }
                                             <td><span class="badge badge-success">E-Mail</span></td>
+                                            @if (cond.TEEM_IN_HTML == 1)
+                                            {
+                                                <td><span class="badge badge-primary">Sim</span></td>
+                                            }
+                                            else
+                                            {
+                                                <td><span class="badge badge-warning">Não</span></td>
+                                            }
                                             <td>@Path.GetFileName(cond.TEEM_AQ_ARQUIVO)</td>
+                                            <td>@cond.TEEM_LK_LINK</td>
                                             <td class="td-one-action">
                                                 @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER" )
                                                 {

@@ -186,6 +186,8 @@ namespace Presentation.Start
             kernel.Bind<ITelefoneRepository>().To<TelefoneRepository>();
             kernel.Bind<ICategoriaTelefoneRepository>().To<CategoriaTelefoneRepository>();
             kernel.Bind<IFilialRepository>().To<FilialRepository>();
+            kernel.Bind<IClienteTagRepository>().To<ClienteTagRepository>();
+            kernel.Bind<IClienteReferenciaRepository>().To<ClienteReferenciaRepository>();
 
 
         }

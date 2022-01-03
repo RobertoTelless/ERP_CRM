@@ -59,9 +59,11 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <hr />
+                                        <h5 style="color:green">Especifique os filtros para a seleção dos componentes desse grupo</h5>                                                
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <h5 style="color:green">Especifique os filtros para a seleção dos componentes desse grupo</h5>                                                
+                                                @*<h5 style="color:green">Especifique os filtros para a seleção dos componentes desse grupo</h5>*@                                                
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Gênero
                                                     @Html.DropDownListFor(m => m.SEXO, (SelectList)ViewBag.Sexo, "Selecionar", new { @class = "form-control", autofocus = true  })
@@ -70,10 +72,6 @@
                                                     Categoria
                                                     @Html.DropDownListFor(m => m.CATEGORIA, (SelectList)ViewBag.Cats, "Selecionar", new { @class = "form-control", autofocus = true  })
                                                 </div>
-                                                @*<div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Posição
-                                                    @Html.DropDownListFor(m => m.STATUS, (SelectList)ViewBag.Status, "Selecionar", new { @class = "form-control", autofocus = true  })
-                                                </div>*@
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Cidade
                                                     @Html.TextBoxFor(m => m.CIDADE, new { @class = "form-control", autofocus = true })
@@ -87,9 +85,9 @@
                                                     @Html.TextBoxFor(m => m.DATA_NASC, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "dn" })
                                                 </div>
                                             </div>
+                                            <h5>Data de Nascimento (Parcial)</h5>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <h5>Data de Nascimento (Parcial)</h5>
-                                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Dia
                                                     @Html.DropDownListFor(m => m.DIA, (SelectList)ViewBag.Dias, "Selecionar", new { @class = "form-control", autofocus = true  })
                                                 </div>
@@ -97,7 +95,7 @@
                                                     Mês
                                                     @Html.DropDownListFor(m => m.MES, (SelectList)ViewBag.Meses, "Selecionar", new { @class = "form-control", autofocus = true  })
                                                 </div>
-                                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Ano
                                                     @Html.TextBoxFor(m => m.ANO, new { @class = "form-control", autofocus = true })
                                                 </div>

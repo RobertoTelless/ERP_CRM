@@ -26,8 +26,10 @@ namespace ERP_CRM_Solution.ViewModels
         public string TEEM_TX_DADOS { get; set; }
         [StringLength(250, ErrorMessage = "O NOME DO ARQUIVO deve conter no máximo 250 caracteres.")]
         public string TEEM_AQ_ARQUIVO { get; set; }
+        public Nullable<int> TEEM_IN_HTML { get; set; }
 
         public string file { get; set; }
+        public Int32 html { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

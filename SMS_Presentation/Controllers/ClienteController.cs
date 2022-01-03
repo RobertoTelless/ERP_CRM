@@ -26,6 +26,7 @@ using EntitiesServices.Attributes;
 using OfficeOpenXml.Table;
 using EntitiesServices.WorkClasses;
 using System.Threading.Tasks;
+using CrossCutting;
 
 namespace ERP_CRM_Solution.Controllers
 {
@@ -95,7 +96,8 @@ namespace ERP_CRM_Solution.Controllers
             {
                 CLIENTE clie = baseApp.GetById(id);
                 Int32 idAss = (Int32)Session["IdAssinante"];
-                
+                USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
                 // Verifica existencia prévia
                 if (clie == null)
                 {
@@ -111,41 +113,50 @@ namespace ERP_CRM_Solution.Controllers
                 }
 
                 // Monta token
-                CONFIGURACAO conf = confApp.GetItemById(idAss);
+                CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
                 String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
                 byte[] textBytes = Encoding.UTF8.GetBytes(text);
                 String token = Convert.ToBase64String(textBytes);
                 String auth = "Basic " + token;
 
-                // Monta routing
-                String routing = "1";
+                // Prepara texto
+                String texto = mensagem;
 
-                // Monta texto
-                String texto = String.Empty;
+                // Prepara corpo do SMS e trata link
+                StringBuilder str = new StringBuilder();
+                str.AppendLine(texto);
+                String body = str.ToString();
+                String smsBody = body;
 
                 // inicia processo
                 String resposta = String.Empty;
-
-                // Monta destinatarios
-                String listaDest = "55" + Regex.Replace(clie.CLIE_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
-
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
-                httpWebRequest.Headers["Authorization"] = auth;
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                try
                 {
-                    string json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", mensagem, "\", \"from\": \"SystemBR\"}]}");
+                    String listaDest = "55" + Regex.Replace(clie.CLIE_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
+                    httpWebRequest.Headers["Authorization"] = auth;
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+                    String customId = Cryptography.GenerateRandomPassword(8);
+                    String data = String.Empty;
+                    String json = String.Empty;
 
-                    streamWriter.Write(json);
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
+                        streamWriter.Write(json);
+                    }
+
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                        resposta = result;
+                    }
                 }
-
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                catch (Exception ex)
                 {
-                    var result = streamReader.ReadToEnd();
-                    resposta = result;
+                    String erro = ex.Message;
                 }
 
                 Session["MensSMSClie"] = 200;
@@ -431,9 +442,8 @@ namespace ERP_CRM_Solution.Controllers
             //ViewBag.Atrasos = crApp.GetItensAtrasoCliente().Select(x => x.CLIE_CD_ID).Distinct().ToList().Count;
             ViewBag.Atrasos = 0;
             ViewBag.Inativos = baseApp.GetAllItensAdm(idAss).Where(p => p.CLIE_IN_ATIVO == 0).ToList().Count;
-            //ViewBag.SemPedidos = baseApp.GetAllItens().Where(p => p.PEDIDO_VENDA.Count == 0 || p.PEDIDO_VENDA == null).ToList().Count;
+            ViewBag.SemPedidos = baseApp.GetAllItens(idAss).Where(p => p.PEDIDO_VENDA.Count == 0 || p.PEDIDO_VENDA == null).ToList().Count;
             //ViewBag.ContasAtrasos = SessionMocks.listaCR;
-            ViewBag.SemPedidos = 0;
             ViewBag.ContasAtrasos = 0;
             ViewBag.CodigoCliente = Session["IdCliente"];
 
@@ -601,8 +611,10 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.TiposCont = new SelectList(baseApp.GetAllContribuinte(idAss), "TICO_CD_ID", "TICO_NM_NOME");
             ViewBag.Regimes = new SelectList(baseApp.GetAllRegimes(idAss), "RETR_CD_ID", "RETR_NM_NOME");
             ViewBag.Sexo = new SelectList(baseApp.GetAllSexo(), "SEXO_CD_ID", "SEXO_NM_NOME");
-            ViewBag.UF = new SelectList(baseApp.GetAllUF(), "UF_CD_ID", "UF_NM_NOME");
+            ViewBag.UF = new SelectList(baseApp.GetAllUF(), "UF_CD_ID", "UF_SG_SIGLA");
             ViewBag.Usuarios = new SelectList((List<USUARIO>)Session["Usuarios"], "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss), "FILI_CD_ID", "FILI_NM_NOME");
+            ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "CACL_CD_ID", "CACL_NM_NOME");
 
             List<SelectListItem> situacao = new List<SelectListItem>();
             situacao.Add(new SelectListItem() { Text = "Ativa", Value = "Ativa" });
@@ -631,8 +643,10 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.TiposCont = new SelectList(baseApp.GetAllContribuinte(idAss), "TICO_CD_ID", "TICO_NM_NOME");
             ViewBag.Regimes = new SelectList(baseApp.GetAllRegimes(idAss), "RETR_CD_ID", "RETR_NM_NOME");
             ViewBag.Sexo = new SelectList(baseApp.GetAllSexo(), "SEXO_CD_ID", "SEXO_NM_NOME");
-            ViewBag.UF = new SelectList(baseApp.GetAllUF(), "UF_CD_ID", "UF_NM_NOME");
+            ViewBag.UF = new SelectList(baseApp.GetAllUF(), "UF_CD_ID", "UF_SG_SIGLA");
             ViewBag.Usuarios = new SelectList((List<USUARIO>)Session["Usuarios"], "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss), "FILI_CD_ID", "FILI_NM_NOME");
+            ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "CACL_CD_ID", "CACL_NM_NOME");
 
             List<SelectListItem> situacao = new List<SelectListItem>();
             situacao.Add(new SelectListItem() { Text = "Ativa", Value = "Ativa" });
@@ -768,8 +782,10 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.TiposCont = new SelectList(baseApp.GetAllContribuinte(idAss), "TICO_CD_ID", "TICO_NM_NOME");
             ViewBag.Regimes = new SelectList(baseApp.GetAllRegimes(idAss), "RETR_CD_ID", "RETR_NM_NOME");
             ViewBag.Sexo = new SelectList(baseApp.GetAllSexo(), "SEXO_CD_ID", "SEXO_NM_NOME");
-            ViewBag.UF = new SelectList(baseApp.GetAllUF(), "UF_CD_ID", "UF_NM_NOME");
+            ViewBag.UF = new SelectList(baseApp.GetAllUF(), "UF_CD_ID", "UF_SG_SIGLA");
             ViewBag.Usuarios = new SelectList((List<USUARIO>)Session["Usuarios"], "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss), "FILI_CD_ID", "FILI_NM_NOME");
+            ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "CACL_CD_ID", "CACL_NM_NOME");
 
             List<SelectListItem> situacao = new List<SelectListItem>();
             situacao.Add(new SelectListItem() { Text = "Ativa", Value = "Ativa" });
@@ -820,8 +836,10 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.TiposCont = new SelectList(baseApp.GetAllContribuinte(idAss), "TICO_CD_ID", "TICO_NM_NOME");
             ViewBag.Regimes = new SelectList(baseApp.GetAllRegimes(idAss), "RETR_CD_ID", "RETR_NM_NOME");
             ViewBag.Sexo = new SelectList(baseApp.GetAllSexo(), "SEXO_CD_ID", "SEXO_NM_NOME");
-            ViewBag.UF = new SelectList(baseApp.GetAllUF(), "UF_CD_ID", "UF_NM_NOME");
+            ViewBag.UF = new SelectList(baseApp.GetAllUF(), "UF_CD_ID", "UF_SG_SIGLA");
             ViewBag.Usuarios = new SelectList((List<USUARIO>)Session["Usuarios"], "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss), "FILI_CD_ID", "FILI_NM_NOME");
+            ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "CACL_CD_ID", "CACL_NM_NOME");
 
             List<SelectListItem> situacao = new List<SelectListItem>();
             situacao.Add(new SelectListItem() { Text = "Ativa", Value = "Ativa" });
@@ -3199,6 +3217,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["Cliente"] = null;
             ViewBag.Sexo = new SelectList(baseApp.GetAllSexo().OrderBy(p => p.SEXO_NM_NOME), "SEXO_CD_ID", "SEXO_NM_NOME");
             ViewBag.TiposCont = new SelectList(baseApp.GetAllContribuinte(idAss), "TICO_CD_ID", "TICO_NM_NOME");
+            ViewBag.UF = new SelectList(baseApp.GetAllUF(), "UF_CD_ID", "UF_NM_NOME");
             ViewBag.Regimes = new SelectList(baseApp.GetAllRegimes(idAss), "RETR_CD_ID", "RETR_NM_NOME");
             List<SelectListItem> status = new List<SelectListItem>();
             status.Add(new SelectListItem() { Text = "Prospecção", Value = "1" });
@@ -3249,6 +3268,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Sexo = new SelectList(baseApp.GetAllSexo().OrderBy(p => p.SEXO_NM_NOME), "SEXO_CD_ID", "SEXO_NM_NOME");
             ViewBag.TiposCont = new SelectList(baseApp.GetAllContribuinte(idAss), "TICO_CD_ID", "TICO_NM_NOME");
             ViewBag.Regimes = new SelectList(baseApp.GetAllRegimes(idAss), "RETR_CD_ID", "RETR_NM_NOME");
+            ViewBag.UF = new SelectList(baseApp.GetAllUF(), "UF_CD_ID", "UF_NM_NOME");
             List<SelectListItem> status = new List<SelectListItem>();
             status.Add(new SelectListItem() { Text = "Prospecção", Value = "1" });
             status.Add(new SelectListItem() { Text = "Oportunidade", Value = "2" });
@@ -3274,9 +3294,9 @@ namespace ERP_CRM_Solution.Controllers
                     }
 
                     // Cria pastas
-                    String caminho = "/Imagens/" + idAss.ToString() + "/Cliente/" + item.CLIE_CD_ID.ToString() + "/Fotos/";
+                    String caminho = "/Imagens/" + idAss.ToString() + "/Clientes/" + item.CLIE_CD_ID.ToString() + "/Fotos/";
                     Directory.CreateDirectory(Server.MapPath(caminho));
-                    caminho = "/Imagens/" + idAss.ToString() + "/Cliente/" + item.CLIE_CD_ID.ToString() + "/Anexos/";
+                    caminho = "/Imagens/" + idAss.ToString() + "/Clientes/" + item.CLIE_CD_ID.ToString() + "/Anexos/";
                     Directory.CreateDirectory(Server.MapPath(caminho));
 
                     // Sucesso

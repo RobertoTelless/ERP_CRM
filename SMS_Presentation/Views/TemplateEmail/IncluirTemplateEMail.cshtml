@@ -70,26 +70,29 @@
                                                     @Html.TextBoxFor(m => m.TEEM_NM_NOME, new { @class = "form-control", autofocus = true, @id = "nome" })
                                                     @Html.ValidationMessageFor(m => m.TEEM_NM_NOME, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-4 col-md-4 col-xs-12" style="margin-left: 6px">
+                                                <div class="col-lg-3 col-md-3 col-xs-12" style="margin-left: 6px">
                                                     Link
                                                     @Html.TextBoxFor(m => m.TEEM_LK_LINK, new { @class = "form-control", autofocus = true, @id = "nome" })
                                                     @Html.ValidationMessageFor(m => m.TEEM_LK_LINK, "", new { @style = "color:red" })
                                                 </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    É Modelo HTML Externo?
+                                                    @Html.DropDownListFor(m => m.TEEM_IN_HTML, (SelectList)ViewBag.Ativos, "Selecionar", new { @class = "form-control", autofocus = true, @id = "html", onchange = "ValidaDiv($(this).val())" })
+                                                    @Html.ValidationMessageFor(m => m.TEEM_IN_HTML, "", new { @style = "color:red" })
+                                                </div>
                                             </div>
                                         </div>
                                         <hr />
-                                        <div class="row" id="Email1">
-                                            <h5 style="color:green">Selecione um arquivo HTML ou especifique o conteúdo da mensagem</h5>
-                                            <h5 style="color:brown">A seleção de um arquivo HTML se sobrepõe ao conteúdo da mensagem</h5>
+                                        <div class="row" id="EM">
+                                            @*<h5 style="color:green">Selecione um arquivo HTML ou especifique o conteúdo da mensagem - A seleção de um arquivo HTML se sobrepõe ao conteúdo da mensagem</h5>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                Arquivo HTML
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-primary" />
                                                 </div>
                                             </div>
-                                            <hr />
+                                            <hr />*@
+                                            <h5>A tag {Nome} está disponível no cabeçalho e se usada será exibido o nome do contato</h5>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <h5>A tag {Nome} está disponível no cabeçalho e se usada será exibido o nome do contato</h5>
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     Cabeçalho da Mensagem
                                                     @Html.TextAreaFor(m => m.TEEM_TX_CABECALHO, new { @class = "form-control summernote", style = "width: 100%; height: 100px;", autofocus = true })
@@ -101,8 +104,8 @@
                                                     @Html.TextAreaFor(m => m.TEEM_TX_CORPO, new { @class = "form-control summernote", style = "width: 100%; height: 200px;", autofocus = true })
                                                 </div>
                                             </div>
+                                            <h5>A tag {Assinatura} está disponível no rodapé e se usada será exibido o nome do assinante</h5>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <h5>A tag {Assinatura} está disponível no rodapé e se usada será exibido o nome do assinante</h5>
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     Rodapé da Mensagem
                                                     @Html.TextAreaFor(m => m.TEEM_TX_DADOS, new { @class = "form-control summernote", style = "width: 100%; height: 100px;", autofocus = true })
@@ -280,28 +283,16 @@
     <script type="text/javascript">
         function ValidaDiv(valTipo) {
             if (valTipo == '1') {
+                $("#EM").hide();
+            } else if (valTipo == '0') { 
                 $("#EM").show();
-                $("#EM1").show();
-                $("#EM2").show();
-                $("#SMS1").hide();
-                $("#WHT1").hide();
-            } else if (valTipo == '2') { 
-                $("#EM").hide();
-                $("#EM1").hide();
-                $("#EM2").hide();
-                $("#SMS1").show();
-                $("#WHT1").hide();
             } else { //Se não for 1, 2 ou 4 esconde as duas
-                $("#EM").hide();
-                $("#EM1").hide();
-                $("#EM2").hide();
-                $("#SMS1").hide();
-                $("#WHT1").show();
+                $("#EM").show();
             }
         }
 
         $(document).ready(function () {
-            ValidaDiv($('#tipo').val());
+            ValidaDiv($('#html').val());
         });
 
         function LimpaPJ() {

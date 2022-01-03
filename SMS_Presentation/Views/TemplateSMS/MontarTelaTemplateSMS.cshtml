@@ -125,6 +125,7 @@
                                         <th style="width: auto">Sigla</th>
                                         <th style="width: auto">Nome</th>
                                         <th style="width: auto">Tipo</th>
+                                        <th style="width: auto">Link Associado</th>
                                         <th class="td-one-action">Ações</th>
                                     </tr>
                                 </thead>
@@ -135,6 +136,7 @@
                                             <td>@cond.TSMS_SG_SIGLA</td>
                                             <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.TSMS_TX_CORPO')">@cond.TSMS_NM_NOME</td>
                                             <td><span class="badge badge-success">SMS</span></td>
+                                            <td>@cond.TSMS_LK_LINK</td>
                                             <td class="td-one-action">
                                                 @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER" )
                                                 {

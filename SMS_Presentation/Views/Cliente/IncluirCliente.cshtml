@@ -79,7 +79,7 @@
                                                 }
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Tipo de Contribuinte
-                                                    @Html.DropDownListFor(m => m.TICO_CD_ID, (SelectList)ViewBag.TiposContribuinte, new { @class = "form-control", autofocus = true })
+                                                    @Html.DropDownListFor(m => m.TICO_CD_ID, (SelectList)ViewBag.TiposCont, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.TICO_CD_ID, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">

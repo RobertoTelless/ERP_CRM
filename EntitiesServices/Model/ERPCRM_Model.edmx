@@ -293,6 +293,7 @@
           <Property Name="CLIE_UF_CD_ENTREGA" Type="int" />
           <Property Name="CLIE_NM_COMPLEMENTO_ENTREGA" Type="varchar" MaxLength="50" />
           <Property Name="CLIE_NR_NUMERO_ENTREGA" Type="varchar" MaxLength="50" />
+          <Property Name="CLIE_CM_END1" Type="varchar" MaxLength="101" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CLIENTE_ANEXO">
           <Key>
@@ -1663,6 +1664,8 @@
           <Property Name="TEEM_TX_CORPO" Type="text" />
           <Property Name="TEEM_TX_DADOS" Type="text" />
           <Property Name="TEEM_AQ_ARQUIVO" Type="varchar" MaxLength="300" />
+          <Property Name="TEEM_TX_COMPLETO" Type="text" />
+          <Property Name="TEEM_IN_HTML" Type="int" />
         </EntityType>
         <EntityType Name="TEMPLATE_SMS">
           <Key>
@@ -6127,6 +6130,7 @@
           <NavigationProperty Name="UF1" Relationship="ERP_CRMModel.FK_CLIENTE_UF1" FromRole="CLIENTE" ToRole="UF" />
           <Property Name="RETR_CD_ID" Type="Int32" />
           <NavigationProperty Name="REGIME_TRIBUTARIO" Relationship="ERP_CRMModel.FK_CLIENTE_REGIME_TRIBUTARIO" FromRole="CLIENTE" ToRole="REGIME_TRIBUTARIO" />
+          <Property Name="CLIE_CM_END1" Type="String" MaxLength="101" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CLIENTE_ANEXO">
           <Key>
@@ -11864,6 +11868,8 @@
           <Property Name="TEEM_AQ_ARQUIVO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_TEMPLATE_EMAIL_ASSINANTE" FromRole="TEMPLATE_EMAIL" ToRole="ASSINANTE" />
           <NavigationProperty Name="MENSAGENS" Relationship="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_EMAIL" FromRole="TEMPLATE_EMAIL" ToRole="MENSAGENS" />
+          <Property Name="TEEM_TX_COMPLETO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TEEM_IN_HTML" Type="Int32" />
         </EntityType>
         <Association Name="FK_TEMPLATE_EMAIL_ASSINANTE">
           <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="0..1" />
@@ -12149,6 +12155,7 @@
           <EntitySetMapping Name="CLIENTE">
             <EntityTypeMapping TypeName="ERP_CRMModel.CLIENTE">
               <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="CLIE_CM_END1" ColumnName="CLIE_CM_END1" />
                 <ScalarProperty Name="RETR_CD_ID" ColumnName="RETR_CD_ID" />
                 <ScalarProperty Name="CLIE_NR_NUMERO_ENTREGA" ColumnName="CLIE_NR_NUMERO_ENTREGA" />
                 <ScalarProperty Name="CLIE_NM_COMPLEMENTO_ENTREGA" ColumnName="CLIE_NM_COMPLEMENTO_ENTREGA" />
@@ -13910,6 +13917,8 @@
           <EntitySetMapping Name="TEMPLATE_EMAIL">
             <EntityTypeMapping TypeName="ERP_CRMModel.TEMPLATE_EMAIL">
               <MappingFragment StoreEntitySet="TEMPLATE_EMAIL">
+                <ScalarProperty Name="TEEM_IN_HTML" ColumnName="TEEM_IN_HTML" />
+                <ScalarProperty Name="TEEM_TX_COMPLETO" ColumnName="TEEM_TX_COMPLETO" />
                 <ScalarProperty Name="TEEM_AQ_ARQUIVO" ColumnName="TEEM_AQ_ARQUIVO" />
                 <ScalarProperty Name="TEEM_TX_DADOS" ColumnName="TEEM_TX_DADOS" />
                 <ScalarProperty Name="TEEM_TX_CORPO" ColumnName="TEEM_TX_CORPO" />
