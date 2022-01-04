@@ -967,7 +967,6 @@
                                                                                 <th>Nome</th>
                                                                                 <th>Cargo</th>
                                                                                 <th>E-Mail</th>
-                                                                                <th>Telefone</th>
                                                                                 <th>Celular</th>
                                                                                 <th>Principal</th>
                                                                             </tr>
@@ -979,7 +978,6 @@
                                                                                     <td>@cond.CRCO_NM_NOME</td>
                                                                                     <td>@cond.CRCO_NM_CARGO</td>
                                                                                     <td>@cond.CRCO_NM_EMAIL</td>
-                                                                                    <td>@cond.CRCO_NR_TELEFONE</td>
                                                                                     <td>@cond.CRCO_NR_CELULAR</td>
                                                                                     @if (cond.CRCO_IN_PRINCIPAL == 1)
                                                                                     {
@@ -1051,25 +1049,24 @@
                                                                     </div>
                                                                 }
                                                             }
+                                                            else
+                                                            {
+                                                                <div class="row">
+                                                                    <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                                    </div>
+                                                                    <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
+                                                                        <h2 style="font-weight: bold">Nenhum comentário cadastrado nesse processo</h2>
+                                                                    </div>
+                                                                    <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                                    </div>
+                                                                </div>
+                                                            }
                                                         </div>
-                                                        else
-                                                        {
-                                                            <div class="row">
-                                                                <div class="col-lg-4 col-md-4 col-xs-2">
-
-                                                                </div>
-                                                                <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
-                                                                    <h2 style="font-weight: bold">Nenhum comentário cadastrado nesse processo</h2>
-                                                                </div>
-                                                                <div class="col-lg-4 col-md-4 col-xs-2">
-
-                                                                </div>
-                                                            </div>
-                                                        }
                                                     </div>
                                                 </div>
                                             </div>
-
 
                                         </div>
                                     
@@ -1093,7 +1090,6 @@
                                                                                 <th>Data Prevista</th>
                                                                                 <th>Dias para Encerrar</th>
                                                                                 <th>Status</th>
-                                                                                <th>Atribuição</th>
                                                                                 <th class="td-one-action">Ações</th>
                                                                             </tr>
                                                                         </thead>
@@ -1142,7 +1138,6 @@
                                                                                         {
                                                                                             <td><span class="badge badge-warning">Excluída</span></td>
                                                                                         }
-                                                                                        <td>@cond.USUARIO.USUA_NM_NOME</td>
                                                                                         <td class="td-one-action">
                                                                                             @Html.TableLinkDetails(cond.CRAC_CD_ID, "VerAcao", "fa-search", "Consultar")
                                                                                         </td>

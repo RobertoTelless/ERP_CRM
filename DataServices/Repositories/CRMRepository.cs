@@ -18,7 +18,6 @@ namespace DataServices.Repositories
         {
             IQueryable<CRM> query = Db.CRM;
             query = query.Where(p => p.CRM1_NM_NOME == tarefa.CRM1_NM_NOME);
-            query = query.Where(p => p.CLIE_CD_ID == tarefa.CLIE_CD_ID);
             query = query.Where(p => p.USUA_CD_ID == idUsu);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.FirstOrDefault();

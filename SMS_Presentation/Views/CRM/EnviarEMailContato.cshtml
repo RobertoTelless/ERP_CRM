@@ -36,6 +36,8 @@
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                     @Html.HiddenFor(m => m.ID)
+                                    @Html.HiddenFor(m => m.MENS_DT_CRIACAO)
+                                    @Html.HiddenFor(m => m.MENS_IN_TIPO)
                                     Nome do Contato
                                     @Html.TextBoxFor(m => m.NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                 </div>

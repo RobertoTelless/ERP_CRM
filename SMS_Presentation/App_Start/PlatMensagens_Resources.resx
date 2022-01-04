@@ -196,7 +196,7 @@
     <value>Entrada de CRM criada a partir de mensagem</value>
   </data>
   <data name="M0035" xml:space="preserve">
-    <value>Processo CRM  já cadastrado para este cliente</value>
+    <value>Já existe um processo com o mesmo nome para este usuário</value>
   </data>
   <data name="M0036" xml:space="preserve">
     <value>Impossível excluir esse processo. Existem ações ainda pendentes.</value>

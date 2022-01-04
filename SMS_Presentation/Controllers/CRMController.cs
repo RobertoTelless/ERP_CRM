@@ -190,6 +190,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Abre view
+            Session["MensCRM"] = 0;
             Session["VoltaCRM"] = 1;
             Session["IncluirCliente"] = 0;
             objeto = new CRM();
@@ -368,6 +369,14 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            if ((Int32)Session["VoltaCRM"] == 10)
+            {
+                return RedirectToAction("VoltarAcompanhamentoCRM");
+            }
+            if ((Int32)Session["VoltaCRM"] == 11)
+            {
+                return RedirectToAction("MontarTelaCRM", "CRM");
+            }
             return RedirectToAction("MontarTelaCRM");
         }
 
@@ -1354,6 +1363,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            if ((Int32)Session["VoltaCRM"] == 10)
+            {
+                return RedirectToAction("VoltarAcompanhamentoCRM");
+            }
             return RedirectToAction("EditarProcessoCRM", new { id = (Int32)Session["IdCRM"] });
         }
 
@@ -1791,7 +1804,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Monta view
-            Session["VoltaCRM"] = 1;
+            Session["VoltaCRM1"] = 1;
             objetoAntes = item;
             Session["IdCRM"] = id;
             CRMViewModel vm = Mapper.Map<CRM, CRMViewModel>(item);
@@ -1865,7 +1878,7 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         FiltrarCRM((CRM)Session["FiltroCRM"]);
                     }
-                    return RedirectToAction("MontarTelaCRM");
+                    return RedirectToAction("VoltarBaseCRM");
                 }
                 catch (Exception ex)
                 {
@@ -2114,10 +2127,14 @@ namespace ERP_CRM_Solution.Controllers
                 try
                 {
                     // Checa principal
-                    if (((CRM)Session["CRM"]).CRM_CONTATO.Where(p => p.CRCO_IN_PRINCIPAL == 1).ToList().Count > 0 & vm.CRCO_IN_PRINCIPAL == 1)
+                    CRM crm = (CRM)Session["CRM"];
+                    if (crm.CRM_CONTATO != null)
                     {
-                        Session["MensCRM"] = 50;
-                        return RedirectToAction("VoltarAnexoCRM");
+                        if (((CRM)Session["CRM"]).CRM_CONTATO.Where(p => p.CRCO_IN_PRINCIPAL == 1).ToList().Count > 0 & vm.CRCO_IN_PRINCIPAL == 1)
+                        {
+                            Session["MensCRM"] = 50;
+                            return RedirectToAction("VoltarAnexoCRM");
+                        }
                     }
 
                     // Executa a operação
@@ -2189,6 +2206,8 @@ namespace ERP_CRM_Solution.Controllers
             List<CRM_ACAO> acoes = item.CRM_ACAO.ToList().OrderByDescending(p => p.CRAC_DT_CRIACAO).ToList();
             CRM_ACAO acao = acoes.Where(p => p.CRAC_IN_STATUS == 1).FirstOrDefault();
             Session["Acoes"] = acoes;
+            Session["CRM"] = item;
+            Session["VoltaCRM"] = 10;
             ViewBag.Acoes = acoes;
             ViewBag.Acao = acao;
             return View(vm);
@@ -2209,11 +2228,14 @@ namespace ERP_CRM_Solution.Controllers
             Int32 crm = (Int32)Session["IdCRM"];
             CRM item = baseApp.GetItemById(crm);
             CRM_CONTATO cont = baseApp.GetContatoById(id);
+            Session["Contato"] = cont;
             ViewBag.Contato = cont;
             MensagemViewModel mens = new MensagemViewModel();
             mens.NOME = cont.CRCO_NM_NOME;
             mens.ID = id;
             mens.MODELO = cont.CRCO_NM_EMAIL;
+            mens.MENS_DT_CRIACAO = DateTime.Today.Date;
+            mens.MENS_IN_TIPO = 1;
             return View(mens);
         }
 
@@ -2270,6 +2292,8 @@ namespace ERP_CRM_Solution.Controllers
             mens.NOME = cont.CRCO_NM_NOME;
             mens.ID = id;
             mens.MODELO = cont.CRCO_NR_CELULAR;
+            mens.MENS_DT_CRIACAO = DateTime.Today.Date;
+            mens.MENS_IN_TIPO = 2;
             return View(mens);
         }
 
@@ -2549,6 +2573,14 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VoltarAcompanhamentoCRM");
         }
 
+        [HttpGet]
+        public ActionResult EditarCliente(Int32 id)
+        {
+            Session["VoltaCRM"] = 11;
+            Session["IdCliente"] = id;
+            return RedirectToAction("VoltarAnexoCliente", "Cliente");
+        }
+
         public ActionResult VerAcao(Int32 id)
         {
             // Verifica se tem usuario logado
@@ -2803,7 +2835,7 @@ namespace ERP_CRM_Solution.Controllers
         [ValidateInput(false)]
         public Int32 ProcessaEnvioEMailContato(MensagemViewModel vm, USUARIO usuario)
         {
-            // Recupera contatos
+            // Recupera contato
             Int32 idAss = (Int32)Session["IdAssinante"];
             CRM_CONTATO cont = (CRM_CONTATO)Session["Contato"];
 
@@ -2811,7 +2843,7 @@ namespace ERP_CRM_Solution.Controllers
             CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
 
             // Prepara cabeçalho
-            String cab = "Prezado Sr." + cont.CRCO_NM_NOME;
+            String cab = "Prezado Sr(a)." + cont.CRCO_NM_NOME + "/r/n";
 
             // Prepara rodape
             ASSINANTE assi = (ASSINANTE)Session["Assinante"];
@@ -2833,7 +2865,7 @@ namespace ERP_CRM_Solution.Controllers
                 }
                 str.AppendLine("<a href='" + vm.MENS_NM_LINK + "'>Clique aqui para maiores informações</a>");
             }
-            String body = str.ToString();                  
+            String body = str.ToString()  + "/r/n";                  
             String emailBody = cab + body + rod;
 
             // Monta e-mail

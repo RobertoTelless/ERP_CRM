@@ -571,6 +571,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("IncluirOrdemServico", "OrdemServico");
             }
+            if ((Int32)Session["VoltaCRM"] == 11)
+            {
+                return RedirectToAction("VoltarBaseCRM", "CRM");
+            }
             return RedirectToAction("MontarTelaCliente");
         }
 
@@ -891,6 +895,10 @@ namespace ERP_CRM_Solution.Controllers
                     if ((Int32)Session["VoltaCliente"]  == 5)
                     {
                         return RedirectToAction("VerClientesInativos");
+                    }
+                    if ((Int32)Session["VoltaCRM"] == 11)
+                    {
+                        return RedirectToAction("VoltarBaseCRM", "CRM");
                     }
                     return RedirectToAction("MontarTelaCliente");
                 }

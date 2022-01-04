@@ -101,17 +101,20 @@
                                 Nome do Processo
                                 @Html.TextBoxFor(m => m.CRM1_NM_NOME, new { @class = "form-control", autofocus = true })
                             </div>
-                            <div class="col-lg-3 col-md-3 col-xs-12">
+                            <div class="col-lg-5 col-md-5 col-xs-12">
                                 Cliente (Nome, Razão Social ou CPF)
                                 @Html.TextBoxFor(m => m.CRM1_DS_DESCRICAO, new { @class = "form-control", autofocus = true })
                             </div>
-                            <div class="col-lg-4 col-md-4 col-xs-12">                                     
+                        </div>
+                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                            <div class="col-lg-12 col-md-12 col-xs-12">                                     
                                 @Html.ButtonActionSubmit(text: "Filtrar")
                                 @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "CRM", action: "RetirarFiltroCRM")
                                 @Html.ButtonLinkIndex(text: "Novo Processo", controller: "CRM", action: "IncluirProcessoCRM")
                                 @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "CRM", action: "GerarRelatorioListaCRM")
                                 @Html.ButtonLinkIndex(text: "Visualização Kanban", controller: "CRM", action: "MontarTelaKanbanCRM")
                                 @Html.ButtonLinkIndex(text: "Ações do Usuário", controller: "CRM", action: "VerAcoesUsuarioCRM")
+                                @Html.ButtonLinkIndex(text: "Dashboard Processos", controller: "CRM", action: "VerDashboardProcessos")
                                 @Html.ButtonLinkIndex(text: "Dashboard", controller: "CRM", action: "Voltar")
                             </div>
                         </div>
@@ -181,7 +184,7 @@
                                                     }
                                                 }
                                             </td>
-                                            <td><a href="@Url.Action("EditarCliente", "Cliente", new { id = cond.CLIE_CD_ID })" />@cond.CLIENTE.CLIE_NM_NOME</td>
+                                            <td><a href="@Url.Action("EditarCliente", "CRM", new { id = cond.CLIE_CD_ID })" />@cond.CLIENTE.CLIE_NM_NOME</td>
                                             <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.CRM1_NM_NOME')">@cond.CRM1_NM_NOME</td>
                                             @if (cond.CRM1_IN_STATUS == 1)
 	                                        {
@@ -318,23 +321,26 @@
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
     @Styles.Render("~/plugins/toastrStyles")
+    @*@Styles.Render("~/Content/plugins/summernote/summernote.css")*@
     <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
     <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
     @Styles.Render("~/plugins/summernoteStyles")
 }
+
 @section Scripts {
+
     <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
     <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
     <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.datetimepicker"></script>
     <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
-    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
-    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
     @Scripts.Render("~/plugins/sparkline")
+    @*@Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")*@
     <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>    
     <script src="~/Scripts/uploadAnexo.js"></script>
