@@ -45,7 +45,7 @@
                                     @Html.ButtonLinkIndex(text: "Inclusão de Clientes", action: "IncluirClienteRapido", controller: "Cliente")
                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMensagemEMail", controller: "Mensagem")
                                     @Html.ButtonLinkIndex(text: "Dashboard Mensagens", controller: "Mensagem", action: "MontarTelaDashboardMensagens")
-                                    @Html.ButtonLinkIndex(text: "Início", controller: "Mensagem", action: "Voltar")
+                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Mensagem", action: "Voltar")
                                 </div>
                             </div>
                             
@@ -64,11 +64,10 @@
                                             @Html.HiddenFor(m => m.USUA_CD_ID)
                                             @Html.HiddenFor(m => m.MENS_IN_TIPO)
                                             <h4 style="color:navy">Seleção dos Destinos da Mensagem</h4>
-                                            <h5>Selecione um nome de contato ou um grupo de contatos para enviar a mensagem</h5>
-                                            <h5 style="color: green">Ao escolher um nome de contato, ela terá prevalência sobre o grupo</h5>
+                                            <h5>Selecione um nome de contato ou um grupo de contatos para enviar a mensagem. Ao escolher um nome de contato, ela terá prevalência sobre o grupo</h5>
                                             <br />
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <div class="col-lg-5 col-md-5 col-xs-12">
                                                     Nome do Contato
                                                     <select name="ID" id="lstCliente" class="form-control" data-val="true" style="display: none;">
                                                         @*<option>Selecionar</option>*@
@@ -76,7 +75,8 @@
                                                 </div> 
                                                 <div class="col-lg-4 col-md-4 col-xs-12" style="margin-left: 6px">
                                                     Grupo
-                                                    @Html.DropDownListFor(m => m.GRUPO, (SelectList)ViewBag.Grupos, "Selecionar", new { @class = "form-control", autofocus = true  })
+                                                    @*@Html.DropDownListFor(m => m.GRUPO, (SelectList)ViewBag.Grupos, "Selecionar", new { @class = "form-control", autofocus = true, @id="gr", onchange = "ValidaDiv($(this).val())" })*@
+                                                    @Html.DropDownListFor(m => m.GRUPO, (SelectList)ViewBag.Grupos, "Selecionar", new { @class = "form-control", autofocus = true, @id="gr" })
                                                 </div>
                                             </div>
                                         </div>
@@ -84,10 +84,9 @@
                                         <div class="row">
                                             <h4 style="color:navy">Parâmetros do E-Mail</h4>
                                             <h5>Se a Data de Agendamento não for preenchida o envio será imediato</h5>
-                                            <h5>Se for escolhido um modelo (Comum ou HTML) o campo Corpo da Mensagem ficará desabilitado</h5>
                                             <br />
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Campanha
                                                     @Html.TextBoxFor(m => m.MENS_NM_CAMPANHA, new { @class = "form-control", autofocus = true })
                                                 </div>
@@ -100,33 +99,38 @@
                                                     @Html.TextBoxFor(m => m.MENS_NM_LINK, new { @class = "form-control", autofocus = true, @id="link" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    Modelos 
-                                                    @Html.DropDownListFor(m => m.TEEM_CD_ID, (SelectList)ViewBag.Temp, "Selecionar", new { @class = "form-control", autofocus = true, @id = "temp", onchange = "ValidaDiv($(this).val())"})
+                                                    <div class="input-group">
+                                                        Modelo E-Mail
+                                                        @Html.DropDownListFor(m => m.TEEM_CD_ID, (SelectList)ViewBag.Temp, "Selecionar", new { @class = "form-control", autofocus = true, @id = "temp"})
+                                                        <span class="input-group-btn">
+                                                            <span class="btn btn-warning btn-sm" id="btnBusca" onclick="PesquisaTemplateEMail($('#temp').val(), $(this), 1)">Ativar</span>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <hr />
                                         <div class="row" id="EM1">
                                             <h4 style="color:navy">Conteúdo da Mensagem</h4>
-                                            <h5>No Cabeçalho deverá existir o bloco {Nome} onde será incluído o nome do contato</h5>
-                                            <h5 style="color: green">Na inexistência desse bloco, as informações acima não serão incluídas na mensagem</h5>
+                                            <h5>A tag {Nome} está disponível no cabeçalho e se usada será exibido o nome do contato</h5>
                                             <br />
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-12 col-md-11 col-xs-12">
                                                     Cabeçalho
-                                                    @Html.TextAreaFor(m => m.MENS_NM_CABECALHO, new { @class = "form-control summernote", style = "width: 100%; height: 200px;", autofocus = true,  @id = "cab"})
+                                                    @Html.TextAreaFor(m => m.MENS_NM_CABECALHO, new { @class = "form-control", style = "width: 100%; height: 50px;", autofocus = true,  @id = "cab"})
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="CORPO">
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     Corpo da Mensagem
-                                                    @Html.TextAreaFor(m => m.MENS_TX_TEXTO, new { @class = "form-control summernote", style = "width: 100%; height: 600px;", autofocus = true,  @id = "cor" })
+                                                    @Html.TextAreaFor(m => m.MENS_TX_TEXTO, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true,  @id = "cor" })
                                                 </div>
                                             </div>
+                                            <h5>A tag {Assinatura} está disponível no rodapé e se usada será exibido o nome do assinante</h5>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     Rodapé
-                                                    @Html.TextAreaFor(m => m.MENS_NM_RODAPE, new { @class = "form-control summernote", style = "width: 100%; height: 200px;", autofocus = true,  @id = "rod" })
+                                                    @Html.TextAreaFor(m => m.MENS_NM_RODAPE, new { @class = "form-control", style = "width: 100%; height: 50px;", autofocus = true,  @id = "rod" })
                                                 </div>
                                             </div>
                                         </div>
@@ -176,17 +180,16 @@
 @section Styles {
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />
-    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+    @*<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />*@
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
     @Styles.Render("~/plugins/toastrStyles")
-    @*@Styles.Render("~/Content/plugins/summernote/summernote.css")*@
+    @Styles.Render("~/Content/plugins/summernote/summernote.css")
     <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
     <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
-    @Styles.Render("~/plugins/summernoteStyles")
 }
 @section Scripts {
-    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
+    @*<script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>*@
     <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
     <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.datetimepicker"></script>
@@ -197,11 +200,10 @@
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
     @Scripts.Render("~/plugins/sparkline")
-    @*@Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")*@
+    @Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")
     <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>    
     <script src="~/Scripts/uploadAnexo.js"></script>
-    @Scripts.Render("~/plugins/summernote")
 
     <script type="text/javascript">
         $(function () {
@@ -324,17 +326,21 @@
                 });
         });
     </script>
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         function ValidaDiv(valTipo) {
             if (valTipo = 0) {
                 $("#EM1").show();
+                $("#EM3").hide();
+                $("#EM4").hide();
             } else { //Se não for 1, 2 ou 4 esconde as duas
                 $("#EM1").hide();
+                $("#EM3").hide();
+                $("#EM4").hide();
             }
         }
 
         $(document).ready(function () {
-            ValidaDiv($('#temp').val());
+            ValidaDiv($('#gr').val());
         });
 
         function LimpaPJ() {
@@ -350,7 +356,7 @@
         function LimpaPF() {
             $('#cpf').val('');
         }
-    </script>
+    </script>*@
     <script>
         function PesquisaTemplate(temp, btn, tipo) {
             data = {
@@ -361,10 +367,16 @@
                 , type: 'POST'
                 , data: data
                 , success: function (r) {
-                    $('#cab').val(r.TEEM_TX_CABECALHO);
-                    $('#cor').val(r.TEEM_TX_CORPO);
-                    $('#rod').val(r.TEEM_TX_DADOS);
-                    $('#link').val(r.TEEM_LK_LINK);
+                    if (r.STATUS = 0)
+                    {
+                        $('#cab').val(r.MENS_NM_CABECALHO);
+                        $('#cor').val(r.MENS_TX_CORPO);
+                        $('#rod').val(r.MENS_NM_DADOS);
+                        $('#link').val(r.MENS_LK_LINK);
+                    }
+                    else {
+                        $('#arq').val(r.MODELO);
+                    }
                 }
             });
         }
