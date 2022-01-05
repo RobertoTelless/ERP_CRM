@@ -13,6 +13,14 @@ namespace DataServices.Repositories
 {
     public class CargoRepository : RepositoryBase<CARGO>, ICargoRepository
     {
+        public CARGO CheckExist(CARGO conta, Int32 idAss)
+        {
+            IQueryable<CARGO> query = Db.CARGO;
+            query = query.Where(p => p.CARG_NM_NOME == conta.CARG_NM_NOME);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
+            return query.FirstOrDefault();
+        }
+
         public CARGO GetItemById(Int32 id)
         {
             IQueryable<CARGO> query = Db.CARGO;
@@ -20,15 +28,17 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<CARGO> GetAllItensAdm()
+        public List<CARGO> GetAllItensAdm(Int32 idAss)
         {
             IQueryable<CARGO> query = Db.CARGO;
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<CARGO> GetAllItens()
+        public List<CARGO> GetAllItens(Int32 idAss)
         {
             IQueryable<CARGO> query = Db.CARGO.Where(p => p.CARG_IN_ATIVO == 1);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 

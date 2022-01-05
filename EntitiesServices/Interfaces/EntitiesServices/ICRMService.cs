@@ -28,10 +28,10 @@ namespace ModelServices.Interfaces.EntitiesServices
 
         List<USUARIO> GetAllUsers(Int32 idAss);
         List<TIPO_CRM> GetAllTipos();
-        List<TIPO_ACAO> GetAllTipoAcao();
-        List<CRM_ORIGEM> GetAllOrigens();
-        List<MOTIVO_CANCELAMENTO> GetAllMotivoCancelamento();
-        List<MOTIVO_ENCERRAMENTO> GetAllMotivoEncerramento();
+        List<TIPO_ACAO> GetAllTipoAcao(Int32 idAss);
+        List<CRM_ORIGEM> GetAllOrigens(Int32 idAss);
+        List<MOTIVO_CANCELAMENTO> GetAllMotivoCancelamento(Int32 idAss);
+        List<MOTIVO_ENCERRAMENTO> GetAllMotivoEncerramento(Int32 idAss);
         CRM_ANEXO GetAnexoById(Int32 id);
         USUARIO GetUserById(Int32 id);
         CRM_COMENTARIO GetComentarioById(Int32 id);

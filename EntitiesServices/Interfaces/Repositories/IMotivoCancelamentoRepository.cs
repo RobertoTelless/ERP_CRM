@@ -9,8 +9,9 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface IMotivoCancelamentoRepository : IRepositoryBase<MOTIVO_CANCELAMENTO>
     {
-        List<MOTIVO_CANCELAMENTO> GetAllItens();
+        List<MOTIVO_CANCELAMENTO> GetAllItens(Int32 idAss);
         MOTIVO_CANCELAMENTO GetItemById(Int32 id);
-        List<MOTIVO_CANCELAMENTO> GetAllItensAdm();
+        List<MOTIVO_CANCELAMENTO> GetAllItensAdm(Int32 idAss);
+        MOTIVO_CANCELAMENTO CheckExist(MOTIVO_CANCELAMENTO item, Int32 idAss);
     }
 }

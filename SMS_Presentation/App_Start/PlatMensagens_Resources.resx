@@ -288,6 +288,27 @@
   <data name="M0065" xml:space="preserve">
     <value>Essa mensagem já foi convertida em processo CRM</value>
   </data>
+  <data name="M0066" xml:space="preserve">
+    <value>Categoria de Cliente já cadastrada</value>
+  </data>
+  <data name="M0067" xml:space="preserve">
+    <value>Cargo já cadastrado</value>
+  </data>
+  <data name="M0068" xml:space="preserve">
+    <value>Impossível excluir este cargo. Ele está vinculado a outras informações</value>
+  </data>
+  <data name="M0069" xml:space="preserve">
+    <value>Impossível excluir esta categoria. Ela está vinculada a outras informações</value>
+  </data>
+  <data name="M0070" xml:space="preserve">
+    <value>Origem do processo CRM já cadastrada</value>
+  </data>
+  <data name="M0071" xml:space="preserve">
+    <value>Impossível excluir esta origem. Ela está vinculada a outras informações</value>
+  </data>
+  <data name="M0072" xml:space="preserve">
+    <value>Motivo de Cancelameneto já cadastrado</value>
+  </data>
   <data name="M0073" xml:space="preserve">
     <value>A Senha não pode ficar em branco</value>
   </data>
@@ -296,6 +317,18 @@
   </data>
   <data name="M0075" xml:space="preserve">
     <value>Confirmação da senha não pode ser em branco</value>
+  </data>
+  <data name="M0076" xml:space="preserve">
+    <value>Impossível excluir este motivo. Ele está vinculado a outras informações</value>
+  </data>
+  <data name="M0077" xml:space="preserve">
+    <value>Motivo de Encerramento já cadastrado</value>
+  </data>
+  <data name="M0078" xml:space="preserve">
+    <value>Tipo de Ação já cadastrado</value>
+  </data>
+  <data name="M0079" xml:space="preserve">
+    <value>Impossível excluir este tipo. Ele está vinculado a outras informações</value>
   </data>
   <data name="M0109" xml:space="preserve">
     <value>O login não pode ficar em branco</value>

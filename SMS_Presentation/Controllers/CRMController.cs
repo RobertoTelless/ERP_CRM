@@ -766,16 +766,9 @@ namespace ERP_CRM_Solution.Controllers
                 }
                 table.AddCell(cell);
 
-                cell = new PdfPCell(new Paragraph(item.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DS_DESCRICAO, meuFont))
+                if (item.CRM_ACAO.Count > 0)
                 {
-                    VerticalAlignment = Element.ALIGN_MIDDLE,
-                    HorizontalAlignment = Element.ALIGN_LEFT
-                };
-                table.AddCell(cell);
-
-                if (item.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DT_PREVISTA.Value.Date >= DateTime.Today.Date)
-                {
-                    cell = new PdfPCell(new Paragraph(item.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DT_PREVISTA.Value.ToShortDateString(), meuFontE))
+                    cell = new PdfPCell(new Paragraph(item.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DS_DESCRICAO, meuFont))
                     {
                         VerticalAlignment = Element.ALIGN_MIDDLE,
                         HorizontalAlignment = Element.ALIGN_LEFT
@@ -783,7 +776,36 @@ namespace ERP_CRM_Solution.Controllers
                 }
                 else
                 {
-                    cell = new PdfPCell(new Paragraph(item.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DT_PREVISTA.Value.ToShortDateString(), meuFontD))
+                    cell = new PdfPCell(new Paragraph("-", meuFontP))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                }
+                table.AddCell(cell);
+
+                if (item.CRM_ACAO.Count > 0)
+                {
+                    if (item.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DT_PREVISTA.Value.Date >= DateTime.Today.Date)
+                    {
+                        cell = new PdfPCell(new Paragraph(item.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DT_PREVISTA.Value.ToShortDateString(), meuFontE))
+                        {
+                            VerticalAlignment = Element.ALIGN_MIDDLE,
+                            HorizontalAlignment = Element.ALIGN_LEFT
+                        };
+                    }
+                    else
+                    {
+                        cell = new PdfPCell(new Paragraph(item.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DT_PREVISTA.Value.ToShortDateString(), meuFontD))
+                        {
+                            VerticalAlignment = Element.ALIGN_MIDDLE,
+                            HorizontalAlignment = Element.ALIGN_LEFT
+                        };
+                    }
+                }
+                else
+                {
+                    cell = new PdfPCell(new Paragraph("-", meuFontP))
                     {
                         VerticalAlignment = Element.ALIGN_MIDDLE,
                         HorizontalAlignment = Element.ALIGN_LEFT
@@ -1958,6 +1980,7 @@ namespace ERP_CRM_Solution.Controllers
 
             CRM_CONTATO item = baseApp.GetContatoById(id);
             objetoAntes = (CRM)Session["CRM"];
+            Session["Contato"] = item;
             CRMContatoViewModel vm = Mapper.Map<CRM_CONTATO, CRMContatoViewModel>(item);
             return View(vm);
         }
@@ -1979,10 +2002,14 @@ namespace ERP_CRM_Solution.Controllers
                 try
                 {
                     // Checa principal
-                    if (((CRM)Session["CRM"]).CRM_CONTATO.Where(p => p.CRCO_IN_PRINCIPAL == 1).ToList().Count > 0 & vm.CRCO_IN_PRINCIPAL == 1)
+                    CRM_CONTATO cont = (CRM_CONTATO)Session["Contato"];
+                    if (cont.CRCO_IN_PRINCIPAL == 0)
                     {
-                        Session["MensCRM"] = 50;
-                        return RedirectToAction("VoltarAnexoCRM");
+                        if (((CRM)Session["CRM"]).CRM_CONTATO.Where(p => p.CRCO_IN_PRINCIPAL == 1).ToList().Count > 0 & vm.CRCO_IN_PRINCIPAL == 1)
+                        {
+                            Session["MensCRM"] = 50;
+                            return RedirectToAction("VoltarAnexoCRM");
+                        }
                     }
 
                     // Executa a operação
@@ -2312,6 +2339,64 @@ namespace ERP_CRM_Solution.Controllers
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     Int32 volta = ProcessaEnvioSMSContato(vm, usuarioLogado);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+
+                    }
+
+                    // Sucesso
+                    return RedirectToAction("AcompanhamentoProcessoCRM", new { id = idNot });
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EnviarSMSCliente(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 crm = (Int32)Session["IdCRM"];
+            CRM item = baseApp.GetItemById(crm);
+            CLIENTE cont = cliApp.GetItemById(id);
+            Session["Cliente"] = cont;
+            ViewBag.Cliente = cont;
+            MensagemViewModel mens = new MensagemViewModel();
+            mens.NOME = cont.CLIE_NM_NOME;
+            mens.ID = id;
+            mens.MODELO = cont.CLIE_NR_CELULAR;
+            mens.MENS_DT_CRIACAO = DateTime.Today.Date;
+            mens.MENS_IN_TIPO = 2;
+            return View(mens);
+        }
+
+        [HttpPost]
+        public ActionResult EnviarSMSCliente(MensagemViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdCRM"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = ProcessaEnvioSMSCliente(vm, usuarioLogado);
 
                     // Verifica retorno
                     if (volta == 1)
@@ -2833,6 +2918,80 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [ValidateInput(false)]
+        public Int32 ProcessaEnvioSMSCliente(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera contatos
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            CLIENTE cont = (CLIENTE)Session["Cliente"];
+
+            // Processa SMS
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+
+            // Monta token
+            String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
+            byte[] textBytes = Encoding.UTF8.GetBytes(text);
+            String token = Convert.ToBase64String(textBytes);
+            String auth = "Basic " + token;
+
+            // Prepara texto
+            String texto = vm.MENS_TX_SMS;
+
+            // Prepara corpo do SMS e trata link
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(vm.MENS_TX_SMS);
+            if (!String.IsNullOrEmpty(vm.LINK))
+            {
+                if (!vm.LINK.Contains("www."))
+                {
+                    vm.LINK = "www." + vm.LINK;
+                }
+                if (!vm.LINK.Contains("http://"))
+                {
+                    vm.LINK = "http://" + vm.LINK;
+                }
+                str.AppendLine("<a href='" + vm.LINK + "'>Clique aqui para maiores informações</a>");
+                texto += "  " + vm.LINK;
+            }
+            String body = str.ToString();
+            String smsBody = body;
+            String erro = null;
+
+            // inicia processo
+            String resposta = String.Empty;
+
+            // Monta destinatarios
+            try
+            {
+                String listaDest = "55" + Regex.Replace(cont.CLIE_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
+                httpWebRequest.Headers["Authorization"] = auth;
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+                String customId = Cryptography.GenerateRandomPassword(8);
+                String data = String.Empty;
+                String json = String.Empty;
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
+                    streamWriter.Write(json);
+                }
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    resposta = result;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro = ex.Message;
+            }
+            return 0;
+        }
+
+        [ValidateInput(false)]
         public Int32 ProcessaEnvioEMailContato(MensagemViewModel vm, USUARIO usuario)
         {
             // Recupera contato
@@ -2843,7 +3002,7 @@ namespace ERP_CRM_Solution.Controllers
             CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
 
             // Prepara cabeçalho
-            String cab = "Prezado Sr(a)." + cont.CRCO_NM_NOME + "/r/n";
+            String cab = "Prezado Sr(a)." + cont.CRCO_NM_NOME;
 
             // Prepara rodape
             ASSINANTE assi = (ASSINANTE)Session["Assinante"];
@@ -2865,8 +3024,8 @@ namespace ERP_CRM_Solution.Controllers
                 }
                 str.AppendLine("<a href='" + vm.MENS_NM_LINK + "'>Clique aqui para maiores informações</a>");
             }
-            String body = str.ToString()  + "/r/n";                  
-            String emailBody = cab + body + rod;
+            String body = str.ToString();                  
+            String emailBody = cab + "<br /><br />" + body + "<br /><br />" + rod;
 
             // Monta e-mail
             NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
@@ -2875,6 +3034,71 @@ namespace ERP_CRM_Solution.Controllers
             mensagem.CORPO = emailBody;
             mensagem.DEFAULT_CREDENTIALS = false;
             mensagem.EMAIL_DESTINO = cont.CRCO_NM_EMAIL;
+            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+            mensagem.ENABLE_SSL = true;
+            mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
+            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+            mensagem.IS_HTML = true;
+            mensagem.NETWORK_CREDENTIAL = net;
+
+            // Envia mensagem
+            try
+            {
+                Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+            }
+            catch (Exception ex)
+            {
+                String erro = ex.Message;
+            }
+            return 0;
+        }
+
+        [ValidateInput(false)]
+        public Int32 ProcessaEnvioEMailCliente(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera cliente
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            CLIENTE cont = (CLIENTE)Session["Cliente"];
+
+            // Processa e-mail
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+
+            // Prepara cabeçalho
+            String cab = "Prezado Sr(a)." + cont.CLIE_NM_NOME;
+
+            // Prepara rodape
+            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            String rod = assi.ASSI_NM_NOME;
+
+            // Prepara corpo do e-mail e trata link
+            String corpo = vm.MENS_TX_TEXTO;
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(corpo);
+            if (!String.IsNullOrEmpty(vm.MENS_NM_LINK))
+            {
+                if (!vm.MENS_NM_LINK.Contains("www."))
+                {
+                    vm.MENS_NM_LINK = "www." + vm.MENS_NM_LINK;
+                }
+                if (!vm.MENS_NM_LINK.Contains("http://"))
+                {
+                    vm.MENS_NM_LINK = "http://" + vm.MENS_NM_LINK;
+                }
+                str.AppendLine("<a href='" + vm.MENS_NM_LINK + "'>Clique aqui para maiores informações</a>");
+            }
+            String body = str.ToString();
+            String emailBody = cab + "<br /><br />" + body + "<br /><br />" + rod;
+
+            // Monta e-mail
+            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+            Email mensagem = new Email();
+            mensagem.ASSUNTO = "Contato";
+            mensagem.CORPO = emailBody;
+            mensagem.DEFAULT_CREDENTIALS = false;
+            mensagem.EMAIL_DESTINO = cont.CLIE_NM_EMAIL;
             mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
             mensagem.ENABLE_SSL = true;
             mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
@@ -3734,6 +3958,7 @@ namespace ERP_CRM_Solution.Controllers
             // recupera cliente e assinante
             CLIENTE cli = cliApp.GetItemById(id);
             ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            Session["Cliente"] = cli;
 
             // Prepara mensagem
             String header = "Prezado <b>" + cli.CLIE_NM_NOME + "</b>";
@@ -3745,11 +3970,13 @@ namespace ERP_CRM_Solution.Controllers
             vm.ASSI_CD_ID = idAss;
             vm.MENS_DT_CRIACAO = DateTime.Now;
             vm.MENS_IN_ATIVO = 1;
+            vm.NOME = cli.CLIE_NM_NOME;
+            vm.ID = id;
+            vm.MODELO = cli.CLIE_NM_EMAIL;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             vm.MENS_NM_CABECALHO = header;
             vm.MENS_NM_RODAPE = footer;
             vm.MENS_IN_TIPO = 1;
-            vm.MODELO = "Mensagem para " + cli.CLIE_NM_NOME;
             vm.ID = cli.CLIE_CD_ID;
             return View(vm);
         }
@@ -3766,6 +3993,7 @@ namespace ERP_CRM_Solution.Controllers
           
             if (ModelState.IsValid)
             {
+                Int32 idNot = (Int32)Session["IdCRM"];
                 try
                 {
                     // Checa corpo da mensagem
@@ -3775,59 +4003,18 @@ namespace ERP_CRM_Solution.Controllers
                         return RedirectToAction("EnviarEMailCliente");
                     }
 
-                    // Prepara
-                    MENSAGENS item = Mapper.Map<MensagemViewModel, MENSAGENS>(vm);
-                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
-                    CLIENTE cli = cliApp.GetItemById(vm.ID.Value);
-                    ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = ProcessaEnvioEMailCliente(vm, usuarioLogado);
 
-                    // Monta corpo do e-mail e trata link
-                    String corpo = vm.MENS_TX_TEXTO;
-                    StringBuilder str = new StringBuilder();
-                    str.AppendLine(corpo);
-                    if (!String.IsNullOrEmpty(vm.MENS_NM_LINK))
+                    // Verifica retorno
+                    if (volta == 1)
                     {
-                        if (!vm.MENS_NM_LINK.Contains("www."))
-                        {
-                            vm.MENS_NM_LINK = "www." + vm.MENS_NM_LINK;
-                        }
-                        if (!vm.MENS_NM_LINK.Contains("http://"))
-                        {
-                            vm.MENS_NM_LINK = "http://" + vm.MENS_NM_LINK;
-                        }
-                        str.AppendLine("<a href='" + vm.MENS_NM_LINK + "'>Clique aqui para maiores informações</a>");
-                    }
-                    String body = str.ToString();
-                    String emailBody = vm.MENS_NM_CABECALHO + body + vm.MENS_NM_RODAPE;
 
-                    // Monta e-mail
-                    CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
-                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
-                    Email mensagem = new Email();
-                    mensagem.ASSUNTO = "Mensagem para " + cli;
-                    mensagem.CORPO = emailBody;
-                    mensagem.DEFAULT_CREDENTIALS = false;
-                    mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
-                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
-                    mensagem.ENABLE_SSL = true;
-                    mensagem.NOME_EMISSOR = assi.ASSI_NM_NOME;
-                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
-                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
-                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
-                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
-                    mensagem.IS_HTML = true;
-                    mensagem.NETWORK_CREDENTIAL = net;
+                    }
 
-                    // Envia mensagem
-                    try
-                    {
-                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
-                    }
-                    catch (Exception ex)
-                    {
-                        String erro = ex.Message;
-                    }
-                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                    // Sucesso
+                    return RedirectToAction("AcompanhamentoProcessoCRM", new { id = idNot });
                 }
                 catch (Exception ex)
                 {

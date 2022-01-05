@@ -153,6 +153,13 @@ namespace ERP_CRM_Solution.Controllers
             Session["SMSEMailEnvio"] = 0;
             Session["MensTemplateSMS"] = 0;
             Session["MensPermissao"] = 0;
+            Session["MensCRM"] = 0;
+            Session["MensCatCliente"] = 0;
+            Session["MensCargo"] = 0;
+            Session["MensOrigem"] = 0;
+            Session["MensMotCancelamento"] = 0;
+            Session["MensMotEncerramento"] = 0;
+            Session["MensTipoAcao"] = 0;
 
             Session["VoltaNotificacao"] = 3;
             Session["VoltaNoticia"] = 1;

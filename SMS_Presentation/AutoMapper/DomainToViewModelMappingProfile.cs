@@ -44,6 +44,12 @@ namespace MvcMapping.Mappers
             CreateMap<FORNECEDOR_COMENTARIO, FornecedorComentarioViewModel>();
             CreateMap<TEMPLATE_SMS, TemplateSMSViewModel>();
             CreateMap<TEMPLATE_EMAIL, TemplateEMailViewModel>();
+            CreateMap<CATEGORIA_CLIENTE, CategoriaClienteViewModel>();
+            CreateMap<CARGO, CargoViewModel>();
+            CreateMap<CRM_ORIGEM, CRMOrigemViewModel>();
+            CreateMap<MOTIVO_CANCELAMENTO, MotivoCancelamentoViewModel>();
+            CreateMap<MOTIVO_ENCERRAMENTO, MotivoEncerramentoViewModel>();
+            CreateMap<TIPO_ACAO, TipoAcaoViewModel>();
 
         }
     }

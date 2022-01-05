@@ -115,7 +115,7 @@
                             <li class=""><a data-toggle="tab" href="#tab-4">Comentários - Follow-Up</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2">Imagem & Anexos</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-3">Contatos</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-6">Resumo</a></li>
+                            @*<li class=""><a data-toggle="tab" href="#tab-6">Resumo</a></li>*@
                         </ul>
                         <div class="tab-content">
                             @*Dados Gerais*@
@@ -142,7 +142,7 @@
                                                                     <abbr title="Fone">P:</abbr> @Model.CLIENTE.CLIE_NR_TELEFONE
                                                                     <br />
 	                                                            }
-                                                                <abbr title="Cel">C:</abbr> @Model.CLIENTE.CLIE_NR_CELULAR
+                                                                <abbr title="Cel">C:</abbr> <a href="@Url.Action("EnviarSMSCliente", "CRM", new { id = Model.CLIENTE.CLIE_CD_ID })" />@Model.CLIENTE.CLIE_NR_CELULAR
                                                             </address>
                                                         }
                                                         else
@@ -748,7 +748,7 @@
                             </div>
 
                             @*Resumo*@
-                            <div id="tab-6" class="tab-pane">
+                            <!--<div id="tab-6" class="tab-pane">
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-4">
@@ -775,9 +775,9 @@
                                                     {
                                                         <h5>Não informado</h5>
                                                     }
-                                                    <p><i class="fa fa-map-marker"></i> @Model.CLIENTE.CLIE_NM_EMAIL</p>
+                                                    <p><i class="fa fa-map-marker"></i> @Model.CLIENTE.CLIE_NM_EMAIL</p>-->
                                                     @*<div class="clearfix"></div>*@
-                                                </div>
+                                                <!--</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
@@ -1217,7 +1217,7 @@
                                         </div>
                                     </div>                            
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>

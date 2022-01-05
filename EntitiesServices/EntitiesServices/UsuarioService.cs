@@ -105,9 +105,9 @@ namespace ModelServices.EntitiesServices
             return _usuarioRepository.GetAllItens(idAss);
         }
 
-        public List<CARGO> GetAllCargos()
+        public List<CARGO> GetAllCargos(Int32 idAss)
         {
-            return _carRepository.GetAllItens();
+            return _carRepository.GetAllItens(idAss);
         }
 
         public List<USUARIO> GetAllItensBloqueados(Int32 idAss)

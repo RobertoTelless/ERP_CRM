@@ -9,8 +9,9 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface ICargoRepository : IRepositoryBase<CARGO>
     {
-        List<CARGO> GetAllItens();
+        CARGO CheckExist(CARGO item, Int32 idAss);
+        List<CARGO> GetAllItens(Int32 idAss);
         CARGO GetItemById(Int32 id);
-        List<CARGO> GetAllItensAdm();
+        List<CARGO> GetAllItensAdm(Int32 idAss);
     }
 }

@@ -179,6 +179,12 @@
     <Compile Include="EntitiesServices\AgendaService.cs" />
     <Compile Include="EntitiesServices\AssinanteCnpjService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
+    <Compile Include="EntitiesServices\TipoAcaoService.cs" />
+    <Compile Include="EntitiesServices\MotivoEncerramentoService.cs" />
+    <Compile Include="EntitiesServices\MotivoCancelamentoService.cs" />
+    <Compile Include="EntitiesServices\CRMOrigemService.cs" />
+    <Compile Include="EntitiesServices\CategoriaClienteService.cs" />
+    <Compile Include="EntitiesServices\CargoService.cs" />
     <Compile Include="EntitiesServices\CRMService.cs" />
     <Compile Include="EntitiesServices\EMailAgendaService.cs" />
     <Compile Include="EntitiesServices\CategoriaTelefoneService.cs" />
@@ -207,6 +213,12 @@
     <Compile Include="Interfaces\EntitiesServices\IAgendaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteCnpjService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ITipoAcaoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IMotivoEncerramentoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IMotivoCancelamentoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ICRMOrigemService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ICargoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ICategoriaClienteService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICRMService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IEMailAgendaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaTelefoneService.cs" />

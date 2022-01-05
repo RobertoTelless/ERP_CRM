@@ -79,7 +79,7 @@ namespace Presentation.Start
             kernel.Bind<IClienteCnpjAppService>().To<ClienteCnpjAppService>();
             kernel.Bind<IMensagemAppService>().To<MensagemAppService>();
             kernel.Bind<IGrupoAppService>().To<GrupoAppService>();
-            //kernel.Bind<ICategoriaClienteAppService>().To<CategoriaClienteAppService>();
+            kernel.Bind<ICategoriaClienteAppService>().To<CategoriaClienteAppService>();
             kernel.Bind<IEMailAgendaAppService>().To<EMailAgendaAppService>();
             kernel.Bind<ICRMAppService>().To<CRMAppService>();
             kernel.Bind<IAgendaAppService>().To<AgendaAppService>();
@@ -95,6 +95,11 @@ namespace Presentation.Start
             kernel.Bind<ITelefoneAppService>().To<TelefoneAppService>();
             kernel.Bind<ICategoriaTelefoneAppService>().To<CategoriaTelefoneAppService>();
             kernel.Bind<IFilialAppService>().To<FilialAppService>();
+            kernel.Bind<ICargoAppService>().To<CargoAppService>();
+            kernel.Bind<ICRMOrigemAppService>().To<CRMOrigemAppService>();
+            kernel.Bind<IMotivoCancelamentoAppService>().To<MotivoCancelamentoAppService>();
+            kernel.Bind<IMotivoEncerramentoAppService>().To<MotivoEncerramentoAppService>();
+            kernel.Bind<ITipoAcaoAppService>().To<TipoAcaoAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -107,7 +112,7 @@ namespace Presentation.Start
             kernel.Bind<IClienteCnpjService>().To<ClienteCnpjService>();
             kernel.Bind<IMensagemService>().To<MensagemService>();
             kernel.Bind<IGrupoService>().To<GrupoService>();
-            //kernel.Bind<ICategoriaClienteService>().To<CategoriaClienteService>();
+            kernel.Bind<ICategoriaClienteService>().To<CategoriaClienteService>();
             kernel.Bind<IEMailAgendaService>().To<EmailAgendaService>();
             kernel.Bind<ICRMService>().To<CRMService>();
             kernel.Bind<IAgendaService>().To<AgendaService>();
@@ -123,6 +128,11 @@ namespace Presentation.Start
             kernel.Bind<ITelefoneService>().To<TelefoneService>();
             kernel.Bind<ICategoriaTelefoneService>().To<CategoriaTelefoneService>();
             kernel.Bind<IFilialService>().To<FilialService>();
+            kernel.Bind<ICargoService>().To<CargoService>();
+            kernel.Bind<ICRMOrigemService>().To<CRMOrigemService>();
+            kernel.Bind<IMotivoCancelamentoService>().To<MotivoCancelamentoService>();
+            kernel.Bind<IMotivoEncerramentoService>().To<MotivoEncerramentoService>();
+            kernel.Bind<ITipoAcaoService>().To<TipoAcaoService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();

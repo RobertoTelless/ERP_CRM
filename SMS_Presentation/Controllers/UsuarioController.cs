@@ -84,7 +84,7 @@ namespace ERP_CRM_Solution.Controllers
 
             // Carrega listas
             ViewBag.Perfis = new SelectList((List<PERFIL>)Session["Perfis"], "PERF_CD_ID", "PERF_NM_NOME");
-            ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(), "CARG_CD_ID", "CARG_NM_NOME");
+            ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(idAss), "CARG_CD_ID", "CARG_NM_NOME");
 
             // Carrega listas
             if ((List<USUARIO>)Session["ListaUsuario"] == null)
@@ -315,7 +315,7 @@ namespace ERP_CRM_Solution.Controllers
 
             // Prepara listas
             ViewBag.Perfis = new SelectList((List<PERFIL>)Session["Perfis"], "PERF_CD_ID", "PERF_NM_NOME");
-            ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(), "CARG_CD_ID", "CARG_NM_NOME");
+            ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(idAss), "CARG_CD_ID", "CARG_NM_NOME");
 
             // Verifica possibilidade
             //Int32 numUsu = baseApp.GetAllItens(idAss).Count;
@@ -345,8 +345,9 @@ namespace ERP_CRM_Solution.Controllers
         [HttpPost]
         public ActionResult IncluirUsuario(UsuarioViewModel vm)
         {
+            Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Perfis = new SelectList((List<PERFIL>)Session["Perfis"], "PERF_CD_ID", "PERF_NM_NOME");
-            ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(), "CARG_CD_ID", "CARG_NM_NOME");
+            ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(idAss), "CARG_CD_ID", "CARG_NM_NOME");
             if (ModelState.IsValid)
             {
                 try
@@ -454,7 +455,7 @@ namespace ERP_CRM_Solution.Controllers
 
             // Prepara view
             ViewBag.Perfis = new SelectList((List<PERFIL>)Session["Perfis"], "PERF_CD_ID", "PERF_NM_NOME");
-            ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(), "CARG_CD_ID", "CARG_NM_NOME");
+            ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(idAss), "CARG_CD_ID", "CARG_NM_NOME");
             ViewBag.UsuarioLogado = usuario;
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             USUARIO item = baseApp.GetItemById(id);
@@ -469,8 +470,9 @@ namespace ERP_CRM_Solution.Controllers
         [HttpPost]
         public ActionResult EditarUsuario(UsuarioViewModel vm)
         {
+            Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Perfis = new SelectList((List<PERFIL>)Session["Perfis"], "PERF_CD_ID", "PERF_NM_NOME");
-            ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(), "CARG_CD_ID", "CARG_NM_NOME");
+            ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(idAss), "CARG_CD_ID", "CARG_NM_NOME");
             if (ModelState.IsValid)
             {
                 try

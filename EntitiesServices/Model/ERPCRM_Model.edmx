@@ -147,6 +147,7 @@
             <PropertyRef Name="CARG_CD_ID" />
           </Key>
           <Property Name="CARG_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" />
           <Property Name="CARG_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="CARG_IN_ATIVO" Type="int" />
           <Property Name="CARG_IN_TIPO" Type="int" />
@@ -2113,6 +2114,18 @@
               <PropertyRef Name="ASSI_CD_ID" />
             </Principal>
             <Dependent Role="BANCO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CARGO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
+          <End Role="CARGO" Type="Self.CARGO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CARGO">
               <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -4865,6 +4878,10 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="BANCO" EntitySet="BANCO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CARGO_ASSINANTE" Association="Self.FK_CARGO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CARGO" EntitySet="CARGO" />
+          </AssociationSet>
           <AssociationSet Name="FK_CATEGORIA_AGENDA_ASSINANTE" Association="Self.FK_CATEGORIA_AGENDA_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CATEGORIA_AGENDA" EntitySet="CATEGORIA_AGENDA" />
@@ -5853,6 +5870,7 @@
           <NavigationProperty Name="TIPO_TAREFA" Relationship="ERP_CRMModel.FK_TIPO_TAREFA_ASSINANTE" FromRole="ASSINANTE" ToRole="TIPO_TAREFA" />
           <NavigationProperty Name="TEMPLATE_SMS" Relationship="ERP_CRMModel.FK_TEMPLATE_SMS_ASSINANTE" FromRole="ASSINANTE" ToRole="TEMPLATE_SMS" />
           <NavigationProperty Name="TEMPLATE_EMAIL" Relationship="ERP_CRMModel.FK_TEMPLATE_EMAIL_ASSINANTE" FromRole="ASSINANTE" ToRole="TEMPLATE_EMAIL" />
+          <NavigationProperty Name="CARGO" Relationship="ERP_CRMModel.FK_CARGO_ASSINANTE" FromRole="ASSINANTE" ToRole="CARGO" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -5943,6 +5961,8 @@
           <Property Name="CARG_IN_ATIVO" Type="Int32" />
           <Property Name="CARG_IN_TIPO" Type="Int32" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_CARGO" FromRole="CARGO" ToRole="USUARIO" />
+          <Property Name="ASSI_CD_ID" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_CARGO_ASSINANTE" FromRole="CARGO" ToRole="ASSINANTE" />
         </EntityType>
         <EntityType Name="CATEGORIA_AGENDA">
           <Key>
@@ -11419,6 +11439,10 @@
             <End Role="TEMPLATE_EMAIL" EntitySet="TEMPLATE_EMAIL" />
             <End Role="MENSAGENS" EntitySet="MENSAGENS" />
           </AssociationSet>
+          <AssociationSet Name="FK_CARGO_ASSINANTE" Association="ERP_CRMModel.FK_CARGO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CARGO" EntitySet="CARGO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -11895,6 +11919,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CARGO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CARGO" Role="CARGO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CARGO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12051,6 +12087,7 @@
           <EntitySetMapping Name="CARGO">
             <EntityTypeMapping TypeName="ERP_CRMModel.CARGO">
               <MappingFragment StoreEntitySet="CARGO">
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CARG_CD_ID" ColumnName="CARG_CD_ID" />
                 <ScalarProperty Name="CARG_NM_NOME" ColumnName="CARG_NM_NOME" />
                 <ScalarProperty Name="CARG_IN_ATIVO" ColumnName="CARG_IN_ATIVO" />

@@ -22,10 +22,10 @@ namespace ApplicationServices.Interfaces
         CRM GetItemById(Int32 id);
         List<CRM> GetAllItens(Int32 idAss);
         List<CRM> GetAllItensAdm(Int32 idAss);
-        List<TIPO_ACAO> GetAllTipoAcao();
-        List<CRM_ORIGEM> GetAllOrigens();
-        List<MOTIVO_CANCELAMENTO> GetAllMotivoCancelamento();
-        List<MOTIVO_ENCERRAMENTO> GetAllMotivoEncerramento();
+        List<TIPO_ACAO> GetAllTipoAcao(Int32 idAss);
+        List<CRM_ORIGEM> GetAllOrigens(Int32 idAss);
+        List<MOTIVO_CANCELAMENTO> GetAllMotivoCancelamento(Int32 idAss);
+        List<MOTIVO_ENCERRAMENTO> GetAllMotivoEncerramento(Int32 idAss);
         CRM_COMENTARIO GetComentarioById(Int32 id);
 
         List<CRM_ACAO> GetAllAcoes(Int32 idAss);

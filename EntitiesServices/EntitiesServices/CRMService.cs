@@ -112,23 +112,23 @@ namespace ModelServices.EntitiesServices
             return _tipoRepository.GetAllItens();
         }
 
-        public List<TIPO_ACAO> GetAllTipoAcao()
+        public List<TIPO_ACAO> GetAllTipoAcao(Int32 idAss)
         {
-            return _taRepository.GetAllItens();
+            return _taRepository.GetAllItens(idAss);
         }
-        public List<CRM_ORIGEM> GetAllOrigens()
+        public List<CRM_ORIGEM> GetAllOrigens(Int32 idAss)
         {
-            return _oriRepository.GetAllItens();
-        }
-
-        public List<MOTIVO_CANCELAMENTO> GetAllMotivoCancelamento()
-        {
-            return _mcRepository.GetAllItens();
+            return _oriRepository.GetAllItens(idAss);
         }
 
-        public List<MOTIVO_ENCERRAMENTO> GetAllMotivoEncerramento()
+        public List<MOTIVO_CANCELAMENTO> GetAllMotivoCancelamento(Int32 idAss)
         {
-            return _meRepository.GetAllItens();
+            return _mcRepository.GetAllItens(idAss);
+        }
+
+        public List<MOTIVO_ENCERRAMENTO> GetAllMotivoEncerramento(Int32 idAss)
+        {
+            return _meRepository.GetAllItens(idAss);
         }
 
         public List<USUARIO> GetAllUsers(Int32 idAss)

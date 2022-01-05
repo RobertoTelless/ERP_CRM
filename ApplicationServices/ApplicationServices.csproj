@@ -170,6 +170,12 @@
     <Compile Include="Interfaces\IAppServiceBase.cs" />
     <Compile Include="Interfaces\IAssinanteAppService.cs" />
     <Compile Include="Interfaces\IAssinanteCnpjAppService.cs" />
+    <Compile Include="Interfaces\ICargoAppService.cs" />
+    <Compile Include="Interfaces\ITipoAcaoAppService.cs" />
+    <Compile Include="Interfaces\IMotivoEncerramentoAppService.cs" />
+    <Compile Include="Interfaces\IMotivoCancelamentoAppService.cs" />
+    <Compile Include="Interfaces\ICRMOrigemAppService.cs" />
+    <Compile Include="Interfaces\ICategoriaClienteAppService.cs" />
     <Compile Include="Interfaces\ICRMAppService.cs" />
     <Compile Include="Interfaces\IEMailAgendaAppService.cs" />
     <Compile Include="Interfaces\ICategoriaTelefoneAppService.cs" />
@@ -198,6 +204,12 @@
     <Compile Include="Services\AppServiceBase.cs" />
     <Compile Include="Services\AssinanteAppService.cs" />
     <Compile Include="Services\AssinanteCnpjAppService.cs" />
+    <Compile Include="Services\CargoAppService.cs" />
+    <Compile Include="Services\TipoAcaoAppService.cs" />
+    <Compile Include="Services\MotivoEncerramentoAppService.cs" />
+    <Compile Include="Services\MotivoCancelamentoAppService.cs" />
+    <Compile Include="Services\CRMOrigemAppService.cs" />
+    <Compile Include="Services\CategoriaClienteAppService.cs" />
     <Compile Include="Services\CRMAppService.cs" />
     <Compile Include="Services\EMailAgendaAppService.cs" />
     <Compile Include="Services\CategoriaTelefoneAppService.cs" />

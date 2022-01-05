@@ -13,6 +13,14 @@ namespace DataServices.Repositories
 {
     public class TipoAcaoRepository : RepositoryBase<TIPO_ACAO>, ITipoAcaoRepository
     {
+        public TIPO_ACAO CheckExist(TIPO_ACAO conta, Int32 idAss)
+        {
+            IQueryable<TIPO_ACAO> query = Db.TIPO_ACAO;
+            query = query.Where(p => p.TIAC_NM_NOME == conta.TIAC_NM_NOME);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
+            return query.FirstOrDefault();
+        }
+
         public TIPO_ACAO GetItemById(Int32 id)
         {
             IQueryable<TIPO_ACAO> query = Db.TIPO_ACAO;
@@ -20,15 +28,17 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<TIPO_ACAO> GetAllItensAdm()
+        public List<TIPO_ACAO> GetAllItensAdm(Int32 idAss)
         {
             IQueryable<TIPO_ACAO> query = Db.TIPO_ACAO;
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<TIPO_ACAO> GetAllItens()
+        public List<TIPO_ACAO> GetAllItens(Int32 idAss)
         {
             IQueryable<TIPO_ACAO> query = Db.TIPO_ACAO.Where(p => p.TIAC_IN_ATIVO == 1);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 

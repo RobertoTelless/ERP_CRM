@@ -315,6 +315,7 @@
     <Compile Include="Controllers\MensagemController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
+    <Compile Include="Controllers\TabelasAuxiliaresController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
     <Compile Include="Controllers\TelefoneController.cs" />
     <Compile Include="Controllers\TemplateEmailController.cs" />
@@ -331,8 +332,14 @@
     <Compile Include="ViewModels\AgendaViewModel.cs" />
     <Compile Include="ViewModels\AssinantePagamentoViewModel.cs" />
     <Compile Include="ViewModels\AssinanteViewModel.cs" />
+    <Compile Include="ViewModels\TipoAcaoViewModel.cs" />
+    <Compile Include="ViewModels\MotivoEncerramentoViewModel.cs" />
+    <Compile Include="ViewModels\MotivoCancelamentoViewModel.cs" />
+    <Compile Include="ViewModels\CRMOrigemViewModel.cs" />
+    <Compile Include="ViewModels\CargoViewModel.cs" />
     <Compile Include="ViewModels\ClienteContatoViewModel.cs" />
     <Compile Include="ViewModels\ClienteReferenciaViewModel.cs" />
+    <Compile Include="ViewModels\CategoriaClienteViewModel.cs" />
     <Compile Include="ViewModels\ClienteTagViewModel.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
     <Compile Include="ViewModels\ConfiguracaoViewModel.cs" />
@@ -3091,6 +3098,25 @@
     <Content Include="Views\Cliente\IncluirClienteRapido.cshtml" />
     <Content Include="Views\TemplateEmail\IncluirModeloHTMLEMail.cshtml" />
     <Content Include="Views\TemplateEmail\EditarTemplateHTMLEMail.cshtml" />
+    <Content Include="Views\CRM\EnviarSMSCliente.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaCatCliente.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirCatCliente.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarCatCliente.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaCargo.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirCargo.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarCargo.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaOrigem.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirOrigem.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarOrigem.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaMotCancelamento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirMotCancelamento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarMotCancelamento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaMotEncerramento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirMotEncerramento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarMotEncerramento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaTipoAcao.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirTipoAcao.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarTipoAcao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

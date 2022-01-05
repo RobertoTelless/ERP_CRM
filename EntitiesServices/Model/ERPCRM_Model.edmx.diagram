@@ -358,6 +358,7 @@
         <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE_EMAIL" Width="1.5" PointX="5.25" PointY="182.75" />
         <AssociationConnector Association="ERP_CRMModel.FK_TEMPLATE_EMAIL_ASSINANTE" />
         <AssociationConnector Association="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_EMAIL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CARGO_ASSINANTE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

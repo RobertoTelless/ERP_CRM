@@ -38,6 +38,6 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<NOTIFICACAO> GetAllItensUser(Int32 id, Int32 idAss);
         List<NOTIFICACAO> GetNotificacaoNovas(Int32 id, Int32 idAss);
         TEMPLATE GetTemplate(String code);
-        List<CARGO> GetAllCargos();
+        List<CARGO> GetAllCargos(Int32 idAss);
     }
 }

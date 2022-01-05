@@ -98,27 +98,27 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public List<TIPO_ACAO> GetAllTipoAcao()
+        public List<TIPO_ACAO> GetAllTipoAcao(Int32 idAss)
         {
-            List<TIPO_ACAO> lista = _baseService.GetAllTipoAcao();
+            List<TIPO_ACAO> lista = _baseService.GetAllTipoAcao(idAss);
             return lista;
         }
 
-        public List<MOTIVO_CANCELAMENTO> GetAllMotivoCancelamento()
+        public List<MOTIVO_CANCELAMENTO> GetAllMotivoCancelamento(Int32 idAss)
         {
-            List<MOTIVO_CANCELAMENTO> lista = _baseService.GetAllMotivoCancelamento();
+            List<MOTIVO_CANCELAMENTO> lista = _baseService.GetAllMotivoCancelamento(idAss);
             return lista;
         }
 
-        public List<MOTIVO_ENCERRAMENTO> GetAllMotivoEncerramento()
+        public List<MOTIVO_ENCERRAMENTO> GetAllMotivoEncerramento(Int32 idAss)
         {
-            List<MOTIVO_ENCERRAMENTO> lista = _baseService.GetAllMotivoEncerramento();
+            List<MOTIVO_ENCERRAMENTO> lista = _baseService.GetAllMotivoEncerramento(idAss);
             return lista;
         }
 
-        public List<CRM_ORIGEM> GetAllOrigens()
+        public List<CRM_ORIGEM> GetAllOrigens(Int32 idAss)
         {
-            List<CRM_ORIGEM> lista = _baseService.GetAllOrigens();
+            List<CRM_ORIGEM> lista = _baseService.GetAllOrigens(idAss);
             return lista;
         }
 

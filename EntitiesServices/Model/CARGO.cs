@@ -24,8 +24,10 @@ namespace EntitiesServices.Model
         public string CARG_NM_NOME { get; set; }
         public Nullable<int> CARG_IN_ATIVO { get; set; }
         public Nullable<int> CARG_IN_TIPO { get; set; }
+        public Nullable<int> ASSI_CD_ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USUARIO> USUARIO { get; set; }
+        public virtual ASSINANTE ASSINANTE { get; set; }
     }
 }
