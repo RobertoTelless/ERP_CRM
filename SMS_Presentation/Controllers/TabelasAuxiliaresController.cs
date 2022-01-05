@@ -169,7 +169,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             listaMasterCC = ccApp.GetAllItensAdm(idAss);
-            Session["ListaCatCliente"] = null;
+            Session["ListaCatCliente"] = listaMasterCC;
             return RedirectToAction("MontarTelaCatCliente");
         }
 
@@ -497,7 +497,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             listaMasterCG = caApp.GetAllItensAdm(idAss);
-            Session["ListaCargo"] = null;
+            Session["ListaCargo"] = listaMasterCG;
             return RedirectToAction("MontarTelaCargo");
         }
 
@@ -826,7 +826,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             listaMasterOR = orApp.GetAllItensAdm(idAss);
-            Session["ListaOrigem"] = null;
+            Session["ListaOrigem"] = listaMasterOR;
             return RedirectToAction("MontarTelaOrigem");
         }
 
@@ -1154,7 +1154,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             listaMasterMC = mcApp.GetAllItensAdm(idAss);
-            Session["ListaMotCancelamento"] = null;
+            Session["ListaMotCancelamento"] = listaMasterMC;
             return RedirectToAction("MontarTelaMotCancelamento");
         }
 
@@ -1482,7 +1482,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             listaMasterME = meApp.GetAllItensAdm(idAss);
-            Session["ListaMotEncerramento"] = null;
+            Session["ListaMotEncerramento"] = listaMasterME;
             return RedirectToAction("MontarTelaMotEncerramento");
         }
 
@@ -1810,7 +1810,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             listaMasterTA = taApp.GetAllItensAdm(idAss);
-            Session["ListaTipoAcao"] = null;
+            Session["ListaTipoAcao"] = listaMasterTA;
             return RedirectToAction("MontarTelaTipoAcao");
         }
 

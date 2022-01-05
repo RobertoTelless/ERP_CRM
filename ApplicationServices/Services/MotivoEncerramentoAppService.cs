@@ -126,7 +126,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelMOEN",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<MOTIVO_ENCERRAMENTO>(item)
+                    LOG_TX_REGISTRO = item.MOEN_NM_NOME
                 };
 
                 // Persiste
@@ -155,7 +155,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatMOEN",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<MOTIVO_ENCERRAMENTO>(item)
+                    LOG_TX_REGISTRO = item.MOEN_NM_NOME
                 };
 
                 // Persiste

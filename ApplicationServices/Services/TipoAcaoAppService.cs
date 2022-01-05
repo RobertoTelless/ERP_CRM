@@ -126,7 +126,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelTIAC",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<TIPO_ACAO>(item)
+                    LOG_TX_REGISTRO = item.TIAC_NM_NOME
                 };
 
                 // Persiste
@@ -155,7 +155,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatTIAC",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<TIPO_ACAO>(item)
+                    LOG_TX_REGISTRO = item.TIAC_NM_NOME
                 };
 
                 // Persiste

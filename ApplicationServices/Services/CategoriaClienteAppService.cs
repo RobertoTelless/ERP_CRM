@@ -126,7 +126,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelCACL",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<CATEGORIA_CLIENTE>(item)
+                    LOG_TX_REGISTRO = item.CACL_NM_NOME
                 };
 
                 // Persiste
@@ -155,7 +155,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatCACL",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<CATEGORIA_CLIENTE>(item)
+                    LOG_TX_REGISTRO = item.CACL_NM_NOME
                 };
 
                 // Persiste

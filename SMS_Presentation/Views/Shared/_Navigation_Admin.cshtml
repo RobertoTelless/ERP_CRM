@@ -36,7 +36,7 @@
             @*Mensageria*@
             @if ((Int32)Session["PermMens"] == 1)
             {
-                <li class="@Html.IsSelected(controller: "Home")">
+                <li class="@Html.IsSelected(controller: "BaseAdmin")">
                     <a href="@Url.Action("MontarTelaDashboardMensagens", "Mensagem")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Mensageria</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
@@ -64,8 +64,8 @@
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>
                             @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>*@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
-                                <li class="@Html.IsSelected(action: "MontarTelaCatCliente")"><a href="@Url.Action("MontarTelaCatCliente", "Auxiliar")">Cat.Cliente</a></li>
-                                <li class="@Html.IsSelected(action: "MontarTelaCargo")"><a href="@Url.Action("MontarTelaCargo", "Auxiliar")">Cargo</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaCatCliente")"><a href="@Url.Action("MontarTelaCatCliente", "TabelasAuxiliares")">Cat.Cliente</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaCargo")"><a href="@Url.Action("MontarTelaCargo", "TabelasAuxiliares")">Cargo</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -75,7 +75,7 @@
             @*CRM*@
             @if ((Int32)Session["PermCRM"] == 1)
             {
-                <li class="@Html.IsSelected(controller: "Home")">
+                <li class="@Html.IsSelected(controller: "BaseAdmin")">
                     <a href="@Url.Action("MontarTelaDashboardCRM", "CRM")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">CRM</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
@@ -94,12 +94,12 @@
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>
                             @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>*@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
-                                <li class="@Html.IsSelected(action: "MontarTelaCatCliente")"><a href="@Url.Action("MontarTelaCatCliente", "Auxiliar")">Cat.Cliente</a></li>
-                                <li class="@Html.IsSelected(action: "MontarTelaCargo")"><a href="@Url.Action("MontarTelaCargo", "Auxiliar")">Cargo</a></li>
-                                <li class="@Html.IsSelected(action: "MontarTelaOrigemCRM")"><a href="@Url.Action("MontarTelaOrigemCRM", "Auxiliar")">Origem Processo</a></li>
-                                <li class="@Html.IsSelected(action: "MontarTelaMotCancelamento")"><a href="@Url.Action("MontarTelaMotCancelamento", "Auxiliar")">Mot.Cancelamento</a></li>
-                                <li class="@Html.IsSelected(action: "MontarTelaMotEncerramento")"><a href="@Url.Action("MontarTelaMotEncerramento", "Auxiliar")">Mot.Encerramento</a></li>
-                                <li class="@Html.IsSelected(action: "MontarTelaTipoAcao")"><a href="@Url.Action("MontarTelaTipoAcao", "Auxiliar")">Tipo de Ação</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaCatCliente")"><a href="@Url.Action("MontarTelaCatCliente", "TabelasAuxiliares")">Cat.Cliente</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaCargo")"><a href="@Url.Action("MontarTelaCargo", "TabelasAuxiliares")">Cargo</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaOrigem")"><a href="@Url.Action("MontarTelaOrigem", "TabelasAuxiliares")">Origem Processo</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaMotCancelamento")"><a href="@Url.Action("MontarTelaMotCancelamento", "TabelasAuxiliares")">Mot.Cancelamento</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaMotEncerramento")"><a href="@Url.Action("MontarTelaMotEncerramento", "TabelasAuxiliares")">Mot.Encerramento</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaTipoAcao")"><a href="@Url.Action("MontarTelaTipoAcao", "TabelasAuxiliares")">Tipo de Ação</a></li>
                             </ul>
                         </li>
                     </ul>
