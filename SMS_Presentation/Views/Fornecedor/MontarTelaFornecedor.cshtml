@@ -5,8 +5,27 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
-
-      @using (Html.BeginForm("EnviarSmsCliente", "Fornecedor", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @using (Html.BeginForm("EnviarSmsFornecedor", "Fornecedor", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
     { 
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
@@ -48,23 +67,6 @@
     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
     {
         <div class="row">
-            <div class="col-lg-3">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-primary pull-right">Hoje</span>
-                        <h5>Fornecedores</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">@ViewBag.Fornecedores</h1>
-                        <div class="stat-percent font-bold text-navy">32% <i class="fa fa-level-up"></i></div>
-                            <small>Fornecedores Exibidos</small>
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                    </div>
-                </div>
-            </div>
             <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
@@ -177,7 +179,7 @@
 	                                }
                                     @Html.ButtonLinkIndex(text: "Exibir Cards dos Fornecedores", controller: "Fornecedor", action: "VerCardsFornecedor")
                                     @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Fornecedor", action: "GerarRelatorioLista")
-                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "Fornecedor", action: "Voltar")
+                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Fornecedor", action: "Voltar")
                                 </div>
                             </div>
                     </div>
@@ -242,7 +244,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <td><img src="~/Images/favicon_SystemBR.jpg" style = "width: auto; height: auto; max-height: 55px; max-width: 45px;"></td>
+                                                    <td><img src="~/Imagens/Base/icone_imagem.jpg" style = "width: auto; height: auto; max-height: 55px; max-width: 45px;"></td>
                                                 }
                                                 <td class="td-one-action">
                                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
@@ -250,12 +252,12 @@
                                                         @Html.TableLinkDetails(cond.FORN_CD_ID, "EditarFornecedor","fa-edit", "Editar/Consultar")
                                                         <span style="cursor: pointer; color: #337ab7;" class="fa fa-send" onclick="MudaIdForn('@cond.FORN_CD_ID')" data-toggle="modal" data-target="#exampleModal" title="Enviar SMS"> </span>
                                                         if (cond.FORN_IN_ATIVO == 1)
-	                                                    {
-                                                            @Html.TableLinkDetails(cond.FORN_CD_ID, "ExcluirFornecedor","fa-trash-o", "Desativar")
+                                                        {
+                                                            <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Fornecedor/ExcluirFornecedorBase/@cond.FORN_CD_ID')" title="Excluir"></span>
                                                         }
                                                         else
                                                         {   
-                                                            @Html.TableLinkDetails(cond.FORN_CD_ID, "ReativarFornecedor","fa-refresh", "Reativar")
+                                                            <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Fornecedor/ReativarFornecedorBase/@cond.FORN_CD_ID')" title="Reativar"></span>
                                                         }
                                                     }
                                                     else
@@ -305,7 +307,31 @@
     @Scripts.Render("~/plugins/jasnyBootstrap")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
     
-   
+    <script>
+        $(function () {
+            limpaModal();
+        });
+
+        function limpaModal() {
+            $('#btnModal').remove();
+            $('#modalTitle').remove();
+        }
+
+        function ShowModalExcluir(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma exclusão do Fornecedor?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativar(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação do Fornecedor?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+    </script>
+
     <script type="text/javascript">
         $(function () {
             $("#cpf").mask("999.999.999-99");
@@ -335,10 +361,7 @@
                     }
                 ]
 
-            });
-
-           
-
+            });         
         });
 
     </script>

@@ -191,6 +191,7 @@ namespace ERP_CRM_Solution.Controllers
                         Session["PermCRM"] = 1;
                         Session["NumProc"] = item.PLANO.PLAN_NR_PROCESSOS;
                         Session["NumAcoes"] = item.PLANO.PLAN_NR_ACOES;
+                        Session["NumClientes"] = item.PLANO.PLAN_NR_CONTATOS;
                     }
                     if (item.PLANO.PLAN_IN_PATRIMONIO == 1)
                     {

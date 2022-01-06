@@ -21,12 +21,14 @@ namespace DataServices.Repositories
         public List<CATEGORIA_FORNECEDOR> GetAllItens(Int32 idAss)
         {
             IQueryable<CATEGORIA_FORNECEDOR> query = Db.CATEGORIA_FORNECEDOR.Where(p => p.CAFO_IN_ATIVO == 1);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
         public List<CATEGORIA_FORNECEDOR> GetAllItensAdm(Int32 idAss)
         {
             IQueryable<CATEGORIA_FORNECEDOR> query = Db.CATEGORIA_FORNECEDOR;
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 

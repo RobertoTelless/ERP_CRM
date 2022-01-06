@@ -330,6 +330,12 @@
   <data name="M0079" xml:space="preserve">
     <value>Impossível excluir este tipo. Ele está vinculado a outras informações</value>
   </data>
+  <data name="M0080" xml:space="preserve">
+    <value>Impossível incluir/reativar cliente. Número de clientes ativos excede o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0081" xml:space="preserve">
+    <value>Impossível incluir/reativar fornecedor. Número de fornecedores ativos excede o contratado no Plano de Assinatura</value>
+  </data>
   <data name="M0109" xml:space="preserve">
     <value>O login não pode ficar em branco</value>
   </data>

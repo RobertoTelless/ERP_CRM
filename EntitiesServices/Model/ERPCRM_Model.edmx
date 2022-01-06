@@ -186,6 +186,7 @@
           <Property Name="CAFO_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CAFO_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CAFO_IN_ATIVO" Type="int" />
+          <Property Name="ASSI_CD_ID" Type="int" />
         </EntityType>
         <EntityType Name="CATEGORIA_NOTIFICACAO">
           <Key>
@@ -2166,6 +2167,18 @@
               <PropertyRef Name="ASSI_CD_ID" />
             </Principal>
             <Dependent Role="CATEGORIA_EQUIPAMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CATEGORIA_FORNECEDOR_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
+          <End Role="CATEGORIA_FORNECEDOR" Type="Self.CATEGORIA_FORNECEDOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CATEGORIA_FORNECEDOR">
               <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -4898,6 +4911,10 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CATEGORIA_EQUIPAMENTO" EntitySet="CATEGORIA_EQUIPAMENTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CATEGORIA_FORNECEDOR_ASSINANTE" Association="Self.FK_CATEGORIA_FORNECEDOR_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CATEGORIA_FORNECEDOR" EntitySet="CATEGORIA_FORNECEDOR" />
+          </AssociationSet>
           <AssociationSet Name="FK_CATEGORIA_PRODUTO_ASSINANTE" Association="Self.FK_CATEGORIA_PRODUTO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
@@ -5875,6 +5892,7 @@
           <NavigationProperty Name="TEMPLATE_SMS" Relationship="ERP_CRMModel.FK_TEMPLATE_SMS_ASSINANTE" FromRole="ASSINANTE" ToRole="TEMPLATE_SMS" />
           <NavigationProperty Name="TEMPLATE_EMAIL" Relationship="ERP_CRMModel.FK_TEMPLATE_EMAIL_ASSINANTE" FromRole="ASSINANTE" ToRole="TEMPLATE_EMAIL" />
           <NavigationProperty Name="CARGO" Relationship="ERP_CRMModel.FK_CARGO_ASSINANTE" FromRole="ASSINANTE" ToRole="CARGO" />
+          <NavigationProperty Name="CATEGORIA_FORNECEDOR" Relationship="ERP_CRMModel.FK_CATEGORIA_FORNECEDOR_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_FORNECEDOR" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -6009,6 +6027,8 @@
           <Property Name="CAFO_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CAFO_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="FORNECEDOR" Relationship="Self.FK_FORNECEDOR_CATEGORIA_FORNECEDOR" FromRole="CATEGORIA_FORNECEDOR" ToRole="FORNECEDOR" />
+          <Property Name="ASSI_CD_ID" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_CATEGORIA_FORNECEDOR_ASSINANTE" FromRole="CATEGORIA_FORNECEDOR" ToRole="ASSINANTE" />
         </EntityType>
         <EntityType Name="CATEGORIA_NOTIFICACAO">
           <Key>
@@ -11451,6 +11471,10 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CARGO" EntitySet="CARGO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CATEGORIA_FORNECEDOR_ASSINANTE" Association="ERP_CRMModel.FK_CATEGORIA_FORNECEDOR_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CATEGORIA_FORNECEDOR" EntitySet="CATEGORIA_FORNECEDOR" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -11939,6 +11963,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CATEGORIA_FORNECEDOR_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CATEGORIA_FORNECEDOR" Role="CATEGORIA_FORNECEDOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CATEGORIA_FORNECEDOR">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12136,6 +12172,7 @@
           <EntitySetMapping Name="CATEGORIA_FORNECEDOR">
             <EntityTypeMapping TypeName="ERP_CRMModel.CATEGORIA_FORNECEDOR">
               <MappingFragment StoreEntitySet="CATEGORIA_FORNECEDOR">
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CAFO_CD_ID" ColumnName="CAFO_CD_ID" />
                 <ScalarProperty Name="CAFO_NM_NOME" ColumnName="CAFO_NM_NOME" />
                 <ScalarProperty Name="CAFO_IN_ATIVO" ColumnName="CAFO_IN_ATIVO" />

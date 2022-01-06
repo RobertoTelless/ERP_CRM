@@ -73,6 +73,7 @@ namespace EntitiesServices.Model
             this.TEMPLATE_SMS = new HashSet<TEMPLATE_SMS>();
             this.TEMPLATE_EMAIL = new HashSet<TEMPLATE_EMAIL>();
             this.CARGO = new HashSet<CARGO>();
+            this.CATEGORIA_FORNECEDOR = new HashSet<CATEGORIA_FORNECEDOR>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -212,5 +213,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<TEMPLATE_EMAIL> TEMPLATE_EMAIL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CARGO> CARGO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CATEGORIA_FORNECEDOR> CATEGORIA_FORNECEDOR { get; set; }
     }
 }

@@ -110,7 +110,7 @@
             @if ((Int32)Session["PermPatrimonio"] == 1)
             {
                 <li class="@Html.IsSelected(controller: "BaseAdmin")">
-                    <a href="@Url.Action("MontarTelaDashboardPatrimonio", "Patrimonio")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">CRM</span> <span class="fa arrow"></span></a>
+                    <a href="@Url.Action("MontarTelaDashboardPatrimonio", "Patrimonio")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Patrimônio</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
                             @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>*@
@@ -141,7 +141,7 @@
             @if ((Int32)Session["PermPatrimonio"] == 1)
             {
                 <li class="@Html.IsSelected(controller: "BaseAdmin")">
-                    <a href="@Url.Action("MontarTelaDashboardPatrimonio", "Patrimonio")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">CRM</span> <span class="fa arrow"></span></a>
+                    <a href="@Url.Action("MontarTelaDashboardPatrimonio", "Patrimonio")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Estoque & Compras</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
                             @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>*@

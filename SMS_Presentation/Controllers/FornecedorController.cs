@@ -22,6 +22,7 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using Canducci.Zip;
+using CrossCutting;
 
 namespace ERP_CRM_Solution.Controllers
 {
@@ -118,79 +119,75 @@ namespace ERP_CRM_Solution.Controllers
             return Json(listResult);
         }
 
-        public ActionResult EnviarSmsCliente(Int32 id, String mensagem)
+        public ActionResult EnviarSmsFornecedor(Int32 id, String mensagem)
         {
             try
             {
-                FORNECEDOR forn = fornApp.GetById(id);
+                FORNECEDOR clie = fornApp.GetById(id);
                 Int32 idAss = (Int32)Session["IdAssinante"];
+                USUARIO usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verifica existencia prévia
-                if (forn == null)
+                if (clie == null)
                 {
                     Session["MensSMSForn"] = 1;
                     return RedirectToAction("MontarTelaFornecedor");
                 }
 
                 // Criticas
-                if (forn.FORN_NR_CELULAR == null)
+                if (clie.FORN_NR_CELULAR == null)
                 {
                     Session["MensSMSForn"] = 2;
                     return RedirectToAction("MontarTelaFornecedor");
                 }
 
                 // Monta token
-                CONFIGURACAO conf = confApp.GetItemById(idAss);
+                CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
                 String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
                 byte[] textBytes = Encoding.UTF8.GetBytes(text);
                 String token = Convert.ToBase64String(textBytes);
                 String auth = "Basic " + token;
 
-                // Monta routing
-                String routing = "1";
+                // Prepara texto
+                String texto = mensagem;
 
-                // Monta texto
-                String texto = String.Empty;
-                //texto = texto.Replace("{Cliente}", clie.CLIE_NM_NOME);
+                // Prepara corpo do SMS e trata link
+                StringBuilder str = new StringBuilder();
+                str.AppendLine(texto);
+                String body = str.ToString();
+                String smsBody = body;
 
                 // inicia processo
-                List<String> resposta = new List<string>();
-                WebRequest request = WebRequest.Create("https://api.smsfire.com.br/v1/sms/send");
-                request.Headers["Authorization"] = auth;
-                request.Method = "POST";
-                request.ContentType = "application/json";
-
-                // Monta destinatarios
-                String listaDest = "55" + Regex.Replace(forn.FORN_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
-
-                // Processa lista
-                String responseFromServer = null;
-                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                String resposta = String.Empty;
+                try
                 {
-                    String campanha = "ERP";
+                    String listaDest = "55" + Regex.Replace(clie.FORN_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
+                    httpWebRequest.Headers["Authorization"] = auth;
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+                    String customId = Cryptography.GenerateRandomPassword(8);
+                    String data = String.Empty;
+                    String json = String.Empty;
 
-                    String json = null;
-                    json = "{\"to\":[\"" + listaDest + "\"]," +
-                            "\"from\":\"SMSFire\", " +
-                            "\"campaignName\":\"" + campanha + "\", " +
-                            "\"text\":\"" + texto + "\"} ";
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
+                        streamWriter.Write(json);
+                    }
 
-                    streamWriter.Write(json);
-                    streamWriter.Close();
-                    streamWriter.Dispose();
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                        resposta = result;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    String erro = ex.Message;
                 }
 
-                WebResponse response = request.GetResponse();
-                resposta.Add(response.ToString());
-
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                responseFromServer = reader.ReadToEnd();
-                resposta.Add(responseFromServer);
-
-                // Saída
-                reader.Close();
-                response.Close();
                 Session["MensSMSForn"] = 200;
                 return RedirectToAction("MontarTelaFornecedor");
             }
@@ -378,7 +375,7 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Carrega listas
-            if (Session["ListaFornecedor"] == null || ((List<FORNECEDOR>)Session["ListaFornecedor"]).Count == 0)
+            if (Session["ListaFornecedor"] == null)
             {
                 listaMasterForn = fornApp.GetAllItens(idAss);
                 Session["ListaFornecedor"] = listaMasterForn;
@@ -398,8 +395,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Atrasos = 0;
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             ViewBag.Inativos = fornApp.GetAllItensAdm(idAss).Where(p => p.FORN_IN_ATIVO == 0).ToList().Count;
-            //ViewBag.SemPedidos = fornApp.GetAllItens().Where(p => p.ITEM_PEDIDO_COMPRA.Count == 0 || p.ITEM_PEDIDO_COMPRA == null).ToList().Count;
-            ViewBag.SemPedidos = 0;
+            ViewBag.SemPedidos = fornApp.GetAllItens(idAss).Where(p => p.ITEM_PEDIDO_COMPRA.Count == 0 || p.ITEM_PEDIDO_COMPRA == null).ToList().Count;
             List<SelectListItem> ativo = new List<SelectListItem>();
             ativo.Add(new SelectListItem() { Text = "Ativo", Value = "1" });
             ativo.Add(new SelectListItem() { Text = "Inativo", Value = "0" });
@@ -419,6 +415,10 @@ namespace ERP_CRM_Solution.Controllers
                 if ((Int32)Session["MensFornecedor"] == 4)
                 {
                     ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0027", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensFornecedor"] == 50)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0081", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -537,6 +537,14 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica possibilidade
+            Int32 num = fornApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumFornecedor"] <= num)
+            {
+                Session["MensFornecedor"] = 50;
+                return RedirectToAction("MontarTelaFornecedor", "Fornecedor");
+            }
 
             // Prepara listas
             ViewBag.Cats = new SelectList(fornApp.GetAllTipos(idAss).OrderBy(x => x.CAFO_NM_NOME), "CAFO_CD_ID", "CAFO_NM_NOME");
@@ -791,6 +799,85 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpGet]
+        public ActionResult ExcluirFornecedorBase(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensFornecedor"] = 2;
+                    return RedirectToAction("MontarTelaFornecedor");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara view
+            FORNECEDOR item = fornApp.GetItemById(id);
+            Int32 volta = fornApp.ValidateDelete(item, usuario);
+
+            // Verifica retorno
+            if (volta == 1)
+            {
+                Session["MensFornecedor"] = 4;
+                return RedirectToAction("MontarTelaFornecedor", "Fornecedor");
+            }
+
+            // Sucesso
+            listaMasterForn = new List<FORNECEDOR>();
+            Session["ListaFornecedor"] = null;
+            return RedirectToAction("MontarTelaFornecedor");
+        }
+
+        [HttpGet]
+        public ActionResult ReativarFornecedorBase(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensFornecedor"] = 2;
+                    return RedirectToAction("MontarTelaFornecedor");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara view
+            FORNECEDOR item = fornApp.GetItemById(id);
+            Int32 volta = fornApp.ValidateReativar(item, usuario);
+
+            // Sucesso
+            listaMasterForn = new List<FORNECEDOR>();
+            Session["ListaFornecedor"] = null;
+            return RedirectToAction("MontarTelaFornecedor");
+        }
+
+        [HttpGet]
         public ActionResult ExcluirFornecedor(Int32 id)
         {
             // Verifica se tem usuario logado
@@ -880,6 +967,14 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica possibilidade
+            Int32 num = fornApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumFornecedor"] <= num)
+            {
+                Session["MensFornecedor"] = 50;
+                return RedirectToAction("MontarTelaFornecedor", "Fornecedor");
+            }
 
             // Prepara view
             FORNECEDOR item = fornApp.GetItemById(id);
@@ -2435,7 +2530,7 @@ namespace ERP_CRM_Solution.Controllers
             Chunk chunk1 = new Chunk("Observações: " + aten.FORN_TX_OBSERVACOES, FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK));
             pdfDoc.Add(chunk1);
 
-            // Pedidos de Venda
+            // Pedidos de Compra
             //if (aten.ITEM_PEDIDO_COMPRA.Count > 0)
             //{
             //    // Linha Horizontal
@@ -2633,7 +2728,7 @@ namespace ERP_CRM_Solution.Controllers
             //ViewBag.Atrasos = SessionMocks.listaCP.Select(x => x.FORN_CD_ID).Distinct().ToList().Count;
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             ViewBag.Inativos = fornApp.GetAllItensAdm(idAss).Where(p => p.FORN_IN_ATIVO == 0).ToList().Count;
-            //ViewBag.SemPedidos = SessionMocks.listaFornecedor.Where(p => p.ITEM_PEDIDO_COMPRA.Count == 0 || p.ITEM_PEDIDO_COMPRA == null).ToList().Count;
+            ViewBag.SemPedidos = fornApp.GetAllItens(idAss).Where(p => p.ITEM_PEDIDO_COMPRA.Count == 0 || p.ITEM_PEDIDO_COMPRA == null).ToList().Count;
 
             ViewBag.Listas = (List<FORNECEDOR>)Session["ListaFornecedoresInativo"];
             ViewBag.Title = "Fornecedores";

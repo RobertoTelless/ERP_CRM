@@ -462,6 +462,10 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0030", CultureInfo.CurrentCulture));
                 }
+                if ((Int32)Session["MensCliente"] == 50)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0080", CultureInfo.CurrentCulture));
+                }
             }
 
             // Abre view
@@ -604,6 +608,14 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             var filiais = filApp.GetAllItens(idAss);
+
+            // Verifica possibilidade
+            Int32 num = baseApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumClientes"] <= num)
+            {
+                Session["MensCliente"] = 50;
+                return RedirectToAction("MontarTelaCliente", "Cliente");
+            }
 
             // Prepara listas
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "CACL_CD_ID", "CACL_NM_NOME");
@@ -1006,6 +1018,14 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica possibilidade
+            Int32 num = baseApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumClientes"] <= num)
+            {
+                Session["MensCliente"] = 50;
+                return RedirectToAction("MontarTelaCliente", "Cliente");
+            }
 
             // Prepara view
             CLIENTE item = baseApp.GetItemById(id);
