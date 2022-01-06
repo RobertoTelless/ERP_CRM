@@ -3117,6 +3117,8 @@
     <Content Include="Views\TabelasAuxiliares\MontarTelaTipoAcao.cshtml" />
     <Content Include="Views\TabelasAuxiliares\IncluirTipoAcao.cshtml" />
     <Content Include="Views\TabelasAuxiliares\EditarTipoAcao.cshtml" />
+    <Content Include="Views\CRM\MontarTelaDashboardCRM.cshtml" />
+    <Content Include="Views\CRM\MontarTelaDashboardCRMNovo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4028,5 +4028,223 @@ namespace ERP_CRM_Solution.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult MontarTelaDashboardCRMNovo()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("MontarTelaCRM", "CRM");
+                }
+                if ((Int32)Session["PermMens"] == 0)
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
+
+            // Recupera listas
+            List<CRM> lt = baseApp.GetAllItens(idAss);
+            List<CRM> lm = lt.Where(p => p.CRM1_DT_CRIACAO.Value.Month == DateTime.Today.Date.Month & p.CRM1_DT_CRIACAO.Value.Year == DateTime.Today.Date.Year).ToList();
+            List<CRM> la = lt.Where(p => p.CRM1_IN_ATIVO == 1).ToList();
+            List<CRM> lq = lt.Where(p => p.CRM1_IN_ATIVO == 2).ToList();
+            List<CRM> ls = lt.Where(p => p.CRM1_IN_ATIVO == 5).ToList();
+            List<CRM> lc = lt.Where(p => p.CRM1_IN_ATIVO == 3).ToList();
+            List<CRM> lf = lt.Where(p => p.CRM1_IN_ATIVO == 4).ToList();
+            List<CRM_ACAO> acoes = baseApp.GetAllAcoes(idAss);
+            List<CRM_ACAO> acoesPend = acoes.Where(p => p.CRAC_IN_STATUS == 1).ToList();
+            List<CLIENTE> cli = cliApp.GetAllItens(idAss);
+
+            // Estatisticas 
+            ViewBag.Total = lt.Count;
+            ViewBag.TotalAtivo = la.Count;
+            ViewBag.TotalSucesso = ls.Count;
+            ViewBag.TotalCancelado = lc.Count;
+            ViewBag.Acoes = acoes.Count;
+            ViewBag.AcoesPend = acoesPend.Count;
+            ViewBag.Clientes = cli.Count;
+
+            ViewBag.TotalPes = lt.Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID).ToList().Count;
+            ViewBag.TotalAtivoPes = la.Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID).ToList().Count;
+            ViewBag.TotalSucessoPes = ls.Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID).ToList().Count;
+            ViewBag.TotalCanceladoPes = lc.Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID).ToList().Count;
+            ViewBag.AcoesPes = acoes.Where(p => p.CRM.USUA_CD_ID == usuario.USUA_CD_ID).ToList().Count;
+            ViewBag.AcoesPendPes = acoesPend.Where(p => p.CRM.USUA_CD_ID == usuario.USUA_CD_ID).ToList().Count;
+
+            Session["ListaCRM"] = lt;
+            Session["ListaCRMMes"] = lm;
+            Session["ListaCRMAtivo"] = la;
+            Session["ListaCRMSucesso"] = ls;
+            Session["ListaCRMCanc"] = lc;
+            Session["ListaCRMAcoes"] = acoes;
+            Session["ListaCRMAcoesPend"] = acoesPend;
+
+            Session["CRMAtivos"] = la.Count;
+            Session["CRMArquivados"] = lq.Count;
+            Session["CRMCancelados"] = lc.Count;
+            Session["CRMFalhados"] = lf.Count;
+            Session["CRMSucessos"] = la.Count;
+
+            Session["CRMProsp"] = lt.Where(p => p.CRM1_IN_STATUS == 1).ToList().Count;
+            Session["CRMCont"] =  lt.Where(p => p.CRM1_IN_STATUS == 2).ToList().Count;
+            Session["CRMProp"] =  lt.Where(p => p.CRM1_IN_STATUS == 3).ToList().Count;
+            Session["CRMNego"] =  lt.Where(p => p.CRM1_IN_STATUS == 4).ToList().Count;
+            Session["CRMEnc"] =  lt.Where(p => p.CRM1_IN_STATUS == 5).ToList().Count;
+
+            // Resumo Mes CRM
+            List<DateTime> datas = lm.Select(p => p.CRM1_DT_CRIACAO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32 conta = lm.Where(p => p.CRM1_DT_CRIACAO.Value.Date == item).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.DataEmissao = item;
+                mod.Valor = conta;
+                lista.Add(mod);
+            }
+            ViewBag.ListaCRMMes = lista;
+            ViewBag.ContaCRMMes = lm.Count;
+            Session["ListaDatasCRM"] = datas;
+            Session["ListaCRMMesResumo"] = lista;
+
+            // Resumo Situacao CRM 
+            List<ModeloViewModel> lista1 = new List<ModeloViewModel>();
+            for (int i = 1; i < 6; i++)
+            {
+                Int32 conta = lt.Where(p => p.CRM1_IN_ATIVO == i).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.Data = i == 1? "Ativo" : (i == 2 ? "Arquivados" : (i == 3 ? "Cancelados" : (i == 4 ? "Falhados" : "Sucesso")));
+                mod.Valor = conta;
+                lista1.Add(mod);
+            }
+            ViewBag.ListaCRMSituacao = lista1;
+            Session["ListaCRMSituacao"] = lista1;
+
+            // Resumo Status CRM 
+            List<ModeloViewModel> lista2 = new List<ModeloViewModel>();
+            for (int i = 1; i < 6; i++)
+            {
+                Int32 conta = lt.Where(p => p.CRM1_IN_STATUS == i).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.Data = i == 1 ? "Prospecção" : (i == 2 ? "Contato Realizado" : (i == 3 ? "Proposta Apresentada" : (i == 4 ? "Negociação" : "Encerrado")));
+                mod.Valor = conta;
+                lista2.Add(mod);
+            }
+            ViewBag.ListaCRMStatus = lista2;
+            Session["ListaCRMStatus"] = lista2;
+            return View(vm);
+        }
+
+        public JsonResult GetDadosGraficoCRMSituacao()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["CRMAtivos"];
+            Int32 q2 = (Int32)Session["CRMArquivados"];
+            Int32 q3 = (Int32)Session["CRMCancelados"];
+            Int32 q4 = (Int32)Session["CRMFalhados"];
+            Int32 q5 = (Int32)Session["CRMSucessos"];
+
+            desc.Add("Ativos");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Arquivados");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+            desc.Add("Cancelados");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+            desc.Add("Falhados");
+            quant.Add(q4);
+            cor.Add("#D63131");
+            desc.Add("Sucesso");
+            quant.Add(q5);
+            cor.Add("#27A1C6");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoCRMStatus()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["CRMProsp"];
+            Int32 q2 = (Int32)Session["CRMCont"];
+            Int32 q3 = (Int32)Session["CRMProp"];
+            Int32 q4 = (Int32)Session["CRMNego"];
+            Int32 q5 = (Int32)Session["CRMEnc"];
+
+            desc.Add("Prospecção");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Contato Realizado");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+            desc.Add("Proposta Enviada");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+            desc.Add("Em Negociação");
+            quant.Add(q4);
+            cor.Add("#D63131");
+            desc.Add("Encerrado");
+            quant.Add(q5);
+            cor.Add("#27A1C6");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoCRM()
+        {
+            List<CRM> listaCP1 = (List<CRM>)Session["ListaCRMMes"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatasCRM"];
+            List<CRM> listaDia = new List<CRM>();
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (DateTime item in datas)
+            {
+                listaDia = listaCP1.Where(p => p.CRM1_DT_CRIACAO.Value.Date == item).ToList();
+                Int32 contaDia = listaDia.Count();
+                dias.Add(item.ToShortDateString());
+                valor.Add(contaDia);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
     }
 }

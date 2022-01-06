@@ -50,6 +50,7 @@
                                         <div class="form-group">
                                             @Html.ButtonActionSubmit(text: "Confirma Inclusão do Processo", htmlAttributes: new { id = "basictoast" })
                                             @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCRM", controller: "CRM")
+                                            @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                                             @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "CRM")
                                         </div>
                                         <div class="row">
@@ -159,6 +160,7 @@
                                     <br />
                                     @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
                                     <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirmar Inclusão de Processo</button>
+                                    @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCRM", controller: "CRM")
                                 </div>
                             </div>

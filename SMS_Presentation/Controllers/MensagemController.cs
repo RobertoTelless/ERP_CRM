@@ -2541,23 +2541,72 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-
             UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
+            
+            // Recupera listas Mensagens
             List<MENSAGENS> lt = baseApp.GetAllItens(idAss);
-            List<MENSAGENS> lm = lt.Where(p => p.MENS_DT_ENVIO != null).ToList();
-            lm = lm.Where(p => p.MENS_DT_ENVIO.Value.Month == DateTime.Today.Date.Month & p.MENS_DT_ENVIO.Value.Year == DateTime.Today.Date.Year).ToList();
-            ViewBag.SMS = lm.Where(p => p.MENS_IN_TIPO == 2).ToList().Count;
-            ViewBag.Emails = lm.Where(p => p.MENS_IN_TIPO == 1).ToList().Count;
-            ViewBag.Total = lm.Count;
-            ViewBag.Falhas = lt.Where(p => p.MENS_TX_RETORNO != null).ToList().Count;
+            List<MENSAGENS> le = lt.Where(p => p.MENS_DT_ENVIO != null).ToList();
+            List<MENSAGENS> lm = le.Where(p => p.MENS_DT_ENVIO.Value.Month == DateTime.Today.Date.Month & p.MENS_DT_ENVIO.Value.Year == DateTime.Today.Date.Year).ToList();
+            List<MENSAGENS> agSMS = lt.Where(p => p.MENS_DT_AGENDAMENTO != null & p.MENS_IN_TIPO == 2).ToList();
+            agSMS = agSMS.Where(p => p.MENS_DT_AGENDAMENTO.Value.Date > DateTime.Today.Date & p.MENS_IN_TIPO == 2).ToList();
+            List<EMAIL_AGENDAMENTO> emAg = emApp.GetAllItens(idAss).Where(p => p.EMAG_IN_ENVIADO == 0 & p.EMAG_DT_AGENDAMENTO.Value.Date > DateTime.Today.Date).ToList();
+            List<CLIENTE> cli = cliApp.GetAllItens(idAss);
+            List<GRUPO> gru = gruApp.GetAllItens(idAss);
 
-            List<MENSAGENS> agSMS = lm.Where(p => p.MENS_DT_AGENDAMENTO > DateTime.Now).ToList();
+            // Estatisticas Mensagens
+            ViewBag.Total = lt.Count;
+            ViewBag.TotalEnviado = le.Count;
+            ViewBag.TotalMes = lm.Count;
+            ViewBag.SMSEnviado = le.Where(p => p.MENS_IN_TIPO == 2).ToList().Count;
+            ViewBag.EmailsEnviado = le.Where(p => p.MENS_IN_TIPO == 1).ToList().Count;
+            ViewBag.SMSMes = lm.Where(p => p.MENS_IN_TIPO == 2).ToList().Count;
+            ViewBag.EmailsMes = lm.Where(p => p.MENS_IN_TIPO == 1).ToList().Count;
+            ViewBag.Falhas = lt.Where(p => p.MENS_TX_RETORNO != null).ToList().Count;
+            ViewBag.FalhasMes = lm.Where(p => p.MENS_TX_RETORNO != null).ToList().Count;
+            ViewBag.Clientes = cli.Count;
+            ViewBag.Grupos = gru.Count;
+            Session["ListaEMailTudo"] = le.Where(p => p.MENS_IN_TIPO == 1).ToList();
+            Session["ListaSMSTudo"] = le.Where(p => p.MENS_IN_TIPO == 2).ToList();
+
+            // Agendamentos Mensagens
             Session["SMSAgenda"] = agSMS;
             ViewBag.SMSAgenda = agSMS.Count;
-
-            List<EMAIL_AGENDAMENTO> emAg = emApp.GetAllItens(idAss).Where(p => p.EMAG_IN_ENVIADO == 0 & p.EMAG_DT_AGENDAMENTO > DateTime.Now).ToList();
             Session["EMailAgenda"] = emAg;
-            ViewBag.SMSEmail = emAg.Count;
+            ViewBag.EmailAgenda = emAg.Count;
+
+            // Resumo Mes E-Mail
+            List<MENSAGENS> lme = lm.Where(p => p.MENS_IN_TIPO == 1).ToList();
+            List<DateTime> datas = lme.Select(p => p.MENS_DT_ENVIO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32 conta = lme.Where(p => p.MENS_DT_ENVIO.Value.Date == item).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.DataEmissao = item;
+                mod.Valor = conta;
+                lista.Add(mod);
+            }
+            ViewBag.ListaEMailMes = lista;
+            ViewBag.ContaEMailMes = lme.Count;
+            Session["ListaEMail"] = lme;
+            Session["ListaDatasEMail"] = datas;
+
+            // Resumo Mes SMS
+            List<MENSAGENS> lms = lm.Where(p => p.MENS_IN_TIPO == 2).ToList();
+            List<DateTime> datas1 = lms.Select(p => p.MENS_DT_ENVIO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista1 = new List<ModeloViewModel>();
+            foreach (DateTime item in datas1)
+            {
+                Int32 conta = lms.Where(p => p.MENS_DT_ENVIO.Value.Date == item).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.DataEmissao = item;
+                mod.Valor = conta;
+                lista1.Add(mod);
+            }
+            ViewBag.ListaSMSMes = lista1;
+            ViewBag.ContaSMSMes = lms.Count;
+            Session["ListaSMS"] = lms;
+            Session["ListaDatasSMS"] = datas;
             return View(vm);
         }
 
@@ -2680,7 +2729,7 @@ namespace ERP_CRM_Solution.Controllers
         public JsonResult GetDadosGraficoEmail()
         {
             List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaEMail"];
-            List<DateTime> datas = (List<DateTime>)Session["ListaDatas"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatasEMail"];
             List<MENSAGENS> listaDia = new List<MENSAGENS>();
             List<String> dias = new List<String>();
             List<Int32> valor = new List<Int32>();
@@ -2703,8 +2752,8 @@ namespace ERP_CRM_Solution.Controllers
 
         public JsonResult GetDadosGraficoEmailTodos()
         {
-            List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaEMailTodas"];
-            List<DateTime> datas = (List<DateTime>)Session["ListaDatasTodas"];
+            List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaEMailTudo"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatasEMailTudo"];
             List<MENSAGENS> listaDia = new List<MENSAGENS>();
             List<String> dias = new List<String>();
             List<Int32> valor = new List<Int32>();
@@ -2729,7 +2778,7 @@ namespace ERP_CRM_Solution.Controllers
         {
             // Prepara grid
             Int32 idAss = (Int32)Session["IdAssinante"];
-            List<MENSAGENS> listaBase = baseApp.GetAllItens(idAss).Where(p => p.MENS_IN_TIPO == 1 & p.MENS_DT_ENVIO != null).ToList();
+            List<MENSAGENS> listaBase = (List<MENSAGENS>)Session["ListaEMailTudo"];
             List<DateTime> datas = listaBase.Select(p => p.MENS_DT_ENVIO.Value.Date).Distinct().ToList();
             List<ModeloViewModel> lista = new List<ModeloViewModel>();
             foreach (DateTime item in datas)
@@ -2740,10 +2789,10 @@ namespace ERP_CRM_Solution.Controllers
                 mod.Valor = conta;
                 lista.Add(mod);
             }
-            ViewBag.Lista = lista;
-            ViewBag.Conta = listaBase.Count;
-            Session["ListaEMailTodas"] = listaBase;
-            Session["ListaDatasTodas"] = datas;
+            ViewBag.ListaEMailTudo = lista;
+            ViewBag.ContaEMailTudo = listaBase.Count;
+            Session["ListaEMailTudo"] = listaBase;
+            Session["ListaDatasEMailTudo"] = datas;
             return View();
         }
 
@@ -2796,8 +2845,8 @@ namespace ERP_CRM_Solution.Controllers
 
         public JsonResult GetDadosGraficoSMSTodos()
         {
-            List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaSMSTodas"];
-            List<DateTime> datas = (List<DateTime>)Session["ListaDatasSMSTodas"];
+            List<MENSAGENS> listaCP1 = (List<MENSAGENS>)Session["ListaSMSTudo"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatasSMSTudo"];
             List<MENSAGENS> listaDia = new List<MENSAGENS>();
             List<String> dias = new List<String>();
             List<Int32> valor = new List<Int32>();
@@ -2822,7 +2871,7 @@ namespace ERP_CRM_Solution.Controllers
         {
             // Prepara grid
             Int32 idAss = (Int32)Session["IdAssinante"];
-            List<MENSAGENS> listaBase = baseApp.GetAllItens(idAss).Where(p => p.MENS_IN_TIPO == 2 & p.MENS_DT_ENVIO != null).ToList();
+            List<MENSAGENS> listaBase = (List<MENSAGENS>)Session["ListaSMSTudo"];
             List<DateTime> datas = listaBase.Select(p => p.MENS_DT_ENVIO.Value.Date).Distinct().ToList();
             List<ModeloViewModel> lista = new List<ModeloViewModel>();
             foreach (DateTime item in datas)
@@ -2833,10 +2882,10 @@ namespace ERP_CRM_Solution.Controllers
                 mod.Valor = conta;
                 lista.Add(mod);
             }
-            ViewBag.Lista = lista;
-            ViewBag.Conta = listaBase.Count;
-            Session["ListaSMSTodas"] = listaBase;
-            Session["ListaDatasSMSTodas"] = datas;
+            ViewBag.ListaSMSTudo = lista;
+            ViewBag.ContaSMSTudo = listaBase.Count;
+            Session["ListaSMSTudo"] = listaBase;
+            Session["ListaDatasSMSTudo"] = datas;
             return View();
         }
 

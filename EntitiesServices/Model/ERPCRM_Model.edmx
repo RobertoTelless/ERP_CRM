@@ -1329,6 +1329,10 @@
           <Property Name="PLAN_IN_FINANCEIRO" Type="int" />
           <Property Name="PLAN_IN_FATURA" Type="int" />
           <Property Name="PLAN_IN_ESTOQUE" Type="int" />
+          <Property Name="PLAN_IN_PATRIMONIO" Type="int" />
+          <Property Name="PLAN_NR_PATRIMONIO" Type="int" />
+          <Property Name="PLAN_NR_PRODUTO" Type="int" />
+          <Property Name="PLAN_NR_FORNECEDOR" Type="int" />
         </EntityType>
         <EntityType Name="PLANO_PERIODICIDADE">
           <Key>
@@ -7368,6 +7372,10 @@
           <Property Name="PLAN_IN_FINANCEIRO" Type="Int32" />
           <Property Name="PLAN_IN_FATURA" Type="Int32" />
           <Property Name="PLAN_IN_ESTOQUE" Type="Int32" />
+          <Property Name="PLAN_IN_PATRIMONIO" Type="Int32" />
+          <Property Name="PLAN_NR_PATRIMONIO" Type="Int32" />
+          <Property Name="PLAN_NR_PRODUTO" Type="Int32" />
+          <Property Name="PLAN_NR_FORNECEDOR" Type="Int32" />
         </EntityType>
         <EntityType Name="PLANO_PERIODICIDADE">
           <Key>
@@ -13284,6 +13292,10 @@
           <EntitySetMapping Name="PLANO">
             <EntityTypeMapping TypeName="ERP_CRMModel.PLANO">
               <MappingFragment StoreEntitySet="PLANO">
+                <ScalarProperty Name="PLAN_NR_FORNECEDOR" ColumnName="PLAN_NR_FORNECEDOR" />
+                <ScalarProperty Name="PLAN_NR_PRODUTO" ColumnName="PLAN_NR_PRODUTO" />
+                <ScalarProperty Name="PLAN_NR_PATRIMONIO" ColumnName="PLAN_NR_PATRIMONIO" />
+                <ScalarProperty Name="PLAN_IN_PATRIMONIO" ColumnName="PLAN_IN_PATRIMONIO" />
                 <ScalarProperty Name="PLAN_IN_ESTOQUE" ColumnName="PLAN_IN_ESTOQUE" />
                 <ScalarProperty Name="PLAN_IN_FATURA" ColumnName="PLAN_IN_FATURA" />
                 <ScalarProperty Name="PLAN_IN_FINANCEIRO" ColumnName="PLAN_IN_FINANCEIRO" />

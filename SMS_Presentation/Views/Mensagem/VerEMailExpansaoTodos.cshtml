@@ -26,7 +26,7 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="form-group">
-                            @Html.ButtonLinkIndex(text: "Voltar", action: "VerEmailExpansao", controller: "BaseAdmin")
+                            @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaDashboardMensagens", controller: "Mensagem")
                         </div>
                     </div>
                     <div class="row">
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="ibox-content">
                                     <div class="row">
-                                        @if ((ViewBag.Lista as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                        @if ((ViewBag.ListaEMailTudo as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
                                         {
                                             <table class="table table-striped table-bordered table-hover">
                                                 <thead style="background-color:lightsteelblue">
@@ -48,7 +48,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach (var cond in (ViewBag.Lista as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                    @foreach (var cond in (ViewBag.ListaEMailTudo as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
                                                     {
                                                         <tr>
                                                             <td>@cond.DataEmissao.ToShortDateString()</td>
@@ -136,7 +136,7 @@
         });
 
     </script>
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         $(document).ready(function () {
 
             $('.dataTables-example').DataTable({
@@ -165,7 +165,7 @@
 
         });
 
-    </script>
+    </script>*@
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -241,7 +241,7 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: '../BaseAdmin/GetDadosGraficoEmailTodos'
+                url: '../Mensagem/GetDadosGraficoEmailTodos'
                 , type: 'POST'
                 , success: function (result) {
                 var barData = {

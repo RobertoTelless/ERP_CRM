@@ -164,10 +164,15 @@ namespace ERP_CRM_Solution.Controllers
                 Session["PermFatura"] = 0;
                 Session["PermFinanceiro"] = 0;
                 Session["PermEstoque"] = 0;
+                Session["PermPatrimonio"] = 0;
                 Session["NumSMS"] = 0;
                 Session["NumEMail"] = 0;
                 Session["NumZap"] = 0;
                 Session["NumClientes"] = 0;
+                Session["NumProcessos"] = 0;
+                Session["NumPatrimonios"] = 0;
+                Session["NumProdutos"] = 0;
+                Session["NumFornecedor"] = 0;
                 List<ASSINANTE_PLANO> plAss = usuario.ASSINANTE.ASSINANTE_PLANO.ToList();
                 List<PLANO> planos = new List<PLANO>();
                 foreach (var item in plAss)
@@ -187,6 +192,12 @@ namespace ERP_CRM_Solution.Controllers
                         Session["NumProc"] = item.PLANO.PLAN_NR_PROCESSOS;
                         Session["NumAcoes"] = item.PLANO.PLAN_NR_ACOES;
                     }
+                    if (item.PLANO.PLAN_IN_PATRIMONIO == 1)
+                    {
+                        Session["PermPatrimonio"] = 1;
+                        Session["NumFornecedor"] = item.PLANO.PLAN_NR_FORNECEDOR;
+                        Session["NumPatrimonios"] = item.PLANO.PLAN_NR_PATRIMONIO;
+                    }
                     if (item.PLANO.PLAN_IN_POSVENDA == 1)
                     {
                         Session["PermPosVenda"] = 1;
@@ -202,6 +213,8 @@ namespace ERP_CRM_Solution.Controllers
                     if (item.PLANO.PLAN_IN_ESTOQUE == 1)
                     {
                         Session["PermEstoque"] = 1;
+                        Session["NumFornecedor"] = item.PLANO.PLAN_NR_FORNECEDOR;
+                        Session["NumProduto"] = item.PLANO.PLAN_NR_PRODUTO;
                     }
                 }
                 Session["Planos"] = planos;

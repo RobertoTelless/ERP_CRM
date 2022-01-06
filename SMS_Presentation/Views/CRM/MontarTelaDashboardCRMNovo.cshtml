@@ -15,14 +15,9 @@
                     <div class="col-lg-12 col-md-12 col-xs-12">
                         @Html.ButtonLinkIndex(text: "Clientes", action: "MontarTelaCliente", controller: "Cliente", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Clientes - Inclusão", action: "IncluirClienteRapido", controller: "Cliente", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Grupos", action: "MontarTelaGrupo", controller: "Grupo", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Modelos E-Mail", action: "MontarTelaTemplateEMail", controller: "TemplateEMail", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Modelos SMS", action: "MontarTelaTemplateSMS", controller: "TemplateSMS", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Central de E-Mails", action: "MontarTelaMensagemEMail", controller: "Mensagem", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Envio de E-Mails", action: "IncluirMensagemEMail", controller: "Mensagem", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "E-Mails Agendados", action: "VerEMailAgendados", controller: "Mensagem", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Central de SMS", action: "MontarTelaMensagemSMS", controller: "Mensagem", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Envio de SMS", action: "IncluirMensagemSMS", controller: "Mensagem", buttonClass: "success")
+                        @Html.ButtonLinkIndex(text: "Central de CRM", action: "MontarTelaCRM", controller: "CRM", buttonClass: "success")
+                        @Html.ButtonLinkIndex(text: "CRM - Kanban", action: "MontarTelaCRMKanban", controller: "CRM", buttonClass: "success")
+                        @Html.ButtonLinkIndex(text: "Ações", action: "VerAcoesUsuarioCRM", controller: "CRM", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Dashboard", controller: "Mensagem", action: "Voltar")
                     </div>
                     <br /><br />
@@ -48,23 +43,39 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="col-lg-4 col-md-4 col-sm-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-warning pull-right">Hoje</span>
-                            <h5>Clientes & Grupos</h5>
+                            <h5>Resumo de Processos CRM</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="row">
-                                <div class="col-xs-12">
-                                    <small class="stats-label">Clientes</small>
-                                    <h4>@ViewBag.Clientes</h4>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Total</small>
+                                    <h4>@ViewBag.Total</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Ativos</small>
+                                    <h4>@ViewBag.TotalAtivo</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Cancelados</small>
+                                    <h4>@ViewBag.TotalCancelado</h4>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-12">
-                                    <small class="stats-label">Grupos de Clientes</small>
-                                    <h4>@ViewBag.Grupos</h4>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Sucesso</small>
+                                    <h4>@ViewBag.TotalSucesso</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Ações</small>
+                                    <h4>@ViewBag.Acoes</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Pendências</small>
+                                    <h4>@ViewBag.AcoesPend</h4>
                                 </div>
                             </div>
                         </div>
@@ -74,35 +85,35 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-warning pull-right">Hoje</span>
-                            <h5>Resumo de Mensagens</h5>
+                            <h5>Resumo Pessoal - CRM</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-xs-4">
                                     <small class="stats-label">Total</small>
-                                    <h4>@ViewBag.TotalEnviado</h4>
+                                    <h4>@ViewBag.TotalPes</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <small class="stats-label">E-Mails</small>
-                                    <h4>@ViewBag.EMailsEnviado</h4>
+                                    <small class="stats-label">Ativos</small>
+                                    <h4>@ViewBag.TotalAtivoPes</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <small class="stats-label">SMS</small>
-                                    <h4>@ViewBag.SMSEnviado</h4>
+                                    <small class="stats-label">Cancelados</small>
+                                    <h4>@ViewBag.TotalCanceladoPes</h4>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <small class="stats-label">Total(Mês)</small>
-                                    <h4>@ViewBag.TotalMes</h4>
+                                    <small class="stats-label">Sucesso</small>
+                                    <h4>@ViewBag.TotalSucessoPes</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <small class="stats-label">E-Mails(Mês)</small>
-                                    <h4>@ViewBag.EMailsMes</h4>
+                                    <small class="stats-label">Ações</small>
+                                    <h4>@ViewBag.AcoesPes</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <small class="stats-label">SMS(Mês)</small>
-                                    <h4>@ViewBag.SMSMes</h4>
+                                    <small class="stats-label">Pendências</small>
+                                    <h4>@ViewBag.AcoesPendPes</h4>
                                 </div>
                             </div>
                         </div>
@@ -124,27 +135,27 @@
                             <small><i class="fa fa-tim"></i> Valores acumulados/atualizados até hoje</small>
                         </div>
 
-                        <div class="ibox-content" style="height: 800px">
+                        <div class="ibox-content" style="height: 1800px">
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
-                                            <h4>Estatística de Envio de E-Mails/dia</h4>
+                                            <h4>Processos CRM/Dia</h4>
                                             <h4 style="color: brown">(Exibindo apenas o mês corrente)</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
-                                                @if ((ViewBag.ListaEMailMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                @if ((ViewBag.ListaCRMMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
                                                 {
                                                     <table class="table table-striped table-bordered table-hover">
                                                         <thead style="background-color:lightsteelblue">
                                                             <tr>
-                                                                <th>Data de Emissão</th>
-                                                                <th>Total Enviado</th>
+                                                                <th>Data de Criação</th>
+                                                                <th>Total</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach (var cond in (ViewBag.ListaEmailMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            @foreach (var cond in (ViewBag.ListaCRMMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
                                                             {
                                                                 <tr>
                                                                     <td>@cond.DataEmissao.ToShortDateString()</td>
@@ -155,7 +166,7 @@
                                                     </table>
                                                 }
                                                 <div class="form-group">
-                                                    @Html.ButtonLinkIndex(text: "Ver Todos os Meses", action: "VerEmailExpansaoTodos", controller: "Mensagem")
+                                                    @Html.ButtonLinkIndex(text: "Ver Todos os Meses", action: "VerCRMExpansaoTodos", controller: "CRM")
                                                 </div>
                                             </div>
                                         </div>
@@ -164,48 +175,45 @@
                                 <div class="col-lg-8 col-md-8 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
-                                            <h4>Gráfico do Envio de E-Mails/Dia (Mês Corrente)</h4>
+                                            <h4>Gráfico de Processos CRM/Dia</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
-                                                <canvas id="barChart" height="150"></canvas>
+                                                <canvas id="barChartCRM" height="150"></canvas>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
-                                            <h4>Estatística de Envio de SMS/dia</h4>
-                                            <h4 style="color: brown">(Exibindo apenas o mês corrente)</h4>
+                                            <h4>Processos CRM por Situação</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
-                                                @if ((ViewBag.ListaSMSMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                @if ((ViewBag.ListaCRMSituacao as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
                                                 {
                                                     <table class="table table-striped table-bordered table-hover">
                                                         <thead style="background-color:lightsteelblue">
                                                             <tr>
-                                                                <th>Data de Emissão</th>
-                                                                <th>Total Enviado</th>
+                                                                <th>Situação</th>
+                                                                <th>Total</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach (var cond in (ViewBag.ListaSMSMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            @foreach (var cond in (ViewBag.ListaCRMSituacao as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
                                                             {
                                                                 <tr>
-                                                                    <td>@cond.DataEmissao.ToShortDateString()</td>
+                                                                    <td>@cond.Data</td>
                                                                     <td>@cond.Valor</td>
                                                                 </tr>
                                                             }
                                                         </tbody>
                                                     </table>
                                                 }
-                                                <div class="form-group">
-                                                    @Html.ButtonLinkIndex(text: "Ver Todos os Meses", action: "VerSMSExpansaoTodos", controller: "Mensagem")
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -213,11 +221,57 @@
                                 <div class="col-lg-8 col-md-8 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
-                                            <h4>Gráfico do Envio de SMS/Dia (Mês Corrente)</h4>
+                                            <h4>Gráfico de Processos CRM por Situação</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
-                                                <canvas id="barChartSMS" height="150"></canvas>
+                                                <canvas id="doughnutChartSit" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Processos CRM por Status</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaCRMStatus as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Status</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaCRMStatus as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Data</td>
+                                                                    <td>@cond.Valor</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Processos CRM por Status</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="doughnutChart1" height="150"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -327,28 +381,22 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: '../Mensagem/GetDadosGraficoEmail'
+                url: '../CRM/GetDadosGraficoCRMSituacao'
                 , type: 'POST'
                 , success: function (result) {
-                    var barData = {
-                        labels: result.dias,
-                        datasets: [
-                            {
-                                label: "Total por Dia",
-                                backgroundColor: 'rgba(26,179,148,0.5)',
-                                pointBorderColor: "#fff",
-                                data: result.valores
-                            }
-                        ]
-                    };
-
-                    var barOptions = {
-                        responsive: true
-                    };
-
-                    var ctx2 = document.getElementById("barChart").getContext("2d");
-                    new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
-                }
+                var doughnutData = {
+                   labels: result.labels,
+                   datasets: [{
+                     data: result.valores,
+                     backgroundColor: result.cores
+                   }]
+                };
+                var doughnutOptions = {
+                   responsive: true
+                };
+                var ctx4 = document.getElementById("doughnutChartSit").getContext("2d");
+                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+              }
             });
         });
     </script>
@@ -356,28 +404,22 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: '../BaseAdmin/GetDadosGraficoEmailTodos'
+                url: '../CRM/GetDadosGraficoCRMStatus'
                 , type: 'POST'
                 , success: function (result) {
-                    var barData = {
-                        labels: result.dias,
-                        datasets: [
-                            {
-                                label: "Total por Dia",
-                                backgroundColor: 'rgba(26,179,148,0.5)',
-                                pointBorderColor: "#fff",
-                                data: result.valores
-                            }
-                        ]
-                    };
-
-                    var barOptions = {
-                        responsive: true
-                    };
-
-                    var ctx2 = document.getElementById("barChart1").getContext("2d");
-                    new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
-                }
+                var doughnutData = {
+                   labels: result.labels,
+                   datasets: [{
+                     data: result.valores,
+                     backgroundColor: result.cores
+                   }]
+                };
+                var doughnutOptions = {
+                   responsive: true
+                };
+                var ctx4 = document.getElementById("doughnutChart1").getContext("2d");
+                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+              }
             });
         });
     </script>
@@ -385,7 +427,7 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: '../Mensagem/GetDadosGraficoSMS'
+                url: '../CRM/GetDadosGraficoCRM'
                 , type: 'POST'
                 , success: function (result) {
                 var barData = {
@@ -404,13 +446,12 @@
                     responsive: true
                 };
 
-                var ctx2 = document.getElementById("barChartSMS").getContext("2d");
+                var ctx2 = document.getElementById("barChartCRM").getContext("2d");
                 new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
               }
             });
         });
     </script>
-
 
 
     @if (ViewBag.Message != null)
