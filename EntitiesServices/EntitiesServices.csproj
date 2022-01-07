@@ -179,6 +179,8 @@
     <Compile Include="EntitiesServices\AgendaService.cs" />
     <Compile Include="EntitiesServices\AssinanteCnpjService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
+    <Compile Include="EntitiesServices\CategoriaFornecedorService.cs" />
+    <Compile Include="EntitiesServices\CategoriaEquipamentoService.cs" />
     <Compile Include="EntitiesServices\EquipamentoService.cs" />
     <Compile Include="EntitiesServices\TipoAcaoService.cs" />
     <Compile Include="EntitiesServices\MotivoEncerramentoService.cs" />
@@ -214,6 +216,8 @@
     <Compile Include="Interfaces\EntitiesServices\IAgendaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteCnpjService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ICategoriaFornecedorService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ICategoriaEquipamentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IEquipamentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITipoAcaoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IMotivoEncerramentoService.cs" />

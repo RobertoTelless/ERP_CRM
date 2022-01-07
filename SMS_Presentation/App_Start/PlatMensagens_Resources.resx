@@ -336,6 +336,12 @@
   <data name="M0081" xml:space="preserve">
     <value>Impossível incluir/reativar fornecedor. Número de fornecedores ativos excede o contratado no Plano de Assinatura</value>
   </data>
+  <data name="M0082" xml:space="preserve">
+    <value>Categoria de Equipamento já cadastrada</value>
+  </data>
+  <data name="M0083" xml:space="preserve">
+    <value>Categoria de Fornecedor já cadastrada</value>
+  </data>
   <data name="M0109" xml:space="preserve">
     <value>O login não pode ficar em branco</value>
   </data>

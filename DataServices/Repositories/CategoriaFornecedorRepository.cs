@@ -11,6 +11,14 @@ namespace DataServices.Repositories
 {
     public class CategoriaFornecedorRepository : RepositoryBase<CATEGORIA_FORNECEDOR>, ICategoriaFornecedorRepository
     {
+        public CATEGORIA_FORNECEDOR CheckExist(CATEGORIA_FORNECEDOR conta, Int32 idAss)
+        {
+            IQueryable<CATEGORIA_FORNECEDOR> query = Db.CATEGORIA_FORNECEDOR;
+            query = query.Where(p => p.CAFO_NM_NOME == conta.CAFO_NM_NOME);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
+            return query.FirstOrDefault();
+        }
+
         public CATEGORIA_FORNECEDOR GetItemById(Int32 id)
         {
             IQueryable<CATEGORIA_FORNECEDOR> query = Db.CATEGORIA_FORNECEDOR;

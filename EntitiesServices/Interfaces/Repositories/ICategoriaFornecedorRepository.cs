@@ -9,6 +9,7 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface ICategoriaFornecedorRepository : IRepositoryBase<CATEGORIA_FORNECEDOR>
     {
+        CATEGORIA_FORNECEDOR CheckExist(CATEGORIA_FORNECEDOR item, Int32 idAss);
         List<CATEGORIA_FORNECEDOR> GetAllItens(Int32 idAss);
         CATEGORIA_FORNECEDOR GetItemById(Int32 id);
         List<CATEGORIA_FORNECEDOR> GetAllItensAdm(Int32 idAss);

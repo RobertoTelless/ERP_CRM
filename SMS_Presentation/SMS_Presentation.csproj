@@ -333,6 +333,8 @@
     <Compile Include="ViewModels\AgendaViewModel.cs" />
     <Compile Include="ViewModels\AssinantePagamentoViewModel.cs" />
     <Compile Include="ViewModels\AssinanteViewModel.cs" />
+    <Compile Include="ViewModels\CategoriaFornecedorViewModel.cs" />
+    <Compile Include="ViewModels\CategoriaEquipamentoViewModel.cs" />
     <Compile Include="ViewModels\EquipamentoManutencaoViewModel.cs" />
     <Compile Include="ViewModels\EquipamentoViewModel.cs" />
     <Compile Include="ViewModels\TipoAcaoViewModel.cs" />
@@ -3135,6 +3137,12 @@
     <Content Include="Views\Equipamento\VerManutencoesVencidas.cshtml" />
     <Content Include="Views\Equipamento\VerDepreciados.cshtml" />
     <Content Include="Views\Equipamento\VerBaixados.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaCatEquipamento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirCatEquipamento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarCatEquipamento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaCatFornecedor.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirCatFornecedor.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarCatFornecedor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

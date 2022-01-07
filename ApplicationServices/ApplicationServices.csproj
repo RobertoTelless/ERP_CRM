@@ -171,6 +171,8 @@
     <Compile Include="Interfaces\IAssinanteAppService.cs" />
     <Compile Include="Interfaces\IAssinanteCnpjAppService.cs" />
     <Compile Include="Interfaces\ICargoAppService.cs" />
+    <Compile Include="Interfaces\ICategoriaFornecedorAppService.cs" />
+    <Compile Include="Interfaces\ICategoriaEquipamentoAppService.cs" />
     <Compile Include="Interfaces\IEquipamentoAppService.cs" />
     <Compile Include="Interfaces\ITipoAcaoAppService.cs" />
     <Compile Include="Interfaces\IMotivoEncerramentoAppService.cs" />
@@ -206,6 +208,8 @@
     <Compile Include="Services\AssinanteAppService.cs" />
     <Compile Include="Services\AssinanteCnpjAppService.cs" />
     <Compile Include="Services\CargoAppService.cs" />
+    <Compile Include="Services\CategoriaFornecedorAppService.cs" />
+    <Compile Include="Services\CategoriaEquipamentoAppService.cs" />
     <Compile Include="Services\EquipamentoAppService.cs" />
     <Compile Include="Services\TipoAcaoAppService.cs" />
     <Compile Include="Services\MotivoEncerramentoAppService.cs" />

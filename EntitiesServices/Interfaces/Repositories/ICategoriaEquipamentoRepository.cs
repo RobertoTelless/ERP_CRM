@@ -9,6 +9,7 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface ICategoriaEquipamentoRepository : IRepositoryBase<CATEGORIA_EQUIPAMENTO>
     {
+        CATEGORIA_EQUIPAMENTO CheckExist(CATEGORIA_EQUIPAMENTO item, Int32 idAss);
         List<CATEGORIA_EQUIPAMENTO> GetAllItens(Int32 idAss);
         CATEGORIA_EQUIPAMENTO GetItemById(Int32 id);
         List<CATEGORIA_EQUIPAMENTO> GetAllItensAdm(Int32 idAss);

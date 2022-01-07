@@ -13,6 +13,14 @@ namespace DataServices.Repositories
 {
     public class CategoriaEquipamentoRepository : RepositoryBase<CATEGORIA_EQUIPAMENTO>, ICategoriaEquipamentoRepository
     {
+        public CATEGORIA_EQUIPAMENTO CheckExist(CATEGORIA_EQUIPAMENTO conta, Int32 idAss)
+        {
+            IQueryable<CATEGORIA_EQUIPAMENTO> query = Db.CATEGORIA_EQUIPAMENTO;
+            query = query.Where(p => p.CAEQ_NM_NOME == conta.CAEQ_NM_NOME);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
+            return query.FirstOrDefault();
+        }
+
         public CATEGORIA_EQUIPAMENTO GetItemById(Int32 id)
         {
             IQueryable<CATEGORIA_EQUIPAMENTO> query = Db.CATEGORIA_EQUIPAMENTO;

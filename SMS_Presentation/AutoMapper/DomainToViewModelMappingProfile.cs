@@ -52,6 +52,8 @@ namespace MvcMapping.Mappers
             CreateMap<TIPO_ACAO, TipoAcaoViewModel>();
             CreateMap<EQUIPAMENTO_MANUTENCAO, EquipamentoManutencaoViewModel>();
             CreateMap<EQUIPAMENTO, EquipamentoViewModel>();
+            CreateMap<CATEGORIA_FORNECEDOR, CategoriaFornecedorViewModel>();
+            CreateMap<CATEGORIA_EQUIPAMENTO, CategoriaEquipamentoViewModel>();
 
         }
     }
