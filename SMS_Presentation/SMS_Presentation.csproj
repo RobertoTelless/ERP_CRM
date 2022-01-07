@@ -3143,6 +3143,7 @@
     <Content Include="Views\TabelasAuxiliares\MontarTelaCatFornecedor.cshtml" />
     <Content Include="Views\TabelasAuxiliares\IncluirCatFornecedor.cshtml" />
     <Content Include="Views\TabelasAuxiliares\EditarCatFornecedor.cshtml" />
+    <Content Include="Views\Equipamento\MontarTelaDashboardEquipamento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

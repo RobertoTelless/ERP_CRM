@@ -28,6 +28,9 @@ namespace ModelServices.Interfaces.EntitiesServices
         
         Int32 CalcularManutencaoVencida(Int32 idAss);
         Int32 CalcularDepreciados(Int32 idAss);
+        List<EQUIPAMENTO> CalcularManutencaoVencidaLista(Int32 idAss);
+        List<EQUIPAMENTO> CalcularDepreciadosLista(Int32 idAss);
+        List<EQUIPAMENTO> CalcularBaixadosLista(Int32 idAss);
         EQUIPAMENTO_MANUTENCAO GetItemManutencaoById(Int32 id);
         Int32 EditManutencao(EQUIPAMENTO_MANUTENCAO item);
         Int32 CreateManutencao(EQUIPAMENTO_MANUTENCAO item);

@@ -85,6 +85,11 @@
                                     @Html.ValidationMessageFor(m => m.EQUI_VL_VALOR, "", new { @style = "color:red" })
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-xs-12">
+                                    Valor Residual
+                                    @Html.TextBoxFor(m => m.EQUI_VL_RESIDUAL, "{0:n2}", new { @class = "form-control", autofocus = true })
+                                    @Html.ValidationMessageFor(m => m.EQUI_VL_RESIDUAL, "", new { @style = "color:red" })
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-xs-12">
                                     Vida Útil (Meses)
                                     @Html.TextBoxFor(m => m.EQUI_NR_VIDA_UTIL, new { @class = "form-control", autofocus = true })
                                     @Html.ValidationMessageFor(m => m.EQUI_NR_VIDA_UTIL, "", new { @style = "color:red" })

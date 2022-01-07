@@ -31,6 +31,7 @@ namespace ERP_CRM_Solution.Controllers
     {
         private readonly IEquipamentoAppService equiApp;
         private readonly IFornecedorAppService forApp;
+        private readonly IConfiguracaoAppService confApp;
 
         private String msg;
         private Exception exception;
@@ -39,10 +40,11 @@ namespace ERP_CRM_Solution.Controllers
         List<EQUIPAMENTO> listaMasterEqui = new List<EQUIPAMENTO>();
         String extensao;
 
-        public EquipamentoController(IEquipamentoAppService equiApps, IFornecedorAppService forApps)
+        public EquipamentoController(IEquipamentoAppService equiApps, IFornecedorAppService forApps, IConfiguracaoAppService confApps)
         {
             equiApp = equiApps;
             forApp = forApps;
+            confApp = confApps;
         }
 
         [HttpGet]
@@ -377,6 +379,7 @@ namespace ERP_CRM_Solution.Controllers
                 ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
             }
 
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
             EQUIPAMENTO item = equiApp.GetItemById(id);
             Int32 dias = equiApp.CalcularDiasDepreciacao(item);
             Int32 diasManutencao = equiApp.CalcularDiasManutencao(item);
@@ -384,6 +387,35 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Status = item.EQUI_DT_BAIXA != null ? "Baixado" : (dias > 0 ? "Ativo" : "Depreciado");
             ViewBag.DiasManutencao = diasManutencao;
             ViewBag.StatusManutencao = diasManutencao > 0 ? "Normal" : "Atrasada";
+
+            // Calcula depreciacao
+            ViewBag.ValorDepre = 0;
+            Decimal depreMes = 0;
+            if (item.EQUI_VL_RESIDUAL != null & item.EQUI_VL_RESIDUAL > 0)
+            {
+                if (item.EQUI_NR_VIDA_UTIL != null & item.EQUI_NR_VIDA_UTIL > 0)
+                {
+                    depreMes = (item.EQUI_VL_VALOR.Value - item.EQUI_VL_RESIDUAL.Value) / item.EQUI_NR_VIDA_UTIL.Value;
+                }
+            }
+            else
+            {
+                if (conf.CONF_IN_RESIDUAL == 1)
+                {
+                    if (item.EQUI_NR_VIDA_UTIL != null & item.EQUI_NR_VIDA_UTIL > 0)
+                    {
+                        depreMes = (item.EQUI_VL_VALOR.Value) / item.EQUI_NR_VIDA_UTIL.Value;
+                    }
+                }
+            }
+            if (depreMes > 0)
+            {
+                Decimal difMes = Convert.ToDecimal(DateTime.Today.Date.Subtract(item.EQUI_DT_COMPRA.Value).Days / (365.25 / 12));
+                Decimal valorDepre = item.EQUI_VL_VALOR.Value - (depreMes * difMes);
+                ViewBag.MesDepre = difMes;
+                ViewBag.ValorDepre = valorDepre;
+            }
+           
             objetoEquiAntes = item;
             Session["CategoriaToEquipamento"] = 2;
             Session["Equipamento"] = item;
@@ -2340,5 +2372,152 @@ namespace ERP_CRM_Solution.Controllers
             Response.End();
             return RedirectToAction("VoltarAnexoEquipamento");
         }
+
+        [HttpGet]
+        public ActionResult MontarTelaDashboardEquipamento()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensEquipamento"] = 2;
+                    return RedirectToAction("MontarTelaEquipamento", "Equipamento");
+                }
+                if ((Int32)Session["PermMens"] == 0)
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
+
+            // Recupera listas e contagem
+            List<EQUIPAMENTO> listaTotal = equiApp.GetAllItens(idAss);
+            Int32 manutVencNum = equiApp.CalcularManutencaoVencida(idAss);
+            Int32 depreNum = equiApp.CalcularDepreciados(idAss);
+            Int32 baixaNum = listaTotal.Where(p => p.EQUI_DT_BAIXA != null & p.EQUI_IN_ATIVO == 1 & p.ASSI_CD_ID == idAss).ToList().Count;
+
+            List<EQUIPAMENTO> listaManutVenc = equiApp.CalcularManutencaoVencidaLista(idAss);
+            List<EQUIPAMENTO> listaDepre = equiApp.CalcularDepreciadosLista(idAss);
+            List<EQUIPAMENTO> listaBaixa = equiApp.CalcularBaixadosLista(idAss);
+
+            // Estatisticas 
+            ViewBag.Total = listaTotal.Count;
+            ViewBag.ManutVencNum = manutVencNum;
+            ViewBag.DepreNum = depreNum;
+            ViewBag.BaixaNum = baixaNum;
+            ViewBag.ListaManutVenc = listaManutVenc;
+            ViewBag.ListaDepre = listaDepre;
+            ViewBag.ListaBaixa = listaBaixa;
+
+            Session["Total"] = listaTotal.Count;
+            Session["ManutVencNum"] = manutVencNum;
+            Session["DepreNum"] = depreNum;
+            Session["BaixaNum"] = baixaNum;
+            Session["ListaManutVenc"] = listaManutVenc;
+            Session["ListaDepre"] = listaDepre;
+            Session["ListaBaixa"] = listaBaixa;
+            Session["AtivoNum"] = listaTotal.Count - depreNum - baixaNum;
+
+            // Resumo Mes Compra
+            List<DateTime> datas = listaTotal.Select(p => p.EQUI_DT_COMPRA.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32 conta = listaTotal.Where(p => p.EQUI_DT_COMPRA.Value.Date == item).Count();
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.DataEmissao = item;
+                mod1.Valor = conta;
+                lista.Add(mod1);
+            }
+            ViewBag.ListaCompra = lista;
+            ViewBag.ContaCompraMes = lista.Count;
+            Session["ListaDatas"] = datas;
+            Session["ListaCompraResumo"] = lista;
+
+            // Resumo Situacao CRM 
+            List<ModeloViewModel> lista1 = new List<ModeloViewModel>();
+            ModeloViewModel mod = new ModeloViewModel();
+            mod.Data = "Depreciados";
+            mod.Valor = depreNum;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Baixados";
+            mod.Valor = baixaNum;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Ativos";
+            mod.Valor = (listaTotal.Count) - baixaNum - depreNum;
+            lista1.Add(mod);
+            ViewBag.ListaSituacao = lista1;
+            Session["ListaSituacao"] = lista1;
+            return View(vm);
+        }
+
+        public JsonResult GetDadosGraficoEquipamentoSituacao()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["AtivoNum"];
+            Int32 q2 = (Int32)Session["DepreNum"];
+            Int32 q3 = (Int32)Session["BaixaNum"];
+
+            desc.Add("Ativos");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Depreciados");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+            desc.Add("Baixados");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoEquipamento()
+        {
+            List<EQUIPAMENTO> listaCP1 = (List<EQUIPAMENTO>)Session["Total"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatas"];
+            List<EQUIPAMENTO> listaDia = new List<EQUIPAMENTO>();
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (DateTime item in datas)
+            {
+                listaDia = listaCP1.Where(p => p.EQUI_DT_COMPRA.Value.Date == item).ToList();
+                Int32 contaDia = listaDia.Count();
+                dias.Add(item.ToShortDateString());
+                valor.Add(contaDia);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
     }
 }

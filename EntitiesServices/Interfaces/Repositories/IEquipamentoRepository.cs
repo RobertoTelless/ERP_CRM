@@ -17,5 +17,8 @@ namespace ModelServices.Interfaces.Repositories
         List<EQUIPAMENTO> ExecuteFilter(Int32? catId, String nome, String numero, Int32? depreciado, Int32? manutencao, Int32 idAss);
         Int32 CalcularManutencaoVencida(Int32 idAss);
         Int32 CalcularDepreciados(Int32 idAss);
+        List<EQUIPAMENTO> CalcularManutencaoVencidaLista(Int32 idAss);
+        List<EQUIPAMENTO> CalcularDepreciadosLista(Int32 idAss);
+        List<EQUIPAMENTO> CalcularBaixadosLista(Int32 idAss);
     }
 }

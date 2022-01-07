@@ -153,6 +153,24 @@ namespace ApplicationServices.Services
             return lista;
         }
 
+        public List<EQUIPAMENTO> CalcularManutencaoVencidaLista(Int32 idAss)
+        {
+            List<EQUIPAMENTO> lista = _baseService.CalcularManutencaoVencidaLista(idAss);
+            return lista;
+        }
+
+        public List<EQUIPAMENTO> CalcularDepreciadosLista(Int32 idAss)
+        {
+            List<EQUIPAMENTO> lista = _baseService.CalcularDepreciadosLista(idAss);
+            return lista;
+        }
+
+        public List<EQUIPAMENTO> CalcularBaixadosLista(Int32 idAss)
+        {
+            List<EQUIPAMENTO> lista = _baseService.CalcularBaixadosLista(idAss);
+            return lista;
+        }
+
         public EQUIPAMENTO_ANEXO GetAnexoById(Int32 id)
         {
             EQUIPAMENTO_ANEXO lista = _baseService.GetAnexoById(id);

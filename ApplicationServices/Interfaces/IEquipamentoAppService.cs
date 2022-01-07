@@ -28,6 +28,9 @@ namespace ApplicationServices.Interfaces
         Int32 CalcularManutencaoVencida(Int32 idAss);
         Int32 CalcularDepreciados(Int32 idAss);
         Int32 CalcularDiasManutencao(EQUIPAMENTO item);
+        List<EQUIPAMENTO> CalcularManutencaoVencidaLista(Int32 idAss);
+        List<EQUIPAMENTO> CalcularDepreciadosLista(Int32 idAss);
+        List<EQUIPAMENTO> CalcularBaixadosLista(Int32 idAss);
         List<PERIODICIDADE> GetAllPeriodicidades(Int32 idAss);
 
         EQUIPAMENTO_MANUTENCAO GetItemManutencaoById(Int32 id);

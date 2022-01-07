@@ -121,9 +121,9 @@
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Patrimônio</span> <span class="fa arrow"></span></a>
                             @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">CRM</span> <span class="fa arrow"></span></a>*@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
-                                <li class="@Html.IsSelected(action: "MontarTelaEquipamento")"><a href="@Url.Action("MontarTelaEquipamento", "Patrimonio")">Bens Patrimoniais</a></li>
-                                <li class="@Html.IsSelected(action: "MontarTelaDepreciacao")"><a href="@Url.Action("MontarTelaDepreciacao", "Patrimonio")">Depreciação</a></li>
-                                <li class="@Html.IsSelected(action: "MontarTelaManutencao")"><a href="@Url.Action("MontarTelaManutencao", "Patrimonio")">Manutenções</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaEquipamento")"><a href="@Url.Action("MontarTelaEquipamento", "Equipamento")">Bens Patrimoniais</a></li>
+                                <li class="@Html.IsSelected(action: "VerDepreciados")"><a href="@Url.Action("VerDepreciados", "Equipamento")">Depreciação</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaManutencao")"><a href="@Url.Action("MontarTelaManutencao", "Equipamento")">Manutenções</a></li>
                             </ul>
                         </li>
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>

@@ -102,6 +102,21 @@ namespace ModelServices.EntitiesServices
             return _baseRepository.CalcularDepreciados(idAss);
         }
 
+        public List<EQUIPAMENTO> CalcularManutencaoVencidaLista(Int32 idAss)
+        {
+            return _baseRepository.CalcularManutencaoVencidaLista(idAss);
+        }
+
+        public List<EQUIPAMENTO> CalcularDepreciadosLista(Int32 idAss)
+        {
+            return _baseRepository.CalcularDepreciadosLista(idAss);
+        }
+
+        public List<EQUIPAMENTO> CalcularBaixadosLista(Int32 idAss)
+        {
+            return _baseRepository.CalcularBaixadosLista(idAss);
+        }
+
         public Int32 Create(EQUIPAMENTO item, LOG log)
         {
             using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))

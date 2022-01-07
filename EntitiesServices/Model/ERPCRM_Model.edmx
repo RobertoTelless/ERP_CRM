@@ -375,6 +375,7 @@
           <Property Name="CONF_NM_SENDGRID_LOGIN" Type="varchar" MaxLength="50" />
           <Property Name="CONF_NM_SENDGRID_PWD" Type="varchar" MaxLength="50" />
           <Property Name="CONF_NM_SENDGRID_APIKEY" Type="varchar" MaxLength="100" />
+          <Property Name="CONF_IN_RESIDUAL" Type="int" />
         </EntityType>
         <EntityType Name="CONTA_BANCO">
           <Key>
@@ -736,6 +737,7 @@
           <Property Name="EQUI_IN_DEPRECIADOS" Type="int" />
           <Property Name="EQUI_IN_MANUTENCAO" Type="int" />
           <Property Name="EQUI_IN_BAIXADOS" Type="int" />
+          <Property Name="EQUI_VL_RESIDUAL" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="EQUIPAMENTO_ANEXO">
           <Key>
@@ -6238,6 +6240,7 @@
           <Property Name="CONF_NM_SENDGRID_PWD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CONF_NM_SENDGRID_APIKEY" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CONFIGURACAO_ASSINANTE" FromRole="CONFIGURACAO" ToRole="ASSINANTE" />
+          <Property Name="CONF_IN_RESIDUAL" Type="Int32" />
         </EntityType>
         <EntityType Name="CONTA_BANCO">
           <Key>
@@ -6674,6 +6677,7 @@
           <NavigationProperty Name="FILIAL" Relationship="Self.FK_EQUIPAMENTO_FILIAL" FromRole="EQUIPAMENTO" ToRole="FILIAL" />
           <NavigationProperty Name="EQUIPAMENTO_MANUTENCAO" Relationship="Self.FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO" FromRole="EQUIPAMENTO" ToRole="EQUIPAMENTO_MANUTENCAO" />
           <NavigationProperty Name="PERIODICIDADE" Relationship="Self.FK_EQUIPAMENTO_PERIODICIDADE" FromRole="EQUIPAMENTO" ToRole="PERIODICIDADE" />
+          <Property Name="EQUI_VL_RESIDUAL" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="EQUIPAMENTO_ANEXO">
           <Key>
@@ -12340,6 +12344,7 @@
           <EntitySetMapping Name="CONFIGURACAO">
             <EntityTypeMapping TypeName="ERP_CRMModel.CONFIGURACAO">
               <MappingFragment StoreEntitySet="CONFIGURACAO">
+                <ScalarProperty Name="CONF_IN_RESIDUAL" ColumnName="CONF_IN_RESIDUAL" />
                 <ScalarProperty Name="CONF_CD_ID" ColumnName="CONF_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CONF_NR_FALHAS_DIA" ColumnName="CONF_NR_FALHAS_DIA" />
@@ -12713,6 +12718,7 @@
           <EntitySetMapping Name="EQUIPAMENTO">
             <EntityTypeMapping TypeName="ERP_CRMModel.EQUIPAMENTO">
               <MappingFragment StoreEntitySet="EQUIPAMENTO">
+                <ScalarProperty Name="EQUI_VL_RESIDUAL" ColumnName="EQUI_VL_RESIDUAL" />
                 <ScalarProperty Name="EQUI_CD_ID" ColumnName="EQUI_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />

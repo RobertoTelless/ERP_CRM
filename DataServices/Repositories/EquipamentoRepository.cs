@@ -60,12 +60,36 @@ namespace DataServices.Repositories
             return query.ToList().Count;
         }
 
+        public List<EQUIPAMENTO> CalcularManutencaoVencidaLista(Int32 idAss)
+        {
+            IQueryable<EQUIPAMENTO> query = Db.EQUIPAMENTO.Where(p => p.EQUI_IN_ATIVO == 1);
+            query = query.Where(p => DbFunctions.AddDays(p.EQUI_DT_MANUTENCAO.Value, p.PERIODICIDADE.PERI_NR_DIAS) < DateTime.Today);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
+            return query.ToList();
+        }
+
         public Int32 CalcularDepreciados(Int32 idAss)
         {
             IQueryable<EQUIPAMENTO> query = Db.EQUIPAMENTO.Where(p => p.EQUI_IN_ATIVO == 1);
             query = query.Where(p => DbFunctions.AddDays(p.EQUI_DT_COMPRA.Value, (p.EQUI_NR_VIDA_UTIL.Value * 30)) < DateTime.Today);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList().Count;
+        }
+
+        public List<EQUIPAMENTO> CalcularDepreciadosLista(Int32 idAss)
+        {
+            IQueryable<EQUIPAMENTO> query = Db.EQUIPAMENTO.Where(p => p.EQUI_IN_ATIVO == 1);
+            query = query.Where(p => DbFunctions.AddDays(p.EQUI_DT_COMPRA.Value, (p.EQUI_NR_VIDA_UTIL.Value * 30)) < DateTime.Today);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
+            return query.ToList();
+        }
+
+        public List<EQUIPAMENTO> CalcularBaixadosLista(Int32 idAss)
+        {
+            IQueryable<EQUIPAMENTO> query = Db.EQUIPAMENTO.Where(p => p.EQUI_IN_ATIVO == 1);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
+            query = query.Where(p => p.EQUI_DT_BAIXA != null);
+            return query.ToList();
         }
 
         public List<EQUIPAMENTO> ExecuteFilter(Int32? catId, String nome, String numero, Int32? depreciado, Int32? manutencao, Int32 idAss )
