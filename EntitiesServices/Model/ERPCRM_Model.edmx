@@ -891,6 +891,7 @@
           <Property Name="FOCO_NM_EMAIL" Type="varchar" MaxLength="100" />
           <Property Name="FOCO_NR_TELEFONES" Type="varchar" MaxLength="50" />
           <Property Name="FOCO_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="FOCO_NR_TELEFONE" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="FORNECEDOR_MENSAGEM">
           <Key>
@@ -6877,6 +6878,7 @@
           <Property Name="FOCO_NR_TELEFONES" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FOCO_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="FORNECEDOR" Relationship="Self.FK_FORNECEDOR_CONTATO_FORNECEDOR" FromRole="FORNECEDOR_CONTATO" ToRole="FORNECEDOR" />
+          <Property Name="FOCO_NR_TELEFONE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="FORNECEDOR_MENSAGEM">
           <Key>
@@ -12891,6 +12893,7 @@
           <EntitySetMapping Name="FORNECEDOR_CONTATO">
             <EntityTypeMapping TypeName="ERP_CRMModel.FORNECEDOR_CONTATO">
               <MappingFragment StoreEntitySet="FORNECEDOR_CONTATO">
+                <ScalarProperty Name="FOCO_NR_TELEFONE" ColumnName="FOCO_NR_TELEFONE" />
                 <ScalarProperty Name="FOCO_CD_ID" ColumnName="FOCO_CD_ID" />
                 <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
                 <ScalarProperty Name="FOCO_NM_NOME" ColumnName="FOCO_NM_NOME" />

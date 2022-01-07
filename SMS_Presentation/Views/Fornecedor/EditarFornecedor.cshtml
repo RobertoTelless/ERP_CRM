@@ -852,6 +852,7 @@
                                                                 <th>Cargo</th>
                                                                 <th>E-Mail</th>
                                                                 <th>Telefone</th>
+                                                                <th>Celular</th>
                                                                 <th>Ativo</th>
                                                                 <th class="td-one-action">Ações</th>
                                                             </tr>
@@ -862,8 +863,9 @@
                                                                 <tr>
                                                                     <td>@cond.FOCO_NM_NOME</td>
                                                                     <td>@cond.FOCO_NM_CARGO</td>
-                                                                    <td>@cond.FOCO_NM_EMAIL</td>
-                                                                    <td>@cond.FOCO_NR_TELEFONES</td>
+                                                                    <td><a href="@Url.Action("EnviarEMailContato", "Fornecedor", new { id = cond.FOCO_CD_ID })" />@cond.FOCO_NM_EMAIL</td>
+                                                                    <td>@cond.FOCO_NR_TELEFONE</td>
+                                                                    <td><a href="@Url.Action("EnviarSMSContato", "Fornecedor", new { id = cond.FOCO_CD_ID })" />@cond.FOCO_NR_TELEFONES</td>
                                                                     @if (cond.FOCO_IN_ATIVO == 1)
                                                                     {
                                                                         <td>Sim</td>

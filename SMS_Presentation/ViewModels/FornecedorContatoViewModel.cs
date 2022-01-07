@@ -21,8 +21,10 @@ namespace ERP_CRM_Solution.ViewModels
         [Required(ErrorMessage = "Campo E-MAIL obrigatorio")]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "O NOME deve conter no minimo 1 e no máximo 100 caracteres.")]
         public string FOCO_NM_EMAIL { get; set; }
-        [StringLength(50, ErrorMessage = "O TELEFONE deve conter no máximo 50 caracteres.")]
+        [StringLength(50, ErrorMessage = "O CELULAR deve conter no máximo 50 caracteres.")]
         public string FOCO_NR_TELEFONES { get; set; }
+        [StringLength(50, ErrorMessage = "O TELEFONE deve conter no máximo 50 caracteres.")]
+        public string FOCO_NR_TELEFONE { get; set; }
         public int FOCO_IN_ATIVO { get; set; }
 
         public virtual FORNECEDOR FORNECEDOR { get; set; }

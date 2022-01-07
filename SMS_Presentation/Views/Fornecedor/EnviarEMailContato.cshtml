@@ -1,11 +1,11 @@
 ﻿@using Presentation.Extensions
-@model ERP_CRM_Solution.ViewModels.FornecedorContatoViewModel
+@model ERP_CRM_Solution.ViewModels.MensagemViewModel
 @{
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="page-title"> 
-        <h3 class="title">Fornecedores</h3> 
+    <div class="page-title">
+        <h3 class="title">Fornecedores</h3>
         <br />
         <ol class="breadcrumb">
             <li>
@@ -15,10 +15,10 @@
                 <a href="@Url.Action("MontarTelaFornecedor", "Fornecedor")">Fornecedores</a>
             </li>
             <li>
-                <a href="@Url.Action("EditarFornecedor", "Fornecedor")">Fornecedores - Edição</a>
+                <a href="@Url.Action("EditarFornecedor", "Fornecedor")">Fornecedor - Edição</a>
             </li>
             <li class="active">
-                <strong>Contatos - Inclusão</strong>
+                <strong>Fornecedor - Mensagens</strong>
             </li>
         </ol>
         <br />
@@ -27,58 +27,46 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Contatos - Inclusão</h5>
+                    <h5>Contatos - E-Mail</h5>
                 </div>
-                @using (Html.BeginForm("IncluirContatoFornecedor", "Fornecedor", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                @using (Html.BeginForm("EnviarEMailContato", "Fornecedor", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
                 {
                     <div class="ibox-content">
-                        @Html.AntiForgeryToken()
-                        @if (!ViewData.ModelState.IsValid)
-                        {
-                            <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert">Fechar</button>
-                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                            </div>
-                        }
                         <div class="row">
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                <div class="col-lg-3 col-md-3 col-xs-12">
-                                    @Html.HiddenFor(m => m.FORN_CD_ID)
-                                    Nome*
-                                    @Html.TextBoxFor(m => m.FOCO_NM_NOME, new { @class = "form-control", autofocus = true })
-                                    @Html.ValidationMessageFor(m => m.FOCO_NM_NOME, "",new { @style="color:red" })
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    @Html.HiddenFor(m => m.ID)
+                                    @Html.HiddenFor(m => m.MENS_DT_CRIACAO)
+                                    @Html.HiddenFor(m => m.MENS_IN_TIPO)
+                                    Nome do Contato
+                                    @Html.TextBoxFor(m => m.NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-xs-12">
-                                    E-Mail*
-                                    @Html.TextBoxFor(m => m.FOCO_NM_EMAIL, new { @class = "form-control", autofocus = true })
-                                    @Html.ValidationMessageFor(m => m.FOCO_NM_EMAIL, "",new { @style="color:red" })
+                                    E-Mail
+                                    @Html.TextBoxFor(m => m.MODELO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Cargo
-                                    @Html.TextBoxFor(m => m.FOCO_NM_CARGO, new { @class = "form-control", autofocus = true })
-                                    @Html.ValidationMessageFor(m => m.FOCO_NM_CARGO, "",new { @style="color:red" })
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Link a Anexar
+                                    @Html.TextBoxFor(m => m.MENS_NM_LINK, new { @class = "form-control", autofocus = true })
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Celular
-                                    @Html.TextBoxFor(m => m.FOCO_NR_TELEFONES, new { @class = "form-control", autofocus = true, @id = "tel" })
-                                    @Html.ValidationMessageFor(m => m.FOCO_NR_TELEFONES, "",new { @style="color:red" })
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Telefone
-                                    @Html.TextBoxFor(m => m.FOCO_NR_TELEFONE, new { @class = "form-control", autofocus = true, @id = "tel1" })
-                                    @Html.ValidationMessageFor(m => m.FOCO_NR_TELEFONE, "",new { @style="color:red" })
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    Mensagem*
+                                    @Html.TextAreaFor(m => m.MENS_TX_TEXTO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
+                                    @Html.ValidationMessageFor(m => m.MENS_TX_TEXTO, "", new { @style = "color:red" })
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.ButtonActionSubmit(text: "Confirma Inclusão de Contato", htmlAttributes: new { id = "basictoast" })
+                            @Html.ButtonActionSubmit(text: "Confirma Envio de E-Mail", htmlAttributes: new { id = "basictoast" })
                             @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAnexoFornecedor", controller: "Fornecedor")
+                            @Html.ButtonLinkIndex(text: "Dashboard", controller: "Fornecedor", action: "Voltar")
                         </div>
                     </div>
                 }
             </div>
          </div>
-
     </div>
 </div>
 
@@ -98,11 +86,8 @@
 
     <script type="text/javascript">
         $(function () {
-            $("#cpf").mask("999.999.999-99");
-            $("#cnpj").mask("99.999.999/9999-99");
-            $("#cep").mask("99999-999");
-            $("#tel").mask("(99)99999-9999");
-            $("#tel1").mask("(99)9999-9999");
+            $("#tel").mask("(99)9999-9999");
+            $("#cel").mask("(99)99999-9999");
         });
     </script>
     @Scripts.Render("~/plugins/iCheck")
@@ -130,7 +115,7 @@
 
             $('#basictoast').click(function () {
                 // Display a success toast, with a title
-                toastr.success('Inclusão em andamento!')
+                toastr.success('Envio em andamento!')
             });
             $('#showtoast').click(function () {
                 var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
@@ -228,3 +213,5 @@
         </script>
     }
 }
+
+

@@ -2808,7 +2808,6 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult IncluirComentarioFornecedor(FornecedorComentarioViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -2845,5 +2844,261 @@ namespace ERP_CRM_Solution.Controllers
                 return View(vm);
             }
         }
+
+        [HttpGet]
+        public ActionResult EnviarEMailContato(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 forn = (Int32)Session["IdFornecedor"];
+            FORNECEDOR item = fornApp.GetItemById(forn);
+            FORNECEDOR_CONTATO cont = fornApp.GetContatoById(id);
+            Session["Contato"] = cont;
+            ViewBag.Contato = cont;
+            MensagemViewModel mens = new MensagemViewModel();
+            mens.NOME = cont.FOCO_NM_NOME;
+            mens.ID = id;
+            mens.MODELO = cont.FOCO_NM_EMAIL;
+            mens.MENS_DT_CRIACAO = DateTime.Today.Date;
+            mens.MENS_IN_TIPO = 1;
+            return View(mens);
+        }
+
+        [HttpPost]
+        public ActionResult EnviarEMailContato(MensagemViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdFornecedor"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = ProcessaEnvioEMailContato(vm, usuarioLogado);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+
+                    }
+
+                    // Sucesso
+                    return RedirectToAction("EditarFornecedor", new { id = idNot });
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EnviarSMSContato(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 forn = (Int32)Session["IdFornecedor"];
+            FORNECEDOR item = fornApp.GetItemById(forn);
+            FORNECEDOR_CONTATO cont = fornApp.GetContatoById(id);
+            Session["Contato"] = cont;
+            ViewBag.Contato = cont;
+            MensagemViewModel mens = new MensagemViewModel();
+            mens.NOME = cont.FOCO_NM_NOME;
+            mens.ID = id;
+            mens.MODELO = cont.FOCO_NR_TELEFONES;
+            mens.MENS_DT_CRIACAO = DateTime.Today.Date;
+            mens.MENS_IN_TIPO = 2;
+            return View(mens);
+        }
+
+        [HttpPost]
+        public ActionResult EnviarSMSContato(MensagemViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdFornecedor"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = ProcessaEnvioSMSContato(vm, usuarioLogado);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+
+                    }
+
+                    // Sucesso
+                    return RedirectToAction("EditarFornecedor", new { id = idNot });
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [ValidateInput(false)]
+        public Int32 ProcessaEnvioEMailContato(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera contato
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            FORNECEDOR_CONTATO cont = (FORNECEDOR_CONTATO)Session["Contato"];
+
+            // Processa e-mail
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+
+            // Prepara cabeçalho
+            String cab = "Prezado Sr(a)." + cont.FOCO_NM_NOME;
+
+            // Prepara rodape
+            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            String rod = assi.ASSI_NM_NOME;
+
+            // Prepara corpo do e-mail e trata link
+            String corpo = vm.MENS_TX_TEXTO;
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(corpo);
+            if (!String.IsNullOrEmpty(vm.MENS_NM_LINK))
+            {
+                if (!vm.MENS_NM_LINK.Contains("www."))
+                {
+                    vm.MENS_NM_LINK = "www." + vm.MENS_NM_LINK;
+                }
+                if (!vm.MENS_NM_LINK.Contains("http://"))
+                {
+                    vm.MENS_NM_LINK = "http://" + vm.MENS_NM_LINK;
+                }
+                str.AppendLine("<a href='" + vm.MENS_NM_LINK + "'>Clique aqui para maiores informações</a>");
+            }
+            String body = str.ToString();
+            String emailBody = cab + "<br /><br />" + body + "<br /><br />" + rod;
+
+            // Monta e-mail
+            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+            Email mensagem = new Email();
+            mensagem.ASSUNTO = "Contato";
+            mensagem.CORPO = emailBody;
+            mensagem.DEFAULT_CREDENTIALS = false;
+            mensagem.EMAIL_DESTINO = cont.FOCO_NM_EMAIL;
+            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+            mensagem.ENABLE_SSL = true;
+            mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
+            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+            mensagem.IS_HTML = true;
+            mensagem.NETWORK_CREDENTIAL = net;
+
+            // Envia mensagem
+            try
+            {
+                Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+            }
+            catch (Exception ex)
+            {
+                String erro = ex.Message;
+            }
+            return 0;
+        }
+
+        [ValidateInput(false)]
+        public Int32 ProcessaEnvioSMSContato(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera contatos
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            FORNECEDOR_CONTATO cont = (FORNECEDOR_CONTATO)Session["Contato"];
+
+            // Processa SMS
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+
+            // Monta token
+            String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
+            byte[] textBytes = Encoding.UTF8.GetBytes(text);
+            String token = Convert.ToBase64String(textBytes);
+            String auth = "Basic " + token;
+
+            // Prepara texto
+            String texto = vm.MENS_TX_SMS;
+
+            // Prepara corpo do SMS e trata link
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(vm.MENS_TX_SMS);
+            if (!String.IsNullOrEmpty(vm.LINK))
+            {
+                if (!vm.LINK.Contains("www."))
+                {
+                    vm.LINK = "www." + vm.LINK;
+                }
+                if (!vm.LINK.Contains("http://"))
+                {
+                    vm.LINK = "http://" + vm.LINK;
+                }
+                str.AppendLine("<a href='" + vm.LINK + "'>Clique aqui para maiores informações</a>");
+                texto += "  " + vm.LINK;
+            }
+            String body = str.ToString();
+            String smsBody = body;
+            String erro = null;
+
+            // inicia processo
+            String resposta = String.Empty;
+
+            // Monta destinatarios
+            try
+            {
+                String listaDest = "55" + Regex.Replace(cont.FOCO_NR_TELEFONES, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
+                httpWebRequest.Headers["Authorization"] = auth;
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+                String customId = Cryptography.GenerateRandomPassword(8);
+                String data = String.Empty;
+                String json = String.Empty;
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
+                    streamWriter.Write(json);
+                }
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    resposta = result;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro = ex.Message;
+            }
+            return 0;
+        }
+
     }
 }

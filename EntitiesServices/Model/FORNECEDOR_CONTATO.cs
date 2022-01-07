@@ -21,6 +21,7 @@ namespace EntitiesServices.Model
         public string FOCO_NM_EMAIL { get; set; }
         public string FOCO_NR_TELEFONES { get; set; }
         public int FOCO_IN_ATIVO { get; set; }
+        public string FOCO_NR_TELEFONE { get; set; }
     
         public virtual FORNECEDOR FORNECEDOR { get; set; }
     }
