@@ -179,6 +179,7 @@
     <Compile Include="EntitiesServices\AgendaService.cs" />
     <Compile Include="EntitiesServices\AssinanteCnpjService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
+    <Compile Include="EntitiesServices\EquipamentoService.cs" />
     <Compile Include="EntitiesServices\TipoAcaoService.cs" />
     <Compile Include="EntitiesServices\MotivoEncerramentoService.cs" />
     <Compile Include="EntitiesServices\MotivoCancelamentoService.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Interfaces\EntitiesServices\IAgendaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteCnpjService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IEquipamentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITipoAcaoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IMotivoEncerramentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IMotivoCancelamentoService.cs" />
@@ -251,6 +253,7 @@
     <Compile Include="Interfaces\Repositories\IAssinantePagamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICargoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMAcaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMAnexoRepository.cs" />
@@ -259,6 +262,9 @@
     <Compile Include="Interfaces\Repositories\ICRMOrigemRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEMailAgendaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEquipamentoAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEquipamentoManutencaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEquipamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorCnpjRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorContatoRepository.cs" />

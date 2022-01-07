@@ -50,6 +50,8 @@ namespace MvcMapping.Mappers
             CreateMap<MOTIVO_CANCELAMENTO, MotivoCancelamentoViewModel>();
             CreateMap<MOTIVO_ENCERRAMENTO, MotivoEncerramentoViewModel>();
             CreateMap<TIPO_ACAO, TipoAcaoViewModel>();
+            CreateMap<EQUIPAMENTO_MANUTENCAO, EquipamentoManutencaoViewModel>();
+            CreateMap<EQUIPAMENTO, EquipamentoViewModel>();
 
         }
     }

@@ -308,6 +308,7 @@
     <Compile Include="Controllers\ConfiguracaoController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
     <Compile Include="Controllers\CRMController.cs" />
+    <Compile Include="Controllers\EquipamentoController.cs" />
     <Compile Include="Controllers\FilialController.cs" />
     <Compile Include="Controllers\FornecedorController.cs" />
     <Compile Include="Controllers\GrupoController.cs" />
@@ -332,6 +333,8 @@
     <Compile Include="ViewModels\AgendaViewModel.cs" />
     <Compile Include="ViewModels\AssinantePagamentoViewModel.cs" />
     <Compile Include="ViewModels\AssinanteViewModel.cs" />
+    <Compile Include="ViewModels\EquipamentoManutencaoViewModel.cs" />
+    <Compile Include="ViewModels\EquipamentoViewModel.cs" />
     <Compile Include="ViewModels\TipoAcaoViewModel.cs" />
     <Compile Include="ViewModels\MotivoEncerramentoViewModel.cs" />
     <Compile Include="ViewModels\MotivoCancelamentoViewModel.cs" />
@@ -3121,6 +3124,17 @@
     <Content Include="Views\CRM\MontarTelaDashboardCRMNovo.cshtml" />
     <Content Include="Views\Fornecedor\EnviarEMailContato.cshtml" />
     <Content Include="Views\Fornecedor\EnviarSMSContato.cshtml" />
+    <Content Include="Views\Equipamento\MontarTelaEquipamento.cshtml" />
+    <Content Include="Views\Equipamento\IncluirEquipamento.cshtml" />
+    <Content Include="Views\Equipamento\EditarEquipamento.cshtml" />
+    <Content Include="Views\Equipamento\VerAnexoEquipamento.cshtml" />
+    <Content Include="Views\Equipamento\VerEquipamento.cshtml" />
+    <Content Include="Views\Equipamento\VerManutencaoEquipamento.cshtml" />
+    <Content Include="Views\Equipamento\IncluirManutencao.cshtml" />
+    <Content Include="Views\Equipamento\EditarManutencao.cshtml" />
+    <Content Include="Views\Equipamento\VerManutencoesVencidas.cshtml" />
+    <Content Include="Views\Equipamento\VerDepreciados.cshtml" />
+    <Content Include="Views\Equipamento\VerBaixados.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

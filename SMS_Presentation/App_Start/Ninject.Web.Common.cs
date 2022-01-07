@@ -100,6 +100,7 @@ namespace Presentation.Start
             kernel.Bind<IMotivoCancelamentoAppService>().To<MotivoCancelamentoAppService>();
             kernel.Bind<IMotivoEncerramentoAppService>().To<MotivoEncerramentoAppService>();
             kernel.Bind<ITipoAcaoAppService>().To<TipoAcaoAppService>();
+            kernel.Bind<IEquipamentoAppService>().To<EquipamentoAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -133,6 +134,7 @@ namespace Presentation.Start
             kernel.Bind<IMotivoCancelamentoService>().To<MotivoCancelamentoService>();
             kernel.Bind<IMotivoEncerramentoService>().To<MotivoEncerramentoService>();
             kernel.Bind<ITipoAcaoService>().To<TipoAcaoService>();
+            kernel.Bind<IEquipamentoService>().To<EquipamentoService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -198,6 +200,10 @@ namespace Presentation.Start
             kernel.Bind<IFilialRepository>().To<FilialRepository>();
             kernel.Bind<IClienteTagRepository>().To<ClienteTagRepository>();
             kernel.Bind<IClienteReferenciaRepository>().To<ClienteReferenciaRepository>();
+            kernel.Bind<IEquipamentoAnexoRepository>().To<EquipamentoAnexoRepository>();
+            kernel.Bind<IEquipamentoManutencaoRepository>().To<EquipamentoManutencaoRepository>();
+            kernel.Bind<IEquipamentoRepository>().To<EquipamentoRepository>();
+            kernel.Bind<ICategoriaEquipamentoRepository>().To<CategoriaEquipamentoRepository>();
 
 
         }
