@@ -208,6 +208,7 @@ namespace Presentation.Start
             kernel.Bind<IEquipamentoManutencaoRepository>().To<EquipamentoManutencaoRepository>();
             kernel.Bind<IEquipamentoRepository>().To<EquipamentoRepository>();
             kernel.Bind<ICategoriaEquipamentoRepository>().To<CategoriaEquipamentoRepository>();
+            kernel.Bind<IPeriodicidadeRepository>().To<PeriodicidadeRepository>();
 
 
         }
