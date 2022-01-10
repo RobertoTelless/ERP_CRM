@@ -512,6 +512,19 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("MontarTelaFornecedor");
         }
 
+        public ActionResult VoltarDashboard()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaDash"] == 3)
+            {
+                return RedirectToAction("MontarTelaDashboardEquipamento", "Equipamento");
+            }
+            return RedirectToAction("Voltar");
+        }
+
         [HttpGet]
         public ActionResult IncluirFornecedor()
         {

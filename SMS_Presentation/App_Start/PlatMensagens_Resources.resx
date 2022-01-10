@@ -342,6 +342,9 @@
   <data name="M0083" xml:space="preserve">
     <value>Categoria de Fornecedor já cadastrada</value>
   </data>
+  <data name="M0084" xml:space="preserve">
+    <value>O valor residual não pode ser maior que o valor de compra</value>
+  </data>
   <data name="M0109" xml:space="preserve">
     <value>O login não pode ficar em branco</value>
   </data>

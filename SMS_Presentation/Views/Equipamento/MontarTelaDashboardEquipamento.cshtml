@@ -13,7 +13,7 @@
                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                     <br />
                     <div class="col-lg-12 col-md-12 col-xs-12">
-                        @Html.ButtonLinkIndex(text: "Fornecedores", action: "MontarTelaCliente", controller: "Cliente", buttonClass: "success")
+                        @Html.ButtonLinkIndex(text: "Fornecedores", action: "MontarTelaFornecedor", controller: "Fornecedor", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Central de Patrimônio", action: "MontarTelaEquipamento", controller: "Equipamento", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Depreciados", action: "VerDepreciados", controller: "Equipamento", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Baixados", action: "VerBaixados", controller: "Equipamento", buttonClass: "success")
@@ -303,29 +303,6 @@
                    responsive: true
                 };
                 var ctx4 = document.getElementById("doughnutChartSit").getContext("2d");
-                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
-              }
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $.ajax({
-                url: '../CRM/GetDadosGraficoCRMStatus'
-                , type: 'POST'
-                , success: function (result) {
-                var doughnutData = {
-                   labels: result.labels,
-                   datasets: [{
-                     data: result.valores,
-                     backgroundColor: result.cores
-                   }]
-                };
-                var doughnutOptions = {
-                   responsive: true
-                };
-                var ctx4 = document.getElementById("doughnutChart1").getContext("2d");
                 new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
               }
             });

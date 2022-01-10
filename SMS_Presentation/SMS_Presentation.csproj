@@ -2121,6 +2121,8 @@
     <Content Include="Imagens\2\Tarefa\1\Anexos\PlanosLista_14122021.pdf" />
     <Content Include="Imagens\2\Mensagem\27\Anexos\UsuarioLista_03012022.pdf" />
     <Content Include="Imagens\2\Clientes\7\Anexos\TelefoneLista_03012022.pdf" />
+    <None Include="Properties\PublishProfiles\ERPCondominio - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ERPSysWeb - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\characterCount.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />

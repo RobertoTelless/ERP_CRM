@@ -49,6 +49,9 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> EQUI_IN_MANUTENCAO { get; set; }
         public Nullable<int> EQUI_IN_BAIXADOS { get; set; }
         public Nullable<decimal> EQUI_VL_RESIDUAL { get; set; }
+        public Nullable<decimal> ValorDepreciado { get; set; }
+        public Nullable<int> MesesDepreciacao { get; set; }
+        public Nullable<System.DateTime> ProximaManutencao { get; set; }
 
         [Required(ErrorMessage = "Campo VALOR obrigatorio")]
         [RegularExpression(@"^[0-9]+([,][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]

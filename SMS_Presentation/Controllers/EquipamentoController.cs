@@ -146,6 +146,7 @@ namespace ERP_CRM_Solution.Controllers
             objetoEqui = new EQUIPAMENTO();
             Session["VoltaEquipamento"] = 1;
             Session["MensEquipamento"] = 0;
+            Session["VoltaDash"] = 1;
             if (Session["FiltroEquipamento"] != null)
             {
                 objetoEqui = (EQUIPAMENTO)Session["FiltroEquipamento"];
@@ -275,6 +276,16 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
+                    // Critica
+                    if (vm.EQUI_VL_RESIDUAL > 0)
+                    {
+                        if (vm.EQUI_VL_VALOR < vm.EQUI_VL_RESIDUAL)
+                        {
+                            ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0084", CultureInfo.CurrentCulture));
+                            return View(vm);
+                        }
+                    }
+
                     // Executa a operação
                     EQUIPAMENTO item = Mapper.Map<EquipamentoViewModel, EQUIPAMENTO>(vm);
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
@@ -391,6 +402,8 @@ namespace ERP_CRM_Solution.Controllers
             // Calcula depreciacao
             ViewBag.ValorDepre = 0;
             Decimal depreMes = 0;
+            Decimal valorDepre = 0;
+            Decimal difMes = 0;
             if (item.EQUI_VL_RESIDUAL != null & item.EQUI_VL_RESIDUAL > 0)
             {
                 if (item.EQUI_NR_VIDA_UTIL != null & item.EQUI_NR_VIDA_UTIL > 0)
@@ -410,8 +423,8 @@ namespace ERP_CRM_Solution.Controllers
             }
             if (depreMes > 0)
             {
-                Decimal difMes = Convert.ToDecimal(DateTime.Today.Date.Subtract(item.EQUI_DT_COMPRA.Value).Days / (365.25 / 12));
-                Decimal valorDepre = item.EQUI_VL_VALOR.Value - (depreMes * difMes);
+                difMes = Convert.ToDecimal(DateTime.Today.Date.Subtract(item.EQUI_DT_COMPRA.Value).Days / (365.25 / 12));
+                valorDepre = item.EQUI_VL_VALOR.Value - (depreMes * difMes);
                 ViewBag.MesDepre = difMes;
                 ViewBag.ValorDepre = valorDepre;
             }
@@ -423,6 +436,9 @@ namespace ERP_CRM_Solution.Controllers
             Session["IdEquipamento"] = id;
 
             EquipamentoViewModel vm = Mapper.Map<EQUIPAMENTO, EquipamentoViewModel>(item);
+            vm.ValorDepreciado = valorDepre;
+            vm.MesesDepreciacao = Convert.ToInt32(difMes);
+            vm.ProximaManutencao = vm.EQUI_DT_MANUTENCAO.Value.AddDays(vm.PERIODICIDADE.PERI_NR_DIAS);
             return View(vm);
         }
 
@@ -583,12 +599,54 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Prepara view
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
             EQUIPAMENTO item = equiApp.GetItemById(id);
+            Int32 dias = equiApp.CalcularDiasDepreciacao(item);
+            Int32 diasManutencao = equiApp.CalcularDiasManutencao(item);
+            ViewBag.Dias = dias;
+            ViewBag.Status = item.EQUI_DT_BAIXA != null ? "Baixado" : (dias > 0 ? "Ativo" : "Depreciado");
+            ViewBag.DiasManutencao = diasManutencao;
+            ViewBag.StatusManutencao = diasManutencao > 0 ? "Normal" : "Atrasada";
+
+            // Calcula depreciacao
+            ViewBag.ValorDepre = 0;
+            Decimal depreMes = 0;
+            Decimal valorDepre = 0;
+            Decimal difMes = 0;
+            if (item.EQUI_VL_RESIDUAL != null & item.EQUI_VL_RESIDUAL > 0)
+            {
+                if (item.EQUI_NR_VIDA_UTIL != null & item.EQUI_NR_VIDA_UTIL > 0)
+                {
+                    depreMes = (item.EQUI_VL_VALOR.Value - item.EQUI_VL_RESIDUAL.Value) / item.EQUI_NR_VIDA_UTIL.Value;
+                }
+            }
+            else
+            {
+                if (conf.CONF_IN_RESIDUAL == 1)
+                {
+                    if (item.EQUI_NR_VIDA_UTIL != null & item.EQUI_NR_VIDA_UTIL > 0)
+                    {
+                        depreMes = (item.EQUI_VL_VALOR.Value) / item.EQUI_NR_VIDA_UTIL.Value;
+                    }
+                }
+            }
+            if (depreMes > 0)
+            {
+                difMes = Convert.ToDecimal(DateTime.Today.Date.Subtract(item.EQUI_DT_COMPRA.Value).Days / (365.25 / 12));
+                valorDepre = item.EQUI_VL_VALOR.Value - (depreMes * difMes);
+                ViewBag.MesDepre = difMes;
+                ViewBag.ValorDepre = valorDepre;
+            }
+
             objetoEquiAntes = item;
+            Session["CategoriaToEquipamento"] = 2;
             Session["Equipamento"] = item;
             Session["IdVolta"] = id;
             Session["IdEquipamento"] = id;
+
             EquipamentoViewModel vm = Mapper.Map<EQUIPAMENTO, EquipamentoViewModel>(item);
+            vm.ValorDepreciado = valorDepre;
+            vm.MesesDepreciacao = Convert.ToInt32(difMes);
             return View(vm);
         }
 
@@ -685,6 +743,10 @@ namespace ERP_CRM_Solution.Controllers
             String a = extensao;
 
             // Gravar registro
+            if (item.EQUIPAMENTO_ANEXO == null)
+            {
+                item.EQUIPAMENTO_ANEXO = new List<EQUIPAMENTO_ANEXO>();
+            }
             EQUIPAMENTO_ANEXO foto = new EQUIPAMENTO_ANEXO();
             foto.EQAN_AQ_ARQUIVO = "~" + caminho + fileName;
             foto.EQAN_DT_ANEXO = DateTime.Today;
@@ -747,6 +809,10 @@ namespace ERP_CRM_Solution.Controllers
             String a = extensao;
 
             // Gravar registro
+            if (item.EQUIPAMENTO_ANEXO == null)
+            {
+                item.EQUIPAMENTO_ANEXO = new List<EQUIPAMENTO_ANEXO>();
+            }
             EQUIPAMENTO_ANEXO foto = new EQUIPAMENTO_ANEXO();
             foto.EQAN_AQ_ARQUIVO = "~" + caminho + fileName;
             foto.EQAN_DT_ANEXO = DateTime.Today;
@@ -1091,10 +1157,9 @@ namespace ERP_CRM_Solution.Controllers
             USUARIO usuario = (USUARIO)Session["UserCredentials"];
 
             // Prepara view
-            Session["ListaManutencaoVencida"] = equiApp.GetAllItens(idAss).Where(p => p.EQUI_DT_MANUTENCAO != null).Where(p => p.EQUI_DT_MANUTENCAO.Value.AddDays(p.PERIODICIDADE.PERI_NR_DIAS) <= DateTime.Today.Date).ToList<EQUIPAMENTO>();
-            Session["ListaManutencaoVencida"] = ((List<EQUIPAMENTO>)Session["ListaManutencaoVencida"]).Where(p => p.EQUI_DT_COMPRA.Value.AddDays(p.EQUI_NR_VIDA_UTIL.Value * 30) > DateTime.Today.Date).ToList<EQUIPAMENTO>();
-            ViewBag.numero = ((List<EQUIPAMENTO>)Session["ListaManutencaoVencida"]).Count;
-            ViewBag.Lista = ((List<EQUIPAMENTO>)Session["ListaManutencaoVencida"]);
+            List<EQUIPAMENTO> lista = equiApp.CalcularManutencaoVencidaLista(idAss);
+            ViewBag.numero = lista.Count;
+            ViewBag.Lista = lista;
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Abre view
@@ -1146,25 +1211,10 @@ namespace ERP_CRM_Solution.Controllers
             Font meuFont1 = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             Font meuFont2 = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
 
-            if (tipo == null)
-            {
-                lista = (List<EQUIPAMENTO>)Session["ListaEquipamentos"];
-                filtro = (EQUIPAMENTO)Session["FiltroEquipamentos"];
-                nomeRel = "EquipamentoLista" + "_" + data + ".pdf";
-                titulo = "Equipamantos - Listagem";
-            }
-            else if (tipo == 1)
-            {
-                lista = (List<EQUIPAMENTO>)Session["ListaEquipamentosDepreciados"];
-                nomeRel = "DepreciadosLista" + "_" + data + ".pdf";
-                titulo = "Equipamentos Depreciados - Listagem";
-            }
-            else if (tipo == 1)
-            {
-                lista = (List<EQUIPAMENTO>)Session["ListaEquipamentosBaixados"];
-                nomeRel = "BaixadosLista" + "_" + data + ".pdf";
-                titulo = "Equipamentos Baixados - Listagem";
-            }
+            lista = (List<EQUIPAMENTO>)Session["ListaEquipamentos"];
+            filtro = (EQUIPAMENTO)Session["FiltroEquipamentos"];
+            nomeRel = "EquipamentoLista" + "_" + data + ".pdf";
+            titulo = "Equipamentos - Listagem";
 
             // Cria documento
             Document pdfDoc = new Document(PageSize.A4.Rotate(), 10, 10, 10, 10);
@@ -1184,7 +1234,7 @@ namespace ERP_CRM_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Imagens/Base/favicon_SystemBR.jpg"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.jpg"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);
@@ -2420,6 +2470,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.ManutVencNum = manutVencNum;
             ViewBag.DepreNum = depreNum;
             ViewBag.BaixaNum = baixaNum;
+            ViewBag.AtivoNum = listaTotal.Count - depreNum - baixaNum;
             ViewBag.ListaManutVenc = listaManutVenc;
             ViewBag.ListaDepre = listaDepre;
             ViewBag.ListaBaixa = listaBaixa;
@@ -2432,6 +2483,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["ListaDepre"] = listaDepre;
             Session["ListaBaixa"] = listaBaixa;
             Session["AtivoNum"] = listaTotal.Count - depreNum - baixaNum;
+            Session["TotalLista"] = listaTotal;
 
             // Resumo Mes Compra
             List<DateTime> datas = listaTotal.Select(p => p.EQUI_DT_COMPRA.Value.Date).Distinct().ToList();
@@ -2449,7 +2501,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["ListaDatas"] = datas;
             Session["ListaCompraResumo"] = lista;
 
-            // Resumo Situacao CRM 
+            // Resumo Situacao  
             List<ModeloViewModel> lista1 = new List<ModeloViewModel>();
             ModeloViewModel mod = new ModeloViewModel();
             mod.Data = "Depreciados";
@@ -2465,6 +2517,7 @@ namespace ERP_CRM_Solution.Controllers
             lista1.Add(mod);
             ViewBag.ListaSituacao = lista1;
             Session["ListaSituacao"] = lista1;
+            Session["VoltaDash"] = 3;
             return View(vm);
         }
 
@@ -2497,7 +2550,7 @@ namespace ERP_CRM_Solution.Controllers
 
         public JsonResult GetDadosGraficoEquipamento()
         {
-            List<EQUIPAMENTO> listaCP1 = (List<EQUIPAMENTO>)Session["Total"];
+            List<EQUIPAMENTO> listaCP1 = (List<EQUIPAMENTO>)Session["TotalLista"];
             List<DateTime> datas = (List<DateTime>)Session["ListaDatas"];
             List<EQUIPAMENTO> listaDia = new List<EQUIPAMENTO>();
             List<String> dias = new List<String>();

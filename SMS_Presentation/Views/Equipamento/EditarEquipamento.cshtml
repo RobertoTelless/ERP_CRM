@@ -187,17 +187,17 @@
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Data de Compra*
-                                                        @Html.TextBoxFor(m => m.EQUI_DT_COMPRA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                                        @Html.TextBoxFor(m => m.EQUI_DT_COMPRA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="dc" })
                                                         @Html.ValidationMessageFor(m => m.EQUI_DT_COMPRA, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Valor*
-                                                        @Html.TextBoxFor(m => m.EQUI_VL_VALOR, null, new { @class = "form-control", autofocus = true })
+                                                        @Html.TextBoxFor(m => m.EQUI_VL_VALOR,  "{0:n2}", new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.EQUI_VL_VALOR, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Valor Residual
-                                                        @Html.TextBoxFor(m => m.EQUI_VL_RESIDUAL, null, new { @class = "form-control", autofocus = true })
+                                                        @Html.TextBoxFor(m => m.EQUI_VL_RESIDUAL,  "{0:n2}", new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.EQUI_VL_RESIDUAL, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
@@ -217,13 +217,23 @@
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">               
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Data de Baixa
-                                                    @Html.TextBoxFor(m => m.EQUI_DT_BAIXA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                                    @Html.TextBoxFor(m => m.EQUI_DT_BAIXA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="db" })
                                                     @Html.ValidationMessageFor(m => m.EQUI_DT_BAIXA, "",new { @style="color:red" })
                                                 </div>
                                                 <div class="col-lg-10 col-md-10 col-xs-12">
                                                     Motivo da Baixa
                                                     @Html.TextAreaFor(m => m.EQUI_DS_MOTIVO_BAIXA, new { @class = "form-control", style = "max-width: 100%; height: 100px;", autofocus = true})
                                                     @Html.ValidationMessageFor(m => m.EQUI_DS_MOTIVO_BAIXA, "",new { @style="color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">               
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Valor Depreciado (R$)
+                                                    @Html.TextBoxFor(m => m.ValorDepreciado,  "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Meses a Depreciar
+                                                    @Html.TextBoxFor(m => m.MesesDepreciacao, null, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                             </div>
                                             @if (Model.AvisaManutencao)
@@ -246,7 +256,7 @@
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
                                                         Data Próxima Manutenção
-                                                        @Html.TextBoxFor(m => m.EQUI_DT_MANUTENCAO.Value.AddDays(m.PERIODICIDADE.PERI_NR_DIAS), "{0:dd/MM/yyyy}", new { @class = "form-control" , autofocus = true, @readonly="readonly",  @style="color:green" })
+                                                        @Html.TextBoxFor(m => m.ProximaManutencao, "{0:dd/MM/yyyy}", new { @class = "form-control" , autofocus = true, @readonly="readonly",  @style="color:green" })
                                                     </div>
                                                 </div>
                                             }
@@ -546,6 +556,8 @@
             $("#cpf").mask("999.999.999-99");
             $("#cnpj").mask("99.999.999/9999-99");
             $("#cep").mask("99999-999");
+            $("#db").mask("99/99/9999");
+            $("#dc").mask("99/99/9999");
         });
     </script>
     @Scripts.Render("~/plugins/iCheck")

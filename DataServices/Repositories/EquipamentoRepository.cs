@@ -56,6 +56,7 @@ namespace DataServices.Repositories
         {
             IQueryable<EQUIPAMENTO> query = Db.EQUIPAMENTO.Where(p => p.EQUI_IN_ATIVO == 1);
             query = query.Where(p => DbFunctions.AddDays(p.EQUI_DT_MANUTENCAO.Value, p.PERIODICIDADE.PERI_NR_DIAS) < DateTime.Today);
+            query = query.Where(p => DbFunctions.AddDays(p.EQUI_DT_COMPRA.Value, (p.EQUI_NR_VIDA_UTIL.Value * 30)) > DateTime.Today);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList().Count;
         }
@@ -64,6 +65,7 @@ namespace DataServices.Repositories
         {
             IQueryable<EQUIPAMENTO> query = Db.EQUIPAMENTO.Where(p => p.EQUI_IN_ATIVO == 1);
             query = query.Where(p => DbFunctions.AddDays(p.EQUI_DT_MANUTENCAO.Value, p.PERIODICIDADE.PERI_NR_DIAS) < DateTime.Today);
+            query = query.Where(p => DbFunctions.AddDays(p.EQUI_DT_COMPRA.Value, (p.EQUI_NR_VIDA_UTIL.Value * 30)) > DateTime.Today);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
