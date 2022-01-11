@@ -423,4 +423,7 @@
   <data name="M0117" xml:space="preserve">
     <value>Existem itens sem quantidade no pedido</value>
   </data>
+  <data name="M0118" xml:space="preserve">
+    <value>Preço já cadastrado para esse produto/filial</value>
+  </data>
 </root>

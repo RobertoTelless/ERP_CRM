@@ -316,6 +316,7 @@
     <Compile Include="Controllers\MensagemController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
+    <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Controllers\TabelasAuxiliaresController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
     <Compile Include="Controllers\TelefoneController.cs" />
@@ -3155,6 +3156,21 @@
     <Content Include="Views\TabelasAuxiliares\IncluirCatFornecedor.cshtml" />
     <Content Include="Views\TabelasAuxiliares\EditarCatFornecedor.cshtml" />
     <Content Include="Views\Equipamento\MontarTelaDashboardEquipamento.cshtml" />
+    <Content Include="Views\Produto\MontarTelaProduto.cshtml" />
+    <Content Include="Views\Produto\IncluirProduto.cshtml" />
+    <Content Include="Views\Produto\EditarProduto.cshtml" />
+    <Content Include="Views\Produto\ConsultarProduto.cshtml" />
+    <Content Include="Views\Produto\ExcluirProduto.cshtml" />
+    <Content Include="Views\Produto\ReativarProduto.cshtml" />
+    <Content Include="Views\Produto\VerCardsProduto.cshtml" />
+    <Content Include="Views\Produto\VerAnexoProduto.cshtml" />
+    <Content Include="Views\Produto\VerMovimentacaoEstoqueProduto.cshtml" />
+    <Content Include="Views\Produto\VerProdutosPontoPedido.cshtml" />
+    <Content Include="Views\Produto\VerProdutosEstoqueZerado.cshtml" />
+    <Content Include="Views\Produto\VerProdutosEstoqueNegativo.cshtml" />
+    <Content Include="Views\Produto\EditarProdutoFornecedor.cshtml" />
+    <Content Include="Views\Produto\EditarProdutoGrade.cshtml" />
+    <Content Include="Views\Produto\IncluirProdutoGrade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

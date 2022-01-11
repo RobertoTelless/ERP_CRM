@@ -165,6 +165,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["PermFinanceiro"] = 0;
                 Session["PermEstoque"] = 0;
                 Session["PermPatrimonio"] = 0;
+                Session["PermVenda"] = 0;
                 Session["NumSMS"] = 0;
                 Session["NumEMail"] = 0;
                 Session["NumZap"] = 0;
@@ -217,6 +218,11 @@ namespace ERP_CRM_Solution.Controllers
                         Session["NumFornecedor"] = item.PLANO.PLAN_NR_FORNECEDOR;
                         Session["NumProduto"] = item.PLANO.PLAN_NR_PRODUTO;
                     }
+                    if (item.PLANO.PLAN_IN_VENDAS == 1)
+                    {
+                        Session["PermVenda"] = 1;
+                    }
+
                 }
                 Session["Planos"] = planos;
 

@@ -764,6 +764,7 @@
     <Compile Include="WorkClasses\Endereco.cs" />
     <Compile Include="WorkClasses\FileQueue.cs" />
     <Compile Include="WorkClasses\Login.cs" />
+    <Compile Include="WorkClasses\PRODUTOS_MAIS_VENDIDOS.cs" />
     <Compile Include="WorkClasses\TrocaSenha.cs" />
   </ItemGroup>
   <ItemGroup>

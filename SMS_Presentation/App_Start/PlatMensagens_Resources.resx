@@ -345,6 +345,15 @@
   <data name="M0084" xml:space="preserve">
     <value>O valor residual não pode ser maior que o valor de compra</value>
   </data>
+  <data name="M0085" xml:space="preserve">
+    <value>Impossível incluir/reativar produto. Número de produtos ativos excede o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0086" xml:space="preserve">
+    <value>Impossível excluir este produto. Ele está vinculado a outras informações</value>
+  </data>
+  <data name="M0087" xml:space="preserve">
+    <value>Impossível excluir este produto. Ele está vinculado a um ou mais pedidos de venda</value>
+  </data>
   <data name="M0109" xml:space="preserve">
     <value>O login não pode ficar em branco</value>
   </data>
