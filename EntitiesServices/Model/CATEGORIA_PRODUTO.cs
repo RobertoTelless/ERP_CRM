@@ -26,6 +26,10 @@ namespace EntitiesServices.Model
         public string CAPR_NM_NOME { get; set; }
         public Nullable<int> CAPR_IN_ATIVO { get; set; }
         public Nullable<int> CAPR_IN_EXPEDICAO { get; set; }
+        public Nullable<int> CAPR_IN_FOOD { get; set; }
+        public Nullable<int> CAPR_IN_GRADE { get; set; }
+        public Nullable<int> CAPR_IN_TAMANHO { get; set; }
+        public Nullable<int> CAPR_IN_SEO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

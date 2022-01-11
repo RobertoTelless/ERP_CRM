@@ -14,8 +14,17 @@ namespace EntitiesServices.Model
     
     public partial class PRODUTO_ORIGEM
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PRODUTO_ORIGEM()
+        {
+            this.PRODUTO = new HashSet<PRODUTO>();
+        }
+    
         public int PROR_CD_ID { get; set; }
         public string PROR_NM_NOME { get; set; }
         public int PROR_IN_ATIVO { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PRODUTO> PRODUTO { get; set; }
     }
 }

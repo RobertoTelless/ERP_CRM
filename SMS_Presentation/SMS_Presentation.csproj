@@ -335,8 +335,16 @@
     <Compile Include="ViewModels\AssinanteViewModel.cs" />
     <Compile Include="ViewModels\CategoriaFornecedorViewModel.cs" />
     <Compile Include="ViewModels\CategoriaEquipamentoViewModel.cs" />
+    <Compile Include="ViewModels\CategoriaProdutoViewModel.cs" />
     <Compile Include="ViewModels\EquipamentoManutencaoViewModel.cs" />
     <Compile Include="ViewModels\EquipamentoViewModel.cs" />
+    <Compile Include="ViewModels\ProdutoFornecedorViewModel.cs" />
+    <Compile Include="ViewModels\ProdutoGradeViewModel.cs" />
+    <Compile Include="ViewModels\ProdutoBarcodeViewModel.cs" />
+    <Compile Include="ViewModels\ProdutoTabelaPrecoViewModel.cs" />
+    <Compile Include="ViewModels\ProdutoViewModel.cs" />
+    <Compile Include="ViewModels\SubcategoriaProdutoViewModel.cs" />
+    <Compile Include="ViewModels\TamanhoViewModel.cs" />
     <Compile Include="ViewModels\TipoAcaoViewModel.cs" />
     <Compile Include="ViewModels\MotivoEncerramentoViewModel.cs" />
     <Compile Include="ViewModels\MotivoCancelamentoViewModel.cs" />
@@ -373,6 +381,7 @@
     <Compile Include="ViewModels\TemplateEmailViewModel.cs" />
     <Compile Include="ViewModels\TemplateSMSViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
+    <Compile Include="ViewModels\UnidadeViewModel.cs" />
     <Compile Include="ViewModels\UsuarioAnexoViewModel.cs" />
     <Compile Include="ViewModels\UsuarioLoginViewModel.cs" />
     <Compile Include="ViewModels\UsuarioViewModel.cs" />

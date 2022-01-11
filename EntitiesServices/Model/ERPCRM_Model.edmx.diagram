@@ -360,6 +360,14 @@
         <AssociationConnector Association="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_EMAIL" />
         <AssociationConnector Association="ERP_CRMModel.FK_CARGO_ASSINANTE" />
         <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_FORNECEDOR_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_PRODUTO_ORIGEM" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_GRADE" Width="1.5" PointX="18.75" PointY="126.125" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAMANHO" Width="1.5" PointX="5.25" PointY="107.5" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAMANHO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_GRADE_PRODUTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_GRADE_TAMANHO" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_BARCODE" Width="1.5" PointX="17.75" PointY="157.25" />
+        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_BARCODE_PRODUTO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

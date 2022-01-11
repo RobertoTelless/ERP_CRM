@@ -205,6 +205,10 @@
           <Property Name="CAPR_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CAPR_IN_ATIVO" Type="int" />
           <Property Name="CAPR_IN_EXPEDICAO" Type="int" />
+          <Property Name="CAPR_IN_FOOD" Type="int" />
+          <Property Name="CAPR_IN_GRADE" Type="int" />
+          <Property Name="CAPR_IN_TAMANHO" Type="int" />
+          <Property Name="CAPR_IN_SEO" Type="int" />
         </EntityType>
         <EntityType Name="CATEGORIA_TELEFONE">
           <Key>
@@ -1377,7 +1381,9 @@
           <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="FILI_CD_ID" Type="int" />
           <Property Name="CAPR_CD_ID" Type="int" />
+          <Property Name="SCPR_CD_ID" Type="int" />
           <Property Name="UNID_CD_ID" Type="int" />
+          <Property Name="PROR_CD_ID" Type="int" />
           <Property Name="PROD_NM_NOME" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="PROD_DS_DESCRICAO" Type="varchar" MaxLength="1000" />
           <Property Name="PROD_QN_QUANTIDADE_MINIMA" Type="int" Nullable="false" />
@@ -1392,7 +1398,6 @@
           <Property Name="PROD_IN_TIPO_PRODUTO" Type="int" />
           <Property Name="PROD_VL_PRECO_VENDA" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PROD_VL_PRECO_PROMOCAO" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="SCPR_CD_ID" Type="int" />
           <Property Name="PROD_DS_INFORMACOES" Type="varchar" MaxLength="1000" />
           <Property Name="PROD_NR_GARANTIA" Type="int" />
           <Property Name="PROD_QN_QUANTIDADE_MAXIMA" Type="int" />
@@ -1431,7 +1436,6 @@
           <Property Name="PROD_NM_FABRICANTE" Type="varchar" MaxLength="50" />
           <Property Name="PROD_NR_BARCODE" Type="varchar" MaxLength="50" />
           <Property Name="PROD_QR_QRCODE" Type="varchar" MaxLength="250" />
-          <Property Name="PROR_CD_ID" Type="int" />
           <Property Name="PROD_NR_CEST" Type="varchar" MaxLength="50" />
           <Property Name="PROD_NR_GTIN_EAN_TRIB" Type="varchar" MaxLength="15" />
           <Property Name="PROD_NM_UNIDADE_TRIB" Type="varchar" MaxLength="50" />
@@ -1463,6 +1467,15 @@
           <Property Name="PRAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="PRAN_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="PRODUTO_BARCODE">
+          <Key>
+            <PropertyRef Name="PRBC_CD_ID" />
+          </Key>
+          <Property Name="PRBC_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PRBC_NR_BARCODE" Type="varchar" MaxLength="50" />
+          <Property Name="PRBC_IN_ATIVO" Type="int" />
+        </EntityType>
         <EntityType Name="PRODUTO_ESTOQUE_FILIAL">
           <Key>
             <PropertyRef Name="PREF_CD_ID" />
@@ -1485,6 +1498,18 @@
           <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
           <Property Name="FORN_CD_ID" Type="int" Nullable="false" />
           <Property Name="PRFO_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUTO_GRADE">
+          <Key>
+            <PropertyRef Name="PRGR_CD_ID" />
+          </Key>
+          <Property Name="PRGR_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PRGR_NM_COR" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PRGR_NM_TAMANHO" Type="varchar" MaxLength="50" />
+          <Property Name="PRGR_QN_QUANTIDADE" Type="int" Nullable="false" />
+          <Property Name="PRGR_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="TAMA_CD_ID" Type="int" />
         </EntityType>
         <EntityType Name="PRODUTO_ORIGEM">
           <Key>
@@ -1557,6 +1582,15 @@
           <Property Name="SUBG_NR_NUMERO" Type="varchar" MaxLength="10" />
           <Property Name="SUBG_NM_EXIBE" Type="varchar" MaxLength="63" StoreGeneratedPattern="Computed" />
           <Property Name="SUBG_DS_DESCRICAO" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="TAMANHO">
+          <Key>
+            <PropertyRef Name="TAMA_CD_ID" />
+          </Key>
+          <Property Name="TAMA_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="TAMA_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TAMA_IN_ATIVO" Type="int" />
         </EntityType>
         <EntityType Name="TAREFA">
           <Key>
@@ -4130,6 +4164,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PRODUTO_BARCODE_PRODUTO">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="1" />
+          <End Role="PRODUTO_BARCODE" Type="Self.PRODUTO_BARCODE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_BARCODE">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PRODUTO_CATEGORIA_PRODUTO">
           <End Role="CATEGORIA_PRODUTO" Type="Self.CATEGORIA_PRODUTO" Multiplicity="0..1" />
           <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="*" />
@@ -4199,6 +4245,42 @@
             </Principal>
             <Dependent Role="PRODUTO_FORNECEDOR">
               <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_GRADE_PRODUTO">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="1" />
+          <End Role="PRODUTO_GRADE" Type="Self.PRODUTO_GRADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_GRADE">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_GRADE_TAMANHO">
+          <End Role="TAMANHO" Type="Self.TAMANHO" Multiplicity="0..1" />
+          <End Role="PRODUTO_GRADE" Type="Self.PRODUTO_GRADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAMANHO">
+              <PropertyRef Name="TAMA_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_GRADE">
+              <PropertyRef Name="TAMA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_PRODUTO_ORIGEM">
+          <End Role="PRODUTO_ORIGEM" Type="Self.PRODUTO_ORIGEM" Multiplicity="0..1" />
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO_ORIGEM">
+              <PropertyRef Name="PROR_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="PROR_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4307,6 +4389,18 @@
             </Principal>
             <Dependent Role="SUBGRUPO">
               <PropertyRef Name="GRUP_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAMANHO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="TAMANHO" Type="Self.TAMANHO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TAMANHO">
+              <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4796,8 +4890,10 @@
           <EntitySet Name="PRECO_PRODUTO" EntityType="Self.PRECO_PRODUTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUTO" EntityType="Self.PRODUTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUTO_ANEXO" EntityType="Self.PRODUTO_ANEXO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUTO_BARCODE" EntityType="Self.PRODUTO_BARCODE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUTO_ESTOQUE_FILIAL" EntityType="Self.PRODUTO_ESTOQUE_FILIAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUTO_FORNECEDOR" EntityType="Self.PRODUTO_FORNECEDOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUTO_GRADE" EntityType="Self.PRODUTO_GRADE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUTO_ORIGEM" EntityType="Self.PRODUTO_ORIGEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUTO_TABELA_PRECO" EntityType="Self.PRODUTO_TABELA_PRECO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REGIME_TRIBUTARIO" EntityType="Self.REGIME_TRIBUTARIO" Schema="dbo" store:Type="Tables" />
@@ -4805,6 +4901,7 @@
           <EntitySet Name="SEXO" EntityType="Self.SEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUBCATEGORIA_PRODUTO" EntityType="Self.SUBCATEGORIA_PRODUTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUBGRUPO" EntityType="Self.SUBGRUPO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAMANHO" EntityType="Self.TAMANHO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TAREFA" EntityType="Self.TAREFA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TAREFA_ACOMPANHAMENTO" EntityType="Self.TAREFA_ACOMPANHAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TAREFA_ANEXO" EntityType="Self.TAREFA_ANEXO" Schema="dbo" store:Type="Tables" />
@@ -5566,6 +5663,10 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="PRODUTO" EntitySet="PRODUTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_BARCODE_PRODUTO" Association="Self.FK_PRODUTO_BARCODE_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="PRODUTO_BARCODE" EntitySet="PRODUTO_BARCODE" />
+          </AssociationSet>
           <AssociationSet Name="FK_PRODUTO_CATEGORIA_PRODUTO" Association="Self.FK_PRODUTO_CATEGORIA_PRODUTO">
             <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
             <End Role="PRODUTO" EntitySet="PRODUTO" />
@@ -5589,6 +5690,18 @@
           <AssociationSet Name="FK_PRODUTO_FORNECEDOR_PRODUTO" Association="Self.FK_PRODUTO_FORNECEDOR_PRODUTO">
             <End Role="PRODUTO" EntitySet="PRODUTO" />
             <End Role="PRODUTO_FORNECEDOR" EntitySet="PRODUTO_FORNECEDOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_GRADE_PRODUTO" Association="Self.FK_PRODUTO_GRADE_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="PRODUTO_GRADE" EntitySet="PRODUTO_GRADE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_GRADE_TAMANHO" Association="Self.FK_PRODUTO_GRADE_TAMANHO">
+            <End Role="TAMANHO" EntitySet="TAMANHO" />
+            <End Role="PRODUTO_GRADE" EntitySet="PRODUTO_GRADE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_PRODUTO_ORIGEM" Association="Self.FK_PRODUTO_PRODUTO_ORIGEM">
+            <End Role="PRODUTO_ORIGEM" EntitySet="PRODUTO_ORIGEM" />
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
           </AssociationSet>
           <AssociationSet Name="FK_PRODUTO_SUBCATEGORIA_PRODUTO" Association="Self.FK_PRODUTO_SUBCATEGORIA_PRODUTO">
             <End Role="SUBCATEGORIA_PRODUTO" EntitySet="SUBCATEGORIA_PRODUTO" />
@@ -5625,6 +5738,10 @@
           <AssociationSet Name="FK_SUBGRUPO_GRUPO" Association="Self.FK_SUBGRUPO_GRUPO">
             <End Role="GRUPO" EntitySet="GRUPO" />
             <End Role="SUBGRUPO" EntitySet="SUBGRUPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAMANHO_ASSINANTE" Association="Self.FK_TAMANHO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TAMANHO" EntitySet="TAMANHO" />
           </AssociationSet>
           <AssociationSet Name="FK_TAREFA_ACOMPANHAMENTO_TAREFA" Association="Self.FK_TAREFA_ACOMPANHAMENTO_TAREFA">
             <End Role="TAREFA" EntitySet="TAREFA" />
@@ -5896,6 +6013,7 @@
           <NavigationProperty Name="TEMPLATE_EMAIL" Relationship="ERP_CRMModel.FK_TEMPLATE_EMAIL_ASSINANTE" FromRole="ASSINANTE" ToRole="TEMPLATE_EMAIL" />
           <NavigationProperty Name="CARGO" Relationship="ERP_CRMModel.FK_CARGO_ASSINANTE" FromRole="ASSINANTE" ToRole="CARGO" />
           <NavigationProperty Name="CATEGORIA_FORNECEDOR" Relationship="ERP_CRMModel.FK_CATEGORIA_FORNECEDOR_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_FORNECEDOR" />
+          <NavigationProperty Name="TAMANHO" Relationship="ERP_CRMModel.FK_TAMANHO_ASSINANTE" FromRole="ASSINANTE" ToRole="TAMANHO" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -6054,6 +6172,10 @@
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CATEGORIA_PRODUTO_ASSINANTE" FromRole="CATEGORIA_PRODUTO" ToRole="ASSINANTE" />
           <NavigationProperty Name="PRODUTO" Relationship="Self.FK_PRODUTO_CATEGORIA_PRODUTO" FromRole="CATEGORIA_PRODUTO" ToRole="PRODUTO" />
           <NavigationProperty Name="SUBCATEGORIA_PRODUTO" Relationship="Self.FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO" FromRole="CATEGORIA_PRODUTO" ToRole="SUBCATEGORIA_PRODUTO" />
+          <Property Name="CAPR_IN_FOOD" Type="Int32" />
+          <Property Name="CAPR_IN_GRADE" Type="Int32" />
+          <Property Name="CAPR_IN_TAMANHO" Type="Int32" />
+          <Property Name="CAPR_IN_SEO" Type="Int32" />
         </EntityType>
         <EntityType Name="CATEGORIA_TELEFONE">
           <Key>
@@ -7533,6 +7655,9 @@
           <NavigationProperty Name="SUBCATEGORIA_PRODUTO" Relationship="Self.FK_PRODUTO_SUBCATEGORIA_PRODUTO" FromRole="PRODUTO" ToRole="SUBCATEGORIA_PRODUTO" />
           <NavigationProperty Name="PRODUTO_TABELA_PRECO" Relationship="Self.FK_PRODUTO_TABELA_PRECO_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_TABELA_PRECO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_PRODUTO_UNIDADE" FromRole="PRODUTO" ToRole="UNIDADE" />
+          <NavigationProperty Name="PRODUTO_ORIGEM" Relationship="ERP_CRMModel.FK_PRODUTO_PRODUTO_ORIGEM" FromRole="PRODUTO" ToRole="PRODUTO_ORIGEM" />
+          <NavigationProperty Name="PRODUTO_GRADE" Relationship="ERP_CRMModel.FK_PRODUTO_GRADE_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_GRADE" />
+          <NavigationProperty Name="PRODUTO_BARCODE" Relationship="ERP_CRMModel.FK_PRODUTO_BARCODE_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_BARCODE" />
         </EntityType>
         <EntityType Name="PRODUTO_ANEXO">
           <Key>
@@ -7581,6 +7706,7 @@
           <Property Name="PROR_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PROR_NM_NOME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PROR_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CRMModel.FK_PRODUTO_PRODUTO_ORIGEM" FromRole="PRODUTO_ORIGEM" ToRole="PRODUTO" />
         </EntityType>
         <EntityType Name="PRODUTO_TABELA_PRECO">
           <Key>
@@ -11481,6 +11607,29 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CATEGORIA_FORNECEDOR" EntitySet="CATEGORIA_FORNECEDOR" />
           </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_PRODUTO_ORIGEM" Association="ERP_CRMModel.FK_PRODUTO_PRODUTO_ORIGEM">
+            <End Role="PRODUTO_ORIGEM" EntitySet="PRODUTO_ORIGEM" />
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+          </AssociationSet>
+          <EntitySet Name="PRODUTO_GRADE" EntityType="ERP_CRMModel.PRODUTO_GRADE" />
+          <EntitySet Name="TAMANHO" EntityType="ERP_CRMModel.TAMANHO" />
+          <AssociationSet Name="FK_TAMANHO_ASSINANTE" Association="ERP_CRMModel.FK_TAMANHO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TAMANHO" EntitySet="TAMANHO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_GRADE_PRODUTO" Association="ERP_CRMModel.FK_PRODUTO_GRADE_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="PRODUTO_GRADE" EntitySet="PRODUTO_GRADE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_GRADE_TAMANHO" Association="ERP_CRMModel.FK_PRODUTO_GRADE_TAMANHO">
+            <End Role="TAMANHO" EntitySet="TAMANHO" />
+            <End Role="PRODUTO_GRADE" EntitySet="PRODUTO_GRADE" />
+          </AssociationSet>
+          <EntitySet Name="PRODUTO_BARCODE" EntityType="ERP_CRMModel.PRODUTO_BARCODE" />
+          <AssociationSet Name="FK_PRODUTO_BARCODE_PRODUTO" Association="ERP_CRMModel.FK_PRODUTO_BARCODE_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="PRODUTO_BARCODE" EntitySet="PRODUTO_BARCODE" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -11981,6 +12130,101 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PRODUTO_PRODUTO_ORIGEM">
+          <End Type="ERP_CRMModel.PRODUTO_ORIGEM" Role="PRODUTO_ORIGEM" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.PRODUTO" Role="PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO_ORIGEM">
+              <PropertyRef Name="PROR_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="PROR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PRODUTO_GRADE">
+          <Key>
+            <PropertyRef Name="PRGR_CD_ID" />
+          </Key>
+          <Property Name="PRGR_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PROD_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PRGR_NM_COR" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PRGR_NM_TAMANHO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PRGR_QN_QUANTIDADE" Type="Int32" Nullable="false" />
+          <Property Name="PRGR_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="TAMA_CD_ID" Type="Int32" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CRMModel.FK_PRODUTO_GRADE_PRODUTO" FromRole="PRODUTO_GRADE" ToRole="PRODUTO" />
+          <NavigationProperty Name="TAMANHO" Relationship="ERP_CRMModel.FK_PRODUTO_GRADE_TAMANHO" FromRole="PRODUTO_GRADE" ToRole="TAMANHO" />
+        </EntityType>
+        <EntityType Name="TAMANHO">
+          <Key>
+            <PropertyRef Name="TAMA_CD_ID" />
+          </Key>
+          <Property Name="TAMA_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="TAMA_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TAMA_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_TAMANHO_ASSINANTE" FromRole="TAMANHO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="PRODUTO_GRADE" Relationship="ERP_CRMModel.FK_PRODUTO_GRADE_TAMANHO" FromRole="TAMANHO" ToRole="PRODUTO_GRADE" />
+        </EntityType>
+        <Association Name="FK_TAMANHO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.TAMANHO" Role="TAMANHO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TAMANHO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_GRADE_PRODUTO">
+          <End Type="ERP_CRMModel.PRODUTO" Role="PRODUTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.PRODUTO_GRADE" Role="PRODUTO_GRADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_GRADE">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_GRADE_TAMANHO">
+          <End Type="ERP_CRMModel.TAMANHO" Role="TAMANHO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.PRODUTO_GRADE" Role="PRODUTO_GRADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAMANHO">
+              <PropertyRef Name="TAMA_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_GRADE">
+              <PropertyRef Name="TAMA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PRODUTO_BARCODE">
+          <Key>
+            <PropertyRef Name="PRBC_CD_ID" />
+          </Key>
+          <Property Name="PRBC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PROD_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PRBC_NR_BARCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PRBC_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CRMModel.FK_PRODUTO_BARCODE_PRODUTO" FromRole="PRODUTO_BARCODE" ToRole="PRODUTO" />
+        </EntityType>
+        <Association Name="FK_PRODUTO_BARCODE_PRODUTO">
+          <End Type="ERP_CRMModel.PRODUTO" Role="PRODUTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.PRODUTO_BARCODE" Role="PRODUTO_BARCODE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_BARCODE">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12197,6 +12441,10 @@
           <EntitySetMapping Name="CATEGORIA_PRODUTO">
             <EntityTypeMapping TypeName="ERP_CRMModel.CATEGORIA_PRODUTO">
               <MappingFragment StoreEntitySet="CATEGORIA_PRODUTO">
+                <ScalarProperty Name="CAPR_IN_SEO" ColumnName="CAPR_IN_SEO" />
+                <ScalarProperty Name="CAPR_IN_TAMANHO" ColumnName="CAPR_IN_TAMANHO" />
+                <ScalarProperty Name="CAPR_IN_GRADE" ColumnName="CAPR_IN_GRADE" />
+                <ScalarProperty Name="CAPR_IN_FOOD" ColumnName="CAPR_IN_FOOD" />
                 <ScalarProperty Name="CAPR_CD_ID" ColumnName="CAPR_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CAPR_NM_NOME" ColumnName="CAPR_NM_NOME" />
@@ -14024,6 +14272,39 @@
                 <ScalarProperty Name="TEEM_NM_NOME" ColumnName="TEEM_NM_NOME" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="TEEM_CD_ID" ColumnName="TEEM_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUTO_GRADE">
+            <EntityTypeMapping TypeName="ERP_CRMModel.PRODUTO_GRADE">
+              <MappingFragment StoreEntitySet="PRODUTO_GRADE">
+                <ScalarProperty Name="TAMA_CD_ID" ColumnName="TAMA_CD_ID" />
+                <ScalarProperty Name="PRGR_IN_ATIVO" ColumnName="PRGR_IN_ATIVO" />
+                <ScalarProperty Name="PRGR_QN_QUANTIDADE" ColumnName="PRGR_QN_QUANTIDADE" />
+                <ScalarProperty Name="PRGR_NM_TAMANHO" ColumnName="PRGR_NM_TAMANHO" />
+                <ScalarProperty Name="PRGR_NM_COR" ColumnName="PRGR_NM_COR" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+                <ScalarProperty Name="PRGR_CD_ID" ColumnName="PRGR_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAMANHO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.TAMANHO">
+              <MappingFragment StoreEntitySet="TAMANHO">
+                <ScalarProperty Name="TAMA_IN_ATIVO" ColumnName="TAMA_IN_ATIVO" />
+                <ScalarProperty Name="TAMA_NM_NOME" ColumnName="TAMA_NM_NOME" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="TAMA_CD_ID" ColumnName="TAMA_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUTO_BARCODE">
+            <EntityTypeMapping TypeName="ERP_CRMModel.PRODUTO_BARCODE">
+              <MappingFragment StoreEntitySet="PRODUTO_BARCODE">
+                <ScalarProperty Name="PRBC_IN_ATIVO" ColumnName="PRBC_IN_ATIVO" />
+                <ScalarProperty Name="PRBC_NR_BARCODE" ColumnName="PRBC_NR_BARCODE" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+                <ScalarProperty Name="PRBC_CD_ID" ColumnName="PRBC_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -173,7 +173,13 @@
     <Compile Include="Interfaces\ICargoAppService.cs" />
     <Compile Include="Interfaces\ICategoriaFornecedorAppService.cs" />
     <Compile Include="Interfaces\ICategoriaEquipamentoAppService.cs" />
+    <Compile Include="Interfaces\ICategoriaProdutoAppService.cs" />
     <Compile Include="Interfaces\IEquipamentoAppService.cs" />
+    <Compile Include="Interfaces\IProdutoAppService.cs" />
+    <Compile Include="Interfaces\IProdutoEstoqueFilialAppService.cs" />
+    <Compile Include="Interfaces\IProdutoTabelaPrecoAppService.cs" />
+    <Compile Include="Interfaces\ISubCategoriaProdutoAppService.cs" />
+    <Compile Include="Interfaces\ITamanhoAppService.cs" />
     <Compile Include="Interfaces\ITipoAcaoAppService.cs" />
     <Compile Include="Interfaces\IMotivoEncerramentoAppService.cs" />
     <Compile Include="Interfaces\IMotivoCancelamentoAppService.cs" />
@@ -201,6 +207,7 @@
     <Compile Include="Interfaces\ITemplateSMSAppService.cs" />
     <Compile Include="Interfaces\ITemplateAppService.cs" />
     <Compile Include="Interfaces\ITipoPessoaAppService.cs" />
+    <Compile Include="Interfaces\IUnidadeAppService.cs" />
     <Compile Include="Interfaces\IUsuarioAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AgendaAppService.cs" />
@@ -210,7 +217,13 @@
     <Compile Include="Services\CargoAppService.cs" />
     <Compile Include="Services\CategoriaFornecedorAppService.cs" />
     <Compile Include="Services\CategoriaEquipamentoAppService.cs" />
+    <Compile Include="Services\CategoriaProdutoAppService.cs" />
     <Compile Include="Services\EquipamentoAppService.cs" />
+    <Compile Include="Services\ProdutoAppService.cs" />
+    <Compile Include="Services\ProdutoEstoqueFilialAppService.cs" />
+    <Compile Include="Services\ProdutoTabelaPrecoAppService.cs" />
+    <Compile Include="Services\SubcategoriaProdutoAppService.cs" />
+    <Compile Include="Services\TamanhoAppService.cs" />
     <Compile Include="Services\TipoAcaoAppService.cs" />
     <Compile Include="Services\MotivoEncerramentoAppService.cs" />
     <Compile Include="Services\MotivoCancelamentoAppService.cs" />
@@ -238,6 +251,7 @@
     <Compile Include="Services\TemplateSMSAppService.cs" />
     <Compile Include="Services\TemplateAppService.cs" />
     <Compile Include="Services\TipoPessoaAppService.cs" />
+    <Compile Include="Services\UnidadeAppService.cs" />
     <Compile Include="Services\UsuarioAppService.cs" />
   </ItemGroup>
   <ItemGroup />

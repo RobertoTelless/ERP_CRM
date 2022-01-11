@@ -181,7 +181,14 @@
     <Compile Include="EntitiesServices\AssinanteService.cs" />
     <Compile Include="EntitiesServices\CategoriaFornecedorService.cs" />
     <Compile Include="EntitiesServices\CategoriaEquipamentoService.cs" />
+    <Compile Include="EntitiesServices\CategoriaProdutoService.cs" />
     <Compile Include="EntitiesServices\EquipamentoService.cs" />
+    <Compile Include="EntitiesServices\ProdutoEstoqueFilialService.cs" />
+    <Compile Include="EntitiesServices\ProdutoMovimentoEstoqueService.cs" />
+    <Compile Include="EntitiesServices\ProdutoService.cs" />
+    <Compile Include="EntitiesServices\ProdutoTabelaPrecoService.cs" />
+    <Compile Include="EntitiesServices\SubCategoriaProdutoService.cs" />
+    <Compile Include="EntitiesServices\TamanhoService.cs" />
     <Compile Include="EntitiesServices\TipoAcaoService.cs" />
     <Compile Include="EntitiesServices\MotivoEncerramentoService.cs" />
     <Compile Include="EntitiesServices\MotivoCancelamentoService.cs" />
@@ -212,13 +219,26 @@
     <Compile Include="EntitiesServices\TemplateSMSService.cs" />
     <Compile Include="EntitiesServices\TemplateService.cs" />
     <Compile Include="EntitiesServices\TipoPessoaService.cs" />
+    <Compile Include="EntitiesServices\UnidadeService.cs" />
     <Compile Include="EntitiesServices\UsuarioService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAgendaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteCnpjService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaFornecedorService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaEquipamentoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ICategoriaProdutoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IEquipamentoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IFormaEnvioService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IFormaFreteService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IFormaPagamentoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IMovimentoEstoqueProdutoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IPedidoCompraService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IProdutoEstoqueFilialService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IProdutoMovimentoEstoqueService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IProdutoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IProdutoTabelaPrecoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ISubCategoriaProdutoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ITamanhoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITipoAcaoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IMotivoEncerramentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IMotivoCancelamentoService.cs" />
@@ -249,6 +269,7 @@
     <Compile Include="Interfaces\EntitiesServices\ITemplateSMSService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITemplateService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITipoPessoaService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IUnidadeService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IUsuarioService.cs" />
     <Compile Include="Interfaces\Repositories\IAgendaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAgendaRepository.cs" />
@@ -259,6 +280,7 @@
     <Compile Include="Interfaces\Repositories\ICargoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaProdutoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMAcaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMComentarioRepository.cs" />
@@ -269,17 +291,34 @@
     <Compile Include="Interfaces\Repositories\IEquipamentoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEquipamentoManutencaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEquipamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFormaEnvioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFormaFreteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFormaPagamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorCnpjRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorContatoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoContatoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IItemPedidoCompraRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMensagemAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMensagemDestinoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMensagemRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMotivoCancelamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMotivoEncerramentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMovimentoEstoqueProdutoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPedidoCompraAcompanhamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPedidoCompraAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPedidoCompraRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IProdutoAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IProdutoEstoqueFilialRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IProdutoBarcodeRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IProdutoFornecedorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IProdutoGradeRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IProdutoMovimentoEstoqueRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IProdutoOrigemRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IProdutoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IProdutoTabelaPrecoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRegimeTributarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaAgendaRepository.cs" />
@@ -306,6 +345,8 @@
     <Compile Include="Interfaces\Repositories\IPeriodicidadeTarefaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPlanoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryBase.cs" />
+    <Compile Include="Interfaces\Repositories\ISubcategoriaProdutoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITamanhoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITarefaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITarefaNotificacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITarefaRepository.cs" />
@@ -318,7 +359,10 @@
     <Compile Include="Interfaces\Repositories\ITipoPessoaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoContribuinteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoTarefaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoTransporteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoVeiculoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUFRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IUnidadeRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioRepository.cs" />
     <Compile Include="Model\AGENDA.cs">
@@ -603,10 +647,16 @@
     <Compile Include="Model\PRODUTO_ANEXO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\PRODUTO_BARCODE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\PRODUTO_ESTOQUE_FILIAL.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PRODUTO_FORNECEDOR.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PRODUTO_GRADE.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PRODUTO_ORIGEM.cs">
@@ -628,6 +678,9 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SUBGRUPO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TAMANHO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TAREFA.cs">

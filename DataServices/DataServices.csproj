@@ -175,6 +175,7 @@
     <Compile Include="Repositories\AssinanteRepository.cs" />
     <Compile Include="Repositories\CargoRepository.cs" />
     <Compile Include="Repositories\CategoriaEquipamentoRepository.cs" />
+    <Compile Include="Repositories\CategoriaProdutoRepository.cs" />
     <Compile Include="Repositories\CRMAcaoRepository.cs" />
     <Compile Include="Repositories\CRMAnexoRepository.cs" />
     <Compile Include="Repositories\CRMComentarioRepository.cs" />
@@ -197,6 +198,15 @@
     <Compile Include="Repositories\MensagemRepository.cs" />
     <Compile Include="Repositories\MotivoCancelamentoRepository.cs" />
     <Compile Include="Repositories\MotivoEncerramentoRepository.cs" />
+    <Compile Include="Repositories\ProdutoAnexoRepository.cs" />
+    <Compile Include="Repositories\ProdutoEstoqueFilialRepository.cs" />
+    <Compile Include="Repositories\ProdutoBarcodeRepository.cs" />
+    <Compile Include="Repositories\ProdutoFornecedorRepository.cs" />
+    <Compile Include="Repositories\ProdutoGradeRepository.cs" />
+    <Compile Include="Repositories\ProdutoMovimentoEstoqueRepository.cs" />
+    <Compile Include="Repositories\ProdutoOrigemRepository.cs" />
+    <Compile Include="Repositories\ProdutoRepository.cs" />
+    <Compile Include="Repositories\ProdutoTabelaPrecoRepository.cs" />
     <Compile Include="Repositories\SexoRepository.cs" />
     <Compile Include="Repositories\RegimeTributarioRepository.cs" />
     <Compile Include="Repositories\CategoriaAgendaRepository.cs" />
@@ -223,6 +233,8 @@
     <Compile Include="Repositories\PeriodicidadeTarefaRepository.cs" />
     <Compile Include="Repositories\PlanoRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Repositories\SubcategoriaProdutoRepository.cs" />
+    <Compile Include="Repositories\TamanhoRepository.cs" />
     <Compile Include="Repositories\TarefaAnexoRepository.cs" />
     <Compile Include="Repositories\TarefaNotificacaoRepository.cs" />
     <Compile Include="Repositories\TarefaRepository.cs" />
@@ -236,6 +248,7 @@
     <Compile Include="Repositories\TipoContribuinteRepository.cs" />
     <Compile Include="Repositories\TipoTarefaRepository.cs" />
     <Compile Include="Repositories\UFRepository.cs" />
+    <Compile Include="Repositories\UnidadeRepository.cs" />
     <Compile Include="Repositories\UsuarioAnexoRepository.cs" />
     <Compile Include="Repositories\UsuarioRepository.cs" />
   </ItemGroup>
