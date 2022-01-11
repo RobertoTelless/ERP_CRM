@@ -151,5 +151,7 @@ namespace EntitiesServices.Model
         public virtual DbSet<PRODUTO_GRADE> PRODUTO_GRADE { get; set; }
         public virtual DbSet<TAMANHO> TAMANHO { get; set; }
         public virtual DbSet<PRODUTO_BARCODE> PRODUTO_BARCODE { get; set; }
+        public virtual DbSet<FICHA_TECNICA> FICHA_TECNICA { get; set; }
+        public virtual DbSet<FICHA_TECNICA_DETALHE> FICHA_TECNICA_DETALHE { get; set; }
     }
 }

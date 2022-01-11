@@ -27,6 +27,8 @@ namespace EntitiesServices.Model
             this.PRODUTO_TABELA_PRECO = new HashSet<PRODUTO_TABELA_PRECO>();
             this.PRODUTO_GRADE = new HashSet<PRODUTO_GRADE>();
             this.PRODUTO_BARCODE = new HashSet<PRODUTO_BARCODE>();
+            this.FICHA_TECNICA = new HashSet<FICHA_TECNICA>();
+            this.FICHA_TECNICA_DETALHE = new HashSet<FICHA_TECNICA_DETALHE>();
         }
     
         public int PROD_CD_ID { get; set; }
@@ -133,5 +135,9 @@ namespace EntitiesServices.Model
         public virtual ICollection<PRODUTO_GRADE> PRODUTO_GRADE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PRODUTO_BARCODE> PRODUTO_BARCODE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FICHA_TECNICA> FICHA_TECNICA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FICHA_TECNICA_DETALHE> FICHA_TECNICA_DETALHE { get; set; }
     }
 }

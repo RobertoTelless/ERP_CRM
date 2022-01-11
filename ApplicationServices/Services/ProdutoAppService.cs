@@ -135,7 +135,7 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(Int32? catId, Int32? subId, String nome, String marca, String codigo, String cod, Int32? filial, Int32 ativo, Int32 idAss, out List<PRODUTO> objeto)
+        public Int32 ExecuteFilter(Int32? catId, Int32? subId, String nome, String marca, String codigo, String cod, Int32? filial, Int32 ativo,  Int32? tipo, Int32 idAss, out List<PRODUTO> objeto)
         {
             try
             {
@@ -143,7 +143,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(catId, subId, nome, marca, codigo, cod, filial, ativo, idAss);
+                objeto = _baseService.ExecuteFilter(catId, subId, nome, marca, codigo, cod, filial, ativo, tipo, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;

@@ -3171,6 +3171,9 @@
     <Content Include="Views\Produto\EditarProdutoFornecedor.cshtml" />
     <Content Include="Views\Produto\EditarProdutoGrade.cshtml" />
     <Content Include="Views\Produto\IncluirProdutoGrade.cshtml" />
+    <Content Include="Views\Produto\IncluirProdutoFornecedor.cshtml" />
+    <Content Include="Views\Produto\EditarProdutoBarcode.cshtml" />
+    <Content Include="Views\Produto\IncluirProdutoBarcode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

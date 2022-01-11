@@ -28,7 +28,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<UNIDADE> GetAllUnidades(Int32 idAss);
         List<TAMANHO> GetAllTamanhos(Int32 idAss);
         PRODUTO_ANEXO GetAnexoById(Int32 id);
-        List<PRODUTO> ExecuteFilter(Int32? catId, Int32? subId, String nome, String marca, String codigo, String cod, Int32? filial, Int32 ativo, Int32 idAss);
+        List<PRODUTO> ExecuteFilter(Int32? catId, Int32? subId, String nome, String marca, String codigo, String cod, Int32? filial, Int32 ativo, Int32? tipo, Int32 idAss);
         
         PRODUTO_FORNECEDOR GetFornecedorById(Int32 id);
         PRODUTO_GRADE GetGradeById(Int32 id);
@@ -37,7 +37,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 EditGrade(PRODUTO_GRADE item);
         Int32 CreateGrade(PRODUTO_GRADE item);
         //FICHA_TECNICA_DETALHE GetFichaTecnicaDetalheById(Int32 id);
-        
+
         List<PRODUTO> GetPontoPedido(Int32 idAss);
         List<PRODUTO> GetEstoqueZerado(Int32 idAss);
         List<PRODUTO_ORIGEM> GetAllOrigens(Int32 idAss);

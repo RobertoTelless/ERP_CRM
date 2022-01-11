@@ -88,7 +88,7 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<PRODUTO> ExecuteFilter(Int32? catId, Int32? subId, String nome, String marca, String codigo, String cod, Int32? filial, Int32 ativo, Int32 idAss)
+        public List<PRODUTO> ExecuteFilter(Int32? catId, Int32? subId, String nome, String marca, String codigo, String cod, Int32? filial, Int32 ativo, Int32? tipo, Int32 idAss)
         {
             List<PRODUTO> lista = new List<PRODUTO>();
             IQueryable<PRODUTO> query = Db.PRODUTO;
@@ -100,6 +100,10 @@ namespace DataServices.Repositories
             if (filial != null)
             {
                 query = query.Where(p => p.FILI_CD_ID == filial);
+            }
+            if (tipo != null)
+            {
+                query = query.Where(p => p.PROD_IN_TIPO_PRODUTO == tipo);
             }
             if (subId != null)
             {

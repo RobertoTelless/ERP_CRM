@@ -231,10 +231,10 @@ namespace SMS_Presentation.Controllers
             ViewBag.Subs = new SelectList(prodApp.GetAllSubs(idAss).OrderBy(x => x.SCPR_NM_NOME).ToList<SUBCATEGORIA_PRODUTO>(), "SCPR_CD_ID", "SCPR_NM_NOME");
             ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss), "FILI_CD_ID", "FILI_NM_NOME");
             ViewBag.Unidades = new SelectList(unApp.GetAllItens(idAss).Where(x => x.UNID_IN_TIPO_UNIDADE == 1).OrderBy(p => p.UNID_NM_NOME).ToList<UNIDADE>(), "UNID_CD_ID", "UNID_NM_NOME");
-            List<SelectListItem> ativo = new List<SelectListItem>();
-            ativo.Add(new SelectListItem() { Text = "Ativo", Value = "1" });
-            ativo.Add(new SelectListItem() { Text = "Inativo", Value = "0" });
-            ViewBag.Ativos = new SelectList(ativo, "Value", "Text");
+            List<SelectListItem> tipo = new List<SelectListItem>();
+            tipo.Add(new SelectListItem() { Text = "Produto", Value = "1" });
+            tipo.Add(new SelectListItem() { Text = "Insumo", Value = "0" });
+            ViewBag.Tipos = new SelectList(tipo, "Value", "Text");
             ViewBag.Produtos = ((List<PRODUTO>)Session["ListaProduto"]).Count;
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             ViewBag.CodigoProduto = Session["IdProduto"];
@@ -362,7 +362,7 @@ namespace SMS_Presentation.Controllers
                 {
                     item.FILI_CD_ID = usuario.FILI_CD_ID;
                 }
-                Int32 volta = prodApp.ExecuteFilter(item.CAPR_CD_ID, item.SCPR_CD_ID, item.PROD_NM_NOME, item.PROD_NM_MARCA, item.PROD_NR_BARCODE, item.PROD_CD_CODIGO, item.FILI_CD_ID, item.PROD_IN_ATIVO, idAss, out listaObj);
+                Int32 volta = prodApp.ExecuteFilter(item.CAPR_CD_ID, item.SCPR_CD_ID, item.PROD_NM_NOME, item.PROD_NM_MARCA, item.PROD_NR_BARCODE, item.PROD_CD_CODIGO, item.FILI_CD_ID, item.PROD_IN_ATIVO, item.PROD_IN_TIPO_PRODUTO, idAss, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)
@@ -869,10 +869,10 @@ namespace SMS_Presentation.Controllers
             // Recupera preços
 
             // Exibe mensagem
-            //if (item.PROD_IN_COMPOSTO == 1 & item.FICHA_TECNICA.Count == 0)
-            //{
-            //    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0098", CultureInfo.CurrentCulture));
-            //}
+            if (item.PROD_IN_COMPOSTO == 1 & item.FICHA_TECNICA.Count == 0)
+            {
+                ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0119", CultureInfo.CurrentCulture));
+            }
 
             if ((Int32)Session["MensProduto"] == 2)
             {
@@ -1007,10 +1007,10 @@ namespace SMS_Presentation.Controllers
             // Recupera preços
 
             // Exibe mensagem
-            //if (item.PROD_IN_COMPOSTO == 1 & item.FICHA_TECNICA.Count == 0)
-            //{
-            //    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0098", CultureInfo.CurrentCulture));
-            //}
+            if (item.PROD_IN_COMPOSTO == 1 & item.FICHA_TECNICA.Count == 0)
+            {
+                ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0119", CultureInfo.CurrentCulture));
+            }
 
 
             if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" && usuario.PERFIL.PERF_SG_SIGLA != "GER")
@@ -1994,6 +1994,139 @@ namespace SMS_Presentation.Controllers
                     PRODUTO_GRADE item = Mapper.Map<ProdutoGradeViewModel, PRODUTO_GRADE>(vm);
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     Int32 volta = prodApp.ValidateCreateGrade(item);
+                    // Verifica retorno
+                    return RedirectToAction("VoltarAnexoProduto");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditarProdutoBarcode(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Prepara view
+            PRODUTO_BARCODE item = prodApp.GetBarcodeById(id);
+            objetoProdAntes = (PRODUTO)Session["Produto"];
+            ProdutoBarcodeViewModel vm = Mapper.Map<PRODUTO_BARCODE, ProdutoBarcodeViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditarProdutoBarcode(ProdutoBarcodeViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    PRODUTO_BARCODE item = Mapper.Map<ProdutoBarcodeViewModel, PRODUTO_BARCODE>(vm);
+                    Int32 volta = prodApp.ValidateEditBarcode(item);
+
+                    // Verifica retorno
+                    return RedirectToAction("VoltarAnexoProduto");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ExcluirProdutoBarcode(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            PRODUTO_BARCODE item = prodApp.GetBarcodeById(id);
+            objetoProdAntes = (PRODUTO)Session["Produto"];
+            item.PRBC_IN_ATIVO = 0;
+            Int32 volta = prodApp.ValidateEditBarcode(item);
+            return RedirectToAction("VoltarAnexoProduto");
+        }
+
+        [HttpGet]
+        public ActionResult ReativarProdutoBarcode(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            PRODUTO_BARCODE item = prodApp.GetBarcodeById(id);
+            objetoProdAntes = (PRODUTO)Session["Produto"];
+            item.PRBC_IN_ATIVO = 1;
+            Int32 volta = prodApp.ValidateEditBarcode(item);
+            return RedirectToAction("VoltarAnexoProduto");
+        }
+
+        [HttpGet]
+        public ActionResult IncluirProdutoBarcode()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Prepara view
+            PRODUTO_BARCODE item = new PRODUTO_BARCODE();
+            ProdutoBarcodeViewModel vm = Mapper.Map<PRODUTO_BARCODE, ProdutoBarcodeViewModel>(item);
+            vm.PROD_CD_ID = (Int32)Session["IdVolta"];
+            vm.PRBC_IN_ATIVO = 1;
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult IncluirProdutoBarcode(ProdutoBarcodeViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    PRODUTO_BARCODE item = Mapper.Map<ProdutoBarcodeViewModel, PRODUTO_BARCODE>(vm);
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = prodApp.ValidadeCreateBarcode(item);
                     // Verifica retorno
                     return RedirectToAction("VoltarAnexoProduto");
                 }

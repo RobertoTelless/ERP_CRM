@@ -767,6 +767,34 @@
           <Property Name="EQMA_TX_OBSERVACOES" Type="text" />
           <Property Name="EQMA_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="FICHA_TECNICA">
+          <Key>
+            <PropertyRef Name="FITE_CD_ID" />
+          </Key>
+          <Property Name="FITE_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
+          <Property Name="FITE_NM_NOME" Type="varchar" MaxLength="50" />
+          <Property Name="FITE_NM_UNITARIO" Type="varchar" MaxLength="50" />
+          <Property Name="FITE_S_DESCRICAO" Type="varchar" MaxLength="5000" />
+          <Property Name="FITE_DT_CADASTRO" Type="date" Nullable="false" />
+          <Property Name="FITE_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="FITE_DS_APRESENTACAO" Type="varchar" MaxLength="5000" />
+          <Property Name="FITE_AQ_APRESENTACAO" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="FICHA_TECNICA_DETALHE">
+          <Key>
+            <PropertyRef Name="FITD_CD_ID" />
+          </Key>
+          <Property Name="FITD_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FITE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
+          <Property Name="FITD_QN_QUANTIDADE" Type="decimal" Precision="14" Scale="4" Nullable="false" />
+          <Property Name="FITD_NM_NOME" Type="varchar" MaxLength="50" />
+          <Property Name="FITD_DS_DESCRICAO" Type="varchar" MaxLength="500" />
+          <Property Name="FITD_DT_CADASTRO" Type="date" Nullable="false" />
+          <Property Name="FITD_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="FILIAL">
           <Key>
             <PropertyRef Name="FILI_CD_ID" />
@@ -3181,6 +3209,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FICHA_TECNICA_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="FICHA_TECNICA" Type="Self.FICHA_TECNICA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="FICHA_TECNICA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FICHA_TECNICA_DETALHE_FICHA_TECNICA">
+          <End Role="FICHA_TECNICA" Type="Self.FICHA_TECNICA" Multiplicity="1" />
+          <End Role="FICHA_TECNICA_DETALHE" Type="Self.FICHA_TECNICA_DETALHE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FICHA_TECNICA">
+              <PropertyRef Name="FITE_CD_ID" />
+            </Principal>
+            <Dependent Role="FICHA_TECNICA_DETALHE">
+              <PropertyRef Name="FITE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FICHA_TECNICA_DETALHE_PRODUTO">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="1" />
+          <End Role="FICHA_TECNICA_DETALHE" Type="Self.FICHA_TECNICA_DETALHE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="FICHA_TECNICA_DETALHE">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FICHA_TECNICA_PRODUTO">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="1" />
+          <End Role="FICHA_TECNICA" Type="Self.FICHA_TECNICA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="FICHA_TECNICA">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FILIAL_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="FILIAL" Type="Self.FILIAL" Multiplicity="*" />
@@ -4850,6 +4926,8 @@
           <EntitySet Name="EQUIPAMENTO" EntityType="Self.EQUIPAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EQUIPAMENTO_ANEXO" EntityType="Self.EQUIPAMENTO_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EQUIPAMENTO_MANUTENCAO" EntityType="Self.EQUIPAMENTO_MANUTENCAO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FICHA_TECNICA" EntityType="Self.FICHA_TECNICA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FICHA_TECNICA_DETALHE" EntityType="Self.FICHA_TECNICA_DETALHE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FILIAL" EntityType="Self.FILIAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FORMA_ENVIO" EntityType="Self.FORMA_ENVIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FORMA_FRETE" EntityType="Self.FORMA_FRETE" Schema="dbo" store:Type="Tables" />
@@ -5335,6 +5413,22 @@
           <AssociationSet Name="FK_EQUIPAMENTO_PERIODICIDADE" Association="Self.FK_EQUIPAMENTO_PERIODICIDADE">
             <End Role="PERIODICIDADE" EntitySet="PERIODICIDADE" />
             <End Role="EQUIPAMENTO" EntitySet="EQUIPAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FICHA_TECNICA_ASSINANTE" Association="Self.FK_FICHA_TECNICA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="FICHA_TECNICA" EntitySet="FICHA_TECNICA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FICHA_TECNICA_DETALHE_FICHA_TECNICA" Association="Self.FK_FICHA_TECNICA_DETALHE_FICHA_TECNICA">
+            <End Role="FICHA_TECNICA" EntitySet="FICHA_TECNICA" />
+            <End Role="FICHA_TECNICA_DETALHE" EntitySet="FICHA_TECNICA_DETALHE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FICHA_TECNICA_DETALHE_PRODUTO" Association="Self.FK_FICHA_TECNICA_DETALHE_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="FICHA_TECNICA_DETALHE" EntitySet="FICHA_TECNICA_DETALHE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FICHA_TECNICA_PRODUTO" Association="Self.FK_FICHA_TECNICA_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="FICHA_TECNICA" EntitySet="FICHA_TECNICA" />
           </AssociationSet>
           <AssociationSet Name="FK_FILIAL_ASSINANTE" Association="Self.FK_FILIAL_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -6015,6 +6109,7 @@
           <NavigationProperty Name="CARGO" Relationship="ERP_CRMModel.FK_CARGO_ASSINANTE" FromRole="ASSINANTE" ToRole="CARGO" />
           <NavigationProperty Name="CATEGORIA_FORNECEDOR" Relationship="ERP_CRMModel.FK_CATEGORIA_FORNECEDOR_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_FORNECEDOR" />
           <NavigationProperty Name="TAMANHO" Relationship="ERP_CRMModel.FK_TAMANHO_ASSINANTE" FromRole="ASSINANTE" ToRole="TAMANHO" />
+          <NavigationProperty Name="FICHA_TECNICA" Relationship="ERP_CRMModel.FK_FICHA_TECNICA_ASSINANTE" FromRole="ASSINANTE" ToRole="FICHA_TECNICA" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -7660,6 +7755,8 @@
           <NavigationProperty Name="PRODUTO_ORIGEM" Relationship="ERP_CRMModel.FK_PRODUTO_PRODUTO_ORIGEM" FromRole="PRODUTO" ToRole="PRODUTO_ORIGEM" />
           <NavigationProperty Name="PRODUTO_GRADE" Relationship="ERP_CRMModel.FK_PRODUTO_GRADE_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_GRADE" />
           <NavigationProperty Name="PRODUTO_BARCODE" Relationship="ERP_CRMModel.FK_PRODUTO_BARCODE_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_BARCODE" />
+          <NavigationProperty Name="FICHA_TECNICA" Relationship="ERP_CRMModel.FK_FICHA_TECNICA_PRODUTO" FromRole="PRODUTO" ToRole="FICHA_TECNICA" />
+          <NavigationProperty Name="FICHA_TECNICA_DETALHE" Relationship="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_PRODUTO" FromRole="PRODUTO" ToRole="FICHA_TECNICA_DETALHE" />
         </EntityType>
         <EntityType Name="PRODUTO_ANEXO">
           <Key>
@@ -11632,6 +11729,24 @@
             <End Role="PRODUTO" EntitySet="PRODUTO" />
             <End Role="PRODUTO_BARCODE" EntitySet="PRODUTO_BARCODE" />
           </AssociationSet>
+          <EntitySet Name="FICHA_TECNICA" EntityType="ERP_CRMModel.FICHA_TECNICA" />
+          <EntitySet Name="FICHA_TECNICA_DETALHE" EntityType="ERP_CRMModel.FICHA_TECNICA_DETALHE" />
+          <AssociationSet Name="FK_FICHA_TECNICA_ASSINANTE" Association="ERP_CRMModel.FK_FICHA_TECNICA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="FICHA_TECNICA" EntitySet="FICHA_TECNICA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FICHA_TECNICA_DETALHE_FICHA_TECNICA" Association="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_FICHA_TECNICA">
+            <End Role="FICHA_TECNICA" EntitySet="FICHA_TECNICA" />
+            <End Role="FICHA_TECNICA_DETALHE" EntitySet="FICHA_TECNICA_DETALHE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FICHA_TECNICA_PRODUTO" Association="ERP_CRMModel.FK_FICHA_TECNICA_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="FICHA_TECNICA" EntitySet="FICHA_TECNICA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FICHA_TECNICA_DETALHE_PRODUTO" Association="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="FICHA_TECNICA_DETALHE" EntitySet="FICHA_TECNICA_DETALHE" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -12223,6 +12338,87 @@
               <PropertyRef Name="PROD_CD_ID" />
             </Principal>
             <Dependent Role="PRODUTO_BARCODE">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FICHA_TECNICA">
+          <Key>
+            <PropertyRef Name="FITE_CD_ID" />
+          </Key>
+          <Property Name="FITE_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="FITE_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FITE_NM_UNITARIO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FITE_S_DESCRICAO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="FITE_DT_CADASTRO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FITE_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="FITE_DS_APRESENTACAO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="FITE_AQ_APRESENTACAO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_FICHA_TECNICA_ASSINANTE" FromRole="FICHA_TECNICA" ToRole="ASSINANTE" />
+          <NavigationProperty Name="FICHA_TECNICA_DETALHE" Relationship="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_FICHA_TECNICA" FromRole="FICHA_TECNICA" ToRole="FICHA_TECNICA_DETALHE" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CRMModel.FK_FICHA_TECNICA_PRODUTO" FromRole="FICHA_TECNICA" ToRole="PRODUTO" />
+        </EntityType>
+        <EntityType Name="FICHA_TECNICA_DETALHE">
+          <Key>
+            <PropertyRef Name="FITD_CD_ID" />
+          </Key>
+          <Property Name="FITD_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FITE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="FITD_QN_QUANTIDADE" Type="Decimal" Nullable="false" Precision="14" Scale="4" />
+          <Property Name="FITD_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FITD_DS_DESCRICAO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FITD_DT_CADASTRO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FITD_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FICHA_TECNICA" Relationship="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_FICHA_TECNICA" FromRole="FICHA_TECNICA_DETALHE" ToRole="FICHA_TECNICA" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_PRODUTO" FromRole="FICHA_TECNICA_DETALHE" ToRole="PRODUTO" />
+        </EntityType>
+        <Association Name="FK_FICHA_TECNICA_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.FICHA_TECNICA" Role="FICHA_TECNICA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="FICHA_TECNICA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FICHA_TECNICA_DETALHE_FICHA_TECNICA">
+          <End Type="ERP_CRMModel.FICHA_TECNICA" Role="FICHA_TECNICA" Multiplicity="1" />
+          <End Type="ERP_CRMModel.FICHA_TECNICA_DETALHE" Role="FICHA_TECNICA_DETALHE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FICHA_TECNICA">
+              <PropertyRef Name="FITE_CD_ID" />
+            </Principal>
+            <Dependent Role="FICHA_TECNICA_DETALHE">
+              <PropertyRef Name="FITE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FICHA_TECNICA_PRODUTO">
+          <End Type="ERP_CRMModel.PRODUTO" Role="PRODUTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.FICHA_TECNICA" Role="FICHA_TECNICA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="FICHA_TECNICA">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FICHA_TECNICA_DETALHE_PRODUTO">
+          <End Type="ERP_CRMModel.PRODUTO" Role="PRODUTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.FICHA_TECNICA_DETALHE" Role="FICHA_TECNICA_DETALHE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="FICHA_TECNICA_DETALHE">
               <PropertyRef Name="PROD_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -14308,6 +14504,36 @@
                 <ScalarProperty Name="PRBC_NR_BARCODE" ColumnName="PRBC_NR_BARCODE" />
                 <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
                 <ScalarProperty Name="PRBC_CD_ID" ColumnName="PRBC_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FICHA_TECNICA">
+            <EntityTypeMapping TypeName="ERP_CRMModel.FICHA_TECNICA">
+              <MappingFragment StoreEntitySet="FICHA_TECNICA">
+                <ScalarProperty Name="FITE_AQ_APRESENTACAO" ColumnName="FITE_AQ_APRESENTACAO" />
+                <ScalarProperty Name="FITE_DS_APRESENTACAO" ColumnName="FITE_DS_APRESENTACAO" />
+                <ScalarProperty Name="FITE_IN_ATIVO" ColumnName="FITE_IN_ATIVO" />
+                <ScalarProperty Name="FITE_DT_CADASTRO" ColumnName="FITE_DT_CADASTRO" />
+                <ScalarProperty Name="FITE_S_DESCRICAO" ColumnName="FITE_S_DESCRICAO" />
+                <ScalarProperty Name="FITE_NM_UNITARIO" ColumnName="FITE_NM_UNITARIO" />
+                <ScalarProperty Name="FITE_NM_NOME" ColumnName="FITE_NM_NOME" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="FITE_CD_ID" ColumnName="FITE_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FICHA_TECNICA_DETALHE">
+            <EntityTypeMapping TypeName="ERP_CRMModel.FICHA_TECNICA_DETALHE">
+              <MappingFragment StoreEntitySet="FICHA_TECNICA_DETALHE">
+                <ScalarProperty Name="FITD_IN_ATIVO" ColumnName="FITD_IN_ATIVO" />
+                <ScalarProperty Name="FITD_DT_CADASTRO" ColumnName="FITD_DT_CADASTRO" />
+                <ScalarProperty Name="FITD_DS_DESCRICAO" ColumnName="FITD_DS_DESCRICAO" />
+                <ScalarProperty Name="FITD_NM_NOME" ColumnName="FITD_NM_NOME" />
+                <ScalarProperty Name="FITD_QN_QUANTIDADE" ColumnName="FITD_QN_QUANTIDADE" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+                <ScalarProperty Name="FITE_CD_ID" ColumnName="FITE_CD_ID" />
+                <ScalarProperty Name="FITD_CD_ID" ColumnName="FITD_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

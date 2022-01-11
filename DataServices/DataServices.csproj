@@ -187,6 +187,8 @@
     <Compile Include="Repositories\EquipamentoAnexoRepository.cs" />
     <Compile Include="Repositories\EquipamentoManutencaoRepository.cs" />
     <Compile Include="Repositories\EquipamentoRepository.cs" />
+    <Compile Include="Repositories\FichaTecnicaDetalheRepository.cs" />
+    <Compile Include="Repositories\FichaTecnicaRepository.cs" />
     <Compile Include="Repositories\FornecedorAnexoRepository.cs" />
     <Compile Include="Repositories\FornecedorCnpjRepository.cs" />
     <Compile Include="Repositories\FornecedorContatoRepository.cs" />

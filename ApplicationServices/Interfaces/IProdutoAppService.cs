@@ -29,7 +29,7 @@ namespace ApplicationServices.Interfaces
         List<TAMANHO> GetAllTamanhos(Int32 idAss);
         PRODUTO_ANEXO GetAnexoById(Int32 id);
         PRODUTO_GRADE GetGradeById(Int32 id);
-        Int32 ExecuteFilter(Int32? catId, Int32? subId, String nome, String marca, String codigo, String cod, Int32? filial, Int32 ativo, Int32 idAss, out List<PRODUTO> objeto);
+        Int32 ExecuteFilter(Int32? catId, Int32? subId, String nome, String marca, String codigo, String cod, Int32? filial, Int32 ativo,  Int32? tipo, Int32 idAss, out List<PRODUTO> objeto);
         
         PRODUTO_FORNECEDOR GetFornecedorById(Int32 id);
         Int32 ValidateEditFornecedor(PRODUTO_FORNECEDOR item);

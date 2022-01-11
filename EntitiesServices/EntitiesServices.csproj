@@ -291,6 +291,8 @@
     <Compile Include="Interfaces\Repositories\IEquipamentoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEquipamentoManutencaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEquipamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFichaTecnicaDetalheRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFichaTecnicaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFormaEnvioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFormaFreteRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFormaPagamentoRepository.cs" />
@@ -523,6 +525,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ERPCRM_Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FICHA_TECNICA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FICHA_TECNICA_DETALHE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FILIAL.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>

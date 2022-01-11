@@ -368,6 +368,12 @@
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_GRADE_TAMANHO" />
         <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_BARCODE" Width="1.5" PointX="17.75" PointY="157.25" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_BARCODE_PRODUTO" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FICHA_TECNICA" Width="1.5" PointX="31.75" PointY="130.625" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FICHA_TECNICA_DETALHE" Width="1.5" PointX="37" PointY="138.875" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_FICHA_TECNICA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_PRODUTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_PRODUTO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

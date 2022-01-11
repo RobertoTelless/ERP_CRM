@@ -27,7 +27,7 @@ namespace ModelServices.EntitiesServices
         private readonly IMovimentoEstoqueProdutoRepository _movRepository;
         private readonly ITamanhoRepository _tamRepository;
         private readonly IProdutoGradeRepository _gradeRepository;
-        //private readonly IFichaTecnicaDetalheRepository _ftRepository;
+        private readonly IFichaTecnicaDetalheRepository _ftRepository;
         private readonly ISubcategoriaProdutoRepository _subRepository;
         private readonly IProdutoOrigemRepository _poRepository;
         private readonly IProdutoTabelaPrecoRepository _tpRepository;
@@ -35,7 +35,7 @@ namespace ModelServices.EntitiesServices
 
         protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
-        public ProdutoService(IProdutoRepository baseRepository, ILogRepository logRepository, ICategoriaProdutoRepository tipoRepository, IProdutoAnexoRepository anexoRepository, IUnidadeRepository unidRepository, IMovimentoEstoqueProdutoRepository movRepository, IProdutoFornecedorRepository fornRepository, ITamanhoRepository tamRepository, IProdutoGradeRepository gradeRepository, ISubcategoriaProdutoRepository subRepository, IProdutoOrigemRepository poRepository, IProdutoTabelaPrecoRepository tpRepository, IProdutoBarcodeRepository bcRepository) : base(baseRepository)
+        public ProdutoService(IProdutoRepository baseRepository, ILogRepository logRepository, ICategoriaProdutoRepository tipoRepository, IProdutoAnexoRepository anexoRepository, IUnidadeRepository unidRepository, IMovimentoEstoqueProdutoRepository movRepository, IProdutoFornecedorRepository fornRepository, ITamanhoRepository tamRepository, IProdutoGradeRepository gradeRepository, ISubcategoriaProdutoRepository subRepository, IProdutoOrigemRepository poRepository, IProdutoTabelaPrecoRepository tpRepository, IProdutoBarcodeRepository bcRepository, IFichaTecnicaDetalheRepository ftRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
@@ -50,6 +50,7 @@ namespace ModelServices.EntitiesServices
             _poRepository = poRepository;
             _tpRepository = tpRepository;
             _bcRepository = bcRepository;
+            _ftRepository = ftRepository;
         }
 
         public PRODUTO CheckExist(PRODUTO conta, Int32 idAss)
@@ -141,9 +142,9 @@ namespace ModelServices.EntitiesServices
             return _fornRepository.GetItemById(id);
         }
 
-        public List<PRODUTO> ExecuteFilter(Int32? catId, Int32? subId, String nome, String marca, String codigo, String cod, Int32? filial, Int32 ativo, Int32 idAss)
+        public List<PRODUTO> ExecuteFilter(Int32? catId, Int32? subId, String nome, String marca, String codigo, String cod, Int32? filial, Int32 ativo,  Int32? tipo, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(catId, subId, nome, marca, codigo, cod, filial, ativo, idAss);
+            return _baseRepository.ExecuteFilter(catId, subId, nome, marca, codigo, cod, filial, ativo, tipo, idAss);
 
         }
 

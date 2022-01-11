@@ -426,4 +426,7 @@
   <data name="M0118" xml:space="preserve">
     <value>Preço já cadastrado para esse produto/filial</value>
   </data>
+  <data name="M0119" xml:space="preserve">
+    <value>Produto composto sem nenhum componente cadastrado</value>
+  </data>
 </root>
