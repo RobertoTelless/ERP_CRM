@@ -200,6 +200,7 @@
     <Compile Include="Repositories\MensagemRepository.cs" />
     <Compile Include="Repositories\MotivoCancelamentoRepository.cs" />
     <Compile Include="Repositories\MotivoEncerramentoRepository.cs" />
+    <Compile Include="Repositories\MovimentoEstoqueProdutoRepository.cs" />
     <Compile Include="Repositories\ProdutoAnexoRepository.cs" />
     <Compile Include="Repositories\ProdutoEstoqueFilialRepository.cs" />
     <Compile Include="Repositories\ProdutoBarcodeRepository.cs" />

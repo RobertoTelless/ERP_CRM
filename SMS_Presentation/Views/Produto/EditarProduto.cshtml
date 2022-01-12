@@ -19,7 +19,26 @@
 </style>
 
 <div class="wrapper wrapper-content animated fadeInRight">
-
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="prtpModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -126,28 +145,31 @@
                             <ul class="nav nav-tabs">
                                 <li class="@ViewBag.TabGeral"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
                                 <li class=""><a data-toggle="tab" href="#tab-imagens">Imagens</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-barcode">Códigos de Barras</a></li>
+                                @if (Model.PROD_IN_TIPO_PRODUTO == 1)
+                                {
+                                    <li class=""><a data-toggle="tab" href="#tab-barcode">Códigos de Barras</a></li>
+                                }
                                 @if (!Model.Composto)
                                 {
                                     <li class=""><a data-toggle="tab" href="#tab-2">Estoque</a></li>
                                     <li class=""><a data-toggle="tab" href="#tab-3">Fornecedores</a></li>
                                 }
                                 <li id="varejoTab" class=""><a data-toggle="tab" href="#tab-4">Varejo</a></li>
-                                @if ((Int32)Session["PermVenda"] == 1)
+                                @if ((Int32)Session["PermVenda"] == 1 & Model.PROD_IN_TIPO_PRODUTO == 1)
                                 {
                                     <li id="foodTab" class=""><a data-toggle="tab" href="#tab-5">Food Service</a></li>
                                     <li class=""><a data-toggle="tab" href="#tab-6">Informações Tributárias</a></li>
                                 }
-                                @if (!Model.Composto)
+                                @if (!Model.Composto & Model.PROD_IN_TIPO_PRODUTO == 1)
                                 {
                                     <li id="expTab" class=""><a data-toggle="tab" href="#tab-7">Expedição</a></li>
                                 }
-                                @if ((Int32)Session["PermVenda"] == 1)
+                                @if ((Int32)Session["PermVenda"] == 1 & Model.PROD_IN_TIPO_PRODUTO == 1)
                                 {
                                     <li id="ecomTab" class=""><a data-toggle="tab" href="#tab-8">E-Commerce</a></li>
                                 }
                                 <li class=""><a data-toggle="tab" href="#tab-9">Anexos</a></li>
-                                @if ((Int32)Session["PermVenda"] == 1)
+                                @if ((Int32)Session["PermVenda"] == 1  & Model.PROD_IN_TIPO_PRODUTO == 1)
                                 {
                                     <li class="@ViewBag.TabPreco"><a data-toggle="tab" href="#tab-10">Custos & Preços</a></li>
                                 }
@@ -157,7 +179,7 @@
                                     <li class=""><a data-toggle="tab" href="#tab-12">Movimentação do Estoque</a></li>
                                 }
                                 <li class=""><a data-toggle="tab" href="#tab-13">Resumos</a></li>
-                                @if (Model.Composto)
+                                @if (Model.Composto  & Model.PROD_IN_TIPO_PRODUTO == 1)
                                 {
                                     <li class=""><a data-toggle="tab" href="#tab-14">Composição do Produto</a></li>
                                 }
@@ -277,12 +299,15 @@
                                                             @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control", autofocus = true })
                                                             @Html.ValidationMessageFor(m => m.UNID_CD_ID, "", new { @style = "color:red" })
                                                         </div>
-                                                        <div class="col-lg-2 col-md-3 col-xs-12">
-                                                            Produto Composto*
-                                                            <br />
-                                                            @Html.CheckBoxFor(m => m.Composto, new { @class = "checkbox i-checks" })
-                                                            @Html.ValidationMessageFor(m => m.Composto, "", new { @style = "color:red" })
-                                                        </div>
+                                                        @if (Model.PROD_IN_TIPO_PRODUTO == 1)
+                                                        {
+                                                            <div class="col-lg-2 col-md-3 col-xs-12">
+                                                                Produto Composto*
+                                                                <br />
+                                                                @Html.CheckBoxFor(m => m.Composto, new { @class = "checkbox i-checks" })
+                                                                @Html.ValidationMessageFor(m => m.Composto, "", new { @style = "color:red" })
+                                                            </div>
+                                                        }
                                                     </div>
                                                     <br />
                                                     <div class="row">
@@ -291,11 +316,14 @@
                                                             @Html.TextBoxFor(m => m.PROD_CD_CODIGO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                             @Html.ValidationMessageFor(m => m.PROD_CD_CODIGO, "", new { @style = "color:red" })
                                                         </div>
-                                                        <div class="col-lg-3 col-md-3 col-xs-12">
-                                                            Cód. Barras Principal
-                                                            @Html.TextBoxFor(m => m.PROD_NR_BARCODE, new { @class = "form-control", autofocus = true })
-                                                            @Html.ValidationMessageFor(m => m.PROD_NR_BARCODE, "", new { @style = "color:red" })
-                                                        </div>
+                                                        @if (Model.PROD_IN_TIPO_PRODUTO == 1)
+                                                        {
+                                                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                                                Cód. Barras Principal
+                                                                @Html.TextBoxFor(m => m.PROD_NR_BARCODE, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.PROD_NR_BARCODE, "", new { @style = "color:red" })
+                                                            </div>
+                                                        }
                                                         <div class="col-lg-6 col-md-6 col-xs-12">
                                                             Nome*
                                                             @Html.TextBoxFor(m => m.PROD_NM_NOME, new { @class = "form-control", autofocus = true })
@@ -307,7 +335,7 @@
 
                                             <div class="row">
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    @if (ViewBag.Perfil != "ADM")
+                                                    @if (ViewBag.Perfil != "ADM" & ViewBag.Perfil != "GER" & Model.PROD_IN_TIPO_PRODUTO == 1 )
                                                     {
                                                         <div class="col-lg-3 col-md-3 col-xs-12">
                                                             Preço Venda
@@ -344,7 +372,7 @@
                                     </div>
                                 </div>
 
-                                  @*Imagens*@
+                                @*Imagens*@
                                 <div id="tab-imagens" class="tab-pane">
                                     <div class="panel-body">
                                         <div class="row">
@@ -588,8 +616,8 @@
                                                                 <tr>
                                                                     <th>Nome</th>
                                                                     <th>E-Mail</th>
+                                                                    <th>Celular</th>
                                                                     <th>Telefone</th>
-                                                                    <th>Ativo</th>
                                                                     <th class="td-one-action">Ações</th>
                                                                 </tr>
                                                             </thead>
@@ -598,25 +626,18 @@
                                                                 {
                                                                     <tr>
                                                                         <td>@cond.FORNECEDOR.FORN_NM_NOME</td>
-                                                                        <td>@cond.FORNECEDOR.FORN_NM_EMAIL</td>
+                                                                        <td><a href="@Url.Action("EnviarEMailContato", "Produto", new { id = cond.FORN_CD_ID })" />@cond.FORNECEDOR.FORN_NM_EMAIL</td>
+                                                                        <td><a href="@Url.Action("EnviarSMSContato", "Produto", new { id = cond.FORN_CD_ID })" />@cond.FORNECEDOR.FORN_NR_CELULAR</td>
                                                                         <td>@cond.FORNECEDOR.FORN_NM_TELEFONES</td>
-                                                                        @if (cond.PRFO_CD_ID == 1)
-                                                                        {
-                                                                            <td>Sim</td>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <td>Não</td>
-                                                                        }
                                                                         <td class="td-one-action">
                                                                             @Html.TableLinkDetails(cond.PRFO_CD_ID, "EditarProdutoFornecedor", "fa-edit", "Editar/Consultar Fornecedor")
                                                                             @if (cond.PRFO_IN_ATIVO == 1)
                                                                             {
-                                                                                @Html.TableLinkDetails(cond.PRFO_CD_ID, "ExcluirProdutoFornecedor", "fa-trash-o", "Desativar Fornecedor")
+                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Produto/ExcluirProdutoFornecedor/@cond.PRFO_CD_ID')" title="Excluir"></span>
                                                                             }
                                                                             else
-                                                                            {
-                                                                                @Html.TableLinkDetails(cond.PRFO_CD_ID, "ReativarProdutoFornecedor", "fa-refresh", "Reativar Fornecedor")
+                                                                            {   
+                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Produto/ReativarProdutoFornecedor/@cond.PRFO_CD_ID')" title="Reativar"></span>
                                                                             }
                                                                         </td>
                                                                     </tr>
@@ -633,15 +654,15 @@
                                     </div>
                                 </div>
 
-                                @*Ficha Técnica*@
-                                @if (Model.Composto)
+                                @*Composição do Produto*@
+                                @if (Model.Composto  & Model.PROD_IN_TIPO_PRODUTO == 1)
                                 {
                                     <div id="tab-14" class="tab-pane">
                                         <div class="panel-body">
                                             @if (Model.FICHA_TECNICA.Count == 0)
                                             {
                                                 <div class="form-group">
-                                                    @Html.ButtonLinkIndex(text: "Criar Ficha Técnica", action: "CriarFichaTecnicaProduto", controller: "FichaTecnica")
+                                                    @Html.ButtonLinkIndex(text: "Criar Composição de Produto", action: "CriarFichaTecnicaProduto", controller: "FichaTecnica")
                                                 </div>
                                             }
                                             else
@@ -671,7 +692,7 @@
                                                     </div>
                                                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                         <div class="col-lg-12 col-md-12 col-xs-12">
-                                                            Mode de Preparo
+                                                            Modo de Montagem
                                                             @Html.TextAreaFor(m => m.FICHA_TECNICA.FirstOrDefault().FITE_S_DESCRICAO, new { @class = "form-control summernote", autofocus = true })
                                                         </div>
                                                     </div>
@@ -843,11 +864,14 @@
                                                         @Html.TextBoxFor(m => m.PROD_NR_REFERENCIA, new { @class = "form-control", @style = "color:green", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.PROD_NR_REFERENCIA, "", new { @style = "color:red" })
                                                     </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Garantia (dias)
-                                                        @Html.TextBoxFor(m => m.Garantia, new { @class = "form-control touchspin2", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.Garantia, "", new { @style = "color:red" })
-                                                    </div>
+                                                    @if (Model.PROD_IN_TIPO_PRODUTO == 1)
+	                                                {
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Garantia (dias)
+                                                            @Html.TextBoxFor(m => m.Garantia, new { @class = "form-control touchspin2", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.Garantia, "", new { @style = "color:red" })
+                                                        </div>
+	                                                }
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -855,350 +879,358 @@
                                             </div>
 
                                         }
-
-                                        <div id="grpGrade" class="row">
-                                            <hr />
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    <h4>Grade</h4>
-                                                    <br />
-                                                    @if (Model.PRODUTO_GRADE != null && Model.PRODUTO_GRADE.Count > 0)
-                                                    {
-                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
-                                                            <thead style="background-color:lightsteelblue">
-                                                                <tr>
-                                                                    <th>Cor</th>
-                                                                    <th>Tamanho</th>
-                                                                    <th>Quantidade</th>
-                                                                    <th>Ativo</th>
-                                                                    <th class="td-one-action">Ações</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach (var cond in (Model.PRODUTO_GRADE.OrderBy(a => a.PRGR_NM_COR).ThenBy(a => a.PRGR_NM_TAMANHO)))
-                                                                {
+                                        @if (Model.PROD_IN_TIPO_PRODUTO == 1)
+	                                    {
+                                            <div id="grpGrade" class="row">
+                                                <hr />
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <h4>Grade</h4>
+                                                        <br />
+                                                        @if (Model.PRODUTO_GRADE != null && Model.PRODUTO_GRADE.Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead style="background-color:lightsteelblue">
                                                                     <tr>
-                                                                        <td>@cond.PRGR_NM_COR</td>
-                                                                        <td>@cond.PRGR_NM_TAMANHO</td>
-                                                                        <td>@cond.PRGR_QN_QUANTIDADE</td>
-                                                                        @if (cond.PRGR_IN_ATIVO == 1)
-                                                                        {
-                                                                            <td>Sim</td>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <td>Não</td>
-                                                                        }
-                                                                        <td class="td-one-action">
-                                                                            @Html.TableLinkDetails(cond.PRGR_CD_ID, "EditarProdutoGrade", "fa-edit", "Editar/Consultar Item")
+                                                                        <th>Cor</th>
+                                                                        <th>Tamanho</th>
+                                                                        <th>Quantidade</th>
+                                                                        <th>Ativo</th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.PRODUTO_GRADE.OrderBy(a => a.PRGR_NM_COR).ThenBy(a => a.PRGR_NM_TAMANHO)))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.PRGR_NM_COR</td>
+                                                                            <td>@cond.PRGR_NM_TAMANHO</td>
+                                                                            <td>@cond.PRGR_QN_QUANTIDADE</td>
                                                                             @if (cond.PRGR_IN_ATIVO == 1)
                                                                             {
-                                                                                @Html.TableLinkDetails(cond.PRGR_CD_ID, "ExcluirProdutoGrade", "fa-trash-o", "Desativar Item")
+                                                                                <td>Sim</td>
                                                                             }
                                                                             else
                                                                             {
-                                                                                @Html.TableLinkDetails(cond.PRGR_CD_ID, "ReativarProdutoGrade", "fa-refresh", "Reativar Item")
+                                                                                <td>Não</td>
                                                                             }
-                                                                        </td>
-                                                                    </tr>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    }
+                                                                            <td class="td-one-action">
+                                                                                @Html.TableLinkDetails(cond.PRGR_CD_ID, "EditarProdutoGrade", "fa-edit", "Editar/Consultar Item")
+                                                                                @if (cond.PRGR_IN_ATIVO == 1)
+                                                                                {
+                                                                                    @Html.TableLinkDetails(cond.PRGR_CD_ID, "ExcluirProdutoGrade", "fa-trash-o", "Desativar Item")
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.TableLinkDetails(cond.PRGR_CD_ID, "ReativarProdutoGrade", "fa-refresh", "Reativar Item")
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            @Html.ButtonLinkIndex(text: "Incluir Novo Item na Grade", action: "IncluirProdutoGrade", controller: "Produto")
-                                        </div>
+                                            <div class="form-group">
+                                                @Html.ButtonLinkIndex(text: "Incluir Novo Item na Grade", action: "IncluirProdutoGrade", controller: "Produto")
+                                            </div>
+	                                    }
                                     </div>
                                 </div>
 
                                 @*Food Service*@
-                                <div id="tab-5" class="tab-pane">
-                                    <div class="panel-body">
-                                        @using (Html.BeginForm("EditarProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
-                                        {
-                                            <div class="row">
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        @Html.HiddenFor(x => x.PROD_CD_ID)
-                                                        @Html.HiddenFor(x => x.ASSI_CD_ID)
-                                                        @Html.HiddenFor(x => x.CAPR_CD_ID)
-                                                        @Html.HiddenFor(x => x.UNID_CD_ID)
-                                                        @Html.HiddenFor(x => x.PROD_NM_NOME)
-                                                        @Html.HiddenFor(x => x.PROD_DS_DESCRICAO)
-                                                        @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_MINIMA)
-                                                        @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_INICIAL)
-                                                        @Html.HiddenFor(x => x.PROD_QN_ESTOQUE)
-                                                        @Html.HiddenFor(x => x.PROD_DT_ULTIMA_MOVIMENTACAO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_AVISA_MINIMO)
-                                                        @Html.HiddenFor(x => x.PROD_DT_CADASTRO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_ATIVO)
-                                                        @Html.HiddenFor(x => x.PROD_AQ_FOTO)
-                                                        @Html.HiddenFor(x => x.PROD_CD_CODIGO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_TIPO_PRODUTO)
-                                                        @Html.HiddenFor(x => x.PROD_VL_PRECO_VENDA)
-                                                        @Html.HiddenFor(x => x.PROD_VL_PRECO_PROMOCAO)
-                                                        @Html.HiddenFor(x => x.SCPR_CD_ID)
-                                                        @Html.HiddenFor(x => x.PROD_DS_INFORMACOES)
-                                                        @Html.HiddenFor(x => x.PROD_NR_GARANTIA)
-                                                        @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_MAXIMA)
-                                                        @Html.HiddenFor(x => x.PROD_QN_RESERVA_ESTOQUE)
-                                                        @Html.HiddenFor(x => x.PROD_NR_REFERENCIA)
-                                                        @Html.HiddenFor(x => x.PROD_IN_BALANCA_PDV)
-                                                        @Html.HiddenFor(x => x.PROD_IN_BALANCA_RETAGUARDA)
-                                                        @Html.HiddenFor(x => x.PROD_NR_DIAS_VALIDADE)
-                                                        @Html.HiddenFor(x => x.PROD_IN_TIPO_COMBO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_OPCAO_COMBO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_COBRAR_MAIOR)
-                                                        @Html.HiddenFor(x => x.PROD_IN_GERAR_ARQUIVO)
-                                                        @Html.HiddenFor(x => x.PROD_NR_NCM)
-                                                        @Html.HiddenFor(x => x.PROD_NM_ORIGEM)
-                                                        @Html.HiddenFor(x => x.PROD_CD_GTIN_EAN)
-                                                        @Html.HiddenFor(x => x.PROD_NM_LOCALIZACAO_ESTOQUE)
-                                                        @Html.HiddenFor(x => x.PROD_QN_PESO_BRUTO)
-                                                        @Html.HiddenFor(x => x.PROD_QN_PESO_LIQUIDO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_TIPO_EMBALAGEM)
-                                                        @Html.HiddenFor(x => x.PROD_NR_LARGURA)
-                                                        @Html.HiddenFor(x => x.PROD_NR_COMPRIMENTO)
-                                                        @Html.HiddenFor(x => x.PROD_NR_ALTURA)
-                                                        @Html.HiddenFor(x => x.PROD_NR_DIAMETRO)
-                                                        @Html.HiddenFor(x => x.PROD_PC_MARKUP_MININO)
-                                                        @Html.HiddenFor(x => x.PROD_VL_PRECO_MINIMO)
-                                                        @Html.HiddenFor(x => x.PROD_VL_MARKUP_PADRAO)
-                                                        @Html.HiddenFor(x => x.PROD_TX_OBSERVACOES)
-                                                        @Html.HiddenFor(x => x.PROD_IN_COMPOSTO)
-                                                        @Html.HiddenFor(x => x.PROD_NM_MARCA)
-                                                        @Html.HiddenFor(x => x.PROD_NM_MODELO)
-                                                        @Html.HiddenFor(x => x.PROD_NM_REFERENCIA_FABRICANTE)
-                                                        @Html.HiddenFor(x => x.PROD_NM_FABRICANTE)
-                                                        @Html.HiddenFor(x => x.PROD_NR_BARCODE)
-                                                        @Html.HiddenFor(x => x.PROD_QR_QRCODE)
-                                                        @Html.HiddenFor(x => x.PROR_CD_ID)
-                                                        @Html.HiddenFor(x => x.PROD_NR_CEST)
-                                                        @Html.HiddenFor(x => x.PROD_NR_GTIN_EAN_TRIB)
-                                                        @Html.HiddenFor(x => x.PROD_NM_UNIDADE_TRIB)
-                                                        @Html.HiddenFor(x => x.PROD_NR_FATOR_CONVERSAO)
-                                                        @Html.HiddenFor(x => x.PROD_NR_ENQUADRE_IPI)
-                                                        @Html.HiddenFor(x => x.PROD_VL_IPI_FIXO)
-                                                        @Html.HiddenFor(x => x.PROD_NM_SLUG)
-                                                        @Html.HiddenFor(x => x.PROD_NM_KEYWORDS)
-                                                        @Html.HiddenFor(x => x.PROD_NM_TITULO_SEO)
-                                                        @Html.HiddenFor(x => x.PROD_DS_DESCRICAO_CEO)
-                                                        @Html.HiddenFor(x => x.PROD_NR_TAG)
-                                                        @Html.HiddenFor(x => x.PRTP_VL_DESCONTO_MAXIMO)
-                                                        @Html.HiddenFor(x => x.PROD_DS_JUSTIFICATIVA)
-                                                        @Html.HiddenFor(x => x.PROD_QN_NOVA_CONTAGEM)
-                                                        @Html.HiddenFor(x => x.PROD_QN_CONTAGEM)
-                                                        @Html.HiddenFor(x => x.Composto)
-                                                        @Html.HiddenFor(x => x.AvisaMinima)
-                                                        @Html.HiddenFor(x => x.Garantia)
-                                                        Balança PDV
-                                                        <br />
-                                                        @Html.CheckBoxFor(m => m.BalancaPDV, new { @class = "checkbox i-checks" })
-                                                        @Html.ValidationMessageFor(m => m.BalancaPDV, "", new { @style = "color:red" })
+                                @if ((Int32)Session["PermVenda"] == 1 & Model.PROD_IN_TIPO_PRODUTO == 1)
+                                {
+                                    <div id="tab-5" class="tab-pane">
+                                        <div class="panel-body">
+                                            @using (Html.BeginForm("EditarProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                            {
+                                                <div class="row">
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            @Html.HiddenFor(x => x.PROD_CD_ID)
+                                                            @Html.HiddenFor(x => x.ASSI_CD_ID)
+                                                            @Html.HiddenFor(x => x.CAPR_CD_ID)
+                                                            @Html.HiddenFor(x => x.UNID_CD_ID)
+                                                            @Html.HiddenFor(x => x.PROD_NM_NOME)
+                                                            @Html.HiddenFor(x => x.PROD_DS_DESCRICAO)
+                                                            @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_MINIMA)
+                                                            @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_INICIAL)
+                                                            @Html.HiddenFor(x => x.PROD_QN_ESTOQUE)
+                                                            @Html.HiddenFor(x => x.PROD_DT_ULTIMA_MOVIMENTACAO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_AVISA_MINIMO)
+                                                            @Html.HiddenFor(x => x.PROD_DT_CADASTRO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_ATIVO)
+                                                            @Html.HiddenFor(x => x.PROD_AQ_FOTO)
+                                                            @Html.HiddenFor(x => x.PROD_CD_CODIGO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_TIPO_PRODUTO)
+                                                            @Html.HiddenFor(x => x.PROD_VL_PRECO_VENDA)
+                                                            @Html.HiddenFor(x => x.PROD_VL_PRECO_PROMOCAO)
+                                                            @Html.HiddenFor(x => x.SCPR_CD_ID)
+                                                            @Html.HiddenFor(x => x.PROD_DS_INFORMACOES)
+                                                            @Html.HiddenFor(x => x.PROD_NR_GARANTIA)
+                                                            @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_MAXIMA)
+                                                            @Html.HiddenFor(x => x.PROD_QN_RESERVA_ESTOQUE)
+                                                            @Html.HiddenFor(x => x.PROD_NR_REFERENCIA)
+                                                            @Html.HiddenFor(x => x.PROD_IN_BALANCA_PDV)
+                                                            @Html.HiddenFor(x => x.PROD_IN_BALANCA_RETAGUARDA)
+                                                            @Html.HiddenFor(x => x.PROD_NR_DIAS_VALIDADE)
+                                                            @Html.HiddenFor(x => x.PROD_IN_TIPO_COMBO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_OPCAO_COMBO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_COBRAR_MAIOR)
+                                                            @Html.HiddenFor(x => x.PROD_IN_GERAR_ARQUIVO)
+                                                            @Html.HiddenFor(x => x.PROD_NR_NCM)
+                                                            @Html.HiddenFor(x => x.PROD_NM_ORIGEM)
+                                                            @Html.HiddenFor(x => x.PROD_CD_GTIN_EAN)
+                                                            @Html.HiddenFor(x => x.PROD_NM_LOCALIZACAO_ESTOQUE)
+                                                            @Html.HiddenFor(x => x.PROD_QN_PESO_BRUTO)
+                                                            @Html.HiddenFor(x => x.PROD_QN_PESO_LIQUIDO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_TIPO_EMBALAGEM)
+                                                            @Html.HiddenFor(x => x.PROD_NR_LARGURA)
+                                                            @Html.HiddenFor(x => x.PROD_NR_COMPRIMENTO)
+                                                            @Html.HiddenFor(x => x.PROD_NR_ALTURA)
+                                                            @Html.HiddenFor(x => x.PROD_NR_DIAMETRO)
+                                                            @Html.HiddenFor(x => x.PROD_PC_MARKUP_MININO)
+                                                            @Html.HiddenFor(x => x.PROD_VL_PRECO_MINIMO)
+                                                            @Html.HiddenFor(x => x.PROD_VL_MARKUP_PADRAO)
+                                                            @Html.HiddenFor(x => x.PROD_TX_OBSERVACOES)
+                                                            @Html.HiddenFor(x => x.PROD_IN_COMPOSTO)
+                                                            @Html.HiddenFor(x => x.PROD_NM_MARCA)
+                                                            @Html.HiddenFor(x => x.PROD_NM_MODELO)
+                                                            @Html.HiddenFor(x => x.PROD_NM_REFERENCIA_FABRICANTE)
+                                                            @Html.HiddenFor(x => x.PROD_NM_FABRICANTE)
+                                                            @Html.HiddenFor(x => x.PROD_NR_BARCODE)
+                                                            @Html.HiddenFor(x => x.PROD_QR_QRCODE)
+                                                            @Html.HiddenFor(x => x.PROR_CD_ID)
+                                                            @Html.HiddenFor(x => x.PROD_NR_CEST)
+                                                            @Html.HiddenFor(x => x.PROD_NR_GTIN_EAN_TRIB)
+                                                            @Html.HiddenFor(x => x.PROD_NM_UNIDADE_TRIB)
+                                                            @Html.HiddenFor(x => x.PROD_NR_FATOR_CONVERSAO)
+                                                            @Html.HiddenFor(x => x.PROD_NR_ENQUADRE_IPI)
+                                                            @Html.HiddenFor(x => x.PROD_VL_IPI_FIXO)
+                                                            @Html.HiddenFor(x => x.PROD_NM_SLUG)
+                                                            @Html.HiddenFor(x => x.PROD_NM_KEYWORDS)
+                                                            @Html.HiddenFor(x => x.PROD_NM_TITULO_SEO)
+                                                            @Html.HiddenFor(x => x.PROD_DS_DESCRICAO_CEO)
+                                                            @Html.HiddenFor(x => x.PROD_NR_TAG)
+                                                            @Html.HiddenFor(x => x.PRTP_VL_DESCONTO_MAXIMO)
+                                                            @Html.HiddenFor(x => x.PROD_DS_JUSTIFICATIVA)
+                                                            @Html.HiddenFor(x => x.PROD_QN_NOVA_CONTAGEM)
+                                                            @Html.HiddenFor(x => x.PROD_QN_CONTAGEM)
+                                                            @Html.HiddenFor(x => x.Composto)
+                                                            @Html.HiddenFor(x => x.AvisaMinima)
+                                                            @Html.HiddenFor(x => x.Garantia)
+                                                            Balança PDV
+                                                            <br />
+                                                            @Html.CheckBoxFor(m => m.BalancaPDV, new { @class = "checkbox i-checks" })
+                                                            @Html.ValidationMessageFor(m => m.BalancaPDV, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Balança Retaguarda
+                                                            <br />
+                                                            @Html.CheckBoxFor(m => m.BalancaRetaguarda, new { @class = "checkbox i-checks" })
+                                                            @Html.ValidationMessageFor(m => m.BalancaRetaguarda, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Validade
+                                                            @Html.TextBoxFor(m => m.PROD_NR_VALIDADE, new { @class = "form-control touchspin2", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_NR_VALIDADE, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Produto Tipo Combo
+                                                            <br />
+                                                            @Html.CheckBoxFor(m => m.ProdutoTipoCombo, new { @class = "checkbox i-checks" })
+                                                            @Html.ValidationMessageFor(m => m.ProdutoTipoCombo, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Produto Opção Combo
+                                                            <br />
+                                                            @Html.CheckBoxFor(m => m.ProdutoOpcaoCombo, new { @class = "checkbox i-checks" })
+                                                            @Html.ValidationMessageFor(m => m.ProdutoOpcaoCombo, "", new { @style = "color:red" })
+                                                        </div>
                                                     </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Balança Retaguarda
-                                                        <br />
-                                                        @Html.CheckBoxFor(m => m.BalancaRetaguarda, new { @class = "checkbox i-checks" })
-                                                        @Html.ValidationMessageFor(m => m.BalancaRetaguarda, "", new { @style = "color:red" })
+
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Divisão
+                                                            @Html.TextBoxFor(m => m.PROD_IN_DIVISAO, new { @class = "form-control touchspin1", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_IN_DIVISAO, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Cobrar pelo Maior
+                                                            <br />
+                                                            @Html.CheckBoxFor(m => m.CobrarMaior, new { @class = "checkbox i-checks" })
+                                                            @Html.ValidationMessageFor(m => m.CobrarMaior, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Gerar Arquivo Texto
+                                                            <br />
+                                                            @Html.CheckBoxFor(m => m.ArquivoTexto, new { @class = "checkbox i-checks" })
+                                                            @Html.ValidationMessageFor(m => m.ArquivoTexto, "", new { @style = "color:red" })
+                                                        </div>
                                                     </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Validade
-                                                        @Html.TextBoxFor(m => m.PROD_NR_VALIDADE, new { @class = "form-control touchspin2", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_NR_VALIDADE, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Produto Tipo Combo
-                                                        <br />
-                                                        @Html.CheckBoxFor(m => m.ProdutoTipoCombo, new { @class = "checkbox i-checks" })
-                                                        @Html.ValidationMessageFor(m => m.ProdutoTipoCombo, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Produto Opção Combo
-                                                        <br />
-                                                        @Html.CheckBoxFor(m => m.ProdutoOpcaoCombo, new { @class = "checkbox i-checks" })
-                                                        @Html.ValidationMessageFor(m => m.ProdutoOpcaoCombo, "", new { @style = "color:red" })
+
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                            Informações Nutricionais
+                                                            @Html.TextAreaFor(m => m.PROD_DS_INFORMACAO_NUTRICIONAL, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_DS_INFORMACAO_NUTRICIONAL, "", new { @style = "color:red" })
+                                                        </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Divisão
-                                                        @Html.TextBoxFor(m => m.PROD_IN_DIVISAO, new { @class = "form-control touchspin1", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_IN_DIVISAO, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Cobrar pelo Maior
-                                                        <br />
-                                                        @Html.CheckBoxFor(m => m.CobrarMaior, new { @class = "checkbox i-checks" })
-                                                        @Html.ValidationMessageFor(m => m.CobrarMaior, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Gerar Arquivo Texto
-                                                        <br />
-                                                        @Html.CheckBoxFor(m => m.ArquivoTexto, new { @class = "checkbox i-checks" })
-                                                        @Html.ValidationMessageFor(m => m.ArquivoTexto, "", new { @style = "color:red" })
-                                                    </div>
+                                                <div class="form-group">
+                                                    @Html.ButtonActionSubmit(text: "Confirma edição de Produto", htmlAttributes: new { id = "basictoast" })
                                                 </div>
+                                            }
 
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        Informações Nutricionais
-                                                        @Html.TextAreaFor(m => m.PROD_DS_INFORMACAO_NUTRICIONAL, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_DS_INFORMACAO_NUTRICIONAL, "", new { @style = "color:red" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.ButtonActionSubmit(text: "Confirma edição de Produto", htmlAttributes: new { id = "basictoast" })
-                                            </div>
-                                        }
-
+                                        </div>
                                     </div>
-                                </div>
+                                }
 
                                 @*Informações Tributarias*@
-                                <div id="tab-6" class="tab-pane">
-                                    <div class="panel-body">
-                                        @using (Html.BeginForm("EditarProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
-                                        {
-                                            <div class="row">
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        @Html.HiddenFor(x => x.PROD_CD_ID)
-                                                        @Html.HiddenFor(x => x.ASSI_CD_ID)
-                                                        @Html.HiddenFor(x => x.MATR_CD_ID)
-                                                        @Html.HiddenFor(x => x.CAPR_CD_ID)
-                                                        @Html.HiddenFor(x => x.UNID_CD_ID)
-                                                        @Html.HiddenFor(x => x.PROD_NM_NOME)
-                                                        @Html.HiddenFor(x => x.PROD_DS_DESCRICAO)
-                                                        @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_MINIMA)
-                                                        @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_INICIAL)
-                                                        @Html.HiddenFor(x => x.PROD_QN_ESTOQUE)
-                                                        @Html.HiddenFor(x => x.PROD_DT_ULTIMA_MOVIMENTACAO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_AVISA_MINIMO)
-                                                        @Html.HiddenFor(x => x.PROD_DT_CADASTRO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_ATIVO)
-                                                        @Html.HiddenFor(x => x.PROD_AQ_FOTO)
-                                                        @Html.HiddenFor(x => x.PROD_CD_CODIGO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_TIPO_PRODUTO)
-                                                        @Html.HiddenFor(x => x.PROD_VL_PRECO_VENDA)
-                                                        @Html.HiddenFor(x => x.PROD_VL_PRECO_PROMOCAO)
-                                                        @Html.HiddenFor(x => x.SCPR_CD_ID)
-                                                        @Html.HiddenFor(x => x.PROD_DS_INFORMACOES)
-                                                        @Html.HiddenFor(x => x.PROD_NR_GARANTIA)
-                                                        @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_MAXIMA)
-                                                        @Html.HiddenFor(x => x.PROD_QN_RESERVA_ESTOQUE)
-                                                        @Html.HiddenFor(x => x.PROD_NR_REFERENCIA)
-                                                        @Html.HiddenFor(x => x.PROD_IN_BALANCA_PDV)
-                                                        @Html.HiddenFor(x => x.PROD_IN_BALANCA_RETAGUARDA)
-                                                        @Html.HiddenFor(x => x.PROD_NR_DIAS_VALIDADE)
-                                                        @Html.HiddenFor(x => x.PROD_IN_TIPO_COMBO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_OPCAO_COMBO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_DIVISAO)
-                                                        @Html.HiddenFor(x => x.PROD_NR_VALIDADE)
-                                                        @Html.HiddenFor(x => x.PROD_IN_COBRAR_MAIOR)
-                                                        @Html.HiddenFor(x => x.PROD_DS_INFORMACAO_NUTRICIONAL)
-                                                        @Html.HiddenFor(x => x.PROD_IN_GERAR_ARQUIVO)
-                                                        @Html.HiddenFor(x => x.PROD_NM_ORIGEM)
-                                                        @Html.HiddenFor(x => x.PROD_NM_LOCALIZACAO_ESTOQUE)
-                                                        @Html.HiddenFor(x => x.PROD_QN_PESO_BRUTO)
-                                                        @Html.HiddenFor(x => x.PROD_QN_PESO_LIQUIDO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_TIPO_EMBALAGEM)
-                                                        @Html.HiddenFor(x => x.PROD_NR_LARGURA)
-                                                        @Html.HiddenFor(x => x.PROD_NR_COMPRIMENTO)
-                                                        @Html.HiddenFor(x => x.PROD_NR_ALTURA)
-                                                        @Html.HiddenFor(x => x.PROD_NR_DIAMETRO)
-                                                        @Html.HiddenFor(x => x.PROD_PC_MARKUP_MININO)
-                                                        @Html.HiddenFor(x => x.PROD_VL_PRECO_MINIMO)
-                                                        @Html.HiddenFor(x => x.PROD_VL_MARKUP_PADRAO)
-                                                        @Html.HiddenFor(x => x.PROD_TX_OBSERVACOES)
-                                                        @Html.HiddenFor(x => x.PROD_IN_COMPOSTO)
-                                                        @Html.HiddenFor(x => x.PROD_NM_MARCA)
-                                                        @Html.HiddenFor(x => x.PROD_NM_MODELO)
-                                                        @Html.HiddenFor(x => x.PROD_NM_REFERENCIA_FABRICANTE)
-                                                        @Html.HiddenFor(x => x.PROD_NM_FABRICANTE)
-                                                        @Html.HiddenFor(x => x.PROD_NR_BARCODE)
-                                                        @Html.HiddenFor(x => x.PROD_QR_QRCODE)
-                                                        @Html.HiddenFor(x => x.PROD_NM_SLUG)
-                                                        @Html.HiddenFor(x => x.PROD_NM_KEYWORDS)
-                                                        @Html.HiddenFor(x => x.PROD_NM_TITULO_SEO)
-                                                        @Html.HiddenFor(x => x.PROD_DS_DESCRICAO_CEO)
-                                                        @Html.HiddenFor(x => x.PROD_NR_TAG)
-                                                        @Html.HiddenFor(x => x.PRTP_VL_DESCONTO_MAXIMO)
-                                                        @Html.HiddenFor(x => x.PROD_DS_JUSTIFICATIVA)
-                                                        @Html.HiddenFor(x => x.PROD_QN_NOVA_CONTAGEM)
-                                                        @Html.HiddenFor(x => x.PROD_QN_CONTAGEM)
-                                                        @Html.HiddenFor(x => x.Composto)
-                                                        @Html.HiddenFor(x => x.AvisaMinima)
-                                                        @Html.HiddenFor(x => x.Garantia)
-                                                        @Html.HiddenFor(x => x.BalancaPDV)
-                                                        @Html.HiddenFor(x => x.BalancaRetaguarda)
-                                                        @Html.HiddenFor(x => x.ProdutoTipoCombo)
-                                                        @Html.HiddenFor(x => x.ProdutoOpcaoCombo)
-                                                        @Html.HiddenFor(x => x.CobrarMaior)
-                                                        @Html.HiddenFor(x => x.ArquivoTexto)
-                                                        Origem
-                                                        @Html.DropDownListFor(m => m.PROR_CD_ID, (SelectList)ViewBag.Origens, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROR_CD_ID, "", new { @style = "color:red" })
+                                @if ((Int32)Session["PermVenda"] == 1 & Model.PROD_IN_TIPO_PRODUTO == 1)
+                                {
+                                    <div id="tab-6" class="tab-pane">
+                                        <div class="panel-body">
+                                            @using (Html.BeginForm("EditarProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                            {
+                                                <div class="row">
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                            @Html.HiddenFor(x => x.PROD_CD_ID)
+                                                            @Html.HiddenFor(x => x.ASSI_CD_ID)
+                                                            @Html.HiddenFor(x => x.CAPR_CD_ID)
+                                                            @Html.HiddenFor(x => x.UNID_CD_ID)
+                                                            @Html.HiddenFor(x => x.PROD_NM_NOME)
+                                                            @Html.HiddenFor(x => x.PROD_DS_DESCRICAO)
+                                                            @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_MINIMA)
+                                                            @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_INICIAL)
+                                                            @Html.HiddenFor(x => x.PROD_QN_ESTOQUE)
+                                                            @Html.HiddenFor(x => x.PROD_DT_ULTIMA_MOVIMENTACAO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_AVISA_MINIMO)
+                                                            @Html.HiddenFor(x => x.PROD_DT_CADASTRO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_ATIVO)
+                                                            @Html.HiddenFor(x => x.PROD_AQ_FOTO)
+                                                            @Html.HiddenFor(x => x.PROD_CD_CODIGO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_TIPO_PRODUTO)
+                                                            @Html.HiddenFor(x => x.PROD_VL_PRECO_VENDA)
+                                                            @Html.HiddenFor(x => x.PROD_VL_PRECO_PROMOCAO)
+                                                            @Html.HiddenFor(x => x.SCPR_CD_ID)
+                                                            @Html.HiddenFor(x => x.PROD_DS_INFORMACOES)
+                                                            @Html.HiddenFor(x => x.PROD_NR_GARANTIA)
+                                                            @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_MAXIMA)
+                                                            @Html.HiddenFor(x => x.PROD_QN_RESERVA_ESTOQUE)
+                                                            @Html.HiddenFor(x => x.PROD_NR_REFERENCIA)
+                                                            @Html.HiddenFor(x => x.PROD_IN_BALANCA_PDV)
+                                                            @Html.HiddenFor(x => x.PROD_IN_BALANCA_RETAGUARDA)
+                                                            @Html.HiddenFor(x => x.PROD_NR_DIAS_VALIDADE)
+                                                            @Html.HiddenFor(x => x.PROD_IN_TIPO_COMBO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_OPCAO_COMBO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_DIVISAO)
+                                                            @Html.HiddenFor(x => x.PROD_NR_VALIDADE)
+                                                            @Html.HiddenFor(x => x.PROD_IN_COBRAR_MAIOR)
+                                                            @Html.HiddenFor(x => x.PROD_DS_INFORMACAO_NUTRICIONAL)
+                                                            @Html.HiddenFor(x => x.PROD_IN_GERAR_ARQUIVO)
+                                                            @Html.HiddenFor(x => x.PROD_NM_ORIGEM)
+                                                            @Html.HiddenFor(x => x.PROD_NM_LOCALIZACAO_ESTOQUE)
+                                                            @Html.HiddenFor(x => x.PROD_QN_PESO_BRUTO)
+                                                            @Html.HiddenFor(x => x.PROD_QN_PESO_LIQUIDO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_TIPO_EMBALAGEM)
+                                                            @Html.HiddenFor(x => x.PROD_NR_LARGURA)
+                                                            @Html.HiddenFor(x => x.PROD_NR_COMPRIMENTO)
+                                                            @Html.HiddenFor(x => x.PROD_NR_ALTURA)
+                                                            @Html.HiddenFor(x => x.PROD_NR_DIAMETRO)
+                                                            @Html.HiddenFor(x => x.PROD_PC_MARKUP_MININO)
+                                                            @Html.HiddenFor(x => x.PROD_VL_PRECO_MINIMO)
+                                                            @Html.HiddenFor(x => x.PROD_VL_MARKUP_PADRAO)
+                                                            @Html.HiddenFor(x => x.PROD_TX_OBSERVACOES)
+                                                            @Html.HiddenFor(x => x.PROD_IN_COMPOSTO)
+                                                            @Html.HiddenFor(x => x.PROD_NM_MARCA)
+                                                            @Html.HiddenFor(x => x.PROD_NM_MODELO)
+                                                            @Html.HiddenFor(x => x.PROD_NM_REFERENCIA_FABRICANTE)
+                                                            @Html.HiddenFor(x => x.PROD_NM_FABRICANTE)
+                                                            @Html.HiddenFor(x => x.PROD_NR_BARCODE)
+                                                            @Html.HiddenFor(x => x.PROD_QR_QRCODE)
+                                                            @Html.HiddenFor(x => x.PROD_NM_SLUG)
+                                                            @Html.HiddenFor(x => x.PROD_NM_KEYWORDS)
+                                                            @Html.HiddenFor(x => x.PROD_NM_TITULO_SEO)
+                                                            @Html.HiddenFor(x => x.PROD_DS_DESCRICAO_CEO)
+                                                            @Html.HiddenFor(x => x.PROD_NR_TAG)
+                                                            @Html.HiddenFor(x => x.PRTP_VL_DESCONTO_MAXIMO)
+                                                            @Html.HiddenFor(x => x.PROD_DS_JUSTIFICATIVA)
+                                                            @Html.HiddenFor(x => x.PROD_QN_NOVA_CONTAGEM)
+                                                            @Html.HiddenFor(x => x.PROD_QN_CONTAGEM)
+                                                            @Html.HiddenFor(x => x.Composto)
+                                                            @Html.HiddenFor(x => x.AvisaMinima)
+                                                            @Html.HiddenFor(x => x.Garantia)
+                                                            @Html.HiddenFor(x => x.BalancaPDV)
+                                                            @Html.HiddenFor(x => x.BalancaRetaguarda)
+                                                            @Html.HiddenFor(x => x.ProdutoTipoCombo)
+                                                            @Html.HiddenFor(x => x.ProdutoOpcaoCombo)
+                                                            @Html.HiddenFor(x => x.CobrarMaior)
+                                                            @Html.HiddenFor(x => x.ArquivoTexto)
+                                                            Origem
+                                                            @Html.DropDownListFor(m => m.PROR_CD_ID, (SelectList)ViewBag.Origens, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROR_CD_ID, "", new { @style = "color:red" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            NCM
+                                                            @Html.TextBoxFor(m => m.PROD_NR_NCM, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_NR_NCM, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            GTIN/EAN
+                                                            @Html.TextBoxFor(m => m.PROD_CD_GTIN_EAN, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_CD_GTIN_EAN, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            GTIN/EAN Trib.
+                                                            @Html.TextBoxFor(m => m.PROD_NR_GTIN_EAN_TRIB, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_NR_GTIN_EAN_TRIB, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            CEST
+                                                            @Html.TextBoxFor(m => m.PROD_NR_CEST, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_NR_CEST, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                                            Unidade Tributável
+                                                            @Html.TextBoxFor(m => m.PROD_NM_UNIDADE_TRIB, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_NM_UNIDADE_TRIB, "", new { @style = "color:red" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Fator de Conversão
+                                                            @Html.TextBoxFor(m => m.PROD_NR_FATOR_CONVERSAO, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_NR_FATOR_CONVERSAO, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Cod.Enquad. IPI
+                                                            @Html.TextBoxFor(m => m.PROD_NR_ENQUADRE_IPI, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_NR_ENQUADRE_IPI, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Valor IPI Fixo (R$)
+                                                            @Html.TextBoxFor(m => m.PROD_VL_IPI_FIXO, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_VL_IPI_FIXO, "", new { @style = "color:red" })
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        NCM
-                                                        @Html.TextBoxFor(m => m.PROD_NR_NCM, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_NR_NCM, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        GTIN/EAN
-                                                        @Html.TextBoxFor(m => m.PROD_CD_GTIN_EAN, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_CD_GTIN_EAN, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        GTIN/EAN Trib.
-                                                        @Html.TextBoxFor(m => m.PROD_NR_GTIN_EAN_TRIB, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_NR_GTIN_EAN_TRIB, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        CEST
-                                                        @Html.TextBoxFor(m => m.PROD_NR_CEST, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_NR_CEST, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-4 col-xs-12">
-                                                        Unidade Tributável
-                                                        @Html.TextBoxFor(m => m.PROD_NM_UNIDADE_TRIB, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_NM_UNIDADE_TRIB, "", new { @style = "color:red" })
-                                                    </div>
+                                                <div class="form-group">
+                                                    @Html.ButtonActionSubmit(text: "Confirma edição de Produto", htmlAttributes: new { id = "basictoast" })
                                                 </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Fator de Conversão
-                                                        @Html.TextBoxFor(m => m.PROD_NR_FATOR_CONVERSAO, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_NR_FATOR_CONVERSAO, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Cod.Enquad. IPI
-                                                        @Html.TextBoxFor(m => m.PROD_NR_ENQUADRE_IPI, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_NR_ENQUADRE_IPI, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Valor IPI Fixo (R$)
-                                                        @Html.TextBoxFor(m => m.PROD_VL_IPI_FIXO, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_VL_IPI_FIXO, "", new { @style = "color:red" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.ButtonActionSubmit(text: "Confirma edição de Produto", htmlAttributes: new { id = "basictoast" })
-                                            </div>
 
-                                        }
+                                            }
 
+                                        </div>
                                     </div>
-                                </div>
+                                }
+
 
                                 @*Resumos*@
                                 <div id="tab-13" class="tab-pane">
@@ -1355,7 +1387,7 @@
                                 </div>
 
                                 @*Expedição*@
-                                @if (!Model.Composto)
+                                @if (!Model.Composto & Model.PROD_IN_TIPO_PRODUTO == 1)
                                 {
                                     <div id="tab-7" class="tab-pane">
                                         <div class="panel-body">
@@ -1366,7 +1398,6 @@
                                                         <div class="col-lg-4 col-md-4 col-xs-12">
                                                             @Html.HiddenFor(x => x.PROD_CD_ID)
                                                             @Html.HiddenFor(x => x.ASSI_CD_ID)
-                                                            @Html.HiddenFor(x => x.MATR_CD_ID)
                                                             @Html.HiddenFor(x => x.CAPR_CD_ID)
                                                             @Html.HiddenFor(x => x.UNID_CD_ID)
                                                             @Html.HiddenFor(x => x.PROD_NM_NOME)
@@ -1492,140 +1523,142 @@
                                 }
 
                                 @*E-Commerce*@
-                                <div id="tab-8" class="tab-pane">
-                                    <div class="panel-body">
-                                        @using (Html.BeginForm("EditarProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
-                                        {
-                                            <div class="row">
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-4 col-md-4 col-xs-12">
-                                                        @Html.HiddenFor(x => x.PROD_CD_ID)
-                                                        @Html.HiddenFor(x => x.ASSI_CD_ID)
-                                                        @Html.HiddenFor(x => x.MATR_CD_ID)
-                                                        @Html.HiddenFor(x => x.CAPR_CD_ID)
-                                                        @Html.HiddenFor(x => x.UNID_CD_ID)
-                                                        @Html.HiddenFor(x => x.PROD_NM_NOME)
-                                                        @Html.HiddenFor(x => x.PROD_DS_DESCRICAO)
-                                                        @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_MINIMA)
-                                                        @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_INICIAL)
-                                                        @Html.HiddenFor(x => x.PROD_QN_ESTOQUE)
-                                                        @Html.HiddenFor(x => x.PROD_DT_ULTIMA_MOVIMENTACAO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_AVISA_MINIMO)
-                                                        @Html.HiddenFor(x => x.PROD_DT_CADASTRO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_ATIVO)
-                                                        @Html.HiddenFor(x => x.PROD_AQ_FOTO)
-                                                        @Html.HiddenFor(x => x.PROD_CD_CODIGO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_TIPO_PRODUTO)
-                                                        @Html.HiddenFor(x => x.PROD_VL_PRECO_VENDA)
-                                                        @Html.HiddenFor(x => x.PROD_VL_PRECO_PROMOCAO)
-                                                        @Html.HiddenFor(x => x.SCPR_CD_ID)
-                                                        @Html.HiddenFor(x => x.PROD_DS_INFORMACOES)
-                                                        @Html.HiddenFor(x => x.PROD_NR_GARANTIA)
-                                                        @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_MAXIMA)
-                                                        @Html.HiddenFor(x => x.PROD_QN_RESERVA_ESTOQUE)
-                                                        @Html.HiddenFor(x => x.PROD_NR_REFERENCIA)
-                                                        @Html.HiddenFor(x => x.PROD_IN_BALANCA_PDV)
-                                                        @Html.HiddenFor(x => x.PROD_IN_BALANCA_RETAGUARDA)
-                                                        @Html.HiddenFor(x => x.PROD_NR_DIAS_VALIDADE)
-                                                        @Html.HiddenFor(x => x.PROD_IN_TIPO_COMBO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_OPCAO_COMBO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_DIVISAO)
-                                                        @Html.HiddenFor(x => x.PROD_NR_VALIDADE)
-                                                        @Html.HiddenFor(x => x.PROD_IN_COBRAR_MAIOR)
-                                                        @Html.HiddenFor(x => x.PROD_DS_INFORMACAO_NUTRICIONAL)
-                                                        @Html.HiddenFor(x => x.PROD_IN_GERAR_ARQUIVO)
-                                                        @Html.HiddenFor(x => x.PROD_NR_NCM)
-                                                        @Html.HiddenFor(x => x.PROD_NM_ORIGEM)
-                                                        @Html.HiddenFor(x => x.PROD_CD_GTIN_EAN)
-                                                        @Html.HiddenFor(x => x.PROD_NM_LOCALIZACAO_ESTOQUE)
-                                                        @Html.HiddenFor(x => x.PROD_QN_PESO_BRUTO)
-                                                        @Html.HiddenFor(x => x.PROD_QN_PESO_LIQUIDO)
-                                                        @Html.HiddenFor(x => x.PROD_IN_TIPO_EMBALAGEM)
-                                                        @Html.HiddenFor(x => x.PROD_NR_LARGURA)
-                                                        @Html.HiddenFor(x => x.PROD_NR_COMPRIMENTO)
-                                                        @Html.HiddenFor(x => x.PROD_NR_ALTURA)
-                                                        @Html.HiddenFor(x => x.PROD_NR_DIAMETRO)
-                                                        @Html.HiddenFor(x => x.PROD_PC_MARKUP_MININO)
-                                                        @Html.HiddenFor(x => x.PROD_VL_PRECO_MINIMO)
-                                                        @Html.HiddenFor(x => x.PROD_VL_MARKUP_PADRAO)
-                                                        @Html.HiddenFor(x => x.PROD_TX_OBSERVACOES)
-                                                        @Html.HiddenFor(x => x.PROD_IN_COMPOSTO)
-                                                        @Html.HiddenFor(x => x.PROD_NM_MARCA)
-                                                        @Html.HiddenFor(x => x.PROD_NM_MODELO)
-                                                        @Html.HiddenFor(x => x.PROD_NM_REFERENCIA_FABRICANTE)
-                                                        @Html.HiddenFor(x => x.PROD_NM_FABRICANTE)
-                                                        @Html.HiddenFor(x => x.PROD_NR_BARCODE)
-                                                        @Html.HiddenFor(x => x.PROD_QR_QRCODE)
-                                                        @Html.HiddenFor(x => x.PROR_CD_ID)
-                                                        @Html.HiddenFor(x => x.PROD_NR_CEST)
-                                                        @Html.HiddenFor(x => x.PROD_NR_GTIN_EAN_TRIB)
-                                                        @Html.HiddenFor(x => x.PROD_NR_FATOR_CONVERSAO)
-                                                        @Html.HiddenFor(x => x.PROD_NR_ENQUADRE_IPI)
-                                                        @Html.HiddenFor(x => x.PROD_VL_IPI_FIXO)
-                                                        @Html.HiddenFor(x => x.PRTP_VL_DESCONTO_MAXIMO)
-                                                        @Html.HiddenFor(x => x.PROD_DS_JUSTIFICATIVA)
-                                                        @Html.HiddenFor(x => x.PROD_QN_NOVA_CONTAGEM)
-                                                        @Html.HiddenFor(x => x.PROD_QN_CONTAGEM)
-                                                        @Html.HiddenFor(x => x.Composto)
-                                                        @Html.HiddenFor(x => x.AvisaMinima)
-                                                        @Html.HiddenFor(x => x.Garantia)
-                                                        @Html.HiddenFor(x => x.BalancaPDV)
-                                                        @Html.HiddenFor(x => x.BalancaRetaguarda)
-                                                        @Html.HiddenFor(x => x.ProdutoTipoCombo)
-                                                        @Html.HiddenFor(x => x.ProdutoOpcaoCombo)
-                                                        @Html.HiddenFor(x => x.CobrarMaior)
-                                                        @Html.HiddenFor(x => x.ArquivoTexto)
-                                                        SLUG
-                                                        @Html.TextBoxFor(m => m.PROD_NM_SLUG, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_NM_SLUG, "", new { @style = "color:red" })
+                                @if ((Int32)Session["PermVenda"] == 1 & Model.PROD_IN_TIPO_PRODUTO == 1)
+                                {
+                                    <div id="tab-8" class="tab-pane">
+                                        <div class="panel-body">
+                                            @using (Html.BeginForm("EditarProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                            {
+                                                <div class="row">
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                                            @Html.HiddenFor(x => x.PROD_CD_ID)
+                                                            @Html.HiddenFor(x => x.ASSI_CD_ID)
+                                                            @Html.HiddenFor(x => x.CAPR_CD_ID)
+                                                            @Html.HiddenFor(x => x.UNID_CD_ID)
+                                                            @Html.HiddenFor(x => x.PROD_NM_NOME)
+                                                            @Html.HiddenFor(x => x.PROD_DS_DESCRICAO)
+                                                            @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_MINIMA)
+                                                            @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_INICIAL)
+                                                            @Html.HiddenFor(x => x.PROD_QN_ESTOQUE)
+                                                            @Html.HiddenFor(x => x.PROD_DT_ULTIMA_MOVIMENTACAO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_AVISA_MINIMO)
+                                                            @Html.HiddenFor(x => x.PROD_DT_CADASTRO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_ATIVO)
+                                                            @Html.HiddenFor(x => x.PROD_AQ_FOTO)
+                                                            @Html.HiddenFor(x => x.PROD_CD_CODIGO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_TIPO_PRODUTO)
+                                                            @Html.HiddenFor(x => x.PROD_VL_PRECO_VENDA)
+                                                            @Html.HiddenFor(x => x.PROD_VL_PRECO_PROMOCAO)
+                                                            @Html.HiddenFor(x => x.SCPR_CD_ID)
+                                                            @Html.HiddenFor(x => x.PROD_DS_INFORMACOES)
+                                                            @Html.HiddenFor(x => x.PROD_NR_GARANTIA)
+                                                            @Html.HiddenFor(x => x.PROD_QN_QUANTIDADE_MAXIMA)
+                                                            @Html.HiddenFor(x => x.PROD_QN_RESERVA_ESTOQUE)
+                                                            @Html.HiddenFor(x => x.PROD_NR_REFERENCIA)
+                                                            @Html.HiddenFor(x => x.PROD_IN_BALANCA_PDV)
+                                                            @Html.HiddenFor(x => x.PROD_IN_BALANCA_RETAGUARDA)
+                                                            @Html.HiddenFor(x => x.PROD_NR_DIAS_VALIDADE)
+                                                            @Html.HiddenFor(x => x.PROD_IN_TIPO_COMBO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_OPCAO_COMBO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_DIVISAO)
+                                                            @Html.HiddenFor(x => x.PROD_NR_VALIDADE)
+                                                            @Html.HiddenFor(x => x.PROD_IN_COBRAR_MAIOR)
+                                                            @Html.HiddenFor(x => x.PROD_DS_INFORMACAO_NUTRICIONAL)
+                                                            @Html.HiddenFor(x => x.PROD_IN_GERAR_ARQUIVO)
+                                                            @Html.HiddenFor(x => x.PROD_NR_NCM)
+                                                            @Html.HiddenFor(x => x.PROD_NM_ORIGEM)
+                                                            @Html.HiddenFor(x => x.PROD_CD_GTIN_EAN)
+                                                            @Html.HiddenFor(x => x.PROD_NM_LOCALIZACAO_ESTOQUE)
+                                                            @Html.HiddenFor(x => x.PROD_QN_PESO_BRUTO)
+                                                            @Html.HiddenFor(x => x.PROD_QN_PESO_LIQUIDO)
+                                                            @Html.HiddenFor(x => x.PROD_IN_TIPO_EMBALAGEM)
+                                                            @Html.HiddenFor(x => x.PROD_NR_LARGURA)
+                                                            @Html.HiddenFor(x => x.PROD_NR_COMPRIMENTO)
+                                                            @Html.HiddenFor(x => x.PROD_NR_ALTURA)
+                                                            @Html.HiddenFor(x => x.PROD_NR_DIAMETRO)
+                                                            @Html.HiddenFor(x => x.PROD_PC_MARKUP_MININO)
+                                                            @Html.HiddenFor(x => x.PROD_VL_PRECO_MINIMO)
+                                                            @Html.HiddenFor(x => x.PROD_VL_MARKUP_PADRAO)
+                                                            @Html.HiddenFor(x => x.PROD_TX_OBSERVACOES)
+                                                            @Html.HiddenFor(x => x.PROD_IN_COMPOSTO)
+                                                            @Html.HiddenFor(x => x.PROD_NM_MARCA)
+                                                            @Html.HiddenFor(x => x.PROD_NM_MODELO)
+                                                            @Html.HiddenFor(x => x.PROD_NM_REFERENCIA_FABRICANTE)
+                                                            @Html.HiddenFor(x => x.PROD_NM_FABRICANTE)
+                                                            @Html.HiddenFor(x => x.PROD_NR_BARCODE)
+                                                            @Html.HiddenFor(x => x.PROD_QR_QRCODE)
+                                                            @Html.HiddenFor(x => x.PROR_CD_ID)
+                                                            @Html.HiddenFor(x => x.PROD_NR_CEST)
+                                                            @Html.HiddenFor(x => x.PROD_NR_GTIN_EAN_TRIB)
+                                                            @Html.HiddenFor(x => x.PROD_NR_FATOR_CONVERSAO)
+                                                            @Html.HiddenFor(x => x.PROD_NR_ENQUADRE_IPI)
+                                                            @Html.HiddenFor(x => x.PROD_VL_IPI_FIXO)
+                                                            @Html.HiddenFor(x => x.PRTP_VL_DESCONTO_MAXIMO)
+                                                            @Html.HiddenFor(x => x.PROD_DS_JUSTIFICATIVA)
+                                                            @Html.HiddenFor(x => x.PROD_QN_NOVA_CONTAGEM)
+                                                            @Html.HiddenFor(x => x.PROD_QN_CONTAGEM)
+                                                            @Html.HiddenFor(x => x.Composto)
+                                                            @Html.HiddenFor(x => x.AvisaMinima)
+                                                            @Html.HiddenFor(x => x.Garantia)
+                                                            @Html.HiddenFor(x => x.BalancaPDV)
+                                                            @Html.HiddenFor(x => x.BalancaRetaguarda)
+                                                            @Html.HiddenFor(x => x.ProdutoTipoCombo)
+                                                            @Html.HiddenFor(x => x.ProdutoOpcaoCombo)
+                                                            @Html.HiddenFor(x => x.CobrarMaior)
+                                                            @Html.HiddenFor(x => x.ArquivoTexto)
+                                                            SLUG
+                                                            @Html.TextBoxFor(m => m.PROD_NM_SLUG, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_NM_SLUG, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-xs-12">
+                                                            Keywords (Separadas por ",")
+                                                            @Html.TextBoxFor(m => m.PROD_NM_KEYWORDS, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_NM_KEYWORDS, "", new { @style = "color:red" })
+                                                        </div>
                                                     </div>
-                                                    <div class="col-lg-8 col-md-8 col-xs-12">
-                                                        Keywords (Separadas por ",")
-                                                        @Html.TextBoxFor(m => m.PROD_NM_KEYWORDS, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_NM_KEYWORDS, "", new { @style = "color:red" })
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-8 col-md-8 col-xs-12">
+                                                            Título SEO
+                                                            @Html.TextBoxFor(m => m.PROD_NM_TITULO_SEO, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_NM_TITULO_SEO, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                                            TAG
+                                                            @Html.TextBoxFor(m => m.PROD_NR_TAG, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_NR_TAG, "", new { @style = "color:red" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                                            Unidade Tributável
+                                                            @Html.TextBoxFor(m => m.PROD_NM_UNIDADE_TRIB, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_NM_UNIDADE_TRIB, "", new { @style = "color:red" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                            Descrição SEO
+                                                            @Html.TextAreaFor(m => m.PROD_DS_DESCRICAO_CEO, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_DS_DESCRICAO_CEO, "", new { @style = "color:red" })
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-8 col-md-8 col-xs-12">
-                                                        Título SEO
-                                                        @Html.TextBoxFor(m => m.PROD_NM_TITULO_SEO, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_NM_TITULO_SEO, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-4 col-xs-12">
-                                                        TAG
-                                                        @Html.TextBoxFor(m => m.PROD_NR_TAG, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_NR_TAG, "", new { @style = "color:red" })
-                                                    </div>
+                                                <div class="form-group">
+                                                    @Html.ButtonActionSubmit(text: "Confirma edição de Produto", htmlAttributes: new { id = "basictoast" })
                                                 </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-4 col-md-4 col-xs-12">
-                                                        Unidade Tributável
-                                                        @Html.TextBoxFor(m => m.PROD_NM_UNIDADE_TRIB, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_NM_UNIDADE_TRIB, "", new { @style = "color:red" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        Descrição SEO
-                                                        @Html.TextAreaFor(m => m.PROD_DS_DESCRICAO_CEO, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_DS_DESCRICAO_CEO, "", new { @style = "color:red" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.ButtonActionSubmit(text: "Confirma edição de Produto", htmlAttributes: new { id = "basictoast" })
-                                            </div>
-                                        }
+                                            }
 
+                                        </div>
                                     </div>
-                                </div>
+                                }
 
                                 @*Anexos*@
                                 <div id="tab-9" class="tab-pane">
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                <h4>Anexos do Produto</h4>
+                                                <h4>Anexos</h4>
                                                 <br />
                                                 <div class="form-group">
                                                     @using (Html.BeginForm("UploadFileProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container2" }))
@@ -1675,7 +1708,7 @@
                                                         <div class="form-group">
                                                             <div class="col-lg-12 col-md-12 col-sm-12">
                                                                 <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
-                                                                <input style="float: left;" type="submit" value="Incluir Anexo do Produto" class="btn btn-sm btn-success" />
+                                                                <input style="float: left;" type="submit" value="Incluir Anexo ao Produto" class="btn btn-sm btn-success" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1687,120 +1720,123 @@
                                 </div>
 
                                 @*Custos e Preços*@
-                                <div id="tab-10" class="tab-pane @ViewBag.TabPreco">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    Preço de Custo
-                                                    @Html.TextBoxFor(m => m.PROD_VL_CUSTO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @using (Html.BeginForm("IncluirTabelaProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container5" }))
-                                        {
+                                @if ((Int32)Session["PermVenda"] == 1  & Model.PROD_IN_TIPO_PRODUTO == 1)
+                                {
+                                    <div id="tab-10" class="tab-pane @ViewBag.TabPreco">
+                                        <div class="panel-body">
                                             <div class="row">
-                                                <hr />
-                                                <h4>Incluir Nova Tabela</h4>
-                                                <br />
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        @Html.HiddenFor(x => x.PROD_CD_ID)
-                                                        Filial
-                                                        @Html.DropDownListFor(m => m.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", autofocus = true, id = "fili" })
-                                                        @Html.ValidationMessageFor(m => m.FILI_CD_ID, "", new { @style = "color:red" })
-                                                    </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Custo
-                                                        @Html.TextBoxFor(m => m.PRTP_VL_CUSTO, new { @class = "form-control", autofocus = true, id = "custo", onfocusout = "CalculaPreco()" })
-                                                        @Html.ValidationMessageFor(m => m.PRTP_VL_CUSTO, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Markup (%)
-                                                        <div class="input-group">
-                                                            @Html.TextBoxFor(m => m.PROD_VL_MARKUP_PADRAO, new { @class = "form-control", autofocus = true, id = "markup", onfocusout = "CalculaPreco()", min = "1", max = "100" })
-                                                            @Html.ValidationMessageFor(m => m.PROD_VL_MARKUP_PADRAO, "", new { @style = "color:red" })
-                                                        <span class="input-group-addon">
-                                                            %
-                                                        </span>
-                                                    </div>
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Preço (R$)
-                                                        @Html.TextBoxFor(m => m.PRTP_VL_PRECO, new { @class = "form-control", autofocus = true, id = "preco" })
-                                                        @Html.ValidationMessageFor(m => m.PRTP_VL_PRECO, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Preço Promoção (R$)
-                                                        @Html.TextBoxFor(m => m.PRTP_VL_PRECO_PROMOCAO, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.PROD_VL_PRECO_PROMOCAO, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        <br />
-                                                        @Html.ButtonActionSubmit(text: "Confirma Inclusão de Preços")
+                                                        Preço de Custo
+                                                        @Html.TextBoxFor(m => m.PROD_VL_CUSTO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                     </div>
                                                 </div>
                                             </div>
-                                        }
-                                        <hr />
-                                        <div class="row">
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    @if (Model.PRODUTO_TABELA_PRECO != null && Model.PRODUTO_TABELA_PRECO.Count > 0)
-                                                    {
-                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
-                                                            <thead style="background-color:lightsteelblue">
-                                                                <tr>
-                                                                    <th>Filial</th>
-                                                                    <th>Custo</th>
-                                                                    <th>Markup (%)</th>
-                                                                    <th>Preço</th>
-                                                                    <th>Preço Promoção</th>
-                                                                    @*<th>Desconto Máximo</th>*@
-                                                                    <th>Data</th>
-                                                                    <th class="td-one-action">Ações</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach (var cond in (Model.PRODUTO_TABELA_PRECO))
-                                                                {
+                                            @using (Html.BeginForm("IncluirTabelaProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container5" }))
+                                            {
+                                                <div class="row">
+                                                    <hr />
+                                                    <h4>Incluir Novo Preço</h4>
+                                                    <br />
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                                            @Html.HiddenFor(x => x.PROD_CD_ID)
+                                                            Filial
+                                                            @Html.DropDownListFor(m => m.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", autofocus = true, id = "fili" })
+                                                            @Html.ValidationMessageFor(m => m.FILI_CD_ID, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Custo
+                                                            @Html.TextBoxFor(m => m.PRTP_VL_CUSTO, new { @class = "form-control", autofocus = true, id = "custo", onfocusout = "CalculaPreco()" })
+                                                            @Html.ValidationMessageFor(m => m.PRTP_VL_CUSTO, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Markup (%)
+                                                            <div class="input-group">
+                                                                @Html.TextBoxFor(m => m.PROD_VL_MARKUP_PADRAO, new { @class = "form-control", autofocus = true, id = "markup", onfocusout = "CalculaPreco()", min = "1", max = "100" })
+                                                                @Html.ValidationMessageFor(m => m.PROD_VL_MARKUP_PADRAO, "", new { @style = "color:red" })
+                                                                <span class="input-group-addon">
+                                                                    %
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Preço (R$)
+                                                            @Html.TextBoxFor(m => m.PRTP_VL_PRECO, new { @class = "form-control", autofocus = true, id = "preco" })
+                                                            @Html.ValidationMessageFor(m => m.PRTP_VL_PRECO, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Preço Promoção (R$)
+                                                            @Html.TextBoxFor(m => m.PRTP_VL_PRECO_PROMOCAO, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.PROD_VL_PRECO_PROMOCAO, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                                            <br />
+                                                            @Html.ButtonActionSubmit(text: "Confirma Inclusão de Preços")
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <hr />
+                                            <div class="row">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        @if (Model.PRODUTO_TABELA_PRECO != null && Model.PRODUTO_TABELA_PRECO.Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead style="background-color:lightsteelblue">
                                                                     <tr>
-                                                                        @if (cond.FILIAL != null)
-                                                                        {
-                                                                            <td style="display: none;"><input type="text" name="codFilial" value="@cond.FILI_CD_ID" /></td>
-                                                                            <td>@cond.FILIAL.FILI_NM_NOME</td>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <td>-</td>
-                                                                        }
-                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.PRTP_VL_CUSTO == null ? 0 : cond.PRTP_VL_CUSTO.Value)</td>
-                                                                        <td>@(cond.PRTP_NR_MARKUP == null ? 0 : cond.PRTP_NR_MARKUP.Value)%</td>
-                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.PRTP_VL_PRECO == null ? 0 : cond.PRTP_VL_PRECO.Value)</td>
-                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.PRTP_VL_PRECO_PROMOCAO == null ? 0 : cond.PRTP_VL_PRECO_PROMOCAO.Value)</td>
-                                                                        @*<td>@CrossCutting.Formatters.DecimalFormatter(cond.PRTP_VL_DESCONTO_MAXIMO.Value)</td>*@
-                                                                        <td>@(cond.PRTP_DT_DATA_REAJUSTE == null ? "-" : cond.PRTP_DT_DATA_REAJUSTE.Value.ToShortDateString())</td>
-                                                                        <td class="td-one-action">
-                                                                            <span style="color:#337ab7; cursor: pointer;" class="fa fa-edit" onclick="EditRow('@cond.PRTP_CD_ID', '@cond.FILI_CD_ID', '@cond.PRTP_VL_CUSTO', '@cond.PRTP_NR_MARKUP', '@cond.PRTP_VL_PRECO', '@cond.PRTP_VL_PRECO_PROMOCAO')"></span>
-                                                                            @if (cond.PRTP_IN_ATIVO == 1)
+                                                                        <th>Filial</th>
+                                                                        <th>Custo</th>
+                                                                        <th>Markup (%)</th>
+                                                                        <th>Preço</th>
+                                                                        <th>Preço Promoção</th>
+                                                                        @*<th>Desconto Máximo</th>*@
+                                                                        <th>Data</th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.PRODUTO_TABELA_PRECO))
+                                                                    {
+                                                                        <tr>
+                                                                            @if (cond.FILIAL != null)
                                                                             {
-                                                                                @Html.TableLinkDetails(cond.PRTP_CD_ID, "ExcluirTabelaProduto", "fa-trash-o", "Desativar")
+                                                                                <td style="display: none;"><input type="text" name="codFilial" value="@cond.FILI_CD_ID" /></td>
+                                                                                <td>@cond.FILIAL.FILI_NM_NOME</td>
                                                                             }
                                                                             else
                                                                             {
-                                                                                @Html.TableLinkDetails(cond.PRTP_CD_ID, "ReativarTabelaProduto", "fa-refresh", "Reativar")
+                                                                                <td>-</td>
                                                                             }
-                                                                        </td>
-                                                                    </tr>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    }
+                                                                            <td>@CrossCutting.Formatters.DecimalFormatter(cond.PRTP_VL_CUSTO == null ? 0 : cond.PRTP_VL_CUSTO.Value)</td>
+                                                                            <td>@(cond.PRTP_NR_MARKUP == null ? 0 : cond.PRTP_NR_MARKUP.Value)%</td>
+                                                                            <td>@CrossCutting.Formatters.DecimalFormatter(cond.PRTP_VL_PRECO == null ? 0 : cond.PRTP_VL_PRECO.Value)</td>
+                                                                            <td>@CrossCutting.Formatters.DecimalFormatter(cond.PRTP_VL_PRECO_PROMOCAO == null ? 0 : cond.PRTP_VL_PRECO_PROMOCAO.Value)</td>
+                                                                            @*<td>@CrossCutting.Formatters.DecimalFormatter(cond.PRTP_VL_DESCONTO_MAXIMO.Value)</td>*@
+                                                                            <td>@(cond.PRTP_DT_DATA_REAJUSTE == null ? "-" : cond.PRTP_DT_DATA_REAJUSTE.Value.ToShortDateString())</td>
+                                                                            <td class="td-one-action">
+                                                                                <span style="color:#337ab7; cursor: pointer;" class="fa fa-edit" onclick="EditRow('@cond.PRTP_CD_ID', '@cond.FILI_CD_ID', '@cond.PRTP_VL_CUSTO', '@cond.PRTP_NR_MARKUP', '@cond.PRTP_VL_PRECO', '@cond.PRTP_VL_PRECO_PROMOCAO')"></span>
+                                                                                @if (cond.PRTP_IN_ATIVO == 1)
+                                                                                {
+                                                                                    @Html.TableLinkDetails(cond.PRTP_CD_ID, "ExcluirTabelaProduto", "fa-trash-o", "Desativar")
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.TableLinkDetails(cond.PRTP_CD_ID, "ReativarTabelaProduto", "fa-refresh", "Reativar")
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
 
                                 @*Observações*@
                                 <div id="tab-11" class="tab-pane">
@@ -1812,7 +1848,6 @@
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
                                                         @Html.HiddenFor(x => x.PROD_CD_ID)
                                                         @Html.HiddenFor(x => x.ASSI_CD_ID)
-                                                        @Html.HiddenFor(x => x.MATR_CD_ID)
                                                         @Html.HiddenFor(x => x.FILI_CD_ID)
                                                         @Html.HiddenFor(x => x.CAPR_CD_ID)
                                                         @Html.HiddenFor(x => x.UNID_CD_ID)
@@ -1950,39 +1985,39 @@
                                                                             <td>@cond.MOEP_DT_MOVIMENTO.ToShortDateString()</td>
                                                                             @if (cond.MOEP_IN_OPERACAO == 1)
                                                                             {
-                                                                                <td>Entrada</td>
+                                                                                <td><span class="badge badge-primary">Entrada</span></td>
                                                                             }
                                                                             else if (cond.MOEP_IN_OPERACAO == 2)
                                                                             {
-                                                                                <td>Saída</td>
+                                                                                <td><span class="badge badge-success">Saída</span></td>
                                                                             }
                                                                             else
                                                                             {
-                                                                                <td>Manual</td>
+                                                                                <td><span class="badge badge-warning">Manual</span></td>
                                                                             }
                                                                             @if (cond.MOEP_IN_CHAVE_ORIGEM == 1)
                                                                             {
-                                                                                <td>Lançamento Avulso</td>
+                                                                                <td><span class="badge badge-primary">Lançamento Avulso</span></td>
                                                                             }
                                                                             else if (cond.MOEP_IN_CHAVE_ORIGEM == 2)
                                                                             {
-                                                                                <td>Inventário</td>
+                                                                                <td><span class="badge badge-primary">Inventário</span></td>
                                                                             }
                                                                             else if (cond.MOEP_IN_CHAVE_ORIGEM == 3)
                                                                             {
-                                                                                <td>Compra</td>
+                                                                                <td><span class="badge badge-primary">Compra</span></td>
                                                                             }
                                                                             else if (cond.MOEP_IN_CHAVE_ORIGEM == 4)
                                                                             {
-                                                                                <td>Venda</td>
+                                                                                <td><span class="badge badge-success">Venda</span></td>
                                                                             }
                                                                             else if (cond.MOEP_IN_CHAVE_ORIGEM == 5)
                                                                             {
-                                                                                <td>Compra Expressa</td>
+                                                                                <td><span class="badge badge-primary">Compra Expressa</span></td>
                                                                             }
                                                                             else
                                                                             {
-                                                                                <td>Manual</td>
+                                                                                <td><span class="badge badge-warning">Manual</span></td>
                                                                             }
                                                                             <td>@cond.MOEP_IN_ORIGEM</td>
                                                                             <td>@cond.MOEP_QN_QUANTIDADE</td>
@@ -2001,6 +2036,54 @@
                                         </div>
                                     </div>
                                 }
+
+                                @*Códigos de Barras*@
+                                <div id="tab-barcode" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <hr />
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <h4>Códigos de Barras</h4>
+                                                    <br />
+                                                    @if (Model.PRODUTO_BARCODE != null && Model.PRODUTO_BARCODE.Count > 0)
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead style="background-color:lightsteelblue">
+                                                                <tr>
+                                                                    <th>Código</th>
+                                                                    <th class="td-one-action">Ações</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.PRODUTO_BARCODE))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.PRBC_NR_BARCODE</td>
+                                                                        <td class="td-one-action">
+                                                                            @Html.TableLinkDetails(cond.PRBC_CD_ID, "EditarProdutoBarcode", "fa-edit", "Editar")
+                                                                            @if (cond.PRBC_IN_ATIVO == 1)
+                                                                            {
+                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluirBC('/Produto/ExcluirProdutoBarcode/@cond.PRBC_CD_ID')" title="Excluir"></span>
+                                                                            }
+                                                                            else
+                                                                            {   
+                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativarBC('/Produto/ReativarProdutoBarcode/@cond.PRBC_CD_ID')" title="Reativar"></span>
+                                                                            }
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.ButtonLinkIndex(text: "Incluir Novo Código de Barras", action: "IncluirProdutoBarcode", controller: "Produto")
+                                            </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                 </div>
@@ -2032,6 +2115,43 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
     <script src="~/Scripts/plugins/summernote/summernote.min.js"></script>
 
+    <script>
+        $(function () {
+            limpaModal();
+        });
+
+        function limpaModal() {
+            $('#btnModal').remove();
+            $('#modalTitle').remove();
+        }
+
+        function ShowModalExcluir(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma exclusão do Fornecedor?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativar(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação do Fornecedor?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+        function ShowModalExcluirBC(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma exclusão do Código de Barras?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativarBC(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação do Código de Barras?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+    </script>
     <script>
         $(function () {
             $('input[name=codFilial]').each(function (i, e) {

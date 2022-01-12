@@ -45,7 +45,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 EditTabelaPreco(PRODUTO_TABELA_PRECO item);
         PRODUTO_TABELA_PRECO CheckExist(PRODUTO_TABELA_PRECO item, Int32? idAss);
         List<PRODUTO_ESTOQUE_FILIAL> RecuperarQuantidadesFiliais(Int32? idFilial, Int32 idAss);
-        List<PRODUTO_ESTOQUE_FILIAL> ExecuteFilterEstoque(Int32? filial, String nome, String marca, String codigo, String barcode, Int32? categoria, Int32 idAss);
+        List<PRODUTO_ESTOQUE_FILIAL> ExecuteFilterEstoque(Int32? filial, String nome, String marca, String codigo, String barcode, Int32? categoria, Int32 tipo, Int32 idAss);
 
         PRODUTO_FORNECEDOR GetByProdForn(Int32 forn, Int32 prod);
 

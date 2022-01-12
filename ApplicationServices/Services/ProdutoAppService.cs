@@ -156,7 +156,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ExecuteFilterEstoque(Int32? filial, String nome, String marca, String codigo, String barcode, Int32? categoria, Int32 idAss, out List<PRODUTO_ESTOQUE_FILIAL> objeto)
+        public Int32 ExecuteFilterEstoque(Int32? filial, String nome, String marca, String codigo, String barcode, Int32? categoria, Int32 tipo, Int32 idAss, out List<PRODUTO_ESTOQUE_FILIAL> objeto)
         {
             try
             {
@@ -164,7 +164,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilterEstoque(filial, nome, marca, codigo, barcode, categoria, idAss);
+                objeto = _baseService.ExecuteFilterEstoque(filial, nome, marca, codigo, barcode, categoria, tipo, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;

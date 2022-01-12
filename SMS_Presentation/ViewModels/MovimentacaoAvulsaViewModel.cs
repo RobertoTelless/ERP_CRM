@@ -6,7 +6,7 @@ using System.Web;
 using EntitiesServices.Model;
 using EntitiesServices.Attributes;
 
-namespace SystemBRPresentation.ViewModels
+namespace ERP_CRM_Solution.ViewModels
 {
     public class MovimentacaoAvulsaViewModel
     {
@@ -30,9 +30,7 @@ namespace SystemBRPresentation.ViewModels
         public Int32 FILI_CD_ID_EX { get; set; }
         public Int32? FORN_CD_ID { get; set; }
         public Int32? PROD_CD_ID { get; set; }
-        public Int32? MAPR_CD_ID { get; set; }
         public Int32? QTDE_PROD { get; set; }
-        public Int32? QTDE_MAPR { get; set; }
 
 
         public Int32[] REGISTROS { get; set; }

@@ -27,15 +27,15 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItens()
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItens(Int32 idAss)
         {
-            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseService.GetAllItens();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensAdm()
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensAdm(Int32 idAss)
         {
-            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseService.GetAllItensAdm();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -45,19 +45,19 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensEntrada()
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensEntrada(Int32 idAss)
         {
-            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseService.GetAllItensEntrada();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseService.GetAllItensEntrada(idAss);
             return lista;
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensSaida()
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensSaida(Int32 idAss)
         {
-            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseService.GetAllItensSaida();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseService.GetAllItensSaida(idAss);
             return lista;
         }
 
-        public Int32 ExecuteFilter(Int32? catId, Int32? subCatId, String nome, String barcode, Int32? filiId, DateTime? dtMov, out List<MOVIMENTO_ESTOQUE_PRODUTO> objeto)
+        public Int32 ExecuteFilter(Int32? catId, Int32? subCatId, String nome, String barcode, Int32? filiId, DateTime? dtMov, Int32 idAss, out List<MOVIMENTO_ESTOQUE_PRODUTO> objeto)
         {
             try
             {
@@ -65,12 +65,11 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(catId, subCatId, nome, barcode, filiId, dtMov);
+                objeto = _baseService.ExecuteFilter(catId, subCatId, nome, barcode, filiId, dtMov, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
                 }
-                SessionMocks.listaMovimentoProduto = objeto;
                 return volta;
             }
             catch (Exception ex)
@@ -79,19 +78,18 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ExecuteFilterAvulso(Int32? operacao, Int32? tipoMovimento, DateTime? dtInicial, DateTime? dtFinal, Int32? filial, Int32? prod, out List<MOVIMENTO_ESTOQUE_PRODUTO> objeto)
+        public Int32 ExecuteFilterAvulso(Int32? operacao, Int32? tipoMovimento, DateTime? dtInicial, DateTime? dtFinal, Int32? filial, Int32? prod, Int32 idAss, out List<MOVIMENTO_ESTOQUE_PRODUTO> objeto)
         {
             try
             {
                 objeto = new List<MOVIMENTO_ESTOQUE_PRODUTO>();
                 Int32 volta = 0;
 
-                objeto = _baseService.ExecuteFilterAvulso(operacao, tipoMovimento, dtInicial, dtFinal, filial, prod);
+                objeto = _baseService.ExecuteFilterAvulso(operacao, tipoMovimento, dtInicial, dtFinal, filial, prod, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
                 }
-                SessionMocks.listaMovimentoProduto = objeto;
                 return volta;
             }
             catch (Exception ex)
@@ -109,11 +107,6 @@ namespace ApplicationServices.Services
                     item.ASSINANTE = null;
                 }
 
-                if (item.MATRIZ != null)
-                {
-                    item.MATRIZ = null;
-                }
-
                 if (item.FILIAL != null)
                 {
                     item.FILIAL = null;
@@ -128,7 +121,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "EditMOEP",
                     LOG_IN_ATIVO = 1,
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<MOVIMENTO_ESTOQUE_PRODUTO>(item)
@@ -163,7 +156,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "AddMOEP",
                     LOG_IN_ATIVO = 1,
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<MOVIMENTO_ESTOQUE_PRODUTO>(mov)
@@ -198,7 +191,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "AddMOEP",
                     LOG_IN_ATIVO = 1,
                 };
@@ -253,10 +246,6 @@ namespace ApplicationServices.Services
                 {
                     item.FILIAL = null;
                 }
-                if (item.MATRIZ != null)
-                {
-                    item.MATRIZ = null;
-                }
                 if (item.PRODUTO != null)
                 {
                     item.PRODUTO = null;
@@ -267,7 +256,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelMovPROD",
@@ -294,10 +283,6 @@ namespace ApplicationServices.Services
                 {
                     item.FILIAL = null;
                 }
-                if (item.MATRIZ != null)
-                {
-                    item.MATRIZ = null;
-                }
                 if (item.PRODUTO != null)
                 {
                     item.PRODUTO = null;
@@ -308,7 +293,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatMovPROD",

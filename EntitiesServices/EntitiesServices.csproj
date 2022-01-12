@@ -183,6 +183,7 @@
     <Compile Include="EntitiesServices\CategoriaEquipamentoService.cs" />
     <Compile Include="EntitiesServices\CategoriaProdutoService.cs" />
     <Compile Include="EntitiesServices\EquipamentoService.cs" />
+    <Compile Include="EntitiesServices\MovimentoEstoqueProdutoService.cs" />
     <Compile Include="EntitiesServices\ProdutoEstoqueFilialService.cs" />
     <Compile Include="EntitiesServices\ProdutoMovimentoEstoqueService.cs" />
     <Compile Include="EntitiesServices\ProdutoService.cs" />

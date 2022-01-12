@@ -15,13 +15,14 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateCreateLista(List<MOVIMENTO_ESTOQUE_PRODUTO> lista);
         Int32 ValidateDelete(MOVIMENTO_ESTOQUE_PRODUTO item, USUARIO usuario);
         Int32 ValidateReativar(MOVIMENTO_ESTOQUE_PRODUTO item, USUARIO usuario);
-        List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItens();
-        List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensAdm();
+
+        List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItens(Int32 idAss);
+        List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensAdm(Int32 idAss);
         MOVIMENTO_ESTOQUE_PRODUTO GetItemById(Int32 id);
         MOVIMENTO_ESTOQUE_PRODUTO GetByProdId(Int32 prod, Int32 fili);
-        List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensEntrada();
-        List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensSaida();
-        Int32 ExecuteFilter(Int32? catId, Int32? subCatId, String nome, String barcode, Int32? filiId, DateTime? dtMov, out List<MOVIMENTO_ESTOQUE_PRODUTO> objeto);
-        Int32 ExecuteFilterAvulso(Int32? operacao, Int32? tipoMovimento, DateTime? dtInicial, DateTime? dtFinal, Int32? filial, Int32? prod, out List<MOVIMENTO_ESTOQUE_PRODUTO> objeto);
+        List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensEntrada(Int32 idAss);
+        List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensSaida(Int32 idAss);
+        Int32 ExecuteFilter(Int32? catId, Int32? subCatId, String nome, String barcode, Int32? filiId, DateTime? dtMov, Int32 idAss, out List<MOVIMENTO_ESTOQUE_PRODUTO> objeto);
+        Int32 ExecuteFilterAvulso(Int32? operacao, Int32? tipoMovimento, DateTime? dtInicial, DateTime? dtFinal, Int32? filial, Int32? prod, Int32 idAss, out List<MOVIMENTO_ESTOQUE_PRODUTO> objeto);
     }
 }

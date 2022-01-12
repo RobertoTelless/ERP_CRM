@@ -12,7 +12,6 @@ namespace DataServices.Repositories
     {
         public MOVIMENTO_ESTOQUE_PRODUTO GetByProdId(Int32 prod, Int32 fili)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<MOVIMENTO_ESTOQUE_PRODUTO> query = Db.MOVIMENTO_ESTOQUE_PRODUTO;
             query = query.Where(x => x.PROD_CD_ID == prod);
             query = query.Where(x => x.FILI_CD_ID == fili);
@@ -26,26 +25,23 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItens()
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItens(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<MOVIMENTO_ESTOQUE_PRODUTO> query = Db.MOVIMENTO_ESTOQUE_PRODUTO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.Where(p => p.MOEP_IN_ATIVO == 1);
             return query.ToList();
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensAdm()
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensAdm(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<MOVIMENTO_ESTOQUE_PRODUTO> query = Db.MOVIMENTO_ESTOQUE_PRODUTO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensEntrada()
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensEntrada(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<MOVIMENTO_ESTOQUE_PRODUTO> query = Db.MOVIMENTO_ESTOQUE_PRODUTO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.Where(p => p.MOEP_IN_ATIVO == 1);
@@ -53,9 +49,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensSaida()
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensSaida(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<MOVIMENTO_ESTOQUE_PRODUTO> query = Db.MOVIMENTO_ESTOQUE_PRODUTO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.Where(p => p.MOEP_IN_ATIVO == 1);
@@ -63,9 +58,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> ExecuteFilter(Int32? catId, Int32? subCatId, String nome, String barcode, Int32? filiId, DateTime? dtMov)
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> ExecuteFilter(Int32? catId, Int32? subCatId, String nome, String barcode, Int32? filiId, DateTime? dtMov, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             List<MOVIMENTO_ESTOQUE_PRODUTO> lista = new List<MOVIMENTO_ESTOQUE_PRODUTO>();
             IQueryable<MOVIMENTO_ESTOQUE_PRODUTO> query = Db.MOVIMENTO_ESTOQUE_PRODUTO;
             if (catId != null)
@@ -103,9 +97,8 @@ namespace DataServices.Repositories
             return lista;
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> ExecuteFilterAvulso(Int32? operacao, Int32? tipoMovimento, DateTime? dtInicial, DateTime? dtFinal, Int32? filial, Int32? prod)
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> ExecuteFilterAvulso(Int32? operacao, Int32? tipoMovimento, DateTime? dtInicial, DateTime? dtFinal, Int32? filial, Int32? prod, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             List<MOVIMENTO_ESTOQUE_PRODUTO> lista = new List<MOVIMENTO_ESTOQUE_PRODUTO>();
             IQueryable<MOVIMENTO_ESTOQUE_PRODUTO> query = Db.MOVIMENTO_ESTOQUE_PRODUTO.Where(x => x.PRODUTO.PROD_IN_COMPOSTO == 0);
             if (operacao != null)

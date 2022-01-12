@@ -151,6 +151,7 @@ namespace ERP_CRM_Solution.ViewModels
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<int> PROD_QN_CONTAGEM { get; set; }
         public Nullable<decimal> PRTP_VL_CUSTO { get; set; }
+        public string Embalagem { get; set; }
 
         public bool AvisaMinima
         {

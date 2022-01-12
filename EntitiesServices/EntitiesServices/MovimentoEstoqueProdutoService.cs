@@ -21,7 +21,7 @@ namespace ModelServices.EntitiesServices
         private readonly IMovimentoEstoqueProdutoRepository _baseRepository;
         private readonly ILogRepository _logRepository;
         private readonly IFilialRepository _filialRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public MovimentoEstoqueProdutoService(IMovimentoEstoqueProdutoRepository baseRepository, ILogRepository logRepository, IFilialRepository filialRepository) : base(baseRepository)
         {
@@ -36,15 +36,15 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItens()
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItens(Int32 idAss)
         {
-            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseRepository.GetAllItens();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseRepository.GetAllItens(idAss);
             return lista;
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensAdm()
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensAdm(Int32 idAss)
         {
-            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseRepository.GetAllItensAdm();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseRepository.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -54,26 +54,26 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensEntrada()
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensEntrada(Int32 idAss)
         {
-            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseRepository.GetAllItensEntrada();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseRepository.GetAllItensEntrada(idAss);
             return lista;
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensSaida()
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> GetAllItensSaida(Int32 idAss)
         {
-            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseRepository.GetAllItensSaida();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = _baseRepository.GetAllItensSaida(idAss);
             return lista;
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> ExecuteFilter(Int32? catId, Int32? subCatId, String nome, String barcode, Int32? filiId, DateTime? dtMov)
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> ExecuteFilter(Int32? catId, Int32? subCatId, String nome, String barcode, Int32? filiId, DateTime? dtMov, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(catId, subCatId, nome, barcode, filiId, dtMov);
+            return _baseRepository.ExecuteFilter(catId, subCatId, nome, barcode, filiId, dtMov, idAss);
         }
 
-        public List<MOVIMENTO_ESTOQUE_PRODUTO> ExecuteFilterAvulso(Int32? operacao, Int32? tipoMovimento, DateTime? dtInicial, DateTime? dtFinal, Int32? filial, Int32? prod)
+        public List<MOVIMENTO_ESTOQUE_PRODUTO> ExecuteFilterAvulso(Int32? operacao, Int32? tipoMovimento, DateTime? dtInicial, DateTime? dtFinal, Int32? filial, Int32? prod, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilterAvulso(operacao, tipoMovimento, dtInicial, dtFinal, filial, prod);
+            return _baseRepository.ExecuteFilterAvulso(operacao, tipoMovimento, dtInicial, dtFinal, filial, prod, idAss);
         }
 
         public Int32 Create(MOVIMENTO_ESTOQUE_PRODUTO item, LOG log)

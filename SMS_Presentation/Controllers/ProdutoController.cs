@@ -40,6 +40,7 @@ namespace SMS_Presentation.Controllers
         private readonly ISubcategoriaProdutoAppService scpApp;
         //private readonly IPedidoVendaAppService pvApp;
         private readonly IProdutoEstoqueFilialAppService pefApp;
+        private readonly IConfiguracaoAppService confApp;
 
         private String msg;
         private Exception exception;
@@ -60,6 +61,7 @@ namespace SMS_Presentation.Controllers
             , IFornecedorAppService fornApps
             , IProdutotabelaPrecoAppService tpApps
             , ISubcategoriaProdutoAppService scpApps
+            , IConfiguracaoAppService confApps
             //, IPedidoVendaAppService pvApps
             , IProdutoEstoqueFilialAppService pefApps)
         {
@@ -73,6 +75,7 @@ namespace SMS_Presentation.Controllers
             scpApp = scpApps;
             //pvApp = pvApps;
             pefApp = pefApps;
+            confApp = confApps;
         }
 
         [HttpGet]
@@ -984,20 +987,20 @@ namespace SMS_Presentation.Controllers
 
             // Prepara view
             PRODUTO item = prodApp.GetItemById(id);
-            ViewBag.Tipos = new SelectList(cpApp.GetAllItens(idAss).OrderBy(x => x.CAPR_NM_NOME).ToList<CATEGORIA_PRODUTO>(), "CAPR_CD_ID", "CAPR_NM_NOME");
-            ViewBag.Subs = new SelectList(prodApp.GetAllSubs(idAss).OrderBy(x => x.SCPR_NM_NOME).ToList<SUBCATEGORIA_PRODUTO>(), "SCPR_CD_ID", "SCPR_NM_NOME");
-            ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss), "FILI_CD_ID", "FILI_NM_NOME");
-            ViewBag.Unidades = new SelectList(unApp.GetAllItens(idAss).Where(x => x.UNID_IN_TIPO_UNIDADE == 1).OrderBy(p => p.UNID_NM_NOME).ToList<UNIDADE>(), "UNID_CD_ID", "UNID_NM_NOME");
-            ViewBag.Origens = new SelectList(prodApp.GetAllOrigens(idAss).OrderBy(p => p.PROR_NM_NOME), "PROR_CD_ID", "PROR_NM_NOME");
-            List<SelectListItem> tipoProduto = new List<SelectListItem>();
-            tipoProduto.Add(new SelectListItem() { Text = "Produto", Value = "1" });
-            tipoProduto.Add(new SelectListItem() { Text = "Insumo", Value = "2" });
-            ViewBag.TiposProduto = new SelectList(tipoProduto, "Value", "Text");
-            List<SelectListItem> tipoEmbalagem = new List<SelectListItem>();
-            tipoEmbalagem.Add(new SelectListItem() { Text = "Envelope", Value = "1" });
-            tipoEmbalagem.Add(new SelectListItem() { Text = "Caixa", Value = "2" });
-            tipoEmbalagem.Add(new SelectListItem() { Text = "Rolo", Value = "3" });
-            ViewBag.TiposEmbalagem = new SelectList(tipoEmbalagem, "Value", "Text");
+            //ViewBag.Tipos = new SelectList(cpApp.GetAllItens(idAss).OrderBy(x => x.CAPR_NM_NOME).ToList<CATEGORIA_PRODUTO>(), "CAPR_CD_ID", "CAPR_NM_NOME");
+            //ViewBag.Subs = new SelectList(prodApp.GetAllSubs(idAss).OrderBy(x => x.SCPR_NM_NOME).ToList<SUBCATEGORIA_PRODUTO>(), "SCPR_CD_ID", "SCPR_NM_NOME");
+            //ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss), "FILI_CD_ID", "FILI_NM_NOME");
+            //ViewBag.Unidades = new SelectList(unApp.GetAllItens(idAss).Where(x => x.UNID_IN_TIPO_UNIDADE == 1).OrderBy(p => p.UNID_NM_NOME).ToList<UNIDADE>(), "UNID_CD_ID", "UNID_NM_NOME");
+            //ViewBag.Origens = new SelectList(prodApp.GetAllOrigens(idAss).OrderBy(p => p.PROR_NM_NOME), "PROR_CD_ID", "PROR_NM_NOME");
+            //List<SelectListItem> tipoProduto = new List<SelectListItem>();
+            //tipoProduto.Add(new SelectListItem() { Text = "Produto", Value = "1" });
+            //tipoProduto.Add(new SelectListItem() { Text = "Insumo", Value = "2" });
+            //ViewBag.TiposProduto = new SelectList(tipoProduto, "Value", "Text");
+            //List<SelectListItem> tipoEmbalagem = new List<SelectListItem>();
+            //tipoEmbalagem.Add(new SelectListItem() { Text = "Envelope", Value = "1" });
+            //tipoEmbalagem.Add(new SelectListItem() { Text = "Caixa", Value = "2" });
+            //tipoEmbalagem.Add(new SelectListItem() { Text = "Rolo", Value = "3" });
+            //ViewBag.TiposEmbalagem = new SelectList(tipoEmbalagem, "Value", "Text");
 
             Int32 venda = item.ITEM_PEDIDO_VENDA.Where(p => p.PEDIDO_VENDA.PEVE_DT_DATA.Month == DateTime.Today.Month).ToList().Sum(m => m.ITPE_QN_QUANTIDADE);
             ViewBag.Vendas = venda;
@@ -1023,6 +1026,22 @@ namespace SMS_Presentation.Controllers
             Session["Produto"]  = item;
             Session["IdVolta"]  = id;
             ProdutoViewModel vm = Mapper.Map<PRODUTO, ProdutoViewModel>(item);
+            if (vm.PROD_IN_TIPO_EMBALAGEM == 1)
+            {
+                vm.Embalagem = "Envelope";
+            }
+            else if (vm.PROD_IN_TIPO_EMBALAGEM == 2)
+            {
+                vm.Embalagem = "Caixa";
+            }
+            else if (vm.PROD_IN_TIPO_EMBALAGEM == 3)
+            {
+                vm.Embalagem = "Rolo";
+            }
+            else
+            {
+                vm.Embalagem = "-";
+            }
             return View(vm);
         }
 
@@ -4549,5 +4568,258 @@ namespace SMS_Presentation.Controllers
 
         //    return View();
         //}
+
+
+        [HttpGet]
+        public ActionResult EnviarEMailContato(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            FORNECEDOR item = fornApp.GetItemById(id);
+            Session["Contato"] = item;
+            ViewBag.Contato = item;
+            MensagemViewModel mens = new MensagemViewModel();
+            mens.NOME = item.FORN_NM_NOME;
+            mens.ID = id;
+            mens.MODELO = item.FORN_NM_EMAIL;
+            mens.MENS_DT_CRIACAO = DateTime.Today.Date;
+            mens.MENS_IN_TIPO = 1;
+            return View(mens);
+        }
+
+        [HttpPost]
+        public ActionResult EnviarEMailContato(MensagemViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdVolta"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = ProcessaEnvioEMailContato(vm, usuarioLogado);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+
+                    }
+
+                    // Sucesso
+                    return RedirectToAction("EditarProduto", new { id = idNot });
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EnviarSMSContato(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            FORNECEDOR item = fornApp.GetItemById(id);
+            Session["Contato"] = item;
+            ViewBag.Contato = item;
+            MensagemViewModel mens = new MensagemViewModel();
+            mens.NOME = item.FORN_NM_NOME;
+            mens.ID = id;
+            mens.MODELO = item.FORN_NR_CELULAR;
+            mens.MENS_DT_CRIACAO = DateTime.Today.Date;
+            mens.MENS_IN_TIPO = 2;
+            return View(mens);
+        }
+
+        [HttpPost]
+        public ActionResult EnviarSMSContato(MensagemViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdVolta"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = ProcessaEnvioSMSContato(vm, usuarioLogado);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+
+                    }
+
+                    // Sucesso
+                    return RedirectToAction("EditarProduto", new { id = idNot });
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [ValidateInput(false)]
+        public Int32 ProcessaEnvioEMailContato(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera contato
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            FORNECEDOR cont = (FORNECEDOR)Session["Contato"];
+
+            // Processa e-mail
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+
+            // Prepara cabeçalho
+            String cab = "Prezado Sr(a)." + cont.FORN_NM_NOME;
+
+            // Prepara rodape
+            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            String rod = assi.ASSI_NM_NOME;
+
+            // Prepara corpo do e-mail e trata link
+            String corpo = vm.MENS_TX_TEXTO;
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(corpo);
+            if (!String.IsNullOrEmpty(vm.MENS_NM_LINK))
+            {
+                if (!vm.MENS_NM_LINK.Contains("www."))
+                {
+                    vm.MENS_NM_LINK = "www." + vm.MENS_NM_LINK;
+                }
+                if (!vm.MENS_NM_LINK.Contains("http://"))
+                {
+                    vm.MENS_NM_LINK = "http://" + vm.MENS_NM_LINK;
+                }
+                str.AppendLine("<a href='" + vm.MENS_NM_LINK + "'>Clique aqui para maiores informações</a>");
+            }
+            String body = str.ToString();
+            String emailBody = cab + "<br /><br />" + body + "<br /><br />" + rod;
+
+            // Monta e-mail
+            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+            Email mensagem = new Email();
+            mensagem.ASSUNTO = "Contato";
+            mensagem.CORPO = emailBody;
+            mensagem.DEFAULT_CREDENTIALS = false;
+            mensagem.EMAIL_DESTINO = cont.FORN_NM_EMAIL;
+            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+            mensagem.ENABLE_SSL = true;
+            mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
+            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+            mensagem.IS_HTML = true;
+            mensagem.NETWORK_CREDENTIAL = net;
+
+            // Envia mensagem
+            try
+            {
+                Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+            }
+            catch (Exception ex)
+            {
+                String erro = ex.Message;
+            }
+            return 0;
+        }
+
+        [ValidateInput(false)]
+        public Int32 ProcessaEnvioSMSContato(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera contatos
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            FORNECEDOR cont = (FORNECEDOR)Session["Contato"];
+
+            // Processa SMS
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+
+            // Monta token
+            String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
+            byte[] textBytes = Encoding.UTF8.GetBytes(text);
+            String token = Convert.ToBase64String(textBytes);
+            String auth = "Basic " + token;
+
+            // Prepara texto
+            String texto = vm.MENS_TX_SMS;
+
+            // Prepara corpo do SMS e trata link
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(vm.MENS_TX_SMS);
+            if (!String.IsNullOrEmpty(vm.LINK))
+            {
+                if (!vm.LINK.Contains("www."))
+                {
+                    vm.LINK = "www." + vm.LINK;
+                }
+                if (!vm.LINK.Contains("http://"))
+                {
+                    vm.LINK = "http://" + vm.LINK;
+                }
+                str.AppendLine("<a href='" + vm.LINK + "'>Clique aqui para maiores informações</a>");
+                texto += "  " + vm.LINK;
+            }
+            String body = str.ToString();
+            String smsBody = body;
+            String erro = null;
+
+            // inicia processo
+            String resposta = String.Empty;
+
+            // Monta destinatarios
+            try
+            {
+                String listaDest = "55" + Regex.Replace(cont.FORN_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
+                httpWebRequest.Headers["Authorization"] = auth;
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+                String customId = Cryptography.GenerateRandomPassword(8);
+                String data = String.Empty;
+                String json = String.Empty;
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
+                    streamWriter.Write(json);
+                }
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    resposta = result;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro = ex.Message;
+            }
+            return 0;
+        }
+
     }
 }
