@@ -354,6 +354,27 @@
   <data name="M0087" xml:space="preserve">
     <value>Impossível excluir este produto. Ele está vinculado a um ou mais pedidos de venda</value>
   </data>
+  <data name="M0088" xml:space="preserve">
+    <value>Categoria de Produto já cadastrada</value>
+  </data>
+  <data name="M0089" xml:space="preserve">
+    <value>Subcategoria de Produto já cadastrada</value>
+  </data>
+  <data name="M0090" xml:space="preserve">
+    <value>Impossível excluir esta subcategoria. Ela está vinculada a outras informações</value>
+  </data>
+  <data name="M0091" xml:space="preserve">
+    <value>Tamanho já cadastrado</value>
+  </data>
+  <data name="M0092" xml:space="preserve">
+    <value>Impossível excluir este tamanho. Ele está vinculado a outras informações</value>
+  </data>
+  <data name="M0093" xml:space="preserve">
+    <value>Unidade já cadastrada</value>
+  </data>
+  <data name="M0094" xml:space="preserve">
+    <value>Impossível excluir esta unidade. Ela está vinculada a outras informações</value>
+  </data>
   <data name="M0109" xml:space="preserve">
     <value>O login não pode ficar em branco</value>
   </data>

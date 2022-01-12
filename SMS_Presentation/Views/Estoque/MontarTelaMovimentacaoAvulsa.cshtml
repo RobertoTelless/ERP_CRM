@@ -93,7 +93,6 @@
                                     @Html.ButtonActionSubmit("Filtrar")
                                     @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Estoque", action: "RetirarFiltroMovimentacaoAvulsa")
                                     @Html.ButtonLinkIndex(text: "Exibir Todos - Produtos", controller: "Estoque", action: "MostrarTudoProduto")
-                                    @Html.ButtonLinkIndex(text: "Exibir Todos - Insumos", controller: "Estoque", action: "MostrarTudoInsumo")
                                     @Html.ButtonLinkIndex(text: "Incluir Movimentação", controller: "Estoque", action: "IncluirMovimentacaoAvulsa")
                                     @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Estoque", action: "GerarRelatorioMovimentacaoAvulsaFiltro")
                                     @Html.ButtonLinkIndex(text: "Voltar", controller: "Estoque", action: "Voltar")
@@ -111,25 +110,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Movimentações de Estoque</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     
@@ -151,8 +131,6 @@
                             </thead>
                             <tbody>
                                 @if (ViewBag.ListaMovimento != null)
-                                {
-                                    if (ViewBag.TipoRegistro == 1)
                                 {
                                     if (ViewBag.ListaMovimento != null && (ViewBag.ListaMovimento as List<EntitiesServices.Model.MOVIMENTO_ESTOQUE_PRODUTO>).Count > 0)
                                     {
@@ -220,95 +198,15 @@
                                                 @if (cond.MOEP_IN_ATIVO == 1)
                                                 {
                                                     <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Estoque/ExcluirMovimentoProduto/@cond.MOEP_CD_ID')" title="Desativar"></span>
-                                                    @*@Html.TableLinkDetails(cond.MOEP_CD_ID, "ExcluirMovimentoProduto", "fa-trash-o", "Desativar")*@
                                                 }
                                                 else
                                                 {
                                                     <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Estoque/ReativarMovimentoProduto/@cond.MOEP_CD_ID')" title="Reativar"></span>
-                                                    @*@Html.TableLinkDetails(cond.MOEP_CD_ID, "ReativarMovimentoProduto", "fa-refresh", "Reativar")*@
                                                 }
                                             </td>
                                         </tr>
                                         }
                                     }
-                                }
-                                else
-                                {
-                                    if (ViewBag.ListaMovimento != null && (ViewBag.ListaMovimento as List<EntitiesServices.Model.MOVIMENTO_ESTOQUE_MATERIA_PRIMA>).Count > 0)
-                                    {
-                                        foreach (var cond in (ViewBag.ListaMovimento as List<EntitiesServices.Model.MOVIMENTO_ESTOQUE_MATERIA_PRIMA>))
-                                    {
-                                        <tr>
-                                            @if (cond.MOEM_IN_OPERACAO == 1)
-                                            {
-                                                <td>Entrada</td>
-                                            }
-                                            else if (cond.MOEM_IN_OPERACAO == 2)
-                                            {
-                                                <td>Saída</td>
-                                            }
-                                            else if (cond.MOEM_IN_OPERACAO == 2)
-                                            {
-                                                <td>Tranferência entre filiais</td>
-                                            }
-                                            else
-                                            {
-                                                <td>Manual</td>
-                                            }
-                                            @if (cond.MOEM_IN_CHAVE_ORIGEM == 1)
-                                            {
-                                                <td>Lançamento Avulso</td>
-                                            }
-                                            else if (cond.MOEM_IN_CHAVE_ORIGEM == 2)
-                                            {
-                                                <td>Inventário</td>
-                                            }
-                                            else if (cond.MOEM_IN_CHAVE_ORIGEM == 3)
-                                            {
-                                                <td>Compra</td>
-                                            }
-                                            else if (cond.MOEM_IN_CHAVE_ORIGEM == 4)
-                                            {
-                                                <td>Venda</td>
-                                            }
-                                            else if (cond.MOEM_IN_CHAVE_ORIGEM == 5)
-                                            {
-                                                <td>Compra Expressa</td>
-                                            }
-                                            else
-                                            {
-                                                <td>Manual</td>
-                                            }
-                                            <td>@cond.MOEM_NM_ORIGEM</td>
-                                            <td>@cond.MOEM_DT_MOVIMENTO.ToShortDateString()</td>
-                                            <td>@cond.MATERIA_PRIMA.MAPR_NM_NOME</td>
-                                            @if (cond.FILIAL != null)
-                                            {
-                                                <td>@cond.FILIAL.FILI_NM_NOME</td>
-                                            }
-                                            else
-                                            {
-                                                <td>-</td>
-                                            }
-                                            <td>@cond.MOEM_QN_ANTES</td>
-                                            <td>@cond.MOEM_QN_ALTERADA</td>
-                                            <td>@cond.MOEM_QN_DEPOIS</td>
-                                            <td class="td-one-action">
-                                                @if (cond.MOEM_IN_ATIVO == 1)
-                                                {
-                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Estoque/ExcluirMovimentoInsumo/@cond.MOEM_CD_ID')" title="Desativar"></span>
-                                                    @*@Html.TableLinkDetails(cond.MOEM_CD_ID, "ExcluirMovimentoInsumo", "fa-trash-o", "Desativar")*@
-                                                }
-                                                else
-                                                {
-                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Estoque/ReativarMovimentoInsumo/@cond.MOEM_CD_ID')" title="Reativar"></span>
-                                                    @*@Html.TableLinkDetails(cond.MOEM_CD_ID, "ReativarMovimentoInsumo", "fa-refresh", "Reativar")*@
-                                                }
-                                            </td>
-                                        </tr>
-                                    }
-                                    }
-                                }
                                 }
                             </tbody>
                         </table>

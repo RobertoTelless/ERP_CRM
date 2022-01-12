@@ -153,8 +153,8 @@
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Estoque</span> <span class="fa arrow"></span></a>
                             @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">CRM</span> <span class="fa arrow"></span></a>*@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
-                                <li class="@Html.IsSelected(action: "MontarTelaConsultaEstoque")"><a href="@Url.Action("MontarTelaConsultaEstoque", "Estoque")">Consulta</a></li>
-                                <li class="@Html.IsSelected(action: "MontarTelaMovimentacaoEstoque")"><a href="@Url.Action("MontarTelaMovimentacaoEstoque", "Estoque")">Movimentações</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaEstoqueProduto")"><a href="@Url.Action("MontarTelaEstoqueProduto", "Estoque")">Consulta</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaMovimentacaoAvulsa")"><a href="@Url.Action("MontarTelaMovimentacaoAvulsa", "Estoque")">Movimentação Avulsa</a></li>
                             </ul>
                         </li>
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Compras</span> <span class="fa arrow"></span></a>
@@ -168,6 +168,7 @@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "MontarTelaCatFornecedor")"><a href="@Url.Action("MontarTelaCatFornecedor", "TabelasAuxiliares")">Cat.Fornecedor</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaCatProduto")"><a href="@Url.Action("MontarTelaCatProduto", "TabelasAuxiliares")">Cat.Produto</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaSubCatProduto")"><a href="@Url.Action("MontarTelaSubCatProduto", "TabelasAuxiliares")">Subcat.Produto</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaUnidade")"><a href="@Url.Action("MontarTelaUnidade", "TabelasAuxiliares")">Unidades</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaTamanho")"><a href="@Url.Action("MontarTelaTamanho", "TabelasAuxiliares")">Tamanhos</a></li>
                             </ul>

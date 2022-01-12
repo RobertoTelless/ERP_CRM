@@ -3185,6 +3185,18 @@
     <Content Include="Views\Estoque\VerMovimentacaoEstoqueProduto.cshtml" />
     <Content Include="Views\Estoque\MontarTelaMovimentacaoAvulsa.cshtml" />
     <Content Include="Views\Estoque\IncluirMovimentacaoAvulsa.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaCatProduto.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirCatProduto.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarCatProduto.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaSubCatProduto.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirSubCatProduto.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarSubCatProduto.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaTamanho.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirTamanho.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarTamanho.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaUnidade.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirUnidade.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarUnidade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
