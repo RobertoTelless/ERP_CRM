@@ -374,6 +374,10 @@
         <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_FICHA_TECNICA" />
         <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_PRODUTO" />
         <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_PRODUTO" />
+        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO_CC" Width="1.5" PointX="5.25" PointY="122.625" />
+        <AssociationConnector Association="ERP_CRMModel.FK_GRUPO_CC_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SUBGRUPO_GRUPO_CC" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CENTRO_CUSTO_GRUPO_CC" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

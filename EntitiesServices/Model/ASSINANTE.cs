@@ -76,6 +76,7 @@ namespace EntitiesServices.Model
             this.CATEGORIA_FORNECEDOR = new HashSet<CATEGORIA_FORNECEDOR>();
             this.TAMANHO = new HashSet<TAMANHO>();
             this.FICHA_TECNICA = new HashSet<FICHA_TECNICA>();
+            this.GRUPO_CC = new HashSet<GRUPO_CC>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -221,5 +222,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<TAMANHO> TAMANHO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FICHA_TECNICA> FICHA_TECNICA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GRUPO_CC> GRUPO_CC { get; set; }
     }
 }

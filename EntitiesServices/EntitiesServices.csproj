@@ -179,10 +179,14 @@
     <Compile Include="EntitiesServices\AgendaService.cs" />
     <Compile Include="EntitiesServices\AssinanteCnpjService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
+    <Compile Include="EntitiesServices\BancoService.cs" />
     <Compile Include="EntitiesServices\CategoriaFornecedorService.cs" />
     <Compile Include="EntitiesServices\CategoriaEquipamentoService.cs" />
     <Compile Include="EntitiesServices\CategoriaProdutoService.cs" />
+    <Compile Include="EntitiesServices\CentroCustoService.cs" />
+    <Compile Include="EntitiesServices\ContaBancariaService.cs" />
     <Compile Include="EntitiesServices\EquipamentoService.cs" />
+    <Compile Include="EntitiesServices\FormaPagamentoService.cs" />
     <Compile Include="EntitiesServices\MovimentoEstoqueProdutoService.cs" />
     <Compile Include="EntitiesServices\PedidoCompraService.cs" />
     <Compile Include="EntitiesServices\ProdutoEstoqueFilialService.cs" />
@@ -190,6 +194,8 @@
     <Compile Include="EntitiesServices\ProdutoService.cs" />
     <Compile Include="EntitiesServices\ProdutoTabelaPrecoService.cs" />
     <Compile Include="EntitiesServices\SubCategoriaProdutoService.cs" />
+    <Compile Include="EntitiesServices\GrupoCCService.cs" />
+    <Compile Include="EntitiesServices\SubgrupoService.cs" />
     <Compile Include="EntitiesServices\TamanhoService.cs" />
     <Compile Include="EntitiesServices\TipoAcaoService.cs" />
     <Compile Include="EntitiesServices\MotivoEncerramentoService.cs" />
@@ -226,9 +232,12 @@
     <Compile Include="Interfaces\EntitiesServices\IAgendaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteCnpjService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IBancoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaFornecedorService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaEquipamentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaProdutoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ICentroCustoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IContaBancariaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IEquipamentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFormaEnvioService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFormaFreteService.cs" />
@@ -240,6 +249,8 @@
     <Compile Include="Interfaces\EntitiesServices\IProdutoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IProdutoTabelaPrecoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ISubCategoriaProdutoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IGrupoCCService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ISubgrupoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITamanhoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITipoAcaoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IMotivoEncerramentoService.cs" />
@@ -279,10 +290,16 @@
     <Compile Include="Interfaces\Repositories\IAssinanteCnpjRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinantePagamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IBancoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICargoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IGrupoCCRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaProdutoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICentroCustoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IContaBancariaContatoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IContaBancariaLancamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IContaBancariaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMAcaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMComentarioRepository.cs" />
@@ -350,6 +367,7 @@
     <Compile Include="Interfaces\Repositories\IPlanoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryBase.cs" />
     <Compile Include="Interfaces\Repositories\ISubcategoriaProdutoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ISubgrupoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITamanhoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITarefaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITarefaNotificacaoRepository.cs" />
@@ -359,6 +377,7 @@
     <Compile Include="Interfaces\Repositories\ITemplateSMSRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITemplateRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoAcaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoContaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoCRMRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoPessoaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoContribuinteRepository.cs" />
@@ -565,6 +584,9 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GRUPO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GRUPO_CC.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GRUPO_CLIENTE.cs">

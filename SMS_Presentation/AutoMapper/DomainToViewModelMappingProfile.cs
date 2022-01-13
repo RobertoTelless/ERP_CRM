@@ -63,6 +63,12 @@ namespace MvcMapping.Mappers
             CreateMap<PRODUTO_GRADE, ProdutoGradeViewModel>();
             CreateMap<PRODUTO_TABELA_PRECO, ProdutoTabelaPrecoViewModel>();
             CreateMap<PRODUTO, ProdutoViewModel>();
+            CreateMap<BANCO, BancoViewModel>();
+            CreateMap<CENTRO_CUSTO, CentroCustoViewModel>();
+            CreateMap<CONTA_BANCO, ContaBancariaViewModel>();
+            CreateMap<CONTA_BANCO_CONTATO, ContaBancariaContatoViewModel>();
+            CreateMap<CONTA_BANCO_LANCAMENTO, ContaBancariaLancamentoViewModel>();
+            CreateMap<FORMA_PAGAMENTO, FormaPagamentoViewModel>();
 
         }
     }

@@ -173,9 +173,15 @@
     <Compile Include="Repositories\AssinanteCnpjRepository.cs" />
     <Compile Include="Repositories\AssinantePagamentoRepository.cs" />
     <Compile Include="Repositories\AssinanteRepository.cs" />
+    <Compile Include="Repositories\BancoRepository.cs" />
     <Compile Include="Repositories\CargoRepository.cs" />
     <Compile Include="Repositories\CategoriaEquipamentoRepository.cs" />
     <Compile Include="Repositories\CategoriaProdutoRepository.cs" />
+    <Compile Include="Repositories\GrupoCCRepository.cs" />
+    <Compile Include="Repositories\CentroCustoRepository.cs" />
+    <Compile Include="Repositories\ContaBancariaContatoRepository.cs" />
+    <Compile Include="Repositories\ContaBancariaLancamentoRepository.cs" />
+    <Compile Include="Repositories\ContaBancariaRepository.cs" />
     <Compile Include="Repositories\CRMAcaoRepository.cs" />
     <Compile Include="Repositories\CRMAnexoRepository.cs" />
     <Compile Include="Repositories\CRMComentarioRepository.cs" />
@@ -189,6 +195,7 @@
     <Compile Include="Repositories\EquipamentoRepository.cs" />
     <Compile Include="Repositories\FichaTecnicaDetalheRepository.cs" />
     <Compile Include="Repositories\FichaTecnicaRepository.cs" />
+    <Compile Include="Repositories\FormaPagamentoRepository.cs" />
     <Compile Include="Repositories\FornecedorAnexoRepository.cs" />
     <Compile Include="Repositories\FornecedorCnpjRepository.cs" />
     <Compile Include="Repositories\FornecedorContatoRepository.cs" />
@@ -241,6 +248,7 @@
     <Compile Include="Repositories\PlanoRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\SubcategoriaProdutoRepository.cs" />
+    <Compile Include="Repositories\SubgrupoRepository.cs" />
     <Compile Include="Repositories\TamanhoRepository.cs" />
     <Compile Include="Repositories\TarefaAnexoRepository.cs" />
     <Compile Include="Repositories\TarefaNotificacaoRepository.cs" />
@@ -250,6 +258,7 @@
     <Compile Include="Repositories\TemplateSMSRepository.cs" />
     <Compile Include="Repositories\TemplateRepository.cs" />
     <Compile Include="Repositories\TipoAcaoRepository.cs" />
+    <Compile Include="Repositories\TipoContaRepository.cs" />
     <Compile Include="Repositories\TipoCRMRepository.cs" />
     <Compile Include="Repositories\TipoPessoaRepository.cs" />
     <Compile Include="Repositories\TipoContribuinteRepository.cs" />

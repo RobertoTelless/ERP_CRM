@@ -233,11 +233,12 @@
           </Key>
           <Property Name="CECU_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="GRUP_CD_ID" Type="int" />
+          <Property Name="SUBG_CD_ID" Type="int" />
+          <Property Name="GRCC_CD_ID" Type="int" />
           <Property Name="CECU_NR_NUMERO" Type="varchar" MaxLength="10" />
           <Property Name="CECU_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="CECU_IN_ATIVO" Type="int" Nullable="false" />
-          <Property Name="GRUP_CD_ID" Type="int" />
-          <Property Name="SUBG_CD_ID" Type="int" />
           <Property Name="CECU_IN_TIPO" Type="int" />
           <Property Name="CECU_IN_MOVTO" Type="int" />
           <Property Name="CECU_NM_EXIBE" Type="varchar" MaxLength="63" StoreGeneratedPattern="Computed" />
@@ -964,6 +965,16 @@
           <Property Name="GRUP_DT_CADASTRO" Type="date" Nullable="false" />
           <Property Name="GRUP_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="GRUPO_CC">
+          <Key>
+            <PropertyRef Name="GRCC_CD_ID" />
+          </Key>
+          <Property Name="GRCC_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="GRCC_NM_NOME" Type="varchar" MaxLength="50" />
+          <Property Name="GRCC_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="GRCC_NR_NUMERO" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="GRUPO_CLIENTE">
           <Key>
             <PropertyRef Name="GRCL_CD_ID" />
@@ -1606,6 +1617,7 @@
           <Property Name="SUBG_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="GRUP_CD_ID" Type="int" />
+          <Property Name="GRCC_CD_ID" Type="int" />
           <Property Name="SUBG_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="SUBG_IN_ATIVO" Type="int" />
           <Property Name="SUBG_NR_NUMERO" Type="varchar" MaxLength="10" />
@@ -2282,6 +2294,18 @@
             </Principal>
             <Dependent Role="CENTRO_CUSTO">
               <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CENTRO_CUSTO_GRUPO_CC">
+          <End Role="GRUPO_CC" Type="Self.GRUPO_CC" Multiplicity="0..1" />
+          <End Role="CENTRO_CUSTO" Type="Self.CENTRO_CUSTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO_CC">
+              <PropertyRef Name="GRCC_CD_ID" />
+            </Principal>
+            <Dependent Role="CENTRO_CUSTO">
+              <PropertyRef Name="GRCC_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3485,6 +3509,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GRUPO_CC_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="GRUPO_CC" Type="Self.GRUPO_CC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="GRUPO_CC">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_GRUPO_CLIENTE_CLIENTE">
           <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
           <End Role="GRUPO_CLIENTE" Type="Self.GRUPO_CLIENTE" Multiplicity="*" />
@@ -4469,6 +4505,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SUBGRUPO_GRUPO_CC">
+          <End Role="GRUPO_CC" Type="Self.GRUPO_CC" Multiplicity="0..1" />
+          <End Role="SUBGRUPO" Type="Self.SUBGRUPO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO_CC">
+              <PropertyRef Name="GRCC_CD_ID" />
+            </Principal>
+            <Dependent Role="SUBGRUPO">
+              <PropertyRef Name="GRCC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TAMANHO_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="TAMANHO" Type="Self.TAMANHO" Multiplicity="*" />
@@ -4939,6 +4987,7 @@
           <EntitySet Name="FORNECEDOR_MENSAGEM" EntityType="Self.FORNECEDOR_MENSAGEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FORNECEDOR_QUADRO_SOCIETARIO" EntityType="Self.FORNECEDOR_QUADRO_SOCIETARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GRUPO" EntityType="Self.GRUPO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GRUPO_CC" EntityType="Self.GRUPO_CC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GRUPO_CLIENTE" EntityType="Self.GRUPO_CLIENTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ITEM_PEDIDO_COMPRA" EntityType="Self.ITEM_PEDIDO_COMPRA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ITEM_PEDIDO_VENDA" EntityType="Self.ITEM_PEDIDO_VENDA" Schema="dbo" store:Type="Tables" />
@@ -5104,6 +5153,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_CENTRO_CUSTO_ASSINANTE" Association="Self.FK_CENTRO_CUSTO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CENTRO_CUSTO_GRUPO_CC" Association="Self.FK_CENTRO_CUSTO_GRUPO_CC">
+            <End Role="GRUPO_CC" EntitySet="GRUPO_CC" />
             <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CENTRO_CUSTO_SUBGRUPO" Association="Self.FK_CENTRO_CUSTO_SUBGRUPO">
@@ -5506,6 +5559,10 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="GRUPO" EntitySet="GRUPO" />
           </AssociationSet>
+          <AssociationSet Name="FK_GRUPO_CC_ASSINANTE" Association="Self.FK_GRUPO_CC_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="GRUPO_CC" EntitySet="GRUPO_CC" />
+          </AssociationSet>
           <AssociationSet Name="FK_GRUPO_CLIENTE_CLIENTE" Association="Self.FK_GRUPO_CLIENTE_CLIENTE">
             <End Role="CLIENTE" EntitySet="CLIENTE" />
             <End Role="GRUPO_CLIENTE" EntitySet="GRUPO_CLIENTE" />
@@ -5834,6 +5891,10 @@
             <End Role="GRUPO" EntitySet="GRUPO" />
             <End Role="SUBGRUPO" EntitySet="SUBGRUPO" />
           </AssociationSet>
+          <AssociationSet Name="FK_SUBGRUPO_GRUPO_CC" Association="Self.FK_SUBGRUPO_GRUPO_CC">
+            <End Role="GRUPO_CC" EntitySet="GRUPO_CC" />
+            <End Role="SUBGRUPO" EntitySet="SUBGRUPO" />
+          </AssociationSet>
           <AssociationSet Name="FK_TAMANHO_ASSINANTE" Association="Self.FK_TAMANHO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="TAMANHO" EntitySet="TAMANHO" />
@@ -6110,6 +6171,7 @@
           <NavigationProperty Name="CATEGORIA_FORNECEDOR" Relationship="ERP_CRMModel.FK_CATEGORIA_FORNECEDOR_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_FORNECEDOR" />
           <NavigationProperty Name="TAMANHO" Relationship="ERP_CRMModel.FK_TAMANHO_ASSINANTE" FromRole="ASSINANTE" ToRole="TAMANHO" />
           <NavigationProperty Name="FICHA_TECNICA" Relationship="ERP_CRMModel.FK_FICHA_TECNICA_ASSINANTE" FromRole="ASSINANTE" ToRole="FICHA_TECNICA" />
+          <NavigationProperty Name="GRUPO_CC" Relationship="ERP_CRMModel.FK_GRUPO_CC_ASSINANTE" FromRole="ASSINANTE" ToRole="GRUPO_CC" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -6315,6 +6377,8 @@
           <NavigationProperty Name="CONTA_RECEBER_RATEIO" Relationship="Self.FK_CONTA_RECEBER_RATEIO_CENTRO_CUSTO" FromRole="CENTRO_CUSTO" ToRole="CONTA_RECEBER_RATEIO" />
           <NavigationProperty Name="PEDIDO_COMPRA" Relationship="Self.FK_PEDIDO_COMPRA_CENTRO_CUSTO" FromRole="CENTRO_CUSTO" ToRole="PEDIDO_COMPRA" />
           <NavigationProperty Name="PEDIDO_VENDA" Relationship="Self.FK_PEDIDO_VENDA_CENTRO_CUSTO" FromRole="CENTRO_CUSTO" ToRole="PEDIDO_VENDA" />
+          <Property Name="GRCC_CD_ID" Type="Int32" />
+          <NavigationProperty Name="GRUPO_CC" Relationship="ERP_CRMModel.FK_CENTRO_CUSTO_GRUPO_CC" FromRole="CENTRO_CUSTO" ToRole="GRUPO_CC" />
         </EntityType>
         <EntityType Name="CLIENTE">
           <Key>
@@ -7863,6 +7927,8 @@
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_SUBGRUPO_ASSINANTE" FromRole="SUBGRUPO" ToRole="ASSINANTE" />
           <NavigationProperty Name="CENTRO_CUSTO" Relationship="Self.FK_CENTRO_CUSTO_SUBGRUPO" FromRole="SUBGRUPO" ToRole="CENTRO_CUSTO" />
           <NavigationProperty Name="GRUPO" Relationship="Self.FK_SUBGRUPO_GRUPO" FromRole="SUBGRUPO" ToRole="GRUPO" />
+          <Property Name="GRCC_CD_ID" Type="Int32" />
+          <NavigationProperty Name="GRUPO_CC" Relationship="ERP_CRMModel.FK_SUBGRUPO_GRUPO_CC" FromRole="SUBGRUPO" ToRole="GRUPO_CC" />
         </EntityType>
         <EntityType Name="TELEFONE">
           <Key>
@@ -11747,6 +11813,19 @@
             <End Role="PRODUTO" EntitySet="PRODUTO" />
             <End Role="FICHA_TECNICA_DETALHE" EntitySet="FICHA_TECNICA_DETALHE" />
           </AssociationSet>
+          <EntitySet Name="GRUPO_CC" EntityType="ERP_CRMModel.GRUPO_CC" />
+          <AssociationSet Name="FK_GRUPO_CC_ASSINANTE" Association="ERP_CRMModel.FK_GRUPO_CC_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="GRUPO_CC" EntitySet="GRUPO_CC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUBGRUPO_GRUPO_CC" Association="ERP_CRMModel.FK_SUBGRUPO_GRUPO_CC">
+            <End Role="GRUPO_CC" EntitySet="GRUPO_CC" />
+            <End Role="SUBGRUPO" EntitySet="SUBGRUPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CENTRO_CUSTO_GRUPO_CC" Association="ERP_CRMModel.FK_CENTRO_CUSTO_GRUPO_CC">
+            <End Role="GRUPO_CC" EntitySet="GRUPO_CC" />
+            <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -12423,6 +12502,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="GRUPO_CC">
+          <Key>
+            <PropertyRef Name="GRCC_CD_ID" />
+          </Key>
+          <Property Name="GRCC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="GRCC_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GRCC_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="GRCC_NR_NUMERO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_GRUPO_CC_ASSINANTE" FromRole="GRUPO_CC" ToRole="ASSINANTE" />
+          <NavigationProperty Name="SUBGRUPO" Relationship="ERP_CRMModel.FK_SUBGRUPO_GRUPO_CC" FromRole="GRUPO_CC" ToRole="SUBGRUPO" />
+          <NavigationProperty Name="CENTRO_CUSTO" Relationship="ERP_CRMModel.FK_CENTRO_CUSTO_GRUPO_CC" FromRole="GRUPO_CC" ToRole="CENTRO_CUSTO" />
+        </EntityType>
+        <Association Name="FK_GRUPO_CC_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.GRUPO_CC" Role="GRUPO_CC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="GRUPO_CC">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUBGRUPO_GRUPO_CC">
+          <End Type="ERP_CRMModel.GRUPO_CC" Role="GRUPO_CC" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.SUBGRUPO" Role="SUBGRUPO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO_CC">
+              <PropertyRef Name="GRCC_CD_ID" />
+            </Principal>
+            <Dependent Role="SUBGRUPO">
+              <PropertyRef Name="GRCC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CENTRO_CUSTO_GRUPO_CC">
+          <End Type="ERP_CRMModel.GRUPO_CC" Role="GRUPO_CC" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CENTRO_CUSTO" Role="CENTRO_CUSTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO_CC">
+              <PropertyRef Name="GRCC_CD_ID" />
+            </Principal>
+            <Dependent Role="CENTRO_CUSTO">
+              <PropertyRef Name="GRCC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12673,6 +12801,7 @@
           <EntitySetMapping Name="CENTRO_CUSTO">
             <EntityTypeMapping TypeName="ERP_CRMModel.CENTRO_CUSTO">
               <MappingFragment StoreEntitySet="CENTRO_CUSTO">
+                <ScalarProperty Name="GRCC_CD_ID" ColumnName="GRCC_CD_ID" />
                 <ScalarProperty Name="CECU_CD_ID" ColumnName="CECU_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CECU_NR_NUMERO" ColumnName="CECU_NR_NUMERO" />
@@ -14022,6 +14151,7 @@
           <EntitySetMapping Name="SUBGRUPO">
             <EntityTypeMapping TypeName="ERP_CRMModel.SUBGRUPO">
               <MappingFragment StoreEntitySet="SUBGRUPO">
+                <ScalarProperty Name="GRCC_CD_ID" ColumnName="GRCC_CD_ID" />
                 <ScalarProperty Name="SUBG_CD_ID" ColumnName="SUBG_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="GRUP_CD_ID" ColumnName="GRUP_CD_ID" />
@@ -14534,6 +14664,17 @@
                 <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
                 <ScalarProperty Name="FITE_CD_ID" ColumnName="FITE_CD_ID" />
                 <ScalarProperty Name="FITD_CD_ID" ColumnName="FITD_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GRUPO_CC">
+            <EntityTypeMapping TypeName="ERP_CRMModel.GRUPO_CC">
+              <MappingFragment StoreEntitySet="GRUPO_CC">
+                <ScalarProperty Name="GRCC_NR_NUMERO" ColumnName="GRCC_NR_NUMERO" />
+                <ScalarProperty Name="GRCC_IN_ATIVO" ColumnName="GRCC_IN_ATIVO" />
+                <ScalarProperty Name="GRCC_NM_NOME" ColumnName="GRCC_NM_NOME" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="GRCC_CD_ID" ColumnName="GRCC_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

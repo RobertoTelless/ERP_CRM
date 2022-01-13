@@ -21,21 +21,27 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<FORMA_PAGAMENTO> GetAllItens(Int32 tipo)
+        public FORMA_PAGAMENTO CheckExist(FORMA_PAGAMENTO conta, Int32 idAss)
         {
-            List<FORMA_PAGAMENTO> lista = _baseService.GetAllItens(tipo);
+            FORMA_PAGAMENTO item = _baseService.CheckExist(conta, idAss);
+            return item;
+        }
+
+        public List<FORMA_PAGAMENTO> GetAllItensTipo(Int32 tipo, Int32 idAss)
+        {
+            List<FORMA_PAGAMENTO> lista = _baseService.GetAllItensTipo(tipo, idAss);
             return lista;
         }
 
-        public List<FORMA_PAGAMENTO> GetAllItens()
+        public List<FORMA_PAGAMENTO> GetAllItens(Int32 idAss)
         {
-            List<FORMA_PAGAMENTO> lista = _baseService.GetAllItens();
+            List<FORMA_PAGAMENTO> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<FORMA_PAGAMENTO> GetAllItensAdm()
+        public List<FORMA_PAGAMENTO> GetAllItensAdm(Int32 idAss)
         {
-            List<FORMA_PAGAMENTO> lista = _baseService.GetAllItensAdm();
+            List<FORMA_PAGAMENTO> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -51,13 +57,13 @@ namespace ApplicationServices.Services
             {
                 // Completa objeto
                 item.FOPA_IN_ATIVO = 1;
-                item.ASSI_CD_ID = SessionMocks.IdAssinante;
+                item.ASSI_CD_ID = usuario.ASSI_CD_ID;
 
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddFOPA",
                     LOG_IN_ATIVO = 1,
@@ -83,7 +89,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "EditFOPA",
                     LOG_IN_ATIVO = 1,
@@ -118,15 +124,15 @@ namespace ApplicationServices.Services
                 item.FOPA_IN_ATIVO = 0;
 
                 // Monta Log
-                //LOG log = new LOG
-                //{
-                //    LOG_DT_DATA = DateTime.Now,
-                //    ASSI_CD_ID = SessionMocks.IdAssinante,
-                //    USUA_CD_ID = usuario.USUA_CD_ID,
-                //    LOG_IN_ATIVO = 1,
-                //    LOG_NM_OPERACAO = "DelFOPA",
-                //    LOG_TX_REGISTRO = Serialization.SerializeJSON<FORMA_PAGAMENTO>(item)
-                //};
+                LOG log = new LOG
+                {
+                    LOG_DT_DATA = DateTime.Now,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
+                    USUA_CD_ID = usuario.USUA_CD_ID,
+                    LOG_IN_ATIVO = 1,
+                    LOG_NM_OPERACAO = "DelFOPA",
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<FORMA_PAGAMENTO>(item)
+                };
 
                 // Persiste
                 return _baseService.Edit(item);
@@ -150,7 +156,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatFOPA",

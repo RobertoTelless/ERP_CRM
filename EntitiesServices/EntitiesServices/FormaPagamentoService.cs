@@ -20,7 +20,7 @@ namespace ModelServices.EntitiesServices
     {
         private readonly IFormaPagamentoRepository _baseRepository;
         private readonly ILogRepository _logRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public FormaPagamentoService(IFormaPagamentoRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
         {
@@ -29,25 +29,31 @@ namespace ModelServices.EntitiesServices
 
         }
 
+        public FORMA_PAGAMENTO CheckExist(FORMA_PAGAMENTO conta, Int32 idAss)
+        {
+            FORMA_PAGAMENTO item = _baseRepository.CheckExist(conta, idAss);
+            return item;
+        }
+
         public FORMA_PAGAMENTO GetItemById(Int32 id)
         {
             FORMA_PAGAMENTO item = _baseRepository.GetItemById(id);
             return item;
         }
 
-        public List<FORMA_PAGAMENTO> GetAllItens(Int32 tipo)
+        public List<FORMA_PAGAMENTO> GetAllItensTipo(Int32 tipo, Int32 idAss)
         {
-            return _baseRepository.GetAllItens(tipo);
+            return _baseRepository.GetAllItensTipo(tipo, idAss);
         }
 
-        public List<FORMA_PAGAMENTO> GetAllItens()
+        public List<FORMA_PAGAMENTO> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<FORMA_PAGAMENTO> GetAllItensAdm()
+        public List<FORMA_PAGAMENTO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
         public Int32 Create(FORMA_PAGAMENTO item, LOG log)

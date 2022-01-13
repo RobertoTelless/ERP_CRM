@@ -111,6 +111,10 @@ namespace Presentation.Start
             kernel.Bind<IProdutoEstoqueFilialAppService>().To<ProdutoEstoqueFilialAppService>();
             kernel.Bind<IProdutotabelaPrecoAppService>().To<ProdutoTabelaPrecoAppService>();
             kernel.Bind<IMovimentoEstoqueProdutoAppService>().To<MovimentoEstoqueProdutoAppService>();
+            kernel.Bind<IBancoAppService>().To<BancoAppService>();
+            kernel.Bind<ICentroCustoAppService>().To<CentroCustoAppService>();
+            kernel.Bind<IContaBancariaAppService>().To<ContaBancariaAppService>();
+            kernel.Bind<IFormaPagamentoAppService>().To<FormaPagamentoAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -156,6 +160,10 @@ namespace Presentation.Start
             kernel.Bind<IProdutoMovimentoEstoqueService>().To<ProdutoMovimentoEstoqueService>();
             kernel.Bind<IProdutoTabelaPrecoService>().To<ProdutoTabelaPrecoService>();
             kernel.Bind<IMovimentoEstoqueProdutoService>().To<MovimentoEstoqueProdutoService>();
+            kernel.Bind<IBancoService>().To<BancoService>();
+            kernel.Bind<ICentroCustoService>().To<CentroCustoService>();
+            kernel.Bind<IContaBancariaService>().To<ContaBancariaService>();
+            kernel.Bind<IFormaPagamentoService>().To<FormaPagamentoService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -240,8 +248,13 @@ namespace Presentation.Start
             kernel.Bind<IProdutoRepository>().To<ProdutoRepository>();
             kernel.Bind<IProdutoTabelaPrecoRepository>().To<ProdutoTabelaPrecoRepository>();
             kernel.Bind<IMovimentoEstoqueProdutoRepository>().To<MovimentoEstoqueProdutoRepository>();
-
-
+            kernel.Bind<IBancoRepository>().To<BancoRepository>();
+            kernel.Bind<ICentroCustoRepository>().To<CentroCustoRepository>();
+            kernel.Bind<IContaBancariaRepository>().To<ContaBancariaRepository>();
+            kernel.Bind<IContaBancariaContatoRepository>().To<ContaBancariaContatoRepository>();
+            kernel.Bind<IContaBancariaLancamentoRepository>().To<ContaBancariaLancamentoRepository>();
+            kernel.Bind<ITipoContaRepository>().To<TipoContaRepository>();
+            kernel.Bind<IFormaPagamentoRepository>().To<FormaPagamentoRepository>();
         }
     }
 }

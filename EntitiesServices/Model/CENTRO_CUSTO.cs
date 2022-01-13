@@ -35,6 +35,7 @@ namespace EntitiesServices.Model
         public Nullable<int> CECU_IN_TIPO { get; set; }
         public Nullable<int> CECU_IN_MOVTO { get; set; }
         public string CECU_NM_EXIBE { get; set; }
+        public Nullable<int> GRCC_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual SUBGRUPO SUBGRUPO { get; set; }
@@ -50,5 +51,6 @@ namespace EntitiesServices.Model
         public virtual ICollection<PEDIDO_COMPRA> PEDIDO_COMPRA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PEDIDO_VENDA> PEDIDO_VENDA { get; set; }
+        public virtual GRUPO_CC GRUPO_CC { get; set; }
     }
 }

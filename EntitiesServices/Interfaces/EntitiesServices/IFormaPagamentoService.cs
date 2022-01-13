@@ -16,8 +16,9 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 Edit(FORMA_PAGAMENTO perfil);
         Int32 Delete(FORMA_PAGAMENTO perfil, LOG log);
 
+        FORMA_PAGAMENTO CheckExist(FORMA_PAGAMENTO conta, Int32 idAss);
         FORMA_PAGAMENTO GetItemById(Int32 id);
-        List<FORMA_PAGAMENTO> GetAllItens(Int32 tipo, Int32 idAss);
+        List<FORMA_PAGAMENTO> GetAllItensTipo(Int32 tipo, Int32 idAss);
         List<FORMA_PAGAMENTO> GetAllItensAdm(Int32 idAss);
         List<FORMA_PAGAMENTO> GetAllItens(Int32 idAss);
     }
