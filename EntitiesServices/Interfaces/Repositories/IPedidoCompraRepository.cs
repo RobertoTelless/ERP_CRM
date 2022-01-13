@@ -15,7 +15,7 @@ namespace ModelServices.Interfaces.Repositories
         List<PEDIDO_COMPRA> GetByUser(Int32 id);
         List<PEDIDO_COMPRA> GetAllItens(Int32 idAss);
         List<PEDIDO_COMPRA> GetAllItensAdm(Int32 idAss);
-        List<PEDIDO_COMPRA> GetAllItensAdmUser(Int32 id);
+        List<PEDIDO_COMPRA> GetAllItensAdmUser(Int32 id, Int32 idAss);
         List<PEDIDO_COMPRA> GetAtrasados(Int32 idAss);
         List<PEDIDO_COMPRA> GetEncerrados(Int32 idAss);
         List<PEDIDO_COMPRA> GetCancelados(Int32 idAss);

@@ -27,7 +27,7 @@ namespace ModelServices.EntitiesServices
         private readonly IUnidadeRepository _unidRepository;
         private readonly IPedidoCompraAcompanhamentoRepository _pecoRepository;
 
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public PedidoCompraService(IPedidoCompraRepository baseRepository, ILogRepository logRepository, IFormaPagamentoRepository forRepository, IPedidoCompraAnexoRepository anexoRepository, IFilialRepository filialRepository, IUnidadeRepository unidRepository, IItemPedidoCompraRepository itemRepository, IPedidoCompraAcompanhamentoRepository pecoRepository) : base(baseRepository)
         {
@@ -41,9 +41,9 @@ namespace ModelServices.EntitiesServices
             _pecoRepository = pecoRepository;
         }
 
-        public PEDIDO_COMPRA CheckExist(PEDIDO_COMPRA objeto)
+        public PEDIDO_COMPRA CheckExist(PEDIDO_COMPRA objeto, Int32 idAss)
         {
-            PEDIDO_COMPRA item = _baseRepository.CheckExist(objeto);
+            PEDIDO_COMPRA item = _baseRepository.CheckExist(objeto, idAss);
             return item;
         }
 
@@ -59,55 +59,55 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public PEDIDO_COMPRA GetByNome(String nome)
+        public PEDIDO_COMPRA GetByNome(String nome, Int32 idAss)
         {
-            PEDIDO_COMPRA item = _baseRepository.GetByNome(nome);
+            PEDIDO_COMPRA item = _baseRepository.GetByNome(nome, idAss);
             return item;
         }
 
-        public List<PEDIDO_COMPRA> GetAllItens()
+        public List<PEDIDO_COMPRA> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<PEDIDO_COMPRA> GetAtrasados()
+        public List<PEDIDO_COMPRA> GetAtrasados(Int32 idAss)
         {
-            return _baseRepository.GetAtrasados();
+            return _baseRepository.GetAtrasados(idAss);
         }
 
-        public List<PEDIDO_COMPRA> GetEncerrados()
+        public List<PEDIDO_COMPRA> GetEncerrados(Int32 idAss)
         {
-            return _baseRepository.GetEncerrados();
+            return _baseRepository.GetEncerrados(idAss);
         }
 
-        public List<PEDIDO_COMPRA> GetCancelados()
+        public List<PEDIDO_COMPRA> GetCancelados(Int32 idAss)
         {
-            return _baseRepository.GetCancelados();
+            return _baseRepository.GetCancelados(idAss);
         }
 
-        public List<PEDIDO_COMPRA> GetAllItensAdm()
+        public List<PEDIDO_COMPRA> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
-        public List<PEDIDO_COMPRA> GetAllItensAdmUser(Int32 id)
+        public List<PEDIDO_COMPRA> GetAllItensAdmUser(Int32 id, Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdmUser(id);
+            return _baseRepository.GetAllItensAdmUser(id, idAss);
         }
 
-        public List<FORMA_PAGAMENTO> GetAllFormas()
+        public List<FORMA_PAGAMENTO> GetAllFormas(Int32 idAss)
         {
-            return _forRepository.GetAllItens();
+            return _forRepository.GetAllItens(idAss);
         }
 
-        public List<UNIDADE> GetAllUnidades()
+        public List<UNIDADE> GetAllUnidades(Int32 idAss)
         {
-            return _unidRepository.GetAllItens();
+            return _unidRepository.GetAllItens(idAss);
         }
 
-        public List<FILIAL> GetAllFilial()
+        public List<FILIAL> GetAllFilial(Int32 idAss)
         {
-            return _filialRepository.GetAllItens();
+            return _filialRepository.GetAllItens(idAss);
         }
 
         public PEDIDO_COMPRA_ANEXO GetAnexoById(Int32 id)
@@ -121,14 +121,14 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<PEDIDO_COMPRA> ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status)
+        public List<PEDIDO_COMPRA> ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(usuaId, nome, numero, nf, data, dataPrevista, status);
+            return _baseRepository.ExecuteFilter(usuaId, nome, numero, nf, data, dataPrevista, status, idAss);
         }
 
-        public List<PEDIDO_COMPRA> ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status)
+        public List<PEDIDO_COMPRA> ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilterDash(nmr, dtFinal, nome, usu, status);
+            return _baseRepository.ExecuteFilterDash(nmr, dtFinal, nome, usu, status, idAss);
         }
 
         public Int32 Create(PEDIDO_COMPRA item, LOG log)

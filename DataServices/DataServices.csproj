@@ -195,12 +195,16 @@
     <Compile Include="Repositories\FornecedorRepository.cs" />
     <Compile Include="Repositories\GrupoContatoRepository.cs" />
     <Compile Include="Repositories\GrupoRepository.cs" />
+    <Compile Include="Repositories\ItemPedidoCompraRepository.cs" />
     <Compile Include="Repositories\MensagemAnexoRepository.cs" />
     <Compile Include="Repositories\MensagemDestinoRepository.cs" />
     <Compile Include="Repositories\MensagemRepository.cs" />
     <Compile Include="Repositories\MotivoCancelamentoRepository.cs" />
     <Compile Include="Repositories\MotivoEncerramentoRepository.cs" />
     <Compile Include="Repositories\MovimentoEstoqueProdutoRepository.cs" />
+    <Compile Include="Repositories\PedidoCompraAcompanhamentoRepository.cs" />
+    <Compile Include="Repositories\PedidoCompraAnexoRepository.cs" />
+    <Compile Include="Repositories\PedidoCompraRepository.cs" />
     <Compile Include="Repositories\ProdutoAnexoRepository.cs" />
     <Compile Include="Repositories\ProdutoEstoqueFilialRepository.cs" />
     <Compile Include="Repositories\ProdutoBarcodeRepository.cs" />

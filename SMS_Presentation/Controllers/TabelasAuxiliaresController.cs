@@ -2865,6 +2865,26 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara listas
+            List<SelectListItem> exp = new List<SelectListItem>();
+            exp.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            exp.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Exp = new SelectList(exp, "Value", "Text");
+            List<SelectListItem> food = new List<SelectListItem>();
+            food.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            food.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Food = new SelectList(food, "Value", "Text");
+            List<SelectListItem> grade = new List<SelectListItem>();
+            grade.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            grade.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Grade = new SelectList(grade, "Value", "Text");
+            List<SelectListItem> seo = new List<SelectListItem>();
+            seo.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            seo.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.SEO = new SelectList(seo, "Value", "Text");
+            List<SelectListItem> tam = new List<SelectListItem>();
+            tam.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            tam.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.TAM = new SelectList(tam, "Value", "Text");
 
             // Prepara view
             CATEGORIA_PRODUTO item = new CATEGORIA_PRODUTO();
@@ -2887,6 +2907,26 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            List<SelectListItem> exp = new List<SelectListItem>();
+            exp.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            exp.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Exp = new SelectList(exp, "Value", "Text");
+            List<SelectListItem> food = new List<SelectListItem>();
+            food.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            food.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Food = new SelectList(food, "Value", "Text");
+            List<SelectListItem> grade = new List<SelectListItem>();
+            grade.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            grade.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Grade = new SelectList(grade, "Value", "Text");
+            List<SelectListItem> seo = new List<SelectListItem>();
+            seo.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            seo.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.SEO = new SelectList(seo, "Value", "Text");
+            List<SelectListItem> tam = new List<SelectListItem>();
+            tam.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            tam.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.TAM = new SelectList(tam, "Value", "Text");
             if (ModelState.IsValid)
             {
                 try
@@ -2952,7 +2992,27 @@ namespace ERP_CRM_Solution.Controllers
             Session["CatProduto"] = item;
 
             // Indicadores
-
+            List<SelectListItem> exp = new List<SelectListItem>();
+            exp.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            exp.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Exp = new SelectList(exp, "Value", "Text");
+            List<SelectListItem> food = new List<SelectListItem>();
+            food.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            food.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Food = new SelectList(food, "Value", "Text");
+            List<SelectListItem> grade = new List<SelectListItem>();
+            grade.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            grade.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Grade = new SelectList(grade, "Value", "Text");
+            List<SelectListItem> seo = new List<SelectListItem>();
+            seo.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            seo.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.SEO = new SelectList(seo, "Value", "Text");
+            List<SelectListItem> tam = new List<SelectListItem>();
+            tam.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            tam.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.TAM = new SelectList(tam, "Value", "Text");
+            
             // Mensagens
             if (Session["MensCatProduto"] != null)
             {
@@ -2970,6 +3030,26 @@ namespace ERP_CRM_Solution.Controllers
         public ActionResult EditarCatProduto(CategoriaProdutoViewModel vm)
         {
             Int32 idAss = (Int32)Session["IdAssinante"];
+            List<SelectListItem> exp = new List<SelectListItem>();
+            exp.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            exp.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Exp = new SelectList(exp, "Value", "Text");
+            List<SelectListItem> food = new List<SelectListItem>();
+            food.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            food.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Food = new SelectList(food, "Value", "Text");
+            List<SelectListItem> grade = new List<SelectListItem>();
+            grade.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            grade.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Grade = new SelectList(grade, "Value", "Text");
+            List<SelectListItem> seo = new List<SelectListItem>();
+            seo.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            seo.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.SEO = new SelectList(seo, "Value", "Text");
+            List<SelectListItem> tam = new List<SelectListItem>();
+            tam.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            tam.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.TAM = new SelectList(tam, "Value", "Text");
             if (ModelState.IsValid)
             {
                 try
@@ -3855,7 +3935,11 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara listas
-            
+            List<SelectListItem> tipo = new List<SelectListItem>();
+            tipo.Add(new SelectListItem() { Text = "Medida", Value = "1" });
+            tipo.Add(new SelectListItem() { Text = "Serviço", Value = "2" });
+            ViewBag.Tipo = new SelectList(tipo, "Value", "Text");
+
             // Prepara view
             UNIDADE item = new UNIDADE();
             UnidadeViewModel vm = Mapper.Map<UNIDADE, UnidadeViewModel>(item);
@@ -3872,6 +3956,10 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            List<SelectListItem> tipo = new List<SelectListItem>();
+            tipo.Add(new SelectListItem() { Text = "Medida", Value = "1" });
+            tipo.Add(new SelectListItem() { Text = "Serviço", Value = "2" });
+            ViewBag.Tipo = new SelectList(tipo, "Value", "Text");
             if (ModelState.IsValid)
             {
                 try
@@ -3937,6 +4025,10 @@ namespace ERP_CRM_Solution.Controllers
             Session["Unidade"] = item;
 
             // Indicadores
+            List<SelectListItem> tipo = new List<SelectListItem>();
+            tipo.Add(new SelectListItem() { Text = "Medida", Value = "1" });
+            tipo.Add(new SelectListItem() { Text = "Serviço", Value = "2" });
+            ViewBag.Tipo = new SelectList(tipo, "Value", "Text");
 
             // Mensagens
             if (Session["MensUnidade"] != null)
@@ -3955,6 +4047,10 @@ namespace ERP_CRM_Solution.Controllers
         public ActionResult EditarUnidade(UnidadeViewModel vm)
         {
             Int32 idAss = (Int32)Session["IdAssinante"];
+            List<SelectListItem> tipo = new List<SelectListItem>();
+            tipo.Add(new SelectListItem() { Text = "Medida", Value = "1" });
+            tipo.Add(new SelectListItem() { Text = "Serviço", Value = "2" });
+            ViewBag.Tipo = new SelectList(tipo, "Value", "Text");
             if (ModelState.IsValid)
             {
                 try
