@@ -95,7 +95,7 @@
                                     @Html.ButtonLinkIndex(text: "Exibir Todos - Produtos", controller: "Estoque", action: "MostrarTudoProduto")
                                     @Html.ButtonLinkIndex(text: "Incluir Movimentação", controller: "Estoque", action: "IncluirMovimentacaoAvulsa")
                                     @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Estoque", action: "GerarRelatorioMovimentacaoAvulsaFiltro")
-                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "Estoque", action: "Voltar")
+                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Estoque", action: "MontarTelaDashboardEstoque")
                                 </div>
                             </div>
                         </div>
@@ -301,14 +301,12 @@
                 });
         });</script>
 
-    @*<script type="text/javascript">
+    <script type="text/javascript">
         $(function () {
             $('.dataTables-example').DataTable({
                 pageLength: 25,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
-                    { extend: 'copy' },
-                    { extend: 'csv' },
                     { extend: 'excel', title: 'ExampleFile' },
                     { extend: 'pdf', title: 'ExampleFile' },
                     {
@@ -325,7 +323,7 @@
                 ]
             });
         });
-    </script>*@
+    </script>
     <script type="text/javascript">
         $(function () {
             $("#cpf").mask("999.999.999-99");

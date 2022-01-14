@@ -3225,6 +3225,8 @@
     <Content Include="Views\Banco\ReativarBanco.cshtml" />
     <Content Include="Views\Banco\ExcluirConta.cshtml" />
     <Content Include="Views\Banco\ReativarConta.cshtml" />
+    <Content Include="Views\Estoque\MontarTelaDashboardEstoque.cshtml" />
+    <Content Include="Views\Estoque\MontarTelaDashboardCompraDummy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

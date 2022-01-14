@@ -20,7 +20,6 @@ namespace ERP_CRM_Solution.ViewModels
         [StringLength(50, MinimumLength = 1, ErrorMessage = "O NOME deve conter no minimo 1 caracteres e no máximo 50 caracteres.")]
         public string CECU_NM_NOME { get; set; }
         public int CECU_IN_ATIVO { get; set; }
-        [Required(ErrorMessage = "Campo GRUPO obrigatorio")]
         public Nullable<int> GRUP_CD_ID { get; set; }
         [Required(ErrorMessage = "Campo SUBGRUPO obrigatorio")]
         public Nullable<int> SUBG_CD_ID { get; set; }
@@ -29,6 +28,7 @@ namespace ERP_CRM_Solution.ViewModels
         [Required(ErrorMessage = "Campo MOVIMENTO obrigatorio")]
         public Nullable<int> CECU_IN_MOVTO { get; set; }
         public string CECU_NM_EXIBE { get; set; }
+        [Required(ErrorMessage = "Campo GRUPO obrigatorio")]
         public Nullable<int> GRCC_CD_ID { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }

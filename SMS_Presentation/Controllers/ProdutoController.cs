@@ -26,6 +26,7 @@ using CrossCutting;
 using System.Threading.Tasks;
 using System.Data.Entity;
 
+
 namespace SMS_Presentation.Controllers
 {
     public class ProdutoController : Controller
@@ -230,7 +231,7 @@ namespace SMS_Presentation.Controllers
                 ViewBag.FilialUsuario = usuario.FILIAL.FILI_NM_NOME;
             }
 
-            ViewBag.Tipos = new SelectList(cpApp.GetAllItens(idAss).OrderBy(x => x.CAPR_NM_NOME).ToList<CATEGORIA_PRODUTO>(), "CAPR_CD_ID", "CAPR_NM_NOME");
+            ViewBag.Cats = new SelectList(cpApp.GetAllItens(idAss).OrderBy(x => x.CAPR_NM_NOME).ToList<CATEGORIA_PRODUTO>(), "CAPR_CD_ID", "CAPR_NM_NOME");
             ViewBag.Subs = new SelectList(prodApp.GetAllSubs(idAss).OrderBy(x => x.SCPR_NM_NOME).ToList<SUBCATEGORIA_PRODUTO>(), "SCPR_CD_ID", "SCPR_NM_NOME");
             ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss), "FILI_CD_ID", "FILI_NM_NOME");
             ViewBag.Unidades = new SelectList(unApp.GetAllItens(idAss).Where(x => x.UNID_IN_TIPO_UNIDADE == 1).OrderBy(p => p.UNID_NM_NOME).ToList<UNIDADE>(), "UNID_CD_ID", "UNID_NM_NOME");
@@ -309,6 +310,7 @@ namespace SMS_Presentation.Controllers
             objetoProd.PROD_IN_ATIVO = 1;
             Session["VoltaProduto"] = 1;
             Session["VoltaConsulta"] = 1;
+            Session["VoltaEstoque"] = 0;
             Session["FlagVoltaProd"] = 1;
             Session["Clonar"] = 0;
             return View(objetoProd);
@@ -417,7 +419,7 @@ namespace SMS_Presentation.Controllers
                     idFilial = item.FILI_CD_ID;
                 }
                 List<PRODUTO_ESTOQUE_FILIAL> listaObj = new List<PRODUTO_ESTOQUE_FILIAL>();
-                Int32 volta = prodApp.ExecuteFilterEstoque(idFilial, item.PRODUTO.PROD_NM_NOME, item.PRODUTO.PROD_NM_MARCA, item.PRODUTO.PROD_CD_CODIGO, item.PRODUTO.PROD_NR_BARCODE, item.PRODUTO.CAPR_CD_ID, idAss, out listaObj);
+                Int32 volta = prodApp.ExecuteFilterEstoque(idFilial, item.PRODUTO.PROD_NM_NOME, item.PRODUTO.PROD_NM_MARCA, item.PRODUTO.PROD_CD_CODIGO, item.PRODUTO.PROD_NR_BARCODE, item.PRODUTO.CAPR_CD_ID, item.PRODUTO.PROD_IN_TIPO_PRODUTO.Value, idAss, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)
@@ -565,11 +567,14 @@ namespace SMS_Presentation.Controllers
             // Mensagens
 
             // Prepara view
+            Session["VoltaCatProduto"] = 2;
+            Session["VoltaSubCatProduto"] = 2;
             PRODUTO item = new PRODUTO();
             ProdutoViewModel vm = Mapper.Map<PRODUTO, ProdutoViewModel>(item);
             vm.ASSI_CD_ID = idAss;
             vm.PROD_DT_CADASTRO = DateTime.Today;
             vm.PROD_IN_ATIVO = 1;
+            vm.PROD_IN_TIPO_PRODUTO = 1;
             return View(vm);
         }
 
@@ -1651,6 +1656,7 @@ namespace SMS_Presentation.Controllers
             Session["Clonar"] = 0;
             Session["FiltroEstoque"] = null;
             ViewBag.Tipo = 2;
+            prod.PRODUTO = new PRODUTO();
             return View(prod);
         }
 
@@ -1706,6 +1712,7 @@ namespace SMS_Presentation.Controllers
             Session["Clonar"] = 0;
             Session["FiltroEstoque"] = null;
             ViewBag.Tipo = 3;
+            prod.PRODUTO = new PRODUTO();
             return View(prod);
         }
 
@@ -1750,6 +1757,7 @@ namespace SMS_Presentation.Controllers
             Session["VoltaConsulta"] = 4;
             Session["FiltroEstoque"] = null;
             ViewBag.Tipo = 4;
+            prod.PRODUTO = new PRODUTO();
             return View(prod);
         }
 

@@ -10,21 +10,14 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
             @*Atalhos*@
             <div class="row">
-                <h3 style="color:olivedrab; font-weight:bold">Dashboard - Mensageria</h3>
+                <h3 style="color:olivedrab; font-weight:bold">Dashboard - Controle de Estoque</h3>
                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                     <br />
                     <div class="col-lg-12 col-md-12 col-xs-12">
-                        @Html.ButtonLinkIndex(text: "Clientes", action: "MontarTelaCliente", controller: "Cliente", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Clientes - Inclusão", action: "IncluirClienteRapido", controller: "Cliente", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Grupos", action: "MontarTelaGrupo", controller: "Grupo", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Modelos E-Mail", action: "MontarTelaTemplateEMail", controller: "TemplateEMail", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Modelos SMS", action: "MontarTelaTemplateSMS", controller: "TemplateSMS", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Central de E-Mails", action: "MontarTelaMensagemEMail", controller: "Mensagem", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Envio de E-Mails", action: "IncluirMensagemEMail", controller: "Mensagem", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "E-Mails Agendados", action: "VerEMailAgendados", controller: "Mensagem", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Central de SMS", action: "MontarTelaMensagemSMS", controller: "Mensagem", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Envio de SMS", action: "IncluirMensagemSMS", controller: "Mensagem", buttonClass: "success")
-                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "Mensagem", action: "Voltar")
+                        @Html.ButtonLinkIndex(text: "Produtos", action: "MontarTelaProduto", controller: "Produto", buttonClass: "success")
+                        @Html.ButtonLinkIndex(text: "Consulta Estoque", action: "MontarTelaEstoqueProduto", controller: "Estoque", buttonClass: "success")
+                        @Html.ButtonLinkIndex(text: "Movimentação Avulsa", action: "MontarTelaMovimentacaoAvulsa", controller: "Estoque", buttonClass: "success")
+                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "Estoque", action: "Voltar")
                     </div>
                     <br /><br />
                 </div>
@@ -49,61 +42,39 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <span class="label label-warning pull-right">Hoje</span>
-                            <h5>Clientes & Grupos</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <small class="stats-label">Clientes</small>
-                                    <h4>@ViewBag.Clientes</h4>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <small class="stats-label">Grupos de Clientes</small>
-                                    <h4>@ViewBag.Grupos</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-lg-4 col-md-4 col-sm-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-warning pull-right">Hoje</span>
-                            <h5>Resumo de Mensagens</h5>
+                            <h5>Resumo de Movimentações</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-xs-4">
                                     <small class="stats-label">Total</small>
-                                    <h4>@ViewBag.TotalEnviado</h4>
+                                    <h4>@ViewBag.TotalSum</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <small class="stats-label">E-Mails</small>
-                                    <h4>@ViewBag.EMailsEnviado</h4>
+                                    <small class="stats-label">Entradas</small>
+                                    <h4>@ViewBag.TotalEntradaSum</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <small class="stats-label">SMS</small>
-                                    <h4>@ViewBag.SMSEnviado</h4>
+                                    <small class="stats-label">Saídas</small>
+                                    <h4>@ViewBag.TotalSaidaSum</h4>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <small class="stats-label">Total(Mês)</small>
-                                    <h4>@ViewBag.TotalMes</h4>
+                                    <small class="stats-label">Total Mês</small>
+                                    <h4>@ViewBag.MesSum</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <small class="stats-label">E-Mails(Mês)</small>
-                                    <h4>@ViewBag.EMailsMes</h4>
+                                    <small class="stats-label">Entradas Mês</small>
+                                    <h4>@ViewBag.MesEntradaSum</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <small class="stats-label">SMS(Mês)</small>
-                                    <h4>@ViewBag.SMSMes</h4>
+                                    <small class="stats-label">Saídas Mês</small>
+                                    <h4>@ViewBag.MesSaidaSum</h4>
                                 </div>
                             </div>
                         </div>
@@ -124,40 +95,81 @@
                             <h3><i class="fa fa-line-chart"></i> Indicadores</h3>
                             <small><i class="fa fa-tim"></i> Valores acumulados/atualizados até hoje</small>
                         </div>
+                        <div class="ibox-content" style="height: 1800px">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Movimentações de Estoque/Dia</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaMov as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Data de Movimentação</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaMov as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.DataEmissao.ToShortDateString()</td>
+                                                                    <td>@cond.Valor</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Movimentações/Dia</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="barChartEst" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="ibox-content" style="height: 800px">
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
-                                            <h4>Estatística de Envio de E-Mails/dia</h4>
-                                            <h4 style="color: brown">(Exibindo apenas o mês corrente)</h4>
+                                            <h4>Movimentações por Tipo</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
-                                                @if ((ViewBag.ListaEMailMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                @if ((ViewBag.ListaSituacao as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
                                                 {
                                                     <table class="table table-striped table-bordered table-hover">
                                                         <thead style="background-color:lightsteelblue">
                                                             <tr>
-                                                                <th>Data de Emissão</th>
-                                                                <th>Total Enviado</th>
+                                                                <th>Tipo</th>
+                                                                <th>Total</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach (var cond in (ViewBag.ListaEmailMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            @foreach (var cond in (ViewBag.ListaSituacao as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
                                                             {
                                                                 <tr>
-                                                                    <td>@cond.DataEmissao.ToShortDateString()</td>
+                                                                    <td>@cond.Data</td>
                                                                     <td>@cond.Valor</td>
                                                                 </tr>
                                                             }
                                                         </tbody>
                                                     </table>
                                                 }
-                                                <div class="form-group">
-                                                    @Html.ButtonLinkIndex(text: "Ver Todos os Meses", action: "VerEmailExpansaoTodos", controller: "Mensagem")
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -165,65 +177,17 @@
                                 <div class="col-lg-8 col-md-8 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
-                                            <h4>Gráfico do Envio de E-Mails/Dia (Mês Corrente)</h4>
+                                            <h4>Gráfico de Movimentações por Tipo</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
-                                                <canvas id="barChart" height="150"></canvas>
+                                                <canvas id="doughnutChartEst" height="150"></canvas>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-4 col-md-4 col-xs-12">
-                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
-                                        <div class="ibox-title">
-                                            <h4>Estatística de Envio de SMS/dia</h4>
-                                            <h4 style="color: brown">(Exibindo apenas o mês corrente)</h4>
-                                        </div>
-                                        <div class="ibox-content">
-                                            <div class="row">
-                                                @if ((ViewBag.ListaSMSMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
-                                                {
-                                                    <table class="table table-striped table-bordered table-hover">
-                                                        <thead style="background-color:lightsteelblue">
-                                                            <tr>
-                                                                <th>Data de Emissão</th>
-                                                                <th>Total Enviado</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var cond in (ViewBag.ListaSMSMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
-                                                            {
-                                                                <tr>
-                                                                    <td>@cond.DataEmissao.ToShortDateString()</td>
-                                                                    <td>@cond.Valor</td>
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                }
-                                                <div class="form-group">
-                                                    @Html.ButtonLinkIndex(text: "Ver Todos os Meses", action: "VerSMSExpansaoTodos", controller: "Mensagem")
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-8 col-md-8 col-xs-12">
-                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
-                                        <div class="ibox-title">
-                                            <h4>Gráfico do Envio de SMS/Dia (Mês Corrente)</h4>
-                                        </div>
-                                        <div class="ibox-content">
-                                            <div class="row">
-                                                <canvas id="barChartSMS" height="150"></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -328,28 +292,22 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: '../Mensagem/GetDadosGraficoEmail'
+                url: '../Estoque/GetDadosGraficoMovimentosTipo'
                 , type: 'POST'
                 , success: function (result) {
-                    var barData = {
-                        labels: result.dias,
-                        datasets: [
-                            {
-                                label: "Total por Dia",
-                                backgroundColor: 'rgba(26,179,148,0.5)',
-                                pointBorderColor: "#fff",
-                                data: result.valores
-                            }
-                        ]
-                    };
-
-                    var barOptions = {
-                        responsive: true
-                    };
-
-                    var ctx2 = document.getElementById("barChart").getContext("2d");
-                    new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
-                }
+                var doughnutData = {
+                   labels: result.labels,
+                   datasets: [{
+                     data: result.valores,
+                     backgroundColor: result.cores
+                   }]
+                };
+                var doughnutOptions = {
+                   responsive: true
+                };
+                var ctx4 = document.getElementById("doughnutChartEst").getContext("2d");
+                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+              }
             });
         });
     </script>
@@ -357,43 +315,14 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: '../BaseAdmin/GetDadosGraficoEmailTodos'
-                , type: 'POST'
-                , success: function (result) {
-                    var barData = {
-                        labels: result.dias,
-                        datasets: [
-                            {
-                                label: "Total por Dia",
-                                backgroundColor: 'rgba(26,179,148,0.5)',
-                                pointBorderColor: "#fff",
-                                data: result.valores
-                            }
-                        ]
-                    };
-
-                    var barOptions = {
-                        responsive: true
-                    };
-
-                    var ctx2 = document.getElementById("barChart1").getContext("2d");
-                    new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
-                }
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $.ajax({
-                url: '../Mensagem/GetDadosGraficoSMS'
+                url: '../Estoque/GetDadosGraficoMovimentos'
                 , type: 'POST'
                 , success: function (result) {
                 var barData = {
                     labels: result.dias,
                     datasets: [
                         {
-                            label: "Total por Dia",
+                            label: "Movimentos por Dia",
                             backgroundColor: 'rgba(26,179,148,0.5)',
                             pointBorderColor: "#fff",
                             data: result.valores
@@ -405,13 +334,12 @@
                     responsive: true
                 };
 
-                var ctx2 = document.getElementById("barChartSMS").getContext("2d");
+                var ctx2 = document.getElementById("barChartEst").getContext("2d");
                 new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
               }
             });
         });
     </script>
-
 
 
     @if (ViewBag.Message != null)

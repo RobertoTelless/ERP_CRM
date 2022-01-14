@@ -128,7 +128,7 @@
                                 Código do Produto
                                 @Html.TextBoxFor(m => m.PROD_CD_CODIGO, new { @class = "form-control", autofocus = true })
                             </div>
-                            <div class="col-lg-3 col-md-3 col-xs-12">
+                            <div class="col-lg-8 col-md-8 col-xs-12">
                                 Nome
                                 @Html.TextBoxFor(m => m.PROD_NM_NOME, new { @class = "form-control", autofocus = true })
                             </div>
@@ -136,7 +136,7 @@
                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                             <div class="col-lg-3 col-md-3 col-xs-12">
                                 Categoria do Produto
-                                @Html.DropDownListFor(m => m.CAPR_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", onchange = "FiltrarSubCategoriaProduto($(this).val())" })
+                                @Html.DropDownListFor(m => m.CAPR_CD_ID, (SelectList)ViewBag.Cats, "Selecionar", new { @class = "form-control", onchange = "FiltrarSubCategoriaProduto($(this).val())" })
                             </div>
                             <div class="col-lg-3 col-md-3 col-xs-12">
                                 Subcategoria do Produto
@@ -293,6 +293,14 @@
                                                 {
                                                     <td>-</td>
                                                 }
+                                                @if (cond.PROD_IN_TIPO_PRODUTO == 1)
+	                                            {
+                                                    <td><span class="badge badge-primary">Produto</span></td>
+                                                }
+                                                else if (cond.PROD_IN_TIPO_PRODUTO == 2)
+                                                {
+                                                    <td><span class="badge badge-success">Insumo</span></td>
+                                                }
                                                 <td>@cond.PROD_NR_BARCODE</td>
                                                 <td>@cond.PROD_CD_CODIGO</td>
                                                 <td>@cond.PROD_NM_MARCA</td>
@@ -400,7 +408,33 @@
             });
         });
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
 
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });         
+        });
+
+    </script>
     <script>
         $(function () {
             FiltrarSubCategoriaProduto($('#catProd').val());

@@ -339,17 +339,18 @@
 
     <script>
         function FiltroProdIns(val) {
-            if (val == 1) {
-                $('#containerProduto').show();
-                $('#containerInsumo').hide();
-            } else if (val == 2) {
-                $('#containerInsumo').show();
-                $('#containerProduto').hide();
-            }
-            else {
-                $('#containerInsumo').hide();
-                $('#containerProduto').hide();
-            }
+            $('#containerProduto').show();
+            //if (val == 1) {
+            //    $('#containerProduto').show();
+            //    $('#containerInsumo').hide();
+            //} else if (val == 2) {
+            //    $('#containerInsumo').show();
+            //    $('#containerProduto').hide();
+            //}
+            //else {
+            //    $('#containerInsumo').hide();
+            //    $('#containerProduto').hide();
+            //}
 
             $('#tblOperacao > tbody').html('');
         }

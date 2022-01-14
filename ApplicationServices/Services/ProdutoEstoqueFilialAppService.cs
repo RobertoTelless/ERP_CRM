@@ -119,13 +119,16 @@ namespace ApplicationServices.Services
 
                 Int32 operacao = item.PREF_QN_ESTOQUE < item.PREF_QN_QUANTIDADE_ALTERADA ? 1 : 2;
                 Int32 quant = 0;
+                Int32 tipo = 0;
                 if (item.PREF_QN_QUANTIDADE_ALTERADA > item.PREF_QN_ESTOQUE)
                 {
                     quant = (Int32)item.PREF_QN_QUANTIDADE_ALTERADA - (Int32)item.PREF_QN_ESTOQUE;
+                    tipo = 1;
                 }
                 else
                 {
                     quant = (Int32)item.PREF_QN_ESTOQUE - (Int32)item.PREF_QN_QUANTIDADE_ALTERADA;
+                    tipo = 2;
                 }
 
                 MOVIMENTO_ESTOQUE_PRODUTO movto = new MOVIMENTO_ESTOQUE_PRODUTO();
@@ -136,7 +139,7 @@ namespace ApplicationServices.Services
                 movto.MOEP_IN_CHAVE_ORIGEM = 0;
                 movto.MOEP_IN_OPERACAO = operacao;
                 movto.MOEP_IN_ORIGEM = "Acerto Manual";
-                movto.MOEP_IN_TIPO_MOVIMENTO = 0;
+                movto.MOEP_IN_TIPO_MOVIMENTO = tipo;
                 movto.MOEP_QN_QUANTIDADE = quant;
                 movto.PROD_CD_ID = item.PROD_CD_ID;
                 movto.USUA_CD_ID = usuario.USUA_CD_ID;

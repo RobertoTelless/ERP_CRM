@@ -180,7 +180,6 @@
     <Compile Include="Interfaces\IEquipamentoAppService.cs" />
     <Compile Include="Interfaces\IFormaPagamentoAppService.cs" />
     <Compile Include="Interfaces\IMovimentoEstoqueProdutoAppService.cs" />
-    <Compile Include="Interfaces\IPedidoCompraAppService.cs" />
     <Compile Include="Interfaces\IProdutoAppService.cs" />
     <Compile Include="Interfaces\IProdutoEstoqueFilialAppService.cs" />
     <Compile Include="Interfaces\IProdutoTabelaPrecoAppService.cs" />
@@ -232,7 +231,6 @@
     <Compile Include="Services\EquipamentoAppService.cs" />
     <Compile Include="Services\FormaPagamentoAppService.cs" />
     <Compile Include="Services\MovimentoEstoqueProdutoAppService.cs" />
-    <Compile Include="Services\PedidoCompraAppService.cs" />
     <Compile Include="Services\ProdutoAppService.cs" />
     <Compile Include="Services\ProdutoEstoqueFilialAppService.cs" />
     <Compile Include="Services\ProdutoTabelaPrecoAppService.cs" />

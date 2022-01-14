@@ -185,7 +185,7 @@ namespace ERP_CRM_Solution.Controllers
             
             // Prepara view
             FORMA_PAGAMENTO item = new FORMA_PAGAMENTO();
-            ViewBag.Contas = new SelectList(cbApp.GetAllItens(idAss), "COBA_CD_ID", "COBA_NM_NOME_EXIBE");
+            ViewBag.Contas = new SelectList(cbApp.GetAllItens(idAss), "COBA_CD_ID", "COBA_NM_NOME_EXIBE_OLD");
             List<SelectListItem> tipo = new List<SelectListItem>();
             tipo.Add(new SelectListItem() { Text = "Pagamento", Value = "1" });
             tipo.Add(new SelectListItem() { Text = "Recebimento", Value = "2" });

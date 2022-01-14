@@ -14,6 +14,7 @@ namespace DataServices.Repositories
         {
             IQueryable<PRODUTO> query = Db.PRODUTO;
             query = query.Where(p => p.PROD_NM_NOME == conta.PROD_NM_NOME);
+            query = query.Where(p => p.PROD_IN_TIPO_PRODUTO == conta.PROD_IN_TIPO_PRODUTO);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.FirstOrDefault();
         }
@@ -92,7 +93,6 @@ namespace DataServices.Repositories
         {
             List<PRODUTO> lista = new List<PRODUTO>();
             IQueryable<PRODUTO> query = Db.PRODUTO;
-            query = query.Where(p => p.PROD_IN_ATIVO == ativo);
             if (catId != null)
             {
                 query = query.Where(p => p.CAPR_CD_ID == catId);

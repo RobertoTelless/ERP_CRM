@@ -10,7 +10,7 @@ namespace DataServices.Repositories
 {
     public class ProdutoTabelaPrecoRepository : RepositoryBase<PRODUTO_TABELA_PRECO>, IProdutoTabelaPrecoRepository
     {
-        public PRODUTO_TABELA_PRECO CheckExist(PRODUTO_TABELA_PRECO item)
+        public PRODUTO_TABELA_PRECO CheckExist(PRODUTO_TABELA_PRECO item, Int32 idAss)
         {
             IQueryable<PRODUTO_TABELA_PRECO> query = Db.PRODUTO_TABELA_PRECO;
             query = query.Where(p => p.PROD_CD_ID == item.PROD_CD_ID);

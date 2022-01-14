@@ -162,6 +162,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["PermCRM"] = 0;
                 Session["PermPosVenda"] = 0;
                 Session["PermFatura"] = 0;
+                Session["PermCompra"] = 0;
                 Session["PermFinanceiro"] = 0;
                 Session["PermEstoque"] = 0;
                 Session["PermPatrimonio"] = 0;
@@ -215,6 +216,12 @@ namespace ERP_CRM_Solution.Controllers
                     if (item.PLANO.PLAN_IN_ESTOQUE == 1)
                     {
                         Session["PermEstoque"] = 1;
+                        Session["NumFornecedor"] = item.PLANO.PLAN_NR_FORNECEDOR;
+                        Session["NumProduto"] = item.PLANO.PLAN_NR_PRODUTO;
+                    }
+                    if (item.PLANO.PLAN_IN_COMPRA == 1)
+                    {
+                        Session["PermCompra"] = 1;
                         Session["NumFornecedor"] = item.PLANO.PLAN_NR_FORNECEDOR;
                         Session["NumProduto"] = item.PLANO.PLAN_NR_PRODUTO;
                     }

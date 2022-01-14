@@ -77,7 +77,7 @@
                                 @Html.ButtonActionSubmit(text: "Filtrar")
                                 @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Estoque", action: "RetirarFiltroProduto")
                                 @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Estoque", action: "GerarRelatorioEstoqueProduto")
-                                @Html.ButtonLinkIndex(text: "Voltar", controller: "Estoque", action: "Voltar")
+                                @Html.ButtonLinkIndex(text: "Voltar", controller: "Estoque", action: "MontarTelaDashboardEstoque")
                             </div>
                         </div>
                     </div>
@@ -266,7 +266,33 @@
             $("#cnpj").mask("99.999.999/9999-99");
         });
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
 
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });         
+        });
+
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
 

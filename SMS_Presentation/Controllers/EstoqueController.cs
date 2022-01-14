@@ -196,6 +196,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["FiltroProduto"] = null;
             }
             listaMasterProdFili = null;
+            Session["FiltroMvmtProd"] = false;
             //Session["ListaProdEstoqueFilial"] = null;
             return View(objetoProd);
         }
@@ -238,7 +239,7 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     item.FILI_CD_ID = usuario.FILI_CD_ID;
                 }
-                Int32 volta = prodApp.ExecuteFilterEstoque(item.FILI_CD_ID, item.PROD_NM_NOME, item.PROD_NM_MARCA, item.PROD_CD_CODIGO, item.PROD_NR_BARCODE, item.CAPR_CD_ID, item.PROD_IN_TIPO_PRODUTO, idAss, out listaObj);
+                Int32 volta = prodApp.ExecuteFilterEstoque(item.FILI_CD_ID, item.PROD_NM_NOME, item.PROD_NM_MARCA, item.PROD_CD_CODIGO, item.PROD_NR_BARCODE, item.CAPR_CD_ID, item.PROD_IN_TIPO_PRODUTO.Value, idAss, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)
@@ -1998,5 +1999,177 @@ namespace ERP_CRM_Solution.Controllers
 
             return RedirectToAction("MontarTelaMovimentacaoAvulsa");
         }
+
+        [HttpGet]
+        public ActionResult MontarTelaDashboardEstoque()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensEstoque"] = 2;
+                    return RedirectToAction("MontarTelaEstoqueProduto", "Estoque");
+                }
+                if ((Int32)Session["PermMens"] == 0)
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
+
+            // Recupera listas e contagem
+            List<MOVIMENTO_ESTOQUE_PRODUTO> listaTotal = moepApp.GetAllItens(idAss);
+            List<MOVIMENTO_ESTOQUE_PRODUTO> listaTotalEntrada = listaTotal.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 1).ToList();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> listaTotalSaida= listaTotal.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 2).ToList();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> listaMes = listaTotal.Where(p => p.MOEP_DT_MOVIMENTO.Month == DateTime.Today.Date.Month & p.MOEP_DT_MOVIMENTO.Year == DateTime.Today.Date.Year).ToList();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> listaMesEntrada = listaMes.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 1).ToList();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> listaMesSaida = listaMes.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 2).ToList();
+
+            // Prepara View 
+            ViewBag.Total = listaTotal;
+            ViewBag.TotalSum = listaTotal.Count;
+            ViewBag.TotalEntrada = listaTotalEntrada;
+            ViewBag.TotalEntradaSum = listaTotalEntrada.Count;
+            ViewBag.TotalSaida = listaTotalSaida;
+            ViewBag.TotalSaidaSum = listaTotalSaida.Count;
+            ViewBag.Mes = listaMes;
+            ViewBag.MesSum = listaMes.Count;
+            ViewBag.MesEntrada = listaMesEntrada;
+            ViewBag.MesEntradaSum = listaMesEntrada.Count;
+            ViewBag.MesSaida = listaMesSaida;
+            ViewBag.MesSaidaSum = listaMesSaida.Count;
+
+            // Resumo Mes 
+            List<DateTime> datas = listaMes.Select(p => p.MOEP_DT_MOVIMENTO.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32 conta = listaMes.Where(p => p.MOEP_DT_MOVIMENTO.Date == item).Count();
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.DataEmissao = item;
+                mod1.Valor = conta;
+                lista.Add(mod1);
+            }
+            ViewBag.ListaMov = lista;
+            ViewBag.ListaMovSum = lista.Count;
+            Session["ListaDatas"] = datas;
+            Session["ListaMovResumo"] = lista;
+            Session["Entradas"] = listaMesEntrada.Count;
+            Session["Saidas"] = listaMesSaida.Count;
+            Session["ListaMes"] = listaMes;
+
+            // Resumo Tipo  
+            List<ModeloViewModel> lista1 = new List<ModeloViewModel>();
+            ModeloViewModel mod = new ModeloViewModel();
+            mod.Data = "Entradas";
+            mod.Valor = listaMesEntrada.Count;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Saídas";
+            mod.Valor = listaMesSaida.Count;
+            lista1.Add(mod);
+            ViewBag.ListaSituacao = lista1;
+            Session["ListaSituacao"] = lista1;
+            Session["VoltaDash"] = 3;
+            return View(vm);
+        }
+
+        public JsonResult GetDadosGraficoMovimentosTipo()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["Entradas"];
+            Int32 q2 = (Int32)Session["Saidas"];
+
+            desc.Add("Entradas");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Saídas");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoMovimentos()
+        {
+            List<MOVIMENTO_ESTOQUE_PRODUTO> listaCP1 = (List<MOVIMENTO_ESTOQUE_PRODUTO>)Session["ListaMes"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatas"];
+            List<MOVIMENTO_ESTOQUE_PRODUTO> listaDia = new List<MOVIMENTO_ESTOQUE_PRODUTO>();
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (DateTime item in datas)
+            {
+                listaDia = listaCP1.Where(p => p.MOEP_DT_MOVIMENTO.Date == item).ToList();
+                Int32 contaDia = listaDia.Count();
+                dias.Add(item.ToShortDateString());
+                valor.Add(contaDia);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        [HttpGet]
+        public ActionResult MontarTelaDashboardCompraDummy()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensEstoque"] = 2;
+                    return RedirectToAction("MontarTelaEstoqueProduto", "Estoque");
+                }
+                if ((Int32)Session["PermMens"] == 0)
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
+
+            return View(vm);
+        }
+
     }
 }

@@ -2777,7 +2777,7 @@ namespace ERP_CRM_Solution.Controllers
                 listaMasterCP = cpApp.GetAllItens(idAss);
                 Session["ListaCatProduto"] = listaMasterCP;
             }
-            ViewBag.Listas = (List<CATEGORIA_TELEFONE>)Session["ListaCatProduto"];
+            ViewBag.Listas = (List<CATEGORIA_PRODUTO>)Session["ListaCatProduto"];
             Session["CatProduto"] = null;
 
             // Indicadores
@@ -2947,6 +2947,10 @@ namespace ERP_CRM_Solution.Controllers
                     listaMasterCP = new List<CATEGORIA_PRODUTO>();
                     Session["ListaCatProduto"] = null;
                     Session["IdCatProduto"] = item.CAPR_CD_ID;
+                    if ((Int32)Session["VoltaCatProduto"] == 2)
+                    {
+                        return RedirectToAction("IncluirProduto", "Produto");
+                    }
                     return RedirectToAction("MontarTelaCatProduto");
                 }
                 catch (Exception ex)
@@ -3317,6 +3321,10 @@ namespace ERP_CRM_Solution.Controllers
                     listaMasterSP = new List<SUBCATEGORIA_PRODUTO>();
                     Session["ListaSubCatProduto"] = null;
                     Session["IdSubCatProduto"] = item.CAPR_CD_ID;
+                    if ((Int32)Session["VoltaSubCatProduto"] == 2)
+                    {
+                        return RedirectToAction("IncluirProduto", "Produto");
+                    }
                     return RedirectToAction("MontarTelaSubCatProduto");
                 }
                 catch (Exception ex)
@@ -3520,7 +3528,7 @@ namespace ERP_CRM_Solution.Controllers
                 listaMasterTAM = tamApp.GetAllItens(idAss);
                 Session["ListaTamanho"] = listaMasterTAM;
             }
-            ViewBag.Listas = (List<SUBCATEGORIA_PRODUTO>)Session["ListaSubCatProduto"];
+            ViewBag.Listas = (List<TAMANHO>)Session["ListaTamanho"];
             Session["SubCatProduto"] = null;
 
             // Indicadores
@@ -3618,7 +3626,7 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
-        public ActionResult IncluirSubTamanho(TamanhoViewModel vm)
+        public ActionResult IncluirTamanho(TamanhoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -3848,6 +3856,7 @@ namespace ERP_CRM_Solution.Controllers
                 listaMasterUN = unApp.GetAllItens(idAss);
                 Session["ListaUnidade"] = listaMasterUN;
             }
+            ViewBag.Listas = (List<UNIDADE>)Session["ListaUnidade"];
             Session["Unidade"] = null;
 
             // Indicadores
