@@ -974,6 +974,7 @@
           <Property Name="GRCC_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="GRCC_IN_ATIVO" Type="int" Nullable="false" />
           <Property Name="GRCC_NR_NUMERO" Type="varchar" MaxLength="50" />
+          <Property Name="GRCC_NM_EXIBE" Type="varchar" MaxLength="103" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="GRUPO_CLIENTE">
           <Key>
@@ -12514,6 +12515,7 @@
           <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_GRUPO_CC_ASSINANTE" FromRole="GRUPO_CC" ToRole="ASSINANTE" />
           <NavigationProperty Name="SUBGRUPO" Relationship="ERP_CRMModel.FK_SUBGRUPO_GRUPO_CC" FromRole="GRUPO_CC" ToRole="SUBGRUPO" />
           <NavigationProperty Name="CENTRO_CUSTO" Relationship="ERP_CRMModel.FK_CENTRO_CUSTO_GRUPO_CC" FromRole="GRUPO_CC" ToRole="CENTRO_CUSTO" />
+          <Property Name="GRCC_NM_EXIBE" Type="String" MaxLength="103" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <Association Name="FK_GRUPO_CC_ASSINANTE">
           <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
@@ -14670,6 +14672,7 @@
           <EntitySetMapping Name="GRUPO_CC">
             <EntityTypeMapping TypeName="ERP_CRMModel.GRUPO_CC">
               <MappingFragment StoreEntitySet="GRUPO_CC">
+                <ScalarProperty Name="GRCC_NM_EXIBE" ColumnName="GRCC_NM_EXIBE" />
                 <ScalarProperty Name="GRCC_NR_NUMERO" ColumnName="GRCC_NR_NUMERO" />
                 <ScalarProperty Name="GRCC_IN_ATIVO" ColumnName="GRCC_IN_ATIVO" />
                 <ScalarProperty Name="GRCC_NM_NOME" ColumnName="GRCC_NM_NOME" />

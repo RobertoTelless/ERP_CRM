@@ -34,7 +34,7 @@ namespace ERP_CRM_Solution.Controllers
     {
         private readonly ICentroCustoAppService ccApp;
         private readonly ILogAppService logApp;
-        private readonly IGrupoAppService gruApp;
+        private readonly IGrupoCCAppService gruApp;
         private readonly ISubgrupoAppService sgApp;
 
         private String msg;
@@ -44,7 +44,7 @@ namespace ERP_CRM_Solution.Controllers
         List<CENTRO_CUSTO> listaMasterCC = new List<CENTRO_CUSTO>();
         String extensao;
 
-        public CentroCustoController(ICentroCustoAppService ccApps, ILogAppService logApps, IGrupoAppService gruApps, ISubgrupoAppService sgApps)
+        public CentroCustoController(ICentroCustoAppService ccApps, ILogAppService logApps, IGrupoCCAppService gruApps, ISubgrupoAppService sgApps)
         {
             ccApp = ccApps;
             logApp = logApps;
@@ -96,7 +96,7 @@ namespace ERP_CRM_Solution.Controllers
                 // Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "USU")
                 {
-                    Session["MensCC"] = 2;
+                    Session["MensPermissao"] = 2;
                     return RedirectToAction("CarregarBase", "BaseAdmin");
                 }
             }
@@ -115,7 +115,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Listas = ((List<CENTRO_CUSTO>)Session["ListaCC"]).ToList();
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             ViewBag.Title = "Centros de Custos";
-            ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(x => x.GRUP_NM_NOME).ToList<GRUPO>(), "GRUP_CD_ID", "GR_NM_EXIBE");
+            ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(x => x.GRCC_NM_NOME).ToList<GRUPO_CC>(), "GRCC_CD_ID", "GRCC_NM_EXIBE");
             ViewBag.Subs = new SelectList(sgApp.GetAllItens(idAss).OrderBy(x => x.SUBG_NM_NOME).ToList<SUBGRUPO>(), "SUBG_CD_ID", "SUBG_NM_EXIBE");
             List<SelectListItem> tipoCC = new List<SelectListItem>();
             tipoCC.Add(new SelectListItem() { Text = "Crédito", Value = "1" });
@@ -220,7 +220,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             else
             {
-                listaSubFiltrada = sgApp.GetAllItens(idAss).Where(x => x.GRUP_CD_ID == id).ToList();
+                listaSubFiltrada = sgApp.GetAllItens(idAss).Where(x => x.GRCC_CD_ID == id).ToList();
             }
 
             return Json(listaSubFiltrada.Select(x => new { x.SUBG_CD_ID, x.SUBG_NM_EXIBE }));
@@ -251,7 +251,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "USU")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensCC"] = 2;
                     return RedirectToAction("MontarTelaCC", "CentroCusto");
@@ -264,7 +264,7 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara listas
-            ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(x => x.GRUP_NM_NOME).ToList<GRUPO>(), "GRUP_CD_ID", "GR_NM_EXIBE");
+            ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(x => x.GRCC_NM_NOME).ToList<GRUPO_CC>(), "GRCC_CD_ID", "GRCC_NM_EXIBE");
             ViewBag.Subs = new SelectList(sgApp.GetAllItens(idAss).OrderBy(x => x.SUBG_NM_NOME).ToList<SUBGRUPO>(), "SUBG_CD_ID", "SUBG_NM_EXIBE");
             List<SelectListItem> tipoCC = new List<SelectListItem>();
             tipoCC.Add(new SelectListItem() { Text = "Crédito", Value = "1" });
@@ -294,7 +294,7 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(x => x.GRUP_NM_NOME).ToList<GRUPO>(), "GRUP_CD_ID", "GR_NM_EXIBE");
+            ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(x => x.GRCC_NM_NOME).ToList<GRUPO_CC>(), "GRCC_CD_ID", "GRCC_NM_EXIBE");
             ViewBag.Subs = new SelectList(sgApp.GetAllItens(idAss).OrderBy(x => x.SUBG_NM_NOME).ToList<SUBGRUPO>(), "SUBG_CD_ID", "SUBG_NM_EXIBE");
             List<SelectListItem> tipoCC = new List<SelectListItem>();
             tipoCC.Add(new SelectListItem() { Text = "Crédito", Value = "1" });
@@ -352,7 +352,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "USU")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensCC"] = 2;
                     return RedirectToAction("MontarTelaCC", "CentroCusto");
@@ -365,7 +365,7 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara listas
-            ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(x => x.GRUP_NM_NOME).ToList<GRUPO>(), "GRUP_CD_ID", "GR_NM_EXIBE");
+            ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(x => x.GRCC_NM_NOME).ToList<GRUPO_CC>(), "GRCC_CD_ID", "GRCC_NM_EXIBE");
             ViewBag.Subs = new SelectList(sgApp.GetAllItens(idAss).OrderBy(x => x.SUBG_NM_NOME).ToList<SUBGRUPO>(), "SUBG_CD_ID", "SUBG_NM_EXIBE");
             List<SelectListItem> tipoCC = new List<SelectListItem>();
             tipoCC.Add(new SelectListItem() { Text = "Crédito", Value = "1" });
@@ -395,7 +395,7 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(x => x.GRUP_NM_NOME).ToList<GRUPO>(), "GRUP_CD_ID", "GR_NM_EXIBE");
+            ViewBag.Grupos = new SelectList(gruApp.GetAllItens(idAss).OrderBy(x => x.GRCC_NM_NOME).ToList<GRUPO_CC>(), "GRCC_CD_ID", "GRCC_NM_EXIBE");
             ViewBag.Subs = new SelectList(sgApp.GetAllItens(idAss).OrderBy(x => x.SUBG_NM_NOME).ToList<SUBGRUPO>(), "SUBG_CD_ID", "SUBG_NM_EXIBE");
             List<SelectListItem> tipoCC = new List<SelectListItem>();
             tipoCC.Add(new SelectListItem() { Text = "Crédito", Value = "1" });
@@ -448,7 +448,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "USU")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensCC"] = 2;
                     return RedirectToAction("MontarTelaCC", "CentroCusto");
@@ -464,7 +464,7 @@ namespace ERP_CRM_Solution.Controllers
             CENTRO_CUSTO item = ccApp.GetItemById(id);
             objCCAntes = (CENTRO_CUSTO)Session["CentroCusto"];
             item.CECU_IN_ATIVO = 0;
-            item.GRUPO = null;
+            item.GRUPO_CC = null;
             item.SUBGRUPO = null;
             item.ASSINANTE = null;
             Int32 volta = ccApp.ValidateDelete(item, usuario);
@@ -492,7 +492,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "USU")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensCC"] = 2;
                     return RedirectToAction("MontarTelaCC", "CentroCusto");
@@ -508,7 +508,7 @@ namespace ERP_CRM_Solution.Controllers
             CENTRO_CUSTO item = ccApp.GetItemById(id);
             objCCAntes = (CENTRO_CUSTO)Session["CentroCusto"];
             item.CECU_IN_ATIVO = 1;
-            item.GRUPO = null;
+            item.GRUPO_CC = null;
             item.SUBGRUPO = null;
             item.ASSINANTE = null;
             Int32 volta = ccApp.ValidateReativar(item, usuario);
@@ -621,14 +621,14 @@ namespace ERP_CRM_Solution.Controllers
 
             foreach (CENTRO_CUSTO item in lista)
             {
-                cell = new PdfPCell(new Paragraph((item.GRUPO == null ? "-" : item.GRUPO.GRUP_NR_NUMERO) + "." + (item.SUBGRUPO == null ? "-" : item.SUBGRUPO.SUBG_NR_NUMERO) + "." + item.CECU_NR_NUMERO, meuFont))
+                cell = new PdfPCell(new Paragraph((item.GRUPO_CC == null ? "-" : item.GRUPO_CC.GRCC_NR_NUMERO) + "." + (item.SUBGRUPO == null ? "-" : item.SUBGRUPO.SUBG_NR_NUMERO) + "." + item.CECU_NR_NUMERO, meuFont))
                 {
                     VerticalAlignment = Element.ALIGN_MIDDLE, HorizontalAlignment = Element.ALIGN_LEFT
                 };
                 table.AddCell(cell);
-                if (item.GRUPO != null)
+                if (item.GRUPO_CC != null)
                 {
-                    cell = new PdfPCell(new Paragraph(item.GRUPO.GRUP_NM_NOME, meuFont))
+                    cell = new PdfPCell(new Paragraph(item.GRUPO_CC.GRCC_NM_NOME, meuFont))
                     {
                         VerticalAlignment = Element.ALIGN_MIDDLE,
                         HorizontalAlignment = Element.ALIGN_LEFT

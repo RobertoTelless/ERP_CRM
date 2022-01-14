@@ -26,6 +26,7 @@ namespace EntitiesServices.Model
         public string GRCC_NM_NOME { get; set; }
         public int GRCC_IN_ATIVO { get; set; }
         public string GRCC_NR_NUMERO { get; set; }
+        public string GRCC_NM_EXIBE { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

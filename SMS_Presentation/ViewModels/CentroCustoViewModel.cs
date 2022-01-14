@@ -29,9 +29,22 @@ namespace ERP_CRM_Solution.ViewModels
         [Required(ErrorMessage = "Campo MOVIMENTO obrigatorio")]
         public Nullable<int> CECU_IN_MOVTO { get; set; }
         public string CECU_NM_EXIBE { get; set; }
+        public Nullable<int> GRCC_CD_ID { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
-        public virtual GRUPO GRUPO { get; set; }
         public virtual SUBGRUPO SUBGRUPO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_PAGAR> CONTA_PAGAR { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_PAGAR_RATEIO> CONTA_PAGAR_RATEIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_RECEBER_RATEIO> CONTA_RECEBER_RATEIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PEDIDO_COMPRA> PEDIDO_COMPRA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PEDIDO_VENDA> PEDIDO_VENDA { get; set; }
+        public virtual GRUPO_CC GRUPO_CC { get; set; }
     }
 }

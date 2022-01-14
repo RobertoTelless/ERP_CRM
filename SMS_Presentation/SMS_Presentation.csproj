@@ -313,6 +313,7 @@
     <Compile Include="Controllers\EquipamentoController.cs" />
     <Compile Include="Controllers\EstoqueController.cs" />
     <Compile Include="Controllers\FilialController.cs" />
+    <Compile Include="Controllers\FormaPagamentoController.cs" />
     <Compile Include="Controllers\FornecedorController.cs" />
     <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -3214,6 +3215,16 @@
     <Content Include="Views\Banco\IncluirContato.cshtml" />
     <Content Include="Views\Banco\IncluirLancamento.cshtml" />
     <Content Include="Views\Banco\EditarLancamento.cshtml" />
+    <Content Include="Views\CentroCusto\MontarTelaCC.cshtml" />
+    <Content Include="Views\CentroCusto\IncluirCC.cshtml" />
+    <Content Include="Views\CentroCusto\EditarCC.cshtml" />
+    <Content Include="Views\FormaPagamento\MontarTelaFormaPagamento.cshtml" />
+    <Content Include="Views\FormaPagamento\IncluirFormaPagamento.cshtml" />
+    <Content Include="Views\FormaPagamento\EditarFormaPagamento.cshtml" />
+    <Content Include="Views\Banco\ExcluirBanco.cshtml" />
+    <Content Include="Views\Banco\ReativarBanco.cshtml" />
+    <Content Include="Views\Banco\ExcluirConta.cshtml" />
+    <Content Include="Views\Banco\ReativarConta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3286,7 +3297,6 @@
     <Folder Include="Imagens\2\Usuario\5\Anexos\" />
     <Folder Include="Imagens\Assinantes\2\Anexos\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\CentroCusto\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
