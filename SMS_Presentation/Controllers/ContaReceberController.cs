@@ -2149,6 +2149,12 @@ namespace ERP_CRM_Solution.Controllers
                         return RedirectToAction("MontarTelaCR");
                     }
 
+                    // Acerta numero
+                    if (item.CARE_NR_DOCUMENTO == null)
+                    {
+                        item.CARE_NR_DOCUMENTO = item.CARE_CD_ID.ToString();
+                    }
+
                     // Cria pastas
                     String caminho = "/Imagens/" + idAss.ToString() + "/ContaReceber/" + item.CARE_CD_ID.ToString() + "/Anexos/";
                     Directory.CreateDirectory(Server.MapPath(caminho));

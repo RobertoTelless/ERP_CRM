@@ -151,7 +151,6 @@ namespace ApplicationServices.Services
                 item.CAPA_VL_SALDO = item.CAPA_VL_VALOR;
                 item.CAPA_VL_TAXAS = 0;
                 item.CAPA_VL_VALOR_PAGO = 0;
-                //item.CAPA_IN_PARCELADA = 0;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
                 if (item.CAPA_IN_PARCELAS > 1)
                 {

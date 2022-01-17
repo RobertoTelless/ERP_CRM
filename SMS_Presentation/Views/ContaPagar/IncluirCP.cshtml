@@ -1,21 +1,21 @@
 ﻿@using Presentation.Extensions
-@model ERP_CRM_Solution.ViewModels.ContaReceberViewModel
+@model ERP_CRM_Solution.ViewModels.ContaPagarViewModel
 @{
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="page-title">
-        <h3 class="title">Contas a Receber</h3>
+        <h3 class="title">Contas a Pagar</h3>
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
             </li>
             <li>
-                <a href="@Url.Action("MontarTelaCR", "ContaReceber")">Contas a Receber</a>
+                <a href="@Url.Action("MontarTelaCP", "ContaPagar")">Contas a Pagar</a>
             </li>
             <li class="active">
-                <strong>Contas a Receber - Inclusão</strong>
+                <strong>Contas a Pagar - Inclusão</strong>
             </li>
         </ol>
         <br />
@@ -25,7 +25,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Conta a Receber - Inclusão</h5>
+                    <h5>Conta a Pagar - Inclusão</h5>
                 </div>
 
                 <div class="ibox-content">
@@ -38,22 +38,21 @@
                         </div>
                     }
                     <div class="tabs-container">
-                        @using (Html.BeginForm("IncluirCR", "ContaReceber", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                        @using (Html.BeginForm("IncluirCP", "ContaPagar", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                         {
-                        <div class="form-group">
-                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Inclusão de Lançamento</button>
-                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCR", controller: "ContaReceber")
-                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "ContaPagar", action: "MontarTelaDashboardFinanceiro")                            
-                            </div>                                    
-                        </div>
+                            <div class="form-group">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Inclusão de Lançamento</button>
+                                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCP", controller: "ContaPagar")
+                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "ContaPagar", action: "MontarTelaDashboardFinanceiro")
+                                </div>
+                            </div>
 
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais e Parcelamento</a></li>
                                 <li><a data-toggle="tab" href="#tab-2">Anexos</a></li>
                             </ul>
                             <div class="tab-content">
-
                                 @*Dados Gerais e Parcelamento*@
                                 <div id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
@@ -61,34 +60,49 @@
                                             <h4>Dados Gerais</h4>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-4 col-md-4 col-xs-12">
-                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                                    @Html.HiddenFor(m => m.CARE_IN_ATIVO)
-                                                    @Html.HiddenFor(m => m.CARE_IN_LIQUIDADA)
-                                                    @Html.HiddenFor(m => m.CARE_IN_PAGA_PARCIAL)
-                                                    @Html.HiddenFor(m => m.CARE_IN_PARCELADA)
-                                                    @Html.HiddenFor(m => m.CARE_IN_TIPO_LANCAMENTO)
-                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_LIQUIDADA)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_PAGA_PARCIAL)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_PARCELADA)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_TIPO_LANCAMENTO)
                                                     @Html.HiddenFor(m => m.USUA_CD_ID)
-                                                    Cliente*
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    Fornecedor
                                                     <div class="input-group">
-                                                        <select name="CLIE_CD_ID" id="lstCliente" class="form-control" data-val="true" style="display: none;" autofocus>
+                                                        <select name="FORN_CD_ID" id="lstForn" class="form-control" data-val="true" style="display: none;" autofocus>
                                                             <option>Selecionar</option>
                                                         </select>
-                                                        @Html.ValidationMessageFor(m => m.CLIE_CD_ID, "", new { @style = "color:red" })
                                                         <span class="input-group-addon">
-                                                            @Html.TableLinkAction("IncluirCliente", "ContaReceber", null, "glyphicon glyphicon-plus", "Adicionar Cliente")
+                                                            @Html.TableLinkAction("IncluirFornecedor", "ContaPagar", null, "glyphicon glyphicon-plus", "Adicionar Fornecedor")
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-xs-12">
-                                                    Plano de Conta*
+                                                    Plano de Contas
                                                     @Html.DropDownListFor(m => m.CECU_CD_ID, (SelectList)ViewBag.CC, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.CECU_CD_ID, "", new { @style = "color:red" })
                                                 </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Responsável*
+                                                    @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
+                                                </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Num.Documento*
-                                                    @Html.TextBoxFor(m => m.CARE_NR_DOCUMENTO, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.CARE_NR_DOCUMENTO, "", new { @style = "color:red" })
+                                                    Num.Documento
+                                                    @Html.TextBoxFor(m => m.CAPA_NR_DOCUMENTO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_NR_DOCUMENTO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Forma de Pagamento*
+                                                    @Html.DropDownListFor(m => m.FOPA_CD_ID, (SelectList)ViewBag.Formas, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.FOPA_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Tipo de Documento
+                                                    @Html.DropDownListFor(m => m.CAPA_IN_TIPO_DOC, (SelectList)ViewBag.TipoDoc, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_IN_TIPO_DOC, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
                                         </div>
@@ -96,72 +110,64 @@
                                             <hr />
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    Descrição*
-                                                    @Html.TextBoxFor(m => m.CARE_DS_DESCRICAO, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.CARE_DS_DESCRICAO, "", new { @style = "color:red" })
+                                                    Descrição
+                                                    @Html.TextBoxFor(m => m.CAPA_DS_DESCRICAO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_DS_DESCRICAO, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Data de Emissão*
-                                                    @Html.TextBoxFor(m => m.CARE_DT_LANCAMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.CARE_DT_LANCAMENTO, "", new { @style = "color:red" })
+                                                    Data de Emissão
+                                                    @Html.TextBoxFor(m => m.CAPA_DT_LANCAMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_DT_LANCAMENTO, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Competência*
-                                                    @Html.TextBoxFor(m => m.CARE_DT_COMPETENCIA, "{0:MM/yyyy}", new { @class = "form-control date-picker1", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.CARE_DT_COMPETENCIA, "", new { @style = "color:red" })
+                                                    Competência
+                                                    @Html.TextBoxFor(m => m.CAPA_DT_COMPETENCIA, "{0:MM/yyyy}", new { @class = "form-control date-picker1", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_DT_COMPETENCIA, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Valor*
-                                                    @Html.TextBoxFor(m => m.CARE_VL_VALOR, "{0:n2}", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.CARE_VL_VALOR, "", new { @style = "color:red" })
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
-                                                    Forma de Recebimento*
-                                                    @Html.DropDownListFor(m => m.FOPA_CD_ID, (SelectList)ViewBag.Formas, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.FOPA_CD_ID, "", new { @style = "color:red" })
+                                                    Valor
+                                                    @Html.TextBoxFor(m => m.CAPA_VL_VALOR, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_VL_VALOR, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Data de Vencimento*
-                                                    @Html.TextBoxFor(m => m.CARE_DT_VENCIMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.CARE_DT_VENCIMENTO, "", new { @style = "color:red" })
+                                                    Data de Vencimento
+                                                    @Html.TextBoxFor(m => m.CAPA_DT_VENCIMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_DT_VENCIMENTO, "", new { @style = "color:red" })
                                                 </div>
-                                            </div>
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                
                                             </div>
                                         </div>
                                         <div class="row">
                                             <hr />
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    Parcelamento/Recebimento Recorrente
-                                                    @Html.DropDownListFor(m => m.CARE_IN_PAGAMENTO, (SelectList)ViewBag.Pagamento, "Único", new { @class = "form-control", autofocus = true, onchange = "ChangePag($(this).val())", @id = "pagamento" })
-                                                    @Html.ValidationMessageFor(m => m.CARE_IN_PAGAMENTO, "", new { @style = "color:red" })
+                                                    Parcelamento/Pagamento Recorrente
+                                                    @Html.DropDownListFor(m => m.CAPA_IN_PAGAMENTO, (SelectList)ViewBag.Pagamento, "Único", new { @class = "form-control", autofocus = true, onchange = "ChangePag($(this).val())", @id = "pagamento" })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_IN_PAGAMENTO, "", new { @style = "color:red" })
                                                 </div>
-                                                <div id="recRecorrente">
+                                                <div id="pagRecorrente">
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Num.Recebimentos
-                                                        @Html.TextBoxFor(m => m.CARE_IN_RECORRENTE, new { @class = "form-control touchspin3", autofocus = true, @id = "inRecorrente" })
-                                                        @Html.ValidationMessageFor(m => m.CARE_IN_RECORRENTE, "", new { @style = "color:red" })
+                                                        Num.Pagamentos
+                                                        @Html.TextBoxFor(m => m.CAPA_IN_RECORRENTE, new { @class = "form-control touchspin3", autofocus = true, @id = "inRecorrente" })
+                                                        @Html.ValidationMessageFor(m => m.CAPA_IN_RECORRENTE, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Data inicial
-                                                        @Html.TextBoxFor(m => m.CARE_DT_INICIO_RECORRENCIA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "data4" })
-                                                        @Html.ValidationMessageFor(m => m.CARE_DT_INICIO_RECORRENCIA, "", new { @style = "color:red" })
+                                                        @Html.TextBoxFor(m => m.CAPA_DT_INICIO_RECORRENCIA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @id = "data4" })
+                                                        @Html.ValidationMessageFor(m => m.CAPA_DT_INICIO_RECORRENCIA, "", new { @style = "color:red" })
                                                     </div>
                                                 </div>
                                                 <div id="parcelamento">
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Num.Parcelas
-                                                        @Html.TextBoxFor(m => m.CARE_IN_PARCELAS, new { @class = "form-control touchspin2", autofocus = true, @id = "parcelas", onchange = "CheckNumParc($(this).val())" })
-                                                        @Html.ValidationMessageFor(m => m.CARE_IN_PARCELAS, "", new { @style = "color:red" })
+                                                        @Html.TextBoxFor(m => m.CAPA_IN_PARCELAS, new { @class = "form-control touchspin2", autofocus = true, @id = "parcelas", onchange = "CheckNumParc($(this).val())" })
+                                                        @Html.ValidationMessageFor(m => m.CAPA_IN_PARCELAS, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Data inicial
-                                                        @Html.TextBoxFor(m => m.CARE_DT_INICIO_PARCELA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "data2" })
-                                                        @Html.ValidationMessageFor(m => m.CARE_DT_INICIO_PARCELA, "", new { @style = "color:red" })
+                                                        @Html.TextBoxFor(m => m.CAPA_DT_INICIO_PARCELAS, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @id = "data2" })
+                                                        @Html.ValidationMessageFor(m => m.CAPA_DT_INICIO_PARCELAS, "", new { @style = "color:red" })
                                                     </div>
                                                 </div>
                                                 <div id="periodicidade">
@@ -179,8 +185,8 @@
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     Observações
-                                                    @Html.TextAreaFor(m => m.CARE_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.CARE_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                                    @Html.TextAreaFor(m => m.CAPA_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_TX_OBSERVACOES, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
                                         </div>
@@ -214,14 +220,13 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <br />
-                                    <div class="col-lg-12 col-md-12 col-xs-12">
-                                        @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
-                                        <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Inclusão de Lançamento</button>
-                                        @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCR", controller: "ContaReceber")
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <br />
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
+                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Inclusão de Lançamento</button>
+                                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCP", controller: "ContaPagar")
                                 </div>
                             </div>
                         }
@@ -231,7 +236,6 @@
         </div>
     </div>
 </div>
-
 
 @section Styles {
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
@@ -244,53 +248,117 @@
     @Styles.Render("~/plugins/sweetAlertStyles")
     <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
     <link href="~/Content/MonthPicker.css" rel="stylesheet" />
-
-    }
+}
 @section Scripts {
-    @Scripts.Render("~/plugins/toastr")
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
     @Scripts.Render("~/plugins/touchSpin")
     @Scripts.Render("~/plugins/iCheck")
-<script src="~/Scripts/MonthPicker.js"></script>
+    <script src="~/Scripts/MonthPicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
     <script src="~/Scripts/uploadAnexo.js"></script>
     <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
 
-    @*<script type="text/javascript">
-        $(document).ready(function () {
-
-            $('.dataTables-example').DataTable({
-                pageLength: 25,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    { extend: 'copy' },
-                    { extend: 'csv' },
-                    { extend: 'excel', title: 'ExampleFile' },
-                    { extend: 'pdf', title: 'ExampleFile' },
-
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
+    <script>
+        $("#lstForn").select2({
+            //data: filterSelect,
+            ajax: {
+                url: '../Fornecedor/BuscaNomeRazao',
+                type: 'POST',
+                data: function (params) {
+                    var query = {
+                        nome: params.term
                     }
-                ]
+                    return query
+                },
+                processResults: function (data) {
+                    console.log(data);
+                    return {
+                        results: data
+                    }
+                }
+            },
+            placeholder: 'Busque por NOME ou RAZÃO SOCIAL',
+            minimumInputLength: 1
+        });
+    </script>
+
+    <script>
+        function ChangePag(val) {
+            if (val == 1) {
+                $('#pagRecorrente').show();
+                $('#parcelamento').hide();
+                $('#periodicidade').show();
+
+                $('#parcelas').val(0);
+                $('#data2').val('');
+            } else if (val == 2) {
+                $('#pagRecorrente').hide();
+                $('#parcelamento').show();
+                $('#periodicidade').show();
+
+                $('#parcelas').val(2);
+
+                $('#inRecorrente').val(0);
+                $('#data4').val('');
+            } else {
+                $('#pagRecorrente').hide();
+                $('#parcelamento').hide();
+                $('#periodicidade').hide();
+
+                $('#parcelas').val(0);
+                $('#data2').val('');
+                $('#inRecorrente').val(0);
+                $('#data4').val('');
+            }
+        }
+
+        $(function () {
+            ChangePag($('#pagamento').val());
+        });
+
+        function CheckNumParc(val) {
+            if (val == 1) {
+                $('#parcelas').val(2);
+            }
+        }
+    </script>
+
+    @*<script type="text/javascript">
+            $(document).ready(function () {
+
+                $('.dataTables-example').DataTable({
+                    pageLength: 25,
+                    dom: '<"html5buttons"B>lTfgitp',
+                    buttons: [
+                        { extend: 'copy' },
+                        { extend: 'csv' },
+                        { extend: 'excel', title: 'ExampleFile' },
+                        { extend: 'pdf', title: 'ExampleFile' },
+
+                        {
+                            extend: 'print',
+                            customize: function (win) {
+                                $(win.document.body).addClass('white-bg');
+                                $(win.document.body).css('font-size', '10px');
+
+                                $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                            }
+                        }
+                    ]
+
+                });
+
+
 
             });
 
-
-
-        });
-
-    </script>*@
+        </script>*@
 
     <script type="text/javascript" language="javascript">
         $(function () {
@@ -320,12 +388,59 @@
                 Button: false
             });
         });
+
+        $(function () {
+            $('#data4').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+
+        $(function () {
+            $('#data2').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
     </script>
 
     <script type="text/javascript">
         $(function () {
             $("#cpf").mask("999.999.999-99");
             $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $("#data2").mask("99/99/9999");
+            $("#data4").mask("99/99/9999");
             $("#cep").mask("99999-999");
         });
     </script>
@@ -352,7 +467,7 @@
     </script>
     <script type="text/javascript">
         $(".touchspin2").TouchSpin({
-            min: 2,
+            min: 0,
             max: 24,
             step: 1,
             buttondown_class: 'btn btn-white',
@@ -361,7 +476,7 @@
     </script>
     <script type="text/javascript">
         $(".touchspin3").TouchSpin({
-            min: 1,
+            min: 0,
             max: 24,
             step: 1,
             buttondown_class: 'btn btn-white',
@@ -471,74 +586,7 @@
     </script>
 
     <script>
-        function ChangePag(val) {
-            if (val == 1) {
-                $('#recRecorrente').show();
-                $('#parcelamento').hide();
-                $('#periodicidade').show();
-
-                $('#parcelas').val(0);
-                $('#data2').val('');
-            } else if (val == 2) {
-                $('#recRecorrente').hide();
-                $('#parcelamento').show();
-                $('#periodicidade').show();
-
-                $('#parcelas').val(2);
-
-                $('#inRecorrente').val(0);
-                $('#data4').val('');
-            } else {
-                $('#recRecorrente').hide();
-                $('#parcelamento').hide();
-                $('#periodicidade').hide();
-
-                $('#parcelas').val(0);
-                $('#data2').val('');
-                $('#inRecorrente').val(0);
-                $('#data4').val('');
-            }
-        }
-
-        $(function () {
-            ChangePag($('#pagamento').val());
-        });
-    </script>
-
-    <script>
-        SendFilesV2(null, 'ContaReceber', 'UploadFileToSession');
-    </script>
-
-    <script>
-        $("#lstCliente").select2({
-            //data: filterSelect,
-            ajax: {
-                url: '../Cliente/BuscaNomeRazao',
-                type: 'POST',
-                data: function (params) {
-                    var query = {
-                        nome: params.term
-                    }
-                    return query
-                },
-                processResults: function (data) {
-                    console.log(data);
-                    return {
-                        results: data
-                    }
-                }
-            },
-            placeholder: 'Busque por NOME ou RAZÃO SOCIAL',
-            minimumInputLength: 1
-        });
-    </script>
-
-    <script>
-        function CheckNumParc(val) {
-            if (val == 1) {
-                $('#parcelas').val(2);
-            }
-        }
+        SendFilesV2(null, 'ContaPagar', 'UploadFileToSession');
     </script>
 
     @if (ViewBag.Message != null)

@@ -845,7 +845,7 @@ namespace ERP_CRM_Solution.Controllers
                     item.CAPA_IN_CHEQUE = forma.FOPA_IN_CHEQUE;
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     Int32 volta = cpApp.ValidateCreate(item, recorrencia, data, usuarioLogado);
-
+                    
                     // Verifica retorno
                     if (volta == 1)
                     {
@@ -872,6 +872,13 @@ namespace ERP_CRM_Solution.Controllers
                         Session["MensCP"] = 14;
                         return View(vm);
                     }
+
+                    // Acerta numero
+                    if (item.CAPA_NR_DOCUMENTO == null)
+                    {
+                        item.CAPA_NR_DOCUMENTO = item.CAPA_CD_ID.ToString();
+                    }
+                    
                     // Cria pastas
                     String caminho = "/Imagens/" + idAss.ToString() + "/ContaPagar/" + item.CAPA_CD_ID.ToString() + "/Anexos/";
                     Directory.CreateDirectory(Server.MapPath(caminho));
