@@ -308,6 +308,8 @@
     <Compile Include="Controllers\CentroCustoController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ConfiguracaoController.cs" />
+    <Compile Include="Controllers\ContaPagarController.cs" />
+    <Compile Include="Controllers\ContaReceberController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
     <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Controllers\EquipamentoController.cs" />
@@ -3232,6 +3234,28 @@
     <Content Include="Views\Banco\ReativarConta.cshtml" />
     <Content Include="Views\Estoque\MontarTelaDashboardEstoque.cshtml" />
     <Content Include="Views\Estoque\MontarTelaDashboardCompraDummy.cshtml" />
+    <Content Include="Views\ContaPagar\MontarTelaCP.cshtml" />
+    <Content Include="Views\ContaPagar\VerPagamentosMes.cshtml" />
+    <Content Include="Views\ContaPagar\VerAPagarMes.cshtml" />
+    <Content Include="Views\ContaPagar\VerLancamentosAtrasoCP.cshtml" />
+    <Content Include="Views\ContaPagar\VerCP.cshtml" />
+    <Content Include="Views\ContaPagar\VerAnexoLancamentoCP.cshtml" />
+    <Content Include="Views\ContaPagar\VerParcelaCP.cshtml" />
+    <Content Include="Views\ContaPagar\EditarCP.cshtml" />
+    <Content Include="Views\ContaPagar\LiquidarParcelaCP.cshtml" />
+    <Content Include="Views\ContaReceber\MontarTelaCR.cshtml" />
+    <Content Include="Views\ContaReceber\VerRecebimentosMes.cshtml" />
+    <Content Include="Views\ContaReceber\VerAReceberMes.cshtml" />
+    <Content Include="Views\ContaReceber\VerLancamentosAtraso.cshtml" />
+    <Content Include="Views\ContaReceber\VerCR.cshtml" />
+    <Content Include="Views\ContaReceber\VerAnexoLancamentoCR.cshtml" />
+    <Content Include="Views\ContaReceber\VerParcelaCR.cshtml" />
+    <Content Include="Views\ContaReceber\IncluirCR.cshtml" />
+    <Content Include="Views\ContaReceber\EditarCR.cshtml" />
+    <Content Include="Views\ContaReceber\ParcelarCR.cshtml" />
+    <Content Include="Views\ContaReceber\LiquidarParcelaCR.cshtml" />
+    <Content Include="Views\ContaReceber\LiquidarCR.cshtml" />
+    <Content Include="Views\ContaReceber\IncluirRateioCC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3247,6 +3271,8 @@
     <Folder Include="Imagens\2\Clientes\5\Fotos\" />
     <Folder Include="Imagens\2\Clientes\6\Anexos\" />
     <Folder Include="Imagens\2\Clientes\6\Fotos\" />
+    <Folder Include="Imagens\2\ContaPagar\" />
+    <Folder Include="Imagens\2\ContaReceber\" />
     <Folder Include="Imagens\2\CRM\" />
     <Folder Include="Imagens\2\Equipamento\" />
     <Folder Include="Imagens\2\Filial\1\Anexos\" />
