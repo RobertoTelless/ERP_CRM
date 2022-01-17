@@ -346,6 +346,11 @@
     <Compile Include="ViewModels\ContaBancariaContatoViewModel.cs" />
     <Compile Include="ViewModels\ContaBancariaLancamentoViewModel.cs" />
     <Compile Include="ViewModels\ContaBancariaViewModel.cs" />
+    <Compile Include="ViewModels\ContaPagarParcelaviewModel.cs" />
+    <Compile Include="ViewModels\ContaPagarRateioViewModel.cs" />
+    <Compile Include="ViewModels\ContaPagarViewModel.cs" />
+    <Compile Include="ViewModels\ContaReceberParcelaViewModel.cs" />
+    <Compile Include="ViewModels\ContaReceberViewModel.cs" />
     <Compile Include="ViewModels\EquipamentoManutencaoViewModel.cs" />
     <Compile Include="ViewModels\EquipamentoViewModel.cs" />
     <Compile Include="ViewModels\FormaPagamentoViewModel.cs" />

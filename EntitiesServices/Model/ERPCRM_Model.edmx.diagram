@@ -378,6 +378,7 @@
         <AssociationConnector Association="ERP_CRMModel.FK_GRUPO_CC_ASSINANTE" />
         <AssociationConnector Association="ERP_CRMModel.FK_SUBGRUPO_GRUPO_CC" />
         <AssociationConnector Association="ERP_CRMModel.FK_CENTRO_CUSTO_GRUPO_CC" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

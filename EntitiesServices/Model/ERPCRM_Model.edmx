@@ -861,6 +861,30 @@
           <Property Name="FOPA_NM_TAXA_EXTRA" Type="varchar" MaxLength="50" />
           <Property Name="FOPA_VL_TAXA_EXTRA" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="FORMULARIO_RESPOSTA">
+          <Key>
+            <PropertyRef Name="FORE_CD_ID" />
+          </Key>
+          <Property Name="FORE_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FORE_DT_CADASTRO" Type="datetime" />
+          <Property Name="FORE_NM_NOME" Type="varchar" MaxLength="50" />
+          <Property Name="FORE_NM_EMAIL" Type="varchar" MaxLength="150" />
+          <Property Name="FORE_NR_CELULAR" Type="varchar" MaxLength="50" />
+          <Property Name="FORE_IN_MENSAGERIA" Type="int" />
+          <Property Name="FORE_IN_CRM" Type="int" />
+          <Property Name="FORE_IN_PATRIMONIO" Type="int" />
+          <Property Name="FORE_IN_ESTOQUE" Type="int" />
+          <Property Name="FORE_IN_COMPRA" Type="int" />
+          <Property Name="FORE_IN_VENDA" Type="int" />
+          <Property Name="FORE_IN_SERVICEDESK" Type="int" />
+          <Property Name="FORE_IN_FATURAMENTO" Type="int" />
+          <Property Name="FORE_IN_FINANCEIRO" Type="int" />
+          <Property Name="FORE_IN_EXPEDICAO" Type="int" />
+          <Property Name="FORE_IN_DOCUMENTO" Type="int" />
+          <Property Name="FORE_TX_MENSAGEM" Type="text" />
+          <Property Name="FORE_IN_ATIVO" Type="int" />
+          <Property Name="FORE_IN_STATUS" Type="int" />
+        </EntityType>
         <EntityType Name="FORNECEDOR">
           <Key>
             <PropertyRef Name="FORN_CD_ID" />
@@ -4982,6 +5006,7 @@
           <EntitySet Name="FORMA_ENVIO" EntityType="Self.FORMA_ENVIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FORMA_FRETE" EntityType="Self.FORMA_FRETE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FORMA_PAGAMENTO" EntityType="Self.FORMA_PAGAMENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FORMULARIO_RESPOSTA" EntityType="Self.FORMULARIO_RESPOSTA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FORNECEDOR" EntityType="Self.FORNECEDOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FORNECEDOR_ANEXO" EntityType="Self.FORNECEDOR_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FORNECEDOR_COMENTARIO" EntityType="Self.FORNECEDOR_COMENTARIO" Schema="dbo" store:Type="Tables" />
@@ -11829,6 +11854,7 @@
             <End Role="GRUPO_CC" EntitySet="GRUPO_CC" />
             <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
           </AssociationSet>
+          <EntitySet Name="FORMULARIO_RESPOSTA" EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA" />
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -12555,6 +12581,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FORMULARIO_RESPOSTA">
+          <Key>
+            <PropertyRef Name="FORE_CD_ID" />
+          </Key>
+          <Property Name="FORE_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FORE_DT_CADASTRO" Type="DateTime" Precision="3" />
+          <Property Name="FORE_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FORE_NM_EMAIL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="FORE_NR_CELULAR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FORE_IN_MENSAGERIA" Type="Int32" />
+          <Property Name="FORE_IN_CRM" Type="Int32" />
+          <Property Name="FORE_IN_PATRIMONIO" Type="Int32" />
+          <Property Name="FORE_IN_ESTOQUE" Type="Int32" />
+          <Property Name="FORE_IN_COMPRA" Type="Int32" />
+          <Property Name="FORE_IN_VENDA" Type="Int32" />
+          <Property Name="FORE_IN_SERVICEDESK" Type="Int32" />
+          <Property Name="FORE_IN_FATURAMENTO" Type="Int32" />
+          <Property Name="FORE_IN_FINANCEIRO" Type="Int32" />
+          <Property Name="FORE_IN_EXPEDICAO" Type="Int32" />
+          <Property Name="FORE_IN_DOCUMENTO" Type="Int32" />
+          <Property Name="FORE_TX_MENSAGEM" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FORE_IN_ATIVO" Type="Int32" />
+          <Property Name="FORE_IN_STATUS" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14681,6 +14731,31 @@
                 <ScalarProperty Name="GRCC_NM_NOME" ColumnName="GRCC_NM_NOME" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="GRCC_CD_ID" ColumnName="GRCC_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FORMULARIO_RESPOSTA">
+            <EntityTypeMapping TypeName="ERP_CRMModel.FORMULARIO_RESPOSTA">
+              <MappingFragment StoreEntitySet="FORMULARIO_RESPOSTA">
+                <ScalarProperty Name="FORE_IN_STATUS" ColumnName="FORE_IN_STATUS" />
+                <ScalarProperty Name="FORE_IN_ATIVO" ColumnName="FORE_IN_ATIVO" />
+                <ScalarProperty Name="FORE_TX_MENSAGEM" ColumnName="FORE_TX_MENSAGEM" />
+                <ScalarProperty Name="FORE_IN_DOCUMENTO" ColumnName="FORE_IN_DOCUMENTO" />
+                <ScalarProperty Name="FORE_IN_EXPEDICAO" ColumnName="FORE_IN_EXPEDICAO" />
+                <ScalarProperty Name="FORE_IN_FINANCEIRO" ColumnName="FORE_IN_FINANCEIRO" />
+                <ScalarProperty Name="FORE_IN_FATURAMENTO" ColumnName="FORE_IN_FATURAMENTO" />
+                <ScalarProperty Name="FORE_IN_SERVICEDESK" ColumnName="FORE_IN_SERVICEDESK" />
+                <ScalarProperty Name="FORE_IN_VENDA" ColumnName="FORE_IN_VENDA" />
+                <ScalarProperty Name="FORE_IN_COMPRA" ColumnName="FORE_IN_COMPRA" />
+                <ScalarProperty Name="FORE_IN_ESTOQUE" ColumnName="FORE_IN_ESTOQUE" />
+                <ScalarProperty Name="FORE_IN_PATRIMONIO" ColumnName="FORE_IN_PATRIMONIO" />
+                <ScalarProperty Name="FORE_IN_CRM" ColumnName="FORE_IN_CRM" />
+                <ScalarProperty Name="FORE_IN_MENSAGERIA" ColumnName="FORE_IN_MENSAGERIA" />
+                <ScalarProperty Name="FORE_NR_CELULAR" ColumnName="FORE_NR_CELULAR" />
+                <ScalarProperty Name="FORE_NM_EMAIL" ColumnName="FORE_NM_EMAIL" />
+                <ScalarProperty Name="FORE_NM_NOME" ColumnName="FORE_NM_NOME" />
+                <ScalarProperty Name="FORE_DT_CADASTRO" ColumnName="FORE_DT_CADASTRO" />
+                <ScalarProperty Name="FORE_CD_ID" ColumnName="FORE_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
