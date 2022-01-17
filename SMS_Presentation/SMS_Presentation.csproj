@@ -3256,6 +3256,7 @@
     <Content Include="Views\ContaReceber\LiquidarParcelaCR.cshtml" />
     <Content Include="Views\ContaReceber\LiquidarCR.cshtml" />
     <Content Include="Views\ContaReceber\IncluirRateioCC.cshtml" />
+    <Content Include="Views\ContaPagar\MontarTelaDashboardFinanceiro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
