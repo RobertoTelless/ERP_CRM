@@ -181,12 +181,10 @@
     <Compile Include="Repositories\ContaPagarParcelaRepository.cs" />
     <Compile Include="Repositories\ContaPagarRateioRepository.cs" />
     <Compile Include="Repositories\ContaPagarRepository.cs" />
-    <Compile Include="Repositories\ContaPagarTagRepository.cs" />
     <Compile Include="Repositories\ContaReceberAnexoRepository.cs" />
     <Compile Include="Repositories\ContaReceberParcelaRepository.cs" />
     <Compile Include="Repositories\ContaReceberRateioRepository.cs" />
     <Compile Include="Repositories\ContaReceberRepository.cs" />
-    <Compile Include="Repositories\ContaReceberTagRepository.cs" />
     <Compile Include="Repositories\GrupoCCRepository.cs" />
     <Compile Include="Repositories\CentroCustoRepository.cs" />
     <Compile Include="Repositories\ContaBancariaContatoRepository.cs" />

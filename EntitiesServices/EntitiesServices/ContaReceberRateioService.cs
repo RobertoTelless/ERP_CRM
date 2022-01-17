@@ -20,7 +20,7 @@ namespace ModelServices.EntitiesServices
     {
         private readonly IContaReceberRateioRepository _baseRepository;
         private readonly ILogRepository _logRepository;
-        protected DUO_DatabaseEntities Db = new DUO_DatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public ContaReceberRateioService(IContaReceberRateioRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
         {

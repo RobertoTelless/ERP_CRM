@@ -117,6 +117,12 @@ namespace Presentation.Start
             kernel.Bind<IFormaPagamentoAppService>().To<FormaPagamentoAppService>();
             kernel.Bind<IGrupoCCAppService>().To<GrupoCCAppService>();
             kernel.Bind<ISubgrupoAppService>().To<SubgrupoAppService>();
+            kernel.Bind<IContaPagarAppService>().To<ContaPagarAppService>();
+            kernel.Bind<IContaPagarParcelaAppService>().To<ContaPagarParcelaAppService>();
+            kernel.Bind<IContaPagarRateioAppService>().To<ContaPagarRateioAppService>();
+            kernel.Bind<IContaReceberAppService>().To<ContaReceberAppService>();
+            kernel.Bind<IContaReceberParcelaAppService>().To<ContaReceberParcelaAppService>();
+            kernel.Bind<IContaReceberRateioAppService>().To<ContaReceberRateioAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -168,6 +174,12 @@ namespace Presentation.Start
             kernel.Bind<IFormaPagamentoService>().To<FormaPagamentoService>();
             kernel.Bind<IGrupoCCService>().To<GrupoCCService>();
             kernel.Bind<ISubgrupoService>().To<SubgrupoService>();
+            kernel.Bind<IContaPagarService>().To<ContaPagarService>();
+            kernel.Bind<IContaPagarParcelaService>().To<ContaPagarParcelaService>();
+            kernel.Bind<IContaPagarRateioService>().To<ContaPagarRateioService>();
+            kernel.Bind<IContaReceberParcelaService>().To<ContaReceberParcelaService>();
+            kernel.Bind<IContaReceberRateioService>().To<ContaReceberRateioService>();
+            kernel.Bind<IContaReceberService>().To<ContaReceberService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -263,6 +275,14 @@ namespace Presentation.Start
             kernel.Bind<IItemPedidoCompraRepository>().To<ItemPedidoCompraRepository>();
             kernel.Bind<IGrupoCCRepository>().To<GrupoCCRepository>();
             kernel.Bind<ISubgrupoRepository>().To<SubgrupoRepository>();
+            kernel.Bind<IContaPagarAnexoRepository>().To<ContaPagarAnexoRepository>();
+            kernel.Bind<IContaPagarParcelaRepository>().To<ContaPagarParcelaRepository>();
+            kernel.Bind<IContaPagarRateioRepository>().To<ContaPagarRateioRepository>();
+            kernel.Bind<IContaPagarRepository>().To<ContaPagarRepository>();
+            kernel.Bind<IContaReceberAnexoRepository>().To<ContaReceberAnexoRepository>();
+            kernel.Bind<IContaReceberParcelaRepository>().To<ContaReceberParcelaRepository>();
+            kernel.Bind<IContaReceberRateioRepository>().To<ContaReceberRateioRepository>();
+            kernel.Bind<IContaReceberRepository>().To<ContaReceberRepository>();
 
         }
     }

@@ -39,5 +39,6 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<CONTA_RECEBER> ExecuteFilterAReceberMes(Int32? clieId, Int32? ccId, String desc, DateTime? emissao, DateTime? venc, Int32 idAss);
         List<CONTA_RECEBER> ExecuteFilterCRAtrasos(Int32? clieId, Int32? ccId, String desc, DateTime? emissao, DateTime? venc, Int32 idAss);
         List<CONTA_RECEBER> ExecuteFilterAtrasos(String nome, String cidade, Int32? uf, Int32 idAss);
+    
     }
 }

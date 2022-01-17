@@ -11,6 +11,5 @@ namespace ModelServices.Interfaces.Repositories
     {
         List<CONTA_RECEBER_PARCELA> GetAllItens();
         CONTA_RECEBER_PARCELA GetItemById(Int32 id);
-
     }
 }

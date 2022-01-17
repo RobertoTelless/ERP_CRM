@@ -34,6 +34,5 @@ namespace ModelServices.Interfaces.EntitiesServices
         TEMPLATE GetTemplateBySigla(String sigla);
         List<CONTA_PAGAR> ExecuteFilter(Int32? forId, Int32? ccId, DateTime? data, String descricao, Int32? aberto, DateTime? vencimento, DateTime? vencFinal, DateTime? quitacao, Int32? atraso, Int32? conta, Int32 idAss);
         List<CONTA_PAGAR> ExecuteFilterAtraso(String nome, DateTime? vencimento, Int32 idAss);
-
     }
 }

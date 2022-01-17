@@ -69,6 +69,11 @@ namespace MvcMapping.Mappers
             CreateMap<ContaBancariaContatoViewModel, CONTA_BANCO_CONTATO>();
             CreateMap<ContaBancariaLancamentoViewModel, CONTA_BANCO_LANCAMENTO>();
             CreateMap<FormaPagamentoViewModel, FORMA_PAGAMENTO>();
+            CreateMap<ContaPagarParcelaViewModel, CONTA_PAGAR_PARCELA>();
+            CreateMap<ContaPagarRateioViewModel, CONTA_PAGAR_RATEIO>();
+            CreateMap<ContaPagarViewModel, CONTA_PAGAR>();
+            CreateMap<ContaReceberParcelaViewModel, CONTA_RECEBER_PARCELA>();
+            CreateMap<ContaReceberViewModel, CONTA_RECEBER>();
 
         }
     }

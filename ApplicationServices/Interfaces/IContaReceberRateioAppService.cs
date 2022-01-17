@@ -17,6 +17,5 @@ namespace ApplicationServices.Interfaces
         CONTA_RECEBER_RATEIO CheckExist(CONTA_RECEBER_RATEIO item);
         CONTA_RECEBER_RATEIO GetItemById(Int32 id);
         List<CONTA_RECEBER_RATEIO> GetAllItens();
-
     }
 }

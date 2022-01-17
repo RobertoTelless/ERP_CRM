@@ -23,7 +23,6 @@ namespace DataServices.Repositories
             IQueryable<CONTA_RECEBER_ANEXO> query = Db.CONTA_RECEBER_ANEXO.Where(p => p.CRAN_CD_ID == id);
             return query.FirstOrDefault();
         }
-
     }
 }
  

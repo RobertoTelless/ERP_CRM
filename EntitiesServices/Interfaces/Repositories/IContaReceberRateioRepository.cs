@@ -12,6 +12,5 @@ namespace ModelServices.Interfaces.Repositories
         CONTA_RECEBER_RATEIO CheckExist(CONTA_RECEBER_RATEIO item);
         List<CONTA_RECEBER_RATEIO> GetAllItens();
         CONTA_RECEBER_RATEIO GetItemById(Int32 id);
-
     }
 }

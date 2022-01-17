@@ -19,6 +19,5 @@ namespace ModelServices.Interfaces.EntitiesServices
 
         CONTA_RECEBER_RATEIO GetItemById(Int32 id);
         List<CONTA_RECEBER_RATEIO> GetAllItens();
-
     }
 }

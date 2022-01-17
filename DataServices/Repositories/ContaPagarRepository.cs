@@ -24,7 +24,6 @@ namespace DataServices.Repositories
             query = query.Include(p => p.CONTA_PAGAR_RATEIO);
             query = query.Include(p => p.USUARIO);
             query = query.Include(p => p.CONTA_PAGAR_PARCELA);
-            query = query.Include(p => p.CONTA_PAGAR_TAG);
             return query.FirstOrDefault();
         }
 
@@ -96,10 +95,8 @@ namespace DataServices.Repositories
             query = query.Include(p => p.CONTA_BANCO);
             query = query.Include(p => p.CONTA_PAGAR_ANEXO);
             query = query.Include(p => p.CONTA_PAGAR_RATEIO);
-            query = query.Include(p => p.TIPO_FAVORECIDO);
             query = query.Include(p => p.USUARIO);
             query = query.Include(p => p.CONTA_PAGAR_PARCELA);
-            query = query.Include(p => p.CONTA_PAGAR_TAG);
             return query.ToList();
         }
 

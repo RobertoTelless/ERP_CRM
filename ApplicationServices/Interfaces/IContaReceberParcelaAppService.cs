@@ -16,6 +16,5 @@ namespace ApplicationServices.Interfaces
 
         CONTA_RECEBER_PARCELA GetItemById(Int32 id);
         List<CONTA_RECEBER_PARCELA> GetAllItens();
-
     }
 }

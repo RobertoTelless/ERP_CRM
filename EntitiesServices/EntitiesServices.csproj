@@ -176,6 +176,7 @@
     <Compile Include="Attributes\CustomValidationCNPJAttribute .cs" />
     <Compile Include="Attributes\CustomValidationCPFAttribute.cs" />
     <Compile Include="Attributes\DataAnteriorAttribute.cs" />
+    <Compile Include="DTO\DTO_CR.cs" />
     <Compile Include="EntitiesServices\AgendaService.cs" />
     <Compile Include="EntitiesServices\AssinanteCnpjService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
@@ -188,11 +189,9 @@
     <Compile Include="EntitiesServices\ContaPagarParcelaService.cs" />
     <Compile Include="EntitiesServices\ContaPagarRateioService.cs" />
     <Compile Include="EntitiesServices\ContaPagarService.cs" />
-    <Compile Include="EntitiesServices\ContaPagarTagService.cs" />
     <Compile Include="EntitiesServices\ContaReceberParcelaService.cs" />
     <Compile Include="EntitiesServices\ContaReceberRateioService.cs" />
     <Compile Include="EntitiesServices\ContaReceberService.cs" />
-    <Compile Include="EntitiesServices\ContaReceberTagService.cs" />
     <Compile Include="EntitiesServices\EquipamentoService.cs" />
     <Compile Include="EntitiesServices\FormaPagamentoService.cs" />
     <Compile Include="EntitiesServices\MovimentoEstoqueProdutoService.cs" />
@@ -249,11 +248,9 @@
     <Compile Include="Interfaces\EntitiesServices\IContaPagarParcelaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaPagarRateioService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaPagarService.cs" />
-    <Compile Include="Interfaces\EntitiesServices\IContaPagarTagService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaReceberParcelaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaReceberRateioService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaReceberService.cs" />
-    <Compile Include="Interfaces\EntitiesServices\IContaReceberTagService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IEquipamentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFormaEnvioService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFormaFreteService.cs" />
@@ -312,12 +309,10 @@
     <Compile Include="Interfaces\Repositories\IContaPagarParcelaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaPagarRateioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaPagarRepository.cs" />
-    <Compile Include="Interfaces\Repositories\IContaPagarTagRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaReceberAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaReceberParcelaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaReceberRateioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaReceberRepository.cs" />
-    <Compile Include="Interfaces\Repositories\IContaReceberTagRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoCCRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />

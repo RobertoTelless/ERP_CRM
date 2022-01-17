@@ -25,7 +25,7 @@ namespace ModelServices.EntitiesServices
         private readonly IUsuarioRepository _colRepository;
         private readonly ITemplateRepository _tempRepository;
         private readonly IContaPagarParcelaRepository _parRepository;
-        protected DUO_DatabaseEntities Db = new DUO_DatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public ContaPagarService(IContaPagarRepository baseRepository, ILogRepository logRepository, IContaPagarAnexoRepository anexoRepository, IConfiguracaoRepository confRepository, IUsuarioRepository colRepository, ITemplateRepository tempRepository, IContaPagarParcelaRepository parRepository) : base(baseRepository)
         {

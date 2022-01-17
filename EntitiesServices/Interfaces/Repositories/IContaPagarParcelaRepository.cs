@@ -12,5 +12,4 @@ namespace ModelServices.Interfaces.Repositories
         List<CONTA_PAGAR_PARCELA> GetAllItens(Int32 idAss);
         CONTA_PAGAR_PARCELA GetItemById(Int32 id);
     }
-
 }

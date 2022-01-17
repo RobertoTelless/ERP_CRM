@@ -21,10 +21,8 @@ namespace DataServices.Repositories
             query = query.Include(p => p.CONTA_BANCO);
             query = query.Include(p => p.CONTA_RECEBER_ANEXO);
             query = query.Include(p => p.FILIAL);
-            query = query.Include(p => p.TIPO_FAVORECIDO);
             query = query.Include(p => p.USUARIO);
             query = query.Include(p => p.CONTA_RECEBER_PARCELA);
-            query = query.Include(p => p.CONTA_RECEBER_TAG);
             return query.FirstOrDefault();
         }
 

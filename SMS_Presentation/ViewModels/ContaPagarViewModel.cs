@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using EntitiesServices.Model;
 
-namespace SMS_Solution.ViewModels
+namespace ERP_CRM_Solution.ViewModels
 {
     public class ContaPagarViewModel
     {
@@ -15,10 +15,8 @@ namespace SMS_Solution.ViewModels
         public Nullable<int> USUA_CD_ID { get; set; }
         public Nullable<int> PLCO_CD_ID { get; set; }
         public Nullable<int> COBA_CD_ID { get; set; }
-        public Nullable<int> TIFA_CD_ID { get; set; }
         [Required(ErrorMessage = "Campo FORNECEDOR obrigatorio")]
         public Nullable<int> FORN_CD_ID { get; set; }
-        public Nullable<int> TITA_CD_ID { get; set; }
         [Required(ErrorMessage = "Campo FORMA DE PAGAMENTO obrigatorio")]
         public Nullable<int> FOPA_CD_ID { get; set; }
         public Nullable<int> PERI_CD_ID { get; set; }
@@ -153,14 +151,10 @@ namespace SMS_Solution.ViewModels
         public virtual FORNECEDOR FORNECEDOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_PAGAR_PARCELA> CONTA_PAGAR_PARCELA { get; set; }
-        //public virtual PEDIDO_COMPRA PEDIDO_COMPRA { get; set; }
+        public virtual PEDIDO_COMPRA PEDIDO_COMPRA { get; set; }
         public virtual PERIODICIDADE PERIODICIDADE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_PAGAR_RATEIO> CONTA_PAGAR_RATEIO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_PAGAR_TAG> CONTA_PAGAR_TAG { get; set; }
-        public virtual TIPO_FAVORECIDO TIPO_FAVORECIDO { get; set; }
-        public virtual TIPO_TAG TIPO_TAG { get; set; }
         public virtual USUARIO USUARIO { get; set; }
         public virtual CONTA_BANCO CONTA_BANCO1 { get; set; }
     }

@@ -23,5 +23,6 @@ namespace ModelServices.Interfaces.Repositories
         List<CONTA_RECEBER> ExecuteFilterAtrasos(String nome, String cidade, Int32? uf, Int32 idAss);
         List<CONTA_RECEBER> GetRecebimentosMes(DateTime mes, Int32 idAss);
         List<CONTA_RECEBER> GetAReceberMes(DateTime mes, Int32 idAss);
+
     }
 }

@@ -31,7 +31,6 @@ namespace DataServices.Repositories
             query = query.Include(p => p.CONTA_RECEBER);
             return query.FirstOrDefault();
         }
-
     }
 }
  

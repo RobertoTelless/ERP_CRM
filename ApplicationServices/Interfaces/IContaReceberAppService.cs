@@ -36,5 +36,6 @@ namespace ApplicationServices.Interfaces
         Int32 ExecuteFilterCRAtrasos(Int32? clieId, Int32? ccId, String desc, DateTime? emissao, DateTime? venc, Int32 idAss, out List<CONTA_RECEBER> objeto);
         Int32 ExecuteFilterAtrasos(String nome, String cidade, Int32? uf, Int32 idAss, out List<CONTA_RECEBER> objeto);
         Int32 IncluirRateioCC(CONTA_RECEBER item, Int32? cc, Int32? perc, USUARIO usuario);
+    
     }
 }

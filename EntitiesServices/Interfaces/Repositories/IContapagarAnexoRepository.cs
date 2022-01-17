@@ -12,5 +12,4 @@ namespace ModelServices.Interfaces.Repositories
         List<CONTA_PAGAR_ANEXO> GetAllItens();
         CONTA_PAGAR_ANEXO GetItemById(Int32 id);
     }
-
 }

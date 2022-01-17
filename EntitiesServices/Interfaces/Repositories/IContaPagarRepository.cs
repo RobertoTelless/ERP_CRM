@@ -22,4 +22,5 @@ namespace ModelServices.Interfaces.Repositories
         List<CONTA_PAGAR> GetItensAtrasoFornecedor(Int32 idAss);
 
     }
+
 }

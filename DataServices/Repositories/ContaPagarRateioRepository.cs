@@ -32,6 +32,5 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
     }
-
 }
  

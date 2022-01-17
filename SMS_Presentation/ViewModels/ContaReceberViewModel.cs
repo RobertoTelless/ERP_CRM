@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using EntitiesServices.Model;
 
-namespace SMS_Solution.ViewModels
+namespace ERP_CRM_Solution.ViewModels
 {
     public class ContaReceberViewModel
     {
@@ -16,8 +16,7 @@ namespace SMS_Solution.ViewModels
         public Nullable<int> USUA_CD_ID { get; set; }
         [Required(ErrorMessage = "Campo CLIENTE obrigatorio")]
         public Nullable<int> CLIE_CD_ID { get; set; }
-        //public Nullable<int> PEVE_CD_ID { get; set; }
-        public Nullable<int> TIFA_CD_ID { get; set; }
+        public Nullable<int> PEVE_CD_ID { get; set; }
         public Nullable<int> COBA_CD_ID { get; set; }
 
         [Required(ErrorMessage = "Campo DATA DE LANÇAMENTO obrigatorio")]
@@ -138,12 +137,8 @@ namespace SMS_Solution.ViewModels
         public virtual FORMA_PAGAMENTO FORMA_PAGAMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_RECEBER_PARCELA> CONTA_RECEBER_PARCELA { get; set; }
-        //public virtual PEDIDO_VENDA PEDIDO_VENDA { get; set; }
+        public virtual PEDIDO_VENDA PEDIDO_VENDA { get; set; }
         public virtual PERIODICIDADE PERIODICIDADE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_RECEBER_TAG> CONTA_RECEBER_TAG { get; set; }
-        public virtual TIPO_FAVORECIDO TIPO_FAVORECIDO { get; set; }
-        public virtual TIPO_TAG TIPO_TAG { get; set; }
         public virtual USUARIO USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_RECEBER_RATEIO> CONTA_RECEBER_RATEIO { get; set; }
