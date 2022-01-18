@@ -287,6 +287,7 @@ namespace Presentation.Start
             kernel.Bind<IContaReceberRepository>().To<ContaReceberRepository>();
             kernel.Bind<IFichaTecnicaRepository>().To<FichaTecnicaRepository>();
             kernel.Bind<IFichaTecnicaDetalheRepository>().To<FichaTecnicaDetalheRepository>();
+            kernel.Bind<IProdutoKitRepository>().To<ProdutoKitRepository>();
 
         }
     }

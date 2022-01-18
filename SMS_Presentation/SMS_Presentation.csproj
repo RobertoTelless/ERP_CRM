@@ -363,6 +363,7 @@
     <Compile Include="ViewModels\MovimentacaoAvulsaGridViewModel.cs" />
     <Compile Include="ViewModels\MovimentacaoAvulsaViewModel.cs" />
     <Compile Include="ViewModels\MovimentoEntradaViewModel.cs" />
+    <Compile Include="ViewModels\ProdutoKitViewModel.cs" />
     <Compile Include="ViewModels\ProdutoFornecedorViewModel.cs" />
     <Compile Include="ViewModels\ProdutoGradeViewModel.cs" />
     <Compile Include="ViewModels\ProdutoBarcodeViewModel.cs" />
@@ -3267,6 +3268,8 @@
     <Content Include="Views\FichaTecnica\VisualizarEditarFTProduto.cshtml" />
     <Content Include="Views\FichaTecnica\IncluirInsumoFT.cshtml" />
     <Content Include="Views\FichaTecnica\CriarFichaTecnicaProduto.cshtml" />
+    <Content Include="Views\Produto\EditarProdutoKit.cshtml" />
+    <Content Include="Views\Produto\IncluirProdutoKit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

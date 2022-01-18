@@ -355,6 +355,7 @@
     <Compile Include="Interfaces\Repositories\IPedidoCompraAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPedidoCompraRepository.cs" />
     <Compile Include="Interfaces\Repositories\IProdutoAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IProdutoKitRepository.cs" />
     <Compile Include="Interfaces\Repositories\IProdutoEstoqueFilialRepository.cs" />
     <Compile Include="Interfaces\Repositories\IProdutoBarcodeRepository.cs" />
     <Compile Include="Interfaces\Repositories\IProdutoFornecedorRepository.cs" />
@@ -715,6 +716,9 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PRODUTO_GRADE.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PRODUTO_KIT.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PRODUTO_ORIGEM.cs">

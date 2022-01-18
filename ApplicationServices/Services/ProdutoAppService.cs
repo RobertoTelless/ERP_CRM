@@ -608,6 +608,43 @@ namespace ApplicationServices.Services
             }
         }
 
+        public PRODUTO_KIT GetKitById(Int32 id)
+        {
+            PRODUTO_KIT lista = _baseService.GetKitById(id);
+            return lista;
+        }
+
+        public PRODUTO_KIT GetKitByProd(Int32 prod)
+        {
+            return _baseService.GetKitByProd(prod);
+        }
+
+        public Int32 ValidateEditKit(PRODUTO_KIT item)
+        {
+            try
+            {
+                // Persiste
+                return _baseService.EditKit(item);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ValidateCreateKit(PRODUTO_KIT item)
+        {
+            try
+            {
+                // Persiste
+                Int32 volta = _baseService.CreateKit(item);
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
 
     }
 }

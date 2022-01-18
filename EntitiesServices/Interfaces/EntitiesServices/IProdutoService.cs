@@ -54,5 +54,10 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 CreateBarcode(PRODUTO_BARCODE item);
         PRODUTO_BARCODE GetByProd(Int32 prod);
 
+        PRODUTO_KIT GetKitById(Int32 id);
+        Int32 EditKit(PRODUTO_KIT item);
+        Int32 CreateKit(PRODUTO_KIT item);
+        PRODUTO_KIT GetKitByProd(Int32 prod);
+
     }
 }

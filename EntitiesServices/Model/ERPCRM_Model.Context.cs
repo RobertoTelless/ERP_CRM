@@ -155,5 +155,6 @@ namespace EntitiesServices.Model
         public virtual DbSet<FICHA_TECNICA_DETALHE> FICHA_TECNICA_DETALHE { get; set; }
         public virtual DbSet<GRUPO_CC> GRUPO_CC { get; set; }
         public virtual DbSet<FORMULARIO_RESPOSTA> FORMULARIO_RESPOSTA { get; set; }
+        public virtual DbSet<PRODUTO_KIT> PRODUTO_KIT { get; set; }
     }
 }

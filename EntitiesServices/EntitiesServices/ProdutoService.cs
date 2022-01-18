@@ -32,10 +32,11 @@ namespace ModelServices.EntitiesServices
         private readonly IProdutoOrigemRepository _poRepository;
         private readonly IProdutoTabelaPrecoRepository _tpRepository;
         private readonly IProdutoBarcodeRepository _bcRepository;
+        private readonly IProdutoKitRepository _kitRepository;
 
         protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
-        public ProdutoService(IProdutoRepository baseRepository, ILogRepository logRepository, ICategoriaProdutoRepository tipoRepository, IProdutoAnexoRepository anexoRepository, IUnidadeRepository unidRepository, IMovimentoEstoqueProdutoRepository movRepository, IProdutoFornecedorRepository fornRepository, ITamanhoRepository tamRepository, IProdutoGradeRepository gradeRepository, ISubcategoriaProdutoRepository subRepository, IProdutoOrigemRepository poRepository, IProdutoTabelaPrecoRepository tpRepository, IProdutoBarcodeRepository bcRepository, IFichaTecnicaDetalheRepository ftRepository) : base(baseRepository)
+        public ProdutoService(IProdutoRepository baseRepository, ILogRepository logRepository, ICategoriaProdutoRepository tipoRepository, IProdutoAnexoRepository anexoRepository, IUnidadeRepository unidRepository, IMovimentoEstoqueProdutoRepository movRepository, IProdutoFornecedorRepository fornRepository, ITamanhoRepository tamRepository, IProdutoGradeRepository gradeRepository, ISubcategoriaProdutoRepository subRepository, IProdutoOrigemRepository poRepository, IProdutoTabelaPrecoRepository tpRepository, IProdutoBarcodeRepository bcRepository, IFichaTecnicaDetalheRepository ftRepository, IProdutoKitRepository kitRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
@@ -51,6 +52,7 @@ namespace ModelServices.EntitiesServices
             _tpRepository = tpRepository;
             _bcRepository = bcRepository;
             _ftRepository = ftRepository;
+            _kitRepository = kitRepository;
         }
 
         public PRODUTO CheckExist(PRODUTO conta, Int32 idAss)
@@ -406,6 +408,54 @@ namespace ModelServices.EntitiesServices
         public PRODUTO_BARCODE GetBarcodeById(Int32 id)
         {
             return _bcRepository.GetItemById(id);
+        }
+
+        public Int32 EditKit(PRODUTO_KIT item)
+        {
+            using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))
+            {
+                try
+                {
+                    PRODUTO_KIT obj = _kitRepository.GetById(item.PRKI_CD_ID);
+                    _kitRepository.Detach(obj);
+                    _kitRepository.Update(item);
+                    transaction.Commit();
+                    return 0;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        public Int32 CreateKit(PRODUTO_KIT item)
+        {
+            using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))
+            {
+                try
+                {
+                    _kitRepository.Add(item);
+                    transaction.Commit();
+                    return 0;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        public PRODUTO_KIT GetKitByProd(Int32 prod)
+        {
+            return _kitRepository.GetByProd(prod);
+        }
+
+        public PRODUTO_KIT GetKitById(Int32 id)
+        {
+            return _kitRepository.GetItemById(id);
         }
 
     }

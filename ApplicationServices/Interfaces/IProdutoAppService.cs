@@ -59,5 +59,11 @@ namespace ApplicationServices.Interfaces
         Int32 ValidadeCreateBarcode(PRODUTO_BARCODE item);
         PRODUTO_BARCODE GetByProd(Int32 prod);
 
+        PRODUTO_KIT GetKitById(Int32 id);
+        Int32 ValidateEditKit(PRODUTO_KIT item);
+        Int32 ValidateCreateKit(PRODUTO_KIT item);
+        PRODUTO_KIT GetKitByProd(Int32 prod);
+
+
     }
 }

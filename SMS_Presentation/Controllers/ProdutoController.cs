@@ -163,8 +163,8 @@ namespace ERP_CRM_Solution.Controllers
             result.Add("FOOD", c.CAPR_IN_FOOD == null ? 0 : c.CAPR_IN_FOOD);
             result.Add("EXP", c.CAPR_IN_EXPEDICAO == null ? 0 : c.CAPR_IN_EXPEDICAO);
             result.Add("ECOM", c.CAPR_IN_SEO == null ? 0 : c.CAPR_IN_SEO);
-            result.Add("VAREJO", c.CAPR_IN_GRADE == null ? 0 : c.CAPR_IN_GRADE);
-            result.Add("GRADE", c.CAPR_IN_TAMANHO == null ? 0 : c.CAPR_IN_TAMANHO);
+            result.Add("GRADE", c.CAPR_IN_GRADE == null ? 0 : c.CAPR_IN_GRADE);
+            result.Add("TAMANHO", c.CAPR_IN_TAMANHO == null ? 0 : c.CAPR_IN_TAMANHO);
             return Json(result);
         }
 
@@ -2156,6 +2156,141 @@ namespace ERP_CRM_Solution.Controllers
                     PRODUTO_BARCODE item = Mapper.Map<ProdutoBarcodeViewModel, PRODUTO_BARCODE>(vm);
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     Int32 volta = prodApp.ValidadeCreateBarcode(item);
+                    // Verifica retorno
+                    return RedirectToAction("VoltarAnexoProduto");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditarProdutoKit(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Prepara view
+            PRODUTO_KIT item = prodApp.GetKitById(id);
+            objetoProdAntes = (PRODUTO)Session["Produto"];
+            ProdutoKitViewModel vm = Mapper.Map<PRODUTO_KIT, ProdutoKitViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditarProdutoKit(ProdutoKitViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    PRODUTO_KIT item = Mapper.Map<ProdutoKitViewModel, PRODUTO_KIT>(vm);
+                    Int32 volta = prodApp.ValidateEditKit(item);
+
+                    // Verifica retorno
+                    return RedirectToAction("VoltarAnexoProduto");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ExcluirProdutoKit(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            PRODUTO_KIT item = prodApp.GetKitById(id);
+            objetoProdAntes = (PRODUTO)Session["Produto"];
+            item.PRKI_IN_ATIVO = 0;
+            Int32 volta = prodApp.ValidateEditKit(item);
+            return RedirectToAction("VoltarAnexoProduto");
+        }
+
+        [HttpGet]
+        public ActionResult ReativarProdutoKit(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            PRODUTO_KIT item = prodApp.GetKitById(id);
+            objetoProdAntes = (PRODUTO)Session["Produto"];
+            item.PRKI_IN_ATIVO = 1;
+            Int32 volta = prodApp.ValidateEditKit(item);
+            return RedirectToAction("VoltarAnexoProduto");
+        }
+
+        [HttpGet]
+        public ActionResult IncluirProdutoKit()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Prepara view
+            ViewBag.Produtos = new SelectList(prodApp.GetAllItens(idAss).Where(x => x.PROD_IN_COMPOSTO == 0 & x.PROD_IN_TIPO_PRODUTO == 1 & x.PROD_IN_KIT == 0).OrderBy(x => x.PROD_NM_NOME).ToList<PRODUTO>(), "PROD_CD_ID", "PROD_NM_NOME");
+            PRODUTO_KIT item = new PRODUTO_KIT();
+            ProdutoKitViewModel vm = Mapper.Map<PRODUTO_KIT, ProdutoKitViewModel>(item);
+            vm.PROD_CD_ID = (Int32)Session["IdVolta"];
+            vm.PRKI_IN_ATIVO = 1;
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult IncluirProdutoKit(ProdutoKitViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            ViewBag.Produtos = new SelectList(prodApp.GetAllItens(idAss).Where(x => x.PROD_IN_COMPOSTO == 0 & x.PROD_IN_TIPO_PRODUTO == 1 & x.PROD_IN_KIT == 0).OrderBy(x => x.PROD_NM_NOME).ToList<PRODUTO>(), "PROD_CD_ID", "PROD_NM_NOME");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    PRODUTO_KIT item = Mapper.Map<ProdutoKitViewModel, PRODUTO_KIT>(vm);
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = prodApp.ValidateCreateKit(item);
                     // Verifica retorno
                     return RedirectToAction("VoltarAnexoProduto");
                 }

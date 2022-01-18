@@ -152,6 +152,7 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> PROD_QN_CONTAGEM { get; set; }
         public Nullable<decimal> PRTP_VL_CUSTO { get; set; }
         public string Embalagem { get; set; }
+        public Nullable<int> PROD_IN_KIT { get; set; }
 
         public bool AvisaMinima
         {
@@ -230,6 +231,22 @@ namespace ERP_CRM_Solution.ViewModels
             set
             {
                 PROD_IN_COMPOSTO = (value == true) ? 1 : 0;
+            }
+        }
+
+        public bool Kit
+        {
+            get
+            {
+                if (PROD_IN_KIT == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                PROD_IN_KIT = (value == true) ? 1 : 0;
             }
         }
 
@@ -367,5 +384,9 @@ namespace ERP_CRM_Solution.ViewModels
         public virtual ICollection<FICHA_TECNICA> FICHA_TECNICA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FICHA_TECNICA_DETALHE> FICHA_TECNICA_DETALHE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PRODUTO_KIT> PRODUTO_KIT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PRODUTO_KIT> PRODUTO_KIT1 { get; set; }
     }
 }

@@ -221,6 +221,7 @@
     <Compile Include="Repositories\PedidoCompraAnexoRepository.cs" />
     <Compile Include="Repositories\PedidoCompraRepository.cs" />
     <Compile Include="Repositories\ProdutoAnexoRepository.cs" />
+    <Compile Include="Repositories\ProdutoKitRepository.cs" />
     <Compile Include="Repositories\ProdutoEstoqueFilialRepository.cs" />
     <Compile Include="Repositories\ProdutoBarcodeRepository.cs" />
     <Compile Include="Repositories\ProdutoFornecedorRepository.cs" />

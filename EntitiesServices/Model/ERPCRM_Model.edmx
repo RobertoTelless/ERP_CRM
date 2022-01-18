@@ -1520,6 +1520,7 @@
           <Property Name="PROD_QN_NOVA_CONTAGEM" Type="int" />
           <Property Name="PROD_QN_CONTAGEM" Type="int" />
           <Property Name="PRTP_VL_CUSTO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PROD_IN_KIT" Type="int" />
         </EntityType>
         <EntityType Name="PRODUTO_ANEXO">
           <Key>
@@ -1576,6 +1577,16 @@
           <Property Name="PRGR_QN_QUANTIDADE" Type="int" Nullable="false" />
           <Property Name="PRGR_IN_ATIVO" Type="int" Nullable="false" />
           <Property Name="TAMA_CD_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="PRODUTO_KIT">
+          <Key>
+            <PropertyRef Name="PRKI_CD_ID" />
+          </Key>
+          <Property Name="PRKI_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PRKI_CD_KIT" Type="int" />
+          <Property Name="PRKI_IN_QUANTIDADE" Type="int" />
+          <Property Name="PRKI_IN_ATIVO" Type="int" />
         </EntityType>
         <EntityType Name="PRODUTO_ORIGEM">
           <Key>
@@ -4411,6 +4422,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PRODUTO_KIT_PRODUTO">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="1" />
+          <End Role="PRODUTO_KIT" Type="Self.PRODUTO_KIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_KIT">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_KIT_PRODUTO1">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="0..1" />
+          <End Role="PRODUTO_KIT" Type="Self.PRODUTO_KIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_KIT">
+              <PropertyRef Name="PRKI_CD_KIT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PRODUTO_PRODUTO_ORIGEM">
           <End Role="PRODUTO_ORIGEM" Type="Self.PRODUTO_ORIGEM" Multiplicity="0..1" />
           <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="*" />
@@ -5049,6 +5084,7 @@
           <EntitySet Name="PRODUTO_ESTOQUE_FILIAL" EntityType="Self.PRODUTO_ESTOQUE_FILIAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUTO_FORNECEDOR" EntityType="Self.PRODUTO_FORNECEDOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUTO_GRADE" EntityType="Self.PRODUTO_GRADE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUTO_KIT" EntityType="Self.PRODUTO_KIT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUTO_ORIGEM" EntityType="Self.PRODUTO_ORIGEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUTO_TABELA_PRECO" EntityType="Self.PRODUTO_TABELA_PRECO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REGIME_TRIBUTARIO" EntityType="Self.REGIME_TRIBUTARIO" Schema="dbo" store:Type="Tables" />
@@ -5877,6 +5913,14 @@
           <AssociationSet Name="FK_PRODUTO_GRADE_TAMANHO" Association="Self.FK_PRODUTO_GRADE_TAMANHO">
             <End Role="TAMANHO" EntitySet="TAMANHO" />
             <End Role="PRODUTO_GRADE" EntitySet="PRODUTO_GRADE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_KIT_PRODUTO" Association="Self.FK_PRODUTO_KIT_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="PRODUTO_KIT" EntitySet="PRODUTO_KIT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_KIT_PRODUTO1" Association="Self.FK_PRODUTO_KIT_PRODUTO1">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="PRODUTO_KIT" EntitySet="PRODUTO_KIT" />
           </AssociationSet>
           <AssociationSet Name="FK_PRODUTO_PRODUTO_ORIGEM" Association="Self.FK_PRODUTO_PRODUTO_ORIGEM">
             <End Role="PRODUTO_ORIGEM" EntitySet="PRODUTO_ORIGEM" />
@@ -7849,6 +7893,9 @@
           <NavigationProperty Name="PRODUTO_BARCODE" Relationship="ERP_CRMModel.FK_PRODUTO_BARCODE_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_BARCODE" />
           <NavigationProperty Name="FICHA_TECNICA" Relationship="ERP_CRMModel.FK_FICHA_TECNICA_PRODUTO" FromRole="PRODUTO" ToRole="FICHA_TECNICA" />
           <NavigationProperty Name="FICHA_TECNICA_DETALHE" Relationship="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_PRODUTO" FromRole="PRODUTO" ToRole="FICHA_TECNICA_DETALHE" />
+          <Property Name="PROD_IN_KIT" Type="Int32" />
+          <NavigationProperty Name="PRODUTO_KIT" Relationship="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_KIT" />
+          <NavigationProperty Name="PRODUTO_KIT1" Relationship="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO1" FromRole="PRODUTO" ToRole="PRODUTO_KIT" />
         </EntityType>
         <EntityType Name="PRODUTO_ANEXO">
           <Key>
@@ -11855,6 +11902,15 @@
             <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
           </AssociationSet>
           <EntitySet Name="FORMULARIO_RESPOSTA" EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA" />
+          <EntitySet Name="PRODUTO_KIT" EntityType="ERP_CRMModel.PRODUTO_KIT" />
+          <AssociationSet Name="FK_PRODUTO_KIT_PRODUTO" Association="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="PRODUTO_KIT" EntitySet="PRODUTO_KIT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_KIT_PRODUTO1" Association="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO1">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="PRODUTO_KIT" EntitySet="PRODUTO_KIT" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -12605,6 +12661,42 @@
           <Property Name="FORE_IN_ATIVO" Type="Int32" />
           <Property Name="FORE_IN_STATUS" Type="Int32" />
         </EntityType>
+        <EntityType Name="PRODUTO_KIT">
+          <Key>
+            <PropertyRef Name="PRKI_CD_ID" />
+          </Key>
+          <Property Name="PRKI_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PROD_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PRKI_CD_KIT" Type="Int32" />
+          <Property Name="PRKI_IN_QUANTIDADE" Type="Int32" />
+          <Property Name="PRKI_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO" FromRole="PRODUTO_KIT" ToRole="PRODUTO" />
+          <NavigationProperty Name="PRODUTO1" Relationship="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO1" FromRole="PRODUTO_KIT" ToRole="PRODUTO" />
+        </EntityType>
+        <Association Name="FK_PRODUTO_KIT_PRODUTO">
+          <End Type="ERP_CRMModel.PRODUTO" Role="PRODUTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.PRODUTO_KIT" Role="PRODUTO_KIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_KIT">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_KIT_PRODUTO1">
+          <End Type="ERP_CRMModel.PRODUTO" Role="PRODUTO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.PRODUTO_KIT" Role="PRODUTO_KIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_KIT">
+              <PropertyRef Name="PRKI_CD_KIT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14038,6 +14130,7 @@
           <EntitySetMapping Name="PRODUTO">
             <EntityTypeMapping TypeName="ERP_CRMModel.PRODUTO">
               <MappingFragment StoreEntitySet="PRODUTO">
+                <ScalarProperty Name="PROD_IN_KIT" ColumnName="PROD_IN_KIT" />
                 <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />
@@ -14756,6 +14849,17 @@
                 <ScalarProperty Name="FORE_NM_NOME" ColumnName="FORE_NM_NOME" />
                 <ScalarProperty Name="FORE_DT_CADASTRO" ColumnName="FORE_DT_CADASTRO" />
                 <ScalarProperty Name="FORE_CD_ID" ColumnName="FORE_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUTO_KIT">
+            <EntityTypeMapping TypeName="ERP_CRMModel.PRODUTO_KIT">
+              <MappingFragment StoreEntitySet="PRODUTO_KIT">
+                <ScalarProperty Name="PRKI_IN_ATIVO" ColumnName="PRKI_IN_ATIVO" />
+                <ScalarProperty Name="PRKI_IN_QUANTIDADE" ColumnName="PRKI_IN_QUANTIDADE" />
+                <ScalarProperty Name="PRKI_CD_KIT" ColumnName="PRKI_CD_KIT" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+                <ScalarProperty Name="PRKI_CD_ID" ColumnName="PRKI_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

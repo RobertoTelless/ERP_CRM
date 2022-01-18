@@ -29,6 +29,8 @@ namespace EntitiesServices.Model
             this.PRODUTO_BARCODE = new HashSet<PRODUTO_BARCODE>();
             this.FICHA_TECNICA = new HashSet<FICHA_TECNICA>();
             this.FICHA_TECNICA_DETALHE = new HashSet<FICHA_TECNICA_DETALHE>();
+            this.PRODUTO_KIT = new HashSet<PRODUTO_KIT>();
+            this.PRODUTO_KIT1 = new HashSet<PRODUTO_KIT>();
         }
     
         public int PROD_CD_ID { get; set; }
@@ -108,6 +110,7 @@ namespace EntitiesServices.Model
         public Nullable<int> PROD_QN_NOVA_CONTAGEM { get; set; }
         public Nullable<int> PROD_QN_CONTAGEM { get; set; }
         public Nullable<decimal> PRTP_VL_CUSTO { get; set; }
+        public Nullable<int> PROD_IN_KIT { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CATEGORIA_PRODUTO CATEGORIA_PRODUTO { get; set; }
@@ -139,5 +142,9 @@ namespace EntitiesServices.Model
         public virtual ICollection<FICHA_TECNICA> FICHA_TECNICA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FICHA_TECNICA_DETALHE> FICHA_TECNICA_DETALHE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PRODUTO_KIT> PRODUTO_KIT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PRODUTO_KIT> PRODUTO_KIT1 { get; set; }
     }
 }
