@@ -193,6 +193,7 @@
     <Compile Include="EntitiesServices\ContaReceberRateioService.cs" />
     <Compile Include="EntitiesServices\ContaReceberService.cs" />
     <Compile Include="EntitiesServices\EquipamentoService.cs" />
+    <Compile Include="EntitiesServices\FichaTecnicaService.cs" />
     <Compile Include="EntitiesServices\FormaPagamentoService.cs" />
     <Compile Include="EntitiesServices\MovimentoEstoqueProdutoService.cs" />
     <Compile Include="EntitiesServices\PedidoCompraService.cs" />
@@ -252,6 +253,7 @@
     <Compile Include="Interfaces\EntitiesServices\IContaReceberRateioService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaReceberService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IEquipamentoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IFichaTecnicaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFormaEnvioService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFormaFreteService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFormaPagamentoService.cs" />

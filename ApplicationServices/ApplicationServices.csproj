@@ -184,6 +184,7 @@
     <Compile Include="Interfaces\IContaReceberParcelaAppService.cs" />
     <Compile Include="Interfaces\IContaReceberRateioAppService.cs" />
     <Compile Include="Interfaces\IEquipamentoAppService.cs" />
+    <Compile Include="Interfaces\IFichaTecnicaAppService.cs" />
     <Compile Include="Interfaces\IFormaPagamentoAppService.cs" />
     <Compile Include="Interfaces\IMovimentoEstoqueProdutoAppService.cs" />
     <Compile Include="Interfaces\IProdutoAppService.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="Services\ContaReceberParcelaAppService.cs" />
     <Compile Include="Services\ContaReceberrRateioAppService.cs" />
     <Compile Include="Services\EquipamentoAppService.cs" />
+    <Compile Include="Services\FichaTecnicaAppService.cs" />
     <Compile Include="Services\FormaPagamentoAppService.cs" />
     <Compile Include="Services\MovimentoEstoqueProdutoAppService.cs" />
     <Compile Include="Services\ProdutoAppService.cs" />

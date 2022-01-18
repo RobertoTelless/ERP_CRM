@@ -10,16 +10,9 @@ namespace DataServices.Repositories
 {
     public class FichaTecnicaRepository : RepositoryBase<FICHA_TECNICA>, IFichaTecnicaRepository
     {
-        public FICHA_TECNICA CheckExist(FICHA_TECNICA conta, Int32 idAss)
+        public FICHA_TECNICA GetByNome(String nome)
         {
-            IQueryable<FICHA_TECNICA> query = Db.FICHA_TECNICA;
-            query = query.Where(p => p.FITE_NM_NOME == conta.FITE_NM_NOME);
-            query = query.Where(p => p.ASSI_CD_ID == idAss);
-            return query.FirstOrDefault();
-        }
-
-        public FICHA_TECNICA GetByNome(String nome, Int32 idAss)
-        {
+            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<FICHA_TECNICA> query = Db.FICHA_TECNICA.Where(p => p.FITE_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.Where(p => p.FITE_NM_NOME == nome);
@@ -37,8 +30,9 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<FICHA_TECNICA> GetAllItens(Int32 idAss)
+        public List<FICHA_TECNICA> GetAllItens()
         {
+            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<FICHA_TECNICA> query = Db.FICHA_TECNICA.Where(p => p.FITE_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.Include(p => p.FICHA_TECNICA_DETALHE);
@@ -46,8 +40,9 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<FICHA_TECNICA> GetAllItensAdm(Int32 idAss)
+        public List<FICHA_TECNICA> GetAllItensAdm()
         {
+            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<FICHA_TECNICA> query = Db.FICHA_TECNICA;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.Include(p => p.FICHA_TECNICA_DETALHE);
@@ -55,8 +50,9 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<FICHA_TECNICA> ExecuteFilter(Int32? prodId, Int32? cat, String descricao, Int32 idAss)
+        public List<FICHA_TECNICA> ExecuteFilter(Int32? prodId, Int32? cat, String descricao)
         {
+            Int32? idAss = SessionMocks.IdAssinante;
             List<FICHA_TECNICA> lista = new List<FICHA_TECNICA>();
             IQueryable<FICHA_TECNICA> query = Db.FICHA_TECNICA.Where(x => x.PRODUTO.PROD_IN_COMPOSTO == 1);
             if (prodId > 0)
