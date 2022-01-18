@@ -184,6 +184,7 @@
     <Compile Include="EntitiesServices\CategoriaFornecedorService.cs" />
     <Compile Include="EntitiesServices\CategoriaEquipamentoService.cs" />
     <Compile Include="EntitiesServices\CategoriaProdutoService.cs" />
+    <Compile Include="EntitiesServices\CategoriaServicoService.cs" />
     <Compile Include="EntitiesServices\CentroCustoService.cs" />
     <Compile Include="EntitiesServices\ContaBancariaService.cs" />
     <Compile Include="EntitiesServices\ContaPagarParcelaService.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="EntitiesServices\ContaReceberParcelaService.cs" />
     <Compile Include="EntitiesServices\ContaReceberRateioService.cs" />
     <Compile Include="EntitiesServices\ContaReceberService.cs" />
+    <Compile Include="EntitiesServices\DepartamentoService.cs" />
     <Compile Include="EntitiesServices\EquipamentoService.cs" />
     <Compile Include="EntitiesServices\FichaTecnicaService.cs" />
     <Compile Include="EntitiesServices\FormaPagamentoService.cs" />
@@ -201,6 +203,8 @@
     <Compile Include="EntitiesServices\ProdutoMovimentoEstoqueService.cs" />
     <Compile Include="EntitiesServices\ProdutoService.cs" />
     <Compile Include="EntitiesServices\ProdutoTabelaPrecoService.cs" />
+    <Compile Include="EntitiesServices\ServicoService.cs" />
+    <Compile Include="EntitiesServices\ServicoTabelaPrecoService.cs" />
     <Compile Include="EntitiesServices\SubCategoriaProdutoService.cs" />
     <Compile Include="EntitiesServices\GrupoCCService.cs" />
     <Compile Include="EntitiesServices\SubgrupoService.cs" />
@@ -244,6 +248,7 @@
     <Compile Include="Interfaces\EntitiesServices\ICategoriaFornecedorService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaEquipamentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaProdutoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ICategoriaServicoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICentroCustoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaBancariaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaPagarParcelaService.cs" />
@@ -252,6 +257,7 @@
     <Compile Include="Interfaces\EntitiesServices\IContaReceberParcelaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaReceberRateioService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaReceberService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IDepartamentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IEquipamentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFichaTecnicaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFormaEnvioService.cs" />
@@ -263,6 +269,8 @@
     <Compile Include="Interfaces\EntitiesServices\IProdutoMovimentoEstoqueService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IProdutoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IProdutoTabelaPrecoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IServicoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IServicoTabelaPrecoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ISubCategoriaProdutoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IGrupoCCService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ISubgrupoService.cs" />
@@ -307,6 +315,7 @@
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
     <Compile Include="Interfaces\Repositories\IBancoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICargoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaServicoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContapagarAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaPagarParcelaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaPagarRateioRepository.cs" />
@@ -315,6 +324,7 @@
     <Compile Include="Interfaces\Repositories\IContaReceberParcelaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaReceberRateioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaReceberRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IDepartamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoCCRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />
@@ -351,6 +361,7 @@
     <Compile Include="Interfaces\Repositories\IMotivoCancelamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMotivoEncerramentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMovimentoEstoqueProdutoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\INomencBrasServicosRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPedidoCompraAcompanhamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPedidoCompraAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPedidoCompraRepository.cs" />
@@ -364,6 +375,9 @@
     <Compile Include="Interfaces\Repositories\IProdutoOrigemRepository.cs" />
     <Compile Include="Interfaces\Repositories\IProdutoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IProdutoTabelaPrecoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IServicoAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IServicoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IServicoTabelaPrecoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRegimeTributarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaAgendaRepository.cs" />
@@ -439,6 +453,18 @@
     <Compile Include="Model\ASSINANTE_QUADRO_SOCIETARIO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ATENDIMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ATENDIMENTO_ACOMPANHAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ATENDIMENTO_AGENDA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ATENDIMENTO_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\BANCO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
@@ -446,6 +472,9 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_AGENDA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CATEGORIA_ATENDIMENTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_CLIENTE.cs">
@@ -460,7 +489,13 @@
     <Compile Include="Model\CATEGORIA_NOTIFICACAO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\CATEGORIA_ORDEM_SERVICO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\CATEGORIA_PRODUTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CATEGORIA_SERVICO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_TELEFONE.cs">
@@ -542,6 +577,9 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CRM_ORIGEM.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DEPARTAMENTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EMAIL_AGENDAMENTO.cs">
@@ -646,6 +684,9 @@
     <Compile Include="Model\MOVIMENTO_ESTOQUE_PRODUTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\NOMENCLATURA_BRAS_SERVICOS.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\NOTICIA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
@@ -656,6 +697,27 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NOTIFICACAO_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ORDEM_SERVICO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ORDEM_SERVICO_ACOMPANHAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ORDEM_SERVICO_AGENDA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ORDEM_SERVICO_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ORDEM_SERVICO_COMENTARIOS.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ORDEM_SERVICO_PRODUTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ORDEM_SERVICO_SERVICO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PEDIDO_COMPRA.cs">
@@ -731,6 +793,15 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\RESUMO_VENDA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SERVICO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SERVICO_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SERVICO_TABELA_PRECO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SEXO.cs">

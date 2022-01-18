@@ -324,6 +324,7 @@
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
+    <Compile Include="Controllers\ServicoController.cs" />
     <Compile Include="Controllers\TabelasAuxiliaresController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
     <Compile Include="Controllers\TelefoneController.cs" />
@@ -345,6 +346,8 @@
     <Compile Include="ViewModels\CategoriaFornecedorViewModel.cs" />
     <Compile Include="ViewModels\CategoriaEquipamentoViewModel.cs" />
     <Compile Include="ViewModels\CategoriaProdutoViewModel.cs" />
+    <Compile Include="ViewModels\DepartamentoViewModel.cs" />
+    <Compile Include="ViewModels\CategoriaServicoViewModel.cs" />
     <Compile Include="ViewModels\CentroCustoViewModel.cs" />
     <Compile Include="ViewModels\ContaBancariaContatoViewModel.cs" />
     <Compile Include="ViewModels\ContaBancariaLancamentoViewModel.cs" />
@@ -369,6 +372,7 @@
     <Compile Include="ViewModels\ProdutoBarcodeViewModel.cs" />
     <Compile Include="ViewModels\ProdutoTabelaPrecoViewModel.cs" />
     <Compile Include="ViewModels\ProdutoViewModel.cs" />
+    <Compile Include="ViewModels\ServicoViewModel.cs" />
     <Compile Include="ViewModels\SubcategoriaProdutoViewModel.cs" />
     <Compile Include="ViewModels\TamanhoViewModel.cs" />
     <Compile Include="ViewModels\TipoAcaoViewModel.cs" />
@@ -3270,6 +3274,8 @@
     <Content Include="Views\FichaTecnica\CriarFichaTecnicaProduto.cshtml" />
     <Content Include="Views\Produto\EditarProdutoKit.cshtml" />
     <Content Include="Views\Produto\IncluirProdutoKit.cshtml" />
+    <Content Include="Views\Servico\MontarTelaServico.cshtml" />
+    <Content Include="Views\Servico\IncluirServico.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3336,6 +3342,7 @@
     <Folder Include="Imagens\2\Notificacao\7\Anexos\" />
     <Folder Include="Imagens\2\Notificacao\8\Anexos\" />
     <Folder Include="Imagens\2\Produtos\" />
+    <Folder Include="Imagens\2\Servicos\" />
     <Folder Include="Imagens\2\Tarefa\2\Anexos\" />
     <Folder Include="Imagens\2\Tarefa\3\Anexos\" />
     <Folder Include="Imagens\2\TemplatesHTML\4\Arquivos\" />

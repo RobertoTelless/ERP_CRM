@@ -22,12 +22,12 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public SERVICO_TABELA_PRECO GetByServFilial(Int32 id, Int32 fili)
+        public SERVICO_TABELA_PRECO GetByServFilial(Int32 id, Int32 fili, Int32 idAss)
         {
-            return _baseService.GetByServFilial(id, fili);
+            return _baseService.GetByServFilial(id, fili, idAss);
         }
 
-        public Int32 ValidateCreateLista(List<SERVICO_TABELA_PRECO> lista)
+        public Int32 ValidateCreateLista(List<SERVICO_TABELA_PRECO> lista, Int32 idAss)
         {
             foreach (SERVICO_TABELA_PRECO item in lista)
             {
@@ -37,7 +37,7 @@ namespace ApplicationServices.Services
                     item.SETP_IN_ATIVO = 1;
 
                     // Persiste
-                    Int32 volta = _baseService.Create(item);
+                    Int32 volta = _baseService.Create(item, idAss);
                 }
                 catch (Exception ex)
                 {
@@ -48,7 +48,7 @@ namespace ApplicationServices.Services
             return 0;
         }
 
-        public Int32 ValidateCreate(SERVICO_TABELA_PRECO item)
+        public Int32 ValidateCreate(SERVICO_TABELA_PRECO item, Int32 idAss)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace ApplicationServices.Services
                 item.SETP_IN_ATIVO = 1;
 
                 // Persiste
-                Int32 volta = _baseService.Create(item);
+                Int32 volta = _baseService.Create(item, idAss);
                 return 0;
             }
             catch (Exception ex)

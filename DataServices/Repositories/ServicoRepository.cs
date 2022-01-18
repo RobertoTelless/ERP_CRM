@@ -14,9 +14,8 @@ namespace DataServices.Repositories
 {
     public class ServicoRepository : RepositoryBase<SERVICO>, IServicoRepository
     {
-        public SERVICO CheckExist(SERVICO conta)
+        public SERVICO CheckExist(SERVICO conta, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<SERVICO> query = Db.SERVICO;
             query = query.Where(p => p.SERV_NM_NOME == conta.SERV_NM_NOME);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
@@ -31,25 +30,22 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<SERVICO> GetAllItens()
+        public List<SERVICO> GetAllItens(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<SERVICO> query = Db.SERVICO.Where(p => p.SERV_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<SERVICO> GetAllItensAdm()
+        public List<SERVICO> GetAllItensAdm(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<SERVICO> query = Db.SERVICO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<SERVICO> ExecuteFilter(Int32? catId, String nome, String descricao, String referencia)
+        public List<SERVICO> ExecuteFilter(Int32? catId, String nome, String descricao, String referencia, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             List<SERVICO> lista = new List<SERVICO>();
             IQueryable<SERVICO> query = Db.SERVICO;
             if (catId != null)

@@ -132,6 +132,73 @@
           <Property Name="ASQS_NM_NOME" Type="varchar" MaxLength="150" />
           <Property Name="ASQS_IN_ATIVO" Type="int" />
         </EntityType>
+        <EntityType Name="ATENDIMENTO">
+          <Key>
+            <PropertyRef Name="ATEN_CD_ID" />
+          </Key>
+          <Property Name="ATEN_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" />
+          <Property Name="CAAT_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CLIE_CD_ID" Type="int" />
+          <Property Name="PROD_CD_ID" Type="int" />
+          <Property Name="PEVE_CD_ID" Type="int" />
+          <Property Name="DEPT_CD_ID" Type="int" />
+          <Property Name="SERV_CD_ID" Type="int" />
+          <Property Name="ATEN_DT_INICIO" Type="datetime" />
+          <Property Name="ATEN_DT_ENCERRAMENTO" Type="datetime" />
+          <Property Name="ATEN_DS_DESCRICAO" Type="varchar" MaxLength="5000" />
+          <Property Name="ATEN_IN_STATUS" Type="int" Nullable="false" />
+          <Property Name="ATEN_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="ATEN_DS_ENCERRAMENTO" Type="varchar" MaxLength="5000" />
+          <Property Name="ATEN_DT_CANCELAMENTO" Type="datetime" />
+          <Property Name="ATEN_DS_CANCELAMENTO" Type="varchar" MaxLength="5000" />
+          <Property Name="ATEN_TX_OBSERVACOES" Type="text" />
+          <Property Name="ATEN_HR_INICIO" Type="time" Precision="7" />
+          <Property Name="ATEN_HR_CANCELAMENTO" Type="time" Precision="7" />
+          <Property Name="ATEN_HR_ENCERRAMENTO" Type="time" Precision="7" />
+          <Property Name="ATEN_NM_ASSUNTO" Type="varchar" MaxLength="50" />
+          <Property Name="ATEN_IN_PRIORIDADE" Type="int" />
+          <Property Name="ATEN_IN_TIPO" Type="int" />
+          <Property Name="ATEN_IN_DESTINO" Type="int" />
+          <Property Name="ATEN_DT_PREVISTA" Type="datetime" />
+          <Property Name="ATEN_IN_SLA" Type="int" />
+          <Property Name="ATEN_NR_NUMERO" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ATENDIMENTO_ACOMPANHAMENTO">
+          <Key>
+            <PropertyRef Name="ATAC_CD_ID" />
+          </Key>
+          <Property Name="ATAC_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ATEN_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="ATAC_DS_ACOMPANHAMENTO" Type="varchar" MaxLength="5000" />
+          <Property Name="ATAC_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="ATAC_DT_ACOMPANHAMENTO" Type="datetime" Nullable="false" />
+          <Property Name="ATAC_DT_ENCERRAMENTO" Type="datetime" />
+          <Property Name="ATAC_DS_ENCERRAMENTO" Type="varchar" MaxLength="1500" />
+        </EntityType>
+        <EntityType Name="ATENDIMENTO_AGENDA">
+          <Key>
+            <PropertyRef Name="ATAG_CD_ID" />
+          </Key>
+          <Property Name="ATAG_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ATEN_CD_ID" Type="int" Nullable="false" />
+          <Property Name="AGEN_CD_ID" Type="int" Nullable="false" />
+          <Property Name="ATAG_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ATENDIMENTO_ANEXO">
+          <Key>
+            <PropertyRef Name="ATAN_CD_ID" />
+          </Key>
+          <Property Name="ATAN_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ATEN_CD_ID" Type="int" Nullable="false" />
+          <Property Name="ATAN_NM_TITULO" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ATAN_DT_ANEXO" Type="date" Nullable="false" />
+          <Property Name="ATAN_IN_TIPO" Type="int" Nullable="false" />
+          <Property Name="ATAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ATAN_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="BANCO">
           <Key>
             <PropertyRef Name="BANC_CD_ID" />
@@ -160,6 +227,16 @@
           <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="CAAG_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="CAAG_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CATEGORIA_ATENDIMENTO">
+          <Key>
+            <PropertyRef Name="CAAT_CD_ID" />
+          </Key>
+          <Property Name="CAAT_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CAAT_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CAAT_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="CAAT_IN_SLA" Type="int" />
         </EntityType>
         <EntityType Name="CATEGORIA_CLIENTE">
           <Key>
@@ -196,6 +273,16 @@
           <Property Name="CANO_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="CANO_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="CATEGORIA_ORDEM_SERVICO">
+          <Key>
+            <PropertyRef Name="CAOS_CD_ID" />
+          </Key>
+          <Property Name="CAOS_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" />
+          <Property Name="CAOS_NM_NOME" Type="varchar" MaxLength="50" />
+          <Property Name="CAOS_IN_ATIVO" Type="int" />
+          <Property Name="CAOS_IN_SLA" Type="int" />
+        </EntityType>
         <EntityType Name="CATEGORIA_PRODUTO">
           <Key>
             <PropertyRef Name="CAPR_CD_ID" />
@@ -209,6 +296,15 @@
           <Property Name="CAPR_IN_GRADE" Type="int" />
           <Property Name="CAPR_IN_TAMANHO" Type="int" />
           <Property Name="CAPR_IN_SEO" Type="int" />
+        </EntityType>
+        <EntityType Name="CATEGORIA_SERVICO">
+          <Key>
+            <PropertyRef Name="CASE_CD_ID" />
+          </Key>
+          <Property Name="CASE_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CASE_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CASE_IN_ATIVO" Type="int" />
         </EntityType>
         <EntityType Name="CATEGORIA_TELEFONE">
           <Key>
@@ -705,6 +801,15 @@
           <Property Name="CROR_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="CROR_IN_ATIVO" Type="int" />
         </EntityType>
+        <EntityType Name="DEPARTAMENTO">
+          <Key>
+            <PropertyRef Name="DEPT_CD_ID" />
+          </Key>
+          <Property Name="DEPT_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="DEPT_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DEPT_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="EMAIL_AGENDAMENTO">
           <Key>
             <PropertyRef Name="EMAG_CD_ID" />
@@ -1148,6 +1253,14 @@
           <Property Name="MOEP_QN_ALTERADA" Type="int" />
           <Property Name="MOEP_IN_OPERACAO" Type="int" />
         </EntityType>
+        <EntityType Name="NOMENCLATURA_BRAS_SERVICOS">
+          <Key>
+            <PropertyRef Name="NBSE_CD_ID" />
+          </Key>
+          <Property Name="NBSE_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NBSE_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NBSE_IN_ATIVO" Type="int" />
+        </EntityType>
         <EntityType Name="NOTICIA">
           <Key>
             <PropertyRef Name="NOTC_CD_ID" />
@@ -1208,6 +1321,112 @@
           <Property Name="NOAN_IN_TIPO" Type="int" />
           <Property Name="NOAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" />
           <Property Name="NOAN_IN_ATIVO" Type="int" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO">
+          <Key>
+            <PropertyRef Name="ORSE_CD_ID" />
+          </Key>
+          <Property Name="ORSE_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ATEN_CD_ID" Type="int" />
+          <Property Name="CAOS_CD_ID" Type="int" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" />
+          <Property Name="CLIE_CD_ID" Type="int" />
+          <Property Name="PROD_CD_ID" Type="int" />
+          <Property Name="SERV_CD_ID" Type="int" />
+          <Property Name="DEPT_CD_ID" Type="int" />
+          <Property Name="ORSE_DT_CRIACAO" Type="datetime" Nullable="false" />
+          <Property Name="ORSE_TX_INFORMACOES" Type="text" />
+          <Property Name="ORSE_DT_PREVISTA" Type="datetime" />
+          <Property Name="ORSE_NR_NUMERO" Type="varchar" MaxLength="20" />
+          <Property Name="ORSE_NR_NOTA_FISCAL" Type="varchar" MaxLength="20" />
+          <Property Name="ORSE_DT_CANCELAMENTO" Type="datetime" />
+          <Property Name="ORSE_DS_MOTIVO_CANCELAMENTO" Type="varchar" MaxLength="1000" />
+          <Property Name="ORSE_DT_ENCERRAMENTO" Type="datetime" />
+          <Property Name="ORSE_DS_ENCERRAMENTO" Type="varchar" MaxLength="1000" />
+          <Property Name="ORSE_IN_VISITA" Type="int" Nullable="false" />
+          <Property Name="ORSE_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="ORSE_IN_STATUS" Type="int" Nullable="false" />
+          <Property Name="ORSE_TX_OBSERVACOES" Type="text" />
+          <Property Name="ORSE_DT_INICIO" Type="datetime" />
+          <Property Name="ORSE_DT_FINAL" Type="datetime" />
+          <Property Name="ORSE_DS_DESCRICAO" Type="varchar" MaxLength="5000" />
+          <Property Name="ORSE_IN_PRIORIDADE" Type="int" />
+          <Property Name="ORSE_IN_VENDEDOR" Type="int" />
+          <Property Name="ORSE_NM_EQUIPAMENTO" Type="varchar" MaxLength="100" />
+          <Property Name="ORSE_NR_EQUIPAMENTO" Type="varchar" MaxLength="50" />
+          <Property Name="ORSE_IN_TECNICO" Type="int" />
+          <Property Name="ORSE_IN_ORCAMENTO" Type="int" />
+          <Property Name="FOPA_CD_ID" Type="int" />
+          <Property Name="FILI_CD_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO_ACOMPANHAMENTO">
+          <Key>
+            <PropertyRef Name="ORSA_CD_ID" />
+          </Key>
+          <Property Name="ORSA_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORSE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="ORSA_DT_ACOMPANHAMENTO" Type="datetime" />
+          <Property Name="ORSA_DS_DESCRICAO" Type="text" />
+          <Property Name="ORSA_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO_AGENDA">
+          <Key>
+            <PropertyRef Name="OSAG_CD_ID" />
+          </Key>
+          <Property Name="OSAG_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORSE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="AGEN_CD_ID" Type="int" Nullable="false" />
+          <Property Name="OSAG_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO_ANEXO">
+          <Key>
+            <PropertyRef Name="ORSX_CD_ID" />
+          </Key>
+          <Property Name="ORSX_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORSE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="ORSX_NM_TITULO" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ORSX_DT_ANEXO" Type="date" Nullable="false" />
+          <Property Name="ORSX_IN_TIPO" Type="int" Nullable="false" />
+          <Property Name="ORSX_AQ_ARQUIVO" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ORSX_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO_COMENTARIOS">
+          <Key>
+            <PropertyRef Name="ORSC_CD_ID" />
+          </Key>
+          <Property Name="ORSC_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORSE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="ORSC_TX_COMENTARIO" Type="text" Nullable="false" />
+          <Property Name="ORSC_DT_CRIACAO" Type="datetime" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO_PRODUTO">
+          <Key>
+            <PropertyRef Name="OSPR_CD_ID" />
+          </Key>
+          <Property Name="OSPR_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORSE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
+          <Property Name="OSPR_IN_QUANTIDADE" Type="int" />
+          <Property Name="OSPR_VL_PRECO_NOVO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OSPR_IN_ATIVO" Type="int" />
+          <Property Name="OSPR_DS_OBSERVACAO" Type="varchar" MaxLength="500" />
+          <Property Name="OSPR_VL_PRECO_PROMO" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO_SERVICO">
+          <Key>
+            <PropertyRef Name="OSSE_CD_ID" />
+          </Key>
+          <Property Name="OSSE_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORSE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="SERV_CD_ID" Type="int" />
+          <Property Name="OSSE_IN_QUANTIDADE" Type="int" />
+          <Property Name="OSSE_VL_PRECO_NOVO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OSSE_DS_OBSERVACOES" Type="varchar" MaxLength="500" />
+          <Property Name="OSSE_IN_ATIVO" Type="int" />
+          <Property Name="OSSE_VL_PRECO_PROMO" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PEDIDO_COMPRA">
           <Key>
@@ -1629,6 +1848,56 @@
           <Property Name="REVE_DT_DATA" Type="date" />
           <Property Name="REVE_NR_NUMERO" Type="int" />
           <Property Name="REVE_VL_VALOR" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="SERVICO">
+          <Key>
+            <PropertyRef Name="SERV_CD_ID" />
+          </Key>
+          <Property Name="SERV_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="FILI_CD_ID" Type="int" />
+          <Property Name="CASE_CD_ID" Type="int" />
+          <Property Name="UNID_CD_ID" Type="int" />
+          <Property Name="NBSE_CD_ID" Type="int" />
+          <Property Name="SERV_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SERV_DS_DESCRICAO" Type="varchar" MaxLength="1000" />
+          <Property Name="SERV_DT_CADASTRO" Type="date" Nullable="false" />
+          <Property Name="SERV_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="SERV_CD_CODIGO" Type="varchar" MaxLength="50" />
+          <Property Name="SERV_TX_OBSERVACOES" Type="text" />
+          <Property Name="SERV_NR_DURACAO" Type="int" />
+          <Property Name="SERV_VL_PRECO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SERV_NR_DURACAO_EXPRESSA" Type="int" />
+          <Property Name="SERV_VL_VALOR_EXPRESSO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SERV_IN_LOCAL" Type="int" />
+          <Property Name="SERV_VL_VISITA" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="SERVICO_ANEXO">
+          <Key>
+            <PropertyRef Name="SEAN_CD_ID" />
+          </Key>
+          <Property Name="SEAN_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SERV_CD_ID" Type="int" Nullable="false" />
+          <Property Name="SEAN_NM_TITULO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SEAN_DT_ANEXO" Type="date" Nullable="false" />
+          <Property Name="SEAN_IN_TIPO" Type="int" Nullable="false" />
+          <Property Name="SEAN_AQ_ARQUIVO" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="SEAN_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SERVICO_TABELA_PRECO">
+          <Key>
+            <PropertyRef Name="SETP_CD_ID" />
+          </Key>
+          <Property Name="SETP_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SERV_CD_ID" Type="int" Nullable="false" />
+          <Property Name="FILI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="SETP_VL_PRECO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SETP_VL_PRECO_PROMOCAO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SETP_VL_DESCONTO_MAXIMO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SETP_DT_DATA_REAJUSTE" Type="date" />
+          <Property Name="SETP_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="SETP_NR_MARKUP" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SETP_VL_CUSTO" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="SEXO">
           <Key>
@@ -2226,6 +2495,174 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ATENDIMENTO_ACOMPANHAMENTO_ATENDIMENTO">
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="1" />
+          <End Role="ATENDIMENTO_ACOMPANHAMENTO" Type="Self.ATENDIMENTO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATENDIMENTO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_ACOMPANHAMENTO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_ACOMPANHAMENTO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="ATENDIMENTO_ACOMPANHAMENTO" Type="Self.ATENDIMENTO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_ACOMPANHAMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_AGENDA_AGENDA">
+          <End Role="AGENDA" Type="Self.AGENDA" Multiplicity="1" />
+          <End Role="ATENDIMENTO_AGENDA" Type="Self.ATENDIMENTO_AGENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENDA">
+              <PropertyRef Name="AGEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_AGENDA">
+              <PropertyRef Name="AGEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_AGENDA_ATENDIMENTO">
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="1" />
+          <End Role="ATENDIMENTO_AGENDA" Type="Self.ATENDIMENTO_AGENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATENDIMENTO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_AGENDA">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_ANEXO_ATENDIMENTO">
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="1" />
+          <End Role="ATENDIMENTO_ANEXO" Type="Self.ATENDIMENTO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATENDIMENTO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_ANEXO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_CATEGORIA_ATENDIMENTO">
+          <End Role="CATEGORIA_ATENDIMENTO" Type="Self.CATEGORIA_ATENDIMENTO" Multiplicity="1" />
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_ATENDIMENTO">
+              <PropertyRef Name="CAAT_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="CAAT_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_DEPARTAMENTO">
+          <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="0..1" />
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTAMENTO">
+              <PropertyRef Name="DEPT_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="DEPT_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_PEDIDO_VENDA">
+          <End Role="PEDIDO_VENDA" Type="Self.PEDIDO_VENDA" Multiplicity="0..1" />
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PEDIDO_VENDA">
+              <PropertyRef Name="PEVE_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="PEVE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_PRODUTO">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="0..1" />
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_SERVICO">
+          <End Role="SERVICO" Type="Self.SERVICO" Multiplicity="0..1" />
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_USUARIO1">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="ATEN_IN_DESTINO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BANCO_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
           <End Role="BANCO" Type="Self.BANCO" Multiplicity="*" />
@@ -2258,6 +2695,18 @@
               <PropertyRef Name="ASSI_CD_ID" />
             </Principal>
             <Dependent Role="CATEGORIA_AGENDA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CATEGORIA_ATENDIMENTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="CATEGORIA_ATENDIMENTO" Type="Self.CATEGORIA_ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CATEGORIA_ATENDIMENTO">
               <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2298,6 +2747,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CATEGORIA_ORDEM_SERVICO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
+          <End Role="CATEGORIA_ORDEM_SERVICO" Type="Self.CATEGORIA_ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CATEGORIA_ORDEM_SERVICO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CATEGORIA_PRODUTO_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
           <End Role="CATEGORIA_PRODUTO" Type="Self.CATEGORIA_PRODUTO" Multiplicity="*" />
@@ -2306,6 +2767,18 @@
               <PropertyRef Name="ASSI_CD_ID" />
             </Principal>
             <Dependent Role="CATEGORIA_PRODUTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CATEGORIA_SERVICO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="CATEGORIA_SERVICO" Type="Self.CATEGORIA_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CATEGORIA_SERVICO">
               <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -3138,6 +3611,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DEPARTAMENTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="DEPARTAMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EMAIL_AGENDAMENTO_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="EMAIL_AGENDAMENTO" Type="Self.EMAIL_AGENDAMENTO" Multiplicity="*" />
@@ -3954,6 +4439,282 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ORDEM_SERVICO_ACOMPANHAMENTO_ORDEM_SERVICO">
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="1" />
+          <End Role="ORDEM_SERVICO_ACOMPANHAMENTO" Type="Self.ORDEM_SERVICO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_ACOMPANHAMENTO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_ACOMPANHAMENTO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="ORDEM_SERVICO_ACOMPANHAMENTO" Type="Self.ORDEM_SERVICO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_ACOMPANHAMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_AGENDA_AGENDA">
+          <End Role="AGENDA" Type="Self.AGENDA" Multiplicity="1" />
+          <End Role="ORDEM_SERVICO_AGENDA" Type="Self.ORDEM_SERVICO_AGENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENDA">
+              <PropertyRef Name="AGEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_AGENDA">
+              <PropertyRef Name="AGEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_AGENDA_ORDEM_SERVICO">
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="1" />
+          <End Role="ORDEM_SERVICO_AGENDA" Type="Self.ORDEM_SERVICO_AGENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_AGENDA">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_ANEXO_ORDEM_SERVICO">
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="1" />
+          <End Role="ORDEM_SERVICO_ANEXO" Type="Self.ORDEM_SERVICO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_ANEXO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_ATENDIMENTO">
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="0..1" />
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATENDIMENTO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_CATEGORIA_ORDEM_SERVICO">
+          <End Role="CATEGORIA_ORDEM_SERVICO" Type="Self.CATEGORIA_ORDEM_SERVICO" Multiplicity="0..1" />
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_ORDEM_SERVICO">
+              <PropertyRef Name="CAOS_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="CAOS_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_DEPARTAMENTO">
+          <End Role="DEPARTAMENTO" Type="Self.DEPARTAMENTO" Multiplicity="0..1" />
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTAMENTO">
+              <PropertyRef Name="DEPT_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="DEPT_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_FILIAL">
+          <End Role="FILIAL" Type="Self.FILIAL" Multiplicity="0..1" />
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_FORMA_PAGAMENTO">
+          <End Role="FORMA_PAGAMENTO" Type="Self.FORMA_PAGAMENTO" Multiplicity="0..1" />
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORMA_PAGAMENTO">
+              <PropertyRef Name="FOPA_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="FOPA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_PRODUTO">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="0..1" />
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_PRODUTO_ORDEM_SERVICO">
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="1" />
+          <End Role="ORDEM_SERVICO_PRODUTO" Type="Self.ORDEM_SERVICO_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_PRODUTO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_PRODUTO_PRODUTO">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="1" />
+          <End Role="ORDEM_SERVICO_PRODUTO" Type="Self.ORDEM_SERVICO_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_SERVICO">
+          <End Role="SERVICO" Type="Self.SERVICO" Multiplicity="0..1" />
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_SERVICO_ORDEM_SERVICO">
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="1" />
+          <End Role="ORDEM_SERVICO_SERVICO" Type="Self.ORDEM_SERVICO_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_SERVICO_SERVICO">
+          <End Role="SERVICO" Type="Self.SERVICO" Multiplicity="0..1" />
+          <End Role="ORDEM_SERVICO_SERVICO" Type="Self.ORDEM_SERVICO_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_USUARIO1">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_IN_VENDEDOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_USUARIO2">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_IN_TECNICO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OS_COMENTARIO_OS">
+          <End Role="ORDEM_SERVICO" Type="Self.ORDEM_SERVICO" Multiplicity="1" />
+          <End Role="ORDEM_SERVICO_COMENTARIOS" Type="Self.ORDEM_SERVICO_COMENTARIOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_COMENTARIOS">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OS_COMENTARIO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="ORDEM_SERVICO_COMENTARIOS" Type="Self.ORDEM_SERVICO_COMENTARIOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_COMENTARIOS">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PEDIDO_COMPRA_ACOMPANHAMENTO_PEDIDO_COMPRA">
           <End Role="PEDIDO_COMPRA" Type="Self.PEDIDO_COMPRA" Multiplicity="1" />
           <End Role="PEDIDO_COMPRA_ACOMPANHAMENTO" Type="Self.PEDIDO_COMPRA_ACOMPANHAMENTO" Multiplicity="*" />
@@ -4518,6 +5279,102 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SERVICO_ANEXO_SERVICO">
+          <End Role="SERVICO" Type="Self.SERVICO" Multiplicity="1" />
+          <End Role="SERVICO_ANEXO" Type="Self.SERVICO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO_ANEXO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="SERVICO" Type="Self.SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_CATEGORIA_SERVICO">
+          <End Role="CATEGORIA_SERVICO" Type="Self.CATEGORIA_SERVICO" Multiplicity="0..1" />
+          <End Role="SERVICO" Type="Self.SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_SERVICO">
+              <PropertyRef Name="CASE_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO">
+              <PropertyRef Name="CASE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_FILIAL">
+          <End Role="FILIAL" Type="Self.FILIAL" Multiplicity="0..1" />
+          <End Role="SERVICO" Type="Self.SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_NOMENCLATURA_BRAS_SERVICOS">
+          <End Role="NOMENCLATURA_BRAS_SERVICOS" Type="Self.NOMENCLATURA_BRAS_SERVICOS" Multiplicity="0..1" />
+          <End Role="SERVICO" Type="Self.SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOMENCLATURA_BRAS_SERVICOS">
+              <PropertyRef Name="NBSE_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO">
+              <PropertyRef Name="NBSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_TABELA_PRECO_FILIAL">
+          <End Role="FILIAL" Type="Self.FILIAL" Multiplicity="1" />
+          <End Role="SERVICO_TABELA_PRECO" Type="Self.SERVICO_TABELA_PRECO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO_TABELA_PRECO">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_TABELA_PRECO_SERVICO">
+          <End Role="SERVICO" Type="Self.SERVICO" Multiplicity="1" />
+          <End Role="SERVICO_TABELA_PRECO" Type="Self.SERVICO_TABELA_PRECO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO_TABELA_PRECO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_UNIDADE">
+          <End Role="UNIDADE" Type="Self.UNIDADE" Multiplicity="0..1" />
+          <End Role="SERVICO" Type="Self.SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDADE">
+              <PropertyRef Name="UNID_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO">
+              <PropertyRef Name="UNID_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SUBCATEGORIA_PRODUTO_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="SUBCATEGORIA_PRODUTO" Type="Self.SUBCATEGORIA_PRODUTO" Multiplicity="*" />
@@ -4996,14 +5853,21 @@
           <EntitySet Name="ASSINANTE_PAGAMENTO" EntityType="Self.ASSINANTE_PAGAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ASSINANTE_PLANO" EntityType="Self.ASSINANTE_PLANO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ASSINANTE_QUADRO_SOCIETARIO" EntityType="Self.ASSINANTE_QUADRO_SOCIETARIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ATENDIMENTO" EntityType="Self.ATENDIMENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ATENDIMENTO_ACOMPANHAMENTO" EntityType="Self.ATENDIMENTO_ACOMPANHAMENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ATENDIMENTO_AGENDA" EntityType="Self.ATENDIMENTO_AGENDA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ATENDIMENTO_ANEXO" EntityType="Self.ATENDIMENTO_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BANCO" EntityType="Self.BANCO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CARGO" EntityType="Self.CARGO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_AGENDA" EntityType="Self.CATEGORIA_AGENDA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORIA_ATENDIMENTO" EntityType="Self.CATEGORIA_ATENDIMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_CLIENTE" EntityType="Self.CATEGORIA_CLIENTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_EQUIPAMENTO" EntityType="Self.CATEGORIA_EQUIPAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_FORNECEDOR" EntityType="Self.CATEGORIA_FORNECEDOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_NOTIFICACAO" EntityType="Self.CATEGORIA_NOTIFICACAO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORIA_ORDEM_SERVICO" EntityType="Self.CATEGORIA_ORDEM_SERVICO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_PRODUTO" EntityType="Self.CATEGORIA_PRODUTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORIA_SERVICO" EntityType="Self.CATEGORIA_SERVICO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_TELEFONE" EntityType="Self.CATEGORIA_TELEFONE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_USUARIO" EntityType="Self.CATEGORIA_USUARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CENTRO_CUSTO" EntityType="Self.CENTRO_CUSTO" Schema="dbo" store:Type="Tables" />
@@ -5031,6 +5895,7 @@
           <EntitySet Name="CRM_COMENTARIO" EntityType="Self.CRM_COMENTARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRM_CONTATO" EntityType="Self.CRM_CONTATO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRM_ORIGEM" EntityType="Self.CRM_ORIGEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DEPARTAMENTO" EntityType="Self.DEPARTAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMAIL_AGENDAMENTO" EntityType="Self.EMAIL_AGENDAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EQUIPAMENTO" EntityType="Self.EQUIPAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EQUIPAMENTO_ANEXO" EntityType="Self.EQUIPAMENTO_ANEXO" Schema="dbo" store:Type="Tables" />
@@ -5060,10 +5925,18 @@
           <EntitySet Name="MOTIVO_CANCELAMENTO" EntityType="Self.MOTIVO_CANCELAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MOTIVO_ENCERRAMENTO" EntityType="Self.MOTIVO_ENCERRAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MOVIMENTO_ESTOQUE_PRODUTO" EntityType="Self.MOVIMENTO_ESTOQUE_PRODUTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NOMENCLATURA_BRAS_SERVICOS" EntityType="Self.NOMENCLATURA_BRAS_SERVICOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOTICIA" EntityType="Self.NOTICIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOTICIA_COMENTARIO" EntityType="Self.NOTICIA_COMENTARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOTIFICACAO" EntityType="Self.NOTIFICACAO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOTIFICACAO_ANEXO" EntityType="Self.NOTIFICACAO_ANEXO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDEM_SERVICO" EntityType="Self.ORDEM_SERVICO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDEM_SERVICO_ACOMPANHAMENTO" EntityType="Self.ORDEM_SERVICO_ACOMPANHAMENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDEM_SERVICO_AGENDA" EntityType="Self.ORDEM_SERVICO_AGENDA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDEM_SERVICO_ANEXO" EntityType="Self.ORDEM_SERVICO_ANEXO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDEM_SERVICO_COMENTARIOS" EntityType="Self.ORDEM_SERVICO_COMENTARIOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDEM_SERVICO_PRODUTO" EntityType="Self.ORDEM_SERVICO_PRODUTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDEM_SERVICO_SERVICO" EntityType="Self.ORDEM_SERVICO_SERVICO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PEDIDO_COMPRA" EntityType="Self.PEDIDO_COMPRA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PEDIDO_COMPRA_ACOMPANHAMENTO" EntityType="Self.PEDIDO_COMPRA_ACOMPANHAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PEDIDO_COMPRA_ANEXO" EntityType="Self.PEDIDO_COMPRA_ANEXO" Schema="dbo" store:Type="Tables" />
@@ -5089,6 +5962,9 @@
           <EntitySet Name="PRODUTO_TABELA_PRECO" EntityType="Self.PRODUTO_TABELA_PRECO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REGIME_TRIBUTARIO" EntityType="Self.REGIME_TRIBUTARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RESUMO_VENDA" EntityType="Self.RESUMO_VENDA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SERVICO" EntityType="Self.SERVICO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SERVICO_ANEXO" EntityType="Self.SERVICO_ANEXO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SERVICO_TABELA_PRECO" EntityType="Self.SERVICO_TABELA_PRECO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SEXO" EntityType="Self.SEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUBCATEGORIA_PRODUTO" EntityType="Self.SUBCATEGORIA_PRODUTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUBGRUPO" EntityType="Self.SUBGRUPO" Schema="dbo" store:Type="Tables" />
@@ -5182,6 +6058,62 @@
             <End Role="UF" EntitySet="UF" />
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
           </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_ACOMPANHAMENTO_ATENDIMENTO" Association="Self.FK_ATENDIMENTO_ACOMPANHAMENTO_ATENDIMENTO">
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+            <End Role="ATENDIMENTO_ACOMPANHAMENTO" EntitySet="ATENDIMENTO_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_ACOMPANHAMENTO_USUARIO" Association="Self.FK_ATENDIMENTO_ACOMPANHAMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ATENDIMENTO_ACOMPANHAMENTO" EntitySet="ATENDIMENTO_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_AGENDA_AGENDA" Association="Self.FK_ATENDIMENTO_AGENDA_AGENDA">
+            <End Role="AGENDA" EntitySet="AGENDA" />
+            <End Role="ATENDIMENTO_AGENDA" EntitySet="ATENDIMENTO_AGENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_AGENDA_ATENDIMENTO" Association="Self.FK_ATENDIMENTO_AGENDA_ATENDIMENTO">
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+            <End Role="ATENDIMENTO_AGENDA" EntitySet="ATENDIMENTO_AGENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_ANEXO_ATENDIMENTO" Association="Self.FK_ATENDIMENTO_ANEXO_ATENDIMENTO">
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+            <End Role="ATENDIMENTO_ANEXO" EntitySet="ATENDIMENTO_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_ASSINANTE" Association="Self.FK_ATENDIMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_CATEGORIA_ATENDIMENTO" Association="Self.FK_ATENDIMENTO_CATEGORIA_ATENDIMENTO">
+            <End Role="CATEGORIA_ATENDIMENTO" EntitySet="CATEGORIA_ATENDIMENTO" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_CLIENTE" Association="Self.FK_ATENDIMENTO_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_DEPARTAMENTO" Association="Self.FK_ATENDIMENTO_DEPARTAMENTO">
+            <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_PEDIDO_VENDA" Association="Self.FK_ATENDIMENTO_PEDIDO_VENDA">
+            <End Role="PEDIDO_VENDA" EntitySet="PEDIDO_VENDA" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_PRODUTO" Association="Self.FK_ATENDIMENTO_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_SERVICO" Association="Self.FK_ATENDIMENTO_SERVICO">
+            <End Role="SERVICO" EntitySet="SERVICO" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_USUARIO" Association="Self.FK_ATENDIMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_USUARIO1" Association="Self.FK_ATENDIMENTO_USUARIO1">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_BANCO_ASSINANTE" Association="Self.FK_BANCO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="BANCO" EntitySet="BANCO" />
@@ -5193,6 +6125,10 @@
           <AssociationSet Name="FK_CATEGORIA_AGENDA_ASSINANTE" Association="Self.FK_CATEGORIA_AGENDA_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CATEGORIA_AGENDA" EntitySet="CATEGORIA_AGENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CATEGORIA_ATENDIMENTO_ASSINANTE" Association="Self.FK_CATEGORIA_ATENDIMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CATEGORIA_ATENDIMENTO" EntitySet="CATEGORIA_ATENDIMENTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CATEGORIA_CLIENTE_ASSINANTE" Association="Self.FK_CATEGORIA_CLIENTE_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -5206,9 +6142,17 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CATEGORIA_FORNECEDOR" EntitySet="CATEGORIA_FORNECEDOR" />
           </AssociationSet>
+          <AssociationSet Name="FK_CATEGORIA_ORDEM_SERVICO_ASSINANTE" Association="Self.FK_CATEGORIA_ORDEM_SERVICO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CATEGORIA_ORDEM_SERVICO" EntitySet="CATEGORIA_ORDEM_SERVICO" />
+          </AssociationSet>
           <AssociationSet Name="FK_CATEGORIA_PRODUTO_ASSINANTE" Association="Self.FK_CATEGORIA_PRODUTO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CATEGORIA_SERVICO_ASSINANTE" Association="Self.FK_CATEGORIA_SERVICO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CATEGORIA_SERVICO" EntitySet="CATEGORIA_SERVICO" />
           </AssociationSet>
           <AssociationSet Name="FK_CATEGORIA_TELEFONE_ASSINANTE" Association="Self.FK_CATEGORIA_TELEFONE_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -5486,6 +6430,10 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="CRM" EntitySet="CRM" />
           </AssociationSet>
+          <AssociationSet Name="FK_DEPARTAMENTO_ASSINANTE" Association="Self.FK_DEPARTAMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_EMAIL_AGENDAMENTO_ASSINANTE" Association="Self.FK_EMAIL_AGENDAMENTO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="EMAIL_AGENDAMENTO" EntitySet="EMAIL_AGENDAMENTO" />
@@ -5758,6 +6706,98 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="NOTIFICACAO" EntitySet="NOTIFICACAO" />
           </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_ACOMPANHAMENTO_ORDEM_SERVICO" Association="Self.FK_ORDEM_SERVICO_ACOMPANHAMENTO_ORDEM_SERVICO">
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO_ACOMPANHAMENTO" EntitySet="ORDEM_SERVICO_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_ACOMPANHAMENTO_USUARIO" Association="Self.FK_ORDEM_SERVICO_ACOMPANHAMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ORDEM_SERVICO_ACOMPANHAMENTO" EntitySet="ORDEM_SERVICO_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_AGENDA_AGENDA" Association="Self.FK_ORDEM_SERVICO_AGENDA_AGENDA">
+            <End Role="AGENDA" EntitySet="AGENDA" />
+            <End Role="ORDEM_SERVICO_AGENDA" EntitySet="ORDEM_SERVICO_AGENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_AGENDA_ORDEM_SERVICO" Association="Self.FK_ORDEM_SERVICO_AGENDA_ORDEM_SERVICO">
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO_AGENDA" EntitySet="ORDEM_SERVICO_AGENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_ANEXO_ORDEM_SERVICO" Association="Self.FK_ORDEM_SERVICO_ANEXO_ORDEM_SERVICO">
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO_ANEXO" EntitySet="ORDEM_SERVICO_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_ASSINANTE" Association="Self.FK_ORDEM_SERVICO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_ATENDIMENTO" Association="Self.FK_ORDEM_SERVICO_ATENDIMENTO">
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_CATEGORIA_ORDEM_SERVICO" Association="Self.FK_ORDEM_SERVICO_CATEGORIA_ORDEM_SERVICO">
+            <End Role="CATEGORIA_ORDEM_SERVICO" EntitySet="CATEGORIA_ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_CLIENTE" Association="Self.FK_ORDEM_SERVICO_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_DEPARTAMENTO" Association="Self.FK_ORDEM_SERVICO_DEPARTAMENTO">
+            <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_FILIAL" Association="Self.FK_ORDEM_SERVICO_FILIAL">
+            <End Role="FILIAL" EntitySet="FILIAL" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_FORMA_PAGAMENTO" Association="Self.FK_ORDEM_SERVICO_FORMA_PAGAMENTO">
+            <End Role="FORMA_PAGAMENTO" EntitySet="FORMA_PAGAMENTO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_PRODUTO" Association="Self.FK_ORDEM_SERVICO_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_PRODUTO_ORDEM_SERVICO" Association="Self.FK_ORDEM_SERVICO_PRODUTO_ORDEM_SERVICO">
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO_PRODUTO" EntitySet="ORDEM_SERVICO_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_PRODUTO_PRODUTO" Association="Self.FK_ORDEM_SERVICO_PRODUTO_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="ORDEM_SERVICO_PRODUTO" EntitySet="ORDEM_SERVICO_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_SERVICO" Association="Self.FK_ORDEM_SERVICO_SERVICO">
+            <End Role="SERVICO" EntitySet="SERVICO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_SERVICO_ORDEM_SERVICO" Association="Self.FK_ORDEM_SERVICO_SERVICO_ORDEM_SERVICO">
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO_SERVICO" EntitySet="ORDEM_SERVICO_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_SERVICO_SERVICO" Association="Self.FK_ORDEM_SERVICO_SERVICO_SERVICO">
+            <End Role="SERVICO" EntitySet="SERVICO" />
+            <End Role="ORDEM_SERVICO_SERVICO" EntitySet="ORDEM_SERVICO_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_USUARIO" Association="Self.FK_ORDEM_SERVICO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_USUARIO1" Association="Self.FK_ORDEM_SERVICO_USUARIO1">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_USUARIO2" Association="Self.FK_ORDEM_SERVICO_USUARIO2">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OS_COMENTARIO_OS" Association="Self.FK_OS_COMENTARIO_OS">
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO_COMENTARIOS" EntitySet="ORDEM_SERVICO_COMENTARIOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OS_COMENTARIO_USUARIO" Association="Self.FK_OS_COMENTARIO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ORDEM_SERVICO_COMENTARIOS" EntitySet="ORDEM_SERVICO_COMENTARIOS" />
+          </AssociationSet>
           <AssociationSet Name="FK_PEDIDO_COMPRA_ACOMPANHAMENTO_PEDIDO_COMPRA" Association="Self.FK_PEDIDO_COMPRA_ACOMPANHAMENTO_PEDIDO_COMPRA">
             <End Role="PEDIDO_COMPRA" EntitySet="PEDIDO_COMPRA" />
             <End Role="PEDIDO_COMPRA_ACOMPANHAMENTO" EntitySet="PEDIDO_COMPRA_ACOMPANHAMENTO" />
@@ -5946,6 +6986,38 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="RESUMO_VENDA" EntitySet="RESUMO_VENDA" />
           </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_ANEXO_SERVICO" Association="Self.FK_SERVICO_ANEXO_SERVICO">
+            <End Role="SERVICO" EntitySet="SERVICO" />
+            <End Role="SERVICO_ANEXO" EntitySet="SERVICO_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_ASSINANTE" Association="Self.FK_SERVICO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="SERVICO" EntitySet="SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_CATEGORIA_SERVICO" Association="Self.FK_SERVICO_CATEGORIA_SERVICO">
+            <End Role="CATEGORIA_SERVICO" EntitySet="CATEGORIA_SERVICO" />
+            <End Role="SERVICO" EntitySet="SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_FILIAL" Association="Self.FK_SERVICO_FILIAL">
+            <End Role="FILIAL" EntitySet="FILIAL" />
+            <End Role="SERVICO" EntitySet="SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_NOMENCLATURA_BRAS_SERVICOS" Association="Self.FK_SERVICO_NOMENCLATURA_BRAS_SERVICOS">
+            <End Role="NOMENCLATURA_BRAS_SERVICOS" EntitySet="NOMENCLATURA_BRAS_SERVICOS" />
+            <End Role="SERVICO" EntitySet="SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_TABELA_PRECO_FILIAL" Association="Self.FK_SERVICO_TABELA_PRECO_FILIAL">
+            <End Role="FILIAL" EntitySet="FILIAL" />
+            <End Role="SERVICO_TABELA_PRECO" EntitySet="SERVICO_TABELA_PRECO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_TABELA_PRECO_SERVICO" Association="Self.FK_SERVICO_TABELA_PRECO_SERVICO">
+            <End Role="SERVICO" EntitySet="SERVICO" />
+            <End Role="SERVICO_TABELA_PRECO" EntitySet="SERVICO_TABELA_PRECO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_UNIDADE" Association="Self.FK_SERVICO_UNIDADE">
+            <End Role="UNIDADE" EntitySet="UNIDADE" />
+            <End Role="SERVICO" EntitySet="SERVICO" />
+          </AssociationSet>
           <AssociationSet Name="FK_SUBCATEGORIA_PRODUTO_ASSINANTE" Association="Self.FK_SUBCATEGORIA_PRODUTO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="SUBCATEGORIA_PRODUTO" EntitySet="SUBCATEGORIA_PRODUTO" />
@@ -6130,6 +7202,8 @@
           <NavigationProperty Name="USUARIO1" Relationship="Self.FK_AGENDA_USUARIO1" FromRole="AGENDA" ToRole="USUARIO" />
           <NavigationProperty Name="AGENDA_VINCULO" Relationship="Self.FK_AGENDA_VINCULO_AGENDA" FromRole="AGENDA" ToRole="AGENDA_VINCULO" />
           <Property Name="AGEN_IN_CORPORATIVA" Type="Int32" />
+          <NavigationProperty Name="ATENDIMENTO_AGENDA" Relationship="ERP_CRMModel.FK_ATENDIMENTO_AGENDA_AGENDA" FromRole="AGENDA" ToRole="ATENDIMENTO_AGENDA" />
+          <NavigationProperty Name="ORDEM_SERVICO_AGENDA" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_AGENDA" FromRole="AGENDA" ToRole="ORDEM_SERVICO_AGENDA" />
         </EntityType>
         <EntityType Name="AGENDA_ANEXO">
           <Key>
@@ -6243,6 +7317,13 @@
           <NavigationProperty Name="TAMANHO" Relationship="ERP_CRMModel.FK_TAMANHO_ASSINANTE" FromRole="ASSINANTE" ToRole="TAMANHO" />
           <NavigationProperty Name="FICHA_TECNICA" Relationship="ERP_CRMModel.FK_FICHA_TECNICA_ASSINANTE" FromRole="ASSINANTE" ToRole="FICHA_TECNICA" />
           <NavigationProperty Name="GRUPO_CC" Relationship="ERP_CRMModel.FK_GRUPO_CC_ASSINANTE" FromRole="ASSINANTE" ToRole="GRUPO_CC" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="ATENDIMENTO" />
+          <NavigationProperty Name="CATEGORIA_ATENDIMENTO" Relationship="ERP_CRMModel.FK_CATEGORIA_ATENDIMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_ATENDIMENTO" />
+          <NavigationProperty Name="CATEGORIA_ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_CATEGORIA_ORDEM_SERVICO_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_ORDEM_SERVICO" />
+          <NavigationProperty Name="CATEGORIA_SERVICO" Relationship="ERP_CRMModel.FK_CATEGORIA_SERVICO_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_SERVICO" />
+          <NavigationProperty Name="DEPARTAMENTO" Relationship="ERP_CRMModel.FK_DEPARTAMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="DEPARTAMENTO" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_ASSINANTE" FromRole="ASSINANTE" ToRole="ORDEM_SERVICO" />
+          <NavigationProperty Name="SERVICO" Relationship="ERP_CRMModel.FK_SERVICO_ASSINANTE" FromRole="ASSINANTE" ToRole="SERVICO" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -6531,6 +7612,8 @@
           <Property Name="RETR_CD_ID" Type="Int32" />
           <NavigationProperty Name="REGIME_TRIBUTARIO" Relationship="ERP_CRMModel.FK_CLIENTE_REGIME_TRIBUTARIO" FromRole="CLIENTE" ToRole="REGIME_TRIBUTARIO" />
           <Property Name="CLIE_CM_END1" Type="String" MaxLength="101" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_CLIENTE" FromRole="CLIENTE" ToRole="ATENDIMENTO" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_CLIENTE" FromRole="CLIENTE" ToRole="ORDEM_SERVICO" />
         </EntityType>
         <EntityType Name="CLIENTE_ANEXO">
           <Key>
@@ -7103,6 +8186,9 @@
           <NavigationProperty Name="TRANSPORTADORA" Relationship="Self.FK_TRANSPORTADORA_FILIAL" FromRole="FILIAL" ToRole="TRANSPORTADORA" />
           <NavigationProperty Name="CLIENTE" Relationship="ERP_CRMModel.FK_CLIENTE_FILIAL" FromRole="FILIAL" ToRole="CLIENTE" />
           <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_USUARIO_FILIAL" FromRole="FILIAL" ToRole="USUARIO" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_FILIAL" FromRole="FILIAL" ToRole="ORDEM_SERVICO" />
+          <NavigationProperty Name="SERVICO" Relationship="ERP_CRMModel.FK_SERVICO_FILIAL" FromRole="FILIAL" ToRole="SERVICO" />
+          <NavigationProperty Name="SERVICO_TABELA_PRECO" Relationship="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_FILIAL" FromRole="FILIAL" ToRole="SERVICO_TABELA_PRECO" />
         </EntityType>
         <EntityType Name="FORMA_ENVIO">
           <Key>
@@ -7150,6 +8236,7 @@
           <NavigationProperty Name="CONTA_RECEBER" Relationship="Self.FK_CONTA_RECEBER_FORMA_PAGAMENTO" FromRole="FORMA_PAGAMENTO" ToRole="CONTA_RECEBER" />
           <NavigationProperty Name="PEDIDO_COMPRA" Relationship="Self.FK_PEDIDO_COMPRA_FORMA_PAGAMENTO" FromRole="FORMA_PAGAMENTO" ToRole="PEDIDO_COMPRA" />
           <NavigationProperty Name="PEDIDO_VENDA" Relationship="Self.FK_PEDIDO_VENDA_FORMA_PAGAMENTO" FromRole="FORMA_PAGAMENTO" ToRole="PEDIDO_VENDA" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_FORMA_PAGAMENTO" FromRole="FORMA_PAGAMENTO" ToRole="ORDEM_SERVICO" />
         </EntityType>
         <EntityType Name="FORNECEDOR">
           <Key>
@@ -7658,6 +8745,7 @@
           <NavigationProperty Name="PERIODICIDADE" Relationship="Self.FK_PEDIDO_VENDA_PERIODICIDADE" FromRole="PEDIDO_VENDA" ToRole="PERIODICIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_PEDIDO_VENDA_USUARIO" FromRole="PEDIDO_VENDA" ToRole="USUARIO" />
           <NavigationProperty Name="USUARIO1" Relationship="Self.FK_PEDIDO_VENDA_USUARIO1" FromRole="PEDIDO_VENDA" ToRole="USUARIO" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_PEDIDO_VENDA" FromRole="PEDIDO_VENDA" ToRole="ATENDIMENTO" />
         </EntityType>
         <EntityType Name="PEDIDO_VENDA_ACOMPANHAMENTO">
           <Key>
@@ -7896,6 +8984,9 @@
           <Property Name="PROD_IN_KIT" Type="Int32" />
           <NavigationProperty Name="PRODUTO_KIT" Relationship="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_KIT" />
           <NavigationProperty Name="PRODUTO_KIT1" Relationship="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO1" FromRole="PRODUTO" ToRole="PRODUTO_KIT" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_PRODUTO" FromRole="PRODUTO" ToRole="ATENDIMENTO" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO" FromRole="PRODUTO" ToRole="ORDEM_SERVICO" />
+          <NavigationProperty Name="ORDEM_SERVICO_PRODUTO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO_PRODUTO" FromRole="PRODUTO" ToRole="ORDEM_SERVICO_PRODUTO" />
         </EntityType>
         <EntityType Name="PRODUTO_ANEXO">
           <Key>
@@ -8205,6 +9296,7 @@
           <NavigationProperty Name="ITEM_PEDIDO_COMPRA" Relationship="Self.FK_ITEM_PEDIDO_COMPRA_UNIDADE" FromRole="UNIDADE" ToRole="ITEM_PEDIDO_COMPRA" />
           <NavigationProperty Name="ITEM_PEDIDO_VENDA" Relationship="Self.FK_ITEM_PEDIDO_VENDA_UNIDADE" FromRole="UNIDADE" ToRole="ITEM_PEDIDO_VENDA" />
           <NavigationProperty Name="PRODUTO" Relationship="Self.FK_PRODUTO_UNIDADE" FromRole="UNIDADE" ToRole="PRODUTO" />
+          <NavigationProperty Name="SERVICO" Relationship="ERP_CRMModel.FK_SERVICO_UNIDADE" FromRole="UNIDADE" ToRole="SERVICO" />
         </EntityType>
         <EntityType Name="USUARIO">
           <Key>
@@ -8279,6 +9371,14 @@
           <Property Name="USUA_TM_INICIO" Type="Time" Precision="7" />
           <Property Name="USUA_TM_FINAL" Type="Time" Precision="7" />
           <NavigationProperty Name="FILIAL" Relationship="ERP_CRMModel.FK_USUARIO_FILIAL" FromRole="USUARIO" ToRole="FILIAL" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_USUARIO" FromRole="USUARIO" ToRole="ATENDIMENTO" />
+          <NavigationProperty Name="ATENDIMENTO1" Relationship="ERP_CRMModel.FK_ATENDIMENTO_USUARIO1" FromRole="USUARIO" ToRole="ATENDIMENTO" />
+          <NavigationProperty Name="ATENDIMENTO_ACOMPANHAMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_USUARIO" FromRole="USUARIO" ToRole="ATENDIMENTO_ACOMPANHAMENTO" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO" FromRole="USUARIO" ToRole="ORDEM_SERVICO" />
+          <NavigationProperty Name="ORDEM_SERVICO1" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO1" FromRole="USUARIO" ToRole="ORDEM_SERVICO" />
+          <NavigationProperty Name="ORDEM_SERVICO2" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO2" FromRole="USUARIO" ToRole="ORDEM_SERVICO" />
+          <NavigationProperty Name="ORDEM_SERVICO_ACOMPANHAMENTO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_ACOMPANHAMENTO_USUARIO" FromRole="USUARIO" ToRole="ORDEM_SERVICO_ACOMPANHAMENTO" />
+          <NavigationProperty Name="ORDEM_SERVICO_COMENTARIOS" Relationship="ERP_CRMModel.FK_OS_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="ORDEM_SERVICO_COMENTARIOS" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -11911,6 +13011,221 @@
             <End Role="PRODUTO" EntitySet="PRODUTO" />
             <End Role="PRODUTO_KIT" EntitySet="PRODUTO_KIT" />
           </AssociationSet>
+          <EntitySet Name="ATENDIMENTO" EntityType="ERP_CRMModel.ATENDIMENTO" />
+          <EntitySet Name="ATENDIMENTO_ACOMPANHAMENTO" EntityType="ERP_CRMModel.ATENDIMENTO_ACOMPANHAMENTO" />
+          <EntitySet Name="ATENDIMENTO_AGENDA" EntityType="ERP_CRMModel.ATENDIMENTO_AGENDA" />
+          <EntitySet Name="ATENDIMENTO_ANEXO" EntityType="ERP_CRMModel.ATENDIMENTO_ANEXO" />
+          <EntitySet Name="CATEGORIA_ATENDIMENTO" EntityType="ERP_CRMModel.CATEGORIA_ATENDIMENTO" />
+          <EntitySet Name="CATEGORIA_ORDEM_SERVICO" EntityType="ERP_CRMModel.CATEGORIA_ORDEM_SERVICO" />
+          <EntitySet Name="CATEGORIA_SERVICO" EntityType="ERP_CRMModel.CATEGORIA_SERVICO" />
+          <EntitySet Name="DEPARTAMENTO" EntityType="ERP_CRMModel.DEPARTAMENTO" />
+          <EntitySet Name="NOMENCLATURA_BRAS_SERVICOS" EntityType="ERP_CRMModel.NOMENCLATURA_BRAS_SERVICOS" />
+          <EntitySet Name="ORDEM_SERVICO" EntityType="ERP_CRMModel.ORDEM_SERVICO" />
+          <EntitySet Name="ORDEM_SERVICO_ACOMPANHAMENTO" EntityType="ERP_CRMModel.ORDEM_SERVICO_ACOMPANHAMENTO" />
+          <EntitySet Name="ORDEM_SERVICO_AGENDA" EntityType="ERP_CRMModel.ORDEM_SERVICO_AGENDA" />
+          <EntitySet Name="ORDEM_SERVICO_ANEXO" EntityType="ERP_CRMModel.ORDEM_SERVICO_ANEXO" />
+          <EntitySet Name="ORDEM_SERVICO_COMENTARIOS" EntityType="ERP_CRMModel.ORDEM_SERVICO_COMENTARIOS" />
+          <EntitySet Name="ORDEM_SERVICO_PRODUTO" EntityType="ERP_CRMModel.ORDEM_SERVICO_PRODUTO" />
+          <EntitySet Name="ORDEM_SERVICO_SERVICO" EntityType="ERP_CRMModel.ORDEM_SERVICO_SERVICO" />
+          <EntitySet Name="SERVICO" EntityType="ERP_CRMModel.SERVICO" />
+          <EntitySet Name="SERVICO_ANEXO" EntityType="ERP_CRMModel.SERVICO_ANEXO" />
+          <EntitySet Name="SERVICO_TABELA_PRECO" EntityType="ERP_CRMModel.SERVICO_TABELA_PRECO" />
+          <AssociationSet Name="FK_ATENDIMENTO_AGENDA_AGENDA" Association="ERP_CRMModel.FK_ATENDIMENTO_AGENDA_AGENDA">
+            <End Role="AGENDA" EntitySet="AGENDA" />
+            <End Role="ATENDIMENTO_AGENDA" EntitySet="ATENDIMENTO_AGENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_AGENDA_AGENDA" Association="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_AGENDA">
+            <End Role="AGENDA" EntitySet="AGENDA" />
+            <End Role="ORDEM_SERVICO_AGENDA" EntitySet="ORDEM_SERVICO_AGENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_ASSINANTE" Association="ERP_CRMModel.FK_ATENDIMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CATEGORIA_ATENDIMENTO_ASSINANTE" Association="ERP_CRMModel.FK_CATEGORIA_ATENDIMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CATEGORIA_ATENDIMENTO" EntitySet="CATEGORIA_ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CATEGORIA_ORDEM_SERVICO_ASSINANTE" Association="ERP_CRMModel.FK_CATEGORIA_ORDEM_SERVICO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CATEGORIA_ORDEM_SERVICO" EntitySet="CATEGORIA_ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CATEGORIA_SERVICO_ASSINANTE" Association="ERP_CRMModel.FK_CATEGORIA_SERVICO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CATEGORIA_SERVICO" EntitySet="CATEGORIA_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DEPARTAMENTO_ASSINANTE" Association="ERP_CRMModel.FK_DEPARTAMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_ASSINANTE" Association="ERP_CRMModel.FK_ORDEM_SERVICO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_ASSINANTE" Association="ERP_CRMModel.FK_SERVICO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="SERVICO" EntitySet="SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_ACOMPANHAMENTO_ATENDIMENTO" Association="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_ATENDIMENTO">
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+            <End Role="ATENDIMENTO_ACOMPANHAMENTO" EntitySet="ATENDIMENTO_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_AGENDA_ATENDIMENTO" Association="ERP_CRMModel.FK_ATENDIMENTO_AGENDA_ATENDIMENTO">
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+            <End Role="ATENDIMENTO_AGENDA" EntitySet="ATENDIMENTO_AGENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_ANEXO_ATENDIMENTO" Association="ERP_CRMModel.FK_ATENDIMENTO_ANEXO_ATENDIMENTO">
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+            <End Role="ATENDIMENTO_ANEXO" EntitySet="ATENDIMENTO_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_CATEGORIA_ATENDIMENTO" Association="ERP_CRMModel.FK_ATENDIMENTO_CATEGORIA_ATENDIMENTO">
+            <End Role="CATEGORIA_ATENDIMENTO" EntitySet="CATEGORIA_ATENDIMENTO" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_CLIENTE" Association="ERP_CRMModel.FK_ATENDIMENTO_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_DEPARTAMENTO" Association="ERP_CRMModel.FK_ATENDIMENTO_DEPARTAMENTO">
+            <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_PEDIDO_VENDA" Association="ERP_CRMModel.FK_ATENDIMENTO_PEDIDO_VENDA">
+            <End Role="PEDIDO_VENDA" EntitySet="PEDIDO_VENDA" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_PRODUTO" Association="ERP_CRMModel.FK_ATENDIMENTO_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_SERVICO" Association="ERP_CRMModel.FK_ATENDIMENTO_SERVICO">
+            <End Role="SERVICO" EntitySet="SERVICO" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_USUARIO" Association="ERP_CRMModel.FK_ATENDIMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_USUARIO1" Association="ERP_CRMModel.FK_ATENDIMENTO_USUARIO1">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_ATENDIMENTO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_ATENDIMENTO">
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_ACOMPANHAMENTO_USUARIO" Association="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ATENDIMENTO_ACOMPANHAMENTO" EntitySet="ATENDIMENTO_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_CATEGORIA_ORDEM_SERVICO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_CATEGORIA_ORDEM_SERVICO">
+            <End Role="CATEGORIA_ORDEM_SERVICO" EntitySet="CATEGORIA_ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_CATEGORIA_SERVICO" Association="ERP_CRMModel.FK_SERVICO_CATEGORIA_SERVICO">
+            <End Role="CATEGORIA_SERVICO" EntitySet="CATEGORIA_SERVICO" />
+            <End Role="SERVICO" EntitySet="SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_CLIENTE" Association="ERP_CRMModel.FK_ORDEM_SERVICO_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_DEPARTAMENTO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_DEPARTAMENTO">
+            <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_FILIAL" Association="ERP_CRMModel.FK_ORDEM_SERVICO_FILIAL">
+            <End Role="FILIAL" EntitySet="FILIAL" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_FILIAL" Association="ERP_CRMModel.FK_SERVICO_FILIAL">
+            <End Role="FILIAL" EntitySet="FILIAL" />
+            <End Role="SERVICO" EntitySet="SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_TABELA_PRECO_FILIAL" Association="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_FILIAL">
+            <End Role="FILIAL" EntitySet="FILIAL" />
+            <End Role="SERVICO_TABELA_PRECO" EntitySet="SERVICO_TABELA_PRECO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_FORMA_PAGAMENTO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_FORMA_PAGAMENTO">
+            <End Role="FORMA_PAGAMENTO" EntitySet="FORMA_PAGAMENTO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_NOMENCLATURA_BRAS_SERVICOS" Association="ERP_CRMModel.FK_SERVICO_NOMENCLATURA_BRAS_SERVICOS">
+            <End Role="NOMENCLATURA_BRAS_SERVICOS" EntitySet="NOMENCLATURA_BRAS_SERVICOS" />
+            <End Role="SERVICO" EntitySet="SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_ACOMPANHAMENTO_ORDEM_SERVICO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_ACOMPANHAMENTO_ORDEM_SERVICO">
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO_ACOMPANHAMENTO" EntitySet="ORDEM_SERVICO_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_AGENDA_ORDEM_SERVICO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_ORDEM_SERVICO">
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO_AGENDA" EntitySet="ORDEM_SERVICO_AGENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_ANEXO_ORDEM_SERVICO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_ANEXO_ORDEM_SERVICO">
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO_ANEXO" EntitySet="ORDEM_SERVICO_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_PRODUTO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_PRODUTO_ORDEM_SERVICO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO_ORDEM_SERVICO">
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO_PRODUTO" EntitySet="ORDEM_SERVICO_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_SERVICO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO">
+            <End Role="SERVICO" EntitySet="SERVICO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_SERVICO_ORDEM_SERVICO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO_ORDEM_SERVICO">
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO_SERVICO" EntitySet="ORDEM_SERVICO_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_USUARIO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_USUARIO1" Association="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO1">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_USUARIO2" Association="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO2">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OS_COMENTARIO_OS" Association="ERP_CRMModel.FK_OS_COMENTARIO_OS">
+            <End Role="ORDEM_SERVICO" EntitySet="ORDEM_SERVICO" />
+            <End Role="ORDEM_SERVICO_COMENTARIOS" EntitySet="ORDEM_SERVICO_COMENTARIOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_ACOMPANHAMENTO_USUARIO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_ACOMPANHAMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ORDEM_SERVICO_ACOMPANHAMENTO" EntitySet="ORDEM_SERVICO_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OS_COMENTARIO_USUARIO" Association="ERP_CRMModel.FK_OS_COMENTARIO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ORDEM_SERVICO_COMENTARIOS" EntitySet="ORDEM_SERVICO_COMENTARIOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_PRODUTO_PRODUTO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="ORDEM_SERVICO_PRODUTO" EntitySet="ORDEM_SERVICO_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDEM_SERVICO_SERVICO_SERVICO" Association="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO_SERVICO">
+            <End Role="SERVICO" EntitySet="SERVICO" />
+            <End Role="ORDEM_SERVICO_SERVICO" EntitySet="ORDEM_SERVICO_SERVICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_ANEXO_SERVICO" Association="ERP_CRMModel.FK_SERVICO_ANEXO_SERVICO">
+            <End Role="SERVICO" EntitySet="SERVICO" />
+            <End Role="SERVICO_ANEXO" EntitySet="SERVICO_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_TABELA_PRECO_SERVICO" Association="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_SERVICO">
+            <End Role="SERVICO" EntitySet="SERVICO" />
+            <End Role="SERVICO_TABELA_PRECO" EntitySet="SERVICO_TABELA_PRECO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICO_UNIDADE" Association="ERP_CRMModel.FK_SERVICO_UNIDADE">
+            <End Role="UNIDADE" EntitySet="UNIDADE" />
+            <End Role="SERVICO" EntitySet="SERVICO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -12694,6 +14009,933 @@
             </Principal>
             <Dependent Role="PRODUTO_KIT">
               <PropertyRef Name="PRKI_CD_KIT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ATENDIMENTO">
+          <Key>
+            <PropertyRef Name="ATEN_CD_ID" />
+          </Key>
+          <Property Name="ATEN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" />
+          <Property Name="CAAT_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CLIE_CD_ID" Type="Int32" />
+          <Property Name="PROD_CD_ID" Type="Int32" />
+          <Property Name="PEVE_CD_ID" Type="Int32" />
+          <Property Name="DEPT_CD_ID" Type="Int32" />
+          <Property Name="SERV_CD_ID" Type="Int32" />
+          <Property Name="ATEN_DT_INICIO" Type="DateTime" Precision="3" />
+          <Property Name="ATEN_DT_ENCERRAMENTO" Type="DateTime" Precision="3" />
+          <Property Name="ATEN_DS_DESCRICAO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="ATEN_IN_STATUS" Type="Int32" Nullable="false" />
+          <Property Name="ATEN_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="ATEN_DS_ENCERRAMENTO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="ATEN_DT_CANCELAMENTO" Type="DateTime" Precision="3" />
+          <Property Name="ATEN_DS_CANCELAMENTO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="ATEN_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ATEN_HR_INICIO" Type="Time" Precision="7" />
+          <Property Name="ATEN_HR_CANCELAMENTO" Type="Time" Precision="7" />
+          <Property Name="ATEN_HR_ENCERRAMENTO" Type="Time" Precision="7" />
+          <Property Name="ATEN_NM_ASSUNTO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ATEN_IN_PRIORIDADE" Type="Int32" />
+          <Property Name="ATEN_IN_TIPO" Type="Int32" />
+          <Property Name="ATEN_IN_DESTINO" Type="Int32" />
+          <Property Name="ATEN_DT_PREVISTA" Type="DateTime" Precision="3" />
+          <Property Name="ATEN_IN_SLA" Type="Int32" />
+          <Property Name="ATEN_NR_NUMERO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_ATENDIMENTO_ASSINANTE" FromRole="ATENDIMENTO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="ATENDIMENTO_ACOMPANHAMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_ATENDIMENTO" FromRole="ATENDIMENTO" ToRole="ATENDIMENTO_ACOMPANHAMENTO" />
+          <NavigationProperty Name="ATENDIMENTO_AGENDA" Relationship="ERP_CRMModel.FK_ATENDIMENTO_AGENDA_ATENDIMENTO" FromRole="ATENDIMENTO" ToRole="ATENDIMENTO_AGENDA" />
+          <NavigationProperty Name="ATENDIMENTO_ANEXO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_ANEXO_ATENDIMENTO" FromRole="ATENDIMENTO" ToRole="ATENDIMENTO_ANEXO" />
+          <NavigationProperty Name="CATEGORIA_ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_CATEGORIA_ATENDIMENTO" FromRole="ATENDIMENTO" ToRole="CATEGORIA_ATENDIMENTO" />
+          <NavigationProperty Name="CLIENTE" Relationship="ERP_CRMModel.FK_ATENDIMENTO_CLIENTE" FromRole="ATENDIMENTO" ToRole="CLIENTE" />
+          <NavigationProperty Name="DEPARTAMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_DEPARTAMENTO" FromRole="ATENDIMENTO" ToRole="DEPARTAMENTO" />
+          <NavigationProperty Name="PEDIDO_VENDA" Relationship="ERP_CRMModel.FK_ATENDIMENTO_PEDIDO_VENDA" FromRole="ATENDIMENTO" ToRole="PEDIDO_VENDA" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_PRODUTO" FromRole="ATENDIMENTO" ToRole="PRODUTO" />
+          <NavigationProperty Name="SERVICO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_SERVICO" FromRole="ATENDIMENTO" ToRole="SERVICO" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_USUARIO" FromRole="ATENDIMENTO" ToRole="USUARIO" />
+          <NavigationProperty Name="USUARIO1" Relationship="ERP_CRMModel.FK_ATENDIMENTO_USUARIO1" FromRole="ATENDIMENTO" ToRole="USUARIO" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_ATENDIMENTO" FromRole="ATENDIMENTO" ToRole="ORDEM_SERVICO" />
+        </EntityType>
+        <EntityType Name="ATENDIMENTO_ACOMPANHAMENTO">
+          <Key>
+            <PropertyRef Name="ATAC_CD_ID" />
+          </Key>
+          <Property Name="ATAC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ATEN_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="ATAC_DS_ACOMPANHAMENTO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="ATAC_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="ATAC_DT_ACOMPANHAMENTO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ATAC_DT_ENCERRAMENTO" Type="DateTime" Precision="3" />
+          <Property Name="ATAC_DS_ENCERRAMENTO" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_ATENDIMENTO" FromRole="ATENDIMENTO_ACOMPANHAMENTO" ToRole="ATENDIMENTO" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_USUARIO" FromRole="ATENDIMENTO_ACOMPANHAMENTO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="ATENDIMENTO_AGENDA">
+          <Key>
+            <PropertyRef Name="ATAG_CD_ID" />
+          </Key>
+          <Property Name="ATAG_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ATEN_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="AGEN_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="ATAG_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AGENDA" Relationship="ERP_CRMModel.FK_ATENDIMENTO_AGENDA_AGENDA" FromRole="ATENDIMENTO_AGENDA" ToRole="AGENDA" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_AGENDA_ATENDIMENTO" FromRole="ATENDIMENTO_AGENDA" ToRole="ATENDIMENTO" />
+        </EntityType>
+        <EntityType Name="ATENDIMENTO_ANEXO">
+          <Key>
+            <PropertyRef Name="ATAN_CD_ID" />
+          </Key>
+          <Property Name="ATAN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ATEN_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="ATAN_NM_TITULO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ATAN_DT_ANEXO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ATAN_IN_TIPO" Type="Int32" Nullable="false" />
+          <Property Name="ATAN_AQ_ARQUIVO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ATAN_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_ANEXO_ATENDIMENTO" FromRole="ATENDIMENTO_ANEXO" ToRole="ATENDIMENTO" />
+        </EntityType>
+        <EntityType Name="CATEGORIA_ATENDIMENTO">
+          <Key>
+            <PropertyRef Name="CAAT_CD_ID" />
+          </Key>
+          <Property Name="CAAT_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CAAT_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CAAT_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="CAAT_IN_SLA" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_CATEGORIA_ATENDIMENTO_ASSINANTE" FromRole="CATEGORIA_ATENDIMENTO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_CATEGORIA_ATENDIMENTO" FromRole="CATEGORIA_ATENDIMENTO" ToRole="ATENDIMENTO" />
+        </EntityType>
+        <EntityType Name="CATEGORIA_ORDEM_SERVICO">
+          <Key>
+            <PropertyRef Name="CAOS_CD_ID" />
+          </Key>
+          <Property Name="CAOS_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" />
+          <Property Name="CAOS_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CAOS_IN_ATIVO" Type="Int32" />
+          <Property Name="CAOS_IN_SLA" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_CATEGORIA_ORDEM_SERVICO_ASSINANTE" FromRole="CATEGORIA_ORDEM_SERVICO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_CATEGORIA_ORDEM_SERVICO" FromRole="CATEGORIA_ORDEM_SERVICO" ToRole="ORDEM_SERVICO" />
+        </EntityType>
+        <EntityType Name="CATEGORIA_SERVICO">
+          <Key>
+            <PropertyRef Name="CASE_CD_ID" />
+          </Key>
+          <Property Name="CASE_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CASE_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CASE_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_CATEGORIA_SERVICO_ASSINANTE" FromRole="CATEGORIA_SERVICO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="SERVICO" Relationship="ERP_CRMModel.FK_SERVICO_CATEGORIA_SERVICO" FromRole="CATEGORIA_SERVICO" ToRole="SERVICO" />
+        </EntityType>
+        <EntityType Name="DEPARTAMENTO">
+          <Key>
+            <PropertyRef Name="DEPT_CD_ID" />
+          </Key>
+          <Property Name="DEPT_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="DEPT_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DEPT_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_DEPARTAMENTO_ASSINANTE" FromRole="DEPARTAMENTO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_DEPARTAMENTO" FromRole="DEPARTAMENTO" ToRole="ATENDIMENTO" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_DEPARTAMENTO" FromRole="DEPARTAMENTO" ToRole="ORDEM_SERVICO" />
+        </EntityType>
+        <EntityType Name="NOMENCLATURA_BRAS_SERVICOS">
+          <Key>
+            <PropertyRef Name="NBSE_CD_ID" />
+          </Key>
+          <Property Name="NBSE_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NBSE_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NBSE_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="SERVICO" Relationship="ERP_CRMModel.FK_SERVICO_NOMENCLATURA_BRAS_SERVICOS" FromRole="NOMENCLATURA_BRAS_SERVICOS" ToRole="SERVICO" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO">
+          <Key>
+            <PropertyRef Name="ORSE_CD_ID" />
+          </Key>
+          <Property Name="ORSE_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ATEN_CD_ID" Type="Int32" />
+          <Property Name="CAOS_CD_ID" Type="Int32" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" />
+          <Property Name="CLIE_CD_ID" Type="Int32" />
+          <Property Name="PROD_CD_ID" Type="Int32" />
+          <Property Name="SERV_CD_ID" Type="Int32" />
+          <Property Name="DEPT_CD_ID" Type="Int32" />
+          <Property Name="ORSE_DT_CRIACAO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ORSE_TX_INFORMACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ORSE_DT_PREVISTA" Type="DateTime" Precision="3" />
+          <Property Name="ORSE_NR_NUMERO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ORSE_NR_NOTA_FISCAL" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ORSE_DT_CANCELAMENTO" Type="DateTime" Precision="3" />
+          <Property Name="ORSE_DS_MOTIVO_CANCELAMENTO" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ORSE_DT_ENCERRAMENTO" Type="DateTime" Precision="3" />
+          <Property Name="ORSE_DS_ENCERRAMENTO" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ORSE_IN_VISITA" Type="Int32" Nullable="false" />
+          <Property Name="ORSE_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="ORSE_IN_STATUS" Type="Int32" Nullable="false" />
+          <Property Name="ORSE_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ORSE_DT_INICIO" Type="DateTime" Precision="3" />
+          <Property Name="ORSE_DT_FINAL" Type="DateTime" Precision="3" />
+          <Property Name="ORSE_DS_DESCRICAO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="ORSE_IN_PRIORIDADE" Type="Int32" />
+          <Property Name="ORSE_IN_VENDEDOR" Type="Int32" />
+          <Property Name="ORSE_NM_EQUIPAMENTO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ORSE_NR_EQUIPAMENTO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ORSE_IN_TECNICO" Type="Int32" />
+          <Property Name="ORSE_IN_ORCAMENTO" Type="Int32" />
+          <Property Name="FOPA_CD_ID" Type="Int32" />
+          <Property Name="FILI_CD_ID" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_ASSINANTE" FromRole="ORDEM_SERVICO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_ATENDIMENTO" FromRole="ORDEM_SERVICO" ToRole="ATENDIMENTO" />
+          <NavigationProperty Name="CATEGORIA_ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_CATEGORIA_ORDEM_SERVICO" FromRole="ORDEM_SERVICO" ToRole="CATEGORIA_ORDEM_SERVICO" />
+          <NavigationProperty Name="CLIENTE" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_CLIENTE" FromRole="ORDEM_SERVICO" ToRole="CLIENTE" />
+          <NavigationProperty Name="DEPARTAMENTO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_DEPARTAMENTO" FromRole="ORDEM_SERVICO" ToRole="DEPARTAMENTO" />
+          <NavigationProperty Name="FILIAL" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_FILIAL" FromRole="ORDEM_SERVICO" ToRole="FILIAL" />
+          <NavigationProperty Name="FORMA_PAGAMENTO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_FORMA_PAGAMENTO" FromRole="ORDEM_SERVICO" ToRole="FORMA_PAGAMENTO" />
+          <NavigationProperty Name="ORDEM_SERVICO_ACOMPANHAMENTO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_ACOMPANHAMENTO_ORDEM_SERVICO" FromRole="ORDEM_SERVICO" ToRole="ORDEM_SERVICO_ACOMPANHAMENTO" />
+          <NavigationProperty Name="ORDEM_SERVICO_AGENDA" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_ORDEM_SERVICO" FromRole="ORDEM_SERVICO" ToRole="ORDEM_SERVICO_AGENDA" />
+          <NavigationProperty Name="ORDEM_SERVICO_ANEXO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_ANEXO_ORDEM_SERVICO" FromRole="ORDEM_SERVICO" ToRole="ORDEM_SERVICO_ANEXO" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO" FromRole="ORDEM_SERVICO" ToRole="PRODUTO" />
+          <NavigationProperty Name="ORDEM_SERVICO_PRODUTO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO_ORDEM_SERVICO" FromRole="ORDEM_SERVICO" ToRole="ORDEM_SERVICO_PRODUTO" />
+          <NavigationProperty Name="SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO" FromRole="ORDEM_SERVICO" ToRole="SERVICO" />
+          <NavigationProperty Name="ORDEM_SERVICO_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO_ORDEM_SERVICO" FromRole="ORDEM_SERVICO" ToRole="ORDEM_SERVICO_SERVICO" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO" FromRole="ORDEM_SERVICO" ToRole="USUARIO" />
+          <NavigationProperty Name="USUARIO1" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO1" FromRole="ORDEM_SERVICO" ToRole="USUARIO" />
+          <NavigationProperty Name="USUARIO2" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO2" FromRole="ORDEM_SERVICO" ToRole="USUARIO" />
+          <NavigationProperty Name="ORDEM_SERVICO_COMENTARIOS" Relationship="ERP_CRMModel.FK_OS_COMENTARIO_OS" FromRole="ORDEM_SERVICO" ToRole="ORDEM_SERVICO_COMENTARIOS" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO_ACOMPANHAMENTO">
+          <Key>
+            <PropertyRef Name="ORSA_CD_ID" />
+          </Key>
+          <Property Name="ORSA_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORSE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="ORSA_DT_ACOMPANHAMENTO" Type="DateTime" Precision="3" />
+          <Property Name="ORSA_DS_DESCRICAO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ORSA_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_ACOMPANHAMENTO_ORDEM_SERVICO" FromRole="ORDEM_SERVICO_ACOMPANHAMENTO" ToRole="ORDEM_SERVICO" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_ACOMPANHAMENTO_USUARIO" FromRole="ORDEM_SERVICO_ACOMPANHAMENTO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO_AGENDA">
+          <Key>
+            <PropertyRef Name="OSAG_CD_ID" />
+          </Key>
+          <Property Name="OSAG_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORSE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="AGEN_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="OSAG_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AGENDA" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_AGENDA" FromRole="ORDEM_SERVICO_AGENDA" ToRole="AGENDA" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_ORDEM_SERVICO" FromRole="ORDEM_SERVICO_AGENDA" ToRole="ORDEM_SERVICO" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO_ANEXO">
+          <Key>
+            <PropertyRef Name="ORSX_CD_ID" />
+          </Key>
+          <Property Name="ORSX_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORSE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="ORSX_NM_TITULO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ORSX_DT_ANEXO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ORSX_IN_TIPO" Type="Int32" Nullable="false" />
+          <Property Name="ORSX_AQ_ARQUIVO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ORSX_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_ANEXO_ORDEM_SERVICO" FromRole="ORDEM_SERVICO_ANEXO" ToRole="ORDEM_SERVICO" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO_COMENTARIOS">
+          <Key>
+            <PropertyRef Name="ORSC_CD_ID" />
+          </Key>
+          <Property Name="ORSC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORSE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="ORSC_TX_COMENTARIO" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ORSC_DT_CRIACAO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_OS_COMENTARIO_OS" FromRole="ORDEM_SERVICO_COMENTARIOS" ToRole="ORDEM_SERVICO" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_OS_COMENTARIO_USUARIO" FromRole="ORDEM_SERVICO_COMENTARIOS" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO_PRODUTO">
+          <Key>
+            <PropertyRef Name="OSPR_CD_ID" />
+          </Key>
+          <Property Name="OSPR_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORSE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="OSPR_IN_QUANTIDADE" Type="Int32" />
+          <Property Name="OSPR_VL_PRECO_NOVO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OSPR_IN_ATIVO" Type="Int32" />
+          <Property Name="OSPR_DS_OBSERVACAO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OSPR_VL_PRECO_PROMO" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO_ORDEM_SERVICO" FromRole="ORDEM_SERVICO_PRODUTO" ToRole="ORDEM_SERVICO" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO_PRODUTO" FromRole="ORDEM_SERVICO_PRODUTO" ToRole="PRODUTO" />
+        </EntityType>
+        <EntityType Name="ORDEM_SERVICO_SERVICO">
+          <Key>
+            <PropertyRef Name="OSSE_CD_ID" />
+          </Key>
+          <Property Name="OSSE_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORSE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="SERV_CD_ID" Type="Int32" />
+          <Property Name="OSSE_IN_QUANTIDADE" Type="Int32" />
+          <Property Name="OSSE_VL_PRECO_NOVO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OSSE_DS_OBSERVACOES" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OSSE_IN_ATIVO" Type="Int32" />
+          <Property Name="OSSE_VL_PRECO_PROMO" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO_ORDEM_SERVICO" FromRole="ORDEM_SERVICO_SERVICO" ToRole="ORDEM_SERVICO" />
+          <NavigationProperty Name="SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO_SERVICO" FromRole="ORDEM_SERVICO_SERVICO" ToRole="SERVICO" />
+        </EntityType>
+        <EntityType Name="SERVICO">
+          <Key>
+            <PropertyRef Name="SERV_CD_ID" />
+          </Key>
+          <Property Name="SERV_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="FILI_CD_ID" Type="Int32" />
+          <Property Name="CASE_CD_ID" Type="Int32" />
+          <Property Name="SERV_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SERV_DS_DESCRICAO" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="SERV_DT_CADASTRO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SERV_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="SERV_CD_CODIGO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SERV_VL_PRECO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UNID_CD_ID" Type="Int32" />
+          <Property Name="NBSE_CD_ID" Type="Int32" />
+          <Property Name="SERV_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_SERVICO_ASSINANTE" FromRole="SERVICO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_SERVICO" FromRole="SERVICO" ToRole="ATENDIMENTO" />
+          <NavigationProperty Name="CATEGORIA_SERVICO" Relationship="ERP_CRMModel.FK_SERVICO_CATEGORIA_SERVICO" FromRole="SERVICO" ToRole="CATEGORIA_SERVICO" />
+          <NavigationProperty Name="FILIAL" Relationship="ERP_CRMModel.FK_SERVICO_FILIAL" FromRole="SERVICO" ToRole="FILIAL" />
+          <NavigationProperty Name="NOMENCLATURA_BRAS_SERVICOS" Relationship="ERP_CRMModel.FK_SERVICO_NOMENCLATURA_BRAS_SERVICOS" FromRole="SERVICO" ToRole="NOMENCLATURA_BRAS_SERVICOS" />
+          <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO" FromRole="SERVICO" ToRole="ORDEM_SERVICO" />
+          <NavigationProperty Name="ORDEM_SERVICO_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO_SERVICO" FromRole="SERVICO" ToRole="ORDEM_SERVICO_SERVICO" />
+          <NavigationProperty Name="SERVICO_ANEXO" Relationship="ERP_CRMModel.FK_SERVICO_ANEXO_SERVICO" FromRole="SERVICO" ToRole="SERVICO_ANEXO" />
+          <NavigationProperty Name="SERVICO_TABELA_PRECO" Relationship="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_SERVICO" FromRole="SERVICO" ToRole="SERVICO_TABELA_PRECO" />
+          <NavigationProperty Name="UNIDADE" Relationship="ERP_CRMModel.FK_SERVICO_UNIDADE" FromRole="SERVICO" ToRole="UNIDADE" />
+          <Property Name="SERV_NR_DURACAO" Type="Int32" />
+          <Property Name="SERV_NR_DURACAO_EXPRESSA" Type="Int32" />
+          <Property Name="SERV_VL_VALOR_EXPRESSO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SERV_IN_LOCAL" Type="Int32" />
+          <Property Name="SERV_VL_VISITA" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="SERVICO_ANEXO">
+          <Key>
+            <PropertyRef Name="SEAN_CD_ID" />
+          </Key>
+          <Property Name="SEAN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SERV_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="SEAN_NM_TITULO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SEAN_DT_ANEXO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SEAN_IN_TIPO" Type="Int32" Nullable="false" />
+          <Property Name="SEAN_AQ_ARQUIVO" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SEAN_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SERVICO" Relationship="ERP_CRMModel.FK_SERVICO_ANEXO_SERVICO" FromRole="SERVICO_ANEXO" ToRole="SERVICO" />
+        </EntityType>
+        <EntityType Name="SERVICO_TABELA_PRECO">
+          <Key>
+            <PropertyRef Name="SETP_CD_ID" />
+          </Key>
+          <Property Name="SETP_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SERV_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="FILI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="SETP_VL_PRECO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SETP_VL_PRECO_PROMOCAO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SETP_VL_DESCONTO_MAXIMO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SETP_DT_DATA_REAJUSTE" Type="DateTime" Precision="0" />
+          <Property Name="SETP_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="SETP_NR_MARKUP" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SETP_VL_CUSTO" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="FILIAL" Relationship="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_FILIAL" FromRole="SERVICO_TABELA_PRECO" ToRole="FILIAL" />
+          <NavigationProperty Name="SERVICO" Relationship="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_SERVICO" FromRole="SERVICO_TABELA_PRECO" ToRole="SERVICO" />
+        </EntityType>
+        <Association Name="FK_ATENDIMENTO_AGENDA_AGENDA">
+          <End Type="ERP_CRMModel.AGENDA" Role="AGENDA" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO_AGENDA" Role="ATENDIMENTO_AGENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENDA">
+              <PropertyRef Name="AGEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_AGENDA">
+              <PropertyRef Name="AGEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_AGENDA_AGENDA">
+          <End Type="ERP_CRMModel.AGENDA" Role="AGENDA" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO_AGENDA" Role="ORDEM_SERVICO_AGENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENDA">
+              <PropertyRef Name="AGEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_AGENDA">
+              <PropertyRef Name="AGEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CATEGORIA_ATENDIMENTO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CATEGORIA_ATENDIMENTO" Role="CATEGORIA_ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CATEGORIA_ATENDIMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CATEGORIA_ORDEM_SERVICO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CATEGORIA_ORDEM_SERVICO" Role="CATEGORIA_ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CATEGORIA_ORDEM_SERVICO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CATEGORIA_SERVICO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CATEGORIA_SERVICO" Role="CATEGORIA_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CATEGORIA_SERVICO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DEPARTAMENTO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.DEPARTAMENTO" Role="DEPARTAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="DEPARTAMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.SERVICO" Role="SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_ACOMPANHAMENTO_ATENDIMENTO">
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO_ACOMPANHAMENTO" Role="ATENDIMENTO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATENDIMENTO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_ACOMPANHAMENTO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_AGENDA_ATENDIMENTO">
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO_AGENDA" Role="ATENDIMENTO_AGENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATENDIMENTO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_AGENDA">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_ANEXO_ATENDIMENTO">
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO_ANEXO" Role="ATENDIMENTO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATENDIMENTO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_ANEXO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_CATEGORIA_ATENDIMENTO">
+          <End Type="ERP_CRMModel.CATEGORIA_ATENDIMENTO" Role="CATEGORIA_ATENDIMENTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_ATENDIMENTO">
+              <PropertyRef Name="CAAT_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="CAAT_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_CLIENTE">
+          <End Type="ERP_CRMModel.CLIENTE" Role="CLIENTE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_DEPARTAMENTO">
+          <End Type="ERP_CRMModel.DEPARTAMENTO" Role="DEPARTAMENTO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTAMENTO">
+              <PropertyRef Name="DEPT_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="DEPT_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_PEDIDO_VENDA">
+          <End Type="ERP_CRMModel.PEDIDO_VENDA" Role="PEDIDO_VENDA" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PEDIDO_VENDA">
+              <PropertyRef Name="PEVE_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="PEVE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_PRODUTO">
+          <End Type="ERP_CRMModel.PRODUTO" Role="PRODUTO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_SERVICO">
+          <End Type="ERP_CRMModel.SERVICO" Role="SERVICO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_USUARIO1">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO">
+              <PropertyRef Name="ATEN_IN_DESTINO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_ATENDIMENTO">
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATENDIMENTO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_ACOMPANHAMENTO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO_ACOMPANHAMENTO" Role="ATENDIMENTO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_ACOMPANHAMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_CATEGORIA_ORDEM_SERVICO">
+          <End Type="ERP_CRMModel.CATEGORIA_ORDEM_SERVICO" Role="CATEGORIA_ORDEM_SERVICO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_ORDEM_SERVICO">
+              <PropertyRef Name="CAOS_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="CAOS_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_CATEGORIA_SERVICO">
+          <End Type="ERP_CRMModel.CATEGORIA_SERVICO" Role="CATEGORIA_SERVICO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.SERVICO" Role="SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_SERVICO">
+              <PropertyRef Name="CASE_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO">
+              <PropertyRef Name="CASE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_CLIENTE">
+          <End Type="ERP_CRMModel.CLIENTE" Role="CLIENTE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_DEPARTAMENTO">
+          <End Type="ERP_CRMModel.DEPARTAMENTO" Role="DEPARTAMENTO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTAMENTO">
+              <PropertyRef Name="DEPT_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="DEPT_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_FILIAL">
+          <End Type="ERP_CRMModel.FILIAL" Role="FILIAL" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_FILIAL">
+          <End Type="ERP_CRMModel.FILIAL" Role="FILIAL" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.SERVICO" Role="SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_TABELA_PRECO_FILIAL">
+          <End Type="ERP_CRMModel.FILIAL" Role="FILIAL" Multiplicity="1" />
+          <End Type="ERP_CRMModel.SERVICO_TABELA_PRECO" Role="SERVICO_TABELA_PRECO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO_TABELA_PRECO">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_FORMA_PAGAMENTO">
+          <End Type="ERP_CRMModel.FORMA_PAGAMENTO" Role="FORMA_PAGAMENTO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORMA_PAGAMENTO">
+              <PropertyRef Name="FOPA_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="FOPA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_NOMENCLATURA_BRAS_SERVICOS">
+          <End Type="ERP_CRMModel.NOMENCLATURA_BRAS_SERVICOS" Role="NOMENCLATURA_BRAS_SERVICOS" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.SERVICO" Role="SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOMENCLATURA_BRAS_SERVICOS">
+              <PropertyRef Name="NBSE_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO">
+              <PropertyRef Name="NBSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_ACOMPANHAMENTO_ORDEM_SERVICO">
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO_ACOMPANHAMENTO" Role="ORDEM_SERVICO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_ACOMPANHAMENTO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_AGENDA_ORDEM_SERVICO">
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO_AGENDA" Role="ORDEM_SERVICO_AGENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_AGENDA">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_ANEXO_ORDEM_SERVICO">
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO_ANEXO" Role="ORDEM_SERVICO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_ANEXO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_PRODUTO">
+          <End Type="ERP_CRMModel.PRODUTO" Role="PRODUTO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_PRODUTO_ORDEM_SERVICO">
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO_PRODUTO" Role="ORDEM_SERVICO_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_PRODUTO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_SERVICO">
+          <End Type="ERP_CRMModel.SERVICO" Role="SERVICO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_SERVICO_ORDEM_SERVICO">
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO_SERVICO" Role="ORDEM_SERVICO_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_USUARIO1">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_IN_VENDEDOR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_USUARIO2">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_IN_TECNICO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OS_COMENTARIO_OS">
+          <End Type="ERP_CRMModel.ORDEM_SERVICO" Role="ORDEM_SERVICO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO_COMENTARIOS" Role="ORDEM_SERVICO_COMENTARIOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDEM_SERVICO">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_COMENTARIOS">
+              <PropertyRef Name="ORSE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_ACOMPANHAMENTO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO_ACOMPANHAMENTO" Role="ORDEM_SERVICO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_ACOMPANHAMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OS_COMENTARIO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO_COMENTARIOS" Role="ORDEM_SERVICO_COMENTARIOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_COMENTARIOS">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_PRODUTO_PRODUTO">
+          <End Type="ERP_CRMModel.PRODUTO" Role="PRODUTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO_PRODUTO" Role="ORDEM_SERVICO_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDEM_SERVICO_SERVICO_SERVICO">
+          <End Type="ERP_CRMModel.SERVICO" Role="SERVICO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.ORDEM_SERVICO_SERVICO" Role="ORDEM_SERVICO_SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Principal>
+            <Dependent Role="ORDEM_SERVICO_SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_ANEXO_SERVICO">
+          <End Type="ERP_CRMModel.SERVICO" Role="SERVICO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.SERVICO_ANEXO" Role="SERVICO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO_ANEXO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_TABELA_PRECO_SERVICO">
+          <End Type="ERP_CRMModel.SERVICO" Role="SERVICO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.SERVICO_TABELA_PRECO" Role="SERVICO_TABELA_PRECO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SERVICO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO_TABELA_PRECO">
+              <PropertyRef Name="SERV_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICO_UNIDADE">
+          <End Type="ERP_CRMModel.UNIDADE" Role="UNIDADE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.SERVICO" Role="SERVICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDADE">
+              <PropertyRef Name="UNID_CD_ID" />
+            </Principal>
+            <Dependent Role="SERVICO">
+              <PropertyRef Name="UNID_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -14860,6 +17102,294 @@
                 <ScalarProperty Name="PRKI_CD_KIT" ColumnName="PRKI_CD_KIT" />
                 <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
                 <ScalarProperty Name="PRKI_CD_ID" ColumnName="PRKI_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ATENDIMENTO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ATENDIMENTO">
+              <MappingFragment StoreEntitySet="ATENDIMENTO">
+                <ScalarProperty Name="ATEN_NR_NUMERO" ColumnName="ATEN_NR_NUMERO" />
+                <ScalarProperty Name="ATEN_IN_SLA" ColumnName="ATEN_IN_SLA" />
+                <ScalarProperty Name="ATEN_DT_PREVISTA" ColumnName="ATEN_DT_PREVISTA" />
+                <ScalarProperty Name="ATEN_IN_DESTINO" ColumnName="ATEN_IN_DESTINO" />
+                <ScalarProperty Name="ATEN_IN_TIPO" ColumnName="ATEN_IN_TIPO" />
+                <ScalarProperty Name="ATEN_IN_PRIORIDADE" ColumnName="ATEN_IN_PRIORIDADE" />
+                <ScalarProperty Name="ATEN_NM_ASSUNTO" ColumnName="ATEN_NM_ASSUNTO" />
+                <ScalarProperty Name="ATEN_HR_ENCERRAMENTO" ColumnName="ATEN_HR_ENCERRAMENTO" />
+                <ScalarProperty Name="ATEN_HR_CANCELAMENTO" ColumnName="ATEN_HR_CANCELAMENTO" />
+                <ScalarProperty Name="ATEN_HR_INICIO" ColumnName="ATEN_HR_INICIO" />
+                <ScalarProperty Name="ATEN_TX_OBSERVACOES" ColumnName="ATEN_TX_OBSERVACOES" />
+                <ScalarProperty Name="ATEN_DS_CANCELAMENTO" ColumnName="ATEN_DS_CANCELAMENTO" />
+                <ScalarProperty Name="ATEN_DT_CANCELAMENTO" ColumnName="ATEN_DT_CANCELAMENTO" />
+                <ScalarProperty Name="ATEN_DS_ENCERRAMENTO" ColumnName="ATEN_DS_ENCERRAMENTO" />
+                <ScalarProperty Name="ATEN_IN_ATIVO" ColumnName="ATEN_IN_ATIVO" />
+                <ScalarProperty Name="ATEN_IN_STATUS" ColumnName="ATEN_IN_STATUS" />
+                <ScalarProperty Name="ATEN_DS_DESCRICAO" ColumnName="ATEN_DS_DESCRICAO" />
+                <ScalarProperty Name="ATEN_DT_ENCERRAMENTO" ColumnName="ATEN_DT_ENCERRAMENTO" />
+                <ScalarProperty Name="ATEN_DT_INICIO" ColumnName="ATEN_DT_INICIO" />
+                <ScalarProperty Name="SERV_CD_ID" ColumnName="SERV_CD_ID" />
+                <ScalarProperty Name="DEPT_CD_ID" ColumnName="DEPT_CD_ID" />
+                <ScalarProperty Name="PEVE_CD_ID" ColumnName="PEVE_CD_ID" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+                <ScalarProperty Name="CLIE_CD_ID" ColumnName="CLIE_CD_ID" />
+                <ScalarProperty Name="CAAT_CD_ID" ColumnName="CAAT_CD_ID" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="ATEN_CD_ID" ColumnName="ATEN_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ATENDIMENTO_ACOMPANHAMENTO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ATENDIMENTO_ACOMPANHAMENTO">
+              <MappingFragment StoreEntitySet="ATENDIMENTO_ACOMPANHAMENTO">
+                <ScalarProperty Name="ATAC_DS_ENCERRAMENTO" ColumnName="ATAC_DS_ENCERRAMENTO" />
+                <ScalarProperty Name="ATAC_DT_ENCERRAMENTO" ColumnName="ATAC_DT_ENCERRAMENTO" />
+                <ScalarProperty Name="ATAC_DT_ACOMPANHAMENTO" ColumnName="ATAC_DT_ACOMPANHAMENTO" />
+                <ScalarProperty Name="ATAC_IN_ATIVO" ColumnName="ATAC_IN_ATIVO" />
+                <ScalarProperty Name="ATAC_DS_ACOMPANHAMENTO" ColumnName="ATAC_DS_ACOMPANHAMENTO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="ATEN_CD_ID" ColumnName="ATEN_CD_ID" />
+                <ScalarProperty Name="ATAC_CD_ID" ColumnName="ATAC_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ATENDIMENTO_AGENDA">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ATENDIMENTO_AGENDA">
+              <MappingFragment StoreEntitySet="ATENDIMENTO_AGENDA">
+                <ScalarProperty Name="ATAG_IN_ATIVO" ColumnName="ATAG_IN_ATIVO" />
+                <ScalarProperty Name="AGEN_CD_ID" ColumnName="AGEN_CD_ID" />
+                <ScalarProperty Name="ATEN_CD_ID" ColumnName="ATEN_CD_ID" />
+                <ScalarProperty Name="ATAG_CD_ID" ColumnName="ATAG_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ATENDIMENTO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ATENDIMENTO_ANEXO">
+              <MappingFragment StoreEntitySet="ATENDIMENTO_ANEXO">
+                <ScalarProperty Name="ATAN_IN_ATIVO" ColumnName="ATAN_IN_ATIVO" />
+                <ScalarProperty Name="ATAN_AQ_ARQUIVO" ColumnName="ATAN_AQ_ARQUIVO" />
+                <ScalarProperty Name="ATAN_IN_TIPO" ColumnName="ATAN_IN_TIPO" />
+                <ScalarProperty Name="ATAN_DT_ANEXO" ColumnName="ATAN_DT_ANEXO" />
+                <ScalarProperty Name="ATAN_NM_TITULO" ColumnName="ATAN_NM_TITULO" />
+                <ScalarProperty Name="ATEN_CD_ID" ColumnName="ATEN_CD_ID" />
+                <ScalarProperty Name="ATAN_CD_ID" ColumnName="ATAN_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORIA_ATENDIMENTO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CATEGORIA_ATENDIMENTO">
+              <MappingFragment StoreEntitySet="CATEGORIA_ATENDIMENTO">
+                <ScalarProperty Name="CAAT_IN_SLA" ColumnName="CAAT_IN_SLA" />
+                <ScalarProperty Name="CAAT_IN_ATIVO" ColumnName="CAAT_IN_ATIVO" />
+                <ScalarProperty Name="CAAT_NM_NOME" ColumnName="CAAT_NM_NOME" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="CAAT_CD_ID" ColumnName="CAAT_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORIA_ORDEM_SERVICO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CATEGORIA_ORDEM_SERVICO">
+              <MappingFragment StoreEntitySet="CATEGORIA_ORDEM_SERVICO">
+                <ScalarProperty Name="CAOS_IN_SLA" ColumnName="CAOS_IN_SLA" />
+                <ScalarProperty Name="CAOS_IN_ATIVO" ColumnName="CAOS_IN_ATIVO" />
+                <ScalarProperty Name="CAOS_NM_NOME" ColumnName="CAOS_NM_NOME" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="CAOS_CD_ID" ColumnName="CAOS_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORIA_SERVICO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CATEGORIA_SERVICO">
+              <MappingFragment StoreEntitySet="CATEGORIA_SERVICO">
+                <ScalarProperty Name="CASE_IN_ATIVO" ColumnName="CASE_IN_ATIVO" />
+                <ScalarProperty Name="CASE_NM_NOME" ColumnName="CASE_NM_NOME" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="CASE_CD_ID" ColumnName="CASE_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEPARTAMENTO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.DEPARTAMENTO">
+              <MappingFragment StoreEntitySet="DEPARTAMENTO">
+                <ScalarProperty Name="DEPT_IN_ATIVO" ColumnName="DEPT_IN_ATIVO" />
+                <ScalarProperty Name="DEPT_NM_NOME" ColumnName="DEPT_NM_NOME" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="DEPT_CD_ID" ColumnName="DEPT_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NOMENCLATURA_BRAS_SERVICOS">
+            <EntityTypeMapping TypeName="ERP_CRMModel.NOMENCLATURA_BRAS_SERVICOS">
+              <MappingFragment StoreEntitySet="NOMENCLATURA_BRAS_SERVICOS">
+                <ScalarProperty Name="NBSE_IN_ATIVO" ColumnName="NBSE_IN_ATIVO" />
+                <ScalarProperty Name="NBSE_NM_NOME" ColumnName="NBSE_NM_NOME" />
+                <ScalarProperty Name="NBSE_CD_ID" ColumnName="NBSE_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDEM_SERVICO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ORDEM_SERVICO">
+              <MappingFragment StoreEntitySet="ORDEM_SERVICO">
+                <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />
+                <ScalarProperty Name="FOPA_CD_ID" ColumnName="FOPA_CD_ID" />
+                <ScalarProperty Name="ORSE_IN_ORCAMENTO" ColumnName="ORSE_IN_ORCAMENTO" />
+                <ScalarProperty Name="ORSE_IN_TECNICO" ColumnName="ORSE_IN_TECNICO" />
+                <ScalarProperty Name="ORSE_NR_EQUIPAMENTO" ColumnName="ORSE_NR_EQUIPAMENTO" />
+                <ScalarProperty Name="ORSE_NM_EQUIPAMENTO" ColumnName="ORSE_NM_EQUIPAMENTO" />
+                <ScalarProperty Name="ORSE_IN_VENDEDOR" ColumnName="ORSE_IN_VENDEDOR" />
+                <ScalarProperty Name="ORSE_IN_PRIORIDADE" ColumnName="ORSE_IN_PRIORIDADE" />
+                <ScalarProperty Name="ORSE_DS_DESCRICAO" ColumnName="ORSE_DS_DESCRICAO" />
+                <ScalarProperty Name="ORSE_DT_FINAL" ColumnName="ORSE_DT_FINAL" />
+                <ScalarProperty Name="ORSE_DT_INICIO" ColumnName="ORSE_DT_INICIO" />
+                <ScalarProperty Name="ORSE_TX_OBSERVACOES" ColumnName="ORSE_TX_OBSERVACOES" />
+                <ScalarProperty Name="ORSE_IN_STATUS" ColumnName="ORSE_IN_STATUS" />
+                <ScalarProperty Name="ORSE_IN_ATIVO" ColumnName="ORSE_IN_ATIVO" />
+                <ScalarProperty Name="ORSE_IN_VISITA" ColumnName="ORSE_IN_VISITA" />
+                <ScalarProperty Name="ORSE_DS_ENCERRAMENTO" ColumnName="ORSE_DS_ENCERRAMENTO" />
+                <ScalarProperty Name="ORSE_DT_ENCERRAMENTO" ColumnName="ORSE_DT_ENCERRAMENTO" />
+                <ScalarProperty Name="ORSE_DS_MOTIVO_CANCELAMENTO" ColumnName="ORSE_DS_MOTIVO_CANCELAMENTO" />
+                <ScalarProperty Name="ORSE_DT_CANCELAMENTO" ColumnName="ORSE_DT_CANCELAMENTO" />
+                <ScalarProperty Name="ORSE_NR_NOTA_FISCAL" ColumnName="ORSE_NR_NOTA_FISCAL" />
+                <ScalarProperty Name="ORSE_NR_NUMERO" ColumnName="ORSE_NR_NUMERO" />
+                <ScalarProperty Name="ORSE_DT_PREVISTA" ColumnName="ORSE_DT_PREVISTA" />
+                <ScalarProperty Name="ORSE_TX_INFORMACOES" ColumnName="ORSE_TX_INFORMACOES" />
+                <ScalarProperty Name="ORSE_DT_CRIACAO" ColumnName="ORSE_DT_CRIACAO" />
+                <ScalarProperty Name="DEPT_CD_ID" ColumnName="DEPT_CD_ID" />
+                <ScalarProperty Name="SERV_CD_ID" ColumnName="SERV_CD_ID" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+                <ScalarProperty Name="CLIE_CD_ID" ColumnName="CLIE_CD_ID" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="CAOS_CD_ID" ColumnName="CAOS_CD_ID" />
+                <ScalarProperty Name="ATEN_CD_ID" ColumnName="ATEN_CD_ID" />
+                <ScalarProperty Name="ORSE_CD_ID" ColumnName="ORSE_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDEM_SERVICO_ACOMPANHAMENTO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ORDEM_SERVICO_ACOMPANHAMENTO">
+              <MappingFragment StoreEntitySet="ORDEM_SERVICO_ACOMPANHAMENTO">
+                <ScalarProperty Name="ORSA_IN_ATIVO" ColumnName="ORSA_IN_ATIVO" />
+                <ScalarProperty Name="ORSA_DS_DESCRICAO" ColumnName="ORSA_DS_DESCRICAO" />
+                <ScalarProperty Name="ORSA_DT_ACOMPANHAMENTO" ColumnName="ORSA_DT_ACOMPANHAMENTO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="ORSE_CD_ID" ColumnName="ORSE_CD_ID" />
+                <ScalarProperty Name="ORSA_CD_ID" ColumnName="ORSA_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDEM_SERVICO_AGENDA">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ORDEM_SERVICO_AGENDA">
+              <MappingFragment StoreEntitySet="ORDEM_SERVICO_AGENDA">
+                <ScalarProperty Name="OSAG_IN_ATIVO" ColumnName="OSAG_IN_ATIVO" />
+                <ScalarProperty Name="AGEN_CD_ID" ColumnName="AGEN_CD_ID" />
+                <ScalarProperty Name="ORSE_CD_ID" ColumnName="ORSE_CD_ID" />
+                <ScalarProperty Name="OSAG_CD_ID" ColumnName="OSAG_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDEM_SERVICO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ORDEM_SERVICO_ANEXO">
+              <MappingFragment StoreEntitySet="ORDEM_SERVICO_ANEXO">
+                <ScalarProperty Name="ORSX_IN_ATIVO" ColumnName="ORSX_IN_ATIVO" />
+                <ScalarProperty Name="ORSX_AQ_ARQUIVO" ColumnName="ORSX_AQ_ARQUIVO" />
+                <ScalarProperty Name="ORSX_IN_TIPO" ColumnName="ORSX_IN_TIPO" />
+                <ScalarProperty Name="ORSX_DT_ANEXO" ColumnName="ORSX_DT_ANEXO" />
+                <ScalarProperty Name="ORSX_NM_TITULO" ColumnName="ORSX_NM_TITULO" />
+                <ScalarProperty Name="ORSE_CD_ID" ColumnName="ORSE_CD_ID" />
+                <ScalarProperty Name="ORSX_CD_ID" ColumnName="ORSX_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDEM_SERVICO_COMENTARIOS">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ORDEM_SERVICO_COMENTARIOS">
+              <MappingFragment StoreEntitySet="ORDEM_SERVICO_COMENTARIOS">
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="ORSC_DT_CRIACAO" ColumnName="ORSC_DT_CRIACAO" />
+                <ScalarProperty Name="ORSC_TX_COMENTARIO" ColumnName="ORSC_TX_COMENTARIO" />
+                <ScalarProperty Name="ORSE_CD_ID" ColumnName="ORSE_CD_ID" />
+                <ScalarProperty Name="ORSC_CD_ID" ColumnName="ORSC_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDEM_SERVICO_PRODUTO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ORDEM_SERVICO_PRODUTO">
+              <MappingFragment StoreEntitySet="ORDEM_SERVICO_PRODUTO">
+                <ScalarProperty Name="OSPR_VL_PRECO_PROMO" ColumnName="OSPR_VL_PRECO_PROMO" />
+                <ScalarProperty Name="OSPR_DS_OBSERVACAO" ColumnName="OSPR_DS_OBSERVACAO" />
+                <ScalarProperty Name="OSPR_IN_ATIVO" ColumnName="OSPR_IN_ATIVO" />
+                <ScalarProperty Name="OSPR_VL_PRECO_NOVO" ColumnName="OSPR_VL_PRECO_NOVO" />
+                <ScalarProperty Name="OSPR_IN_QUANTIDADE" ColumnName="OSPR_IN_QUANTIDADE" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+                <ScalarProperty Name="ORSE_CD_ID" ColumnName="ORSE_CD_ID" />
+                <ScalarProperty Name="OSPR_CD_ID" ColumnName="OSPR_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDEM_SERVICO_SERVICO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ORDEM_SERVICO_SERVICO">
+              <MappingFragment StoreEntitySet="ORDEM_SERVICO_SERVICO">
+                <ScalarProperty Name="OSSE_VL_PRECO_PROMO" ColumnName="OSSE_VL_PRECO_PROMO" />
+                <ScalarProperty Name="OSSE_IN_ATIVO" ColumnName="OSSE_IN_ATIVO" />
+                <ScalarProperty Name="OSSE_DS_OBSERVACOES" ColumnName="OSSE_DS_OBSERVACOES" />
+                <ScalarProperty Name="OSSE_VL_PRECO_NOVO" ColumnName="OSSE_VL_PRECO_NOVO" />
+                <ScalarProperty Name="OSSE_IN_QUANTIDADE" ColumnName="OSSE_IN_QUANTIDADE" />
+                <ScalarProperty Name="SERV_CD_ID" ColumnName="SERV_CD_ID" />
+                <ScalarProperty Name="ORSE_CD_ID" ColumnName="ORSE_CD_ID" />
+                <ScalarProperty Name="OSSE_CD_ID" ColumnName="OSSE_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SERVICO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.SERVICO">
+              <MappingFragment StoreEntitySet="SERVICO">
+                <ScalarProperty Name="SERV_VL_VISITA" ColumnName="SERV_VL_VISITA" />
+                <ScalarProperty Name="SERV_IN_LOCAL" ColumnName="SERV_IN_LOCAL" />
+                <ScalarProperty Name="SERV_VL_VALOR_EXPRESSO" ColumnName="SERV_VL_VALOR_EXPRESSO" />
+                <ScalarProperty Name="SERV_NR_DURACAO_EXPRESSA" ColumnName="SERV_NR_DURACAO_EXPRESSA" />
+                <ScalarProperty Name="SERV_NR_DURACAO" ColumnName="SERV_NR_DURACAO" />
+                <ScalarProperty Name="SERV_TX_OBSERVACOES" ColumnName="SERV_TX_OBSERVACOES" />
+                <ScalarProperty Name="NBSE_CD_ID" ColumnName="NBSE_CD_ID" />
+                <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
+                <ScalarProperty Name="SERV_VL_PRECO" ColumnName="SERV_VL_PRECO" />
+                <ScalarProperty Name="SERV_CD_CODIGO" ColumnName="SERV_CD_CODIGO" />
+                <ScalarProperty Name="SERV_IN_ATIVO" ColumnName="SERV_IN_ATIVO" />
+                <ScalarProperty Name="SERV_DT_CADASTRO" ColumnName="SERV_DT_CADASTRO" />
+                <ScalarProperty Name="SERV_DS_DESCRICAO" ColumnName="SERV_DS_DESCRICAO" />
+                <ScalarProperty Name="SERV_NM_NOME" ColumnName="SERV_NM_NOME" />
+                <ScalarProperty Name="CASE_CD_ID" ColumnName="CASE_CD_ID" />
+                <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="SERV_CD_ID" ColumnName="SERV_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SERVICO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.SERVICO_ANEXO">
+              <MappingFragment StoreEntitySet="SERVICO_ANEXO">
+                <ScalarProperty Name="SEAN_IN_ATIVO" ColumnName="SEAN_IN_ATIVO" />
+                <ScalarProperty Name="SEAN_AQ_ARQUIVO" ColumnName="SEAN_AQ_ARQUIVO" />
+                <ScalarProperty Name="SEAN_IN_TIPO" ColumnName="SEAN_IN_TIPO" />
+                <ScalarProperty Name="SEAN_DT_ANEXO" ColumnName="SEAN_DT_ANEXO" />
+                <ScalarProperty Name="SEAN_NM_TITULO" ColumnName="SEAN_NM_TITULO" />
+                <ScalarProperty Name="SERV_CD_ID" ColumnName="SERV_CD_ID" />
+                <ScalarProperty Name="SEAN_CD_ID" ColumnName="SEAN_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SERVICO_TABELA_PRECO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.SERVICO_TABELA_PRECO">
+              <MappingFragment StoreEntitySet="SERVICO_TABELA_PRECO">
+                <ScalarProperty Name="SETP_VL_CUSTO" ColumnName="SETP_VL_CUSTO" />
+                <ScalarProperty Name="SETP_NR_MARKUP" ColumnName="SETP_NR_MARKUP" />
+                <ScalarProperty Name="SETP_IN_ATIVO" ColumnName="SETP_IN_ATIVO" />
+                <ScalarProperty Name="SETP_DT_DATA_REAJUSTE" ColumnName="SETP_DT_DATA_REAJUSTE" />
+                <ScalarProperty Name="SETP_VL_DESCONTO_MAXIMO" ColumnName="SETP_VL_DESCONTO_MAXIMO" />
+                <ScalarProperty Name="SETP_VL_PRECO_PROMOCAO" ColumnName="SETP_VL_PRECO_PROMOCAO" />
+                <ScalarProperty Name="SETP_VL_PRECO" ColumnName="SETP_VL_PRECO" />
+                <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />
+                <ScalarProperty Name="SERV_CD_ID" ColumnName="SERV_CD_ID" />
+                <ScalarProperty Name="SETP_CD_ID" ColumnName="SETP_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

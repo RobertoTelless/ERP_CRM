@@ -21,15 +21,15 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<SERVICO> GetAllItens()
+        public List<SERVICO> GetAllItens(Int32 idAss)
         {
-            List<SERVICO> lista = _baseService.GetAllItens();
+            List<SERVICO> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<SERVICO> GetAllItensAdm()
+        public List<SERVICO> GetAllItensAdm(Int32 idAss)
         {
-            List<SERVICO> lista = _baseService.GetAllItensAdm();
+            List<SERVICO> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -39,15 +39,15 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public SERVICO CheckExist(SERVICO conta)
+        public SERVICO CheckExist(SERVICO conta, Int32 idAss)
         {
-            SERVICO item = _baseService.CheckExist(conta);
+            SERVICO item = _baseService.CheckExist(conta, idAss);
             return item;
         }
 
-        public List<CATEGORIA_SERVICO> GetAllTipos()
+        public List<CATEGORIA_SERVICO> GetAllTipos(Int32 idAss)
         {
-            List<CATEGORIA_SERVICO> lista = _baseService.GetAllTipos();
+            List<CATEGORIA_SERVICO> lista = _baseService.GetAllTipos(idAss);
             return lista;
         }
 
@@ -64,7 +64,7 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(Int32? catId, String nome, String descricao, String referencia, out List<SERVICO> objeto)
+        public Int32 ExecuteFilter(Int32? catId, String nome, String descricao, String referencia, Int32 idAss, out List<SERVICO> objeto)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(catId, nome, descricao, referencia);
+                objeto = _baseService.ExecuteFilter(catId, nome, descricao, referencia, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -90,7 +90,7 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica existencia prévia
-                if (_baseService.CheckExist(item) != null)
+                if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
                     return 1;
                 }
@@ -103,7 +103,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddSERV",
                     LOG_IN_ATIVO = 1,
@@ -129,7 +129,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "EditSERV",
                     LOG_IN_ATIVO = 1,
@@ -165,6 +165,16 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica integridade referencial
+                if (item.ATENDIMENTO.Count > 0)
+                {
+                    return 1;
+                }
+                if (item.ORDEM_SERVICO.Count > 0)
+                {
+                    return 1;
+                }
+
+                // Ajusta objetos
                 if (item.ASSINANTE != null)
                 {
                     item.ASSINANTE = null;
@@ -176,10 +186,6 @@ namespace ApplicationServices.Services
                 if (item.FILIAL != null)
                 {
                     item.FILIAL = null;
-                }
-                if (item.MATRIZ != null)
-                {
-                    item.MATRIZ = null;
                 }
                 if (item.NOMENCLATURA_BRAS_SERVICOS!= null)
                 {
@@ -197,7 +203,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelSERV",
@@ -226,7 +232,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatSERV",

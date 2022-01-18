@@ -15,13 +15,13 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateDelete(SERVICO perfil, USUARIO usuario);
         Int32 ValidateReativar(SERVICO perfil, USUARIO usuario);
 
-        List<SERVICO> GetAllItens();
-        List<SERVICO> GetAllItensAdm();
+        List<SERVICO> GetAllItens(Int32 idAss);
+        List<SERVICO> GetAllItensAdm(Int32 idAss);
         SERVICO GetItemById(Int32 id);
-        SERVICO CheckExist(SERVICO conta);
-        List<CATEGORIA_SERVICO> GetAllTipos();
+        SERVICO CheckExist(SERVICO conta, Int32 idAss);
+        List<CATEGORIA_SERVICO> GetAllTipos(Int32 idAss);
         List<NOMENCLATURA_BRAS_SERVICOS> GetAllNBSE();
         SERVICO_ANEXO GetAnexoById(Int32 id);
-        Int32 ExecuteFilter(Int32? catId, String nome, String descricao, String referencia, out List<SERVICO> objeto);
+        Int32 ExecuteFilter(Int32? catId, String nome, String descricao, String referencia, Int32 idAss, out List<SERVICO> objeto);
     }
 }

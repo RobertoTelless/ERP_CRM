@@ -21,6 +21,7 @@ namespace EntitiesServices.Model
             this.PEDIDO_VENDA_ACOMPANHAMENTO = new HashSet<PEDIDO_VENDA_ACOMPANHAMENTO>();
             this.PEDIDO_VENDA_ANEXO = new HashSet<PEDIDO_VENDA_ANEXO>();
             this.PEDIDO_VENDA_PARCELA = new HashSet<PEDIDO_VENDA_PARCELA>();
+            this.ATENDIMENTO = new HashSet<ATENDIMENTO>();
         }
     
         public int PEVE_CD_ID { get; set; }
@@ -89,5 +90,7 @@ namespace EntitiesServices.Model
         public virtual PERIODICIDADE PERIODICIDADE { get; set; }
         public virtual USUARIO USUARIO { get; set; }
         public virtual USUARIO USUARIO1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ATENDIMENTO> ATENDIMENTO { get; set; }
     }
 }

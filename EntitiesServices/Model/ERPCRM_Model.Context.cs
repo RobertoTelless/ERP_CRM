@@ -156,5 +156,24 @@ namespace EntitiesServices.Model
         public virtual DbSet<GRUPO_CC> GRUPO_CC { get; set; }
         public virtual DbSet<FORMULARIO_RESPOSTA> FORMULARIO_RESPOSTA { get; set; }
         public virtual DbSet<PRODUTO_KIT> PRODUTO_KIT { get; set; }
+        public virtual DbSet<ATENDIMENTO> ATENDIMENTO { get; set; }
+        public virtual DbSet<ATENDIMENTO_ACOMPANHAMENTO> ATENDIMENTO_ACOMPANHAMENTO { get; set; }
+        public virtual DbSet<ATENDIMENTO_AGENDA> ATENDIMENTO_AGENDA { get; set; }
+        public virtual DbSet<ATENDIMENTO_ANEXO> ATENDIMENTO_ANEXO { get; set; }
+        public virtual DbSet<CATEGORIA_ATENDIMENTO> CATEGORIA_ATENDIMENTO { get; set; }
+        public virtual DbSet<CATEGORIA_ORDEM_SERVICO> CATEGORIA_ORDEM_SERVICO { get; set; }
+        public virtual DbSet<CATEGORIA_SERVICO> CATEGORIA_SERVICO { get; set; }
+        public virtual DbSet<DEPARTAMENTO> DEPARTAMENTO { get; set; }
+        public virtual DbSet<NOMENCLATURA_BRAS_SERVICOS> NOMENCLATURA_BRAS_SERVICOS { get; set; }
+        public virtual DbSet<ORDEM_SERVICO> ORDEM_SERVICO { get; set; }
+        public virtual DbSet<ORDEM_SERVICO_ACOMPANHAMENTO> ORDEM_SERVICO_ACOMPANHAMENTO { get; set; }
+        public virtual DbSet<ORDEM_SERVICO_AGENDA> ORDEM_SERVICO_AGENDA { get; set; }
+        public virtual DbSet<ORDEM_SERVICO_ANEXO> ORDEM_SERVICO_ANEXO { get; set; }
+        public virtual DbSet<ORDEM_SERVICO_COMENTARIOS> ORDEM_SERVICO_COMENTARIOS { get; set; }
+        public virtual DbSet<ORDEM_SERVICO_PRODUTO> ORDEM_SERVICO_PRODUTO { get; set; }
+        public virtual DbSet<ORDEM_SERVICO_SERVICO> ORDEM_SERVICO_SERVICO { get; set; }
+        public virtual DbSet<SERVICO> SERVICO { get; set; }
+        public virtual DbSet<SERVICO_ANEXO> SERVICO_ANEXO { get; set; }
+        public virtual DbSet<SERVICO_TABELA_PRECO> SERVICO_TABELA_PRECO { get; set; }
     }
 }

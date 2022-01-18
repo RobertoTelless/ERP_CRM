@@ -19,23 +19,23 @@ namespace ModelServices.EntitiesServices
     public class ServicoTabelaPrecoService : ServiceBase<SERVICO_TABELA_PRECO>, IServicoTabelaPrecoService
     {
         private readonly IServicoTabelaPrecoRepository _baseRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public ServicoTabelaPrecoService(IServicoTabelaPrecoRepository baseRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
         }
 
-        public SERVICO_TABELA_PRECO GetByServFilial(Int32 id, Int32 fili)
+        public SERVICO_TABELA_PRECO GetByServFilial(Int32 id, Int32 fili, Int32 idAss)
         {
-            return _baseRepository.GetByServFilial(id, fili);
+            return _baseRepository.GetByServFilial(id, fili, idAss);
         }
 
-        public Int32 Create(SERVICO_TABELA_PRECO item)
+        public Int32 Create(SERVICO_TABELA_PRECO item, Int32 idAss)
         {
             using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))
             {
-                if (_baseRepository.CheckExist(item.FILI_CD_ID, item.SERV_CD_ID) != null)
+                if (_baseRepository.CheckExist(item.FILI_CD_ID, item.SERV_CD_ID, idAss) != null)
                 {
                     return 1;
                 }

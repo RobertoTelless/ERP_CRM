@@ -124,6 +124,10 @@ namespace Presentation.Start
             kernel.Bind<IContaReceberParcelaAppService>().To<ContaReceberParcelaAppService>();
             kernel.Bind<IContaReceberRateioAppService>().To<ContaReceberRateioAppService>();
             kernel.Bind<IFichaTecnicaAppService>().To<FichaTecnicaAppService>();
+            kernel.Bind<ICategoriaServicoAppService>().To<CategoriaServicoAppService>();
+            kernel.Bind<IDepartamentoAppService>().To<DepartamentoAppService>();
+            kernel.Bind<IServicoAppService>().To<ServicoAppService>();
+            kernel.Bind<IServicoTabelaPrecoAppService>().To<ServicoTabelaPrecoAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -182,6 +186,10 @@ namespace Presentation.Start
             kernel.Bind<IContaReceberRateioService>().To<ContaReceberRateioService>();
             kernel.Bind<IContaReceberService>().To<ContaReceberService>();
             kernel.Bind<IFichaTecnicaService>().To<FichaTecnicaService>();
+            kernel.Bind<ICategoriaServicoService>().To<CategoriaServicoService>();
+            kernel.Bind<IDepartamentoService>().To<DepartamentoService>();
+            kernel.Bind<IServicoService>().To<ServicoService>();
+            kernel.Bind<IServicoTabelaPrecoService>().To<ServicoTabelaPrecoService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -288,6 +296,12 @@ namespace Presentation.Start
             kernel.Bind<IFichaTecnicaRepository>().To<FichaTecnicaRepository>();
             kernel.Bind<IFichaTecnicaDetalheRepository>().To<FichaTecnicaDetalheRepository>();
             kernel.Bind<IProdutoKitRepository>().To<ProdutoKitRepository>();
+            kernel.Bind<IProdutoKitRepository>().To<ProdutoKitRepository>();
+            kernel.Bind<ICategoriaServicoRepository>().To<CategoriaServicoRepository>();
+            kernel.Bind<IDepartamentoRepository>().To<DepartamentoRepository>();
+            kernel.Bind<IServicoAnexoRepository>().To<ServicoAnexoRepository>();
+            kernel.Bind<IServicoRepository>().To<ServicoRepository>();
+            kernel.Bind<IServicoTabelaPrecoRepository>().To<ServicoTabelaPrecoRepository>();
 
         }
     }

@@ -177,6 +177,7 @@
     <Compile Include="Repositories\CargoRepository.cs" />
     <Compile Include="Repositories\CategoriaEquipamentoRepository.cs" />
     <Compile Include="Repositories\CategoriaProdutoRepository.cs" />
+    <Compile Include="Repositories\CategoriaServicoRepository.cs" />
     <Compile Include="Repositories\ContaPagarAnexoRepository.cs" />
     <Compile Include="Repositories\ContaPagarParcelaRepository.cs" />
     <Compile Include="Repositories\ContaPagarRateioRepository.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Repositories\ContaReceberParcelaRepository.cs" />
     <Compile Include="Repositories\ContaReceberRateioRepository.cs" />
     <Compile Include="Repositories\ContaReceberRepository.cs" />
+    <Compile Include="Repositories\DepartamentoRepository.cs" />
     <Compile Include="Repositories\GrupoCCRepository.cs" />
     <Compile Include="Repositories\CentroCustoRepository.cs" />
     <Compile Include="Repositories\ContaBancariaContatoRepository.cs" />
@@ -217,6 +219,7 @@
     <Compile Include="Repositories\MotivoCancelamentoRepository.cs" />
     <Compile Include="Repositories\MotivoEncerramentoRepository.cs" />
     <Compile Include="Repositories\MovimentoEstoqueProdutoRepository.cs" />
+    <Compile Include="Repositories\NomencBrasServicosRepository.cs" />
     <Compile Include="Repositories\PedidoCompraAcompanhamentoRepository.cs" />
     <Compile Include="Repositories\PedidoCompraAnexoRepository.cs" />
     <Compile Include="Repositories\PedidoCompraRepository.cs" />
@@ -230,6 +233,9 @@
     <Compile Include="Repositories\ProdutoOrigemRepository.cs" />
     <Compile Include="Repositories\ProdutoRepository.cs" />
     <Compile Include="Repositories\ProdutoTabelaPrecoRepository.cs" />
+    <Compile Include="Repositories\ServicoAnexoRepository.cs" />
+    <Compile Include="Repositories\ServicoRepository.cs" />
+    <Compile Include="Repositories\ServicoTabelaPrecoRepository.cs" />
     <Compile Include="Repositories\SexoRepository.cs" />
     <Compile Include="Repositories\RegimeTributarioRepository.cs" />
     <Compile Include="Repositories\CategoriaAgendaRepository.cs" />

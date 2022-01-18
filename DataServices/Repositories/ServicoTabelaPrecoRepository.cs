@@ -14,7 +14,7 @@ namespace DataServices.Repositories
 {
     public class ServicoTabelaPrecoRepository : RepositoryBase<SERVICO_TABELA_PRECO>, IServicoTabelaPrecoRepository
     {
-        public SERVICO_TABELA_PRECO CheckExist(Int32 fili, Int32 servico)
+        public SERVICO_TABELA_PRECO CheckExist(Int32 fili, Int32 servico, Int32 idAss)
         {
             IQueryable<SERVICO_TABELA_PRECO> query = Db.SERVICO_TABELA_PRECO;
             query = query.Where(x => x.FILI_CD_ID == fili);
@@ -22,7 +22,7 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public SERVICO_TABELA_PRECO GetByServFilial(Int32 id, Int32 fili)
+        public SERVICO_TABELA_PRECO GetByServFilial(Int32 id, Int32 fili, Int32 idAss)
         {
             IQueryable<SERVICO_TABELA_PRECO> query = Db.SERVICO_TABELA_PRECO;
             query = query.Where(x => x.FILI_CD_ID == fili);

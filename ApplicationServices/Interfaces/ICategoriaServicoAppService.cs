@@ -14,8 +14,10 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEdit(CATEGORIA_SERVICO item, CATEGORIA_SERVICO itemAntes);
         Int32 ValidateDelete(CATEGORIA_SERVICO item, USUARIO usuario);
         Int32 ValidateReativar(CATEGORIA_SERVICO item, USUARIO usuario);
-        List<CATEGORIA_SERVICO> GetAllItens();
-        List<CATEGORIA_SERVICO> GetAllItensAdm();
+
+        CATEGORIA_SERVICO CheckExist(CATEGORIA_SERVICO conta, Int32 idAss);
+        List<CATEGORIA_SERVICO> GetAllItens(Int32 idAss);
+        List<CATEGORIA_SERVICO> GetAllItensAdm(Int32 idAss);
         CATEGORIA_SERVICO GetItemById(Int32 id);
     }
 }

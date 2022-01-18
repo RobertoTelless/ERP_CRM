@@ -77,6 +77,13 @@ namespace EntitiesServices.Model
             this.TAMANHO = new HashSet<TAMANHO>();
             this.FICHA_TECNICA = new HashSet<FICHA_TECNICA>();
             this.GRUPO_CC = new HashSet<GRUPO_CC>();
+            this.ATENDIMENTO = new HashSet<ATENDIMENTO>();
+            this.CATEGORIA_ATENDIMENTO = new HashSet<CATEGORIA_ATENDIMENTO>();
+            this.CATEGORIA_ORDEM_SERVICO = new HashSet<CATEGORIA_ORDEM_SERVICO>();
+            this.CATEGORIA_SERVICO = new HashSet<CATEGORIA_SERVICO>();
+            this.DEPARTAMENTO = new HashSet<DEPARTAMENTO>();
+            this.ORDEM_SERVICO = new HashSet<ORDEM_SERVICO>();
+            this.SERVICO = new HashSet<SERVICO>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -224,5 +231,19 @@ namespace EntitiesServices.Model
         public virtual ICollection<FICHA_TECNICA> FICHA_TECNICA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GRUPO_CC> GRUPO_CC { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ATENDIMENTO> ATENDIMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CATEGORIA_ATENDIMENTO> CATEGORIA_ATENDIMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CATEGORIA_ORDEM_SERVICO> CATEGORIA_ORDEM_SERVICO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CATEGORIA_SERVICO> CATEGORIA_SERVICO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DEPARTAMENTO> DEPARTAMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ORDEM_SERVICO> ORDEM_SERVICO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SERVICO> SERVICO { get; set; }
     }
 }

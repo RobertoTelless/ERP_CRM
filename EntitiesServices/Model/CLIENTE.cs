@@ -28,6 +28,8 @@ namespace EntitiesServices.Model
             this.PEDIDO_VENDA = new HashSet<PEDIDO_VENDA>();
             this.CLIENTE_REFERENCIA = new HashSet<CLIENTE_REFERENCIA>();
             this.CLIENTE_TAG = new HashSet<CLIENTE_TAG>();
+            this.ATENDIMENTO = new HashSet<ATENDIMENTO>();
+            this.ORDEM_SERVICO = new HashSet<ORDEM_SERVICO>();
         }
     
         public int CLIE_CD_ID { get; set; }
@@ -118,5 +120,9 @@ namespace EntitiesServices.Model
         public virtual SEXO SEXO { get; set; }
         public virtual UF UF1 { get; set; }
         public virtual REGIME_TRIBUTARIO REGIME_TRIBUTARIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ATENDIMENTO> ATENDIMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ORDEM_SERVICO> ORDEM_SERVICO { get; set; }
     }
 }

@@ -22,6 +22,7 @@ namespace EntitiesServices.Model
             this.CONTA_RECEBER = new HashSet<CONTA_RECEBER>();
             this.PEDIDO_COMPRA = new HashSet<PEDIDO_COMPRA>();
             this.PEDIDO_VENDA = new HashSet<PEDIDO_VENDA>();
+            this.ORDEM_SERVICO = new HashSet<ORDEM_SERVICO>();
         }
     
         public int FOPA_CD_ID { get; set; }
@@ -50,5 +51,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<PEDIDO_COMPRA> PEDIDO_COMPRA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PEDIDO_VENDA> PEDIDO_VENDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ORDEM_SERVICO> ORDEM_SERVICO { get; set; }
     }
 }

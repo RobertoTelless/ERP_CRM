@@ -30,6 +30,9 @@ namespace EntitiesServices.Model
             this.TRANSPORTADORA = new HashSet<TRANSPORTADORA>();
             this.CLIENTE = new HashSet<CLIENTE>();
             this.USUARIO = new HashSet<USUARIO>();
+            this.ORDEM_SERVICO = new HashSet<ORDEM_SERVICO>();
+            this.SERVICO = new HashSet<SERVICO>();
+            this.SERVICO_TABELA_PRECO = new HashSet<SERVICO_TABELA_PRECO>();
         }
     
         public int FILI_CD_ID { get; set; }
@@ -85,5 +88,11 @@ namespace EntitiesServices.Model
         public virtual ICollection<CLIENTE> CLIENTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USUARIO> USUARIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ORDEM_SERVICO> ORDEM_SERVICO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SERVICO> SERVICO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SERVICO_TABELA_PRECO> SERVICO_TABELA_PRECO { get; set; }
     }
 }

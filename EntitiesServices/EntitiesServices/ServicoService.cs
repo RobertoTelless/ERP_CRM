@@ -23,7 +23,7 @@ namespace ModelServices.EntitiesServices
         private readonly ICategoriaServicoRepository _tipoRepository;
         private readonly IServicoAnexoRepository _anexoRepository;
         private readonly INomencBrasServicosRepository _nbseRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public ServicoService(IServicoRepository baseRepository, ILogRepository logRepository, ICategoriaServicoRepository tipoRepository, IServicoAnexoRepository anexoRepository, INomencBrasServicosRepository nbseRepository) : base(baseRepository)
         {
@@ -34,9 +34,9 @@ namespace ModelServices.EntitiesServices
             _nbseRepository = nbseRepository;
         }
 
-        public SERVICO CheckExist(SERVICO conta)
+        public SERVICO CheckExist(SERVICO conta, Int32 idAss)
         {
-            SERVICO item = _baseRepository.CheckExist(conta);
+            SERVICO item = _baseRepository.CheckExist(conta, idAss);
             return item;
         }
 
@@ -46,19 +46,19 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<SERVICO> GetAllItens()
+        public List<SERVICO> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<SERVICO> GetAllItensAdm()
+        public List<SERVICO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
-        public List<CATEGORIA_SERVICO> GetAllTipos()
+        public List<CATEGORIA_SERVICO> GetAllTipos(Int32 idAss)
         {
-            return _tipoRepository.GetAllItens();
+            return _tipoRepository.GetAllItens(idAss);
         }
 
         public List<NOMENCLATURA_BRAS_SERVICOS> GetAllNBSE()
@@ -71,9 +71,9 @@ namespace ModelServices.EntitiesServices
             return _anexoRepository.GetItemById(id);
         }
 
-        public List<SERVICO> ExecuteFilter(Int32? catId, String nome, String descricao, String referencia)
+        public List<SERVICO> ExecuteFilter(Int32? catId, String nome, String descricao, String referencia, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(catId, nome, descricao, referencia);
+            return _baseRepository.ExecuteFilter(catId, nome, descricao, referencia, idAss);
 
         }
 

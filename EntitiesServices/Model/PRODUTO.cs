@@ -31,6 +31,9 @@ namespace EntitiesServices.Model
             this.FICHA_TECNICA_DETALHE = new HashSet<FICHA_TECNICA_DETALHE>();
             this.PRODUTO_KIT = new HashSet<PRODUTO_KIT>();
             this.PRODUTO_KIT1 = new HashSet<PRODUTO_KIT>();
+            this.ATENDIMENTO = new HashSet<ATENDIMENTO>();
+            this.ORDEM_SERVICO = new HashSet<ORDEM_SERVICO>();
+            this.ORDEM_SERVICO_PRODUTO = new HashSet<ORDEM_SERVICO_PRODUTO>();
         }
     
         public int PROD_CD_ID { get; set; }
@@ -146,5 +149,11 @@ namespace EntitiesServices.Model
         public virtual ICollection<PRODUTO_KIT> PRODUTO_KIT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PRODUTO_KIT> PRODUTO_KIT1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ATENDIMENTO> ATENDIMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ORDEM_SERVICO> ORDEM_SERVICO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ORDEM_SERVICO_PRODUTO> ORDEM_SERVICO_PRODUTO { get; set; }
     }
 }

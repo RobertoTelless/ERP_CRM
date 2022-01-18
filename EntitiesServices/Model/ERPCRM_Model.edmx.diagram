@@ -382,6 +382,74 @@
         <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_KIT" Width="1.5" PointX="17.75" PointY="163.5" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO1" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO" Width="1.5" PointX="37.25" PointY="145.625" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_ACOMPANHAMENTO" Width="1.5" PointX="39.5" PointY="143" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_AGENDA" Width="1.5" PointX="39.5" PointY="147.375" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_ANEXO" Width="1.5" PointX="39.5" PointY="164.125" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_ATENDIMENTO" Width="1.5" PointX="5.25" PointY="187.875" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_ORDEM_SERVICO" Width="1.5" PointX="5.25" PointY="103.75" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_SERVICO" Width="1.5" PointX="5.25" PointY="203.125" />
+        <EntityTypeShape EntityType="ERP_CRMModel.DEPARTAMENTO" Width="1.5" PointX="5.25" PointY="100" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NOMENCLATURA_BRAS_SERVICOS" Width="1.5" PointX="15.25" PointY="172" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO" Width="1.5" PointX="42.5" PointY="136.875" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_ACOMPANHAMENTO" Width="1.5" PointX="44.75" PointY="141.875" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_AGENDA" Width="1.5" PointX="9.75" PointY="159.875" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_ANEXO" Width="1.5" PointX="44.75" PointY="154.875" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_COMENTARIOS" Width="1.5" PointX="47.75" PointY="144.875" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_PRODUTO" Width="1.5" PointX="44.75" PointY="145.5" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_SERVICO" Width="1.5" PointX="44.75" PointY="150.25" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO" Width="1.5" PointX="17.5" PointY="167.125" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO_ANEXO" Width="1.5" PointX="19.75" PointY="172.625" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO_TABELA_PRECO" Width="1.5" PointX="33.75" PointY="158.625" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_AGENDA_AGENDA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_AGENDA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_ATENDIMENTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_ORDEM_SERVICO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_SERVICO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_DEPARTAMENTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_ATENDIMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_AGENDA_ATENDIMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ANEXO_ATENDIMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_CATEGORIA_ATENDIMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_CLIENTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_DEPARTAMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_PEDIDO_VENDA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_PRODUTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_SERVICO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_USUARIO1" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ATENDIMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_CATEGORIA_ORDEM_SERVICO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_CATEGORIA_SERVICO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_CLIENTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_DEPARTAMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_FILIAL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_FILIAL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_FILIAL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_FORMA_PAGAMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_NOMENCLATURA_BRAS_SERVICOS" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ACOMPANHAMENTO_ORDEM_SERVICO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_ORDEM_SERVICO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ANEXO_ORDEM_SERVICO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO_ORDEM_SERVICO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO_ORDEM_SERVICO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO1" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO2" />
+        <AssociationConnector Association="ERP_CRMModel.FK_OS_COMENTARIO_OS" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ACOMPANHAMENTO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_OS_COMENTARIO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO_PRODUTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO_SERVICO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_ANEXO_SERVICO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_SERVICO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_UNIDADE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

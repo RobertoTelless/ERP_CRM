@@ -432,4 +432,7 @@
   <data name="M0120" xml:space="preserve">
     <value>Composição já cadastrada para esse produto</value>
   </data>
+  <data name="M0121" xml:space="preserve">
+    <value>Serviço já cadastrado</value>
+  </data>
 </root>

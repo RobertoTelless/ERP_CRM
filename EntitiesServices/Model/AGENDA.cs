@@ -19,6 +19,8 @@ namespace EntitiesServices.Model
         {
             this.AGENDA_ANEXO = new HashSet<AGENDA_ANEXO>();
             this.AGENDA_VINCULO = new HashSet<AGENDA_VINCULO>();
+            this.ATENDIMENTO_AGENDA = new HashSet<ATENDIMENTO_AGENDA>();
+            this.ORDEM_SERVICO_AGENDA = new HashSet<ORDEM_SERVICO_AGENDA>();
         }
     
         public int AGEN_CD_ID { get; set; }
@@ -43,5 +45,9 @@ namespace EntitiesServices.Model
         public virtual USUARIO USUARIO1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA_VINCULO> AGENDA_VINCULO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ATENDIMENTO_AGENDA> ATENDIMENTO_AGENDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ORDEM_SERVICO_AGENDA> ORDEM_SERVICO_AGENDA { get; set; }
     }
 }

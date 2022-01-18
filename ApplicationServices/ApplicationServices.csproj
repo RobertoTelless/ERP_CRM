@@ -175,6 +175,7 @@
     <Compile Include="Interfaces\ICategoriaFornecedorAppService.cs" />
     <Compile Include="Interfaces\ICategoriaEquipamentoAppService.cs" />
     <Compile Include="Interfaces\ICategoriaProdutoAppService.cs" />
+    <Compile Include="Interfaces\ICategoriaServicoAppService.cs" />
     <Compile Include="Interfaces\ICentroCustoAppService.cs" />
     <Compile Include="Interfaces\IContaBancariaAppService.cs" />
     <Compile Include="Interfaces\IContaPagarAppService.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Interfaces\IContaReceberAppService.cs" />
     <Compile Include="Interfaces\IContaReceberParcelaAppService.cs" />
     <Compile Include="Interfaces\IContaReceberRateioAppService.cs" />
+    <Compile Include="Interfaces\IDepartamentoAppService.cs" />
     <Compile Include="Interfaces\IEquipamentoAppService.cs" />
     <Compile Include="Interfaces\IFichaTecnicaAppService.cs" />
     <Compile Include="Interfaces\IFormaPagamentoAppService.cs" />
@@ -190,6 +192,8 @@
     <Compile Include="Interfaces\IProdutoAppService.cs" />
     <Compile Include="Interfaces\IProdutoEstoqueFilialAppService.cs" />
     <Compile Include="Interfaces\IProdutoTabelaPrecoAppService.cs" />
+    <Compile Include="Interfaces\IServicoAppService.cs" />
+    <Compile Include="Interfaces\IServicoTabelaPrecoAppService.cs" />
     <Compile Include="Interfaces\ISubCategoriaProdutoAppService.cs" />
     <Compile Include="Interfaces\IGrupoCCAppService.cs" />
     <Compile Include="Interfaces\ISubgrupoAppService.cs" />
@@ -233,6 +237,7 @@
     <Compile Include="Services\CategoriaFornecedorAppService.cs" />
     <Compile Include="Services\CategoriaEquipamentoAppService.cs" />
     <Compile Include="Services\CategoriaProdutoAppService.cs" />
+    <Compile Include="Services\CategoriaServicoAppService.cs" />
     <Compile Include="Services\CentroCustoAppService.cs" />
     <Compile Include="Services\ContaBancariaAppService.cs" />
     <Compile Include="Services\ContaPagarAppService.cs" />
@@ -241,6 +246,7 @@
     <Compile Include="Services\ContaReceberAppService.cs" />
     <Compile Include="Services\ContaReceberParcelaAppService.cs" />
     <Compile Include="Services\ContaReceberrRateioAppService.cs" />
+    <Compile Include="Services\DepartamentoAppService.cs" />
     <Compile Include="Services\EquipamentoAppService.cs" />
     <Compile Include="Services\FichaTecnicaAppService.cs" />
     <Compile Include="Services\FormaPagamentoAppService.cs" />
@@ -248,6 +254,8 @@
     <Compile Include="Services\ProdutoAppService.cs" />
     <Compile Include="Services\ProdutoEstoqueFilialAppService.cs" />
     <Compile Include="Services\ProdutoTabelaPrecoAppService.cs" />
+    <Compile Include="Services\ServicoAppService.cs" />
+    <Compile Include="Services\ServicoTabelaPrecoAppService.cs" />
     <Compile Include="Services\SubcategoriaProdutoAppService.cs" />
     <Compile Include="Services\GrupoCCAppService.cs" />
     <Compile Include="Services\SubgrupoAppService.cs" />
