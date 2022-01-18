@@ -74,6 +74,8 @@ namespace MvcMapping.Mappers
             CreateMap<ContaPagarViewModel, CONTA_PAGAR>();
             CreateMap<ContaReceberParcelaViewModel, CONTA_RECEBER_PARCELA>();
             CreateMap<ContaReceberViewModel, CONTA_RECEBER>();
+            CreateMap<FichaTecnicaViewModel, FICHA_TECNICA>();
+            CreateMap<FichaTecnicaDetalheViewModel, FICHA_TECNICA_DETALHE>();
 
         }
     }

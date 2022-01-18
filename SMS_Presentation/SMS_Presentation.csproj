@@ -314,6 +314,7 @@
     <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Controllers\EquipamentoController.cs" />
     <Compile Include="Controllers\EstoqueController.cs" />
+    <Compile Include="Controllers\FichaTecnicaController.cs" />
     <Compile Include="Controllers\FilialController.cs" />
     <Compile Include="Controllers\FormaPagamentoController.cs" />
     <Compile Include="Controllers\FornecedorController.cs" />
@@ -3258,6 +3259,14 @@
     <Content Include="Views\ContaReceber\LiquidarParcelaCR.cshtml" />
     <Content Include="Views\ContaPagar\MontarTelaDashboardFinanceiro.cshtml" />
     <Content Include="Views\ContaPagar\IncluirCP.cshtml" />
+    <Content Include="Views\FichaTecnica\MontarTelaFT.cshtml" />
+    <Content Include="Views\FichaTecnica\MontarTelaFTProd.cshtml" />
+    <Content Include="Views\FichaTecnica\IncluirFT.cshtml" />
+    <Content Include="Views\FichaTecnica\EditarInsumoFT.cshtml" />
+    <Content Include="Views\FichaTecnica\EditarFT.cshtml" />
+    <Content Include="Views\FichaTecnica\VisualizarEditarFTProduto.cshtml" />
+    <Content Include="Views\FichaTecnica\IncluirInsumoFT.cshtml" />
+    <Content Include="Views\FichaTecnica\CriarFichaTecnicaProduto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3277,6 +3286,7 @@
     <Folder Include="Imagens\2\ContaReceber\" />
     <Folder Include="Imagens\2\CRM\" />
     <Folder Include="Imagens\2\Equipamento\" />
+    <Folder Include="Imagens\2\FichaTecnica\" />
     <Folder Include="Imagens\2\Filial\1\Anexos\" />
     <Folder Include="Imagens\2\Filial\2\Logo\" />
     <Folder Include="Imagens\2\Fornecedores\" />

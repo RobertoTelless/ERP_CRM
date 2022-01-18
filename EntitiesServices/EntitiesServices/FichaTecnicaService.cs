@@ -21,7 +21,7 @@ namespace ModelServices.EntitiesServices
         private readonly IFichaTecnicaRepository _baseRepository;
         private readonly ILogRepository _logRepository;
         private readonly IFichaTecnicaDetalheRepository _detRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public FichaTecnicaService(IFichaTecnicaRepository baseRepository, ILogRepository logRepository, IFichaTecnicaDetalheRepository detRepository) : base(baseRepository)
         {
@@ -30,20 +30,26 @@ namespace ModelServices.EntitiesServices
             _detRepository = detRepository;
         }
 
+        public FICHA_TECNICA CheckExist(FICHA_TECNICA conta, Int32 idAss)
+        {
+            FICHA_TECNICA item = _baseRepository.CheckExist(conta, idAss);
+            return item;
+        }
+
         public FICHA_TECNICA GetItemById(Int32 id)
         {
             FICHA_TECNICA item = _baseRepository.GetItemById(id);
             return item;
         }
 
-        public List<FICHA_TECNICA> GetAllItens()
+        public List<FICHA_TECNICA> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<FICHA_TECNICA> GetAllItensAdm()
+        public List<FICHA_TECNICA> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
         public FICHA_TECNICA_DETALHE GetDetalheById(Int32 id)
@@ -51,9 +57,9 @@ namespace ModelServices.EntitiesServices
             return _detRepository.GetItemById(id);
         }
 
-        public List<FICHA_TECNICA> ExecuteFilter(Int32? prodId, Int32? cat, String descricao)
+        public List<FICHA_TECNICA> ExecuteFilter(Int32? prodId, Int32? cat, String descricao, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(prodId, cat, descricao);
+            return _baseRepository.ExecuteFilter(prodId, cat, descricao, idAss);
 
         }
 
@@ -161,9 +167,9 @@ namespace ModelServices.EntitiesServices
             {
                 try
                 {
-                    if (item.MATERIA_PRIMA != null)
+                    if (item.PRODUTO != null)
                     {
-                        item.MATERIA_PRIMA = null;
+                        item.PRODUTO = null;
                     }
 
                     FICHA_TECNICA_DETALHE obj = _detRepository.GetById(item.FITD_CD_ID);

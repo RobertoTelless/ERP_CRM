@@ -15,6 +15,7 @@
                     <br />
                     <div class="col-lg-12 col-md-12 col-xs-12">
                         @Html.ButtonLinkIndex(text: "Produtos", action: "MontarTelaProduto", controller: "Produto", buttonClass: "success")
+                        @Html.ButtonLinkIndex(text: "Composição de Produtos", action: "MontarTelaFT", controller: "FichaTecnica", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Consulta Estoque", action: "MontarTelaEstoqueProduto", controller: "Estoque", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Movimentação Avulsa", action: "MontarTelaMovimentacaoAvulsa", controller: "Estoque", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Dashboard", controller: "Estoque", action: "Voltar")

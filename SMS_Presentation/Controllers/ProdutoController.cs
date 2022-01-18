@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 
 
-namespace SMS_Presentation.Controllers
+namespace ERP_CRM_Solution.Controllers
 {
     public class ProdutoController : Controller
     {
@@ -42,6 +42,7 @@ namespace SMS_Presentation.Controllers
         //private readonly IPedidoVendaAppService pvApp;
         private readonly IProdutoEstoqueFilialAppService pefApp;
         private readonly IConfiguracaoAppService confApp;
+        private readonly IFichaTecnicaAppService ftApp;
 
         private String msg;
         private Exception exception;
@@ -63,6 +64,7 @@ namespace SMS_Presentation.Controllers
             , IProdutotabelaPrecoAppService tpApps
             , ISubcategoriaProdutoAppService scpApps
             , IConfiguracaoAppService confApps
+            , IFichaTecnicaAppService ftApps
             //, IPedidoVendaAppService pvApps
             , IProdutoEstoqueFilialAppService pefApps)
         {
@@ -4828,6 +4830,7 @@ namespace SMS_Presentation.Controllers
             }
             return 0;
         }
+
 
     }
 }

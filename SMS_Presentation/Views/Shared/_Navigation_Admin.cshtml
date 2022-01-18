@@ -147,6 +147,7 @@
                             @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>*@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "MontarTelaProduto")"><a href="@Url.Action("MontarTelaProduto", "Produto")">Produtos</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaFT")"><a href="@Url.Action("MontarTelaFT", "FichaTecnica")">Composição Produtos</a></li>
                             </ul>
                         </li>
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Estoque</span> <span class="fa arrow"></span></a>
@@ -180,6 +181,7 @@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "MontarTelaFornecedor")"><a href="@Url.Action("MontarTelaFornecedor", "Fornecedor")">Fornecedores</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaProduto")"><a href="@Url.Action("MontarTelaProduto", "Produto")">Produtos</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaFT")"><a href="@Url.Action("MontarTelaFT", "FichaTecnica")">Composição Produtos</a></li>
                                 @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
                                 {
                                     <li class="@Html.IsSelected(action: "MontarTelaCC")"><a href="@Url.Action("MontarTelaCC", "CentroCusto")">Centros de Custo</a></li>

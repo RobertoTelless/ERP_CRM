@@ -21,15 +21,21 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<FICHA_TECNICA> GetAllItens()
+        public FICHA_TECNICA CheckExist(FICHA_TECNICA conta, Int32 idAss)
         {
-            List<FICHA_TECNICA> lista = _baseService.GetAllItens();
+            FICHA_TECNICA item = _baseService.CheckExist(conta, idAss);
+            return item;
+        }
+
+        public List<FICHA_TECNICA> GetAllItens(Int32 idAss)
+        {
+            List<FICHA_TECNICA> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<FICHA_TECNICA> GetAllItensAdm()
+        public List<FICHA_TECNICA> GetAllItensAdm(Int32 idAss)
         {
-            List<FICHA_TECNICA> lista = _baseService.GetAllItensAdm();
+            List<FICHA_TECNICA> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -45,7 +51,7 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(Int32? prodId, Int32? cat, String descricao, out List<FICHA_TECNICA> objeto)
+        public Int32 ExecuteFilter(Int32? prodId, Int32? cat, String descricao, Int32 idAss, out List<FICHA_TECNICA> objeto)
         {
             try
             {
@@ -53,7 +59,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(prodId, cat, descricao);
+                objeto = _baseService.ExecuteFilter(prodId, cat, descricao, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -71,16 +77,20 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica existencia prévia
+                if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
+                {
+                    return 1;
+                }
 
                 // Completa objeto
                 item.FITE_IN_ATIVO = 1;
-                item.FITE_DT_CADASTRO = DateTime.Today;
+                item.FITE_DT_CADASTRO = DateTime.Today.Date;
                
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddFITE",
                     LOG_IN_ATIVO = 1,
@@ -97,7 +107,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateCreateProduto(FICHA_TECNICA item, USUARIO usuario)
+        public Int32 ValidateCreateProduto(FICHA_TECNICA item, PRODUTO prod, USUARIO usuario)
         {
             try
             {
@@ -106,13 +116,13 @@ namespace ApplicationServices.Services
                 // Completa objeto
                 item.FITE_IN_ATIVO = 1;
                 item.FITE_DT_CADASTRO = DateTime.Today;
-                item.PROD_CD_ID = SessionMocks.idVolta;
+                item.PROD_CD_ID = prod.PROD_CD_ID;
 
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddFITE",
                     LOG_IN_ATIVO = 1,
@@ -137,7 +147,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "EditFITE",
                     LOG_IN_ATIVO = 1,
@@ -181,7 +191,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelFITE",
@@ -210,7 +220,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatFITE",
