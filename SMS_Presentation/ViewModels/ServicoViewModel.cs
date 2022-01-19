@@ -32,7 +32,7 @@ namespace ERP_CRM_Solution.ViewModels
         public string SERV_CD_CODIGO { get; set; }
         public int SERV_IN_ATIVO { get; set; }
         public string SERV_TX_OBSERVACOES { get; set; }
-        [Required(ErrorMessage = "Campo DURAÇÃO obrigatorio")]
+        [Required(ErrorMessage = "Campo PRAZO obrigatorio")]
         [RegularExpression(@"^[0-9]+([,][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<int> SERV_NR_DURACAO { get; set; }
         [RegularExpression(@"^[0-9]+([,][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
