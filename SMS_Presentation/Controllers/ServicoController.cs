@@ -66,7 +66,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            return View(vm);
+            return View();
         }
 
         public ActionResult Voltar()
@@ -161,16 +161,23 @@ namespace ERP_CRM_Solution.Controllers
                 if ((Int32)Session["MensServico"] == 3)
                 {
                     ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0121", CultureInfo.CurrentCulture));
-                    Session["MensServico"] = 0;
                 }
                 if ((Int32)Session["MensServico"] == 2)
                 {
                     ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-                    Session["MensServico"] = 0;
+                }
+                if ((Int32)Session["MensServico"] == 4)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0122", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensServico"] == 50)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0124", CultureInfo.CurrentCulture));
                 }
             }
 
             // Abre view
+            Session["MensServico"] = 0;
             objetoServ = new SERVICO();
             return View(objetoServ);
         }
@@ -266,7 +273,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS" || usuario.PERFIL.PERF_SG_SIGLA == "VEN")
                 {
                     Session["MensPermissao"] = 2;
                     return RedirectToAction("CarregarBase", "BaseAdmin");
@@ -277,6 +284,14 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica possibilidade
+            Int32 num = servApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumServicos"] <= num)
+            {
+                Session["MensServico"] = 50;
+                return RedirectToAction("MontarTelaServico");
+            }
 
             // Prepara listas
             ViewBag.Tipos = new SelectList(servApp.GetAllTipos(idAss).OrderBy(x => x.CASE_NM_NOME).ToList<CATEGORIA_SERVICO>(), "CASE_CD_ID", "CASE_NM_NOME");
@@ -418,13 +433,13 @@ namespace ERP_CRM_Solution.Controllers
             try
             {
                 // Executa a operação
-                Int32 idAss = SessionMocks.IdAssinante;
-                USUARIO usuarioLogado = SessionMocks.UserCredentials;
+                Int32 idAss = (Int32)Session["IdAssinante"];
+                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
 
                 item.SETP_IN_ATIVO = 1;
                 item.SETP_DT_DATA_REAJUSTE = DateTime.Now;
 
-                Int32 volta = stbApp.ValidateCreate(item);
+                Int32 volta = stbApp.ValidateCreate(item, idAss);
 
                 // Verifica retorno
                 if (volta == 1)
@@ -448,7 +463,7 @@ namespace ERP_CRM_Solution.Controllers
             try
             {
                 // Executa a operação
-                USUARIO usuarioLogado = SessionMocks.UserCredentials;
+                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];;
 
                 item.SERV_CD_ID = id;
                 item.SETP_DT_DATA_REAJUSTE = DateTime.Today.Date;
@@ -469,10 +484,11 @@ namespace ERP_CRM_Solution.Controllers
         [HttpGet]
         public ActionResult ExcluirTabelaServico(Int32 id)
         {
-            
+
             // Verifica se tem usuario logado
-            Int32 idAss = SessionMocks.IdAssinante;
-            USUARIO usuarioLogado = SessionMocks.UserCredentials;
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+
             SERVICO_TABELA_PRECO itemAntes = stbApp.GetById(id);
             SERVICO_TABELA_PRECO item = new SERVICO_TABELA_PRECO();
             item.FILI_CD_ID = itemAntes.FILI_CD_ID;
@@ -492,10 +508,11 @@ namespace ERP_CRM_Solution.Controllers
         [HttpGet]
         public ActionResult ReativarTabelaServico(Int32 id)
         {
-            
+
             // Verifica se tem usuario logado
-            Int32 idAss = SessionMocks.IdAssinante;
-            USUARIO usuarioLogado = SessionMocks.UserCredentials;
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+
             SERVICO_TABELA_PRECO itemAntes = stbApp.GetById(id);
             SERVICO_TABELA_PRECO item = new SERVICO_TABELA_PRECO();
             item.FILI_CD_ID = itemAntes.FILI_CD_ID;
@@ -518,11 +535,11 @@ namespace ERP_CRM_Solution.Controllers
             
             // Prepara view
             SERVICO item = servApp.GetItemById(id);
-            ViewBag.LstPedidos = pedvApp.GetAllItens();
+            //ViewBag.LstPedidos = pedvApp.GetAllItens();
             objetoServAntes = item;
-            SessionMocks.servico = item;
-            SessionMocks.idVolta = id;
-            SessionMocks.voltaPop = 3;
+            Session["Servico"] = item;
+            Session["IdVolta"] = id;
+            Session["VoltaPop"] = 3;
             ServicoViewModel vm = Mapper.Map<SERVICO, ServicoViewModel>(item);
             return View(vm);
         }
@@ -530,28 +547,63 @@ namespace ERP_CRM_Solution.Controllers
         [HttpGet]
         public ActionResult EditarServico(Int32 id)
         {
-            
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS" || usuario.PERFIL.PERF_SG_SIGLA == "VEN")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
             // Prepara view
             SERVICO item = servApp.GetItemById(id);
-            ViewBag.Tipos = new SelectList(servApp.GetAllTipos().OrderBy(x => x.CASE_NM_NOME).ToList<CATEGORIA_SERVICO>(), "CASE_CD_ID", "CASE_NM_NOME");
-            ViewBag.Filiais = new SelectList(filApp.GetAllItens().OrderBy(x => x.FILI_NM_NOME).ToList<FILIAL>(), "FILI_CD_ID", "FILI_NM_NOME");
-            ViewBag.Unidades = new SelectList(unApp.GetAllItens().Where(x => x.UNID_IN_TIPO_UNIDADE == 2).OrderBy(x => x.UNID_NM_NOME).ToList<UNIDADE>(), "UNID_CD_ID", "UNID_NM_NOME");
-            ViewBag.Nomes = new SelectList(servApp.GetAllNBSE().OrderBy(x => x.NBSE_NM_NOME).ToList<NOMENCLATURA_BRAS_SERVICOS>(), "NBSE_CD_ID", "NBSE_NM_NOME");
-            ViewBag.LstPedidos = pedvApp.GetAllItens();
+            ViewBag.Tipos = new SelectList(servApp.GetAllTipos(idAss).OrderBy(x => x.CASE_NM_NOME).ToList<CATEGORIA_SERVICO>(), "CASE_CD_ID", "CASE_NM_NOME");
+            ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss).OrderBy(p => p.FILI_NM_NOME), "FILI_CD_ID", "FILI_NM_NOME");
+            ViewBag.Unidades = new SelectList(unApp.GetAllItens(idAss).Where(p => p.UNID_IN_TIPO_UNIDADE == 2).OrderBy(p => p.UNID_NM_NOME), "UNID_CD_ID", "UNID_NM_NOME");
+            ViewBag.Nomes = new SelectList(servApp.GetAllNBSE().OrderBy(p => p.NBSE_NM_NOME), "NBSE_CD_ID", "NBSE_NM_NOME");
+            List<SelectListItem> local = new List<SelectListItem>();
+            local.Add(new SelectListItem() { Text = "Interno", Value = "1" });
+            local.Add(new SelectListItem() { Text = "Externo", Value = "2" });
+            local.Add(new SelectListItem() { Text = "Interno/externo", Value = "3" });
+            ViewBag.Local = new SelectList(local, "Value", "Text");
+            //ViewBag.LstPedidos = pedvApp.GetAllItens();
             objetoServAntes = item;
 
             if (Session["MensPreco"] != null)
             {
                 if ((Int32)Session["MensPreco"] == 1)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0108", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0108", CultureInfo.CurrentCulture));
                     Session["MensPreco"] = 0;
+                }
+                if ((Int32)Session["MensServico"] == 30)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensServico"] == 31)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
                 }
             }
 
-            SessionMocks.servico = item;
-            SessionMocks.idVolta = id;
-            SessionMocks.voltaPop = 3;
+            Session["Servico"] = item;
+            Session["IdVolta"] = id;
+            Session["VoltaPop"] = 3;
             ServicoViewModel vm = Mapper.Map<SERVICO, ServicoViewModel>(item);
             return View(vm);
         }
@@ -560,18 +612,28 @@ namespace ERP_CRM_Solution.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditarServico(ServicoViewModel vm)
         {
-            
-            ViewBag.Tipos = new SelectList(servApp.GetAllTipos(), "CASE_CD_ID", "CASE_NM_NOME");
-            ViewBag.Filiais = new SelectList(filApp.GetAllItens(), "FILI_CD_ID", "FILI_NM_NOME");
-            ViewBag.Unidades = new SelectList(unApp.GetAllItens(), "UNID_CD_ID", "UNID_NM_NOME");
-            ViewBag.Nomes = new SelectList(servApp.GetAllNBSE(), "NBSE_CD_ID", "NBSE_NM_NOME");
-            ViewBag.LstPedidos = pedvApp.GetAllItens();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            ViewBag.Tipos = new SelectList(servApp.GetAllTipos(idAss).OrderBy(x => x.CASE_NM_NOME).ToList<CATEGORIA_SERVICO>(), "CASE_CD_ID", "CASE_NM_NOME");
+            ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss).OrderBy(p => p.FILI_NM_NOME), "FILI_CD_ID", "FILI_NM_NOME");
+            ViewBag.Unidades = new SelectList(unApp.GetAllItens(idAss).Where(p => p.UNID_IN_TIPO_UNIDADE == 2).OrderBy(p => p.UNID_NM_NOME), "UNID_CD_ID", "UNID_NM_NOME");
+            ViewBag.Nomes = new SelectList(servApp.GetAllNBSE().OrderBy(p => p.NBSE_NM_NOME), "NBSE_CD_ID", "NBSE_NM_NOME");
+            List<SelectListItem> local = new List<SelectListItem>();
+            local.Add(new SelectListItem() { Text = "Interno", Value = "1" });
+            local.Add(new SelectListItem() { Text = "Externo", Value = "2" });
+            local.Add(new SelectListItem() { Text = "Interno/externo", Value = "3" });
+            ViewBag.Local = new SelectList(local, "Value", "Text");
+            //ViewBag.LstPedidos = pedvApp.GetAllItens();
             if (ModelState.IsValid)
             {
                 try
             {
                     // Executa a operação
-                    USUARIO usuarioLogado = SessionMocks.UserCredentials;
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     SERVICO item = Mapper.Map<ServicoViewModel, SERVICO>(vm);
                     Int32 volta = servApp.ValidateEdit(item, objetoServAntes, usuarioLogado);
 
@@ -579,7 +641,7 @@ namespace ERP_CRM_Solution.Controllers
 
                     // Sucesso
                     listaMasterServ = new List<SERVICO>();
-                    SessionMocks.listaServico = null;
+                    Session["ListaServico"] = null;
                     return RedirectToAction("MontarTelaServico");
                 }
                 catch (Exception ex)
@@ -597,68 +659,95 @@ namespace ERP_CRM_Solution.Controllers
         [HttpGet]
         public ActionResult ExcluirServico(Int32 id)
         {
-            
             // Verifica se tem usuario logado
-            USUARIO usu = SessionMocks.UserCredentials;
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS" || usuario.PERFIL.PERF_SG_SIGLA == "VEN")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Executar
             SERVICO item = servApp.GetItemById(id);
-            SERVICO ex = new SERVICO();
-            ex.ASSI_CD_ID = item.ASSI_CD_ID;
-            ex.CASE_CD_ID = item.CASE_CD_ID;
-            ex.FILI_CD_ID = item.FILI_CD_ID;
-            ex.MATR_CD_ID = item.MATR_CD_ID;
-            ex.NBSE_CD_ID = item.NBSE_CD_ID;
-            ex.SERV_CD_CODIGO = item.SERV_CD_CODIGO;
-            ex.SERV_CD_ID = item.SERV_CD_ID;
-            ex.SERV_DS_DESCRICAO = item.SERV_DS_DESCRICAO;
-            ex.SERV_DT_CADASTRO = item.SERV_DT_CADASTRO;
-            ex.SERV_IN_ATIVO = 0;
-            ex.SERV_NM_NOME = item.SERV_NM_NOME;
-            ex.SERV_TX_OBSERVACOES = item.SERV_TX_OBSERVACOES;
-            ex.SERV_VL_PRECO = item.SERV_VL_PRECO;
-            ex.UNID_CD_ID = item.UNID_CD_ID;
             objetoServAntes = item;
-            Int32 volta = servApp.ValidateDelete(ex, usu);
+            item.SERV_IN_ATIVO = 0;
+            Int32 volta = servApp.ValidateEdit(item, item, usuario);
+            if (volta == 1)
+            {
+                Session["MensServico"] = 4;
+                return RedirectToAction("MontarTelaServico");
+            }
             listaMasterServ = new List<SERVICO>();
-            SessionMocks.listaServico = null;
+            Session["ListaServico"] = null;
             return RedirectToAction("MontarTelaServico");
         }
 
         [HttpGet]
         public ActionResult ReativarServico(Int32 id)
         {
-            
             // Verifica se tem usuario logado
-            USUARIO usu = SessionMocks.UserCredentials;
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS" || usuario.PERFIL.PERF_SG_SIGLA == "VEN")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica possibilidade
+            Int32 num = servApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumServicos"] <= num)
+            {
+                Session["MensServico"] = 50;
+                return RedirectToAction("MontarTelaServico");
+            }
+
             // Executar
             SERVICO item = servApp.GetItemById(id);
-            SERVICO re = new SERVICO();
-            re.ASSI_CD_ID = item.ASSI_CD_ID;
-            re.CASE_CD_ID = item.CASE_CD_ID;
-            re.FILI_CD_ID = item.FILI_CD_ID;
-            re.MATR_CD_ID = item.MATR_CD_ID;
-            re.NBSE_CD_ID = item.NBSE_CD_ID;
-            re.SERV_CD_CODIGO = item.SERV_CD_CODIGO;
-            re.SERV_CD_ID = item.SERV_CD_ID;
-            re.SERV_DS_DESCRICAO = item.SERV_DS_DESCRICAO;
-            re.SERV_DT_CADASTRO = item.SERV_DT_CADASTRO;
-            re.SERV_IN_ATIVO = 1;
-            re.SERV_NM_NOME = item.SERV_NM_NOME;
-            re.SERV_TX_OBSERVACOES = item.SERV_TX_OBSERVACOES;
-            re.SERV_VL_PRECO = item.SERV_VL_PRECO;
-            re.UNID_CD_ID = item.UNID_CD_ID;
+            item.SERV_IN_ATIVO = 1;
             objetoServAntes = item;
-            Int32 volta = servApp.ValidateReativar(re, usu);
+            Int32 volta = servApp.ValidateReativar(item, usuario);
             listaMasterServ = new List<SERVICO>();
-            SessionMocks.listaServico = null;
+            Session["ListaServico"] = null;
             return RedirectToAction("MontarTelaServico");
         }
 
         [HttpGet]
         public ActionResult VerAnexoServico(Int32 id)
         {
-            
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
             // Prepara view
             SERVICO_ANEXO item = servApp.GetAnexoById(id);
             return View(item);
@@ -666,8 +755,11 @@ namespace ERP_CRM_Solution.Controllers
 
         public ActionResult VoltarAnexoServico()
         {
-            
-            return RedirectToAction("EditarServico", new { id = SessionMocks.idVolta });
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("EditarServico", new { id = (Int32)Session["IdVolta"] });
         }
 
         public FileResult DownloadServico(Int32 id)
@@ -724,22 +816,26 @@ namespace ERP_CRM_Solution.Controllers
         [HttpPost]
         public ActionResult UploadFileQueueServico(FileQueue file)
         {
-            
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
             if (file == null)
             {
-                ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0076", CultureInfo.CurrentCulture));
+                Session["MensServico"] = 30;
                 return RedirectToAction("VoltarAnexoServico");
             }
 
-            SERVICO item = servApp.GetById(SessionMocks.idVolta);
-            USUARIO usu = SessionMocks.UserCredentials;
+            SERVICO item = servApp.GetById((Int32)Session["IdVolta"]);
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
             var fileName = file.Name;
             if (fileName.Length > 100)
             {
-                ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0015", CultureInfo.CurrentCulture));
+                Session["MensServico"] = 31;
                 return RedirectToAction("VoltarAnexoServico");
             }
-            String caminho = "/Imagens/" + SessionMocks.IdAssinante.ToString() + "/Servicos/" + item.SERV_CD_ID.ToString() + "/Anexos/";
+            String caminho = "/Imagens/" + idAss.ToString() + "/Servicos/" + item.SERV_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
             System.IO.Directory.CreateDirectory(Server.MapPath(caminho));
             System.IO.File.WriteAllBytes(path, file.Contents);
@@ -779,22 +875,26 @@ namespace ERP_CRM_Solution.Controllers
         [HttpPost]
         public ActionResult UploadFileServico(HttpPostedFileBase file)
         {
-            
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
             if (file == null)
             {
-                ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0076", CultureInfo.CurrentCulture));
+                Session["MensServico"] = 30;
                 return RedirectToAction("VoltarAnexoServico");
             }
 
-            SERVICO item = servApp.GetById(SessionMocks.idVolta);
-            USUARIO usu = SessionMocks.UserCredentials;
+            SERVICO item = servApp.GetById((Int32)Session["IdVolta"]);
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
             var fileName = Path.GetFileName(file.FileName);
             if (fileName.Length > 100)
             {
-                ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0015", CultureInfo.CurrentCulture));
+                Session["MensServico"] = 31;
                 return RedirectToAction("VoltarAnexoServico");
             }
-            String caminho = "/Imagens/" + SessionMocks.IdAssinante.ToString() + "/Servicos/" + item.SERV_CD_ID.ToString() + "/Anexos/";
+            String caminho = "/Imagens/" + idAss.ToString() + "/Servicos/" + item.SERV_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
             System.IO.Directory.CreateDirectory(Server.MapPath(caminho));
             file.SaveAs(path);
@@ -833,13 +933,17 @@ namespace ERP_CRM_Solution.Controllers
 
         public ActionResult GerarRelatorioLista()
         {
-            
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
             // Prepara geração
             String data = DateTime.Today.Date.ToShortDateString();
             data = data.Substring(0, 2) + data.Substring(3, 2) + data.Substring(6, 4);
             String nomeRel = "ServicoLista" + "_" + data + ".pdf";
-            List<SERVICO> lista = SessionMocks.listaServico;
-            SERVICO filtro = SessionMocks.filtroServico;
+            List<SERVICO> lista = (List<SERVICO>)Session["ListaServico"];
+            SERVICO filtro = (SERVICO)Session["FiltroServico"];
             Font meuFont = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             Font meuFont1 = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             Font meuFont2 = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
@@ -1026,8 +1130,12 @@ namespace ERP_CRM_Solution.Controllers
 
         public ActionResult GerarRelatorioDetalhe()
         {
-            
-            SERVICO serv = servApp.GetById(SessionMocks.idVolta);
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            SERVICO serv = servApp.GetById((Int32)Session["IdVolta"]);
             String data = DateTime.Today.Date.ToShortDateString();
             data = data.Substring(0, 2) + data.Substring(3, 2) + data.Substring(6, 4);
             String nomeRel = "Serviço" + serv.SERV_CD_ID.ToString() + "_" + data + ".pdf";
@@ -1176,13 +1284,6 @@ namespace ERP_CRM_Solution.Controllers
             table.AddCell(cell);
             pdfDoc.Add(table);
 
-            //cell = new PdfPCell(new Paragraph("Descrição: " + serv.SERV_DS_DESCRICAO, meuFont));
-            //cell.Border = 0;
-            //cell.Colspan = 9;
-            //cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            //table.AddCell(cell);
-
             //Descirição
             Chunk chunk = new Chunk("Descrição: " + serv.SERV_DS_DESCRICAO, FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK));
             pdfDoc.Add(chunk);
@@ -1207,5 +1308,36 @@ namespace ERP_CRM_Solution.Controllers
 
             return RedirectToAction("VoltarAnexoServico");
         }
+
+        [HttpGet]
+        public ActionResult MontarTelaDashboardServiceDesk()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
+
+            return View(vm);
+        }
+
     }
 }

@@ -140,6 +140,10 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0049", CultureInfo.CurrentCulture));
                 }
+                if ((Int32)Session["MensFornecedor"] == 50)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0123", CultureInfo.CurrentCulture));
+                }
             }
 
             // Abre view
@@ -247,6 +251,14 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica possibilidade
+            Int32 num = equiApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumPatrimonios"] <= num)
+            {
+                Session["MensPatrimonio"] = 50;
+                return RedirectToAction("MontarTelaEquipamento");
+            }
 
             // Prepara listas
             ViewBag.Tipos = new SelectList(equiApp.GetAllTipos(idAss).OrderBy(x => x.CAEQ_NM_NOME).ToList<CATEGORIA_EQUIPAMENTO>(), "CAEQ_CD_ID", "CAEQ_NM_NOME");
@@ -548,6 +560,14 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica possibilidade
+            Int32 num = equiApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumPatrimonios"] <= num)
+            {
+                Session["MensPatrimonio"] = 50;
+                return RedirectToAction("MontarTelaEquipamento");
+            }
 
             // Prepara view
             EQUIPAMENTO item = equiApp.GetItemById(id);

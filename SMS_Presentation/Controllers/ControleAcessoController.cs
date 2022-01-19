@@ -160,7 +160,7 @@ namespace ERP_CRM_Solution.Controllers
                 // Recupera Planos do assinante
                 Session["PermMens"] = 0;
                 Session["PermCRM"] = 0;
-                Session["PermPosVenda"] = 0;
+                Session["PermServDesk"] = 0;
                 Session["PermFatura"] = 0;
                 Session["PermCompra"] = 0;
                 Session["PermFinanceiro"] = 0;
@@ -229,7 +229,13 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         Session["PermVenda"] = 1;
                     }
-
+                    if (item.PLANO.PLAN_IN_POSVENDA == 1)
+                    {
+                        Session["PermServDesk"] = 1;
+                        Session["NumAtedimentos"] = item.PLANO.PLAN_IN_ATENDIMENTOS;
+                        Session["NumOS"] = item.PLANO.PLAN_IN_OS;
+                        Session["NumServicos"] = item.PLANO.PLAN_IN_SERVICOS;
+                    }
                 }
                 Session["Planos"] = planos;
 

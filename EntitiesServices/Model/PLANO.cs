@@ -52,6 +52,9 @@ namespace EntitiesServices.Model
         public Nullable<int> PLAN_NR_FORNECEDOR { get; set; }
         public Nullable<int> PLAN_IN_VENDAS { get; set; }
         public Nullable<int> PLAN_IN_COMPRA { get; set; }
+        public Nullable<int> PLAN_IN_SERVICOS { get; set; }
+        public Nullable<int> PLAN_IN_ATENDIMENTOS { get; set; }
+        public Nullable<int> PLAN_IN_OS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ASSINANTE_PAGAMENTO> ASSINANTE_PAGAMENTO { get; set; }

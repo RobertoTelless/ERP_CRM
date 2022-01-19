@@ -3276,6 +3276,10 @@
     <Content Include="Views\Produto\IncluirProdutoKit.cshtml" />
     <Content Include="Views\Servico\MontarTelaServico.cshtml" />
     <Content Include="Views\Servico\IncluirServico.cshtml" />
+    <Content Include="Views\Servico\VerServico.cshtml" />
+    <Content Include="Views\Servico\EditarServico.cshtml" />
+    <Content Include="Views\Servico\VerAnexoServico.cshtml" />
+    <Content Include="Views\Servico\MontarTelaDashboardServiceDesk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

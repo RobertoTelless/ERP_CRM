@@ -435,4 +435,13 @@
   <data name="M0121" xml:space="preserve">
     <value>Serviço já cadastrado</value>
   </data>
+  <data name="M0122" xml:space="preserve">
+    <value>Não é possível excluir esse serviço. Existem informações vinculadas a ele</value>
+  </data>
+  <data name="M0123" xml:space="preserve">
+    <value>Impossível incluir/reativar esse item de patrimônio. O número máximo de itens de patrimônio permitido pelo seu plano de assinatura foi atingido</value>
+  </data>
+  <data name="M0124" xml:space="preserve">
+    <value>Impossível incluir/reativar esse serviço. O número máximo de serviços permitido pelo seu plano de assinatura foi atingido</value>
+  </data>
 </root>
