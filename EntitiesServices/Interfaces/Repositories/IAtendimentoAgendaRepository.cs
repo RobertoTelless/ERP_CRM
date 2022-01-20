@@ -10,5 +10,6 @@ namespace ModelServices.Interfaces.Repositories
     public interface IAtendimentoAgendaRepository : IRepositoryBase<ATENDIMENTO_AGENDA>
     {
         List<ATENDIMENTO_AGENDA> GetAgendaByAtendimento(ATENDIMENTO item);
+    
     }
 }

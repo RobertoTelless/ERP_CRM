@@ -13,4 +13,5 @@ namespace ApplicationServices.Interfaces
 
         List<ATENDIMENTO_AGENDA> GetAgendaByAtendimento(ATENDIMENTO item);
     }
+
 }

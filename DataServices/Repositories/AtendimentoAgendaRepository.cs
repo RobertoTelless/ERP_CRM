@@ -14,7 +14,6 @@ namespace DataServices.Repositories
     {
         public List<ATENDIMENTO_AGENDA> GetAgendaByAtendimento(ATENDIMENTO item)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<ATENDIMENTO_AGENDA> query = Db.ATENDIMENTO_AGENDA.Where(p => p.ATAG_IN_ATIVO == 1);
             query = query.Where(p => p.ATEN_CD_ID == item.ATEN_CD_ID);
             return query.ToList();

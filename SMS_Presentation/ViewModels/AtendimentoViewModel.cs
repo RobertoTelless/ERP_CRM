@@ -6,7 +6,7 @@ using System.Web;
 using EntitiesServices.Attributes;
 using EntitiesServices.Model;
 
-namespace SystemBRPresentation.ViewModels
+namespace ERP_CRM_Solution.ViewModels
 {
     public class AtendimentoViewModel
     {
@@ -53,11 +53,14 @@ namespace SystemBRPresentation.ViewModels
         [DataType(DataType.Date, ErrorMessage = "Deve ser uma data válida")]
         public Nullable<System.DateTime> ATEN_DT_PREVISTA { get; set; }
         public Nullable<Int32> SERV_CD_ID { get; set; }
+        public Nullable<int> ATEN_IN_SLA { get; set; }
         public string ATEN_NR_NUMERO { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ATENDIMENTO_ACOMPANHAMENTO> ATENDIMENTO_ACOMPANHAMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ATENDIMENTO_AGENDA> ATENDIMENTO_AGENDA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ATENDIMENTO_ANEXO> ATENDIMENTO_ANEXO { get; set; }
         public virtual CATEGORIA_ATENDIMENTO CATEGORIA_ATENDIMENTO { get; set; }
@@ -65,10 +68,12 @@ namespace SystemBRPresentation.ViewModels
         public virtual DEPARTAMENTO DEPARTAMENTO { get; set; }
         public virtual PEDIDO_VENDA PEDIDO_VENDA { get; set; }
         public virtual PRODUTO PRODUTO { get; set; }
-        public virtual USUARIO USUARIO { get; set; }
         public virtual SERVICO SERVICO { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
+        public virtual USUARIO USUARIO1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDEM_SERVICO> ORDEM_SERVICO { get; set; }
-        public virtual USUARIO USUARIO1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NOTIFICACAO> NOTIFICACAO { get; set; }
     }
 }

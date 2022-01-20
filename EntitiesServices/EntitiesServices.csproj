@@ -180,7 +180,10 @@
     <Compile Include="EntitiesServices\AgendaService.cs" />
     <Compile Include="EntitiesServices\AssinanteCnpjService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
+    <Compile Include="EntitiesServices\AtendimentoAgendaService.cs" />
+    <Compile Include="EntitiesServices\AtendimentoService.cs" />
     <Compile Include="EntitiesServices\BancoService.cs" />
+    <Compile Include="EntitiesServices\CategoriaAtendimentoService.cs" />
     <Compile Include="EntitiesServices\CategoriaFornecedorService.cs" />
     <Compile Include="EntitiesServices\CategoriaEquipamentoService.cs" />
     <Compile Include="EntitiesServices\CategoriaProdutoService.cs" />
@@ -244,7 +247,10 @@
     <Compile Include="Interfaces\EntitiesServices\IAgendaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteCnpjService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAssinanteService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IAtendimentoAgendaService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IAtendimentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IBancoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ICategoriaAtendimentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaFornecedorService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaEquipamentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaProdutoService.cs" />
@@ -313,8 +319,12 @@
     <Compile Include="Interfaces\Repositories\IAssinanteCnpjRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinantePagamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAtendimentoAgendaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAtendimentoAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAtendimentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IBancoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICargoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaAtendimentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaServicoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContapagarAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaPagarParcelaRepository.cs" />

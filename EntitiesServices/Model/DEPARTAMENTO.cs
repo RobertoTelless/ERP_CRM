@@ -19,6 +19,7 @@ namespace EntitiesServices.Model
         {
             this.ATENDIMENTO = new HashSet<ATENDIMENTO>();
             this.ORDEM_SERVICO = new HashSet<ORDEM_SERVICO>();
+            this.USUARIO = new HashSet<USUARIO>();
         }
     
         public int DEPT_CD_ID { get; set; }
@@ -31,5 +32,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<ATENDIMENTO> ATENDIMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDEM_SERVICO> ORDEM_SERVICO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<USUARIO> USUARIO { get; set; }
     }
 }

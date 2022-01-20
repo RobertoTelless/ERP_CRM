@@ -14,5 +14,6 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 Create(ATENDIMENTO_AGENDA item);
 
         List<ATENDIMENTO_AGENDA> GetAgendaByAtendimento(ATENDIMENTO item);
+
     }
 }

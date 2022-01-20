@@ -21,15 +21,21 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<CATEGORIA_ATENDIMENTO> GetAllItens()
+        public CATEGORIA_ATENDIMENTO CheckExist(CATEGORIA_ATENDIMENTO conta, Int32 idAss)
         {
-            List<CATEGORIA_ATENDIMENTO> lista = _baseService.GetAllItens();
+            CATEGORIA_ATENDIMENTO item = _baseService.CheckExist(conta, idAss);
+            return item;
+        }
+
+        public List<CATEGORIA_ATENDIMENTO> GetAllItens(Int32 idAss)
+        {
+            List<CATEGORIA_ATENDIMENTO> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<CATEGORIA_ATENDIMENTO> GetAllItensAdm()
+        public List<CATEGORIA_ATENDIMENTO> GetAllItensAdm(Int32 idAss)
         {
-            List<CATEGORIA_ATENDIMENTO> lista = _baseService.GetAllItensAdm();
+            List<CATEGORIA_ATENDIMENTO> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -44,6 +50,10 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica existencia prévia
+                if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
+                {
+                    return 1;
+                }
 
                 // Completa objeto
                 item.CAAT_IN_ATIVO = 1;
@@ -51,7 +61,7 @@ namespace ApplicationServices.Services
                 // Monta Log
                 LOG log = new LOG
                 {
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddCAAT",
@@ -76,7 +86,7 @@ namespace ApplicationServices.Services
                 // Monta Log
                 LOG log = new LOG
                 {
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "EditCAAT",
@@ -123,6 +133,7 @@ namespace ApplicationServices.Services
                 // Monta Log
                 LOG log = new LOG
                 {
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
@@ -151,6 +162,7 @@ namespace ApplicationServices.Services
                 // Monta Log
                 LOG log = new LOG
                 {
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,

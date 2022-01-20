@@ -128,6 +128,9 @@ namespace Presentation.Start
             kernel.Bind<IDepartamentoAppService>().To<DepartamentoAppService>();
             kernel.Bind<IServicoAppService>().To<ServicoAppService>();
             kernel.Bind<IServicoTabelaPrecoAppService>().To<ServicoTabelaPrecoAppService>();
+            kernel.Bind<ICategoriaAtendimentoAppService>().To<CategoriaAtendimentoAppService>();
+            kernel.Bind<IAtendimentoAgendaAppService>().To<AtendimentoAgendaAppService>();
+            kernel.Bind<IAtendimentoAppService>().To<AtendimentoAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -190,6 +193,9 @@ namespace Presentation.Start
             kernel.Bind<IDepartamentoService>().To<DepartamentoService>();
             kernel.Bind<IServicoService>().To<ServicoService>();
             kernel.Bind<IServicoTabelaPrecoService>().To<ServicoTabelaPrecoService>();
+            kernel.Bind<ICategoriaAtendimentoService>().To<CategoriaAtendimentoService>();
+            kernel.Bind<IAtendimentoAgendaService>().To<AtendimentoAgendaService>();
+            kernel.Bind<IAtendimentoService>().To<AtendimentoService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -302,6 +308,10 @@ namespace Presentation.Start
             kernel.Bind<IServicoAnexoRepository>().To<ServicoAnexoRepository>();
             kernel.Bind<IServicoRepository>().To<ServicoRepository>();
             kernel.Bind<IServicoTabelaPrecoRepository>().To<ServicoTabelaPrecoRepository>();
+            kernel.Bind<ICategoriaAtendimentoRepository>().To<CategoriaAtendimentoRepository>();
+            kernel.Bind<IAtendimentoAgendaRepository>().To<AtendimentoAgendaRepository>();
+            kernel.Bind<IAtendimentoAnexoRepository>().To<AtendimentoAnexoRepository>();
+            kernel.Bind<IAtendimentoRepository>().To<AtendimentoRepository>();
 
         }
     }

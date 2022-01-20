@@ -14,9 +14,8 @@ namespace DataServices.Repositories
 {
     public class AtendimentoRepository : RepositoryBase<ATENDIMENTO>, IAtendimentoRepository
     {
-        public ATENDIMENTO CheckExist(ATENDIMENTO conta)
+        public ATENDIMENTO CheckExist(ATENDIMENTO conta, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<ATENDIMENTO> query = Db.ATENDIMENTO;
             query = query.Where(p => p.CLIE_CD_ID == conta.CLIE_CD_ID);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
@@ -33,34 +32,30 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<ATENDIMENTO> GetAllItens()
+        public List<ATENDIMENTO> GetAllItens(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<ATENDIMENTO> query = Db.ATENDIMENTO.Where(p => p.ATEN_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<ATENDIMENTO> GetByCliente(Int32 id)
+        public List<ATENDIMENTO> GetByCliente(Int32 id, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<ATENDIMENTO> query = Db.ATENDIMENTO.Where(p => p.ATEN_IN_ATIVO == 1);
             query = query.Where(p => p.CLIE_CD_ID == id);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<ATENDIMENTO> GetAllItensAdm()
+        public List<ATENDIMENTO> GetAllItensAdm(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<ATENDIMENTO> query = Db.ATENDIMENTO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<ATENDIMENTO> ExecuteFilter(Int32? idCat, Int32? cliente, Int32? produto, DateTime? data, Int32? status, String descricao, Int32? depto, Int32? prioridade, Int32? idUsua, Int32? idServico, Int32? sla)
+        public List<ATENDIMENTO> ExecuteFilter(Int32? idCat, Int32? cliente, Int32? produto, DateTime? data, Int32? status, String descricao, Int32? depto, Int32? prioridade, Int32? idUsua, Int32? idServico, Int32? sla, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             List<ATENDIMENTO> lista = new List<ATENDIMENTO>();
             IQueryable<ATENDIMENTO> query = Db.ATENDIMENTO;
             if (cliente != null)

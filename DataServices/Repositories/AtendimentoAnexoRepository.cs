@@ -23,6 +23,7 @@ namespace DataServices.Repositories
             IQueryable<ATENDIMENTO_ANEXO> query = Db.ATENDIMENTO_ANEXO.Where(p => p.ATAN_CD_ID == id);
             return query.FirstOrDefault();
         }
+
     }
 }
  

@@ -170,8 +170,11 @@
     <Compile Include="Interfaces\IAppServiceBase.cs" />
     <Compile Include="Interfaces\IAssinanteAppService.cs" />
     <Compile Include="Interfaces\IAssinanteCnpjAppService.cs" />
+    <Compile Include="Interfaces\IAtendimentoAgendaAppService.cs" />
+    <Compile Include="Interfaces\IAtendimentoAppService.cs" />
     <Compile Include="Interfaces\IBancoAppService.cs" />
     <Compile Include="Interfaces\ICargoAppService.cs" />
+    <Compile Include="Interfaces\ICategoriaAtendimentoAppService.cs" />
     <Compile Include="Interfaces\ICategoriaFornecedorAppService.cs" />
     <Compile Include="Interfaces\ICategoriaEquipamentoAppService.cs" />
     <Compile Include="Interfaces\ICategoriaProdutoAppService.cs" />
@@ -232,8 +235,11 @@
     <Compile Include="Services\AppServiceBase.cs" />
     <Compile Include="Services\AssinanteAppService.cs" />
     <Compile Include="Services\AssinanteCnpjAppService.cs" />
+    <Compile Include="Services\AtendimentoAgendaAppService.cs" />
+    <Compile Include="Services\AtendimentoAppService.cs" />
     <Compile Include="Services\BancoAppService.cs" />
     <Compile Include="Services\CargoAppService.cs" />
+    <Compile Include="Services\CategoriaAtendimentoAppService.cs" />
     <Compile Include="Services\CategoriaFornecedorAppService.cs" />
     <Compile Include="Services\CategoriaEquipamentoAppService.cs" />
     <Compile Include="Services\CategoriaProdutoAppService.cs" />

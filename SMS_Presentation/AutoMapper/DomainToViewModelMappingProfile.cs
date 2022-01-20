@@ -80,6 +80,9 @@ namespace MvcMapping.Mappers
             CreateMap<CATEGORIA_SERVICO, CategoriaServicoViewModel>();
             CreateMap<DEPARTAMENTO, DepartamentoViewModel>();
             CreateMap<SERVICO, ServicoViewModel>();
+            CreateMap<ATENDIMENTO, AtendimentoViewModel>();
+            CreateMap<ATENDIMENTO_ACOMPANHAMENTO, AtendimentoAcompanhamentoViewModel>();
+
         }
     }
 }

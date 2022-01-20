@@ -173,8 +173,12 @@
     <Compile Include="Repositories\AssinanteCnpjRepository.cs" />
     <Compile Include="Repositories\AssinantePagamentoRepository.cs" />
     <Compile Include="Repositories\AssinanteRepository.cs" />
+    <Compile Include="Repositories\AtendimentoAgendaRepository.cs" />
+    <Compile Include="Repositories\AtendimentoAnexoRepository.cs" />
+    <Compile Include="Repositories\AtendimentoRepository.cs" />
     <Compile Include="Repositories\BancoRepository.cs" />
     <Compile Include="Repositories\CargoRepository.cs" />
+    <Compile Include="Repositories\CategoriaAtendimentoRepository.cs" />
     <Compile Include="Repositories\CategoriaEquipamentoRepository.cs" />
     <Compile Include="Repositories\CategoriaProdutoRepository.cs" />
     <Compile Include="Repositories\CategoriaServicoRepository.cs" />

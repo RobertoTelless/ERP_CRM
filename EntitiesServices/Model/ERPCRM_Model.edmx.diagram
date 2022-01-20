@@ -450,6 +450,8 @@
         <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_ANEXO_SERVICO" />
         <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_SERVICO" />
         <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_UNIDADE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_NOTIFICACAO_ATENDIMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_DEPARTAMENTO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

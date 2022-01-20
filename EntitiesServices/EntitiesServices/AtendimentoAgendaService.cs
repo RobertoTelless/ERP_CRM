@@ -21,7 +21,7 @@ namespace ModelServices.EntitiesServices
         private readonly IAtendimentoAgendaRepository _baseRepository;
         private readonly ILogRepository _logRepository;
 
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public AtendimentoAgendaService(IAtendimentoAgendaRepository baseRepository, ILogRepository logRepository): base(baseRepository)
         {

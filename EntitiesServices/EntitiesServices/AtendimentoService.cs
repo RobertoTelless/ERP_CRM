@@ -24,7 +24,7 @@ namespace ModelServices.EntitiesServices
         private readonly IClienteRepository _cliRepository;
         private readonly IProdutoRepository _prodRepository;
         private readonly ICategoriaAtendimentoRepository _tipoRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public AtendimentoService(IAtendimentoRepository baseRepository, ILogRepository logRepository, IClienteRepository cliRepository, IProdutoRepository prodRepository, ICategoriaAtendimentoRepository tipoRepository, IAtendimentoAnexoRepository anexoRepository) : base(baseRepository)
         {
@@ -36,9 +36,9 @@ namespace ModelServices.EntitiesServices
             _anexoRepository = anexoRepository;
         }
 
-        public ATENDIMENTO CheckExist(ATENDIMENTO conta)
+        public ATENDIMENTO CheckExist(ATENDIMENTO conta, Int32 idAss)
         {
-            ATENDIMENTO item = _baseRepository.CheckExist(conta);
+            ATENDIMENTO item = _baseRepository.CheckExist(conta, idAss);
             return item;
         }
 
@@ -48,9 +48,9 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<ATENDIMENTO> GetAllItens()
+        public List<ATENDIMENTO> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
         public ATENDIMENTO_ANEXO GetAnexoById(Int32 id)
@@ -58,24 +58,24 @@ namespace ModelServices.EntitiesServices
             return _anexoRepository.GetItemById(id);
         }
 
-        public List<ATENDIMENTO> GetAllItensAdm()
+        public List<ATENDIMENTO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
-        public List<ATENDIMENTO> GetByCliente(Int32 id)
+        public List<ATENDIMENTO> GetByCliente(Int32 id, Int32 idAss)
         {
-            return _baseRepository.GetByCliente(id);
+            return _baseRepository.GetByCliente(id, idAss);
         }
 
-        public List<CATEGORIA_ATENDIMENTO> GetAllTipos()
+        public List<CATEGORIA_ATENDIMENTO> GetAllTipos(Int32 idAss)
         {
-            return _tipoRepository.GetAllItens();
+            return _tipoRepository.GetAllItens(idAss);
         }
 
-        public List<ATENDIMENTO> ExecuteFilter(Int32? idCat, Int32? cliente, Int32? produto, DateTime? data, Int32? status, String descricao, Int32? depto, Int32? prioridade, Int32? idUsua, Int32? idServico, Int32? sla)
+        public List<ATENDIMENTO> ExecuteFilter(Int32? idCat, Int32? cliente, Int32? produto, DateTime? data, Int32? status, String descricao, Int32? depto, Int32? prioridade, Int32? idUsua, Int32? idServico, Int32? sla, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(idCat, cliente, produto, data, status, descricao, depto, prioridade, idUsua, idServico, sla);
+            return _baseRepository.ExecuteFilter(idCat, cliente, produto, data, status, descricao, depto, prioridade, idUsua, idServico, sla, idAss);
 
         }
 

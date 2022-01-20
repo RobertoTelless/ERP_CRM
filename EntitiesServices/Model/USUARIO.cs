@@ -91,6 +91,7 @@ namespace EntitiesServices.Model
         public Nullable<int> FILI_CD_ID { get; set; }
         public Nullable<System.TimeSpan> USUA_TM_INICIO { get; set; }
         public Nullable<System.TimeSpan> USUA_TM_FINAL { get; set; }
+        public Nullable<int> DEPT_CD_ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA> AGENDA { get; set; }
@@ -169,5 +170,6 @@ namespace EntitiesServices.Model
         public virtual ICollection<ORDEM_SERVICO_ACOMPANHAMENTO> ORDEM_SERVICO_ACOMPANHAMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDEM_SERVICO_COMENTARIOS> ORDEM_SERVICO_COMENTARIOS { get; set; }
+        public virtual DEPARTAMENTO DEPARTAMENTO { get; set; }
     }
 }

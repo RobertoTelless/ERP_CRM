@@ -20,12 +20,18 @@ namespace ModelServices.EntitiesServices
     {
         private readonly ICategoriaAtendimentoRepository _baseRepository;
         private readonly ILogRepository _logRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public CategoriaAtendimentoService(ICategoriaAtendimentoRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
+        }
+
+        public CATEGORIA_ATENDIMENTO CheckExist(CATEGORIA_ATENDIMENTO conta, Int32 idAss)
+        {
+            CATEGORIA_ATENDIMENTO item = _baseRepository.CheckExist(conta, idAss);
+            return item;
         }
 
         public CATEGORIA_ATENDIMENTO GetItemById(Int32 id)
@@ -34,14 +40,14 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<CATEGORIA_ATENDIMENTO> GetAllItens()
+        public List<CATEGORIA_ATENDIMENTO> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<CATEGORIA_ATENDIMENTO> GetAllItensAdm()
+        public List<CATEGORIA_ATENDIMENTO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
     
         public Int32 Create(CATEGORIA_ATENDIMENTO item, LOG log)

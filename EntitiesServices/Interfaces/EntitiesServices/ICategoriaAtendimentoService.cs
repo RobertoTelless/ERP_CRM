@@ -15,8 +15,10 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 Edit(CATEGORIA_ATENDIMENTO item, LOG log);
         Int32 Edit(CATEGORIA_ATENDIMENTO item);
         Int32 Delete(CATEGORIA_ATENDIMENTO item, LOG log);
+
+        CATEGORIA_ATENDIMENTO CheckExist(CATEGORIA_ATENDIMENTO item, Int32 idAss);
         CATEGORIA_ATENDIMENTO GetItemById(Int32 id);
-        List<CATEGORIA_ATENDIMENTO> GetAllItens();
-        List<CATEGORIA_ATENDIMENTO> GetAllItensAdm();
+        List<CATEGORIA_ATENDIMENTO> GetAllItens(Int32 idAss);
+        List<CATEGORIA_ATENDIMENTO> GetAllItensAdm(Int32 idAss);
     }
 }
