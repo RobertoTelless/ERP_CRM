@@ -3292,7 +3292,6 @@
     <Content Include="Views\Atendimento\EditarAtendimento.cshtml" />
     <Content Include="Views\Atendimento\CancelarAtendimento.cshtml" />
     <Content Include="Views\Atendimento\EncerrarAtendimento.cshtml" />
-    <Content Include="Views\Atendimento\AtivarAtendimento.cshtml" />
     <Content Include="Views\Atendimento\ExcluirAtendimento.cshtml" />
     <Content Include="Views\Atendimento\ReativarAtendimento.cshtml" />
     <Content Include="Views\Atendimento\VerAnexoAtendimento.cshtml" />
@@ -3301,6 +3300,7 @@
     <Content Include="Views\Atendimento\MontarTelaAtenDia.cshtml" />
     <Content Include="Views\Atendimento\MontarTelaAtenClieDia.cshtml" />
     <Content Include="Views\Atendimento\MontarTelaGraficos.cshtml" />
+    <Content Include="Views\Atendimento\VerAtendimento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

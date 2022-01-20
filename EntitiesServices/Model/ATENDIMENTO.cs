@@ -52,6 +52,7 @@ namespace EntitiesServices.Model
         public Nullable<System.DateTime> ATEN_DT_PREVISTA { get; set; }
         public Nullable<int> ATEN_IN_SLA { get; set; }
         public string ATEN_NR_NUMERO { get; set; }
+        public Nullable<int> ATEN_IN_CRM { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

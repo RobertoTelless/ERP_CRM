@@ -164,6 +164,7 @@
           <Property Name="ATEN_DT_PREVISTA" Type="datetime" />
           <Property Name="ATEN_IN_SLA" Type="int" />
           <Property Name="ATEN_NR_NUMERO" Type="varchar" MaxLength="50" />
+          <Property Name="ATEN_IN_CRM" Type="int" />
         </EntityType>
         <EntityType Name="ATENDIMENTO_ACOMPANHAMENTO">
           <Key>
@@ -14112,6 +14113,7 @@
           <NavigationProperty Name="USUARIO1" Relationship="ERP_CRMModel.FK_ATENDIMENTO_USUARIO1" FromRole="ATENDIMENTO" ToRole="USUARIO" />
           <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_ATENDIMENTO" FromRole="ATENDIMENTO" ToRole="ORDEM_SERVICO" />
           <NavigationProperty Name="NOTIFICACAO" Relationship="ERP_CRMModel.FK_NOTIFICACAO_ATENDIMENTO" FromRole="ATENDIMENTO" ToRole="NOTIFICACAO" />
+          <Property Name="ATEN_IN_CRM" Type="Int32" />
         </EntityType>
         <EntityType Name="ATENDIMENTO_ACOMPANHAMENTO">
           <Key>
@@ -17194,6 +17196,7 @@
           <EntitySetMapping Name="ATENDIMENTO">
             <EntityTypeMapping TypeName="ERP_CRMModel.ATENDIMENTO">
               <MappingFragment StoreEntitySet="ATENDIMENTO">
+                <ScalarProperty Name="ATEN_IN_CRM" ColumnName="ATEN_IN_CRM" />
                 <ScalarProperty Name="ATEN_NR_NUMERO" ColumnName="ATEN_NR_NUMERO" />
                 <ScalarProperty Name="ATEN_IN_SLA" ColumnName="ATEN_IN_SLA" />
                 <ScalarProperty Name="ATEN_DT_PREVISTA" ColumnName="ATEN_DT_PREVISTA" />

@@ -377,6 +377,11 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("MontarTelaCRM", "CRM");
             }
+            if ((Int32)Session["VoltaCRM"] == 12)
+            {
+                return RedirectToAction("VoltarAnexoAtendimento", "Atendimento");
+            }
+            Session["VoltaCRM"] = 0;
             return RedirectToAction("MontarTelaCRM");
         }
 

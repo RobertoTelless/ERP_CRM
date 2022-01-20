@@ -134,8 +134,9 @@
                                 @Html.ButtonLinkIndex(text: "Novo Atendimento", controller: "Atendimento", action: "IncluirAtendimento")
                                 @Html.ButtonLinkIndex(text: "Exibir Quadro", controller: "Atendimento", action: "MontarTelaAtendimentoQuadro")
                                 @Html.ButtonLinkIndex(text: "Visualização Kanban", controller: "Atendimento", action: "MontarTelaAtendimentoKanban")
-                                @Html.ButtonLinkIndex(text: "Listagem de Atendimentos (Filtro)", controller: "Atendimento", action: "GerarRelatorioResumo")
+                                @Html.ButtonLinkIndex(text: "Relatório", controller: "Atendimento", action: "GerarRelatorioResumo")
                                 @Html.ButtonLinkIndex(text: "Gráficos", controller: "Atendimento", action: "MontarTelaGraficos")
+                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Servico", action: "MontarTelaDashboardServiceDesk")
                                 @Html.ButtonLinkIndex(text: "Voltar", controller: "Atendimento", action: "Voltar")
                             </div>
                         </div>
@@ -150,25 +151,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Atendimentos</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     @if (!ViewData.ModelState.IsValid)
@@ -233,12 +215,12 @@
                                             }
                                             else
                                             {
-                                                <td>Não definido</td>
+                                                <td><span class="badge badge-success">Não definido</span></td>
                                             }
                                             <td>@cond.ATEN_NM_ASSUNTO</td>
                                             @if (cond.ATEN_IN_STATUS == 1)
                                             {
-                                                <td style="color: orange; font-weight: bold;">Criação</td>
+                                                <td><span class="badge badge-warning">Criação</span></td>
                                             }
                                             @*else if (cond.ATEN_IN_STATUS == 2)
                                                 {
@@ -246,15 +228,15 @@
                                                 }*@
                                             else if (cond.ATEN_IN_STATUS == 3)
                                             {
-                                                <td style="color: red; font-weight: bold;">Cancelado</td>
+                                                <td><span class="badge badge-danger">Cancelado</span></td>
                                             }
                                             else if (cond.ATEN_IN_STATUS == 4)
                                             {
-                                                <td style="color: green; font-weight: bold;">Em Execução</td>
+                                                <td><span class="badge badge-primary">Em Execução</span></td>
                                             }
                                             else if (cond.ATEN_IN_STATUS == 5)
                                             {
-                                                <td style="color: blue; font-weight: bold;">Encerrado</td>
+                                                <td><span class="badge badge-success">Encerrado</span></td>
                                             }
                                             else
                                             {
@@ -277,7 +259,7 @@
                                                 <td><span class="badge badge-danger">Não</span></td>
                                             }
                                             <td class="td-one-action">
-                                                @if (cond.ATEN_IN_STATUS != 3 && cond.ATEN_IN_STATUS != 5 && ViewBag.Perfil == "ADM")
+                                                @if (cond.ATEN_IN_STATUS != 3 && cond.ATEN_IN_STATUS != 5)
                                                 {
                                                     @Html.TableLinkDetails(cond.ATEN_CD_ID, "EditarAtendimento", "fa-edit", "Editar/Consultar")
                                                 }
@@ -285,11 +267,22 @@
                                                 {
                                                     @Html.TableLinkDetails(cond.ATEN_CD_ID, "VerAtendimento", "fa-search", "Consultar")
                                                 }
-                                                @if (ViewBag.Perfil == "ADM")
+                                                @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
                                                 {
-                                                    if (cond.ATEN_IN_STATUS != 3 && cond.ATEN_IN_STATUS != 5)
+                                                    if (cond.ATEN_IN_STATUS != 3 & cond.ATEN_IN_STATUS != 5)
                                                     {
                                                         @Html.TableLinkDetails(cond.ATEN_CD_ID, "CancelarAtendimento", "fa-ban", "Cancelar")
+                                                    }
+                                                    if (cond.ATEN_IN_STATUS == 1)
+                                                    {
+                                                        if (cond.ATEN_IN_ATIVO == 1)
+	                                                    {
+                                                            @Html.TableLinkDetails(cond.ATEN_CD_ID, "ExcluirAtendimento","fa-trash-o", "Desativar")
+                                                        }
+                                                        else
+                                                        {   
+                                                            @Html.TableLinkDetails(cond.ATEN_CD_ID, "ReativarAtendimento","fa-refresh", "Reativar")
+                                                        }
                                                     }
                                                 }
                                             </td>
@@ -358,8 +351,6 @@
                 pageLength: lineCount,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
-                    { extend: 'copy' },
-                    { extend: 'csv' },
                     { extend: 'excel', title: 'ExampleFile' },
                     { extend: 'pdf', title: 'ExampleFile' },
                     {

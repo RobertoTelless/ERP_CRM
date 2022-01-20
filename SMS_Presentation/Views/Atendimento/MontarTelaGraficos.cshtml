@@ -1,7 +1,298 @@
-﻿
+﻿@using Presentation.Extensions
+@using CrossCutting;
+@using EntitiesServices.Work_Classes;
+@model EntitiesServices.Model.ATENDIMENTO
 @{
-    ViewBag.Title = "MontarTelaGraficos";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Atendimentos</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Atendimentos</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Atendimentos</h5>
+                </div>
+                <div class="ibox-content">
+                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Servico", action: "MontarTelaDashboardServiceDesk")
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaAtendimento", controller: "Atendimento")
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-xs-12">
+                            <div id="chartdiv" style="width: 100%; height: 600px;"></div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-xs-12">
+                            <div id="chartdiv1" style="width: 100%; height: 600px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3">
+                            <div></div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-12">
+                            <div id="chartdiv2" style="width: 100%; height: 600px;"></div>
+                        </div>
+                        <div class="col-lg-3 col-md-3">
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/Content/plugins/summernote/summernote.css")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
 }
 
-<h2>MontarTelaGraficos</h2>
+@section Scripts {
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/summernote")
+    @Scripts.Render("~/plugins/touchSpin")
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/uploadAnexo.js"></script>
+    <script src="~/Scripts/amcharts/core.js"></script>
+    <script src="~/Scripts/amcharts/charts.js"></script>
+    <script src="~/Scripts/amcharts/themes/animated.js"></script>
+    <script src="~/Scripts/amcharts/lang/pt_BR.js"></script>
+
+    <!-- Chart code -->
+    <script>
+        am4core.ready(function () {
+
+            // Themes begin
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+
+            // Create chart instance
+            var chart = am4core.create("chartdiv", am4charts.XYChart);
+            chart.dateFormatter.dateFormat = "dd/MM/yyyy";
+            chart.language.locale = am4lang_pt_BR;
+
+            // Add data
+            $.ajax({
+                url: '../Atendimento/GetGraficoAtendimentoDia'
+                , type: 'POST'
+                , success: function (r) {
+                    chart.data = r;
+                }
+            });
+
+            let title = chart.titles.create();
+            title.text = "Atendimentos/Dia";
+            title.fontSize = 15;
+            title.fontWeight = "bold"
+            title.marginBottom = 5;
+
+            // Create axes
+            var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.title.text = "Nmr. Atendimentos";
+            valueAxis.title.align = "left"
+            valueAxis.title.fontWeight = "normal";
+
+            // Create series
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.dataFields.valueY = "value";
+            series.dataFields.dateX = "date";
+            series.name = "Atendimentos";
+            series.columns.template.tooltipText = "{dateX}: [bold]{clienteZ}[/]";
+            series.columns.template.width = am4core.percent(70);
+            series.columns.template.fill = am4core.color("#18A689");
+            series.columns.template.stroke = am4core.color("#18A689");
+
+            var columnTemplate = series.columns.template;
+            columnTemplate.strokeWidth = 2;
+            columnTemplate.strokeOpacity = 1;
+
+            var cursor = new am4charts.XYCursor();
+            cursor.behavior = "panX";
+            chart.cursor = cursor;
+            cursor.lineX.disabled = true;
+
+            chart.legend = new am4charts.Legend();
+            chart.cursor = new am4charts.XYCursor();
+            chart.zoomOutButton.align = "left";
+            chart.zoomOutButton.valign = "bottom";
+            chart.zoomOutButton.marginLeft = 10;
+            chart.zoomOutButton.marginBottom = 10;
+
+            var scrollbar = new am4charts.XYChartScrollbar();
+            scrollbar.series.push(series);
+            scrollbar.height = 5;
+            chart.scrollbarX = scrollbar;
+
+            let button = chart.chartContainer.createChild(am4core.Button);
+            button.label.text = "Expandir";
+            button.padding(5, 5, 5, 5);
+            button.align = "left";
+            button.marginRight = 15;
+            button.events.on("hit", function () {
+                window.open('../Atendimento/MontarTelaAtenDia', '_self');
+            });
+        }); // end am4core.ready()
+    </script>
+
+    <!-- Chart code -->
+    <script>
+        am4core.ready(function () {
+
+            // Themes begin
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+
+            // Create chart instance
+            var chart = am4core.create("chartdiv1", am4charts.XYChart);
+            chart.dateFormatter.dateFormat = "dd/MM/yyyy";
+            chart.language.locale = am4lang_pt_BR;
+
+            // Add data
+            $.ajax({
+                url: '../Atendimento/GetGraficoClieAtenDia'
+                , type: 'POST'
+                , success: function (r) {
+                    chart.data = r;
+                }
+            });
+
+            let title = chart.titles.create();
+            title.text = "Atendimentos por Cliente/Dia";
+            title.fontSize = 15;
+            title.fontWeight = "bold"
+            title.marginBottom = 5;
+
+            // Create axes
+            var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.title.text = "Nmr. Atendimentos";
+            valueAxis.title.align = "left"
+            valueAxis.title.fontWeight = "normal";
+
+            // Create series
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.dataFields.valueY = "value";
+            series.dataFields.dateX = "date";
+            series.name = "Atendimentos";
+            series.columns.template.tooltipText = "{dateX}: [bold]{valueY}[/]";
+            series.columns.template.width = am4core.percent(70);
+            series.columns.template.fill = am4core.color("#18A689");
+            series.columns.template.stroke = am4core.color("#18A689");
+
+            var columnTemplate = series.columns.template;
+            columnTemplate.strokeWidth = 2;
+            columnTemplate.strokeOpacity = 1;
+
+            var cursor = new am4charts.XYCursor();
+            cursor.behavior = "panX";
+            chart.cursor = cursor;
+            cursor.lineX.disabled = true;
+
+            chart.legend = new am4charts.Legend();
+            chart.cursor = new am4charts.XYCursor();
+            chart.zoomOutButton.align = "left";
+            chart.zoomOutButton.valign = "bottom";
+            chart.zoomOutButton.marginLeft = 10;
+            chart.zoomOutButton.marginBottom = 10;
+
+            var scrollbar = new am4charts.XYChartScrollbar();
+            scrollbar.series.push(series);
+            scrollbar.height = 5;
+            chart.scrollbarX = scrollbar;
+
+            let button = chart.chartContainer.createChild(am4core.Button);
+            button.label.text = "Expandir";
+            button.padding(5, 5, 5, 5);
+            button.align = "left";
+            button.marginRight = 15;
+            button.events.on("hit", function () {
+                window.open('../Atendimento/MontarTelaAtenClieDia', '_self');
+            });
+        }); // end am4core.ready()
+    </script>
+
+    <!-- Chart code -->
+    <script>
+        am4core.ready(function () {
+
+            // Themes begin
+            am4core.useTheme(am4themes_animated);
+            // Themes end
+
+            // Create chart instance
+            var chart = am4core.create("chartdiv2", am4charts.PieChart);
+
+            // Add data
+            $.ajax({
+                url: '../Atendimento/GetGraficoAtenStatus'
+                , type: 'POST'
+                , success: function (r) {
+                    chart.data = r;
+                }
+            });
+
+            // Add and configure Series
+            var pieSeries = chart.series.push(new am4charts.PieSeries());
+            pieSeries.dataFields.value = "value";
+            pieSeries.dataFields.category = "text";
+            pieSeries.slices.template.stroke = am4core.color("#fff");
+            pieSeries.slices.template.strokeOpacity = 1;
+            pieSeries.slices.template.propertyFields.fill = "color";
+
+            pieSeries.slices.template.events.on("hit", function (ev) {
+                window.open('../Atendimento/MontarTelaAtenGrafStatus?status=' + ev.target.dataItem.category, '_self');
+            });
+
+            // This creates initial animation
+            pieSeries.hiddenState.properties.opacity = 1;
+            pieSeries.hiddenState.properties.endAngle = -90;
+            pieSeries.hiddenState.properties.startAngle = -90;
+
+            chart.hiddenState.properties.radius = am4core.percent(0);
+
+
+        }); // end am4core.ready()
+    </script>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
 

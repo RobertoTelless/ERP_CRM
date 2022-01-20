@@ -384,4 +384,7 @@
   <data name="M0111" xml:space="preserve">
     <value>Login já existente</value>
   </data>
+  <data name="M0112" xml:space="preserve">
+    <value>Impossível incluir/reativar atendimentos. Número de atendimentos ativos excede o contratado no Plano de Assinatura</value>
+  </data>
 </root>

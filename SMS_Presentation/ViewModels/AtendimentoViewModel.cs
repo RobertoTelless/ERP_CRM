@@ -55,6 +55,48 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<Int32> SERV_CD_ID { get; set; }
         public Nullable<int> ATEN_IN_SLA { get; set; }
         public string ATEN_NR_NUMERO { get; set; }
+        public Nullable<int> ATEN_IN_CRM { get; set; }
+
+
+        public String Tipo
+        {
+            get
+            {
+                if (ATEN_IN_TIPO == 1)
+                {
+                    return "Interno";
+                }
+                if (ATEN_IN_TIPO == 2)
+                {
+                    return "Externo";
+                }
+                return "Interno";
+            }
+        }
+
+        public String Prioridade
+        {
+            get
+            {
+                if (ATEN_IN_PRIORIDADE == 1)
+                {
+                    return "Normal";
+                }
+                if (ATEN_IN_PRIORIDADE == 2)
+                {
+                    return "Baixa";
+                }
+                if (ATEN_IN_PRIORIDADE == 3)
+                {
+                    return "Alta";
+                }
+                if (ATEN_IN_PRIORIDADE == 4)
+                {
+                    return "Urgente";
+                }
+                return "Normal";
+            }
+        }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

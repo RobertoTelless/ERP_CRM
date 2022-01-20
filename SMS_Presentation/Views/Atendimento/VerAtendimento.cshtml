@@ -15,7 +15,7 @@
                 <a href="@Url.Action("MontarTelaAtendimento", "Atendimento")">Atendimentos</a>
             </li>
             <li class="active">
-                <strong>Atendimento - Consulta & Edição</strong>
+                <strong>Atendimento - Consulta</strong>
             </li>
         </ol>
         <br />
@@ -69,58 +69,12 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Atendimento - Edição</h5>
+                    <h5>Atendimento - Consulta</h5>
                 </div>
                 <div class="ibox-content">
-                    @Html.AntiForgeryToken()
-                    @if (!ViewData.ModelState.IsValid)
-                    {
-                        <div class="alert alert-danger">
-                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
-                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                        </div>
-                    }
-                    @if (ViewBag.TarefaAgen != null && ViewBag.TarefaAgen == 1)
-                    {
-                        <div class="alert alert-success">
-                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
-                            Tarefa cadastrada com sucesso!
-                        </div>
-                    }
                     <row>
                         <div class="form-group">
                             @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioAtendimento", controller: "Atendimento")
-                            @if (Model.ATEN_IN_STATUS == 1 || Model.ATEN_IN_STATUS == 2 || Model.ATEN_IN_STATUS == 4)
-                            {
-                                @Html.ButtonLinkIndex(text: "Cancelar", action: "CancelarAtendimento", controller: "Atendimento")
-                            }
-                            @if (Model.ATEN_IN_STATUS == 1 || Model.ATEN_IN_STATUS == 2 || Model.ATEN_IN_STATUS == 4)
-                            {
-                                @Html.ButtonLinkIndex(text: "Encerrar", action: "EncerrarAtendimento", controller: "Atendimento")
-                            }
-
-                            @if ((Model.ORDEM_SERVICO == null || Model.ORDEM_SERVICO.Count == 0) & (Model.ATEN_IN_STATUS == 1 || Model.ATEN_IN_STATUS == 2 || Model.ATEN_IN_STATUS == 4))
-                            {
-                                @Html.ButtonLinkIndex(text: "Gerar Ordem de Serviço", action: "GerarOSAtendimento", controller: "Atendimento")
-                            }
-                            @if ((Model.ORDEM_SERVICO == null || Model.ORDEM_SERVICO.Count == 0) & (Model.ATEN_IN_STATUS == 1 || Model.ATEN_IN_STATUS == 2 || Model.ATEN_IN_STATUS == 4))
-                            {
-                                if (Model.CLIENTE != null)
-                                {
-                                    @Html.ButtonLinkIndex(text: "Gerar Tarefa Associada", action: "GerarTarefaAtendimento", controller: "Atendimento", routeValues: new { cliente = Model.CLIENTE.CLIE_NM_NOME })
-                                }
-                            }
-                            @if (Model.ORDEM_SERVICO == null)
-                            { 
-                                @Html.ButtonLinkIndex(text: "Criar Ordem de Serviço", action: "IncluirOrdemServico", controller: "Atendimento")
-                            }
-                            @if ((Int32)Session["PermCRM"] == 1 & Model.ATEN_IN_CRM == null)
-	                        {
-                                if (Model.ATEN_IN_STATUS == 1 || Model.ATEN_IN_STATUS == 4)
-                                {
-                                    @Html.ButtonLinkIndex(text: "Gerar Processo CRM", action: "GerarCRMAtendimento", controller: "Atendimento")
-                                }
-	                        }
                             @if ((Int32)Session["PermCRM"] == 1 & Model.ATEN_IN_CRM != null)
 	                        {
                                 @Html.ButtonLinkIndex(text: "Ver Processo CRM", action: "VerCRMAtendimento", controller: "Atendimento")
@@ -135,7 +89,6 @@
                             <li class=""><a data-toggle="tab" href="#tab-2">Anexos</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-3">Cancelamento</a></li>
                             <li class="@ViewBag.Acompanhamento"><a data-toggle="tab" href="#tab-4">Acompanhamentos</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-5">Agendamento</a></li>
                             <li class="@ViewBag.AgenLista"><a data-toggle="tab" href="#tab-6">Agendamentos - Lista</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-7">Observações</a></li>
                             <li class="@ViewBag.OrdemServico"><a data-toggle="tab" href="#tab-8">Ordens de Serviço</a></li>
@@ -144,11 +97,8 @@
                             @*Dados Gerais*@
                             <div id="tab-1" class="tab-pane @ViewBag.DadosGerais">
                                 <div class="panel-body">
-                                    @using (Html.BeginForm("EditarAtendimento", "Atendimento", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    @using (Html.BeginForm("VerAtendimento", "Atendimento", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
-                                        <div class="form-group">
-                                            @Html.ButtonActionSubmit(text: "Confirma edição de Atendimento", htmlAttributes: new { id = "basictoast" })
-                                        </div>
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-4 col-md-4 col-xs-12">
@@ -170,7 +120,7 @@
                                                     @Html.HiddenFor(m => m.CAAT_CD_ID)
                                                     @Html.HiddenFor(m => m.ATEN_NR_NUMERO)
                                                     @Html.HiddenFor(m => m.ATEN_IN_CRM)
-                                                    Cliente*
+                                                    Cliente
                                                     @Html.TextBoxFor(m => m.CLIENTE.CLIE_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
@@ -199,23 +149,20 @@
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Número
                                                     @Html.TextBoxFor(m => m.ATEN_NR_NUMERO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                    @Html.ValidationMessageFor(m => m.ATEN_NR_NUMERO, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-4 col-md-4 col-xs-12">
-                                                    Categoria*
+                                                    Categoria
                                                     @Html.TextBoxFor(m => m.CATEGORIA_ATENDIMENTO.CAAT_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-xs-12">
-                                                    Responsável*
-                                                    @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
+                                                    Responsável
+                                                    @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                                     Departamento
-                                                    @Html.DropDownListFor(m => m.DEPT_CD_ID, (SelectList)ViewBag.Depts, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.DEPT_CD_ID, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.DEPARTAMENTO.DEPT_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
@@ -230,7 +177,6 @@
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Data Início
                                                     @Html.TextBoxFor(m => m.ATEN_DT_INICIO, new { @class = "form-control", autofocus = true, @readonly = "readonly", @style = "color:green; font-weight:bold" })
-                                                    @Html.ValidationMessageFor(m => m.ATEN_DT_INICIO, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Data Prevista
@@ -239,33 +185,22 @@
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Tipo*
-                                                    @Html.DropDownListFor(m => m.ATEN_IN_TIPO, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.ATEN_IN_TIPO, "", new { @style = "color:red" })
+                                                    Tipo
+                                                    @Html.TextBoxFor(m => m.Tipo, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-xs-12">
-                                                    Assunto*
-                                                    @Html.TextBoxFor(m => m.ATEN_NM_ASSUNTO, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.ATEN_NM_ASSUNTO, "", new { @style = "color:red" })
+                                                    Assunto
+                                                    @Html.TextBoxFor(m => m.ATEN_NM_ASSUNTO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Prioridade*
-                                                    @Html.DropDownListFor(m => m.ATEN_IN_PRIORIDADE, (SelectList)ViewBag.Prioridade, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.ATEN_IN_PRIORIDADE, "", new { @style = "color:red" })
+                                                    Prioridade
+                                                    @Html.TextBoxFor(m => m.Prioridade, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    Descrição*
-                                                    @if (ViewBag.Perfil == "ADM")
-                                                    {
-                                                        @Html.TextAreaFor(m => m.ATEN_DS_DESCRICAO, new { @class = "form-control summernote", style = "width: 100%; height: 100px;", autofocus = true })
-                                                    }
-                                                    else
-                                                    {
-                                                        @Html.TextAreaFor(m => m.ATEN_DS_DESCRICAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly = "readonly" })
-                                                    }
-                                                    @Html.ValidationMessageFor(m => m.ATEN_DS_DESCRICAO, "", new { @style = "color:red" })
+                                                    Descrição
+                                                    @Html.TextAreaFor(m => m.ATEN_DS_DESCRICAO, new { @class = "form-control summernote", style = "width: 100%; height: 100px;", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                             </div>
                                             @if (Model.ATEN_IN_STATUS == 5)
@@ -286,9 +221,6 @@
                                             }
                                         </div>
                                         <hr />
-                                        <div class="form-group">
-                                            @Html.ButtonActionSubmit(text: "Confirma edição de Atendimento", htmlAttributes: new { id = "basictoast" })
-                                        </div>
                                     }
                                 </div>
                             </div>
@@ -346,10 +278,6 @@
                                                                 </tbody>
                                                             </table>
                                                         }
-                                                        <div class="col-lg-12 col-md-12 col-xs-12">
-                                                            <input style="float:left; margin-right:5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
-                                                            <input style="float:left;" type="submit" value="Incluir Anexo" class="btn btn-sm btn-success" />
-                                                        </div>
                                                     </div>
                                                 }
                                             </div>
@@ -361,7 +289,7 @@
                             @*Cancelamento*@
                             <div id="tab-3" class="tab-pane">
                                 <div class="panel-body">
-                                    @using (Html.BeginForm("EditarAtendimento", "Atendimento", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    @using (Html.BeginForm("VerAtendimento", "Atendimento", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
@@ -416,60 +344,6 @@
                                         </div>
                                     </div>
                                     <br />
-                                    <div class="form-group">
-                                        @Html.ButtonLinkIndex(text: "Incluir Acompanhamento", action: "IncluirAcompanhamento", controller: "Atendimento")
-                                        @Html.ButtonLinkIndex(text: "Incluir Acompanhamento e Encerrar", action: "IncluirAcompanhamentoEncerrar", controller: "Atendimento")
-                                    </div>
-                                </div>
-                            </div>
-
-                            @*Agendamento*@
-                            <div id="tab-5" class="tab-pane">
-                                <div class="panel-body">
-                                    @using (Html.BeginForm("IncluirAgendamento", "Atendimento", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container2" }))
-                                    {
-                                        <div class="row">
-                                            <div class="form-group">
-                                                <div class="col-sm-3 col-md-3 col-xs-12">
-                                                    @Html.HiddenFor(m => m.ATEN_CD_ID)
-                                                    Categoria
-                                                    @Html.DropDownList("CAAG_CD_ID", (SelectList)ViewBag.CatsAgenda, "Selecionar", new { @class = "form-control", @data_val = "true" })
-                                                </div>
-                                                <div class="col-sm-3 col-md-3 col-xs-12">
-                                                    Data
-                                                    @Html.TextBox(name: "AGEN_DT_DATA", value: DateTime.Now.Date.ToString("dd//MM/yyyy"), format: "{0:dd/MM/yyyy}", htmlAttributes: new { @class = "form-control date-picker", autofocus = true })
-                                                </div>
-                                                <div class="col-sm-3 col-md-3 col-xs-12">
-                                                    Hora
-                                                    <div class="input-group date" id="datetimepicker3">
-                                                        @Html.TextBox(name: "AGEN_HR_HORA", value: DateTime.Now.TimeOfDay, htmlAttributes: new { @class = "form-control time-picker", autofocus = true, @id = "hora" })
-                                                        <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-time"></span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3 col-md-3 col-xs-12">
-                                                    Contato
-                                                    @Html.DropDownList("AGEN_CD_USUARIO", (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", @id = "AGEN_CD_USUARIO", @data_val = "true" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-12 col-md-12 col-xs-12">
-                                                    Título
-                                                    @Html.TextBox(name: "AGEN_NM_TITULO", value: null, htmlAttributes: new { @class = "form-control", autofocus = true })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-12 col-md-12 col-xs-12">
-                                                    Descrição
-                                                    @Html.TextArea(name: "AGEN_DS_DESCRICAO", value: null, htmlAttributes: new { @class = "form-control", autofocus = true })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            @Html.ButtonActionSubmit(text: "Incluir Agendamento", htmlAttributes: new { id = "basictoast" })
-                                        </div>
-                                    }
                                 </div>
                             </div>
 
@@ -488,7 +362,6 @@
                                                             <th>Hora</th>
                                                             <th>Título</th>
                                                             <th>Categoria</th>
-                                                            <th>Ações</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -501,9 +374,6 @@
                                                                     <td>@cond.AGEN_HR_HORA.ToString()</td>
                                                                     <td>@cond.AGEN_NM_TITULO</td>
                                                                     <td>@cond.CATEGORIA_AGENDA.CAAG_NM_NOME</td>
-                                                                    <td>
-                                                                        @Html.TableLinkDetails(cond.AGEN_CD_ID, "EditarAgenda", "fa-edit", "Editar")
-                                                                    </td>
                                                                 </tr>
                                                             }
                                                         }
@@ -554,13 +424,9 @@
                                                     @Html.HiddenFor(m => m.ATEN_NR_NUMERO)
                                                     @Html.HiddenFor(m => m.ATEN_IN_CRM)
                                                     Observações
-                                                    @Html.TextAreaFor(m => m.ATEN_TX_OBSERVACOES, new { @class = "form-control summernote", style = "width: 100%; height: 400px;", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.ATEN_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                                    @Html.TextAreaFor(m => m.ATEN_TX_OBSERVACOES, new { @class = "form-control summernote", style = "width: 100%; height: 400px;", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            @Html.ButtonActionSubmit(text: "Confirma edição de Atendimento", htmlAttributes: new { id = "basictoast" })
                                         </div>
                                     }
                                 </div>

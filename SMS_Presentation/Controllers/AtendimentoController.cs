@@ -45,6 +45,7 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IAtendimentoAgendaAppService aAgenApp;
         private readonly IAgendaAppService agenApp;
         //private readonly IOrdemServicoAppService osApp;
+        private readonly ICRMAppService crmApp;
 
         private String msg; 
         private Exception exception;
@@ -53,7 +54,7 @@ namespace ERP_CRM_Solution.Controllers
         ATENDIMENTO objetoAntes = new ATENDIMENTO();
         List<ATENDIMENTO> listaMaster = new List<ATENDIMENTO>();
 
-        public AtendimentoController(IAtendimentoAppService baseApps, ILogAppService logApps, IClienteAppService cliApps, IUsuarioAppService usuApps, IServicoAppService serApps, ICategoriaAtendimentoAppService caApps, IProdutoAppService proApps, IDepartamentoAppService depApps, ITarefaAppService tarApps, IConfiguracaoAppService conApps, IAtendimentoAgendaAppService aAgenApps, IAgendaAppService agenApps)
+        public AtendimentoController(IAtendimentoAppService baseApps, ILogAppService logApps, IClienteAppService cliApps, IUsuarioAppService usuApps, IServicoAppService serApps, ICategoriaAtendimentoAppService caApps, IProdutoAppService proApps, IDepartamentoAppService depApps, ITarefaAppService tarApps, IConfiguracaoAppService conApps, IAtendimentoAgendaAppService aAgenApps, IAgendaAppService agenApps, ICRMAppService crmApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -68,6 +69,7 @@ namespace ERP_CRM_Solution.Controllers
             conApp = conApps;
             aAgenApp = aAgenApps;
             agenApp = agenApps;
+            crmApp = crmApps;
         }
 
         [HttpGet]
@@ -319,6 +321,10 @@ namespace ERP_CRM_Solution.Controllers
                 if ((Int32)Session["MensAtendimento"] == 11)
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0072", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensFornecedor"] == 70)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0081", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -737,6 +743,14 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             Session["VoltaCliente"] = 6;
 
+            // Verifica possibilidade
+            Int32 num = baseApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumAtendimentos"] <= num)
+            {
+                Session["MensAtendimento"] = 70;
+                return RedirectToAction("MontarTelaAtendimento");
+            }
+
             // Prepara listas
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
             ViewBag.Clientes = new SelectList(cliApp.GetAllItens(idAss).OrderBy(p => p.CLIE_NM_NOME), "CLIE_CD_ID", "CLIE_NM_NOME");
@@ -1042,6 +1056,10 @@ namespace ERP_CRM_Solution.Controllers
                 if ((Int32)Session["MensAtendimento"] == 51)
                 {
                     ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensAtendimento"] == 71)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0055", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -1554,6 +1572,14 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
+            // Verifica possibilidade
+            Int32 num = baseApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumAtendimentos"] <= num)
+            {
+                Session["MensAtendimento"] = 70;
+                return RedirectToAction("MontarTelaAtendimento");
+            }
+
             // Prepara view
             ATENDIMENTO item = baseApp.GetItemById(id);
             AtendimentoViewModel vm = Mapper.Map<ATENDIMENTO, AtendimentoViewModel>(item);
@@ -1617,6 +1643,19 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("EditarAtendimento", new { id = (Int32)Session["IdVolta"] });
             }
             return RedirectToAction("MontarTelaAtendimento");
+        }
+
+        public ActionResult VerCRMAtendimento()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            ATENDIMENTO aten = baseApp.GetItemById((Int32)Session["IdAtendimento"]);
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Session["VoltaCRM"] = 12;
+            return RedirectToAction("AcompanharProcessoCRM", "CRM", new { id = aten.ATEN_IN_CRM });
         }
 
         public ActionResult VoltarConsultaAtendimento()
@@ -2810,5 +2849,45 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Lista = baseApp.GetAllItens(idAss);
             return View();
         }
+
+        [HttpGet]
+        public ActionResult ConverterAtendimentoCRM(Int32 id)
+        {
+            // Recupera
+            ATENDIMENTO aten = baseApp.GetItemById((Int32)Session["IdAtendimento"]);
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica possibilidade
+            Int32 num = crmApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumProc"] <= num)
+            {
+                Session["MensAtendimento"] = 71;
+                return RedirectToAction("VoltarAnexoAtendimeto");
+            }
+
+            // Cria CRM
+            CRM crm = new CRM();
+            crm.ASSI_CD_ID = usuario.ASSI_CD_ID;
+            crm.CLIE_CD_ID = aten.CLIE_CD_ID.Value;
+            crm.CRM1_DS_DESCRICAO = aten.ATEN_DS_DESCRICAO;
+            crm.CRM1_DT_CRIACAO = DateTime.Today.Date;
+            crm.CRM1_IN_ATIVO = 1;
+            crm.CRM1_IN_STATUS = 1;
+            crm.CRM1_NM_NOME = "Atendimento - " + aten.ATEN_NR_NUMERO;
+            crm.TICR_CD_ID = 1;
+            crm.USUA_CD_ID = usuario.USUA_CD_ID;
+            crm.MENS_CD_ID = null;
+            crm.ORIG_CD_ID = 1;
+            Int32 volta = crmApp.ValidateCreate(crm, usuario);
+
+            // Atualiza atendimento
+            aten.ATEN_IN_CRM = crm.CRM1_CD_ID;
+            Int32 volta1 = baseApp.ValidateEdit(aten, aten, usuario);
+
+            // Retorno
+            return RedirectToAction("VoltarAnexoAtendimento");
+        }
+
     }
 }
