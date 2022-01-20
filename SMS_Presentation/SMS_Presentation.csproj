@@ -3298,6 +3298,9 @@
     <Content Include="Views\Atendimento\VerAnexoAtendimento.cshtml" />
     <Content Include="Views\Atendimento\IncluirAcompanhamento.cshtml" />
     <Content Include="Views\Atendimento\IncluirAcompanhamentoEncerrar.cshtml" />
+    <Content Include="Views\Atendimento\MontarTelaAtenDia.cshtml" />
+    <Content Include="Views\Atendimento\MontarTelaAtenClieDia.cshtml" />
+    <Content Include="Views\Atendimento\MontarTelaGraficos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
