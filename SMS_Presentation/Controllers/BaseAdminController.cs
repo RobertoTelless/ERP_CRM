@@ -160,6 +160,10 @@ namespace ERP_CRM_Solution.Controllers
             Session["MensMotCancelamento"] = 0;
             Session["MensMotEncerramento"] = 0;
             Session["MensTipoAcao"] = 0;
+            Session["MensAtendimento"] = 0;
+            Session["MensServico"] = 0;
+            Session["MensCR"] = 0;
+            Session["MensCP"] = 0;
 
             Session["VoltaNotificacao"] = 3;
             Session["VoltaNoticia"] = 1;

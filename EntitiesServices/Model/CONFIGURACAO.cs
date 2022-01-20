@@ -30,6 +30,7 @@ namespace EntitiesServices.Model
         public string CONF_NM_SENDGRID_PWD { get; set; }
         public string CONF_NM_SENDGRID_APIKEY { get; set; }
         public Nullable<int> CONF_IN_RESIDUAL { get; set; }
+        public Nullable<int> CONF_NR_DIAS_ATENDIMENTO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
     }
