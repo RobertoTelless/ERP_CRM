@@ -228,7 +228,7 @@ namespace ERP_CRM_Solution.Controllers
                 FiltrarAtendimento((ATENDIMENTO)Session["FiltroAtendimento"]);
             }
 
-            if ((Int32)Session["IdAtendimento"] != 0)
+            if (Session["IdAtendimento"] != null)
             {
                 ViewBag.CodigoAtendimento = (Int32)Session["IdAtendimento"];
             }

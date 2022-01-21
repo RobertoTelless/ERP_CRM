@@ -131,6 +131,7 @@ namespace Presentation.Start
             kernel.Bind<ICategoriaAtendimentoAppService>().To<CategoriaAtendimentoAppService>();
             kernel.Bind<IAtendimentoAgendaAppService>().To<AtendimentoAgendaAppService>();
             kernel.Bind<IAtendimentoAppService>().To<AtendimentoAppService>();
+            kernel.Bind<IPeriodicidadeAppService>().To<PeriodicidadeAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -196,6 +197,7 @@ namespace Presentation.Start
             kernel.Bind<ICategoriaAtendimentoService>().To<CategoriaAtendimentoService>();
             kernel.Bind<IAtendimentoAgendaService>().To<AtendimentoAgendaService>();
             kernel.Bind<IAtendimentoService>().To<AtendimentoService>();
+            kernel.Bind<IPeriodicidadeService>().To<PeriodicidadeService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -287,7 +289,6 @@ namespace Presentation.Start
             kernel.Bind<IContaBancariaLancamentoRepository>().To<ContaBancariaLancamentoRepository>();
             kernel.Bind<ITipoContaRepository>().To<TipoContaRepository>();
             kernel.Bind<IFormaPagamentoRepository>().To<FormaPagamentoRepository>();
-            kernel.Bind<IFichaTecnicaDetalheRepository>().To<FichaTecnicaDetalheRepository>();
             kernel.Bind<IItemPedidoCompraRepository>().To<ItemPedidoCompraRepository>();
             kernel.Bind<IGrupoCCRepository>().To<GrupoCCRepository>();
             kernel.Bind<ISubgrupoRepository>().To<SubgrupoRepository>();
@@ -302,7 +303,6 @@ namespace Presentation.Start
             kernel.Bind<IFichaTecnicaRepository>().To<FichaTecnicaRepository>();
             kernel.Bind<IFichaTecnicaDetalheRepository>().To<FichaTecnicaDetalheRepository>();
             kernel.Bind<IProdutoKitRepository>().To<ProdutoKitRepository>();
-            kernel.Bind<IProdutoKitRepository>().To<ProdutoKitRepository>();
             kernel.Bind<ICategoriaServicoRepository>().To<CategoriaServicoRepository>();
             kernel.Bind<IDepartamentoRepository>().To<DepartamentoRepository>();
             kernel.Bind<IServicoAnexoRepository>().To<ServicoAnexoRepository>();
@@ -312,6 +312,7 @@ namespace Presentation.Start
             kernel.Bind<IAtendimentoAgendaRepository>().To<AtendimentoAgendaRepository>();
             kernel.Bind<IAtendimentoAnexoRepository>().To<AtendimentoAnexoRepository>();
             kernel.Bind<IAtendimentoRepository>().To<AtendimentoRepository>();
+            kernel.Bind<INomencBrasServicosRepository>().To<NomencBrasServicosRepository>();
 
         }
     }
