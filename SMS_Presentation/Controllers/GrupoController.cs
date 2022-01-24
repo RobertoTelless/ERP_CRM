@@ -297,6 +297,14 @@ namespace ERP_CRM_Solution.Controllers
                     Session["IncluirGrupo"] = 1;
                     Session["GrupoNovo"] = item.GRUP_CD_ID;
                     Session["IdGrupo"] = item.GRUP_CD_ID;
+                    if ((Int32)Session["VoltaGrupo"] == 1)
+                    {
+                        return RedirectToAction("VoltarAnexoGrupo");
+                    }
+                    if ((Int32)Session["VoltaGrupo"] == 10)
+                    {
+                        return RedirectToAction("IncluirMensagemAutomacao", "MensagemAutomacao");
+                    }
                     return RedirectToAction("VoltarAnexoGrupo");
                 }
                 catch (Exception ex)

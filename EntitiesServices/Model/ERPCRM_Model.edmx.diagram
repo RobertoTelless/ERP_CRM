@@ -460,6 +460,7 @@
         <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL" />
         <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS" />
         <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_PERIODICIDADE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

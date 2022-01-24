@@ -1,7 +1,473 @@
-﻿
+﻿@using Presentation.Extensions
+@model ERP_CRM_Solution.ViewModels.MensagemAutomacaoViewModel
 @{
-    ViewBag.Title = "IncluirMensagemAutomacao";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Mensagens</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaMensagemAutomacao", "Mensagem")">Automação de Mensagens</a>
+            </li>
+            <li class="active">
+                <strong>Automação de Mensagens - Criação</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Automação de Mensagens - Criação</h5>
+                </div>
+                <div class="ibox-content">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="tabs-container">
+                        @using (Html.BeginForm("IncluirMensagemAutomacao", "MensagemAutomacao", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                        {
+                            <div class="form-group">
+                                <br />
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
+                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Criação da Automação</button>
+                                    @Html.ButtonLinkIndex(text: "Criar Novo Grupo", action: "IncluirGrupo", controller: "MensagemAutomacao")
+                                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMensagemAutomacao", controller: "MensagemAutomacao")
+                                    @Html.ButtonLinkIndex(text: "Dashboard Mensagens", controller: "Mensagem", action: "MontarTelaDashboardMensagens")
+                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "MensagemAutomacao", action: "Voltar")
+                                </div>
+                            </div>
+                            
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Definição da Automação</a></li>
+                            </ul>
 
-<h2>IncluirMensagemAutomacao</h2>
+                            <div class="tab-content">
+                                @*Dados Gerais*@
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                            @Html.HiddenFor(m => m.MEAU_IN_ATIVO)
+                                            @Html.HiddenFor(m => m.MEAU_DT_CADASTRO)
+                                            @Html.HiddenFor(m => m.USUA_CD_ID)
+                                            <h4 style="color:navy">Seleção do Tipo e Destinos da Mensagem</h4>
+                                            <br />
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-4 col-md-4 col-xs-12" style="margin-left: 6px">
+                                                    Tipo de Mensagem*
+                                                    @Html.DropDownListFor(m => m.MEAU_IN_TIPO, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, @id="tipo" })
+                                                    @Html.ValidationMessageFor(m => m.MEAU_IN_TIPO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12" style="margin-left: 6px">
+                                                    Grupo*
+                                                    @Html.DropDownListFor(m => m.GRUP_CD_ID, (SelectList)ViewBag.Grupos, "Selecionar", new { @class = "form-control", autofocus = true, @id="gr" })
+                                                    @Html.ValidationMessageFor(m => m.GRUP_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <h4 style="color:navy">Definição da Mensagem</h4>
+                                            <br />
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-3 col-md-3 col-xs-12" id="EMAIL">
+                                                    Modelos de E-Mail
+                                                    @Html.DropDownListFor(m => m.TEEM_CD_ID, (SelectList)ViewBag.TempEMail, "Selecionar", new { @class = "form-control", autofocus = true, @id = "temp"})
+                                                    @Html.ValidationMessageFor(m => m.TEEM_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12" id="SMS">
+                                                    Modelos de SMS
+                                                    @Html.DropDownListFor(m => m.TSMS_CD_ID, (SelectList)ViewBag.TempSMS, "Selecionar", new { @class = "form-control", autofocus = true, @id = "temp"})
+                                                    @Html.ValidationMessageFor(m => m.TSMS_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <h4 style="color:navy">Quando enviar....</h4>
+                                            <br />
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <h5 style="color:navy">Escolha uma faixa de datas e a periodicidade ou dia da semana, ou uma data fixa (será condidero apenas o dia/mês dessa data, p.ex. dia de natal)</h5>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data de Início
+                                                    @Html.TextBoxFor(m => m.MEAU_DT_INICIO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="dt1" })
+                                                    @Html.ValidationMessageFor(m => m.MEAU_DT_INICIO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data de Término
+                                                    @Html.TextBoxFor(m => m.MEAU_DT_FINAL, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="dt1" })
+                                                    @Html.ValidationMessageFor(m => m.MEAU_DT_FINAL, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Periodicidade
+                                                    @Html.DropDownListFor(m => m.PERI_CD_ID, (SelectList)ViewBag.Periodicidades, "Selecionar", new { @class = "form-control", autofocus = true, @id = "temp"})
+                                                    @Html.ValidationMessageFor(m => m.PERI_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Dia da Semana
+                                                    @Html.DropDownListFor(m => m.MEAU_IN_DIA_SEMANA, (SelectList)ViewBag.Dias, "Selecionar", new { @class = "form-control", autofocus = true, @id = "temp"})
+                                                    @Html.ValidationMessageFor(m => m.MEAU_IN_DIA_SEMANA, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data Fixa
+                                                    @Html.TextBoxFor(m => m.MEAU_DT_DATA_FIXA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="dt1" })
+                                                    @Html.ValidationMessageFor(m => m.MEAU_DT_DATA_FIXA, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Aniversário
+                                                    @Html.DropDownListFor(m => m.MEAU_IN_ANIVERSARIO, (SelectList)ViewBag.Aniversario, "Selecionar", new { @class = "form-control", autofocus = true, @id = "temp"})
+                                                    @Html.ValidationMessageFor(m => m.MEAU_IN_ANIVERSARIO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <br />
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                        @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
+                                        <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Criação da Automação</button>
+                                        @Html.ButtonLinkIndex(text: "Criar Novo Grupo", action: "IncluirGrupo", controller: "MensagemAutomacao")
+                                        @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMensagemAutomacao", controller: "MensagemAutomacao")
+                                        @Html.ButtonLinkIndex(text: "Dashboard Mensagens", controller: "Mensagem", action: "MontarTelaDashboardMensagens")
+                                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "MensagemAutomacao", action: "Voltar")
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @*<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />*@
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/Content/plugins/summernote/summernote.css")
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+}
+@section Scripts {
+    @*<script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>*@
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.datetimepicker"></script>
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>    
+    <script src="~/Scripts/uploadAnexo.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $("#tel").mask("(99)9999-9999");
+            $("#cel").mask("(99)99999-9999");
+            $("#wh").mask("(99)99999-9999");
+            $("#dn").mask("99/99/9999");
+            $("#da").mask("99/99/9999");
+            $('#saida').mask("99/99/9999 99:99");
+            $('.date-picker').mask('99/99/9999');
+        });
+    </script>
+
+    <script>
+        $("#lstCliente").select2({
+            //data: filterSelect,
+            ajax: {
+                url: '../Cliente/BuscaNomeRazao',
+                type: 'POST',
+                data: function (params) {
+                    var query = {
+                        nome: params.term
+                    }
+                    return query
+                },
+                processResults: function (data) {
+                    console.log(data);
+                    return {
+                        results: data
+                    }
+                }
+            },
+            placeholder: 'Busque por NOME ou RAZÃO SOCIAL',
+            minimumInputLength: 1
+        });
+    </script>
+
+    @Scripts.Render("~/plugins/iCheck")
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.summernote').summernote();
+
+        });
+
+        var edit = function () {
+            $('.click2edit').summernote({ focus: true });
+        };
+
+        var save = function () {
+            var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
+            $('.click2edit').destroy();
+        };
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+        });
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.datetime-picker').datetimepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    controlType: 'select',
+                    showSecond: "false",
+                    timeFormat: 'HH:mm',
+                    locale: 'pt-br',
+                    hourText: 'Hora',
+                    minuteText: 'Minuto',
+                    secondText: 'Segundo',
+                    currentText: 'Agora',
+                    closeText: 'Feito',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#SMS').hide();
+            $('#EMAIL').hide();
+        });
+
+        $(document).ready(function () {
+            //Chama o evento após selecionar um valor
+            $('#tipo').on('change', function () {
+                //Verifica se o valor é igual a 1 e mostra a divCnpj
+                if (this.value == '2') {
+                    $("#EMAIL").hide();
+                    $("#SMS").show();
+                }
+                //Se o tempo for mé igual a 2 mostra a divCpf
+                else if (this.value == '1') {
+                    $("#SMS").hide();
+                    $("#EMAIL").show();
+                }
+                else if (this.value == '3') {
+                    $("#EMAIL").hide();
+                    $("#SMS").hide();
+                }
+            });
+        });
+    </script>
+    <script>
+        function PesquisaTemplate(temp, btn, tipo) {
+            data = {
+                temp: temp
+            }
+            $.ajax({
+                url: '../Mensagem/PesquisaTemplateEMail'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    if (r.STATUS = 0)
+                    {
+                        $('#cab').val(r.MENS_NM_CABECALHO);
+                        $('#cor').val(r.MENS_TX_CORPO);
+                        $('#rod').val(r.MENS_NM_DADOS);
+                        $('#link').val(r.MENS_LK_LINK);
+                    }
+                    else {
+                        $('#arq').val(r.MODELO);
+                    }
+                }
+            });
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Envio de Mensagem em andamento!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                    + shortCutFunction
+                    + "](\""
+                    + msg
+                    + (title ? "\", \"" + title : '')
+                    + "\")\n\ntoastr.options = "
+                    + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+    <script>
+        SendFilesV2('imgCliente', 'Mensagem', 'UploadFileToSession');
+    </script>
+
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

@@ -21,6 +21,7 @@ namespace EntitiesServices.Model
             this.CONTA_RECEBER = new HashSet<CONTA_RECEBER>();
             this.EQUIPAMENTO = new HashSet<EQUIPAMENTO>();
             this.PEDIDO_VENDA = new HashSet<PEDIDO_VENDA>();
+            this.MENSAGEM_AUTOMACAO = new HashSet<MENSAGEM_AUTOMACAO>();
         }
     
         public int PERI_CD_ID { get; set; }
@@ -36,5 +37,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<EQUIPAMENTO> EQUIPAMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PEDIDO_VENDA> PEDIDO_VENDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MENSAGEM_AUTOMACAO> MENSAGEM_AUTOMACAO { get; set; }
     }
 }

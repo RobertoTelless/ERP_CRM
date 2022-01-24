@@ -44,6 +44,7 @@ namespace ERP_CRM_Solution.Controllers
         private readonly ITemplateSMSAppService temApp;
         private readonly IGrupoAppService gruApp;
         private readonly ITemplateEMailAppService temaApp;
+        private readonly IPeriodicidadeAppService perApp;
 
         private String msg;
         private Exception exception;
@@ -53,7 +54,7 @@ namespace ERP_CRM_Solution.Controllers
         List<MENSAGEM_AUTOMACAO> listaMaster = new List<MENSAGEM_AUTOMACAO>();
         String extensao;
 
-        public MensagemAutomacaoController(IMensagemAutomacaoAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, ITemplateSMSAppService temApps, IGrupoAppService gruApps, ITemplateEMailAppService temaApps)
+        public MensagemAutomacaoController(IMensagemAutomacaoAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, ITemplateSMSAppService temApps, IGrupoAppService gruApps, ITemplateEMailAppService temaApps, IPeriodicidadeAppService perApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -62,6 +63,7 @@ namespace ERP_CRM_Solution.Controllers
             temApp = temApps;
             gruApp = gruApps;
             temaApp = temaApps;
+            perApp = perApps;
         }
 
         [HttpGet]
@@ -81,6 +83,16 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             return RedirectToAction("CarregarBase", "BaseAdmin");
+        }
+
+        public ActionResult IncluirGrupo()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaGrupo"] = 10;
+            return RedirectToAction("IncluirGrupo", "Grupo");
         }
 
         [HttpGet]
@@ -132,8 +144,9 @@ namespace ERP_CRM_Solution.Controllers
             List<SelectListItem> tipo = new List<SelectListItem>();
             tipo.Add(new SelectListItem() { Text = "E-Mail", Value = "1" });
             tipo.Add(new SelectListItem() { Text = "SMS", Value = "2" });
+            tipo.Add(new SelectListItem() { Text = "WhatsApp", Value = "3" });
             ViewBag.Tipos = new SelectList(tipo, "Value", "Text");
-            
+
             // Mensagens
             if (Session["MensMensagemAutomacao"] != null)
             {
@@ -406,6 +419,7 @@ namespace ERP_CRM_Solution.Controllers
             List<SelectListItem> tipo = new List<SelectListItem>();
             tipo.Add(new SelectListItem() { Text = "E-Mail", Value = "1" });
             tipo.Add(new SelectListItem() { Text = "SMS", Value = "2" });
+            tipo.Add(new SelectListItem() { Text = "WhatsApp", Value = "3" });
             ViewBag.Tipos = new SelectList(tipo, "Value", "Text");
             List<SelectListItem> tipoSelecao = new List<SelectListItem>();
             tipoSelecao.Add(new SelectListItem() { Text = "Faixa de Datas", Value = "1" });
@@ -413,6 +427,20 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.TipoSelecao = new SelectList(tipoSelecao, "Value", "Text");
             ViewBag.TempSMS = new SelectList(temApp.GetAllItens(idAss).ToList().OrderBy(p => p.TSMS_NM_NOME), "TSMS_CD_ID", "TSMS_NM_NOME");
             ViewBag.TempEMail = new SelectList(temaApp.GetAllItens(idAss).ToList().OrderBy(p => p.TEEM_NM_NOME), "TEEM_CD_ID", "TEEM_NM_NOME");
+            List<SelectListItem> dia = new List<SelectListItem>();
+            dia.Add(new SelectListItem() { Text = "2a Feira", Value = "1" });
+            dia.Add(new SelectListItem() { Text = "3a Feira", Value = "2" });
+            dia.Add(new SelectListItem() { Text = "4a Feira", Value = "3" });
+            dia.Add(new SelectListItem() { Text = "5a Feira", Value = "4" });
+            dia.Add(new SelectListItem() { Text = "6a Feira", Value = "5" });
+            dia.Add(new SelectListItem() { Text = "Sábado", Value = "6" });
+            dia.Add(new SelectListItem() { Text = "Domingo", Value = "7" });
+            ViewBag.Dias = new SelectList(dia, "Value", "Text");
+            ViewBag.Periodicidades = new SelectList(perApp.GetAllItens(idAss).OrderBy(p => p.PERI_NM_NOME), "PERI_CD_ID", "PERI_NM_NOME");
+            List<SelectListItem> aniv = new List<SelectListItem>();
+            aniv.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            aniv.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Aniversario = new SelectList(aniv, "Value", "Text");
 
             // Prepara view
             if (Session["MensMensagemAutomacao"] != null)
@@ -452,6 +480,7 @@ namespace ERP_CRM_Solution.Controllers
             List<SelectListItem> tipo = new List<SelectListItem>();
             tipo.Add(new SelectListItem() { Text = "E-Mail", Value = "1" });
             tipo.Add(new SelectListItem() { Text = "SMS", Value = "2" });
+            tipo.Add(new SelectListItem() { Text = "WhatsApp", Value = "3" });
             ViewBag.Tipos = new SelectList(tipo, "Value", "Text");
             List<SelectListItem> tipoSelecao = new List<SelectListItem>();
             tipoSelecao.Add(new SelectListItem() { Text = "Faixa de Datas", Value = "1" });
@@ -459,6 +488,20 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.TipoSelecao = new SelectList(tipoSelecao, "Value", "Text");
             ViewBag.TempSMS = new SelectList(temApp.GetAllItens(idAss).ToList().OrderBy(p => p.TSMS_NM_NOME), "TSMS_CD_ID", "TSMS_NM_NOME");
             ViewBag.TempEMail = new SelectList(temaApp.GetAllItens(idAss).ToList().OrderBy(p => p.TEEM_NM_NOME), "TEEM_CD_ID", "TEEM_NM_NOME");
+            List<SelectListItem> dia = new List<SelectListItem>();
+            dia.Add(new SelectListItem() { Text = "2a Feira", Value = "1" });
+            dia.Add(new SelectListItem() { Text = "3a Feira", Value = "2" });
+            dia.Add(new SelectListItem() { Text = "4a Feira", Value = "3" });
+            dia.Add(new SelectListItem() { Text = "5a Feira", Value = "4" });
+            dia.Add(new SelectListItem() { Text = "6a Feira", Value = "5" });
+            dia.Add(new SelectListItem() { Text = "Sábado", Value = "6" });
+            dia.Add(new SelectListItem() { Text = "Domingo", Value = "7" });
+            ViewBag.Dias = new SelectList(dia, "Value", "Text");
+            ViewBag.Periodicidades = new SelectList(perApp.GetAllItens(idAss).OrderBy(p => p.PERI_NM_NOME), "PERI_CD_ID", "PERI_NM_NOME");
+            List<SelectListItem> aniv = new List<SelectListItem>();
+            aniv.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            aniv.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Aniversario = new SelectList(aniv, "Value", "Text");
 
             if (ModelState.IsValid)
             {
@@ -597,6 +640,37 @@ namespace ERP_CRM_Solution.Controllers
             Session["MensagemNovo"] = 0;
             MENSAGEM_AUTOMACAO item = baseApp.GetItemById(id);
             MensagemAutomacaoViewModel vm = Mapper.Map<MENSAGEM_AUTOMACAO, MensagemAutomacaoViewModel>(item);
+            vm.Tipo = vm.MEAU_IN_TIPO == 1 ? "E-Mail" : "SMS";
+            vm.DataDisparo = vm.MEAU_DT_DATA_FIXA.Value.ToShortDateString().Substring(0, 5);
+            vm.Aniversario = vm.MEAU_IN_ANIVERSARIO == 1 ? "Sim" : "Não";
+            if (vm.MEAU_IN_DIA_SEMANA == 1)
+            {
+                vm.DiaSemana = "2a Feira";
+            }
+            else if (vm.MEAU_IN_DIA_SEMANA == 2)
+            {
+                vm.DiaSemana = "3a Feira";
+            }
+            else if (vm.MEAU_IN_DIA_SEMANA == 3)
+            {
+                vm.DiaSemana = "4a Feira";
+            }
+            else if (vm.MEAU_IN_DIA_SEMANA == 4)
+            {
+                vm.DiaSemana = "5a Feira";
+            }
+            else if (vm.MEAU_IN_DIA_SEMANA == 5)
+            {
+                vm.DiaSemana = "6a Feira";
+            }
+            else if (vm.MEAU_IN_DIA_SEMANA == 6)
+            {
+                vm.DiaSemana = "Sábado";
+            }
+            else if (vm.MEAU_IN_DIA_SEMANA == 7)
+            {
+                vm.DiaSemana = "Domingo";
+            }
             return View(vm);
         }
 

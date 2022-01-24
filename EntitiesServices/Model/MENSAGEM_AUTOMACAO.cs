@@ -35,6 +35,9 @@ namespace EntitiesServices.Model
         public Nullable<System.TimeSpan> MEAU_HR_DISPARO { get; set; }
         public Nullable<int> MEAU_IN_DIA_SEMANA { get; set; }
         public string MEAU_DS_DESCRICAO { get; set; }
+        public Nullable<System.DateTime> MEAU_DT_DATA_FIXA { get; set; }
+        public Nullable<int> PERI_CD_ID { get; set; }
+        public Nullable<int> MEAU_IN_ANIVERSARIO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual GRUPO GRUPO { get; set; }
@@ -43,5 +46,6 @@ namespace EntitiesServices.Model
         public virtual TEMPLATE_EMAIL TEMPLATE_EMAIL { get; set; }
         public virtual TEMPLATE_SMS TEMPLATE_SMS { get; set; }
         public virtual USUARIO USUARIO { get; set; }
+        public virtual PERIODICIDADE PERIODICIDADE { get; set; }
     }
 }

@@ -1196,6 +1196,9 @@
           <Property Name="MEAU_HR_DISPARO" Type="time" Precision="7" />
           <Property Name="MEAU_IN_DIA_SEMANA" Type="int" />
           <Property Name="MEAU_DS_DESCRICAO" Type="varchar" MaxLength="250" />
+          <Property Name="MEAU_DT_DATA_FIXA" Type="date" />
+          <Property Name="PERI_CD_ID" Type="int" />
+          <Property Name="MEAU_IN_ANIVERSARIO" Type="int" />
         </EntityType>
         <EntityType Name="MENSAGEM_AUTOMACAO_DATAS">
           <Key>
@@ -4271,6 +4274,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_PERIODICIDADE">
+          <End Role="PERIODICIDADE" Type="Self.PERIODICIDADE" Multiplicity="0..1" />
+          <End Role="MENSAGEM_AUTOMACAO" Type="Self.MENSAGEM_AUTOMACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERIODICIDADE">
+              <PropertyRef Name="PERI_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="PERI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL">
           <End Role="TEMPLATE_EMAIL" Type="Self.TEMPLATE_EMAIL" Multiplicity="0..1" />
           <End Role="MENSAGEM_AUTOMACAO" Type="Self.MENSAGEM_AUTOMACAO" Multiplicity="*" />
@@ -6772,6 +6787,10 @@
             <End Role="GRUPO" EntitySet="GRUPO" />
             <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
           </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_PERIODICIDADE" Association="Self.FK_MENSAGEM_AUTOMACAO_PERIODICIDADE">
+            <End Role="PERIODICIDADE" EntitySet="PERIODICIDADE" />
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+          </AssociationSet>
           <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL" Association="Self.FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL">
             <End Role="TEMPLATE_EMAIL" EntitySet="TEMPLATE_EMAIL" />
             <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
@@ -8977,6 +8996,7 @@
           <NavigationProperty Name="CONTA_RECEBER" Relationship="Self.FK_CONTA_RECEBER_PERIODICIDADE" FromRole="PERIODICIDADE" ToRole="CONTA_RECEBER" />
           <NavigationProperty Name="EQUIPAMENTO" Relationship="Self.FK_EQUIPAMENTO_PERIODICIDADE" FromRole="PERIODICIDADE" ToRole="EQUIPAMENTO" />
           <NavigationProperty Name="PEDIDO_VENDA" Relationship="Self.FK_PEDIDO_VENDA_PERIODICIDADE" FromRole="PERIODICIDADE" ToRole="PEDIDO_VENDA" />
+          <NavigationProperty Name="MENSAGEM_AUTOMACAO" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_PERIODICIDADE" FromRole="PERIODICIDADE" ToRole="MENSAGEM_AUTOMACAO" />
         </EntityType>
         <EntityType Name="PLANO">
           <Key>
@@ -13437,6 +13457,10 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
           </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_PERIODICIDADE" Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_PERIODICIDADE">
+            <End Role="PERIODICIDADE" EntitySet="PERIODICIDADE" />
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -15204,6 +15228,10 @@
           <NavigationProperty Name="TEMPLATE_EMAIL" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL" FromRole="MENSAGEM_AUTOMACAO" ToRole="TEMPLATE_EMAIL" />
           <NavigationProperty Name="TEMPLATE_SMS" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS" FromRole="MENSAGEM_AUTOMACAO" ToRole="TEMPLATE_SMS" />
           <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_USUARIO" FromRole="MENSAGEM_AUTOMACAO" ToRole="USUARIO" />
+          <Property Name="MEAU_DT_DATA_FIXA" Type="DateTime" Precision="0" />
+          <Property Name="PERI_CD_ID" Type="Int32" />
+          <NavigationProperty Name="PERIODICIDADE" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_PERIODICIDADE" FromRole="MENSAGEM_AUTOMACAO" ToRole="PERIODICIDADE" />
+          <Property Name="MEAU_IN_ANIVERSARIO" Type="Int32" />
         </EntityType>
         <EntityType Name="MENSAGEM_AUTOMACAO_DATAS">
           <Key>
@@ -15284,6 +15312,18 @@
             </Principal>
             <Dependent Role="MENSAGEM_AUTOMACAO">
               <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_PERIODICIDADE">
+          <End Type="ERP_CRMModel.PERIODICIDADE" Role="PERIODICIDADE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.MENSAGEM_AUTOMACAO" Role="MENSAGEM_AUTOMACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERIODICIDADE">
+              <PropertyRef Name="PERI_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="PERI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -17751,6 +17791,9 @@
           <EntitySetMapping Name="MENSAGEM_AUTOMACAO">
             <EntityTypeMapping TypeName="ERP_CRMModel.MENSAGEM_AUTOMACAO">
               <MappingFragment StoreEntitySet="MENSAGEM_AUTOMACAO">
+                <ScalarProperty Name="MEAU_IN_ANIVERSARIO" ColumnName="MEAU_IN_ANIVERSARIO" />
+                <ScalarProperty Name="PERI_CD_ID" ColumnName="PERI_CD_ID" />
+                <ScalarProperty Name="MEAU_DT_DATA_FIXA" ColumnName="MEAU_DT_DATA_FIXA" />
                 <ScalarProperty Name="MEAU_DS_DESCRICAO" ColumnName="MEAU_DS_DESCRICAO" />
                 <ScalarProperty Name="MEAU_IN_DIA_SEMANA" ColumnName="MEAU_IN_DIA_SEMANA" />
                 <ScalarProperty Name="MEAU_HR_DISPARO" ColumnName="MEAU_HR_DISPARO" />

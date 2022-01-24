@@ -36,6 +36,15 @@ namespace ERP_CRM_Solution.ViewModels
         [Required(ErrorMessage = "Campo DESCRIÇÃO obrigatorio")]
         [StringLength(250, ErrorMessage = "A DESCRIÇÂO deve conter no máximo 250 caracteres.")]
         public string MEAU_DS_DESCRICAO { get; set; }
+        [DataType(DataType.Date, ErrorMessage = "A DATA DE DISPARO deve ser uma data válida")]
+        public Nullable<System.DateTime> MEAU_DT_DATA_FIXA { get; set; }
+        public Nullable<int> PERI_CD_ID { get; set; }
+        public Nullable<int> MEAU_IN_ANIVERSARIO { get; set; }
+
+        public string Tipo { get; set; }
+        public string DiaSemana { get; set; }
+        public string DataDisparo { get; set; }
+        public string Aniversario { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual GRUPO GRUPO { get; set; }
@@ -44,5 +53,6 @@ namespace ERP_CRM_Solution.ViewModels
         public virtual TEMPLATE_EMAIL TEMPLATE_EMAIL { get; set; }
         public virtual TEMPLATE_SMS TEMPLATE_SMS { get; set; }
         public virtual USUARIO USUARIO { get; set; }
+        public virtual PERIODICIDADE PERIODICIDADE { get; set; }
     }
 }
