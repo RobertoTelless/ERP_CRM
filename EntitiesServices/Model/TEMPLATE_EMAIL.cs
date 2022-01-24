@@ -18,6 +18,7 @@ namespace EntitiesServices.Model
         public TEMPLATE_EMAIL()
         {
             this.MENSAGENS = new HashSet<MENSAGENS>();
+            this.MENSAGEM_AUTOMACAO = new HashSet<MENSAGEM_AUTOMACAO>();
         }
     
         public int TEEM_CD_ID { get; set; }
@@ -36,5 +37,7 @@ namespace EntitiesServices.Model
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MENSAGENS> MENSAGENS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MENSAGEM_AUTOMACAO> MENSAGEM_AUTOMACAO { get; set; }
     }
 }

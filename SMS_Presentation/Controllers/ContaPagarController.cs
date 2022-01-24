@@ -45,6 +45,7 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IFormaPagamentoAppService fpApp;
         private readonly IContaPagarRateioAppService ratApp;
         private readonly IFornecedorAppService fornApp;
+        private readonly IContaReceberAppService recApp;
 
         private String msg;
         private Exception exception;
@@ -65,7 +66,7 @@ namespace ERP_CRM_Solution.Controllers
         CONTA_PAGAR_PARCELA objetoCPPAntes = new CONTA_PAGAR_PARCELA();
         List<CONTA_PAGAR_PARCELA> listaCPPMaster = new List<CONTA_PAGAR_PARCELA>();
 
-        public ContaPagarController(IBancoAppService baseApps, ILogAppService logApps, IContaBancariaAppService contaApps, IContaPagarAppService cpApps, IFornecedorAppService forApps, IContaPagarParcelaAppService ppApps, IContaBancariaAppService cbApps, IUsuarioAppService usuApps, ICentroCustoAppService ccApps, IPeriodicidadeAppService perApps, IFormaPagamentoAppService fpApps, IContaPagarRateioAppService ratApps, IFornecedorAppService fornApps)
+        public ContaPagarController(IBancoAppService baseApps, ILogAppService logApps, IContaBancariaAppService contaApps, IContaPagarAppService cpApps, IFornecedorAppService forApps, IContaPagarParcelaAppService ppApps, IContaBancariaAppService cbApps, IUsuarioAppService usuApps, ICentroCustoAppService ccApps, IPeriodicidadeAppService perApps, IFormaPagamentoAppService fpApps, IContaPagarRateioAppService ratApps, IFornecedorAppService fornApps, IContaReceberAppService recApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -80,6 +81,7 @@ namespace ERP_CRM_Solution.Controllers
             fpApp = fpApps;
             ratApp = ratApps;
             fornApp = fornApps;
+            recApp = recApps;
         }
 
         [HttpGet]
@@ -1455,8 +1457,210 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
 
+            // Recupera listas CP
+            List<CONTA_PAGAR> listaTotal = cpApp.GetAllItens(idAss);
+            Decimal pago = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 1 && p.CAPA_DT_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
+            Decimal aPagar = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0 && p.CAPA_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CAPA_VL_VALOR).Value;
+            Decimal atraso = listaTotal.Where(p => p.CAPA_NR_ATRASO > 0).Sum(p => p.CAPA_VL_VALOR).Value;
+
+            Int32 liquidadas = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 1).Count();
+            Int32 atrasos = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0 & p.CAPA_NR_ATRASO > 0).Count();
+            Int32 pendentes = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0).Count();
+
+            ViewBag.Pago = pago;
+            ViewBag.APagar = aPagar;
+            ViewBag.Atrasos = atraso;
+
+            Session["TotalCP"] = listaTotal.Count;
+            Session["APagarMes"] = aPagar;
+            Session["Atraso"] = atraso;
+            Session["PagoMes"] = pago;
+
+            // Resumo Mes Pagamentos
+            List<DateTime> datas = listaTotal.Select(p => p.CAPA_DT_LIQUIDACAO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Decimal conta = listaTotal.Where(p => p.CAPA_DT_LIQUIDACAO.Value.Date == item).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.DataEmissao = item;
+                mod1.ValorDec = conta;
+                lista.Add(mod1);
+            }
+            ViewBag.ListaPagDia = lista;
+            ViewBag.ContaPagDia = lista.Count;
+            Session["ListaDatas"] = datas;
+            Session["ListaPagResumo"] = lista;
+
+            // Resumo CP Situacao  
+            List<ModeloViewModel> lista1 = new List<ModeloViewModel>();
+            ModeloViewModel mod = new ModeloViewModel();
+            mod.Data = "Liquidados";
+            mod.Valor = liquidadas;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Em Atraso";
+            mod.Valor = atrasos;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Pendentes";
+            mod.Valor = pendentes;
+            lista1.Add(mod);
+            ViewBag.ListaCPSituacao = lista1;
+            Session["ListaCPSituacao"] = lista1;
+            Session["VoltaDash"] = 3;
+
+            // Recupera listas CR
+            List<CONTA_RECEBER> listaCRTotal = recApp.GetAllItens(idAss);
+            Decimal recebido = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 1 && p.CARE_DT_DATA_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CARE_VL_VALOR_RECEBIDO).Value;
+            Decimal aReceber = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 0 && p.CARE_DT_DATA_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CARE_VL_VALOR_RECEBIDO).Value;
+            Decimal atrasoCR = listaCRTotal.Where(p => p.CARE_NR_ATRASO > 0).Sum(p => p.CARE_VL_VALOR);
+
+            Int32 recebidas = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 1).Count();
+            Int32 atrasosCR = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 0 & p.CARE_NR_ATRASO > 0).Count();
+            Int32 pendentesCR = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 0).Count();
+
+            ViewBag.Recebido = recebidas;
+            ViewBag.AReceber = pendentesCR;
+            ViewBag.AtrasoCR = atrasosCR;
+
+            Session["TotalCR"] = listaCRTotal.Count;
+            Session["Recebido"] = recebidas;
+            Session["AReceber"] = pendentesCR;
+            Session["AtrasoCR"] = atrasosCR;
+
+            // Resumo Mes Recebimentos
+            List<DateTime> datasCR = listaCRTotal.Select(p => p.CARE_DT_DATA_LIQUIDACAO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> listaCR = new List<ModeloViewModel>();
+            foreach (DateTime item in datasCR)
+            {
+                Decimal conta = listaCRTotal.Where(p => p.CARE_DT_DATA_LIQUIDACAO.Value.Date == item).Sum(p => p.CARE_VL_VALOR_LIQUIDADO).Value;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.DataEmissao = item;
+                mod1.ValorDec = conta;
+                listaCR.Add(mod1);
+            }
+            ViewBag.ListaRecDia = listaCR;
+            ViewBag.ContaRecDia = listaCR.Count;
+            Session["ListaDatasCR"] = datasCR;
+            Session["ListaRecResumo"] = listaCR;
+
+            // Resumo CR Situacao  
+            List<ModeloViewModel> lista2 = new List<ModeloViewModel>();
+            ModeloViewModel mod2 = new ModeloViewModel();
+            mod2.Data = "Recebidas";
+            mod2.Valor = recebidas;
+            lista2.Add(mod2);
+            mod2 = new ModeloViewModel();
+            mod2.Data = "Em Atraso";
+            mod2.Valor = atrasosCR;
+            lista2.Add(mod2);
+            mod2 = new ModeloViewModel();
+            mod2.Data = "Pendentes";
+            mod2.Valor = pendentesCR;
+            lista2.Add(mod2);
+            ViewBag.ListaCRSituacao = lista2;
+            Session["ListaCRSituacao"] = lista2;
+            Session["VoltaDash"] = 3;
             return View(vm);
         }
+
+        public JsonResult GetDadosGraficoCPSituacao()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["APagarMes"];
+            Int32 q2 = (Int32)Session["Atraso"];
+            Int32 q3 = (Int32)Session["PagoMes"];
+
+            desc.Add("A Pagar (Mês)");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Em Atraso");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+            desc.Add("Pago (Mês)");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoCP()
+        {
+            List<ModeloViewModel> listaCP1 = (List<ModeloViewModel>)Session["ListaPagResumo"];
+            List<String> dias = new List<String>();
+            List<Decimal> valor = new List<Decimal>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (ModeloViewModel item in listaCP1)
+            {
+                dias.Add(item.DataEmissao.ToShortDateString());
+                valor.Add(item.ValorDec);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoCRSituacao()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["Recebido"];
+            Int32 q2 = (Int32)Session["AtrasoCR"];
+            Int32 q3 = (Int32)Session["AReceber"];
+
+            desc.Add("Recebido (Mês)");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Em Atraso");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+            desc.Add("A Receber (Mês)");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoCR()
+        {
+            List<ModeloViewModel> listaCP1 = (List<ModeloViewModel>)Session["ListaRecResumo"];
+            List<String> dias = new List<String>();
+            List<Decimal> valor = new List<Decimal>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (ModeloViewModel item in listaCP1)
+            {
+                dias.Add(item.DataEmissao.ToShortDateString());
+                valor.Add(item.ValorDec);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+
+
 
     }
 }

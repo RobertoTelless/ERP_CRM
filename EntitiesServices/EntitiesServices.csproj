@@ -200,6 +200,7 @@
     <Compile Include="EntitiesServices\EquipamentoService.cs" />
     <Compile Include="EntitiesServices\FichaTecnicaService.cs" />
     <Compile Include="EntitiesServices\FormaPagamentoService.cs" />
+    <Compile Include="EntitiesServices\MensagemAutomacaoService.cs" />
     <Compile Include="EntitiesServices\MovimentoEstoqueProdutoService.cs" />
     <Compile Include="EntitiesServices\PedidoCompraService.cs" />
     <Compile Include="EntitiesServices\ProdutoEstoqueFilialService.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="Interfaces\EntitiesServices\IFormaEnvioService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFormaFreteService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFormaPagamentoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IMensagemAutomacaoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IMovimentoEstoqueProdutoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IPedidoCompraService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IProdutoEstoqueFilialService.cs" />
@@ -365,8 +367,10 @@
     <Compile Include="Interfaces\Repositories\IGrupoContatoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IItemPedidoCompraRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMensagemAutomacaoDatasRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMensagemAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMensagemDestinoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMensagemAutomacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMensagemRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMotivoCancelamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMotivoEncerramentoRepository.cs" />
@@ -677,6 +681,12 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MENSAGEM_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MENSAGEM_AUTOMACAO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MENSAGEM_AUTOMACAO_DATAS.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MENSAGENS.cs">

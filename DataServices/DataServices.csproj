@@ -217,8 +217,10 @@
     <Compile Include="Repositories\GrupoContatoRepository.cs" />
     <Compile Include="Repositories\GrupoRepository.cs" />
     <Compile Include="Repositories\ItemPedidoCompraRepository.cs" />
+    <Compile Include="Repositories\MensagemAutomacaoDatasRepository.cs" />
     <Compile Include="Repositories\MensagemAnexoRepository.cs" />
     <Compile Include="Repositories\MensagemDestinoRepository.cs" />
+    <Compile Include="Repositories\MensagemAutomacaoRepository.cs" />
     <Compile Include="Repositories\MensagemRepository.cs" />
     <Compile Include="Repositories\MotivoCancelamentoRepository.cs" />
     <Compile Include="Repositories\MotivoEncerramentoRepository.cs" />

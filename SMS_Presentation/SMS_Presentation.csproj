@@ -322,6 +322,7 @@
     <Compile Include="Controllers\FornecedorController.cs" />
     <Compile Include="Controllers\GrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MensagemAutomacaoController.cs" />
     <Compile Include="Controllers\MensagemController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
@@ -368,6 +369,8 @@
     <Compile Include="ViewModels\FichaTecnicaViewModel.cs" />
     <Compile Include="ViewModels\FormaPagamentoViewModel.cs" />
     <Compile Include="ViewModels\InventarioViewModel.cs" />
+    <Compile Include="ViewModels\MensagemAutomaçãoViewModel.cs" />
+    <Compile Include="ViewModels\MensagemAuotomacaoDatasViewModel.cs" />
     <Compile Include="ViewModels\MovimentacaoAvulsaGridViewModel.cs" />
     <Compile Include="ViewModels\MovimentacaoAvulsaViewModel.cs" />
     <Compile Include="ViewModels\MovimentoEntradaViewModel.cs" />
@@ -3301,6 +3304,11 @@
     <Content Include="Views\Atendimento\MontarTelaAtenClieDia.cshtml" />
     <Content Include="Views\Atendimento\MontarTelaGraficos.cshtml" />
     <Content Include="Views\Atendimento\VerAtendimento.cshtml" />
+    <Content Include="Views\Mensagem\MontarTelaAutomacao.cshtml" />
+    <Content Include="Views\MensagemAutomacao\MontarTelaAutomacao.cshtml" />
+    <Content Include="Views\MensagemAutomacao\VerMensagemAutomacao.cshtml" />
+    <Content Include="Views\MensagemAutomacao\EditarMensagemAutomacao.cshtml" />
+    <Content Include="Views\MensagemAutomacao\IncluirMensagemAutomacao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

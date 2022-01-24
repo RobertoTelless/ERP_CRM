@@ -1177,6 +1177,35 @@
           <Property Name="MEAN_IN_ATIVO" Type="int" />
           <Property Name="MEAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" />
         </EntityType>
+        <EntityType Name="MENSAGEM_AUTOMACAO">
+          <Key>
+            <PropertyRef Name="MEAU_CD_ID" />
+          </Key>
+          <Property Name="MEAU_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="MEAU_DT_CADASTRO" Type="date" />
+          <Property Name="USUA_CD_ID" Type="int" />
+          <Property Name="MEAU_IN_ATIVO" Type="int" />
+          <Property Name="GRUP_CD_ID" Type="int" />
+          <Property Name="MEAU_IN_TIPO" Type="int" />
+          <Property Name="TEEM_CD_ID" Type="int" />
+          <Property Name="TSMS_CD_ID" Type="int" />
+          <Property Name="MEAU_IN_TIPO_ENVIO" Type="int" />
+          <Property Name="MEAU_DT_INICIO" Type="date" />
+          <Property Name="MEAU_DT_FINAL" Type="date" />
+          <Property Name="MEAU_HR_DISPARO" Type="time" Precision="7" />
+          <Property Name="MEAU_IN_DIA_SEMANA" Type="int" />
+          <Property Name="MEAU_DS_DESCRICAO" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="MENSAGEM_AUTOMACAO_DATAS">
+          <Key>
+            <PropertyRef Name="MEAD_CD_ID" />
+          </Key>
+          <Property Name="MEAD_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MEAU_CD_ID" Type="int" Nullable="false" />
+          <Property Name="MEAD_DT_DATA" Type="date" />
+          <Property Name="MEAD_IN_ATIVO" Type="int" />
+        </EntityType>
         <EntityType Name="MENSAGENS">
           <Key>
             <PropertyRef Name="MENS_CD_ID" />
@@ -4206,6 +4235,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="MENSAGEM_AUTOMACAO" Type="Self.MENSAGEM_AUTOMACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_DATAS_MENSAGEM_AUTOMACAO">
+          <End Role="MENSAGEM_AUTOMACAO" Type="Self.MENSAGEM_AUTOMACAO" Multiplicity="1" />
+          <End Role="MENSAGEM_AUTOMACAO_DATAS" Type="Self.MENSAGEM_AUTOMACAO_DATAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="MEAU_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO_DATAS">
+              <PropertyRef Name="MEAU_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_GRUPO">
+          <End Role="GRUPO" Type="Self.GRUPO" Multiplicity="0..1" />
+          <End Role="MENSAGEM_AUTOMACAO" Type="Self.MENSAGEM_AUTOMACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO">
+              <PropertyRef Name="GRUP_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="GRUP_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL">
+          <End Role="TEMPLATE_EMAIL" Type="Self.TEMPLATE_EMAIL" Multiplicity="0..1" />
+          <End Role="MENSAGEM_AUTOMACAO" Type="Self.MENSAGEM_AUTOMACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE_EMAIL">
+              <PropertyRef Name="TEEM_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="TEEM_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS">
+          <End Role="TEMPLATE_SMS" Type="Self.TEMPLATE_SMS" Multiplicity="0..1" />
+          <End Role="MENSAGEM_AUTOMACAO" Type="Self.MENSAGEM_AUTOMACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE_SMS">
+              <PropertyRef Name="TSMS_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="TSMS_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="MENSAGEM_AUTOMACAO" Type="Self.MENSAGEM_AUTOMACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MENSAGENS_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="MENSAGENS" Type="Self.MENSAGENS" Multiplicity="*" />
@@ -5951,6 +6052,8 @@
           <EntitySet Name="ITEM_PEDIDO_VENDA" EntityType="Self.ITEM_PEDIDO_VENDA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOG" EntityType="Self.LOG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MENSAGEM_ANEXO" EntityType="Self.MENSAGEM_ANEXO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MENSAGEM_AUTOMACAO" EntityType="Self.MENSAGEM_AUTOMACAO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MENSAGEM_AUTOMACAO_DATAS" EntityType="Self.MENSAGEM_AUTOMACAO_DATAS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MENSAGENS" EntityType="Self.MENSAGENS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MENSAGENS_DESTINOS" EntityType="Self.MENSAGENS_DESTINOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MOTIVO_CANCELAMENTO" EntityType="Self.MOTIVO_CANCELAMENTO" Schema="dbo" store:Type="Tables" />
@@ -6656,6 +6759,30 @@
           <AssociationSet Name="FK_MENSAGEM_ANEXO_MENSAGENS" Association="Self.FK_MENSAGEM_ANEXO_MENSAGENS">
             <End Role="MENSAGENS" EntitySet="MENSAGENS" />
             <End Role="MENSAGEM_ANEXO" EntitySet="MENSAGEM_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_ASSINANTE" Association="Self.FK_MENSAGEM_AUTOMACAO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_DATAS_MENSAGEM_AUTOMACAO" Association="Self.FK_MENSAGEM_AUTOMACAO_DATAS_MENSAGEM_AUTOMACAO">
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+            <End Role="MENSAGEM_AUTOMACAO_DATAS" EntitySet="MENSAGEM_AUTOMACAO_DATAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_GRUPO" Association="Self.FK_MENSAGEM_AUTOMACAO_GRUPO">
+            <End Role="GRUPO" EntitySet="GRUPO" />
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL" Association="Self.FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL">
+            <End Role="TEMPLATE_EMAIL" EntitySet="TEMPLATE_EMAIL" />
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS" Association="Self.FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS">
+            <End Role="TEMPLATE_SMS" EntitySet="TEMPLATE_SMS" />
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_USUARIO" Association="Self.FK_MENSAGEM_AUTOMACAO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
           </AssociationSet>
           <AssociationSet Name="FK_MENSAGENS_ASSINANTE" Association="Self.FK_MENSAGENS_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -7363,6 +7490,7 @@
           <NavigationProperty Name="DEPARTAMENTO" Relationship="ERP_CRMModel.FK_DEPARTAMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="DEPARTAMENTO" />
           <NavigationProperty Name="ORDEM_SERVICO" Relationship="ERP_CRMModel.FK_ORDEM_SERVICO_ASSINANTE" FromRole="ASSINANTE" ToRole="ORDEM_SERVICO" />
           <NavigationProperty Name="SERVICO" Relationship="ERP_CRMModel.FK_SERVICO_ASSINANTE" FromRole="ASSINANTE" ToRole="SERVICO" />
+          <NavigationProperty Name="MENSAGEM_AUTOMACAO" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_ASSINANTE" FromRole="ASSINANTE" ToRole="MENSAGEM_AUTOMACAO" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -8408,6 +8536,7 @@
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_GRUPO_USUARIO" FromRole="GRUPO" ToRole="USUARIO" />
           <NavigationProperty Name="MENSAGENS_DESTINOS" Relationship="Self.FK_MENSAGENS_DESTINOS_GRUPO" FromRole="GRUPO" ToRole="MENSAGENS_DESTINOS" />
           <NavigationProperty Name="SUBGRUPO" Relationship="Self.FK_SUBGRUPO_GRUPO" FromRole="GRUPO" ToRole="SUBGRUPO" />
+          <NavigationProperty Name="MENSAGEM_AUTOMACAO" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_GRUPO" FromRole="GRUPO" ToRole="MENSAGEM_AUTOMACAO" />
         </EntityType>
         <EntityType Name="GRUPO_CLIENTE">
           <Key>
@@ -9426,6 +9555,7 @@
           <NavigationProperty Name="ORDEM_SERVICO_COMENTARIOS" Relationship="ERP_CRMModel.FK_OS_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="ORDEM_SERVICO_COMENTARIOS" />
           <Property Name="DEPT_CD_ID" Type="Int32" />
           <NavigationProperty Name="DEPARTAMENTO" Relationship="ERP_CRMModel.FK_USUARIO_DEPARTAMENTO" FromRole="USUARIO" ToRole="DEPARTAMENTO" />
+          <NavigationProperty Name="MENSAGEM_AUTOMACAO" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_USUARIO" FromRole="USUARIO" ToRole="MENSAGEM_AUTOMACAO" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -13281,6 +13411,32 @@
             <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
             <End Role="USUARIO" EntitySet="USUARIO" />
           </AssociationSet>
+          <EntitySet Name="MENSAGEM_AUTOMACAO" EntityType="ERP_CRMModel.MENSAGEM_AUTOMACAO" />
+          <EntitySet Name="MENSAGEM_AUTOMACAO_DATAS" EntityType="ERP_CRMModel.MENSAGEM_AUTOMACAO_DATAS" />
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_ASSINANTE" Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_GRUPO" Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_GRUPO">
+            <End Role="GRUPO" EntitySet="GRUPO" />
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_DATAS_MENSAGEM_AUTOMACAO" Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_DATAS_MENSAGEM_AUTOMACAO">
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+            <End Role="MENSAGEM_AUTOMACAO_DATAS" EntitySet="MENSAGEM_AUTOMACAO_DATAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL" Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL">
+            <End Role="TEMPLATE_EMAIL" EntitySet="TEMPLATE_EMAIL" />
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS" Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS">
+            <End Role="TEMPLATE_SMS" EntitySet="TEMPLATE_SMS" />
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MENSAGEM_AUTOMACAO_USUARIO" Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="MENSAGEM_AUTOMACAO" EntitySet="MENSAGEM_AUTOMACAO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
@@ -13689,6 +13845,7 @@
           <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_TEMPLATE_SMS_ASSINANTE" FromRole="TEMPLATE_SMS" ToRole="ASSINANTE" />
           <Property Name="TSMS_SG_SIGLA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="MENSAGENS" Relationship="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_SMS" FromRole="TEMPLATE_SMS" ToRole="MENSAGENS" />
+          <NavigationProperty Name="MENSAGEM_AUTOMACAO" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS" FromRole="TEMPLATE_SMS" ToRole="MENSAGEM_AUTOMACAO" />
         </EntityType>
         <Association Name="FK_TEMPLATE_SMS_ASSINANTE">
           <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
@@ -13732,6 +13889,7 @@
           <NavigationProperty Name="MENSAGENS" Relationship="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_EMAIL" FromRole="TEMPLATE_EMAIL" ToRole="MENSAGENS" />
           <Property Name="TEEM_TX_COMPLETO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="TEEM_IN_HTML" Type="Int32" />
+          <NavigationProperty Name="MENSAGEM_AUTOMACAO" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL" FromRole="TEMPLATE_EMAIL" ToRole="MENSAGEM_AUTOMACAO" />
         </EntityType>
         <Association Name="FK_TEMPLATE_EMAIL_ASSINANTE">
           <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="0..1" />
@@ -15018,6 +15176,114 @@
             </Principal>
             <Dependent Role="USUARIO">
               <PropertyRef Name="DEPT_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MENSAGEM_AUTOMACAO">
+          <Key>
+            <PropertyRef Name="MEAU_CD_ID" />
+          </Key>
+          <Property Name="MEAU_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="MEAU_DT_CADASTRO" Type="DateTime" Precision="0" />
+          <Property Name="USUA_CD_ID" Type="Int32" />
+          <Property Name="MEAU_IN_ATIVO" Type="Int32" />
+          <Property Name="GRUP_CD_ID" Type="Int32" />
+          <Property Name="MEAU_IN_TIPO" Type="Int32" />
+          <Property Name="TEEM_CD_ID" Type="Int32" />
+          <Property Name="TSMS_CD_ID" Type="Int32" />
+          <Property Name="MEAU_IN_TIPO_ENVIO" Type="Int32" />
+          <Property Name="MEAU_DT_INICIO" Type="DateTime" Precision="0" />
+          <Property Name="MEAU_DT_FINAL" Type="DateTime" Precision="0" />
+          <Property Name="MEAU_HR_DISPARO" Type="Time" Precision="7" />
+          <Property Name="MEAU_IN_DIA_SEMANA" Type="Int32" />
+          <Property Name="MEAU_DS_DESCRICAO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_ASSINANTE" FromRole="MENSAGEM_AUTOMACAO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="GRUPO" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_GRUPO" FromRole="MENSAGEM_AUTOMACAO" ToRole="GRUPO" />
+          <NavigationProperty Name="MENSAGEM_AUTOMACAO_DATAS" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_DATAS_MENSAGEM_AUTOMACAO" FromRole="MENSAGEM_AUTOMACAO" ToRole="MENSAGEM_AUTOMACAO_DATAS" />
+          <NavigationProperty Name="TEMPLATE_EMAIL" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL" FromRole="MENSAGEM_AUTOMACAO" ToRole="TEMPLATE_EMAIL" />
+          <NavigationProperty Name="TEMPLATE_SMS" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS" FromRole="MENSAGEM_AUTOMACAO" ToRole="TEMPLATE_SMS" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_USUARIO" FromRole="MENSAGEM_AUTOMACAO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="MENSAGEM_AUTOMACAO_DATAS">
+          <Key>
+            <PropertyRef Name="MEAD_CD_ID" />
+          </Key>
+          <Property Name="MEAD_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MEAU_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="MEAD_DT_DATA" Type="DateTime" Precision="0" />
+          <Property Name="MEAD_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="MENSAGEM_AUTOMACAO" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_DATAS_MENSAGEM_AUTOMACAO" FromRole="MENSAGEM_AUTOMACAO_DATAS" ToRole="MENSAGEM_AUTOMACAO" />
+        </EntityType>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.MENSAGEM_AUTOMACAO" Role="MENSAGEM_AUTOMACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_GRUPO">
+          <End Type="ERP_CRMModel.GRUPO" Role="GRUPO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.MENSAGEM_AUTOMACAO" Role="MENSAGEM_AUTOMACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO">
+              <PropertyRef Name="GRUP_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="GRUP_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_DATAS_MENSAGEM_AUTOMACAO">
+          <End Type="ERP_CRMModel.MENSAGEM_AUTOMACAO" Role="MENSAGEM_AUTOMACAO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.MENSAGEM_AUTOMACAO_DATAS" Role="MENSAGEM_AUTOMACAO_DATAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="MEAU_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO_DATAS">
+              <PropertyRef Name="MEAU_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL">
+          <End Type="ERP_CRMModel.TEMPLATE_EMAIL" Role="TEMPLATE_EMAIL" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.MENSAGEM_AUTOMACAO" Role="MENSAGEM_AUTOMACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE_EMAIL">
+              <PropertyRef Name="TEEM_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="TEEM_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS">
+          <End Type="ERP_CRMModel.TEMPLATE_SMS" Role="TEMPLATE_SMS" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.MENSAGEM_AUTOMACAO" Role="MENSAGEM_AUTOMACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE_SMS">
+              <PropertyRef Name="TSMS_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="TSMS_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MENSAGEM_AUTOMACAO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.MENSAGEM_AUTOMACAO" Role="MENSAGEM_AUTOMACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="MENSAGEM_AUTOMACAO">
+              <PropertyRef Name="USUA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -17479,6 +17745,37 @@
                 <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />
                 <ScalarProperty Name="SERV_CD_ID" ColumnName="SERV_CD_ID" />
                 <ScalarProperty Name="SETP_CD_ID" ColumnName="SETP_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MENSAGEM_AUTOMACAO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.MENSAGEM_AUTOMACAO">
+              <MappingFragment StoreEntitySet="MENSAGEM_AUTOMACAO">
+                <ScalarProperty Name="MEAU_DS_DESCRICAO" ColumnName="MEAU_DS_DESCRICAO" />
+                <ScalarProperty Name="MEAU_IN_DIA_SEMANA" ColumnName="MEAU_IN_DIA_SEMANA" />
+                <ScalarProperty Name="MEAU_HR_DISPARO" ColumnName="MEAU_HR_DISPARO" />
+                <ScalarProperty Name="MEAU_DT_FINAL" ColumnName="MEAU_DT_FINAL" />
+                <ScalarProperty Name="MEAU_DT_INICIO" ColumnName="MEAU_DT_INICIO" />
+                <ScalarProperty Name="MEAU_IN_TIPO_ENVIO" ColumnName="MEAU_IN_TIPO_ENVIO" />
+                <ScalarProperty Name="TSMS_CD_ID" ColumnName="TSMS_CD_ID" />
+                <ScalarProperty Name="TEEM_CD_ID" ColumnName="TEEM_CD_ID" />
+                <ScalarProperty Name="MEAU_IN_TIPO" ColumnName="MEAU_IN_TIPO" />
+                <ScalarProperty Name="GRUP_CD_ID" ColumnName="GRUP_CD_ID" />
+                <ScalarProperty Name="MEAU_IN_ATIVO" ColumnName="MEAU_IN_ATIVO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="MEAU_DT_CADASTRO" ColumnName="MEAU_DT_CADASTRO" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="MEAU_CD_ID" ColumnName="MEAU_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MENSAGEM_AUTOMACAO_DATAS">
+            <EntityTypeMapping TypeName="ERP_CRMModel.MENSAGEM_AUTOMACAO_DATAS">
+              <MappingFragment StoreEntitySet="MENSAGEM_AUTOMACAO_DATAS">
+                <ScalarProperty Name="MEAD_IN_ATIVO" ColumnName="MEAD_IN_ATIVO" />
+                <ScalarProperty Name="MEAD_DT_DATA" ColumnName="MEAD_DT_DATA" />
+                <ScalarProperty Name="MEAU_CD_ID" ColumnName="MEAU_CD_ID" />
+                <ScalarProperty Name="MEAD_CD_ID" ColumnName="MEAD_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

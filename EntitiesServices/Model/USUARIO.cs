@@ -53,6 +53,7 @@ namespace EntitiesServices.Model
             this.ORDEM_SERVICO2 = new HashSet<ORDEM_SERVICO>();
             this.ORDEM_SERVICO_ACOMPANHAMENTO = new HashSet<ORDEM_SERVICO_ACOMPANHAMENTO>();
             this.ORDEM_SERVICO_COMENTARIOS = new HashSet<ORDEM_SERVICO_COMENTARIOS>();
+            this.MENSAGEM_AUTOMACAO = new HashSet<MENSAGEM_AUTOMACAO>();
         }
     
         public int USUA_CD_ID { get; set; }
@@ -171,5 +172,7 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDEM_SERVICO_COMENTARIOS> ORDEM_SERVICO_COMENTARIOS { get; set; }
         public virtual DEPARTAMENTO DEPARTAMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MENSAGEM_AUTOMACAO> MENSAGEM_AUTOMACAO { get; set; }
     }
 }

@@ -387,4 +387,7 @@
   <data name="M0112" xml:space="preserve">
     <value>Impossível incluir/reativar atendimentos. Número de atendimentos ativos excede o contratado no Plano de Assinatura</value>
   </data>
+  <data name="M0113" xml:space="preserve">
+    <value>Definição de automação de mensagens já cadastrada</value>
+  </data>
 </root>

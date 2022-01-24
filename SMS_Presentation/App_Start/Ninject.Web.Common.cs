@@ -132,6 +132,7 @@ namespace Presentation.Start
             kernel.Bind<IAtendimentoAgendaAppService>().To<AtendimentoAgendaAppService>();
             kernel.Bind<IAtendimentoAppService>().To<AtendimentoAppService>();
             kernel.Bind<IPeriodicidadeAppService>().To<PeriodicidadeAppService>();
+            kernel.Bind<IMensagemAutomacaoAppService>().To<MensagemAutomacaoAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -198,6 +199,7 @@ namespace Presentation.Start
             kernel.Bind<IAtendimentoAgendaService>().To<AtendimentoAgendaService>();
             kernel.Bind<IAtendimentoService>().To<AtendimentoService>();
             kernel.Bind<IPeriodicidadeService>().To<PeriodicidadeService>();
+            kernel.Bind<IMensagemAutomacaoService>().To<MensagemAutomacaoService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -313,6 +315,8 @@ namespace Presentation.Start
             kernel.Bind<IAtendimentoAnexoRepository>().To<AtendimentoAnexoRepository>();
             kernel.Bind<IAtendimentoRepository>().To<AtendimentoRepository>();
             kernel.Bind<INomencBrasServicosRepository>().To<NomencBrasServicosRepository>();
+            kernel.Bind<IMensagemAutomacaoRepository>().To<MensagemAutomacaoRepository>();
+            kernel.Bind<IMensagemAutomacaoDatasRepository>().To<MensagemAutomacaoDatasRepository>();
 
         }
     }

@@ -452,6 +452,14 @@
         <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_UNIDADE" />
         <AssociationConnector Association="ERP_CRMModel.FK_NOTIFICACAO_ATENDIMENTO" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_DEPARTAMENTO" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_AUTOMACAO" Width="1.5" PointX="28.5" PointY="170.875" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_AUTOMACAO_DATAS" Width="1.5" PointX="30.75" PointY="172.5" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_GRUPO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_DATAS_MENSAGEM_AUTOMACAO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_USUARIO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

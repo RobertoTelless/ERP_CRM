@@ -239,7 +239,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Unidades = new SelectList(unApp.GetAllItens(idAss).Where(x => x.UNID_IN_TIPO_UNIDADE == 1).OrderBy(p => p.UNID_NM_NOME).ToList<UNIDADE>(), "UNID_CD_ID", "UNID_NM_NOME");
             List<SelectListItem> tipo = new List<SelectListItem>();
             tipo.Add(new SelectListItem() { Text = "Produto", Value = "1" });
-            tipo.Add(new SelectListItem() { Text = "Insumo", Value = "0" });
+            tipo.Add(new SelectListItem() { Text = "Insumo", Value = "2" });
             ViewBag.Tipos = new SelectList(tipo, "Value", "Text");
             ViewBag.Produtos = ((List<PRODUTO>)Session["ListaProduto"]).Count;
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;

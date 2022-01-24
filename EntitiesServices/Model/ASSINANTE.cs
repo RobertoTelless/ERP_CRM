@@ -84,6 +84,7 @@ namespace EntitiesServices.Model
             this.DEPARTAMENTO = new HashSet<DEPARTAMENTO>();
             this.ORDEM_SERVICO = new HashSet<ORDEM_SERVICO>();
             this.SERVICO = new HashSet<SERVICO>();
+            this.MENSAGEM_AUTOMACAO = new HashSet<MENSAGEM_AUTOMACAO>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -245,5 +246,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<ORDEM_SERVICO> ORDEM_SERVICO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SERVICO> SERVICO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MENSAGEM_AUTOMACAO> MENSAGEM_AUTOMACAO { get; set; }
     }
 }

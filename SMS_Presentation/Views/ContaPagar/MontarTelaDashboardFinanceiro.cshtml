@@ -43,8 +43,248 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-warning pull-right">Hoje</span>
+                            <h5>Resumo Financeiro</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stats-label">A Pagar (Mês)</small>
+                                    <h4>@ViewBag.APagar</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Em Atraso</small>
+                                    <h4>@ViewBag.Atraso</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Pago (Mês)</small>
+                                    <h4>@ViewBag.Pago</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Recebido (Mês)</small>
+                                    <h4>@ViewBag.Recebidos/h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">A Receber</small>
+                                    <h4>@ViewBag.AReceber</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Em Atraso</small>
+                                    <h4>@ViewBag.AtrasoCR</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            @*Indicadores*@
+            <br />
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Indicadores</h5>
+                        </div>
+                        <div class="ibox-content ibox-heading">
+                            <h3><i class="fa fa-line-chart"></i> Indicadores</h3>
+                            <small><i class="fa fa-tim"></i> Valores acumulados/atualizados até hoje</small>
+                        </div>
+                        <div class="ibox-content" style="height: 1800px">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Pagamentos/Dia</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaPagDia as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Data de Pagamento</th>
+                                                                <th>Total (R$)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaPagDia as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.DataEmissao.ToShortDateString()</td>
+                                                                    <td>@CrossCutting.Formatters.DecimalFormatter(cond.ValorDec)</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Pagamentos/Dia</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="barChartCP" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Pagamentos por Situação</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaCPSituacao as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Situação</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaCPSituacao as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Data</td>
+                                                                    <td>@cond.Valor</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Pagamentos por Situação</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="doughnutChartCP" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Recebimentos/Dia</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaRecDia as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Data de Recebimento</th>
+                                                                <th>Valor (R$)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaRecDia as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.DataEmissao.ToShortDateString()</td>
+                                                                    <td>@CrossCutting.Formatters.DecimalFormatter(cond.ValorDec)</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Recebimentos/Dia</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="barChartCR" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Recebimentos por Situação</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaCRSituacao as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Situação</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaCRSituacao as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Data</td>
+                                                                    <td>@cond.Valor</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Recebimentos por Situação</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="doughnutChartCR" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -141,11 +381,11 @@
 
         });
     </script>
-    @*<script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
 
             $.ajax({
-                url: '../Estoque/GetDadosGraficoMovimentosTipo'
+                url: '../ContaPagar/GetDadosGraficoCPSituacao'
                 , type: 'POST'
                 , success: function (result) {
                 var doughnutData = {
@@ -158,7 +398,7 @@
                 var doughnutOptions = {
                    responsive: true
                 };
-                var ctx4 = document.getElementById("doughnutChartEst").getContext("2d");
+                var ctx4 = document.getElementById("doughnutChartCP").getContext("2d");
                 new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
               }
             });
@@ -168,14 +408,14 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: '../Estoque/GetDadosGraficoMovimentos'
+                url: '../ContaPagar/GetDadosGraficoCP'
                 , type: 'POST'
                 , success: function (result) {
                 var barData = {
                     labels: result.dias,
                     datasets: [
                         {
-                            label: "Movimentos por Dia",
+                            label: "Pagamentos por Dia",
                             backgroundColor: 'rgba(26,179,148,0.5)',
                             pointBorderColor: "#fff",
                             data: result.valores
@@ -187,13 +427,65 @@
                     responsive: true
                 };
 
-                var ctx2 = document.getElementById("barChartEst").getContext("2d");
+                var ctx2 = document.getElementById("barChartCP").getContext("2d");
                 new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
               }
             });
         });
-    </script>*@
+    </script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '../ContaPagar/GetDadosGraficoCRSituacao'
+                , type: 'POST'
+                , success: function (result) {
+                var doughnutData = {
+                   labels: result.labels,
+                   datasets: [{
+                     data: result.valores,
+                     backgroundColor: result.cores
+                   }]
+                };
+                var doughnutOptions = {
+                   responsive: true
+                };
+                var ctx4 = document.getElementById("doughnutChartCR").getContext("2d");
+                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+              }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '../ContaPagar/GetDadosGraficoCR'
+                , type: 'POST'
+                , success: function (result) {
+                var barData = {
+                    labels: result.dias,
+                    datasets: [
+                        {
+                            label: "Recebimentos por Dia",
+                            backgroundColor: 'rgba(26,179,148,0.5)',
+                            pointBorderColor: "#fff",
+                            data: result.valores
+                        }
+                    ]
+                };
+
+                var barOptions = {
+                    responsive: true
+                };
+
+                var ctx2 = document.getElementById("barChartCR").getContext("2d");
+                new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
+              }
+            });
+        });
+    </script>
 
     @if (ViewBag.Message != null)
     {
