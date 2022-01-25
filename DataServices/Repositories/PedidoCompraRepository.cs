@@ -28,7 +28,6 @@ namespace DataServices.Repositories
             query = query.Include(p => p.FORMA_PAGAMENTO);
             query = query.Include(p => p.ITEM_PEDIDO_COMPRA);
             query = query.Include(p => p.PEDIDO_COMPRA_ANEXO);
-            query = query.Include(p => p.USUARIO);
             return query.FirstOrDefault();
         }
 
@@ -40,7 +39,6 @@ namespace DataServices.Repositories
             query = query.Include(p => p.FORMA_PAGAMENTO);
             query = query.Include(p => p.ITEM_PEDIDO_COMPRA);
             query = query.Include(p => p.PEDIDO_COMPRA_ANEXO);
-            query = query.Include(p => p.USUARIO);
             return query.FirstOrDefault();
         }
 
@@ -52,7 +50,6 @@ namespace DataServices.Repositories
             query = query.Include(p => p.FORMA_PAGAMENTO);
             query = query.Include(p => p.ITEM_PEDIDO_COMPRA);
             query = query.Include(p => p.PEDIDO_COMPRA_ANEXO);
-            query = query.Include(p => p.USUARIO);
             return query.ToList();
         }
 

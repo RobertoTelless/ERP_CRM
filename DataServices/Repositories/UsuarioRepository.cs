@@ -53,6 +53,24 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
+        public USUARIO GetComprador(Int32 idAss)
+        {
+            IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
+            query = query.Where(p => p.USUA_IN_COMPRADOR == 1);
+            query = query.Include(p => p.ASSINANTE);
+            query = query.Include(p => p.PERFIL);
+            return query.FirstOrDefault();
+        }
+
+        public USUARIO GetAprovador(Int32 idAss)
+        {
+            IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
+            query = query.Where(p => p.USUA_IN_APROVADOR == 1);
+            query = query.Include(p => p.ASSINANTE);
+            query = query.Include(p => p.PERFIL);
+            return query.FirstOrDefault();
+        }
+
         public List<USUARIO> GetAllItens(Int32 idAss)
         {
             IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);

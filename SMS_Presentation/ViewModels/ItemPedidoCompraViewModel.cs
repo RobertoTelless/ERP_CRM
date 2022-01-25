@@ -6,7 +6,7 @@ using System.Web;
 using EntitiesServices.Model;
 using EntitiesServices.Attributes;
 
-namespace SystemBRPresentation.ViewModels
+namespace ERP_CRM_Solution.ViewModels
 {
     public class ItemPedidoCompraViewModel
     {
@@ -14,7 +14,6 @@ namespace SystemBRPresentation.ViewModels
         public int ITPC_CD_ID { get; set; }
         public int PECO_CD_ID { get; set; }
         public Nullable<int> PROD_CD_ID { get; set; }
-        public Nullable<int> MAPR_CD_ID { get; set; }
         public Nullable<int> UNID_CD_ID { get; set; }
 
         [Required(ErrorMessage = "Campo QUANTIDADE obrigatorio")]
@@ -37,7 +36,6 @@ namespace SystemBRPresentation.ViewModels
 
         public virtual FORNECEDOR FORNECEDOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual MATERIA_PRIMA MATERIA_PRIMA { get; set; }
         public virtual PEDIDO_COMPRA PEDIDO_COMPRA { get; set; }
         public virtual PRODUTO PRODUTO { get; set; }
         public virtual UNIDADE UNIDADE { get; set; }

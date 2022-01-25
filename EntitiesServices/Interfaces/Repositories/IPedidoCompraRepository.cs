@@ -21,5 +21,6 @@ namespace ModelServices.Interfaces.Repositories
         List<PEDIDO_COMPRA> GetCancelados(Int32 idAss);
         List<PEDIDO_COMPRA> ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32 idAss);
         List<PEDIDO_COMPRA> ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status, Int32 idAss);
+    
     }
 }

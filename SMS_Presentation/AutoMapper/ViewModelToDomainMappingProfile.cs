@@ -84,6 +84,9 @@ namespace MvcMapping.Mappers
             CreateMap<AtendimentoViewModel, ATENDIMENTO>();
             CreateMap<MensagemAutomacaoViewModel, MENSAGEM_AUTOMACAO>();
             CreateMap<MensagemAutomacaoDatasViewModel, MENSAGEM_AUTOMACAO_DATAS>();
+            CreateMap<PedidoCompraViewModel, PEDIDO_COMPRA>();
+            CreateMap<PedidoCompraAcompanhamentoViewModel, PEDIDO_COMPRA_ACOMPANHAMENTO>();
+            CreateMap<ItemPedidoCompraViewModel, ITEM_PEDIDO_COMPRA>();
 
         }
     }

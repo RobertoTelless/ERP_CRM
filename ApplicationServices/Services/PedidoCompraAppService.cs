@@ -31,8 +31,10 @@ namespace ApplicationServices.Services
         private readonly IProdutoService _proService;
         private readonly IProdutoEstoqueFilialService _pefService;
         private readonly IProdutoTabelaPrecoService _ptpService;
+        private readonly ITemplateAppService _tempService;
 
-        public PedidoCompraAppService(IPedidoCompraService baseService, IMovimentoEstoqueProdutoService movService, IUsuarioService usuService, INotificacaoService notiService, IConfiguracaoService confService, IFornecedorService fornService, IContaPagarService cpService, ICentroCustoAppService ccService, IContaBancariaService cbService, IProdutoService proService, IProdutoEstoqueFilialService pefService,IProdutoTabelaPrecoService ptpService) : base(baseService)
+
+        public PedidoCompraAppService(IPedidoCompraService baseService, IMovimentoEstoqueProdutoService movService, IUsuarioService usuService, INotificacaoService notiService, IConfiguracaoService confService, IFornecedorService fornService, IContaPagarService cpService, ICentroCustoAppService ccService, IContaBancariaService cbService, IProdutoService proService, IProdutoEstoqueFilialService pefService,IProdutoTabelaPrecoService ptpService, TemplateAppService tempService) : base(baseService)
         {
             _baseService = baseService;
             _movService = movService;
@@ -46,6 +48,7 @@ namespace ApplicationServices.Services
             _proService = proService;
             _pefService = pefService;
             _ptpService = ptpService;
+            _tempService = tempService;
         }
 
         public List<PEDIDO_COMPRA> GetAllItens(Int32 idAss)
@@ -213,13 +216,14 @@ namespace ApplicationServices.Services
                 if (volta == 0)
                 {
                     // Notifica comprador
+                    USUARIO comprador = _usuService.GetComprador(usuario.ASSI_CD_ID);
                     NOTIFICACAO noti = new NOTIFICACAO();
                     noti.CANO_CD_ID = 1;
                     noti.ASSI_CD_ID = usuario.ASSI_CD_ID;
                     noti.NOTI_DT_EMISSAO = DateTime.Today;
                     noti.NOTI_IN_ATIVO = 1;
                     noti.NOTI_IN_STATUS = 1;
-                    noti.USUA_CD_ID = _usuService.GetComprador(usuario.ASSI_CD_ID).USUA_CD_ID;
+                    noti.USUA_CD_ID = comprador.USUA_CD_ID;
                     noti.NOTI_DT_VALIDADE = DateTime.Today.AddDays(30);
                     noti.NOTI_IN_NIVEL = 1;
                     noti.NOTI_IN_VISTA = 0;
@@ -228,6 +232,47 @@ namespace ApplicationServices.Services
 
                     // Persiste notificação 
                     Int32 volta1 = _notiService.Create(noti);
+
+                    // Configuracao
+                    CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
+
+                    // Recupera template
+                    String header = _tempService.GetByCode("CRIAPEDCOM").TEMP_TX_CABECALHO;
+                    String body = _tempService.GetByCode("CRIAPEDCOM").TEMP_TX_CORPO;
+                    String footer = _tempService.GetByCode("CRIAPEDCOM").TEMP_TX_DADOS;
+
+                    // Prepara campos
+                    body = body.Replace("{pedido}", item.PECO_NM_NOME);
+                    body = body.Replace("{numero}", item.PECO_NR_NUMERO);
+                    header = header.Replace("{nome}", comprador.USUA_NM_NOME);
+                    String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = "Pedido de Compra - Criação";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = comprador.USUA_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.IS_HTML = true;
+                    mensagem.NETWORK_CREDENTIAL = net;
+
+                    // Envia mensagem
+                    try
+                    {
+                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                    }
+                    catch (Exception ex)
+                    {
+                        String erro = ex.Message;
+                    }
                 }
                 return volta;
             }
@@ -333,6 +378,47 @@ namespace ApplicationServices.Services
 
                     // Persiste notificação 
                     Int32 volta1 = _notiService.Create(noti);
+
+                    // Configuracao
+                    CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
+
+                    // Recupera template
+                    String header = _tempService.GetByCode("EXCPEDCOM").TEMP_TX_CABECALHO;
+                    String body = _tempService.GetByCode("EXCPEDCOM").TEMP_TX_CORPO;
+                    String footer = _tempService.GetByCode("EXCPEDCOM").TEMP_TX_DADOS;
+
+                    // Prepara campos
+                    body = body.Replace("{pedido}", item.PECO_NM_NOME);
+                    body = body.Replace("{numero}", item.PECO_NR_NUMERO);
+                    header = header.Replace("{nome}", aprov.USUA_NM_NOME);
+                    String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = "Pedido de Compra - Exclusão";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = aprov.USUA_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.IS_HTML = true;
+                    mensagem.NETWORK_CREDENTIAL = net;
+
+                    // Envia mensagem
+                    try
+                    {
+                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                    }
+                    catch (Exception ex)
+                    {
+                        String erro = ex.Message;
+                    }
                 }
                 return volta;
             }
@@ -388,6 +474,13 @@ namespace ApplicationServices.Services
 
                 if (volta == 0)
                 {
+                    // Recupera comprador
+                    USUARIO aprov = _usuService.GetComprador(usuario.ASSI_CD_ID);
+                    if (aprov == null)
+                    {
+                        aprov = _usuService.GetAdministrador(usuario.ASSI_CD_ID);
+                    }
+
                     // Notifica comprador
                     NOTIFICACAO noti = new NOTIFICACAO();
                     noti.CANO_CD_ID = 1;
@@ -395,7 +488,7 @@ namespace ApplicationServices.Services
                     noti.NOTI_DT_EMISSAO = DateTime.Today;
                     noti.NOTI_IN_ATIVO = 1;
                     noti.NOTI_IN_STATUS = 1;
-                    noti.USUA_CD_ID = _usuService.GetComprador(usuario.ASSI_CD_ID).USUA_CD_ID;
+                    noti.USUA_CD_ID = aprov.USUA_CD_ID;
                     noti.NOTI_DT_VALIDADE = DateTime.Today.AddDays(30);
                     noti.NOTI_IN_NIVEL = 1;
                     noti.NOTI_IN_VISTA = 0;
@@ -404,6 +497,47 @@ namespace ApplicationServices.Services
 
                     // Persiste notificação 
                     Int32 volta1 = _notiService.Create(noti);
+
+                    // Configuracao
+                    CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
+
+                    // Recupera template
+                    String header = _tempService.GetByCode("REAPEDCOM").TEMP_TX_CABECALHO;
+                    String body = _tempService.GetByCode("REAPEDCOM").TEMP_TX_CORPO;
+                    String footer = _tempService.GetByCode("REAPEDCOM").TEMP_TX_DADOS;
+
+                    // Prepara campos
+                    body = body.Replace("{pedido}", item.PECO_NM_NOME);
+                    body = body.Replace("{numero}", item.PECO_NR_NUMERO);
+                    header = header.Replace("{nome}", aprov.USUA_NM_NOME);
+                    String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = "Pedido de Compra - Reativação";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = aprov.USUA_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.IS_HTML = true;
+                    mensagem.NETWORK_CREDENTIAL = net;
+
+                    // Envia mensagem
+                    try
+                    {
+                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                    }
+                    catch (Exception ex)
+                    {
+                        String erro = ex.Message;
+                    }
                 }
                 return volta;
             }
@@ -606,7 +740,7 @@ namespace ApplicationServices.Services
 
                         // Concatena
                         String emailBody = header + body + footer;
-                        CONFIGURACAO conf = _confService.GetItemById(1);
+                        CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
 
                         // Gera emails
                         // Monta e-mail
@@ -624,8 +758,9 @@ namespace ApplicationServices.Services
                         mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
                         mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
                         mensagem.NETWORK_CREDENTIAL = net;
-                        //mensagem.ATTACHMENT = new List<Attachment>();
-                        //mensagem.ATTACHMENT.Add(anexo.First(x => x.FORN_CD_ID == f.FORN_CD_ID).ATTACHMENT);
+                        mensagem.IS_HTML = true;
+                        mensagem.ATTACHMENT = new List<Attachment>();
+                        mensagem.ATTACHMENT.Add(anexo.First(x => x.FORN_CD_ID == f.FORN_CD_ID).ATTACHMENT);
 
                         // Envia mensagem
                         Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
@@ -801,40 +936,50 @@ namespace ApplicationServices.Services
                     return "2";
                 }
 
+                CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
                 // Monta token
-                CONFIGURACAO conf = _confService.GetItemById(1);
                 String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
                 byte[] textBytes = Encoding.UTF8.GetBytes(text);
                 String token = Convert.ToBase64String(textBytes);
                 String auth = "Basic " + token;
 
                 // Monta texto
-                String texto = _usuService.GetTemplate("SMSCOTACAO").TEMP_TX_CORPO;
+                String texto = _tempService.GetByCode("SMSCOTACAO").TEMP_TX_CORPO;
                 texto = texto.Replace("{Fornecedor}", forn.FORN_NM_NOME);
 
                 // inicia processo
+                String smsBody = texto;
+                String erro = null;
                 String resposta = String.Empty;
 
                 // Monta destinatarios
-                String listaDest = "55" + Regex.Replace(forn.FORN_NM_TELEFONES, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
-
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
-                httpWebRequest.Headers["Authorization"] = auth;
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                try
                 {
-                    string json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"from\": \"SystemBR\"}]}");
+                    String listaDest = "55" + Regex.Replace(forn.FORN_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
+                    httpWebRequest.Headers["Authorization"] = auth;
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+                    String customId = Cryptography.GenerateRandomPassword(8);
+                    String data = String.Empty;
+                    String json = String.Empty;
 
-                    streamWriter.Write(json);
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
+                        streamWriter.Write(json);
+                    }
+
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                        resposta = result;
+                    }
                 }
-
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                catch (Exception ex)
                 {
-                    var result = streamReader.ReadToEnd();
-                    resposta = result;
+                    erro = ex.Message;
                 }
                 return resposta;
             }
@@ -894,6 +1039,47 @@ namespace ApplicationServices.Services
 
                     // Persiste notificação 
                     Int32 volta1 = _notiService.Create(noti);
+
+                    // Configuracao
+                    CONFIGURACAO conf = _confService.GetItemById(aprov.ASSI_CD_ID);
+
+                    // Recupera template
+                    String header = _tempService.GetByCode("APRPEDCOM").TEMP_TX_CABECALHO;
+                    String body = _tempService.GetByCode("APRPEDCOM").TEMP_TX_CORPO;
+                    String footer = _tempService.GetByCode("APRPEDCOM").TEMP_TX_DADOS;
+
+                    // Prepara campos
+                    body = body.Replace("{pedido}", item.PECO_NM_NOME);
+                    body = body.Replace("{numero}", item.PECO_NR_NUMERO);
+                    header = header.Replace("{nome}", aprov.USUA_NM_NOME);
+                    String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = "Pedido de Compra - Envio para Aprovação";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = aprov.USUA_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = aprov.ASSINANTE.ASSI_NM_NOME;
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.IS_HTML = true;
+                    mensagem.NETWORK_CREDENTIAL = net;
+
+                    // Envia mensagem
+                    try
+                    {
+                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                    }
+                    catch (Exception ex)
+                    {
+                        String erro = ex.Message;
+                    }
                 }
                 return volta;
             }
@@ -973,6 +1159,47 @@ namespace ApplicationServices.Services
 
                     // Persiste notificação 
                     volta1 = _notiService.Create(noti);
+
+                    // Configuracao
+                    CONFIGURACAO conf = _confService.GetItemById(aprov.ASSI_CD_ID);
+
+                    // Recupera template
+                    String header = _tempService.GetByCode("APDPEDCOM").TEMP_TX_CABECALHO;
+                    String body = _tempService.GetByCode("APDPEDCOM").TEMP_TX_CORPO;
+                    String footer = _tempService.GetByCode("APDPEDCOM").TEMP_TX_DADOS;
+
+                    // Prepara campos
+                    body = body.Replace("{pedido}", item.PECO_NM_NOME);
+                    body = body.Replace("{numero}", item.PECO_NR_NUMERO);
+                    header = header.Replace("{nome}", aprov.USUA_NM_NOME);
+                    String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = "Pedido de Compra - Aprovação";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = aprov.USUA_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = aprov.ASSINANTE.ASSI_NM_NOME;
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.IS_HTML = true;
+                    mensagem.NETWORK_CREDENTIAL = net;
+
+                    // Envia mensagem
+                    try
+                    {
+                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                    }
+                    catch (Exception ex)
+                    {
+                        String erro = ex.Message;
+                    }
                 }
                 return volta;
             }
@@ -1037,6 +1264,47 @@ namespace ApplicationServices.Services
 
                     // Persiste notificação 
                     volta1 = _notiService.Create(noti);
+
+                    // Configuracao
+                    CONFIGURACAO conf = _confService.GetItemById(aprov.ASSI_CD_ID);
+
+                    // Recupera template
+                    String header = _tempService.GetByCode("REPPEDCOM").TEMP_TX_CABECALHO;
+                    String body = _tempService.GetByCode("REPPEDCOM").TEMP_TX_CORPO;
+                    String footer = _tempService.GetByCode("REPPEDCOM").TEMP_TX_DADOS;
+
+                    // Prepara campos
+                    body = body.Replace("{pedido}", item.PECO_NM_NOME);
+                    body = body.Replace("{numero}", item.PECO_NR_NUMERO);
+                    header = header.Replace("{nome}", aprov.USUA_NM_NOME);
+                    String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = "Pedido de Compra - Reprovação";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = aprov.USUA_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = aprov.ASSINANTE.ASSI_NM_NOME;
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.IS_HTML = true;
+                    mensagem.NETWORK_CREDENTIAL = net;
+
+                    // Envia mensagem
+                    try
+                    {
+                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                    }
+                    catch (Exception ex)
+                    {
+                        String erro = ex.Message;
+                    }
                 }
                 return volta;
             }
@@ -1076,6 +1344,48 @@ namespace ApplicationServices.Services
 
                 // Persiste notificação 
                 Int32 volta1 = _notiService.Create(noti);
+
+                // Configuracao
+                CONFIGURACAO conf = _confService.GetItemById(item.ASSI_CD_ID);
+
+                // Recupera template
+                USUARIO usu = _usuService.GetItemById(item.USUA_CD_ID);
+                String header = _tempService.GetByCode("RECPEDCOM").TEMP_TX_CABECALHO;
+                String body = _tempService.GetByCode("RECPEDCOM").TEMP_TX_CORPO;
+                String footer = _tempService.GetByCode("RECPEDCOM").TEMP_TX_DADOS;
+
+                // Prepara campos
+                body = body.Replace("{pedido}", item.PECO_NM_NOME);
+                body = body.Replace("{numero}", item.PECO_NR_NUMERO);
+                header = header.Replace("{nome}", usu.USUA_NM_NOME);
+                String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
+
+                // Monta e-mail
+                NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                Email mensagem = new Email();
+                mensagem.ASSUNTO = "Pedido de Compra - Reprovação";
+                mensagem.CORPO = emailBody;
+                mensagem.DEFAULT_CREDENTIALS = false;
+                mensagem.EMAIL_DESTINO = usu.USUA_NM_EMAIL;
+                mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                mensagem.ENABLE_SSL = true;
+                mensagem.NOME_EMISSOR = usu.ASSINANTE.ASSI_NM_NOME;
+                mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                mensagem.IS_HTML = true;
+                mensagem.NETWORK_CREDENTIAL = net;
+
+                // Envia mensagem
+                try
+                {
+                    Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                }
+                catch (Exception ex)
+                {
+                    String erro = ex.Message;
+                }
                 return volta;
             }
             catch (Exception ex)
@@ -1106,6 +1416,7 @@ namespace ApplicationServices.Services
             try
             {
                 PEDIDO_COMPRA ped = _baseService.GetItemById(item.PECO_CD_ID);
+                Int32 idAss = usuario.ASSI_CD_ID;
 
                 // Acerta campos
                 item.PECO_IN_STATUS = 7;
@@ -1168,7 +1479,7 @@ namespace ApplicationServices.Services
                         PRODUTO_TABELA_PRECO ptp = new PRODUTO_TABELA_PRECO();
                         ptp.PROD_CD_ID = (Int32)itpc.PROD_CD_ID;
                         ptp.FILI_CD_ID = ped.FILI_CD_ID;
-                        PRODUTO_TABELA_PRECO ptpAntes = _ptpService.CheckExist(ptp);
+                        PRODUTO_TABELA_PRECO ptpAntes = _ptpService.CheckExist(ptp, idAss);
 
                         if (ptpAntes == null)
                         {
@@ -1268,7 +1579,7 @@ namespace ApplicationServices.Services
                     PRODUTO_TABELA_PRECO ptp = new PRODUTO_TABELA_PRECO();
                     ptp.PROD_CD_ID = (Int32)itpc.PROD_CD_ID;
                     ptp.FILI_CD_ID = ped.FILI_CD_ID;
-                    PRODUTO_TABELA_PRECO ptpAntes = _ptpService.CheckExist(ptp);
+                    PRODUTO_TABELA_PRECO ptpAntes = _ptpService.CheckExist(ptp, usuario.ASSI_CD_ID);
 
                     if (ptpAntes == null)
                     {
@@ -1368,6 +1679,47 @@ namespace ApplicationServices.Services
 
                     // Persiste notificação 
                     volta1 = _notiService.Create(noti);
+
+                    // Configuracao
+                    CONFIGURACAO conf = _confService.GetItemById(aprov.ASSI_CD_ID);
+
+                    // Recupera template
+                    String header = _tempService.GetByCode("CANPEDCOM").TEMP_TX_CABECALHO;
+                    String body = _tempService.GetByCode("CANPEDCOM").TEMP_TX_CORPO;
+                    String footer = _tempService.GetByCode("CANPEDCOM").TEMP_TX_DADOS;
+
+                    // Prepara campos
+                    body = body.Replace("{pedido}", item.PECO_NM_NOME);
+                    body = body.Replace("{numero}", item.PECO_NR_NUMERO);
+                    header = header.Replace("{nome}", aprov.USUA_NM_NOME);
+                    String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = "Pedido de Compra - Cancelamento";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = aprov.USUA_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = aprov.ASSINANTE.ASSI_NM_NOME;
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.IS_HTML = true;
+                    mensagem.NETWORK_CREDENTIAL = net;
+
+                    // Envia mensagem
+                    try
+                    {
+                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                    }
+                    catch (Exception ex)
+                    {
+                        String erro = ex.Message;
+                    }
                 }
                 return volta;
             }

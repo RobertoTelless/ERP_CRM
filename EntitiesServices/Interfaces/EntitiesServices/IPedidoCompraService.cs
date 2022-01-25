@@ -39,5 +39,6 @@ namespace ModelServices.Interfaces.EntitiesServices
         ITEM_PEDIDO_COMPRA GetItemCompraById(Int32 id);
         Int32 EditItemCompra(ITEM_PEDIDO_COMPRA item);
         Int32 CreateItemCompra(ITEM_PEDIDO_COMPRA item);
+    
     }
 }

@@ -18,5 +18,6 @@ namespace DataServices.Repositories
             query = query.Where(p => p.PCAT_DS_ACOMPANHAMENTO == conta.PCAT_DS_ACOMPANHAMENTO);
             return query.FirstOrDefault();
         }
+    
     }
 }

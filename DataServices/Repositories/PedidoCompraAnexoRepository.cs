@@ -20,6 +20,5 @@ namespace DataServices.Repositories
             IQueryable<PEDIDO_COMPRA_ANEXO> query = Db.PEDIDO_COMPRA_ANEXO.Where(p => p.PECA_CD_ID == id);
             return query.FirstOrDefault();
         }
-
     }
 }

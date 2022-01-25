@@ -309,6 +309,7 @@
     <Compile Include="Controllers\BaseAdminController.cs" />
     <Compile Include="Controllers\CentroCustoController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\CompraController.cs" />
     <Compile Include="Controllers\ConfiguracaoController.cs" />
     <Compile Include="Controllers\ContaPagarController.cs" />
     <Compile Include="Controllers\ContaReceberController.cs" />
@@ -369,11 +370,14 @@
     <Compile Include="ViewModels\FichaTecnicaViewModel.cs" />
     <Compile Include="ViewModels\FormaPagamentoViewModel.cs" />
     <Compile Include="ViewModels\InventarioViewModel.cs" />
+    <Compile Include="ViewModels\ItemPedidoCompraViewModel.cs" />
     <Compile Include="ViewModels\MensagemAutomaçãoViewModel.cs" />
     <Compile Include="ViewModels\MensagemAuotomacaoDatasViewModel.cs" />
     <Compile Include="ViewModels\MovimentacaoAvulsaGridViewModel.cs" />
     <Compile Include="ViewModels\MovimentacaoAvulsaViewModel.cs" />
     <Compile Include="ViewModels\MovimentoEntradaViewModel.cs" />
+    <Compile Include="ViewModels\PedidoCompraAcompanhamentoViewModel.cs" />
+    <Compile Include="ViewModels\PedidoCompraViewModel.cs" />
     <Compile Include="ViewModels\ProdutoKitViewModel.cs" />
     <Compile Include="ViewModels\ProdutoFornecedorViewModel.cs" />
     <Compile Include="ViewModels\ProdutoGradeViewModel.cs" />
@@ -3309,6 +3313,31 @@
     <Content Include="Views\MensagemAutomacao\VerMensagemAutomacao.cshtml" />
     <Content Include="Views\MensagemAutomacao\EditarMensagemAutomacao.cshtml" />
     <Content Include="Views\MensagemAutomacao\IncluirMensagemAutomacao.cshtml" />
+    <Content Include="Views\Compra\MontarTelaPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\IncluirPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\EditarPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\ExcluirPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\ReativarPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\VerAnexoPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\ProcessarCotacaoPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\AprovarPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\ReprovarPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\ProcessarReceberPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\ReceberPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\ReceberItemPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\CancelarPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\VerPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\VerItemPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\VerAtrasados.cshtml" />
+    <Content Include="Views\Compra\VerEncerrados.cshtml" />
+    <Content Include="Views\Compra\VerCancelados.cshtml" />
+    <Content Include="Views\Compra\EditarItemPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\ExcluirItemPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\ReativarItemPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\IncluirItemPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\EnviarCotacaoPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\ProcessarEnviarAprovacaoPedidoCompra.cshtml" />
+    <Content Include="Views\Compra\IncluirAcompanhamento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3375,6 +3404,7 @@
     <Folder Include="Imagens\2\Notificacao\6\Anexos\" />
     <Folder Include="Imagens\2\Notificacao\7\Anexos\" />
     <Folder Include="Imagens\2\Notificacao\8\Anexos\" />
+    <Folder Include="Imagens\2\PedidoCompra\" />
     <Folder Include="Imagens\2\Produtos\" />
     <Folder Include="Imagens\2\Servicos\" />
     <Folder Include="Imagens\2\Tarefa\2\Anexos\" />

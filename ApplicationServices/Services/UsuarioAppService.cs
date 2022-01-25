@@ -66,6 +66,16 @@ namespace ApplicationServices.Services
             return _usuarioService.GetAdministrador(idAss);
         }
 
+        public USUARIO GetComprador(Int32 idAss)
+        {
+            return _usuarioService.GetComprador(idAss);
+        }
+
+        public USUARIO GetAprovador(Int32 idAss)
+        {
+            return _usuarioService.GetAprovador(idAss);
+        }
+
         public List<NOTIFICACAO> GetAllItensUser(Int32 id, Int32 idAss)
         {
             return _usuarioService.GetAllItensUser(id, idAss);

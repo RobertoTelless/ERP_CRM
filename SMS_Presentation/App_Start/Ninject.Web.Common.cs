@@ -133,6 +133,7 @@ namespace Presentation.Start
             kernel.Bind<IAtendimentoAppService>().To<AtendimentoAppService>();
             kernel.Bind<IPeriodicidadeAppService>().To<PeriodicidadeAppService>();
             kernel.Bind<IMensagemAutomacaoAppService>().To<MensagemAutomacaoAppService>();
+            kernel.Bind<IPedidoCompraAppService>().To<PedidoCompraAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -200,6 +201,7 @@ namespace Presentation.Start
             kernel.Bind<IAtendimentoService>().To<AtendimentoService>();
             kernel.Bind<IPeriodicidadeService>().To<PeriodicidadeService>();
             kernel.Bind<IMensagemAutomacaoService>().To<MensagemAutomacaoService>();
+            kernel.Bind<IPedidoCompraService>().To<PedidoCompraService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -317,6 +319,10 @@ namespace Presentation.Start
             kernel.Bind<INomencBrasServicosRepository>().To<NomencBrasServicosRepository>();
             kernel.Bind<IMensagemAutomacaoRepository>().To<MensagemAutomacaoRepository>();
             kernel.Bind<IMensagemAutomacaoDatasRepository>().To<MensagemAutomacaoDatasRepository>();
+            kernel.Bind<IPedidoCompraRepository>().To<PedidoCompraRepository>();
+            kernel.Bind<IPedidoCompraAnexoRepository>().To<PedidoCompraAnexoRepository>();
+            kernel.Bind<IPedidoCompraAcompanhamentoRepository>().To<PedidoCompraAcompanhamentoRepository>();
+            kernel.Bind<IItemPedidoCompraRepository>().To<ItemPedidoCompraRepository>();
 
         }
     }

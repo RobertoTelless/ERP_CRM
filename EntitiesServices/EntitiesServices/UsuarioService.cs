@@ -120,6 +120,16 @@ namespace ModelServices.EntitiesServices
             return _usuarioRepository.GetAdministrador(idAss);
         }
 
+        public USUARIO GetComprador(Int32 idAss)
+        {
+            return _usuarioRepository.GetComprador(idAss);
+        }
+
+        public USUARIO GetAprovador(Int32 idAss)
+        {
+            return _usuarioRepository.GetAprovador(idAss);
+        }
+
         public List<USUARIO> GetAllItensAcessoHoje(Int32 idAss)
         {
             return _usuarioRepository.GetAllItensAcessoHoje(idAss);

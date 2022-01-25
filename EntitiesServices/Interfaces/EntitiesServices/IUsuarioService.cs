@@ -26,6 +26,8 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<USUARIO> GetAllUsuariosAdm(Int32 idAss);
         USUARIO GetItemById(Int32 id);
         USUARIO GetAdministrador(Int32 idAss);
+        USUARIO GetComprador(Int32 idAss);
+        USUARIO GetAprovador(Int32 idAss);
         List<USUARIO> GetAllUsuarios(Int32 idAss);
         List<PERFIL> GetAllPerfis();
         List<USUARIO> GetAllItens(Int32 idAss);

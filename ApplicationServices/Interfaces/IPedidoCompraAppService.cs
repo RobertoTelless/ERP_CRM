@@ -54,5 +54,6 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateReceber(PEDIDO_COMPRA item);
         Int32 ValidateRecebido(PEDIDO_COMPRA item, USUARIO usuario);
         Int32 ValidateItemRecebido(ITEM_PEDIDO_COMPRA item, USUARIO usuario);
+    
     }
 }

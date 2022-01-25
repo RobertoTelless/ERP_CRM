@@ -27,7 +27,7 @@ namespace ModelServices.EntitiesServices
         private readonly IUnidadeRepository _unidRepository;
         private readonly IPedidoCompraAcompanhamentoRepository _pecoRepository;
 
-        protected DUO_DatabaseEntities Db = new DUO_DatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public PedidoCompraService(IPedidoCompraRepository baseRepository, ILogRepository logRepository, IFormaPagamentoRepository forRepository, IPedidoCompraAnexoRepository anexoRepository, IFilialRepository filialRepository, IUnidadeRepository unidRepository, IItemPedidoCompraRepository itemRepository, IPedidoCompraAcompanhamentoRepository pecoRepository) : base(baseRepository)
         {

@@ -10,6 +10,5 @@ namespace ModelServices.Interfaces.Repositories
     public interface IPedidoCompraAcompanhamentoRepository : IRepositoryBase<PEDIDO_COMPRA_ACOMPANHAMENTO>
     {
         PEDIDO_COMPRA_ACOMPANHAMENTO CheckExist(PEDIDO_COMPRA_ACOMPANHAMENTO item, Int32 idAss);
-    
     }
 }
