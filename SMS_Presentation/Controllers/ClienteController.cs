@@ -741,6 +741,10 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         return RedirectToAction("IncluirOrdemServico", "OrdemServico");
                     }
+                    if ((Int32)Session["VoltaCliente"] == 8)
+                    {
+                        return RedirectToAction("IncluirProcessoCRM", "CRM");
+                    }
                     //if (SessionMocks.ClienteToCr)
                     //{
                     //    SessionMocks.ClienteToCr = false;

@@ -1129,6 +1129,7 @@ namespace ERP_CRM_Solution.Controllers
 
             // Prepara view
             Session["CRMNovo"] = 0;
+            Session["VoltaCliente"] = 8;
             CRM item = new CRM();
             CRMViewModel vm = Mapper.Map<CRM, CRMViewModel>(item);
             vm.ASSI_CD_ID = idAss;
