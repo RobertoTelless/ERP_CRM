@@ -107,8 +107,7 @@
                                         <th style="width: auto">Template E-Mail</th>
                                         <th style="width: auto">Data Início</th>
                                         <th style="width: auto">Data Final</th>
-                                        <th style="width: auto">Hora</th>
-                                        <th style="width: auto">Data Base</th>
+                                        <th style="width: auto">Tipo Seleção</th>
                                         <th class="td-one-action">Ações</th>
                                     </tr>
                                 </thead>
@@ -163,18 +162,22 @@
                                                 <td style="width: auto">-</td>
                                             }
                                             <td style="width: auto">@cond.MEAU_HR_DISPARO.Value.ToString()</td>
-                                            @if (cond.MEAU_DT_DATA_FIXA != null)
+                                            @if (cond.MEAU_IN_TIPO_ENVIO == 1)
                                             {
-                                                <td style="width: auto">@cond.MEAU_DT_FINAL.Value.ToShortDateString().Substring(0, 5)</td>
+                                                <td><span class="badge badge-primary">Periodicidade</span></td>
+                                            }
+                                            else if (cond.MEAU_IN_TIPO_ENVIO == 2)
+                                            {
+                                                <td><span class="badge badge-primary">Dia da Semana</span></td>
                                             }
                                             else
                                             {
-                                                <td style="width: auto">-</td>
+                                                <td><span class="badge badge-primary">Data Fixa</span></td>
                                             }
                                             <td class="td-one-action">
                                                 @if (ViewBag.Perfil != "VIS")
                                                 {
-                                                    @Html.TableLinkDetails(cond.MEAU_CD_ID, "EditarMensagemAutomacao", "fa-edit", "Editar")
+                                                    @Html.TableLinkDetails(cond.MEAU_CD_ID, "EditarMensagemAutomacao", "fa-search", "Consultar")
                                                     if (cond.MEAU_IN_ATIVO == 1)
                                                     {
                                                         <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/MensagemAutomacao/ExcluirMensagemAutomacao/@cond.MEAU_CD_ID')" title="Excluir"></span>
@@ -186,7 +189,7 @@
                                                 }
                                                 else
                                                 {
-                                                    @Html.TableLinkDetails(cond.MEAU_CD_ID, "VerMensagemEMail", "fa-search", "Consultar")
+                                                    @Html.TableLinkDetails(cond.MEAU_CD_ID, "EditarMensagemAutomacao", "fa-search", "Consultar")
                                                 }
                                             </td>
                                         </tr>

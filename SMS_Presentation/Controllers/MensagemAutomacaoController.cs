@@ -441,6 +441,11 @@ namespace ERP_CRM_Solution.Controllers
             aniv.Add(new SelectListItem() { Text = "Sim", Value = "1" });
             aniv.Add(new SelectListItem() { Text = "Não", Value = "2" });
             ViewBag.Aniversario = new SelectList(aniv, "Value", "Text");
+            List<SelectListItem> tipoSel = new List<SelectListItem>();
+            tipoSel.Add(new SelectListItem() { Text = "Peridicidade", Value = "1" });
+            tipoSel.Add(new SelectListItem() { Text = "Dia da Semana", Value = "2" });
+            tipoSel.Add(new SelectListItem() { Text = "Data Fixa", Value = "3" });
+            ViewBag.TipoSel = new SelectList(tipoSel, "Value", "Text");
 
             // Prepara view
             if (Session["MensMensagemAutomacao"] != null)
@@ -502,6 +507,11 @@ namespace ERP_CRM_Solution.Controllers
             aniv.Add(new SelectListItem() { Text = "Sim", Value = "1" });
             aniv.Add(new SelectListItem() { Text = "Não", Value = "2" });
             ViewBag.Aniversario = new SelectList(aniv, "Value", "Text");
+            List<SelectListItem> tipoSel = new List<SelectListItem>();
+            tipoSel.Add(new SelectListItem() { Text = "Peridicidade", Value = "1" });
+            tipoSel.Add(new SelectListItem() { Text = "Dia da Semana", Value = "2" });
+            tipoSel.Add(new SelectListItem() { Text = "Data Fixa", Value = "3" });
+            ViewBag.TipoSel = new SelectList(tipoSel, "Value", "Text");
 
             if (ModelState.IsValid)
             {
@@ -670,6 +680,18 @@ namespace ERP_CRM_Solution.Controllers
             else if (vm.MEAU_IN_DIA_SEMANA == 7)
             {
                 vm.DiaSemana = "Domingo";
+            }
+            if (vm.MEAU_IN_TIPO_ENVIO == 1)
+            {
+                vm.TipoSel = "Periodicidade";
+            }
+            else if (vm.MEAU_IN_TIPO_ENVIO == 2)
+            {
+                vm.TipoSel = "Dia da Semana";
+            }
+            else if (vm.MEAU_IN_TIPO_ENVIO == 3)
+            {
+                vm.TipoSel = "Data Fixa";
             }
             return View(vm);
         }

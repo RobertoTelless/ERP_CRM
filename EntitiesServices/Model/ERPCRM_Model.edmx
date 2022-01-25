@@ -1199,6 +1199,7 @@
           <Property Name="MEAU_DT_DATA_FIXA" Type="date" />
           <Property Name="PERI_CD_ID" Type="int" />
           <Property Name="MEAU_IN_ANIVERSARIO" Type="int" />
+          <Property Name="MEAU_ME_DATA_FIXA" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MENSAGEM_AUTOMACAO_DATAS">
           <Key>
@@ -15232,6 +15233,7 @@
           <Property Name="PERI_CD_ID" Type="Int32" />
           <NavigationProperty Name="PERIODICIDADE" Relationship="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_PERIODICIDADE" FromRole="MENSAGEM_AUTOMACAO" ToRole="PERIODICIDADE" />
           <Property Name="MEAU_IN_ANIVERSARIO" Type="Int32" />
+          <Property Name="MEAU_ME_DATA_FIXA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="MENSAGEM_AUTOMACAO_DATAS">
           <Key>
@@ -17791,6 +17793,7 @@
           <EntitySetMapping Name="MENSAGEM_AUTOMACAO">
             <EntityTypeMapping TypeName="ERP_CRMModel.MENSAGEM_AUTOMACAO">
               <MappingFragment StoreEntitySet="MENSAGEM_AUTOMACAO">
+                <ScalarProperty Name="MEAU_ME_DATA_FIXA" ColumnName="MEAU_ME_DATA_FIXA" />
                 <ScalarProperty Name="MEAU_IN_ANIVERSARIO" ColumnName="MEAU_IN_ANIVERSARIO" />
                 <ScalarProperty Name="PERI_CD_ID" ColumnName="PERI_CD_ID" />
                 <ScalarProperty Name="MEAU_DT_DATA_FIXA" ColumnName="MEAU_DT_DATA_FIXA" />

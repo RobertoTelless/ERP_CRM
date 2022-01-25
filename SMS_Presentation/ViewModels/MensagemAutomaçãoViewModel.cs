@@ -25,10 +25,12 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> MEAU_IN_TIPO { get; set; }
         public Nullable<int> TEEM_CD_ID { get; set; }
         public Nullable<int> TSMS_CD_ID { get; set; }
-        [Required(ErrorMessage = "Campo TIPO DE AUTOMAÇÃO obrigatorio")]
+        [Required(ErrorMessage = "Campo TIPO DE ENVIO obrigatorio")]
         public Nullable<int> MEAU_IN_TIPO_ENVIO { get; set; }
+        [Required(ErrorMessage = "Campo DATA INICIAL obrigatorio")]
         [DataType(DataType.Date, ErrorMessage = "A DATA DE INÍCIO deve ser uma data válida")]
         public Nullable<System.DateTime> MEAU_DT_INICIO { get; set; }
+        [Required(ErrorMessage = "Campo DATA FINAL obrigatorio")]
         [DataType(DataType.Date, ErrorMessage = "A DATA DE TÉRMINO deve ser uma data válida")]
         public Nullable<System.DateTime> MEAU_DT_FINAL { get; set; }
         public Nullable<System.TimeSpan> MEAU_HR_DISPARO { get; set; }
@@ -40,11 +42,13 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<System.DateTime> MEAU_DT_DATA_FIXA { get; set; }
         public Nullable<int> PERI_CD_ID { get; set; }
         public Nullable<int> MEAU_IN_ANIVERSARIO { get; set; }
+        public string MEAU_ME_DATA_FIXA { get; set; }
 
         public string Tipo { get; set; }
         public string DiaSemana { get; set; }
         public string DataDisparo { get; set; }
         public string Aniversario { get; set; }
+        public string TipoSel { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual GRUPO GRUPO { get; set; }

@@ -38,6 +38,7 @@ namespace EntitiesServices.Model
         public Nullable<System.DateTime> MEAU_DT_DATA_FIXA { get; set; }
         public Nullable<int> PERI_CD_ID { get; set; }
         public Nullable<int> MEAU_IN_ANIVERSARIO { get; set; }
+        public string MEAU_ME_DATA_FIXA { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual GRUPO GRUPO { get; set; }
