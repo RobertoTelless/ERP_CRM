@@ -20,18 +20,17 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<TIPO_TRANSPORTE> GetAllItensAdm()
+        public List<TIPO_TRANSPORTE> GetAllItensAdm(Int32 idAss)
         {
             IQueryable<TIPO_TRANSPORTE> query = Db.TIPO_TRANSPORTE;
             return query.ToList();
         }
 
-        public List<TIPO_TRANSPORTE> GetAllItens()
+        public List<TIPO_TRANSPORTE> GetAllItens(Int32 idAss)
         {
             IQueryable<TIPO_TRANSPORTE> query = Db.TIPO_TRANSPORTE.Where(p => p.TITR_IN_ATIVO == 1);
             return query.ToList();
         }
-
     }
 }
  

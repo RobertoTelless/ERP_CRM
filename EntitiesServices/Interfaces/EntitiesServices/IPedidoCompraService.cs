@@ -20,7 +20,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         PEDIDO_COMPRA CheckExist(PEDIDO_COMPRA conta, Int32 idAss);
         PEDIDO_COMPRA GetItemById(Int32 id);
         PEDIDO_COMPRA GetByNome(String nome, Int32 idAss);
-        List<PEDIDO_COMPRA> GetByUser(Int32 id);
+        List<PEDIDO_COMPRA> GetByUser(Int32 id, Int32 idAss);
         List<PEDIDO_COMPRA> GetAllItens(Int32 idAss);
         List<PEDIDO_COMPRA> GetAllItensAdm(Int32 idAss);
         List<PEDIDO_COMPRA> GetAllItensAdmUser(Int32 id, Int32 idAss);
@@ -31,6 +31,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<FORMA_PAGAMENTO> GetAllFormas(Int32 idAss);
         List<UNIDADE> GetAllUnidades(Int32 idAss);
         List<FILIAL> GetAllFilial(Int32 idAss);
+        
         PEDIDO_COMPRA_ANEXO GetAnexoById(Int32 id);
         List<PEDIDO_COMPRA> ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32 idAss);
         List<PEDIDO_COMPRA> ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status, Int32 idAss);

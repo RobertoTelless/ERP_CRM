@@ -6,14 +6,13 @@ using System.Web;
 using EntitiesServices.Model;
 using EntitiesServices.Attributes;
 
-namespace SystemBRPresentation.ViewModels
+namespace SMS_Solution.ViewModels
 {
     public class PedidoCompraViewModel
     {
         [Key]
         public int PECO_CD_ID { get; set; }
         public int ASSI_CD_ID { get; set; }
-        public Nullable<int> MATR_CD_ID { get; set; }
         public Nullable<int> FILI_CD_ID { get; set; }
         public int USUA_CD_ID { get; set; }
 
@@ -59,7 +58,6 @@ namespace SystemBRPresentation.ViewModels
         public virtual FORMA_PAGAMENTO FORMA_PAGAMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ITEM_PEDIDO_COMPRA> ITEM_PEDIDO_COMPRA { get; set; }
-        public virtual MATRIZ MATRIZ { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PEDIDO_COMPRA_ANEXO> PEDIDO_COMPRA_ANEXO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

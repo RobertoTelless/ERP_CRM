@@ -7,9 +7,9 @@ using EntitiesServices.Model;
 
 namespace ModelServices.Interfaces.Repositories
 {
-    public interface IPedidoCompraAcompanhamentoRepository : IRepositoryBase<PEDIDO_COMPRA_ACOMPANHAMENTO>
+    public interface IPedidoVendaParcelaRepository : IRepositoryBase<PEDIDO_VENDA_PARCELA>
     {
-        PEDIDO_COMPRA_ACOMPANHAMENTO CheckExist(PEDIDO_COMPRA_ACOMPANHAMENTO item, Int32 idAss);
-    
+
+
     }
 }

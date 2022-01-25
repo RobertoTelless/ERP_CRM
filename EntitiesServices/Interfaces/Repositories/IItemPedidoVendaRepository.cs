@@ -7,10 +7,10 @@ using EntitiesServices.Model;
 
 namespace ModelServices.Interfaces.Repositories
 {
-    public interface IPedidoCompraAnexoRepository : IRepositoryBase<PEDIDO_COMPRA_ANEXO>
+    public interface IItemPedidoVendaRepository : IRepositoryBase<ITEM_PEDIDO_VENDA>
     {
-        List<PEDIDO_COMPRA_ANEXO> GetAllItens();
-        PEDIDO_COMPRA_ANEXO GetItemById(Int32 id);
-    
+        List<ITEM_PEDIDO_VENDA> GetAllItens();
+        ITEM_PEDIDO_VENDA GetItemById(Int32 id);
+
     }
 }

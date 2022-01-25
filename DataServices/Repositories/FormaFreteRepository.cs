@@ -14,9 +14,8 @@ namespace DataServices.Repositories
 {
     public class FormaFreteRepository : RepositoryBase<FORMA_FRETE>, IFormaFreteRepository
     {
-        public List<FORMA_FRETE> GetAllItens()
+        public List<FORMA_FRETE> GetAllItens(Int32 idAss)
         {
-            Int32 idAss = SessionMocks.IdAssinante;
             IQueryable<FORMA_FRETE> query = Db.FORMA_FRETE.Where(x => x.FOFR_IN_ATIVO == 1);
             query = query.Where(x => x.ASSI_CD_ID == idAss);
             return query.ToList<FORMA_FRETE>();

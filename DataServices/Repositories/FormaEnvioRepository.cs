@@ -14,9 +14,8 @@ namespace DataServices.Repositories
 {
     public class FormaEnvioRepository : RepositoryBase<FORMA_ENVIO>, IFormaEnvioRepository
     {
-        public List<FORMA_ENVIO> GetAllItens()
+        public List<FORMA_ENVIO> GetAllItens(Int32 idAss)
         {
-            Int32 idAss = SessionMocks.IdAssinante;
             IQueryable<FORMA_ENVIO> query = Db.FORMA_ENVIO.Where(x => x.FOEN_IN_ATIVO == 1);
             query = query.Where(x => x.ASSI_CD_ID == idAss);
             return query.ToList<FORMA_ENVIO>();

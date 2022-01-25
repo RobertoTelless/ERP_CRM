@@ -24,7 +24,6 @@ namespace DataServices.Repositories
             IQueryable<PEDIDO_COMPRA> query = Db.PEDIDO_COMPRA.Where(p => p.PECO_IN_ATIVO == 1);
             query = query.Where(p => p.PECO_NM_NOME == nome);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
-            //query = query.Include(p => p.CONTA_PAGAR);
             query = query.Include(p => p.FILIAL);
             query = query.Include(p => p.FORMA_PAGAMENTO);
             query = query.Include(p => p.ITEM_PEDIDO_COMPRA);
@@ -37,7 +36,6 @@ namespace DataServices.Repositories
         {
             IQueryable<PEDIDO_COMPRA> query = Db.PEDIDO_COMPRA;
             query = query.Where(p => p.PECO_CD_ID == id);
-            //query = query.Include(p => p.CONTA_PAGAR);
             query = query.Include(p => p.FILIAL);
             query = query.Include(p => p.FORMA_PAGAMENTO);
             query = query.Include(p => p.ITEM_PEDIDO_COMPRA);
@@ -50,7 +48,6 @@ namespace DataServices.Repositories
         {
             IQueryable<PEDIDO_COMPRA> query = Db.PEDIDO_COMPRA;
             query = query.Where(p => p.USUA_CD_ID == id);
-            //query = query.Include(p => p.CONTA_PAGAR);
             query = query.Include(p => p.FILIAL);
             query = query.Include(p => p.FORMA_PAGAMENTO);
             query = query.Include(p => p.ITEM_PEDIDO_COMPRA);

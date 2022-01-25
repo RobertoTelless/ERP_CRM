@@ -12,5 +12,6 @@ namespace ModelServices.Interfaces.Repositories
         List<ITEM_PEDIDO_COMPRA> GetAllItens();
         ITEM_PEDIDO_COMPRA GetItemById(Int32 id);
         ITEM_PEDIDO_COMPRA GetItemByProduto(Int32 id);
+    
     }
 }

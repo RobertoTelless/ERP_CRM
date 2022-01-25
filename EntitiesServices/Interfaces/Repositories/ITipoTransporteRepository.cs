@@ -9,7 +9,6 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface ITipoTransporteRepository : IRepositoryBase<TIPO_TRANSPORTE>
     {
-        TIPO_TRANSPORTE CheckExist(TIPO_TRANSPORTE item, Int32 idAss);
         List<TIPO_TRANSPORTE> GetAllItens(Int32 idAss);
         TIPO_TRANSPORTE GetItemById(Int32 id);
         List<TIPO_TRANSPORTE> GetAllItensAdm(Int32 idAss);
