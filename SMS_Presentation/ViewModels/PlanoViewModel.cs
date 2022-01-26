@@ -54,6 +54,30 @@ namespace ERP_CRM_Solution.ViewModels
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<decimal> PLAN_VL_PROMOCAO { get; set; }
         public string PLAN_TX_SITE { get; set; }
+        public Nullable<int> PLAN_IN_BLOCO { get; set; }
+        public Nullable<int> PLAN_IN_NIVEL { get; set; }
+        public Nullable<int> PLAN_IN_MENSAGENS { get; set; }
+        public Nullable<int> PLAN_IN_CRM { get; set; }
+        public Nullable<int> PLAN_IN_POSVENDA { get; set; }
+        public Nullable<int> PLAN_IN_FINANCEIRO { get; set; }
+        public Nullable<int> PLAN_IN_FATURA { get; set; }
+        public Nullable<int> PLAN_IN_ESTOQUE { get; set; }
+        public Nullable<int> PLAN_IN_PATRIMONIO { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<int> PLAN_NR_PATRIMONIO { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<int> PLAN_NR_PRODUTO { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<int> PLAN_NR_FORNECEDOR { get; set; }
+        public Nullable<int> PLAN_IN_VENDAS { get; set; }
+        public Nullable<int> PLAN_IN_COMPRA { get; set; }
+        public Nullable<int> PLAN_IN_SERVICOS { get; set; }
+        public Nullable<int> PLAN_IN_ATENDIMENTOS { get; set; }
+        public Nullable<int> PLAN_IN_OS { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<int> PLAN_NR_COMPRA { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<int> PLAN_NR_VENDA { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ASSINANTE> ASSINANTE { get; set; }

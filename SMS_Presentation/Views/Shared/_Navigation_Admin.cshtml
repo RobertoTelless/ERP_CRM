@@ -178,17 +178,20 @@
                                 <li class="@Html.IsSelected(action: "MontarTelaFornecedor")"><a href="@Url.Action("MontarTelaFornecedor", "Fornecedor")">Fornecedores</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaProduto")"><a href="@Url.Action("MontarTelaProduto", "Produto")">Produtos</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaFT")"><a href="@Url.Action("MontarTelaFT", "FichaTecnica")">Composição Produtos</a></li>
-                                @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
+                                @if ((Int32)Session["PermFinanceiro"] == 1)
                                 {
-                                    <li class="@Html.IsSelected(action: "MontarTelaCC")"><a href="@Url.Action("MontarTelaCC", "CentroCusto")">Centros de Custo</a></li>
-                                    <li class="@Html.IsSelected(action: "MontarTelaBanco")"><a href="@Url.Action("MontarTelaBanco", "Banco")">Bancos & Contas</a></li>
-                                    <li class="@Html.IsSelected(action: "MontarTelaFormaPagamento")"><a href="@Url.Action("MontarTelaFormaPagamento", "FormaPagamento")">Formas Pagamento</a></li>
+                                    if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
+                                    {
+                                        <li class="@Html.IsSelected(action: "MontarTelaCC")"><a href="@Url.Action("MontarTelaCC", "CentroCusto")">Centros de Custo</a></li>
+                                        <li class="@Html.IsSelected(action: "MontarTelaBanco")"><a href="@Url.Action("MontarTelaBanco", "Banco")">Bancos & Contas</a></li>
+                                        <li class="@Html.IsSelected(action: "MontarTelaFormaPagamento")"><a href="@Url.Action("MontarTelaFormaPagamento", "FormaPagamento")">Formas Pagamento</a></li>
+                                    }
                                 }
                             </ul>
                         </li>
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Compras</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
-                                <li class="@Html.IsSelected(action: "MontarTelaCompra")"><a href="@Url.Action("MontarTelaCompra", "Compra")">Compras</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaPedidoCompra")"><a href="@Url.Action("MontarTelaPedidoCompra", "Compra")">Compras</a></li>
                             </ul>
                         </li>
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>
@@ -198,6 +201,70 @@
                                 <li class="@Html.IsSelected(action: "MontarTelaSubCatProduto")"><a href="@Url.Action("MontarTelaSubCatProduto", "TabelasAuxiliares")">Subcat.Produto</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaUnidade")"><a href="@Url.Action("MontarTelaUnidade", "TabelasAuxiliares")">Unidades</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaTamanho")"><a href="@Url.Action("MontarTelaTamanho", "TabelasAuxiliares")">Tamanhos</a></li>
+                                @if ((Int32)Session["PermFinanceiro"] == 1)
+                                {
+                                    if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
+                                    {
+                                        <li class="@Html.IsSelected(action: "MontarTelaGrupoCC")"><a href="@Url.Action("MontarTelaGrupoCC", "TabelasAuxiliares")">Grupo</a></li>
+                                        <li class="@Html.IsSelected(action: "MontarTelaSubgrupo")"><a href="@Url.Action("MontarTelaSubgrupo", "TabelasAuxiliares")">Subgrupos</a></li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            }
+
+            @*Vendas*@
+            @if ((Int32)Session["PermVenda"] == 1)
+            {
+                <li class="@Html.IsSelected(controller: "BaseAdmin")">
+                    <a href="@Url.Action("MontarTelaDashboardVenda", "Venda")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Vendas</span> <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
+                        <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
+                                <li class="@Html.IsSelected(action: "MontarTelaCliente")"><a href="@Url.Action("MontarTelaCliente", "Cliente")">Clientes</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaProduto")"><a href="@Url.Action("MontarTelaProduto", "Produto")">Produtos</a></li>
+                                @if ((Int32)Session["PermFinanceiro"] == 1)
+                                {
+                                    if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
+                                    {
+                                        <li class="@Html.IsSelected(action: "MontarTelaCC")"><a href="@Url.Action("MontarTelaCC", "CentroCusto")">Centros de Custo</a></li>
+                                        <li class="@Html.IsSelected(action: "MontarTelaBanco")"><a href="@Url.Action("MontarTelaBanco", "Banco")">Bancos & Contas</a></li>
+                                        <li class="@Html.IsSelected(action: "MontarTelaFormaPagamento")"><a href="@Url.Action("MontarTelaFormaPagamento", "FormaPagamento")">Formas Pagamento</a></li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                        <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Compras</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
+                                <li class="@Html.IsSelected(action: "MontarTelaPedidovenda")"><a href="@Url.Action("MontarTelaPedidoVenda", "Venda")">Vendas</a></li>
+                            </ul>
+                        </li>
+                        <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Frete & Entrega</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
+                                <li class="@Html.IsSelected(action: "MontarTelaTransportadora")"><a href="@Url.Action("MontarTelaTransportadora", "Transportadora")">Transportadoras</a></li>
+                            </ul>
+                        </li>
+                        <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
+                                <li class="@Html.IsSelected(action: "MontarTelaCatCliente")"><a href="@Url.Action("MontarTelaCatCliente", "TabelasAuxiliares")">Cat.Cçiente</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaCatProduto")"><a href="@Url.Action("MontarTelaCatProduto", "TabelasAuxiliares")">Cat.Produto</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaSubCatProduto")"><a href="@Url.Action("MontarTelaSubCatProduto", "TabelasAuxiliares")">Subcat.Produto</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaUnidade")"><a href="@Url.Action("MontarTelaUnidade", "TabelasAuxiliares")">Unidades</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaTamanho")"><a href="@Url.Action("MontarTelaTamanho", "TabelasAuxiliares")">Tamanhos</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaFormaEnvio")"><a href="@Url.Action("MontarTelaFormaEnvio", "TabelasAuxiliares")">Forma Envio</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaFormaFrete")"><a href="@Url.Action("MontarTelaFormaFrete", "TabelasAuxiliares")">Forma Frete</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaTipoTransporte")"><a href="@Url.Action("MontarTelaTipoTransporte", "TabelasAuxiliares")">Tipo Transporte</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaTipoVeículo")"><a href="@Url.Action("MontarTelaTipoVeículo", "TabelasAuxiliares")">Tipo Veículo</a></li>
+                                @if ((Int32)Session["PermFinanceiro"] == 1)
+                                {
+                                    if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
+                                    {
+                                        <li class="@Html.IsSelected(action: "MontarTelaGrupoCC")"><a href="@Url.Action("MontarTelaGrupoCC", "TabelasAuxiliares")">Grupo</a></li>
+                                        <li class="@Html.IsSelected(action: "MontarTelaSubgrupo")"><a href="@Url.Action("MontarTelaSubgrupo", "TabelasAuxiliares")">Subgrupos</a></li>
+                                    }
+                                }
                             </ul>
                         </li>
                     </ul>
@@ -255,6 +322,12 @@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "MontarTelaCP")"><a href="@Url.Action("MontarTelaCP", "ContaPagar")">Contas a Pagar</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaCR")"><a href="@Url.Action("MontarTelaCR", "ContaPagar")">Contas a Receber</a></li>
+                            </ul>
+                        </li>
+                        <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
+                                <li class="@Html.IsSelected(action: "MontarTelaGrupoCC")"><a href="@Url.Action("MontarTelaGrupoCC", "TabelasAuxiliares")">Grupo</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaSubgrupo")"><a href="@Url.Action("MontarTelaSubgrupo", "TabelasAuxiliares")">Subgrupos</a></li>
                             </ul>
                         </li>
                     </ul>

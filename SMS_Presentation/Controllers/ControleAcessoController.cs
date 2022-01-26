@@ -224,10 +224,14 @@ namespace ERP_CRM_Solution.Controllers
                         Session["PermCompra"] = 1;
                         Session["NumFornecedor"] = item.PLANO.PLAN_NR_FORNECEDOR;
                         Session["NumProduto"] = item.PLANO.PLAN_NR_PRODUTO;
+                        Session["NumCompra"] = item.PLANO.PLAN_NR_COMPRA;
                     }
                     if (item.PLANO.PLAN_IN_VENDAS == 1)
                     {
                         Session["PermVenda"] = 1;
+                        Session["NumProduto"] = item.PLANO.PLAN_NR_PRODUTO;
+                        Session["NumClientes"] = item.PLANO.PLAN_NR_CONTATOS;
+                        Session["NumVendas"] = item.PLANO.PLAN_NR_VENDA;
                     }
                     if (item.PLANO.PLAN_IN_POSVENDA == 1)
                     {

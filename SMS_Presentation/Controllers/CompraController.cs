@@ -207,6 +207,10 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0100", CultureInfo.CurrentCulture));
                 }
+                if ((Int32)Session["MensCompra"] == 50)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0125", CultureInfo.CurrentCulture));
+                }
 
             }
 
@@ -351,6 +355,14 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             Session["ListaITPC"] = null;
+
+            // Verifica possibilidade
+            Int32 num = baseApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumCompra"] <= num)
+            {
+                Session["MensCompra"] = 50;
+                return RedirectToAction("MontarTelaCompra", "Compra");
+            }
 
             // Prepara listas
             ViewBag.CC = new SelectList(ccApp.GetAllItens(idAss).OrderBy(p => p.CECU_NM_NOME), "CECU_CD_ID", "CECU_NM_NOME");
@@ -729,6 +741,14 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica possibilidade
+            Int32 num = baseApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumCompra"] <= num)
+            {
+                Session["MensCompra"] = 50;
+                return RedirectToAction("MontarTelaCompra", "Compra");
+            }
 
             // Prepara view
             PEDIDO_COMPRA item = baseApp.GetItemById(id);

@@ -1665,6 +1665,8 @@
           <Property Name="PLAN_IN_SERVICOS" Type="int" />
           <Property Name="PLAN_IN_ATENDIMENTOS" Type="int" />
           <Property Name="PLAN_IN_OS" Type="int" />
+          <Property Name="PLAN_NR_COMPRA" Type="int" />
+          <Property Name="PLAN_NR_VENDA" Type="int" />
         </EntityType>
         <EntityType Name="PLANO_PERIODICIDADE">
           <Key>
@@ -9042,6 +9044,8 @@
           <Property Name="PLAN_IN_SERVICOS" Type="Int32" />
           <Property Name="PLAN_IN_ATENDIMENTOS" Type="Int32" />
           <Property Name="PLAN_IN_OS" Type="Int32" />
+          <Property Name="PLAN_NR_COMPRA" Type="Int32" />
+          <Property Name="PLAN_NR_VENDA" Type="Int32" />
         </EntityType>
         <EntityType Name="PLANO_PERIODICIDADE">
           <Key>
@@ -16697,6 +16701,8 @@
           <EntitySetMapping Name="PLANO">
             <EntityTypeMapping TypeName="ERP_CRMModel.PLANO">
               <MappingFragment StoreEntitySet="PLANO">
+                <ScalarProperty Name="PLAN_NR_VENDA" ColumnName="PLAN_NR_VENDA" />
+                <ScalarProperty Name="PLAN_NR_COMPRA" ColumnName="PLAN_NR_COMPRA" />
                 <ScalarProperty Name="PLAN_IN_OS" ColumnName="PLAN_IN_OS" />
                 <ScalarProperty Name="PLAN_IN_ATENDIMENTOS" ColumnName="PLAN_IN_ATENDIMENTOS" />
                 <ScalarProperty Name="PLAN_IN_SERVICOS" ColumnName="PLAN_IN_SERVICOS" />
