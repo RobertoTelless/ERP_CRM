@@ -322,7 +322,6 @@ namespace Presentation.Start
             kernel.Bind<IPedidoCompraRepository>().To<PedidoCompraRepository>();
             kernel.Bind<IPedidoCompraAnexoRepository>().To<PedidoCompraAnexoRepository>();
             kernel.Bind<IPedidoCompraAcompanhamentoRepository>().To<PedidoCompraAcompanhamentoRepository>();
-            kernel.Bind<IItemPedidoCompraRepository>().To<ItemPedidoCompraRepository>();
 
         }
     }

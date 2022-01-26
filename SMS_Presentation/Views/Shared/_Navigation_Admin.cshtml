@@ -144,21 +144,18 @@
                     <a href="@Url.Action("MontarTelaDashboardEstoque", "Estoque")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Estoque</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
-                            @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>*@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "MontarTelaProduto")"><a href="@Url.Action("MontarTelaProduto", "Produto")">Produtos</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaFT")"><a href="@Url.Action("MontarTelaFT", "FichaTecnica")">Composição Produtos</a></li>
                             </ul>
                         </li>
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Estoque</span> <span class="fa arrow"></span></a>
-                            @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">CRM</span> <span class="fa arrow"></span></a>*@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "MontarTelaEstoqueProduto")"><a href="@Url.Action("MontarTelaEstoqueProduto", "Estoque")">Consulta</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaMovimentacaoAvulsa")"><a href="@Url.Action("MontarTelaMovimentacaoAvulsa", "Estoque")">Movimentação Avulsa</a></li>
                             </ul>
                         </li>
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>
-                            @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>*@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "MontarTelaCatProduto")"><a href="@Url.Action("MontarTelaCatProduto", "TabelasAuxiliares")">Cat.Produto</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaSubCatProduto")"><a href="@Url.Action("MontarTelaSubCatProduto", "TabelasAuxiliares")">Subcat.Produto</a></li>
@@ -177,7 +174,6 @@
                     <a href="@Url.Action("MontarTelaDashboardCompra", "Compra")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Compras</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
-                            @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>*@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "MontarTelaFornecedor")"><a href="@Url.Action("MontarTelaFornecedor", "Fornecedor")">Fornecedores</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaProduto")"><a href="@Url.Action("MontarTelaProduto", "Produto")">Produtos</a></li>
@@ -191,13 +187,11 @@
                             </ul>
                         </li>
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Compras</span> <span class="fa arrow"></span></a>
-                            @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">CRM</span> <span class="fa arrow"></span></a>*@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "MontarTelaCompra")"><a href="@Url.Action("MontarTelaCompra", "Compra")">Compras</a></li>
                             </ul>
                         </li>
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>
-                            @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tab.Auxiliares</span> <span class="fa arrow"></span></a>*@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "MontarTelaCatFornecedor")"><a href="@Url.Action("MontarTelaCatFornecedor", "TabelasAuxiliares")">Cat.Fornecedor</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaCatProduto")"><a href="@Url.Action("MontarTelaCatProduto", "TabelasAuxiliares")">Cat.Produto</a></li>

@@ -3338,6 +3338,7 @@
     <Content Include="Views\Compra\EnviarCotacaoPedidoCompra.cshtml" />
     <Content Include="Views\Compra\ProcessarEnviarAprovacaoPedidoCompra.cshtml" />
     <Content Include="Views\Compra\IncluirAcompanhamento.cshtml" />
+    <Content Include="Views\Compra\MontarTelaDashboardCompra.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -185,6 +185,8 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.CanceladasLista = lista.Where(p => p.PECO_IN_STATUS == 8).ToList();
             ViewBag.AtrasadasLista = lista.Where(p => p.PECO_DT_PREVISTA < DateTime.Today.Date && p.PECO_IN_STATUS != 7 && p.PECO_IN_STATUS != 8).ToList();
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+            ViewBag.Aprovador = usuario.USUA_IN_APROVADOR;
+            ViewBag.Comprador = usuario.USUA_IN_COMPRADOR;
             ViewBag.CotacaoEnvioSucesso = (Int32)Session["SMSEmailEnvio"];
 
             Session["Fornecedores"] = forApp.GetAllItens(idAss);
@@ -367,8 +369,8 @@ namespace ERP_CRM_Solution.Controllers
             status.Add(new SelectListItem() { Text = "Encerrada", Value = "5" });
             status.Add(new SelectListItem() { Text = "Cancelada", Value = "6" });
             ViewBag.Status = new SelectList(status, "Value", "Text");
-            //List<PRODUTO> lista = proApp.GetAllItens(idAss).OrderBy(x => x.PROD_NM_NOME).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
-            //ViewBag.Produtos = new SelectList(lista, "PROD_CD_ID", "PROD_NM_NOME");
+            List<PRODUTO> lista = proApp.GetAllItens(idAss).OrderBy(x => x.PROD_NM_NOME).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
+            ViewBag.Produtos = new SelectList(lista, "PROD_CD_ID", "PROD_NM_NOME");
 
             // Prepara view
             Session["VoltaPop"] = 1;
@@ -2682,5 +2684,36 @@ namespace ERP_CRM_Solution.Controllers
                 return View(vm);
             }
         }
+
+        [HttpGet]
+        public ActionResult MontarTelaDashboardCompra()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if ((Int32)Session["PermCompra"] == 0)
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
+
+            return View(vm);
+        }
+
     }
 }
