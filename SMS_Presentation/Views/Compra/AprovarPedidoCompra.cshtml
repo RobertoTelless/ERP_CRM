@@ -95,7 +95,7 @@
                             <div class="form-group">
                                 @Html.ButtonActionSubmit(text: "Aprovar Pedido de Compra?", htmlAttributes: new { style = "margin-left: 15px; margin-top: 5px;", id = "basictoast" })
                                 @Html.ButtonLinkIndex(text: "Reprovar Pedido de Compra", action: "ReprovarPedidoCompra", controller: "Compra", routeValues: new { id = Model.PECO_CD_ID })
-                                @Html.ButtonLinkIndex(text: "Voltar", controller: "Compra", action: "Voltar")
+                                @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaPedidoCompra", controller: "Compra")
                                 @Html.ButtonLinkIndex(text: "Dashboard", controller: "Compra", action: "MontarTelaDasboardCompra")
                             </div>
 

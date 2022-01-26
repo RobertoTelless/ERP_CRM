@@ -94,7 +94,8 @@
                         {
                             <div class="form-group">
                                 @Html.ButtonActionSubmit(text: "Confirmar recebimento do Pedido de Compra?", htmlAttributes: new { id = "basictoast", style = "margin-left: 15px; margin-top: 5px;" })
-                                @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseMontarTelaPedidoCompra", controller: "Compra")
+                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Compra", action: "MontarTelaDasboardCompra")
+                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMontarTelaPedidoCompra", controller: "Compra")
                             </div>
 
                         <ul class="nav nav-tabs">
