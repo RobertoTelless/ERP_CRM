@@ -17,11 +17,11 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PEDIDO_VENDA()
         {
+            this.ATENDIMENTO = new HashSet<ATENDIMENTO>();
             this.ITEM_PEDIDO_VENDA = new HashSet<ITEM_PEDIDO_VENDA>();
             this.PEDIDO_VENDA_ACOMPANHAMENTO = new HashSet<PEDIDO_VENDA_ACOMPANHAMENTO>();
             this.PEDIDO_VENDA_ANEXO = new HashSet<PEDIDO_VENDA_ANEXO>();
             this.PEDIDO_VENDA_PARCELA = new HashSet<PEDIDO_VENDA_PARCELA>();
-            this.ATENDIMENTO = new HashSet<ATENDIMENTO>();
         }
     
         public int PEVE_CD_ID { get; set; }
@@ -73,6 +73,8 @@ namespace EntitiesServices.Model
         public Nullable<int> FOFR_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ATENDIMENTO> ATENDIMENTO { get; set; }
         public virtual CENTRO_CUSTO CENTRO_CUSTO { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }
         public virtual FILIAL FILIAL { get; set; }
@@ -90,7 +92,5 @@ namespace EntitiesServices.Model
         public virtual PERIODICIDADE PERIODICIDADE { get; set; }
         public virtual USUARIO USUARIO { get; set; }
         public virtual USUARIO USUARIO1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ATENDIMENTO> ATENDIMENTO { get; set; }
     }
 }

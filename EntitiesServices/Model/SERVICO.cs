@@ -28,16 +28,16 @@ namespace EntitiesServices.Model
         public int ASSI_CD_ID { get; set; }
         public Nullable<int> FILI_CD_ID { get; set; }
         public Nullable<int> CASE_CD_ID { get; set; }
+        public Nullable<int> UNID_CD_ID { get; set; }
+        public Nullable<int> NBSE_CD_ID { get; set; }
         public string SERV_NM_NOME { get; set; }
         public string SERV_DS_DESCRICAO { get; set; }
         public System.DateTime SERV_DT_CADASTRO { get; set; }
         public int SERV_IN_ATIVO { get; set; }
         public string SERV_CD_CODIGO { get; set; }
-        public Nullable<decimal> SERV_VL_PRECO { get; set; }
-        public Nullable<int> UNID_CD_ID { get; set; }
-        public Nullable<int> NBSE_CD_ID { get; set; }
         public string SERV_TX_OBSERVACOES { get; set; }
         public Nullable<int> SERV_NR_DURACAO { get; set; }
+        public Nullable<decimal> SERV_VL_PRECO { get; set; }
         public Nullable<int> SERV_NR_DURACAO_EXPRESSA { get; set; }
         public Nullable<decimal> SERV_VL_VALOR_EXPRESSO { get; set; }
         public Nullable<int> SERV_IN_LOCAL { get; set; }

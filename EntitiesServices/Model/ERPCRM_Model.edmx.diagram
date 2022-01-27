@@ -4,123 +4,168 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3bd60074d56142998d09e7f0b35562b4" Name="Diagram1">
-        <EntityTypeShape EntityType="ERP_CRMModel.AGENDA" Width="1.5" PointX="7.5" PointY="142.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.AGENDA_ANEXO" Width="1.5" PointX="9.75" PointY="156.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.AGENDA_VINCULO" Width="1.5" PointX="26.5" PointY="144.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE" Width="1.5" PointX="3" PointY="138.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_ANEXO" Width="1.5" PointX="5.25" PointY="115.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_CONSUMO" Width="1.5" PointX="5.25" PointY="118.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_PAGAMENTO" Width="1.5" PointX="8.25" PointY="148.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_PLANO" Width="1.5" PointX="10.25" PointY="144.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_QUADRO_SOCIETARIO" Width="1.5" PointX="5.25" PointY="129" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.BANCO" Width="1.5" PointX="5.25" PointY="132.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CARGO" Width="1.5" PointX="16" PointY="133.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_AGENDA" Width="1.5" PointX="5.25" PointY="135.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_CLIENTE" Width="1.5" PointX="5.25" PointY="138.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_EQUIPAMENTO" Width="1.5" PointX="5.25" PointY="141.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_FORNECEDOR" Width="1.5" PointX="21.25" PointY="127.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_NOTIFICACAO" Width="1.5" PointX="6" PointY="126" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_PRODUTO" Width="1.5" PointX="5.25" PointY="144.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_TELEFONE" Width="1.5" PointX="5.25" PointY="147.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_USUARIO" Width="1.5" PointX="16" PointY="130.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CENTRO_CUSTO" Width="1.5" PointX="5.25" PointY="150.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE" Width="1.5" PointX="7.5" PointY="168.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_ANEXO" Width="1.5" PointX="9.75" PointY="169.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_CONTATO" Width="1.5" PointX="9.75" PointY="172.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_QUADRO_SOCIETARIO" Width="1.5" PointX="9.75" PointY="184.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONFIGURACAO" Width="1.5" PointX="5.25" PointY="155.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_BANCO" Width="1.5" PointX="10.5" PointY="136.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_BANCO_CONTATO" Width="1.5" PointX="12.75" PointY="131.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_BANCO_LANCAMENTO" Width="1.5" PointX="12.75" PointY="128.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR" Width="1.5" PointX="23.5" PointY="140.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR_ANEXO" Width="1.5" PointX="25.75" PointY="132.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR_PARCELA" Width="1.5" PointX="28.75" PointY="134.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR_RATEIO" Width="1.5" PointX="31.75" PointY="146.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER" Width="1.5" PointX="20.5" PointY="152.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER_ANEXO" Width="1.5" PointX="22.75" PointY="160.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER_PARCELA" Width="1.5" PointX="22.75" PointY="163.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER_RATEIO" Width="1.5" PointX="25.75" PointY="162.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM" Width="1.5" PointX="20.5" PointY="177" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_ACAO" Width="1.5" PointX="22.75" PointY="177.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_ANEXO" Width="1.5" PointX="22.75" PointY="182.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMENTARIO" Width="1.5" PointX="25.75" PointY="166" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_CONTATO" Width="1.5" PointX="22.75" PointY="189.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_ORIGEM" Width="1.5" PointX="5.25" PointY="160.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.EMAIL_AGENDAMENTO" Width="1.5" PointX="12.75" PointY="160.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.EQUIPAMENTO" Width="1.5" PointX="12.5" PointY="144.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.EQUIPAMENTO_ANEXO" Width="1.5" PointX="14.75" PointY="156.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.EQUIPAMENTO_MANUTENCAO" Width="1.5" PointX="25.75" PointY="140.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FILIAL" Width="1.5" PointX="13.25" PointY="135.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORMA_ENVIO" Width="1.5" PointX="5.25" PointY="163.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORMA_FRETE" Width="1.5" PointX="5.25" PointY="175.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORMA_PAGAMENTO" Width="1.5" PointX="20.75" PointY="134.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR" Width="1.5" PointX="23.5" PointY="130.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_ANEXO" Width="1.5" PointX="25.75" PointY="129" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_COMENTARIO" Width="1.5" PointX="31.75" PointY="140" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_CONTATO" Width="1.5" PointX="25.75" PointY="125.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_MENSAGEM" Width="1.5" PointX="31.75" PointY="135.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_QUADRO_SOCIETARIO" Width="1.5" PointX="25.75" PointY="158.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO" Width="1.5" PointX="10.25" PointY="152.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO_CLIENTE" Width="1.5" PointX="12.5" PointY="165" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ITEM_PEDIDO_COMPRA" Width="1.5" PointX="34" PointY="140.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ITEM_PEDIDO_VENDA" Width="1.5" PointX="31.25" PointY="150.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.LOG" Width="1.5" PointX="13.25" PointY="152.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_ANEXO" Width="1.5" PointX="12.75" PointY="178.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGENS" Width="1.5" PointX="10.5" PointY="177.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGENS_DESTINOS" Width="1.5" PointX="14.75" PointY="166.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MOTIVO_CANCELAMENTO" Width="1.5" PointX="5.25" PointY="192.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MOTIVO_ENCERRAMENTO" Width="1.5" PointX="5.25" PointY="195.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MOVIMENTO_ESTOQUE_PRODUTO" Width="1.5" PointX="25.75" PointY="148.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.NOTICIA" Width="1.5" PointX="5.25" PointY="198" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.NOTICIA_COMENTARIO" Width="1.5" PointX="7.5" PointY="198.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.NOTIFICACAO" Width="1.5" PointX="8.25" PointY="132.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.NOTIFICACAO_ANEXO" Width="1.5" PointX="10.5" PointY="132.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_COMPRA" Width="1.5" PointX="28.75" PointY="144.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_COMPRA_ACOMPANHAMENTO" Width="1.5" PointX="34" PointY="145.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_COMPRA_ANEXO" Width="1.5" PointX="31" PointY="155" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA" Width="1.5" PointX="28" PointY="152.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA_ACOMPANHAMENTO" Width="1.5" PointX="34.25" PointY="151.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA_ANEXO" Width="1.5" PointX="30.25" PointY="164.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA_PARCELA" Width="1.5" PointX="30.25" PointY="167.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PERFIL" Width="1.5" PointX="16" PointY="160.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PERIODICIDADE" Width="1.5" PointX="25.75" PointY="169.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PLANO" Width="1.5" PointX="8" PointY="109.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PLANO_PERIODICIDADE" Width="1.5" PointX="5.75" PointY="111" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.POSICAO" Width="1.5" PointX="5.25" PointY="208.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRECO_PRODUTO" Width="1.5" PointX="25.75" PointY="136" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO" Width="1.5" PointX="15.5" PointY="136.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_ANEXO" Width="1.5" PointX="17.75" PointY="153.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_ESTOQUE_FILIAL" Width="1.5" PointX="22.75" PointY="151.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_FORNECEDOR" Width="1.5" PointX="28.75" PointY="140.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_ORIGEM" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_TABELA_PRECO" Width="1.5" PointX="25.75" PointY="153.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.RESUMO_VENDA" Width="1.5" PointX="5.25" PointY="211" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.SUBCATEGORIA_PRODUTO" Width="1.5" PointX="7.5" PointY="138.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.SUBGRUPO" Width="1.5" PointX="23.5" PointY="156.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TELEFONE" Width="1.5" PointX="7.5" PointY="152.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE" Width="1.5" PointX="5.25" PointY="213.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_ACAO" Width="1.5" PointX="5.25" PointY="218.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_CONTA" Width="1.5" PointX="8.25" PointY="130.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_CONTRIBUINTE" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_CRM" Width="1.5" PointX="5.25" PointY="221.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_GRUPO" Width="1.5" PointX="5.25" PointY="224.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_PESSOA" Width="1.5" PointX="0.75" PointY="140.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_TRANSPORTE" Width="1.5" PointX="16.25" PointY="127.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_VEICULO" Width="1.5" PointX="16.25" PointY="124.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TRANSPORTADORA" Width="1.5" PointX="18.5" PointY="131.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TRANSPORTADORA_ANEXO" Width="1.5" PointX="20.75" PointY="130.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.UF" Width="1.5" PointX="0.75" PointY="144.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.UNIDADE" Width="1.5" PointX="13.25" PointY="124.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.USUARIO" Width="1.5" PointX="18.25" PointY="139.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.USUARIO_ANEXO" Width="1.5" PointX="20.5" PointY="140.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.USUARIO_FUNCIONARIO" Width="1.5" PointX="20.5" PointY="143.5" IsExpanded="true" />
+      <Diagram DiagramId="80115c82d7a64edf981abfe31c7c1bfe" Name="Diagram1">
+        <EntityTypeShape EntityType="ERP_CRMModel.AGENDA" Width="1.5" PointX="7.5" PointY="201.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.AGENDA_ANEXO" Width="1.5" PointX="9.75" PointY="216.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.AGENDA_VINCULO" Width="1.5" PointX="24.75" PointY="217.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE" Width="1.5" PointX="3" PointY="198.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_ANEXO" Width="1.5" PointX="5.25" PointY="157.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_CONSUMO" Width="1.5" PointX="5.25" PointY="160.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_PAGAMENTO" Width="1.5" PointX="8.25" PointY="207.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_PLANO" Width="1.5" PointX="8.25" PointY="211.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_QUADRO_SOCIETARIO" Width="1.5" PointX="5.25" PointY="171" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO" Width="1.5" PointX="10.5" PointY="205.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_ACOMPANHAMENTO" Width="1.5" PointX="27.75" PointY="214" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_AGENDA" Width="1.5" PointX="24.75" PointY="195.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_ANEXO" Width="1.5" PointX="12.75" PointY="218" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.BANCO" Width="1.5" PointX="5.25" PointY="184.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CARGO" Width="1.5" PointX="5.25" PointY="187.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_AGENDA" Width="1.5" PointX="5.25" PointY="190.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_ATENDIMENTO" Width="1.5" PointX="5.25" PointY="193.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_CLIENTE" Width="1.5" PointX="5.25" PointY="196.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_EQUIPAMENTO" Width="1.5" PointX="5.25" PointY="199.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_FORNECEDOR" Width="1.5" PointX="5.25" PointY="202.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_NOTIFICACAO" Width="1.5" PointX="25.5" PointY="252.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_ORDEM_SERVICO" Width="1.5" PointX="5.25" PointY="205.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_PRODUTO" Width="1.5" PointX="5.25" PointY="208.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_SERVICO" Width="1.5" PointX="5.25" PointY="212.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_TELEFONE" Width="1.5" PointX="5.25" PointY="215.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_USUARIO" Width="1.5" PointX="11.25" PointY="221.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CENTRO_CUSTO" Width="1.5" PointX="32.25" PointY="222.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE" Width="1.5" PointX="15.75" PointY="220.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_ANEXO" Width="1.5" PointX="18" PointY="234.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_CONTATO" Width="1.5" PointX="18" PointY="247.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_NEW" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_QUADRO_SOCIETARIO" Width="1.5" PointX="18" PointY="251.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_REFERENCIA" Width="1.5" PointX="18" PointY="254.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_TAG" Width="1.5" PointX="18" PointY="237.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONFIGURACAO" Width="1.5" PointX="5.25" PointY="218.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_BANCO" Width="1.5" PointX="10.5" PointY="194" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_BANCO_CONTATO" Width="1.5" PointX="12.75" PointY="194.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_BANCO_LANCAMENTO" Width="1.5" PointX="12.75" PointY="190.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR" Width="1.5" PointX="21.75" PointY="201" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR_ANEXO" Width="1.5" PointX="24" PointY="221.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR_PARCELA" Width="1.5" PointX="33" PointY="195.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR_RATEIO" Width="1.5" PointX="30" PointY="194.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER" Width="1.5" PointX="21.75" PointY="189.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER_ANEXO" Width="1.5" PointX="24" PointY="186.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER_PARCELA" Width="1.5" PointX="24" PointY="181.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER_RATEIO" Width="1.5" PointX="27" PointY="193.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM" Width="1.5" PointX="24" PointY="235.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_ACAO" Width="1.5" PointX="29.25" PointY="243.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_ANEXO" Width="1.5" PointX="26.25" PointY="245" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMENTARIO" Width="1.5" PointX="32.25" PointY="229.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_CONTATO" Width="1.5" PointX="26.25" PointY="248.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_ORIGEM" Width="1.5" PointX="5.25" PointY="223.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.DEPARTAMENTO" Width="1.5" PointX="5.25" PointY="226.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.EMAIL_AGENDAMENTO" Width="1.5" PointX="21" PointY="222.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.EQUIPAMENTO" Width="1.5" PointX="16.5" PointY="202.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.EQUIPAMENTO_ANEXO" Width="1.5" PointX="18.75" PointY="193.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.EQUIPAMENTO_MANUTENCAO" Width="1.5" PointX="27.75" PointY="207.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FICHA_TECNICA" Width="1.5" PointX="27.75" PointY="202.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FICHA_TECNICA_DETALHE" Width="1.5" PointX="36" PointY="206.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FILIAL" Width="1.5" PointX="8.25" PointY="191" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMA_ENVIO" Width="1.5" PointX="5.25" PointY="230.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMA_FRETE" Width="1.5" PointX="5.25" PointY="233" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMA_PAGAMENTO" Width="1.5" PointX="24.75" PointY="201.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR" Width="1.5" PointX="16.5" PointY="210.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_ANEXO" Width="1.5" PointX="18.75" PointY="218.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_COMENTARIO" Width="1.5" PointX="21.75" PointY="213.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_CONTATO" Width="1.5" PointX="18.75" PointY="222.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_MENSAGEM" Width="1.5" PointX="24.75" PointY="209.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_QUADRO_SOCIETARIO" Width="1.5" PointX="18.75" PointY="225.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO" Width="1.5" PointX="24.75" PointY="212.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO_CC" Width="1.5" PointX="5.25" PointY="245.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO_CLIENTE" Width="1.5" PointX="30" PointY="226.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ITEM_PEDIDO_COMPRA" Width="1.5" PointX="38.25" PointY="204.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ITEM_PEDIDO_VENDA" Width="1.5" PointX="41.25" PointY="205.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.LOG" Width="1.5" PointX="24.75" PointY="198.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_ANEXO" Width="1.5" PointX="18" PointY="257.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_AUTOMACAO" Width="1.5" PointX="27" PointY="238.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_AUTOMACAO_DATAS" Width="1.5" PointX="29.25" PointY="240.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGENS" Width="1.5" PointX="15.75" PointY="238" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGENS_DESTINOS" Width="1.5" PointX="27" PointY="228.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MOTIVO_CANCELAMENTO" Width="1.5" PointX="5.25" PointY="249.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MOTIVO_ENCERRAMENTO" Width="1.5" PointX="5.25" PointY="252.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MOVIMENTO_ESTOQUE_PRODUTO" Width="1.5" PointX="27.75" PointY="197" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NOMENCLATURA_BRAS_SERVICOS" Width="1.5" PointX="14.25" PointY="181.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NOTICIA" Width="1.5" PointX="5.25" PointY="255.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NOTICIA_COMENTARIO" Width="1.5" PointX="18.75" PointY="230.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NOTIFICACAO" Width="1.5" PointX="27.75" PointY="218.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NOTIFICACAO_ANEXO" Width="1.5" PointX="30" PointY="222.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO" Width="1.5" PointX="30" PointY="210.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_ACOMPANHAMENTO" Width="1.5" PointX="32.25" PointY="210.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_AGENDA" Width="1.5" PointX="9.75" PointY="187.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_ANEXO" Width="1.5" PointX="32.25" PointY="217.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_COMENTARIOS" Width="1.5" PointX="32.25" PointY="214.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_PRODUTO" Width="1.5" PointX="37.25" PointY="210.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_SERVICO" Width="1.5" PointX="35.25" PointY="202.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_COMPRA" Width="1.5" PointX="33" PointY="201.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_COMPRA_ACOMPANHAMENTO" Width="1.5" PointX="40.25" PointY="210.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_COMPRA_ANEXO" Width="1.5" PointX="35.25" PointY="224.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA" Width="1.5" PointX="35" PointY="210.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA_ACOMPANHAMENTO" Width="1.5" PointX="40.25" PointY="214.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA_ANEXO" Width="1.5" PointX="37.25" PointY="220.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA_PARCELA" Width="1.5" PointX="37.25" PointY="228" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PERFIL" Width="1.5" PointX="11.25" PointY="223.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PERIODICIDADE" Width="1.5" PointX="19.5" PointY="182.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PERIODICIDADE_TAREFA" Width="1.5" PointX="5.25" PointY="260" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PLANO" Width="1.5" PointX="6" PointY="175.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PLANO_PERIODICIDADE" Width="1.5" PointX="3.75" PointY="178.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.POSICAO" Width="1.5" PointX="5.25" PointY="263.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRECO_PRODUTO" Width="1.5" PointX="30.75" PointY="201.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO" Width="1.5" PointX="19.5" PointY="197.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_ANEXO" Width="1.5" PointX="21.75" PointY="216.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_BARCODE" Width="1.5" PointX="21.75" PointY="220" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_ESTOQUE_FILIAL" Width="1.5" PointX="30.75" PointY="197.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_FORNECEDOR" Width="1.5" PointX="27.75" PointY="211.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_GRADE" Width="1.5" PointX="21.75" PointY="233.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_KIT" Width="1.5" PointX="21.75" PointY="230.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_ORIGEM" Width="1.5" PointX="17.25" PointY="182.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_TABELA_PRECO" Width="1.5" PointX="30.75" PointY="205.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.REGIME_TRIBUTARIO" Width="1.5" PointX="13.5" PointY="224.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.RESUMO_VENDA" Width="1.5" PointX="5.25" PointY="266" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO" Width="1.5" PointX="16.5" PointY="194.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO_ANEXO" Width="1.5" PointX="18.75" PointY="189.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO_TABELA_PRECO" Width="1.5" PointX="24.75" PointY="190.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SEXO" Width="1.5" PointX="13.5" PointY="227.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SUBCATEGORIA_PRODUTO" Width="1.5" PointX="10.5" PointY="202.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SUBGRUPO" Width="1.5" PointX="27" PointY="224.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAMANHO" Width="1.5" PointX="5.25" PointY="268.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA" Width="1.5" PointX="18.75" PointY="241" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_ACOMPANHAMENTO" Width="1.5" PointX="24" PointY="225.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_ANEXO" Width="1.5" PointX="21" PointY="245.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_NOTIFICACAO" Width="1.5" PointX="21" PointY="226.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_VINCULO" Width="1.5" PointX="24" PointY="229.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TELEFONE" Width="1.5" PointX="7.5" PointY="214.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE" Width="1.5" PointX="5.25" PointY="271.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE_EMAIL" Width="1.5" PointX="5.25" PointY="276.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE_SMS" Width="1.5" PointX="5.25" PointY="281.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_ACAO" Width="1.5" PointX="5.25" PointY="284.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_CONTA" Width="1.5" PointX="8.25" PointY="184.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_CONTRIBUINTE" Width="1.5" PointX="13.5" PointY="229.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_CRM" Width="1.5" PointX="5.25" PointY="287.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_GRUPO" Width="1.5" PointX="5.25" PointY="290.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_PESSOA" Width="1.5" PointX="0.75" PointY="202.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_TAREFA" Width="1.5" PointX="5.25" PointY="293.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_TRANSPORTE" Width="1.5" PointX="13.25" PointY="187.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_VEICULO" Width="1.5" PointX="13.25" PointY="184.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TRANSPORTADORA" Width="1.5" PointX="15.5" PointY="186.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TRANSPORTADORA_ANEXO" Width="1.5" PointX="17.75" PointY="185.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.UF" Width="1.5" PointX="0.75" PointY="206.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.UNIDADE" Width="1.5" PointX="17.25" PointY="178.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.USUARIO" Width="1.5" PointX="13.5" PointY="200.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.USUARIO_ANEXO" Width="1.5" PointX="15.75" PointY="251.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.USUARIO_FUNCIONARIO" Width="1.5" PointX="15.75" PointY="254.625" IsExpanded="true" />
         <AssociationConnector Association="ERP_CRMModel.FK_AGENDA_ANEXO_AGENDA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_AGENDA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_AGENDA_CATEGORIA_AGENDA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_AGENDA_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_AGENDA_USUARIO1" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_AGENDA_VINCULO_AGENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_AGENDA_AGENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_AGENDA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_AGENDA_VINCULO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_ANEXO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_CONSUMO_ASSINANTE" ManuallyRouted="false" />
@@ -129,11 +174,17 @@
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_QUADRO_SOCIETARIO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_TIPO_PESSOA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_UF" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_BANCO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CARGO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_AGENDA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_ATENDIMENTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_CLIENTE_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_EQUIPAMENTO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_FORNECEDOR_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_ORDEM_SERVICO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_PRODUTO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_SERVICO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_TELEFONE_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CENTRO_CUSTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_ASSINANTE" ManuallyRouted="false" />
@@ -143,48 +194,77 @@
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_ACAO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_ORIGEM_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_DEPARTAMENTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_EMAIL_AGENDAMENTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_EQUIPAMENTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_FILIAL_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_FORMA_ENVIO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_FORMA_FRETE_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_FORMA_PAGAMENTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_FORNECEDOR_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_GRUPO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_GRUPO_CC_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_LOG_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_MENSAGENS_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_MOTIVO_CANCELAMENTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_MOTIVO_ENCERRAMENTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_NOTICIA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_NOTIFICACAO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_COMPRA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_VENDA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_PERIODICIDADE_TAREFA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_POSICAO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_RESUMO_VENDA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_SUBCATEGORIA_PRODUTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_SUBGRUPO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAMANHO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TELEFONE_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TEMPLATE_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TEMPLATE_EMAIL_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TEMPLATE_SMS_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TIPO_ACAO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TIPO_CRM_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TIPO_GRUPO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TIPO_TAREFA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TRANSPORTADORA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_PAGAMENTO_PLANO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_PLANO_PLANO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_ATENDIMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_AGENDA_ATENDIMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ANEXO_ATENDIMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_CATEGORIA_ATENDIMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_DEPARTAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_PEDIDO_VENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_SERVICO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_USUARIO1" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_NOTIFICACAO_ATENDIMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ATENDIMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_BANCO_BANCO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_CARGO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_CATEGORIA_CLIENTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_FORNECEDOR_CATEGORIA_FORNECEDOR" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_NOTIFICACAO_CATEGORIA_NOTIFICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_CATEGORIA_ORDEM_SERVICO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_CATEGORIA_PRODUTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_CATEGORIA_SERVICO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TELEFONE_CATEGORIA_TELEFONE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_CATEGORIA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CENTRO_CUSTO_GRUPO_CC" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CENTRO_CUSTO_SUBGRUPO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_PAGAR_CENTRO_CUSTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_PAGAR_RATEIO_CENTRO_CUSTO" ManuallyRouted="false" />
@@ -194,16 +274,24 @@
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_VENDA_CENTRO_CUSTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_ANEXO_CLIENTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_CONTATO_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_FILIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_POSICAO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_QUADRO_SOCIETARIO_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_REFERENCIA_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_REGIME_TRIBUTARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_SEXO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_TAG_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_TIPO_CONTRIBUINTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_TIPO_PESSOA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_UF" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_UF1" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_RECEBER_CLIENTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_CLIENTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_EMAIL_AGENDAMENTO_CLIENTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_GRUPO_CLIENTE_CLIENTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_MENSAGENS_DESTINOS_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_CLIENTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_VENDA_CLIENTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_BANCO_CONTATO_CONTA_BANCO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO" ManuallyRouted="false" />
@@ -242,24 +330,34 @@
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_ACAO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_ACAO_USUARIO1" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMENTARIO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_DEPARTAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_DEPARTAMENTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_EMAIL_AGENDAMENTO_MENSAGENS" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_EQUIPAMENTO_FILIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_EQUIPAMENTO_PERIODICIDADE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_FICHA_TECNICA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_PRODUTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_FILIAL_UF" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_FORNECEDOR_FILIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_FILIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_FILIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_COMPRA_FILIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_VENDA_FILIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRECO_PRODUTO_FILIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_ESTOQUE_FILIAL_FILIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_FILIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_TABELA_PRECO_FILIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_FILIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_FILIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TRANSPORTADORA_FILIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_FILIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_VENDA_Forma_ENVIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_VENDA_Forma_FRETE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_FORMA_PAGAMENTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_COMPRA_FORMA_PAGAMENTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_VENDA_FORMA_PAGAMENTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_FORNECEDOR_ANEXO_FORNECEDOR" ManuallyRouted="false" />
@@ -276,8 +374,10 @@
         <AssociationConnector Association="ERP_CRMModel.FK_FORNECEDOR_MENSAGEM_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_GRUPO_CLIENTE_GRUPO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_GRUPO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_GRUPO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_MENSAGENS_DESTINOS_GRUPO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_SUBGRUPO_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SUBGRUPO_GRUPO_CC" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ITEM_PEDIDO_COMPRA_PEDIDO_COMPRA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ITEM_PEDIDO_COMPRA_PRODUTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ITEM_PEDIDO_COMPRA_UNIDADE" ManuallyRouted="false" />
@@ -286,14 +386,37 @@
         <AssociationConnector Association="ERP_CRMModel.FK_ITEM_PEDIDO_VENDA_UNIDADE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_LOG_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_ANEXO_MENSAGENS" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_DATAS_MENSAGEM_AUTOMACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_PERIODICIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_MENSAGENS_DESTINOS_MENSAGENS" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_MENSAGENS_TEMPLATE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_EMAIL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_SMS" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_MENSAGENS_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_NOMENCLATURA_BRAS_SERVICOS" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_NOTICIA_COMENTARIO_NOTICIA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_NOTICIA_COMENTARIO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_NOTIFICACAO_ANEXO_NOTIFICACAO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_NOTIFICACAO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ACOMPANHAMENTO_ORDEM_SERVICO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_ORDEM_SERVICO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ANEXO_ORDEM_SERVICO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO_ORDEM_SERVICO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO_ORDEM_SERVICO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO1" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO2" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_OS_COMENTARIO_OS" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ACOMPANHAMENTO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_OS_COMENTARIO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO_SERVICO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_COMPRA_ACOMPANHAMENTO_PEDIDO_COMPRA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_COMPRA_ANEXO_PEDIDO_COMPRA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_COMPRA_USUARIO" ManuallyRouted="false" />
@@ -306,161 +429,39 @@
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_VENDA_USUARIO1" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PEDIDO_VENDA_ACOMPANHAMENTO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_PERFIL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_PERIODICIDADE_TAREFA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PLANO_PLANO_PERIODICIDADE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRECO_PRODUTO_PRODUTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_ANEXO_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_BARCODE_PRODUTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_ESTOQUE_FILIAL_PRODUTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_FORNECEDOR_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_GRADE_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO1" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_PRODUTO_ORIGEM" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_SUBCATEGORIA_PRODUTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_TABELA_PRECO_PRODUTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_GRADE_TAMANHO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_ANEXO_SERVICO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_SERVICO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_TAREFA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ANEXO_TAREFA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_TAREFA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_TIPO_TAREFA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_VINCULO_TAREFA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_VINCULO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TELEFONE_UF" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TRANSPORTADORA_TIPO_TRANSPORTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TRANSPORTADORA_TIPO_VEICULO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TRANSPORTADORA_ANEXO_TRANSPORTADORA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_ANEXO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_FUNCIONARIO_USUARIO" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PERIODICIDADE_TAREFA" Width="1.5" PointX="5.25" PointY="170.5" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA" Width="1.5" PointX="20.5" PointY="164.625" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_ACOMPANHAMENTO" Width="1.5" PointX="30.75" PointY="158.75" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_ANEXO" Width="1.5" PointX="22.75" PointY="173.375" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_NOTIFICACAO" Width="1.5" PointX="32.75" PointY="162.875" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_VINCULO" Width="1.5" PointX="33.75" PointY="154.875" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_TAREFA" Width="1.5" PointX="5.25" PointY="167.5" />
-        <AssociationConnector Association="ERP_CRMModel.FK_PERIODICIDADE_TAREFA_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TIPO_TAREFA_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_PERIODICIDADE_TAREFA" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_TAREFA" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ANEXO_TAREFA" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_TAREFA" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_TIPO_TAREFA" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_USUARIO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_VINCULO_TAREFA" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_ACOMPANHAMENTO_USUARIO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_NOTIFICACAO_USUARIO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TAREFA_VINCULO_USUARIO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_FILIAL" />
-        <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_FILIAL" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_REFERENCIA" Width="1.5" PointX="9.75" PointY="187.875" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_TAG" Width="1.5" PointX="9.75" PointY="166" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_REFERENCIA_CLIENTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_TAG_CLIENTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_TIPO_CONTRIBUINTE" />
-        <EntityTypeShape EntityType="ERP_CRMModel.SEXO" Width="1.5" PointX="0.75" PointY="3.875" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_SEXO" />
-        <EntityTypeShape EntityType="ERP_CRMModel.REGIME_TRIBUTARIO" Width="1.5" PointX="3.375" PointY="3.75" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_UF1" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CLIENTE_REGIME_TRIBUTARIO" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE_SMS" Width="1.5" PointX="5.25" PointY="179.125" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TEMPLATE_SMS_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_SMS" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE_EMAIL" Width="1.5" PointX="5.25" PointY="182.75" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TEMPLATE_EMAIL_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGENS_TEMPLATE_EMAIL" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CARGO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_FORNECEDOR_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_PRODUTO_ORIGEM" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_GRADE" Width="1.5" PointX="18.75" PointY="126.125" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TAMANHO" Width="1.5" PointX="5.25" PointY="107.5" />
-        <AssociationConnector Association="ERP_CRMModel.FK_TAMANHO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_GRADE_PRODUTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_GRADE_TAMANHO" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_BARCODE" Width="1.5" PointX="17.75" PointY="157.25" />
-        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_BARCODE_PRODUTO" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FICHA_TECNICA" Width="1.5" PointX="31.75" PointY="130.625" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FICHA_TECNICA_DETALHE" Width="1.5" PointX="37" PointY="138.875" />
-        <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_FICHA_TECNICA" />
-        <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_PRODUTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_FICHA_TECNICA_DETALHE_PRODUTO" />
-        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO_CC" Width="1.5" PointX="5.25" PointY="122.625" />
-        <AssociationConnector Association="ERP_CRMModel.FK_GRUPO_CC_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_SUBGRUPO_GRUPO_CC" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CENTRO_CUSTO_GRUPO_CC" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA" Width="1.5" PointX="5.375" PointY="0.75" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_KIT" Width="1.5" PointX="17.75" PointY="163.5" />
-        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_PRODUTO_KIT_PRODUTO1" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO" Width="1.5" PointX="37.25" PointY="145.625" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_ACOMPANHAMENTO" Width="1.5" PointX="39.5" PointY="143" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_AGENDA" Width="1.5" PointX="39.5" PointY="147.375" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_ANEXO" Width="1.5" PointX="39.5" PointY="164.125" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_ATENDIMENTO" Width="1.5" PointX="5.25" PointY="187.875" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_ORDEM_SERVICO" Width="1.5" PointX="5.25" PointY="103.75" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_SERVICO" Width="1.5" PointX="5.25" PointY="203.125" />
-        <EntityTypeShape EntityType="ERP_CRMModel.DEPARTAMENTO" Width="1.5" PointX="5.25" PointY="100" />
-        <EntityTypeShape EntityType="ERP_CRMModel.NOMENCLATURA_BRAS_SERVICOS" Width="1.5" PointX="15.25" PointY="172" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO" Width="1.5" PointX="42.5" PointY="136.875" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_ACOMPANHAMENTO" Width="1.5" PointX="44.75" PointY="141.875" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_AGENDA" Width="1.5" PointX="9.75" PointY="159.875" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_ANEXO" Width="1.5" PointX="44.75" PointY="154.875" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_COMENTARIOS" Width="1.5" PointX="47.75" PointY="144.875" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_PRODUTO" Width="1.5" PointX="44.75" PointY="145.5" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_SERVICO" Width="1.5" PointX="44.75" PointY="150.25" />
-        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO" Width="1.5" PointX="17.5" PointY="167.125" />
-        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO_ANEXO" Width="1.5" PointX="19.75" PointY="172.625" />
-        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO_TABELA_PRECO" Width="1.5" PointX="33.75" PointY="158.625" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_AGENDA_AGENDA" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_AGENDA" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_ATENDIMENTO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_ORDEM_SERVICO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CATEGORIA_SERVICO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_DEPARTAMENTO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_ATENDIMENTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_AGENDA_ATENDIMENTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ANEXO_ATENDIMENTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_CATEGORIA_ATENDIMENTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_CLIENTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_DEPARTAMENTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_PEDIDO_VENDA" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_PRODUTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_SERVICO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_USUARIO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_USUARIO1" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ATENDIMENTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_USUARIO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_CATEGORIA_ORDEM_SERVICO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_CATEGORIA_SERVICO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_CLIENTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_DEPARTAMENTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_FILIAL" />
-        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_FILIAL" />
-        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_FILIAL" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_FORMA_PAGAMENTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_NOMENCLATURA_BRAS_SERVICOS" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ACOMPANHAMENTO_ORDEM_SERVICO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_ORDEM_SERVICO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ANEXO_ORDEM_SERVICO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO_ORDEM_SERVICO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO_ORDEM_SERVICO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO1" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_USUARIO2" />
-        <AssociationConnector Association="ERP_CRMModel.FK_OS_COMENTARIO_OS" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_ACOMPANHAMENTO_USUARIO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_OS_COMENTARIO_USUARIO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_PRODUTO_PRODUTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_SERVICO_SERVICO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_ANEXO_SERVICO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_TABELA_PRECO_SERVICO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_SERVICO_UNIDADE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_NOTIFICACAO_ATENDIMENTO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_DEPARTAMENTO" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_AUTOMACAO" Width="1.5" PointX="28.5" PointY="170.875" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_AUTOMACAO_DATAS" Width="1.5" PointX="30.75" PointY="172.5" />
-        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_GRUPO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_DATAS_MENSAGEM_AUTOMACAO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_EMAIL" />
-        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_TEMPLATE_SMS" />
-        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_USUARIO" />
-        <AssociationConnector Association="ERP_CRMModel.FK_MENSAGEM_AUTOMACAO_PERIODICIDADE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

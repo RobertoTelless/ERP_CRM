@@ -23,12 +23,12 @@ namespace EntitiesServices.Model
         public int SUBG_CD_ID { get; set; }
         public int ASSI_CD_ID { get; set; }
         public Nullable<int> GRUP_CD_ID { get; set; }
+        public Nullable<int> GRCC_CD_ID { get; set; }
         public string SUBG_NM_NOME { get; set; }
         public Nullable<int> SUBG_IN_ATIVO { get; set; }
         public string SUBG_NR_NUMERO { get; set; }
         public string SUBG_NM_EXIBE { get; set; }
         public string SUBG_DS_DESCRICAO { get; set; }
-        public Nullable<int> GRCC_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

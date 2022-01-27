@@ -27,6 +27,8 @@ namespace EntitiesServices.Model
         public int ASSI_CD_ID { get; set; }
         public int USUA_CD_ID { get; set; }
         public Nullable<int> TEMP_CD_ID { get; set; }
+        public Nullable<int> TSMS_CD_ID { get; set; }
+        public Nullable<int> TEEM_CD_ID { get; set; }
         public Nullable<int> MENS_IN_ATIVO { get; set; }
         public Nullable<System.DateTime> MENS_DT_CRIACAO { get; set; }
         public string MENS_NM_CAMPANHA { get; set; }
@@ -39,8 +41,6 @@ namespace EntitiesServices.Model
         public string MENS_NM_RODAPE { get; set; }
         public string MENS_NM_LINK { get; set; }
         public string MENS_TX_SMS { get; set; }
-        public Nullable<int> TSMS_CD_ID { get; set; }
-        public Nullable<int> TEEM_CD_ID { get; set; }
         public Nullable<int> MENS_IN_CRM { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
@@ -53,8 +53,8 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MENSAGENS_DESTINOS> MENSAGENS_DESTINOS { get; set; }
         public virtual TEMPLATE TEMPLATE { get; set; }
-        public virtual USUARIO USUARIO { get; set; }
-        public virtual TEMPLATE_SMS TEMPLATE_SMS { get; set; }
         public virtual TEMPLATE_EMAIL TEMPLATE_EMAIL { get; set; }
+        public virtual TEMPLATE_SMS TEMPLATE_SMS { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
     }
 }

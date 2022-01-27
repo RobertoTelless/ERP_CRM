@@ -44,9 +44,9 @@ namespace EntitiesServices.Model
         public virtual GRUPO GRUPO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MENSAGEM_AUTOMACAO_DATAS> MENSAGEM_AUTOMACAO_DATAS { get; set; }
+        public virtual PERIODICIDADE PERIODICIDADE { get; set; }
         public virtual TEMPLATE_EMAIL TEMPLATE_EMAIL { get; set; }
         public virtual TEMPLATE_SMS TEMPLATE_SMS { get; set; }
         public virtual USUARIO USUARIO { get; set; }
-        public virtual PERIODICIDADE PERIODICIDADE { get; set; }
     }
 }

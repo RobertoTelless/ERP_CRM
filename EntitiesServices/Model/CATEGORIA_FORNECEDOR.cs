@@ -25,8 +25,8 @@ namespace EntitiesServices.Model
         public Nullable<int> CAFO_IN_ATIVO { get; set; }
         public Nullable<int> ASSI_CD_ID { get; set; }
     
+        public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FORNECEDOR> FORNECEDOR { get; set; }
-        public virtual ASSINANTE ASSINANTE { get; set; }
     }
 }

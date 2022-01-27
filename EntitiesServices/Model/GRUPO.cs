@@ -18,9 +18,9 @@ namespace EntitiesServices.Model
         public GRUPO()
         {
             this.GRUPO_CLIENTE = new HashSet<GRUPO_CLIENTE>();
+            this.MENSAGEM_AUTOMACAO = new HashSet<MENSAGEM_AUTOMACAO>();
             this.MENSAGENS_DESTINOS = new HashSet<MENSAGENS_DESTINOS>();
             this.SUBGRUPO = new HashSet<SUBGRUPO>();
-            this.MENSAGEM_AUTOMACAO = new HashSet<MENSAGEM_AUTOMACAO>();
         }
     
         public int GRUP_CD_ID { get; set; }
@@ -35,10 +35,10 @@ namespace EntitiesServices.Model
         public virtual ICollection<GRUPO_CLIENTE> GRUPO_CLIENTE { get; set; }
         public virtual USUARIO USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MENSAGEM_AUTOMACAO> MENSAGEM_AUTOMACAO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MENSAGENS_DESTINOS> MENSAGENS_DESTINOS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SUBGRUPO> SUBGRUPO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MENSAGEM_AUTOMACAO> MENSAGEM_AUTOMACAO { get; set; }
     }
 }

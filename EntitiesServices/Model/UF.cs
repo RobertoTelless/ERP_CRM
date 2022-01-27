@@ -19,10 +19,10 @@ namespace EntitiesServices.Model
         {
             this.ASSINANTE = new HashSet<ASSINANTE>();
             this.CLIENTE = new HashSet<CLIENTE>();
+            this.CLIENTE1 = new HashSet<CLIENTE>();
             this.FILIAL = new HashSet<FILIAL>();
             this.FORNECEDOR = new HashSet<FORNECEDOR>();
             this.TELEFONE = new HashSet<TELEFONE>();
-            this.CLIENTE1 = new HashSet<CLIENTE>();
         }
     
         public int UF_CD_ID { get; set; }
@@ -35,12 +35,12 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CLIENTE> CLIENTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CLIENTE> CLIENTE1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FILIAL> FILIAL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FORNECEDOR> FORNECEDOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TELEFONE> TELEFONE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CLIENTE> CLIENTE1 { get; set; }
     }
 }
