@@ -202,6 +202,7 @@
                                                         @Html.HiddenFor(x => x.PROD_QN_ESTOQUE)
                                                         @Html.HiddenFor(x => x.PROD_DT_ULTIMA_MOVIMENTACAO)
                                                         @Html.HiddenFor(x => x.PROD_IN_AVISA_MINIMO)
+                                                        @Html.HiddenFor(x => x.PROD_IN_TIPO_PRODUTO)
                                                         @Html.HiddenFor(x => x.PROD_DT_CADASTRO)
                                                         @Html.HiddenFor(x => x.PROD_IN_ATIVO)
                                                         @Html.HiddenFor(x => x.PROD_NR_GARANTIA)
@@ -720,6 +721,7 @@
                                                                             <th>Unidade</th>
                                                                             <th>Quantidade</th>
                                                                             <th></th>
+                                                                            <th class="td-one-action">Ações</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -737,6 +739,9 @@
                                                                                 {
                                                                                     <td><img src="~/Imagens/Base/icone_imagem.jpg" style="width: auto; height: auto; max-height: 55px; max-width: 45px;"></td>
                                                                                 }
+                                                                                @*<td class="td-one-action">
+                                                                                    @Html.TableLinkDetails(cond.FITE_CD_ID, "EditarFT", "fa-edit", "Consultar")
+                                                                                </td>*@
                                                                             </tr>
                                                                         }
                                                                     </tbody>
@@ -745,7 +750,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        @Html.ButtonLinkIndex(text: "Visualizar/Editar Composição", action: "VisualizarEditarFTProduto", controller: "FichaTecnica")
+                                                        @Html.ButtonLinkIndex(text: "Visualizar/Editar Composição", action: "EditarFT", controller: "Produto")
                                                     </div>
                                                 </div>
                                             }
@@ -933,7 +938,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 @Html.ButtonLinkIndex(text: "Incluir Novo Item na Grade", action: "IncluirProdutoGrade", controller: "Produto")
                                             </div>
 	                                    }
@@ -1724,18 +1729,17 @@
                                 {
                                     <div id="tab-10" class="tab-pane @ViewBag.TabPreco">
                                         <div class="panel-body">
-                                            <div class="row">
+                                            @*<div class="row">
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Preço de Custo
                                                         @Html.TextBoxFor(m => m.PROD_VL_CUSTO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>*@
                                             @using (Html.BeginForm("IncluirTabelaProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container5" }))
                                             {
                                                 <div class="row">
-                                                    <hr />
                                                     <h4>Incluir Novo Preço</h4>
                                                     <br />
                                                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">

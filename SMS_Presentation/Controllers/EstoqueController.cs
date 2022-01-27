@@ -2040,6 +2040,41 @@ namespace ERP_CRM_Solution.Controllers
             List<MOVIMENTO_ESTOQUE_PRODUTO> listaMesEntrada = listaMes.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 1).ToList();
             List<MOVIMENTO_ESTOQUE_PRODUTO> listaMesSaida = listaMes.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 2).ToList();
 
+            // Produtos
+            List<PRODUTO> prodTotal = prodApp.GetAllItens(idAss);
+            Int32 prodTotalNum = prodTotal.Count;
+            Int32 prods = prodTotal.Where(p => p.PROD_IN_TIPO_PRODUTO == 1).ToList().Count;
+            Int32 ins = prodTotal.Where(p => p.PROD_IN_TIPO_PRODUTO == 2).ToList().Count;
+            ViewBag.ProdTotal = prodTotalNum;
+            ViewBag.Prods = prods;
+            ViewBag.Ins = ins;
+
+            Int32? idFilial = null;
+            if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+            {
+                idFilial = usuario.FILI_CD_ID;
+            }
+            List<PRODUTO_ESTOQUE_FILIAL> listaBase = prodApp.RecuperarQuantidadesFiliais(idFilial, idAss);
+            List<PRODUTO_ESTOQUE_FILIAL> pontoPedido = listaBase.Where(x => x.PREF_QN_ESTOQUE < x.PRODUTO.PROD_QN_QUANTIDADE_MINIMA).ToList();
+            List<PRODUTO_ESTOQUE_FILIAL> estoqueZerado = listaBase.Where(x => x.PREF_QN_ESTOQUE == 0).ToList();
+            List<PRODUTO_ESTOQUE_FILIAL> estoqueNegativo = listaBase.Where(x => x.PREF_QN_ESTOQUE < 0).ToList();
+
+            if (usuario.PERFIL.PERF_SG_SIGLA == "ADM" || usuario.PERFIL.PERF_SG_SIGLA == "GER")
+            {
+                ViewBag.PontoPedido = pontoPedido.Count;
+                ViewBag.EstoqueZerado = estoqueZerado.Count;
+                ViewBag.EstoqueNegativo = estoqueNegativo.Count;
+            }
+            else
+            {
+                pontoPedido = pontoPedido.Where(x => x.FILI_CD_ID == usuario.FILI_CD_ID).ToList<PRODUTO_ESTOQUE_FILIAL>();
+                estoqueZerado = estoqueZerado.Where(x => x.FILI_CD_ID == usuario.FILI_CD_ID).ToList<PRODUTO_ESTOQUE_FILIAL>();
+                estoqueNegativo = estoqueNegativo.Where(x => x.FILI_CD_ID == usuario.FILI_CD_ID).ToList<PRODUTO_ESTOQUE_FILIAL>();
+                ViewBag.PontoPedido = pontoPedido.Count;
+                ViewBag.EstoqueZerado = estoqueZerado.Count;
+                ViewBag.EstoqueNegativo = estoqueNegativo.Count;
+            }
+
             // Prepara View 
             ViewBag.Total = listaTotal;
             ViewBag.TotalSum = listaTotal.Count;
@@ -2086,6 +2121,8 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.ListaSituacao = lista1;
             Session["ListaSituacao"] = lista1;
             Session["VoltaDash"] = 3;
+            Session["VoltaProdutoDash"] = 5;
+            Session["VoltaFTDash"] = 5;
             return View(vm);
         }
 

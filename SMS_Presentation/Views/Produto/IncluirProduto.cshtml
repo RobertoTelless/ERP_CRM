@@ -55,8 +55,8 @@
                         @using (Html.BeginForm("IncluirProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                         {
                             <div class="form-group">
-                                <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Produto</button>
-                                @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseProduto", controller: "Produto")
+                                <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma e Prossegue na Edição do Produto</button>
+                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseProduto", controller: "Produto")
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
@@ -67,7 +67,7 @@
                                     <li class="" id="foodTab"><a data-toggle="tab" href="#tab-4">Food Service</a></li>
                                     <li class=""><a data-toggle="tab" href="#tab-5">Informações Tributárias</a></li>
                                     <li class="" id="ecomTab"><a data-toggle="tab" href="#tab-7">E-Commerce</a></li>
-                                    <li class=""><a data-toggle="tab" href="#tab-8">Preços e Custos</a></li>
+                                    @*<li class=""><a data-toggle="tab" href="#tab-8">Preços e Custos</a></li>*@
                                 }
                                 <li class="" id="expTab"><a data-toggle="tab" href="#tab-6">Expedição</a></li>
                                 <li class=""><a data-toggle="tab" href="#tab-9">Imagens</a></li>
@@ -125,7 +125,7 @@
                                                     @Html.TextBoxFor(m => m.PROD_CD_CODIGO, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.PROD_CD_CODIGO, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12" id="cb">
+                                                <div class="col-lg-3 col-md-3 col-xs-12" id="cb1">
                                                     Código de Barras (Número)
                                                     @Html.TextBoxFor(m => m.PROD_NR_BARCODE, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.PROD_NR_BARCODE, "", new { @style = "color:red" })
@@ -225,7 +225,7 @@
                                                     @Html.TextBoxFor(m => m.PROD_NR_REFERENCIA, new { @class = "form-control", @style = "color:green", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.PROD_NR_REFERENCIA, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12" id="ga">
+                                                <div class="col-lg-2 col-md-2 col-xs-12" id="ga1">
                                                     Garantia (dias)
                                                     @Html.TextBoxFor(m => m.Garantia, new { @class = "form-control touchspin2", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.Garantia, "", new { @style = "color:red" })
@@ -473,7 +473,7 @@
                                 }
 
                                 @*Precos e Custos*@
-                                @if((Int32)Session["PermVenda"] == 1)
+                                @*@if((Int32)Session["PermVenda"] == 1)
                                 {
                                     <div id="tab-8" class="tab-pane">
                                         <div class="panel-body">
@@ -519,7 +519,7 @@
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
                                                         <br />
                                                         <span class="btn btn-success btn-sm" onclick="incluiPrecoProduto($('select#filiCusto option:selected').val(), $('select#filiCusto option:selected').text(), $('#preco').val(), $('#precoPromo').val(), $('#markup').val(), $('#custo').val())">Incluir Preço</span>
-                                                        @*<span class="btn btn-warning btn-sm" onclick="IncluirInsumo()">teste</span>*@
+                                                        <span class="btn btn-warning btn-sm" onclick="IncluirInsumo()">teste</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -547,7 +547,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                }*@
 
                                 @*Imagens - Foto e Anexos*@
                                 <div id="tab-9" class="tab-pane">
@@ -602,7 +602,7 @@
                                 <div class="form-group">
                                     <br />
                                     @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
-                                    <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Produto</button>
+                                    <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma e Prossegue na Edição do Produto</button>
                                     @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseProduto", controller: "Produto")
                                 </div>
                             </div>
@@ -666,29 +666,29 @@
         });
     </script>*@
 
-    @*<script type="text/javascript">
+    <script type="text/javascript">
         function ValidaDiv(valTipo) {
             if (valTipo == '2') {
                 $("#pc").hide();
-                $("#cb").hide();
-                $("#ga").hide();
-                $("#tab-4").hide();
-                $("#tab-6").hide();
-                $("#tab-7").hide();
+                $("#cb1").hide();
+                $("#ga1").hide();
+                $("#foodTab").hide();
+                $("#ecomTab").hide();
+                $("#expTab").hide();
             } else if (valTipo == '1')
                 $("#pc").show();
-                $("#cb").show();
-                $("#ga").show();
-                $("#tab-4").show();
-                $("#tab-6").show();
-                $("#tab-7").show();
+                $("#cb1").show();
+                $("#ga1").show();
+                $("#foodTab").show();
+                $("#ecomTab").show();
+                $("#expTab").show();
         }
 
         $(document).ready(function () {
             ValidaDiv($('#tipo').val());
         });
 
-    </script>*@
+    </script>
     <script type="text/javascript">
         $(function () {
             $("#cpf").mask("999.999.999-99");

@@ -195,7 +195,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelFITE",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<FICHA_TECNICA>(item)
+                    LOG_TX_REGISTRO = "Composição: " + item.FITE_NM_NOME
                 };
 
                 // Persiste
@@ -224,7 +224,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatFITE",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<FICHA_TECNICA>(item)
+                    LOG_TX_REGISTRO = "Composição: " + item.FITE_NM_NOME
                 };
 
                 // Persiste

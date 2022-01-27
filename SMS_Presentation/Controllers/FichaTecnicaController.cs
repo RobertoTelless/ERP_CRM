@@ -265,6 +265,22 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("MontarTelaFT");
         }
 
+        public ActionResult VoltarBaseFTDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Session["ListaFTd"] = null;
+
+            if ((Int32)Session["VoltaFTDash"] == 5)
+            {
+                return RedirectToAction("MontarTelaDashboardEstoque", "Estoque");
+            }
+            return RedirectToAction("MontarTelaFT");
+        }
+
         [HttpPost]
         public void MontaListaInsumos(FICHA_TECNICA_DETALHE item)
         {
@@ -328,6 +344,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Prepara view
+            Session["ListaFtd"] = null;
             FICHA_TECNICA item = new FICHA_TECNICA();
             FichaTecnicaViewModel vm = Mapper.Map<FICHA_TECNICA, FichaTecnicaViewModel>(item);
             vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
@@ -406,6 +423,10 @@ namespace ERP_CRM_Solution.Controllers
                     Session["ListaFtd"] = null;
 
                     // Sucesso
+                    if ((Int32)Session["VoltaFTDash"] == 10)
+                    {
+                        return RedirectToAction("EditarProduto", new { id = (Int32)Session["IdProduto"] });
+                    }
                     if ((Int32)Session["VoltaComposto"] == 0)
                     {
                         listaMasterFt = new List<FICHA_TECNICA>();
@@ -548,6 +569,10 @@ namespace ERP_CRM_Solution.Controllers
                         return RedirectToAction("EditarProduto", "Produto", new { id = ((PRODUTO)Session["Produto"]).PROD_CD_ID });
                     }
 
+                    if ((Int32)Session["VoltaFTDash"] == 10)
+                    {
+                        return RedirectToAction("EditarProduto", new { id = (Int32)Session["IdProduto"] });
+                    }
                     return RedirectToAction("MontarTelaFT");
                 }
                 catch (Exception ex)

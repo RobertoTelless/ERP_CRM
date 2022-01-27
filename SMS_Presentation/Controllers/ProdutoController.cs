@@ -247,7 +247,7 @@ namespace ERP_CRM_Solution.Controllers
 
             // Novos indicadores
             Int32? idFilial = null;
-            if (usuario.PERF_CD_ID > 2)
+            if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
             {
                 idFilial = usuario.FILI_CD_ID;
             }
@@ -510,7 +510,24 @@ namespace ERP_CRM_Solution.Controllers
                 Session["ListaProduto"] = null;
                 return RedirectToAction("VerCardsProduto");
             }
+            if ((Int32)Session["VoltaProduto"] == 5)
+            {
+                return RedirectToAction("MontarTelaDashboardEstoque");
+            }
             Session["ListaProduto"] = null;
+            return RedirectToAction("MontarTelaProduto");
+        }
+
+        public ActionResult VoltarBaseProdutoDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaProdutoDash"] == 5)
+            {
+                return RedirectToAction("MontarTelaDashboardEstoque", "Estoque");
+            }
             return RedirectToAction("MontarTelaProduto");
         }
 
@@ -698,6 +715,7 @@ namespace ERP_CRM_Solution.Controllers
                         IncluirTabelaProduto(vm, tabelaProduto);
                     }
                     Session["IdProduto"] = item.PROD_CD_ID;
+                    Session["IdVolta"] = item.PROD_CD_ID;
 
                     // Sucesso
                     if (item.PROD_IN_COMPOSTO == 0)
@@ -714,7 +732,7 @@ namespace ERP_CRM_Solution.Controllers
                             Session["VoltaProduto"] = 0;
                             return RedirectToAction("IncluirCliente", "Cliente");
                         }
-                        return RedirectToAction("MontarTelaProduto");
+                        return RedirectToAction("VoltarAnexoProduto");
                     }
                     else
                     {
@@ -918,6 +936,8 @@ namespace ERP_CRM_Solution.Controllers
             objetoProdAntes = item;
             Session["Produto"] = item;
             Session["IdVolta"] = id;
+            Session["IdProduto"] = id;
+            Session["VoltaFTDash"] = 10;
             ProdutoViewModel vm = Mapper.Map<PRODUTO, ProdutoViewModel>(item);
             return View(vm);
         }
@@ -1280,6 +1300,15 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             return RedirectToAction("EditarProduto", new { id = (Int32)Session["IdVolta"]});
+        }
+
+        public ActionResult EditarFT(Int32? idFT)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("EditarFT", "FichaTecnica", new { id = idFT });
         }
 
         public FileResult DownloadProduto(Int32 id)
