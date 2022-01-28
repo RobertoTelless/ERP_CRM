@@ -50,7 +50,7 @@ namespace ApplicationServices.Interfaces
         //List<PRODUTO> CalcularEstoqueNegativo();
         //List<PRODUTO> CalcularMaisVendidos();
         List<PRODUTO_ESTOQUE_FILIAL> RecuperarQuantidadesFiliais(Int32? idFilial, Int32 idAss);
-        Int32 ExecuteFilterEstoque(Int32? filial, String nome, String marca, String codigo, String barcode, Int32? categoria, Int32 tipo, Int32 idAss, out List<PRODUTO_ESTOQUE_FILIAL> objeto);
+        Int32 ExecuteFilterEstoque(Int32? filial, String nome, String marca, String codigo, String barcode, Int32? categoria, Int32? tipo, Int32 idAss, out List<PRODUTO_ESTOQUE_FILIAL> objeto);
 
         PRODUTO_FORNECEDOR GetByProdForn(Int32 forn, Int32 prod);
 

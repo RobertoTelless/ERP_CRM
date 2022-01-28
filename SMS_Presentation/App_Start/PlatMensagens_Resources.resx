@@ -375,6 +375,9 @@
   <data name="M0094" xml:space="preserve">
     <value>Impossível excluir esta unidade. Ela está vinculada a outras informações</value>
   </data>
+  <data name="M0096" xml:space="preserve">
+    <value>E-Mail não cadastrado.</value>
+  </data>
   <data name="M0109" xml:space="preserve">
     <value>O login não pode ficar em branco</value>
   </data>

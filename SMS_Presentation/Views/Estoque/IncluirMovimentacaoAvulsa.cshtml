@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-lg-2 col-md-2 col-xs-12">
+                            <div class="col-lg-3 col-md-3 col-xs-12">
                                 Operação*
                                 @Html.DropDownListFor(x => x.MOVMT_IN_OPERACAO, (SelectList)ViewBag.Lista, "Selecionar", new { @class = "form-control", onchange = "FiltrarTipo($(this).val())", id = "operacao" })
                                 @Html.ValidationMessageFor(m => m.MOVMT_IN_OPERACAO, "", new { @style = "color:red" })
@@ -69,7 +69,6 @@
                                     @Html.ValidationMessageFor(m => m.FILI_CD_ID, "", new { @style = "color:red" })
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-xs-12" style="display:none" id="filialDestino">
-                                    <br />
                                     Filial Destino*
                                     @Html.DropDownListFor(x => x.FILI_DESTINO_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", id = "filialDestino" })
                                 </div>
@@ -142,32 +141,13 @@
         </div>
     }
 
-    @*@using (Html.BeginForm("IncluirCompraExpressa", "Estoque", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container2" }))
+    @using (Html.BeginForm("IncluirCompraExpressa", "Estoque", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container2" }))
     {
         <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Compra Expressa</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li>
-                                    <a href="#">Configuração 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Configuração 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
                     </div>
 
                     <div class="ibox-content">
@@ -177,11 +157,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-lg-3 col-md-3 col-xs-12">
-                                Produto/Insumo*
-                                @Html.DropDownListFor(x => x.ProdutoInsumoEx, (SelectList)ViewBag.ProdutoInsumo, new { @class = "form-control", onchange = "FiltroProdInsEx($(this).val())", id = "prodInsEx" })
-                                @Html.ValidationMessageFor(m => m.ProdutoInsumoEx, "", new { @style = "color:red" })
-                            </div>
+                            @*<div class="col-lg-3 col-md-3 col-xs-12">
+                                Produto*
+                                @Html.DropDownListFor(x => x.PROD_CD_ID, (SelectList)ViewBag.ListaProdutos, new { @class = "form-control", onchange = "FiltroProdInsEx($(this).val())", id = "prodInsEx" })
+                                @Html.ValidationMessageFor(m => m.PROD_CD_ID, "", new { @style = "color:red" })
+                            </div>*@  
                             <div class="col-lg-3 col-md-3 col-xs-12">
                                 Operação*
                                 @Html.DropDownListFor(x => x.MOVMT_IN_OPERACAO_EX, (SelectList)ViewBag.Lista, "Selecionar", new { @class = "form-control", onchange = "FiltrarTipo($(this).val())", id = "operacaoEx" })
@@ -211,20 +191,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div id="containerInsumoEx" style="display: none">
-                            <div class="form-group">
-                                <div class="col-lg-8 col-md-8 col-xs-12">
-                                    Insumos*
-                                    @Html.DropDownListFor(x => x.MAPR_CD_ID, (SelectList)ViewBag.ListaInsumos, "Selecionar", new { @class = "form-control", id = "insEx" })
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Quantidade*
-                                    @Html.TextBoxFor(x => x.QTDE_MAPR, new { @class = "form-control", id = "qtdeIns" })
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <div class="col-lg-12 col-md-12 col-xs-12">
                                 @Html.ButtonActionSubmit("Confirmar")
@@ -234,7 +200,7 @@
                 </div>
             </div>
         </div>
-    }*@
+    }
 
     <div class="row">
         <div class="col-lg-12 col-md-12 col-xs-12">
@@ -393,9 +359,7 @@
                 $('#filialDestino').hide();
 
                 $('#containerProduto').find('#qtde').val("0");
-                $('#containerInsumo').find('#qtde').val("0");
                 $('#containerProduto').find('#qtde').attr("readonly", true);
-                $('#containerInsumo').find('#qtde').attr("readonly", true);
 
                 $('#pwd-container1').show();
                 $('#pwd-container2').hide();

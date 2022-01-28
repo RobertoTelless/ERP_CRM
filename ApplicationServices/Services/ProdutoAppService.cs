@@ -156,7 +156,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ExecuteFilterEstoque(Int32? filial, String nome, String marca, String codigo, String barcode, Int32? categoria, Int32 tipo, Int32 idAss, out List<PRODUTO_ESTOQUE_FILIAL> objeto)
+        public Int32 ExecuteFilterEstoque(Int32? filial, String nome, String marca, String codigo, String barcode, Int32? categoria, Int32? tipo, Int32 idAss, out List<PRODUTO_ESTOQUE_FILIAL> objeto)
         {
             try
             {

@@ -692,7 +692,7 @@ namespace ApplicationServices.Services
             String emailBody = header + body + data;
 
             // Prepara e-mail e enviar
-            CONFIGURACAO conf = _usuarioService.CarregaConfiguracao(2);
+            CONFIGURACAO conf = _usuarioService.CarregaConfiguracao(usuario.ASSI_CD_ID);
             Email mensagem = new Email();
             mensagem.ASSUNTO = "Geração de Nova Senha";
             mensagem.CORPO = emailBody;

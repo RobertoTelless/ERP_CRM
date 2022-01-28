@@ -421,7 +421,7 @@ namespace ERP_CRM_Solution.Controllers
                 }
                 if (volta == 2)
                 {
-                    return Json(PlatMensagens_Resources.ResourceManager.GetString("M0002", CultureInfo.CurrentCulture));
+                    return Json(PlatMensagens_Resources.ResourceManager.GetString("M0096", CultureInfo.CurrentCulture));
                 }
                 if (volta == 3)
                 {

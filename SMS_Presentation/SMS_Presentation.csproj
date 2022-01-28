@@ -3340,6 +3340,7 @@
     <Content Include="Views\Compra\ProcessarEnviarAprovacaoPedidoCompra.cshtml" />
     <Content Include="Views\Compra\IncluirAcompanhamento.cshtml" />
     <Content Include="Views\Compra\MontarTelaDashboardCompra.cshtml" />
+    <Content Include="Views\Estoque\MontarTelaInventario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

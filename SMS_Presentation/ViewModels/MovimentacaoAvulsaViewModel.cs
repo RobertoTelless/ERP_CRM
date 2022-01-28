@@ -25,7 +25,7 @@ namespace ERP_CRM_Solution.ViewModels
         public String MOVMT_DS_JUSTIFICATIVA { get; set; }
 
 
-        public Int32? ProdutoInsumoEx { get; set; }
+        public Int32? ProdutoEx { get; set; }
         public Int32? MOVMT_IN_OPERACAO_EX { get; set; }
         public Int32 FILI_CD_ID_EX { get; set; }
         public Int32? FORN_CD_ID { get; set; }

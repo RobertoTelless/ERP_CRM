@@ -150,7 +150,7 @@ namespace ModelServices.EntitiesServices
 
         }
 
-        public List<PRODUTO_ESTOQUE_FILIAL> ExecuteFilterEstoque(Int32? filial, String nome, String marca, String codigo, String barcode, Int32? categoria, Int32 tipo, Int32 idAss)
+        public List<PRODUTO_ESTOQUE_FILIAL> ExecuteFilterEstoque(Int32? filial, String nome, String marca, String codigo, String barcode, Int32? categoria, Int32? tipo, Int32 idAss)
         {
             return _baseRepository.ExecuteFilterEstoque(filial, nome, marca, codigo, barcode, categoria, tipo, idAss);
 

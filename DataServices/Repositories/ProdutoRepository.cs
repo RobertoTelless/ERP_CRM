@@ -134,7 +134,7 @@ namespace DataServices.Repositories
             return lista;
         }
 
-        public List<PRODUTO_ESTOQUE_FILIAL> ExecuteFilterEstoque(Int32? filial, String nome, String marca, String codigo, String barcode, Int32? categoria, Int32 tipo, Int32 idAss)
+        public List<PRODUTO_ESTOQUE_FILIAL> ExecuteFilterEstoque(Int32? filial, String nome, String marca, String codigo, String barcode, Int32? categoria, Int32? tipo, Int32 idAss)
         {
             List<PRODUTO_ESTOQUE_FILIAL> lista = new List<PRODUTO_ESTOQUE_FILIAL>();
             IQueryable<PRODUTO_ESTOQUE_FILIAL> query = Db.PRODUTO_ESTOQUE_FILIAL;
@@ -142,7 +142,7 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.FILI_CD_ID == filial);
             }
-            if (tipo > 0)
+            if (tipo != null)
             {
                 query = query.Where(p => p.PRODUTO.PROD_IN_TIPO_PRODUTO == tipo);
             }

@@ -221,7 +221,7 @@ namespace ModelServices.EntitiesServices
 
         public CONFIGURACAO CarregaConfiguracao(Int32 id)
         {
-            CONFIGURACAO conf = _configuracaoRepository.GetById(id);
+            CONFIGURACAO conf = _configuracaoRepository.GetItemById(id);
             return conf;
         }
 

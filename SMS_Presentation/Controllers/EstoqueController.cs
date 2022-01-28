@@ -239,7 +239,7 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     item.FILI_CD_ID = usuario.FILI_CD_ID;
                 }
-                Int32 volta = prodApp.ExecuteFilterEstoque(item.FILI_CD_ID, item.PROD_NM_NOME, item.PROD_NM_MARCA, item.PROD_CD_CODIGO, item.PROD_NR_BARCODE, item.CAPR_CD_ID, item.PROD_IN_TIPO_PRODUTO.Value, idAss, out listaObj);
+                Int32 volta = prodApp.ExecuteFilterEstoque(item.FILI_CD_ID, item.PROD_NM_NOME, item.PROD_NM_MARCA, item.PROD_CD_CODIGO, item.PROD_NR_BARCODE, item.CAPR_CD_ID, item.PROD_IN_TIPO_PRODUTO, idAss, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)
@@ -286,11 +286,13 @@ namespace ERP_CRM_Solution.Controllers
             String data = DateTime.Today.Date.ToShortDateString();
             data = data.Substring(0, 2) + data.Substring(3, 2) + data.Substring(6, 4);
             String nomeRel = "ProdutoEstoqueLista" + "_" + data + ".pdf";
-            List<PRODUTO> lista = (List<PRODUTO>)Session["ListaProduto"];
+            List<PRODUTO_ESTOQUE_FILIAL> lista = pefApp.GetAllItens(usuario.ASSI_CD_ID);
             PRODUTO filtro = (PRODUTO)Session["FiltroProduto"];
             Font meuFont = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             Font meuFont1 = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             Font meuFont2 = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            Font meuFont3 = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLUE);
+            Font meuFont4 = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.GREEN);
 
             // Cria documento
             Document pdfDoc = new Document(PageSize.A4.Rotate(), 10, 10, 10, 10);
@@ -332,7 +334,7 @@ namespace ERP_CRM_Solution.Controllers
             pdfDoc.Add(line1);
 
             // Grid
-            table = new PdfPTable(new float[] { 70f, 150f, 60f, 60f, 150f, 50f, 50f, 20f });
+            table = new PdfPTable(new float[] { 50f, 70f, 150f, 60f, 60f, 60f, 50f, 50f, 20f });
             table.WidthPercentage = 100;
             table.HorizontalAlignment = 0;
             table.SpacingBefore = 1f;
@@ -343,10 +345,18 @@ namespace ERP_CRM_Solution.Controllers
                 VerticalAlignment = Element.ALIGN_MIDDLE,
                 HorizontalAlignment = Element.ALIGN_LEFT
             };
-            cell.Colspan = 8;
+            cell.Colspan = 9;
             cell.BackgroundColor = BaseColor.LIGHT_GRAY;
             table.AddCell(cell);
 
+
+            cell = new PdfPCell(new Paragraph("Tipo", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
             cell = new PdfPCell(new Paragraph("Filial", meuFont))
             {
                 VerticalAlignment = Element.ALIGN_MIDDLE,
@@ -404,8 +414,27 @@ namespace ERP_CRM_Solution.Controllers
             cell.BackgroundColor = BaseColor.LIGHT_GRAY;
             table.AddCell(cell);
 
-            foreach (PRODUTO item in lista)
+            foreach (PRODUTO_ESTOQUE_FILIAL item in lista)
             {
+                if (item.PRODUTO.PROD_IN_TIPO_PRODUTO == 1)
+                {
+                    cell = new PdfPCell(new Paragraph("Produto", meuFont4))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else
+                {
+                    cell = new PdfPCell(new Paragraph("Insumo", meuFont3))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+
                 if (item.FILIAL != null)
                 {
                     cell = new PdfPCell(new Paragraph(item.FILIAL.FILI_NM_NOME, meuFont))
@@ -424,45 +453,52 @@ namespace ERP_CRM_Solution.Controllers
                     };
                     table.AddCell(cell);
                 }
-                cell = new PdfPCell(new Paragraph(item.PROD_NM_NOME, meuFont))
+
+                cell = new PdfPCell(new Paragraph(item.PRODUTO.PROD_NM_NOME, meuFont))
                 {
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     HorizontalAlignment = Element.ALIGN_LEFT
                 };
                 table.AddCell(cell);
-                cell = new PdfPCell(new Paragraph(item.PROD_NR_BARCODE, meuFont))
+
+                cell = new PdfPCell(new Paragraph(item.PRODUTO.PROD_NR_BARCODE, meuFont))
                 {
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     HorizontalAlignment = Element.ALIGN_LEFT
                 };
                 table.AddCell(cell);
-                cell = new PdfPCell(new Paragraph(item.PROD_QN_ESTOQUE.ToString(), meuFont))
+
+                cell = new PdfPCell(new Paragraph(item.PREF_QN_ESTOQUE.ToString(), meuFont))
                 {
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     HorizontalAlignment = Element.ALIGN_LEFT
                 };
                 table.AddCell(cell);
-                cell = new PdfPCell(new Paragraph(item.PROD_QN_QUANTIDADE_MINIMA.ToString(), meuFont))
+
+                cell = new PdfPCell(new Paragraph(item.PRODUTO.PROD_QN_QUANTIDADE_MINIMA.ToString(), meuFont))
                 {
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     HorizontalAlignment = Element.ALIGN_LEFT
                 };
                 table.AddCell(cell);
-                cell = new PdfPCell(new Paragraph(item.PROD_QN_QUANTIDADE_MAXIMA.ToString(), meuFont))
+
+                cell = new PdfPCell(new Paragraph(item.PRODUTO.PROD_QN_QUANTIDADE_MAXIMA.ToString(), meuFont))
                 {
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     HorizontalAlignment = Element.ALIGN_LEFT
                 };
                 table.AddCell(cell);
-                cell = new PdfPCell(new Paragraph(item.PROD_DT_ULTIMA_MOVIMENTACAO.Value.ToShortDateString(), meuFont))
+
+                cell = new PdfPCell(new Paragraph(item.PRODUTO.PROD_DT_ULTIMA_MOVIMENTACAO.Value.ToShortDateString(), meuFont))
                 {
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     HorizontalAlignment = Element.ALIGN_LEFT
                 };
                 table.AddCell(cell);
-                if (item.PROD_AQ_FOTO != null)
+
+                if (item.PRODUTO.PROD_AQ_FOTO != null)
                 {
-                    Image foto = Image.GetInstance(Server.MapPath(item.PROD_AQ_FOTO));
+                    Image foto = Image.GetInstance(Server.MapPath(item.PRODUTO.PROD_AQ_FOTO));
                     cell = new PdfPCell(foto, true);
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     cell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -2208,5 +2244,219 @@ namespace ERP_CRM_Solution.Controllers
             return View(vm);
         }
 
+        [HttpPost]
+        public ActionResult IncluirCompraExpressa(MovimentacaoAvulsaViewModel vm)
+        {          
+            Session["MovAvulsaVM"] = vm;
+            USUARIO usuario = new USUARIO();
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (vm.PROD_CD_ID == null)
+            {
+                Session["MensCompraEx"] = 1;
+                return RedirectToAction("IncluirMovimentacaoAvulsa");
+            }
+            if (vm.PROD_CD_ID == null)
+            {
+                Session["MensCompraEx"] = 2;
+                return RedirectToAction("IncluirMovimentacaoAvulsa");
+            }
+
+            PRODUTO_ESTOQUE_FILIAL pef = pefApp.GetByProdFilial((Int32)vm.PROD_CD_ID, (Int32)vm.FILI_CD_ID_EX);
+            PRODUTO_ESTOQUE_FILIAL pef1 = new PRODUTO_ESTOQUE_FILIAL();
+            Int32 qnAntes = 0;
+            if (pef == null)
+            {
+                pef = new PRODUTO_ESTOQUE_FILIAL();
+                pef.FILI_CD_ID = vm.FILI_CD_ID_EX;
+                pef.PROD_CD_ID = (Int32)vm.PROD_CD_ID;
+                pef.PREF_QN_QUANTIDADE_ALTERADA = vm.QTDE_PROD;
+                pef.PREF_QN_ESTOQUE = vm.QTDE_PROD;
+                pef.PREF_IN_ATIVO = 1;
+                pef.PREF_DT_ULTIMO_MOVIMENTO = DateTime.Now;
+                Int32 v = pefApp.ValidateCreate(pef, usuario);
+            } 
+            else
+            {
+                pef1.PREF_CD_ID = pef.PREF_CD_ID;
+                pef1.FILI_CD_ID = pef.FILI_CD_ID;
+                pef1.PROD_CD_ID = pef.PROD_CD_ID;
+                pef1.PREF_QN_ESTOQUE = pef.PREF_QN_ESTOQUE + vm.QTDE_PROD;
+                pef1.PREF_QN_QUANTIDADE_ALTERADA = vm.QTDE_PROD;
+                pef1.PREF_IN_ATIVO = 1;
+                pef1.PREF_DT_ULTIMO_MOVIMENTO = DateTime.Now;
+                pef1.PREF_DS_JUSTIFICATIVA = pef.PREF_DS_JUSTIFICATIVA;
+                pef1.PREF_NR_MARKUP = pef.PREF_NR_MARKUP;
+                Int32 v = pefApp.ValidateEdit(pef1, pef, usuario);
+                qnAntes = (Int32)pef.PREF_QN_ESTOQUE;
+            }
+
+            MOVIMENTO_ESTOQUE_PRODUTO mov = new MOVIMENTO_ESTOQUE_PRODUTO();
+            mov.ASSI_CD_ID = idAss;
+            mov.FILI_CD_ID = pef.FILI_CD_ID;
+            mov.MOEP_DT_MOVIMENTO = DateTime.Now;
+            mov.MOEP_IN_ATIVO = 1;
+            mov.MOEP_IN_CHAVE_ORIGEM = 5;
+            mov.MOEP_IN_OPERACAO = 1;
+            mov.MOEP_IN_ORIGEM = "Compra Expressa";
+            mov.MOEP_IN_TIPO_MOVIMENTO = 0;
+            mov.MOEP_QN_ALTERADA = vm.QTDE_PROD;
+            mov.MOEP_QN_ANTES = qnAntes;
+            mov.MOEP_QN_DEPOIS = vm.QTDE_PROD;
+            mov.MOEP_QN_QUANTIDADE = (Int32)vm.QTDE_PROD;
+            mov.PROD_CD_ID = (Int32)vm.PROD_CD_ID;
+            mov.USUA_CD_ID = usuario.USUA_CD_ID;
+            Int32 volta = moepApp.ValidateCreate(mov, usuario);
+
+            CONTA_PAGAR cp = new CONTA_PAGAR();
+            cp.FORN_CD_ID = vm.FORN_CD_ID;
+            cp.USUA_CD_ID = usuario.USUA_CD_ID;
+            cp.CAPA_DT_LANCAMENTO = DateTime.Now;
+            cp.CAPA_DT_COMPETENCIA = DateTime.Now;
+            cp.CAPA_DT_VENCIMENTO = DateTime.Now.AddDays(30);
+            cp.ASSI_CD_ID = idAss;
+            cp.CAPA_IN_ATIVO = 1;
+            cp.CAPA_IN_LIQUIDADA = 0;
+            cp.CAPA_IN_PAGA_PARCIAL = 0;
+            cp.CAPA_IN_PARCELADA = 0;
+            cp.CAPA_IN_PARCELAS = 0;
+            cp.CAPA_VL_SALDO = 0;
+            cp.CAPA_IN_CHEQUE = 0;
+
+            Session["ContaPagar"] = cp;
+            Session["VoltaCpmpra"] = 2;
+            return RedirectToAction("IncluirCP", "ContaPagar");
+        }
+
+        [HttpGet]
+        public ActionResult MontarTelaInventario()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            
+            InventarioViewModel vm = new InventarioViewModel();
+            if (Session["FiltroInventario"] != null)
+            {
+                vm = (InventarioViewModel)Session["FiltroInventario"];
+            }
+
+            if (Session["ListaProdEstoqueFilial"] == null)
+            {
+                if (Session["FiltroInventario"] != null)
+                {
+                    vm = (InventarioViewModel)Session["FiltroInventario"];
+                    Session["FiltroInventario"] = null;
+                    return FiltrarInventario(vm);
+                }
+                else
+                {
+                    if (vm.PRODUTO != null)
+                    {
+                        vm.PRODUTO = new PRODUTO();
+                    }
+                    else
+                    {
+                        vm.PRODUTO = new PRODUTO();
+                    }
+                    return FiltrarInventario(vm);
+                }
+            }
+
+            ViewBag.Title = "Inventário";
+            ViewBag.ListaProd = Session["ListaProdEstoqueFilial"] == null ? null : (List<PRODUTO_ESTOQUE_FILIAL>)Session["ListaProdEstoqueFilial"];
+            ViewBag.Diferenca = Session["ListaValEstoqueAlterado"];
+            List<SelectListItem> filtroPM = new List<SelectListItem>();
+            filtroPM.Add(new SelectListItem() { Text = "Produto", Value = "1" });
+            filtroPM.Add(new SelectListItem() { Text = "Insumo", Value = "2" });
+            ViewBag.CatProd = new SelectList(cpApp.GetAllItens(idAss).OrderBy(x => x.CAPR_NM_NOME).ToList<CATEGORIA_PRODUTO>(), "CAPR_CD_ID", "CAPR_NM_NOME");
+            ViewBag.SubCatProd = new SelectList(prodApp.GetAllSubs(idAss).OrderBy(x => x.SCPR_NM_NOME).ToList<SUBCATEGORIA_PRODUTO>(), "SCPR_CD_ID", "SCPR_NM_NOME");
+            if (Session["ListaProdEstoqueFilial"] != null)
+            {
+                ViewBag.IsProdIns = 1;
+            }
+            ViewBag.CdFiliUsuario = usuario.FILI_CD_ID == null ? 1 : usuario.FILI_CD_ID;
+            ViewBag.FilialUsuario = usuario.FILIAL == null ? "Sem Filial" : usuario.FILIAL.FILI_NM_NOME;
+            ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss).OrderBy(x => x.FILI_NM_NOME).ToList<FILIAL>(), "FILI_CD_ID", "FILI_NM_NOME", "Selecionar");
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
+            if (Session["MensEstoque"] != null)
+            {
+                if ((Int32)Session["MensEstoque"] == 1)
+                {
+                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0010", CultureInfo.CurrentCulture));
+                    Session["MensEstoque"] = 0;
+                }
+            }
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult FiltrarInventario(InventarioViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Session["FiltroInventario"] = vm;
+
+            PRODUTO prod = vm.PRODUTO;
+            if (vm.TIPO == 1 || vm.TIPO == null)
+            {
+                prod.FILI_CD_ID = vm.FILI_CD_ID_P;
+                try
+                {
+                    // Executa a operação
+                    List<PRODUTO_ESTOQUE_FILIAL> listaObj = new List<PRODUTO_ESTOQUE_FILIAL>();
+                    if (usuario.FILI_CD_ID != null)
+                    {
+                        prod.FILI_CD_ID = usuario.FILI_CD_ID;
+                    }
+                    Int32 volta = prodApp.ExecuteFilterEstoque(prod.FILI_CD_ID, prod.PROD_NM_NOME, prod.PROD_NM_MARCA, prod.PROD_CD_CODIGO, prod.PROD_NR_BARCODE, prod.CAPR_CD_ID, prod.PROD_IN_TIPO_PRODUTO, idAss, out listaObj);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensEstoque"] = 1;
+                    }
+
+                    // Sucesso
+                    listaMasterProdFili = listaObj;
+                    Session["ListaProdEstoqueFilial"] = listaObj;
+
+                    return RedirectToAction("MontarTelaInventario");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return RedirectToAction("MontarTelaInventario");
+                }
+            }
+            else
+            {
+                return RedirectToAction("MontarTelaInventario");
+            }
+        }
     }
 }
