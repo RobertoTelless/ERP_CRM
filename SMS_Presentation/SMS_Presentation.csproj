@@ -773,6 +773,8 @@
     <Content Include="Imagens\2\CRM\5\Fotos\icon_vaga.png" />
     <Content Include="Imagens\2\FichaTecnica\1\Apresentacao\764Z6M0S6K.jpg" />
     <Content Include="Imagens\2\FichaTecnica\2\Apresentacao\C35152OLQ8suco-laranja.jpg" />
+    <Content Include="Imagens\2\FichaTecnica\3\Apresentacao\5MEDQXA59Z.jpg" />
+    <Content Include="Imagens\2\FichaTecnica\4\Apresentacao\KS4GAQG0YPlimonada_jarra.jpg" />
     <Content Include="Imagens\2\Filial\1\Foto\FotoBase.jpg" />
     <Content Include="Imagens\2\Filial\1\Foto\Logo_RTI.png" />
     <Content Include="Imagens\2\Fornecedores\2\Fotos\ambev-logo.png" />
@@ -786,6 +788,9 @@
     <Content Include="Imagens\2\Produtos\12\Fotos\laranja_pera.jpg" />
     <Content Include="Imagens\2\Produtos\13\Fotos\suco-laranja.jpg" />
     <Content Include="Imagens\2\Produtos\14\Fotos\suco-laranja.jpg" />
+    <Content Include="Imagens\2\Produtos\15\Fotos\limao.jpg" />
+    <Content Include="Imagens\2\Produtos\16\Fotos\talento_morango.jpg" />
+    <Content Include="Imagens\2\Produtos\17\Fotos\limonada_jarra.jpg" />
     <Content Include="Imagens\2\Produtos\1\Fotos\bombay_garrafa.jpg" />
     <Content Include="Imagens\2\Produtos\2\Fotos\mortadela-defsadia-pckg_81661.png" />
     <Content Include="Imagens\2\Produtos\3\Fotos\CamHer.jpg" />
@@ -3399,10 +3404,10 @@
     <Folder Include="Imagens\2\Clientes\6\Fotos\" />
     <Folder Include="Imagens\2\Clientes\9\Anexos\" />
     <Folder Include="Imagens\2\Clientes\9\Fotos\" />
-    <Folder Include="Imagens\2\ContaPagar\" />
+    <Folder Include="Imagens\2\ContaPagar\3\Anexos\" />
+    <Folder Include="Imagens\2\ContaPagar\4\Anexos\" />
     <Folder Include="Imagens\2\ContaReceber\" />
     <Folder Include="Imagens\2\Equipamento\" />
-    <Folder Include="Imagens\2\FichaTecnica\3\Apresentacao\" />
     <Folder Include="Imagens\2\Filial\1\Anexos\" />
     <Folder Include="Imagens\2\Filial\2\Logo\" />
     <Folder Include="Imagens\2\Fornecedores\1\Anexos\" />
@@ -3460,6 +3465,12 @@
     <Folder Include="Imagens\2\Produtos\13\QR\" />
     <Folder Include="Imagens\2\Produtos\14\Anexos\" />
     <Folder Include="Imagens\2\Produtos\14\QR\" />
+    <Folder Include="Imagens\2\Produtos\15\Anexos\" />
+    <Folder Include="Imagens\2\Produtos\15\QR\" />
+    <Folder Include="Imagens\2\Produtos\16\Anexos\" />
+    <Folder Include="Imagens\2\Produtos\16\QR\" />
+    <Folder Include="Imagens\2\Produtos\17\Anexos\" />
+    <Folder Include="Imagens\2\Produtos\17\QR\" />
     <Folder Include="Imagens\2\Produtos\1\QR\" />
     <Folder Include="Imagens\2\Produtos\2\Anexos\" />
     <Folder Include="Imagens\2\Produtos\2\QR\" />
