@@ -31,6 +31,7 @@ namespace ERP_CRM_Solution.ViewModels
         public Int32? FORN_CD_ID { get; set; }
         public Int32? PROD_CD_ID { get; set; }
         public Int32? QTDE_PROD { get; set; }
+        public Decimal? Preco { get; set; }
 
 
         public Int32[] REGISTROS { get; set; }

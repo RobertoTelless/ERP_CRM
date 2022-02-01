@@ -2248,7 +2248,7 @@ namespace ERP_CRM_Solution.Controllers
         public ActionResult IncluirCompraExpressa(MovimentacaoAvulsaViewModel vm)
         {          
             Session["MovAvulsaVM"] = vm;
-            USUARIO usuario = new USUARIO();
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             if (vm.PROD_CD_ID == null)
@@ -2311,9 +2311,9 @@ namespace ERP_CRM_Solution.Controllers
             CONTA_PAGAR cp = new CONTA_PAGAR();
             cp.FORN_CD_ID = vm.FORN_CD_ID;
             cp.USUA_CD_ID = usuario.USUA_CD_ID;
-            cp.CAPA_DT_LANCAMENTO = DateTime.Now;
-            cp.CAPA_DT_COMPETENCIA = DateTime.Now;
-            cp.CAPA_DT_VENCIMENTO = DateTime.Now.AddDays(30);
+            cp.CAPA_DT_LANCAMENTO = DateTime.Today.Date;
+            cp.CAPA_DT_COMPETENCIA = DateTime.Today.Date;
+            cp.CAPA_DT_VENCIMENTO = DateTime.Today.Date.AddDays(30);
             cp.ASSI_CD_ID = idAss;
             cp.CAPA_IN_ATIVO = 1;
             cp.CAPA_IN_LIQUIDADA = 0;
@@ -2322,10 +2322,18 @@ namespace ERP_CRM_Solution.Controllers
             cp.CAPA_IN_PARCELAS = 0;
             cp.CAPA_VL_SALDO = 0;
             cp.CAPA_IN_CHEQUE = 0;
+            cp.CAPA_VL_VALOR = vm.QTDE_PROD * vm.Preco;
+            cp.CAPA_DS_DESCRICAO = "Compra expressa em " + DateTime.Today.Date.ToShortDateString();
+            cp.CAPA_VL_DESCONTO = 0;
+            cp.CAPA_VL_JUROS = 0;
+            cp.CAPA_VL_TAXAS = 0;
+            cp.USUA_CD_ID = usuario.USUA_CD_ID;
+            cp.CAPA_IN_CHEQUE = 0;
 
             Session["ContaPagar"] = cp;
             Session["VoltaCpmpra"] = 2;
-            return RedirectToAction("IncluirCP", "ContaPagar");
+            Session["ListaProdEstoqueFilial"] = null;
+            return RedirectToAction("IncluirCPExpressa", "ContaPagar");
         }
 
         [HttpGet]

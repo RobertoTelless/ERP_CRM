@@ -107,6 +107,7 @@ namespace ModelServices.EntitiesServices
             {
                 try
                 {
+                    item.PRODUTO = null;
                     FICHA_TECNICA obj = _baseRepository.GetById(item.FITE_CD_ID);
                     _baseRepository.Detach(obj);
                     _logRepository.Add(log);

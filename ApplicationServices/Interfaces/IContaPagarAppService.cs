@@ -14,6 +14,7 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEditPagar(CONTA_PAGAR item, CONTA_PAGAR itemAntes, USUARIO usuario);
         Int32 ValidateDelete(CONTA_PAGAR item, USUARIO usuario);
         Int32 ValidateReativar(CONTA_PAGAR item, USUARIO usuario);
+        Int32 ValidateCreateExpressa(CONTA_PAGAR item, USUARIO usuario);
 
         CONTA_PAGAR GetItemById(Int32 id);
         CONTA_PAGAR_ANEXO GetAnexoById(Int32 id);

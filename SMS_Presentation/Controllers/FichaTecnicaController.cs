@@ -354,6 +354,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 vm.PROD_CD_ID = prod.PROD_CD_ID;
             }
+            vm.FITE_NM_NOME = prod.PROD_NM_NOME;  
             return View(vm);
         }
 

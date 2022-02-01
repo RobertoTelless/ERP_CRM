@@ -1659,6 +1659,186 @@ namespace ERP_CRM_Solution.Controllers
             return Json(result);
         }
 
+        [HttpGet]
+        public ActionResult IncluirCPExpressa()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS" || usuario.PERFIL.PERF_SG_SIGLA == "VEN")
+                {
+                    Session["MensCP"] = 2;
+                    return RedirectToAction("MontarTelaCP");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+           
+            // Prepara listas
+            //ViewBag.Forn = new SelectList(fornApp.GetAllItens(idAss).OrderBy(x => x.FORN_NM_NOME).ToList<FORNECEDOR>(), "FORN_CD_ID", "FORN_NM_NOME");
+            ViewBag.CC = new SelectList(ccApp.GetAllDespesas(idAss).OrderBy(x => x.CECU_NM_EXIBE).ToList<CENTRO_CUSTO>(), "CECU_CD_ID", "CECU_NM_EXIBE");
+            ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss), "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.Contas = new SelectList(cpApp.GetAllItens(idAss), "COBA_CD_ID", "COBA_NM_NOME_EXIBE");
+            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).OrderBy(x => x.FOPA_NM_NOME).ToList<FORMA_PAGAMENTO>(), "FOPA_CD_ID", "FOPA_NM_NOME");
+            ViewBag.Periodicidade = new SelectList(perApp.GetAllItens(idAss), "PERI_CD_ID", "PERI_NM_NOME");
+            //List<SelectListItem> tipoPag = new List<SelectListItem>();
+            //tipoPag.Add(new SelectListItem() { Text = "Pagamento Recorrente", Value = "1" });
+            //tipoPag.Add(new SelectListItem() { Text = "Parcelamento", Value = "2" });
+            //ViewBag.Pagamento = new SelectList(tipoPag, "Value", "Text");
+            List<SelectListItem> tipoDoc = new List<SelectListItem>();
+            tipoDoc.Add(new SelectListItem() { Text = "Boleto", Value = "1" });
+            tipoDoc.Add(new SelectListItem() { Text = "Nota", Value = "2" });
+            tipoDoc.Add(new SelectListItem() { Text = "Recibo", Value = "3" });
+            tipoDoc.Add(new SelectListItem() { Text = "Fatura", Value = "4" });
+            tipoDoc.Add(new SelectListItem() { Text = "Crediário", Value = "5" });
+            ViewBag.TipoDoc = new SelectList(tipoDoc, "Value", "Text");
+
+            if (Session["MensCP"] != null)
+            {
+                // Mensagem
+                if ((Int32)Session["MensCP"] == 10)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0060", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCP"] == 11)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0061", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCP"] == 12)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0062", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCP"] == 13)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0064", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCP"] == 14)
+                {
+                    ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0065", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // Prepara view
+            CONTA_PAGAR item = (CONTA_PAGAR)Session["ContaPagar"];
+            ContaPagarViewModel vm = Mapper.Map<CONTA_PAGAR, ContaPagarViewModel>((CONTA_PAGAR)Session["ContaPagar"]);
+            FORNECEDOR forn = forApp.GetItemById(item.FORN_CD_ID.Value);
+            vm.NomeFornecedor = forn.FORN_NM_NOME;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult IncluirCPExpressa(ContaPagarViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            var result = new Hashtable();
+            //ViewBag.Forn = new SelectList(fornApp.GetAllItens(idAss).OrderBy(x => x.FORN_NM_NOME).ToList<FORNECEDOR>(), "FORN_CD_ID", "FORN_NM_NOME");
+            ViewBag.CC = new SelectList(ccApp.GetAllDespesas(idAss).OrderBy(x => x.CECU_NM_EXIBE).ToList<CENTRO_CUSTO>(), "CECU_CD_ID", "CECU_NM_EXIBE");
+            ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss), "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.Contas = new SelectList(cpApp.GetAllItens(idAss), "COBA_CD_ID", "COBA_NM_NOME_EXIBE");
+            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).OrderBy(x => x.FOPA_NM_NOME).ToList<FORMA_PAGAMENTO>(), "FOPA_CD_ID", "FOPA_NM_NOME");
+            ViewBag.Periodicidade = new SelectList(perApp.GetAllItens(idAss), "PERI_CD_ID", "PERI_NM_NOME");
+            //List<SelectListItem> tipoPag = new List<SelectListItem>();
+            //tipoPag.Add(new SelectListItem() { Text = "Pagamento Recorrente", Value = "1" });
+            //tipoPag.Add(new SelectListItem() { Text = "Parcelamento", Value = "2" });
+            //ViewBag.Pagamento = new SelectList(tipoPag, "Value", "Text");
+            List<SelectListItem> tipoDoc = new List<SelectListItem>();
+            tipoDoc.Add(new SelectListItem() { Text = "Boleto", Value = "1" });
+            tipoDoc.Add(new SelectListItem() { Text = "Nota", Value = "2" });
+            tipoDoc.Add(new SelectListItem() { Text = "Recibo", Value = "3" });
+            tipoDoc.Add(new SelectListItem() { Text = "Fatura", Value = "4" });
+            tipoDoc.Add(new SelectListItem() { Text = "Crediário", Value = "5" });
+            ViewBag.TipoDoc = new SelectList(tipoDoc, "Value", "Text");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CONTA_PAGAR item = Mapper.Map<ContaPagarViewModel, CONTA_PAGAR>(vm);
+                    FORMA_PAGAMENTO forma = fpApp.GetItemById(item.FOPA_CD_ID.Value);
+                    item.CAPA_IN_CHEQUE = forma.FOPA_IN_CHEQUE;
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = cpApp.ValidateCreateExpressa(item, usuarioLogado);
+                    
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensCP"] = 10;
+                        return View(vm);
+                    }
+                    if (volta == 2)
+                    {
+                        Session["MensCP"] = 11;
+                        return View(vm);
+                    }
+                    if (volta == 3)
+                    {
+                        Session["MensCP"] = 12;
+                        return View(vm);
+                    }
+                    if (volta == 4)
+                    {
+                        Session["MensCP"] = 13;
+                        return View(vm);
+                    }
+                    if (volta == 5)
+                    {
+                        Session["MensCP"] = 14;
+                        return View(vm);
+                    }
+
+                    // Acerta numero
+                    if (item.CAPA_NR_DOCUMENTO == null)
+                    {
+                        item.CAPA_NR_DOCUMENTO = item.CAPA_CD_ID.ToString();
+                    }
+                    
+                    // Cria pastas
+                    String caminho = "/Imagens/" + idAss.ToString() + "/ContaPagar/" + item.CAPA_CD_ID.ToString() + "/Anexos/";
+                    Directory.CreateDirectory(Server.MapPath(caminho));
+
+                    // Sucesso
+                    Session["IdVolta"] = item.CAPA_CD_ID;
+                    if (Session["FileQueueCP"] != null)
+                    {
+                        List<FileQueue> fq = (List<FileQueue>)Session["FileQueueCP"];
+
+                        foreach (var file in fq)
+                        {
+                            UploadFileQueueLancamentoCP(file);
+                        }
+
+                        Session["FileQueueCP"] = null;
+                    }
+                    return RedirectToAction("MontarTelaMovimentacaoAvulsa", "Estoque");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
 
 
 

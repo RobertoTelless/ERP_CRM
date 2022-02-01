@@ -932,6 +932,14 @@ namespace ERP_CRM_Solution.Controllers
                 ViewBag.EstoqueAtualizado = "Todas as Filiais";
             }
 
+            // Categoria
+            ViewBag.CatExpedicao = item.CATEGORIA_PRODUTO.CAPR_IN_EXPEDICAO;
+            ViewBag.CatFood = item.CATEGORIA_PRODUTO.CAPR_IN_FOOD;
+            ViewBag.CatGrade = item.CATEGORIA_PRODUTO.CAPR_IN_GRADE;
+            ViewBag.CatSEO = item.CATEGORIA_PRODUTO.CAPR_IN_SEO;
+            ViewBag.CatTamanho = item.CATEGORIA_PRODUTO.CAPR_IN_TAMANHO;
+
+            // Exibe
             Session["VoltaConsulta"] = 1;
             objetoProdAntes = item;
             Session["Produto"] = item;

@@ -352,6 +352,131 @@ namespace ApplicationServices.Services
             }
         }
 
+        public Int32 ValidateCreateExpressa(CONTA_PAGAR item, USUARIO usuario)
+        {
+            try
+            {
+                // Verifica existencia prévia
+
+                // Completa objeto
+                item.CAPA_IN_ATIVO = 1;
+                item.CAPA_VL_DESCONTO = 0;
+                item.CAPA_VL_JUROS = 0;
+                item.CAPA_VL_PARCELADO = 0;
+                item.CAPA_VL_PARCIAL = 0;
+                item.CAPA_VL_SALDO = item.CAPA_VL_VALOR;
+                item.CAPA_VL_TAXAS = 0;
+                item.CAPA_VL_VALOR_PAGO = 0;
+                item.ASSI_CD_ID = usuario.ASSI_CD_ID;
+                if (item.CAPA_IN_PARCELAS > 1)
+                {
+                    item.CAPA_IN_PARCELADA = 1;
+                    item.CAPA_VL_PARCELADO = item.CAPA_VL_VALOR;
+                }
+                else
+                {
+                    item.CAPA_IN_PARCELADA = 0;
+                    item.CAPA_VL_PARCELADO = 0;
+                }
+
+                // Monta Log
+                LOG log = new LOG
+                {
+                    LOG_DT_DATA = DateTime.Now,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
+                    USUA_CD_ID = usuario.USUA_CD_ID,
+                    LOG_NM_OPERACAO = "AddCAPA",
+                    LOG_IN_ATIVO = 1,
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<CONTA_PAGAR>(item)
+                };
+
+                // Critica de parcelamento
+                if (item.CAPA_DT_INICIO_PARCELAS != null)
+                {
+                    // Checa data
+                    if (item.CAPA_DT_INICIO_PARCELAS < DateTime.Now.Date)
+                    {
+                        return 1;
+                    }
+
+                    // Verifica Num.Parcelas
+                    if (item.CAPA_IN_PARCELAS < 2)
+                    {
+                        return 2;
+                    }
+
+                    // Acerta objeto
+                    item.CAPA_IN_PARCELADA = 1;
+                    item.CAPA_VL_PARCELADO = item.CAPA_VL_VALOR;
+                }
+                else
+                {
+                    if (item.CAPA_IN_PARCELAS > 1)
+                    {
+                        return 5;
+                    }
+                }
+
+                //Gera lançamentos
+                Int32 volta = 0;
+
+                // Gera Notificação
+                NOTIFICACAO noti2 = new NOTIFICACAO();
+                noti2.NOTI_DT_EMISSAO = DateTime.Now;
+                noti2.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                noti2.NOTI_IN_NIVEL = 1;
+                noti2.NOTI_IN_VISTA = 0;
+                noti2.NOTI_NM_TITULO = "Contas a Pagar - Criação do Lançamento";
+                noti2.NOTI_IN_ATIVO = 1;
+                noti2.NOTI_TX_TEXTO = "O lançamento " + item.CAPA_NR_DOCUMENTO + " foi criado em " + DateTime.Today.Date.ToLongDateString() + " sob sua responsabilidade.";
+                noti2.USUA_CD_ID = item.USUA_CD_ID.Value;
+                noti2.ASSI_CD_ID = usuario.ASSI_CD_ID;
+                noti2.CANO_CD_ID = 1;
+                noti2.NOTI_IN_STATUS = 0;
+
+                // Persiste Lancamento CP
+                volta = _baseService.Create(item);
+
+                // Persiste notificação
+                Int32 volta2 = _notiService.Create(noti2);
+
+                // Cria Parcelas
+                if (item.CAPA_IN_PARCELADA == 1)
+                {
+                    CONTA_PAGAR rec = _baseService.GetItemById(item.CAPA_CD_ID);
+                    DateTime dataParcela = rec.CAPA_DT_INICIO_PARCELAS.Value;
+                    PERIODICIDADE period = _perService.GetItemById(item.PERI_CD_ID.Value);
+                    if (dataParcela.Date <= DateTime.Today.Date)
+                    {
+                        dataParcela = dataParcela.AddMonths(1);
+                    }
+
+                    for (int i = 1; i <= rec.CAPA_IN_PARCELAS; i++)
+                    {
+                        CONTA_PAGAR_PARCELA parc = new CONTA_PAGAR_PARCELA();
+                        parc.CAPA_CD_ID = item.CAPA_CD_ID;
+                        parc.CPPA_DT_QUITACAO = null;
+                        parc.CPPA_DT_VENCIMENTO = dataParcela;
+                        parc.CPPA_IN_ATIVO = 1;
+                        parc.CPPA_IN_QUITADA = 0;
+                        parc.CPPA_NR_PARCELA = i.ToString() + "/" + item.CAPA_IN_PARCELAS.Value.ToString();
+                        parc.CPPA_VL_VALOR_PAGO = 0;
+                        parc.CPPA_VL_VALOR = item.CAPA_VL_PARCELADO / item.CAPA_IN_PARCELAS;
+                        parc.CPPA_IN_PARCELA = i;
+                        parc.CPPA_DS_DESCRICAO = rec.CAPA_DS_DESCRICAO;
+                        rec.CONTA_PAGAR_PARCELA.Add(parc);
+                        dataParcela = dataParcela.AddDays(period.PERI_NR_DIAS);
+                    }
+                    volta = _baseService.Edit(rec);
+                }
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public Int32 ValidateEdit(CONTA_PAGAR item, CONTA_PAGAR itemAntes, USUARIO usuario, Int32 liquida, Int32 eParcela)
         {
             try

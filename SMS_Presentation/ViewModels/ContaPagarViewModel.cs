@@ -81,6 +81,8 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> CAPA_IN_TIPO_DOC { get; set; }
         public Nullable<int> CAPA_IN_PAGAMENTO { get; set; }
 
+        public String NomeFornecedor { get; set; }
+
         public bool Cheque
         {
             get
