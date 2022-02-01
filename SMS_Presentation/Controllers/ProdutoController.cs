@@ -115,13 +115,13 @@ namespace ERP_CRM_Solution.Controllers
         public ActionResult IncluirCategoriaProduto()
         {
             Session["CategoriaToProduto"] = true;
-            return RedirectToAction("IncluirCategoriaProduto", "TabelasAuxiliares");
+            return RedirectToAction("IncluirCatProduto", "TabelasAuxiliares");
         }
 
         public ActionResult IncluirSubCategoriaProduto()
         {
             Session["SubCategoriaToProduto"] = true;
-            return RedirectToAction("IncluirSubCategoriaProduto", "TabelasAuxiliares");
+            return RedirectToAction("IncluirSubCatProduto", "TabelasAuxiliares");
         }
 
         [HttpPost]
@@ -1302,13 +1302,19 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("EditarProduto", new { id = (Int32)Session["IdVolta"]});
         }
 
-        public ActionResult EditarFT(Int32? idFT)
+        public ActionResult EditarFT()
         {
             if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            return RedirectToAction("EditarFT", "FichaTecnica", new { id = idFT });
+            PRODUTO prod = (PRODUTO)Session["Produto"];
+            if (prod.FICHA_TECNICA.Count > 0)
+            {
+                Int32 idFT = prod.FICHA_TECNICA.FirstOrDefault().FITE_CD_ID;
+                return RedirectToAction("EditarFT", "FichaTecnica", new { id = idFT });
+            }
+            return RedirectToAction("EditarProduto");
         }
 
         public FileResult DownloadProduto(Int32 id)

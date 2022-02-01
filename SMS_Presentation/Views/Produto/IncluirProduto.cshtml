@@ -92,7 +92,7 @@
                                                         @Html.DropDownListFor(m => m.CAPR_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarSubCategoriaProduto($(this).val())", id = "catProd" })
                                                         @Html.ValidationMessageFor(m => m.CAPR_CD_ID, "", new { @style = "color:red" })
                                                         <span class="input-group-addon">
-                                                            @Html.TableLinkAction("IncluirCatProduto", "Produto", null, "glyphicon glyphicon-plus", "Adicionar Categoria")
+                                                            @Html.TableLinkAction("IncluirCategoriaProduto", "Produto", null, "glyphicon glyphicon-plus", "Adicionar Categoria")
                                                         </span>
                                                     </div>
                                                 </div>
@@ -102,7 +102,7 @@
                                                         @Html.DropDownListFor(m => m.SCPR_CD_ID, (SelectList)ViewBag.Subs, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarCategoriaProduto($(this).val())", id = "subCatProd" })
                                                         @Html.ValidationMessageFor(m => m.SCPR_CD_ID, "", new { @style = "color:red" })
                                                         <span class="input-group-addon">
-                                                            @Html.TableLinkAction("IncluirSubCatProduto", "Produto", null, "glyphicon glyphicon-plus", "Adicionar SubCategoria")
+                                                            @Html.TableLinkAction("IncluirSubCategoriaProduto", "Produto", null, "glyphicon glyphicon-plus", "Adicionar SubCategoria")
                                                         </span>
                                                     </div>
                                                 </div>

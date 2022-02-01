@@ -41,7 +41,7 @@
 
                             <div class="form-group">
                                 <br />
-                                <button style="margin-left:15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Ficha Técnica</button>
+                                <button style="margin-left:15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Composição</button>
                                 @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFT", controller: "FichaTecnica")
                                 @Html.ButtonLinkIndex(text: "Dashboard", controller: "Estoque", action: "MontarTelaDashboardEstoque")
                             </div>
@@ -128,12 +128,12 @@
                                                     @Html.DropDownList("PROD_CD_ID", (SelectList)ViewBag.Insumos, "Selecionar", new { @class = "form-control", autofocus = true, id = "ins" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    Quantidade*
-                                                    @Html.TextBox("FITD_QN_QUANTIDADE", null, new { @class = "form-control", autofocus = true, id = "qtde" })
+                                                    Unidade*
+                                                    @Html.TextBox(name: "Unidade", value: null, htmlAttributes: new { @class = "form-control", @readonly = "readonly", id = "unidade" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    Descrição
-                                                    @Html.TextBox("FITD_DS_DESCRICAO", null, new { @class = "form-control", autofocus = true, id = "desc" })
+                                                    Quantidade*
+                                                    @Html.TextBox("FITD_QN_QUANTIDADE", null, new { @class = "form-control", autofocus = true, id = "qtde" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     <span class="btn btn-success btn-sm" onclick="IncluirInsumoTabela()">Incluir Componente</span>
@@ -147,7 +147,6 @@
                                                                 <th>Componente</th>
                                                                 <th>Unidade</th>
                                                                 <th>Quantidade</th>
-                                                                <th>Descrição</th>
                                                                 <th>Ações</th>
                                                             </tr>
                                                         </thead>
@@ -163,7 +162,7 @@
                                 <div class="form-group">
                                     <br />
                                     @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
-                                    <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Ficha Técnica</button>
+                                    <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Composição</button>
                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFT", controller: "FichaTecnica")
                                     @Html.ButtonLinkIndex(text: "Dashboard", controller: "FichaTecnica", action: "MontarTelaDashboardEstoque")
                                 </div>
@@ -258,7 +257,7 @@
                     + '<td><input name="rowIns" type="hidden" value="' + $('#ins option:selected').val() + '" />' + $('#ins option:selected').text() + '</td>'
                     + '<td>' + unidade + '</td>'
                     + '<td><input name="rowQtde" type="hidden" value="' + $('#qtde').val() + '" />' + $('#qtde').val() + '</td>'
-                    + '<td><input name="rowDesc" type="hidden" value="' + $('#desc').val() + '" />' + $('#desc').val() + '</td>'
+                    //+ '<td><input name="rowDesc" type="hidden" value="' + $('#desc').val() + '" />' + $('#desc').val() + '</td>'
                     + '<td><span style="color: #337ab7; cursor: pointer;" class="fa fa-trash-o" onclick="apagaRow($(this))"></span></td>'
                     + '</tr>'
                 );
@@ -266,7 +265,7 @@
                 var data = {
                     "PROD_CD_ID": $('#ins option:selected').val()
                     , "FITD_QN_QUANTIDADE": $('#qtde').val()
-                    , "FITD_DS_DESCRICAO": $('#desc').val()
+                //    , "FITD_DS_DESCRICAO": $('#desc').val()
                 }
 
                 $.ajax({
@@ -313,6 +312,21 @@
         }
     </script>
 
+    <script>
+        function GetUnidadeInsumo(id) {
+            var data = {
+                id: id
+            }
+            $.ajax({
+                url: '../FichaTecnica/GetUnidadeInsumo'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    $('#unidade').val(r.unidade);
+                }
+            });
+        }
+    </script>
     <script type="text/javascript">
         $(function () {
             $("#cpf").mask("999.999.999-99");

@@ -87,7 +87,6 @@ namespace MvcMapping.Mappers
             CreateMap<PEDIDO_COMPRA, PedidoCompraViewModel>();
             CreateMap<PEDIDO_COMPRA_ACOMPANHAMENTO, PedidoCompraAcompanhamentoViewModel>();
             CreateMap<ITEM_PEDIDO_COMPRA, ItemPedidoCompraViewModel>();
-
         }
     }
 }

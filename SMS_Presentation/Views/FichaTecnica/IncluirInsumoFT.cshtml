@@ -42,7 +42,7 @@
                 <div class="col-lg-5 col-md-5 col-xs-12">
                     @Html.HiddenFor(m => m.FITE_CD_ID)
                     @Html.HiddenFor(m => m.FITD_IN_ATIVO)
-                    Insumo*
+                    Componente*
                     @Html.DropDownListFor(m => m.PROD_CD_ID, (SelectList)ViewBag.Insumos, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "GetUnidadeInsumo($(this).val())" })
                     @Html.ValidationMessageFor(m => m.PROD_CD_ID, "", new { @style = "color:red" })
                 </div>

@@ -369,6 +369,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Insumos = new SelectList(prodApp.GetAllItens(idAss).Where(p => p.PROD_IN_TIPO_PRODUTO == 2).OrderBy(x => x.PROD_NM_NOME).ToList<PRODUTO>(), "PROD_CD_ID", "PROD_NM_NOME");
             if (ModelState.IsValid)
             {
+
                 try
                 {
                     // Executa a operação
@@ -425,7 +426,7 @@ namespace ERP_CRM_Solution.Controllers
                     // Sucesso
                     if ((Int32)Session["VoltaFTDash"] == 10)
                     {
-                        return RedirectToAction("EditarProduto", new { id = (Int32)Session["IdProduto"] });
+                        return RedirectToAction("EditarProduto", "Produto", new { id = (Int32)Session["IdProduto"] });
                     }
                     if ((Int32)Session["VoltaComposto"] == 0)
                     {
