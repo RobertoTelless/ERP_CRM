@@ -88,6 +88,7 @@
                     <div class="form-group">
                         <br />
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCP", controller: "ContaPagar")
+                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "ContaPagar", action: "MontarTelaDashboardFinanceiro")
                     </div>
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
@@ -112,13 +113,11 @@
                                         <div class="form-group">
                                             @Html.ButtonLinkIndex(text: "Duplicar Lançamento", action: "DuplicarCP", controller: "ContaPagar", htmlAttributes: new { id = Model.CAPA_CD_ID })
                                             @Html.ButtonActionSubmit(text: "Confirma Edição de Lançamento", htmlAttributes: new { id = "basictoast" })
-                                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCP", controller: "ContaPagar")
-                                            @Html.ButtonLinkIndex(text: "Dashboard", controller: "ContaPagar", action: "MontarTelaDashboardFinanceiro")
                                         </div>
 
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <div class="col-lg-6 col-md-6 col-xs-12" style="color: green; font-weight: bold">
                                                     @Html.HiddenFor(m => m.CAPA_CD_ID)
                                                     @Html.HiddenFor(m => m.CAPA_DT_LIQUIDACAO)
                                                     @Html.HiddenFor(m => m.CAPA_DT_INICIO_PARCELAS)
@@ -139,19 +138,12 @@
                                                     @Html.HiddenFor(m => m.CAPA_VL_PARCIAL)
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                     Fornecedor
-                                                    <div class="input-group">
-                                                        <select name="FORN_CD_ID" id="lstForn" class="form-control" data-val="true" style="display: none;" autofocus>
-                                                            <option>Selecionar</option>
-                                                        </select>
-                                                        <span class="input-group-addon">
-                                                            @Html.TableLinkAction("IncluirFornecedor", "ContaPagar", null, "glyphicon glyphicon-plus", "Adicionar Fornecedor")
-                                                        </span>
-                                                    </div>
+                                                    @Html.TextBoxFor(m => m.FORNECEDOR.FORN_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    PLano de Contas
+                                                    Plano de Contas
                                                     @Html.DropDownListFor(m => m.CECU_CD_ID, (SelectList)ViewBag.CC, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.CECU_CD_ID, "", new { @style = "color:red" })
                                                 </div>
@@ -190,7 +182,7 @@
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Data de Emissão
-                                                    @Html.TextBoxFor(m => m.CAPA_DT_LANCAMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                                    @Html.TextBoxFor(m => m.CAPA_DT_LANCAMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                     @Html.ValidationMessageFor(m => m.CAPA_DT_LANCAMENTO, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
@@ -198,12 +190,11 @@
                                                     @Html.TextBoxFor(m => m.CAPA_DT_COMPETENCIA, "{0:MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.CAPA_DT_COMPETENCIA, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                     Valor
-                                                    @Html.TextBoxFor(m => m.CAPA_VL_VALOR, "{0:n2}", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.CAPA_VL_VALOR, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.CAPA_VL_VALOR, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12" style="color: brown; font-weight: bold">
                                                     Data de Vencimento
                                                     @if (Model.Parcelado || Model.Parcial)
                                                     {
@@ -215,24 +206,17 @@
                                                     }
                                                     @Html.ValidationMessageFor(m => m.CAPA_DT_VENCIMENTO, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12" style="color: darkblue; font-weight: bold">
                                                     Saldo
                                                     @Html.TextBoxFor(m => m.CAPA_VL_SALDO, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                                 @if (Model.CAPA_NR_ATRASO > 0)
                                                 {
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12" style="color: red; font-weight: bold">
                                                         Atraso
                                                         @Html.TextBoxFor(m => m.CAPA_NR_ATRASO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                     </div>
                                                 }
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <br />
-                                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                                @Html.ButtonActionSubmit(text: "Confirma Edição de Lançamento", htmlAttributes: new { id = "basictoast" })
-                                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCP", controller: "ContaPagar")
                                             </div>
                                         </div>
                                     }
@@ -316,13 +300,13 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                         Data Liquidação
                                                         @Html.TextBoxFor(m => m.CAPA_DT_LIQUIDACAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true , @readonly="readonly" })
                                                     </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                         Valor Original
-                                                        @Html.TextBoxFor(m => m.CAPA_VL_VALOR,  "{0:n2}",new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                        @Html.TextBoxFor(m => m.CAPA_VL_VALOR, "{0:n2}",new { @class = "form-control", autofocus = true , @readonly="readonly"})
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Descontos(-)
@@ -372,11 +356,11 @@
                                                             @Html.TextBoxFor(m => m.CAPA_DT_LIQUIDACAO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker",  @id = "data5", autofocus = true })
                                                             @Html.ValidationMessageFor(m => m.CAPA_DT_LIQUIDACAO, "",new { @style="color:red" })
                                                         </div>
-                                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                                        <div class="col-lg-4 col-md-4 col-xs-12" style="color: green; font-weight: bold">
                                                             Conta Bancária
                                                             @Html.TextBoxFor(m => m.FORMA_PAGAMENTO.CONTA_BANCO.COBA_NM_NOME, new { @class = "form-control", autofocus = true , @readonly="readonly"})
                                                         </div>
-                                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                                        <div class="col-lg-4 col-md-4 col-xs-12" style="color: green; font-weight: bold">
                                                             Forma de Pagamento
                                                             @Html.TextBoxFor(m => m.FORMA_PAGAMENTO.FOPA_NM_NOME, new { @class = "form-control", autofocus = true , @readonly="readonly"})
                                                         </div>
@@ -386,7 +370,7 @@
 	                                                    {
                                                             @Html.HiddenFor(m => m.CAPA_VL_PARCIAL)
                                                             @Html.HiddenFor(m => m.CAPA_VL_SALDO)
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                                 Valor Original
                                                                 @Html.TextBoxFor(m => m.CAPA_VL_VALOR, "{0:n2}",new { @class = "form-control", autofocus = true, @readonly="readonly", @id = "valor"})
                                                             </div>
@@ -414,11 +398,11 @@
                                                         else
                                                         {
                                                             @Html.HiddenFor(m => m.CAPA_VL_VALOR)
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                                 Valor já Pago
                                                                 @Html.TextBoxFor(m => m.CAPA_VL_PARCIAL, "{0:n2}",new { @class = "form-control", autofocus = true, @readonly="readonly"})
                                                             </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12" style="color: darkblue; font-weight: bold">
                                                                 Saldo a Receber
                                                                 @Html.TextBoxFor(m => m.CAPA_VL_SALDO,"{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly", @id = "saldo"})
                                                             </div>
@@ -562,11 +546,11 @@
                                                     if (Model.CAPA_IN_LIQUIDADA == 0)
 	                                                {
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                                 Valor Recebido
                                                                 @Html.TextBoxFor(m => m.CAPA_VL_PARCIAL, "{0:n2}",new { @class = "form-control", autofocus = true , @readonly="readonly"})
                                                             </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12" style="color: darkblue; font-weight: bold">
                                                                 Saldo a Receber
                                                                 @Html.TextBoxFor(m => m.CAPA_VL_SALDO, "{0:n2}", new { @class = "form-control", autofocus = true , @readonly="readonly"})
                                                             </div>
@@ -575,7 +559,7 @@
                                                     else
                                                     {
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                                 Valor Recebido
                                                                 @Html.TextBoxFor(m => m.CAPA_VL_VALOR_PAGO, "{0:n2}",new { @class = "form-control", autofocus = true , @readonly="readonly"})
                                                             </div>
@@ -587,7 +571,7 @@
                                                     if (Model.CAPA_IN_LIQUIDADA == 0 & Model.CAPA_IN_PARCELADA.Value == 0)
 	                                                {
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                                 Valor Total
                                                                 @Html.TextBoxFor(m => m.CAPA_VL_VALOR, "{0:n2}",new { @class = "form-control", autofocus = true , @readonly="readonly"})
                                                             </div>
@@ -723,23 +707,23 @@
                                         <br />
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                     Valor Parcelado
                                                     @Html.TextBoxFor(m => m.CAPA_VL_PARCELADO, "{0:n2}",new { @class = "form-control", autofocus = true , @readonly="readonly"})
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                     Num.Parcelas
                                                     @Html.TextBoxFor(m => m.CAPA_IN_PARCELAS, new { @class = "form-control", autofocus = true , @readonly="readonly"})
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                     Data inicial
                                                     @Html.TextBoxFor(m => m.CAPA_DT_INICIO_PARCELAS, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true , @readonly="readonly"})
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-3 col-md-3 col-xs-12" style="color: green; font-weight: bold">
                                                     Periodicidade
                                                     @Html.TextBoxFor(m => m.PERIODICIDADE.PERI_NM_NOME, new { @class = "form-control", autofocus = true , @readonly="readonly"})
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12" style="color: darkblue; font-weight: bold">
                                                     Saldo
                                                     @Html.TextBoxFor(m => m.CAPA_VL_SALDO,"{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly"})
                                                 </div>                                                
@@ -801,7 +785,7 @@
                                                         @Html.DropDownListFor(m => m.PERI_CD_ID, (SelectList)ViewBag.Periodicidade, "Selecionar", new { @class = "form-control", autofocus = true })                            
                                                         @Html.ValidationMessageFor(m => m.PERI_CD_ID, "", new { @style = "color:red" })
                                                     </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12" style="color: darkblue; font-weight: bold">
                                                         Saldo
                                                         @Html.TextBoxFor(m => m.CAPA_VL_SALDO,"{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly"})
                                                     </div>
@@ -919,15 +903,8 @@
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                     @Html.HiddenFor(m => m.CAPA_IN_TIPO_DOC)
                                                     Observações
-                                                    @Html.TextAreaFor(m => m.CAPA_TX_OBSERVACOES, new { @class = "form-control", style = "width: 1040px; height: 400px;", autofocus = true , @readonly="readonly"})
+                                                    @Html.TextAreaFor(m => m.CAPA_TX_OBSERVACOES, new { @class = "form-control", style = "width: 1040px; height: 400px;", autofocus = true } )
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <br />
-                                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                                @Html.ButtonActionSubmit(text: "Confirma Edição de Lançamento", htmlAttributes: new { id = "basictoast" })
-                                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCP", controller: "ContaPagar")
                                             </div>
                                         </div>
                                     }
