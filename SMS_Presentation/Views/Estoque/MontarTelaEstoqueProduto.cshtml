@@ -77,7 +77,7 @@
                                 @Html.ButtonActionSubmit(text: "Filtrar")
                                 @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Estoque", action: "RetirarFiltroProduto")
                                 @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Estoque", action: "GerarRelatorioEstoqueProduto")
-                                @Html.ButtonLinkIndex(text: "Voltar", controller: "Estoque", action: "MontarTelaDashboardEstoque")
+                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Estoque", action: "MontarTelaDashboardEstoque")
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                                             <input type="hidden" name="btwZeroMinima" value="@(cond.PREF_QN_ESTOQUE > 0 && cond.PREF_QN_ESTOQUE < cond.PRODUTO.PROD_QN_QUANTIDADE_MINIMA ? 1 : 0)" />
                                             <input type="hidden" name="negativo" value="@(cond.PREF_QN_ESTOQUE <= 0 ? 1 : 0)" />
                                             <input type="hidden" name="abaixoMin" value="@(cond.PREF_QN_ESTOQUE < cond.PRODUTO.PROD_QN_QUANTIDADE_MINIMA ? 1 : 0)" />
-                                            <input type="hidden" name="acimaMin" value="@(cond.PREF_QN_ESTOQUE > cond.PRODUTO.PROD_QN_QUANTIDADE_MINIMA ? 1 : 0)" />
+                                            <input type="hidden" name="acimaMin" value="@(cond.PREF_QN_ESTOQUE > cond.PRODUTO.PROD_QN_QUANTIDADE_MAXIMA ? 1 : 0)" />
                                         </td>
                                         @if (cond.PRODUTO.PROD_IN_TIPO_PRODUTO == 1)
 	                                    {

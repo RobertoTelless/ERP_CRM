@@ -61,7 +61,7 @@
                     {
 
                         @*Filtro Produto*@
-                        <div class="container-fluid" id="prodContainer">
+                        <div class="container-fluid">
                             <div class="row">
                                 <h3>Produto</h3>
                             </div>
@@ -117,7 +117,7 @@
                                     @Html.ButtonActionSubmit("Filtrar")
                                     @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Estoque", action: "RetirarFiltroInventario")
                                     @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Estoque", action: "GerarRelatorioInventarioFiltro")
-                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "Estoque", action: "Voltar")
+                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Estoque", action: "MontarTelaDashboardEstoque")
                                 </div>
                             </div>
                         </div>

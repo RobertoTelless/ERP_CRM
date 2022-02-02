@@ -1363,14 +1363,6 @@ namespace ERP_CRM_Solution.Controllers
                             else if (vm.MOVMT_IN_OPERACAO == 3)
                             {
                                 pef.PREF_QN_QUANTIDADE_ALTERADA = pef.PREF_QN_ESTOQUE;
-                                if (pef.PREF_QN_ESTOQUE < 0)
-                                {
-                                    vm.MOVMT_IN_OPERACAO = 1;
-                                }
-                                else
-                                {
-                                    vm.MOVMT_IN_OPERACAO = 2;
-                                }
                                 pef.PREF_QN_ESTOQUE = 0;
                                 pef.PREF_DT_ULTIMO_MOVIMENTO = DateTime.Now;
                             }
@@ -1410,13 +1402,18 @@ namespace ERP_CRM_Solution.Controllers
                             mov.MOEP_IN_OPERACAO = vm.MOVMT_IN_OPERACAO;
                             if (vm.MOVMT_IN_OPERACAO == 1)
                             {
-                                mov.MOEP_IN_TIPO_MOVIMENTO = (Int32)vm.MOVMT_IN_TIPO_MOVIMENTO_ENTRADA;
+                                mov.MOEP_IN_TIPO_MOVIMENTO = 1;
                                 mov.MOEP_IN_ORIGEM = GetTipoEntrada().Where(x => x.Value == vm.MOVMT_IN_TIPO_MOVIMENTO_ENTRADA.ToString()).Select(x => x.Text).First();
                             }
-                            else if (vm.MOVMT_IN_OPERACAO != 4)
+                            else if (vm.MOVMT_IN_OPERACAO == 2)
                             {
-                                mov.MOEP_IN_TIPO_MOVIMENTO = (Int32)vm.MOVMT_IN_TIPO_MOVIMENTO_SAIDA;
+                                mov.MOEP_IN_TIPO_MOVIMENTO = 2;
                                 mov.MOEP_IN_ORIGEM = GetTipoSaida().Where(x => x.Value == vm.MOVMT_IN_TIPO_MOVIMENTO_SAIDA.ToString()).Select(x => x.Text).First();
+                            }
+                            else if(vm.MOVMT_IN_OPERACAO == 3)
+                            {
+                                mov.MOEP_IN_TIPO_MOVIMENTO = 3;
+                                mov.MOEP_IN_ORIGEM = "Zeramento de Estoque";
                             }
                             else
                             {
@@ -1458,7 +1455,7 @@ namespace ERP_CRM_Solution.Controllers
                     ViewBag.flagProdIns = 1;
                     ViewBag.ListaMovimento = listaMvmtProd;
                     Session["ListaMovimentoProduto"] = listaMvmtProd;
-
+                    Session["ListaProdEstoqueFilial"] = null;
                     if (vm.btnVolta == null)
                     {
                         return View();
@@ -2070,11 +2067,19 @@ namespace ERP_CRM_Solution.Controllers
 
             // Recupera listas e contagem
             List<MOVIMENTO_ESTOQUE_PRODUTO> listaTotal = moepApp.GetAllItens(idAss);
+            if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+            {
+                listaTotal = listaTotal.Where(p => p.FILI_CD_ID == usuario.FILI_CD_ID).ToList();
+            }            
+            
             List<MOVIMENTO_ESTOQUE_PRODUTO> listaTotalEntrada = listaTotal.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 1).ToList();
             List<MOVIMENTO_ESTOQUE_PRODUTO> listaTotalSaida= listaTotal.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 2).ToList();
             List<MOVIMENTO_ESTOQUE_PRODUTO> listaMes = listaTotal.Where(p => p.MOEP_DT_MOVIMENTO.Month == DateTime.Today.Date.Month & p.MOEP_DT_MOVIMENTO.Year == DateTime.Today.Date.Year).ToList();
             List<MOVIMENTO_ESTOQUE_PRODUTO> listaMesEntrada = listaMes.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 1).ToList();
             List<MOVIMENTO_ESTOQUE_PRODUTO> listaMesSaida = listaMes.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 2).ToList();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> listaMesCompra = listaMes.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 5).ToList();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> listaMesZeramento = listaMes.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 3).ToList();
+            List<MOVIMENTO_ESTOQUE_PRODUTO> listaMesTransf = listaMes.Where(p => p.MOEP_IN_TIPO_MOVIMENTO == 4).ToList();
 
             // Produtos
             List<PRODUTO> prodTotal = prodApp.GetAllItens(idAss);
@@ -2118,12 +2123,13 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.TotalEntradaSum = listaTotalEntrada.Count;
             ViewBag.TotalSaida = listaTotalSaida;
             ViewBag.TotalSaidaSum = listaTotalSaida.Count;
+            
             ViewBag.Mes = listaMes;
             ViewBag.MesSum = listaMes.Count;
             ViewBag.MesEntrada = listaMesEntrada;
-            ViewBag.MesEntradaSum = listaMesEntrada.Count;
+            ViewBag.MesEntradaSum = (listaMesEntrada.Count) + (listaMesCompra.Count);
             ViewBag.MesSaida = listaMesSaida;
-            ViewBag.MesSaidaSum = listaMesSaida.Count;
+            ViewBag.MesSaidaSum = (listaMesSaida.Count) + (listaMesZeramento.Count);
 
             // Resumo Mes 
             List<DateTime> datas = listaMes.Select(p => p.MOEP_DT_MOVIMENTO.Date).Distinct().ToList();
@@ -2141,7 +2147,10 @@ namespace ERP_CRM_Solution.Controllers
             Session["ListaDatas"] = datas;
             Session["ListaMovResumo"] = lista;
             Session["Entradas"] = listaMesEntrada.Count;
-            Session["Saidas"] = listaMesSaida.Count;
+            Session["Saidas"] = (listaMesSaida.Count);
+            Session["Zeramento"] = (listaMesZeramento.Count);
+            Session["Transf"] = (listaMesTransf.Count);
+            Session["Compra"] = (listaMesCompra.Count);
             Session["ListaMes"] = listaMes;
 
             // Resumo Tipo  
@@ -2153,6 +2162,18 @@ namespace ERP_CRM_Solution.Controllers
             mod = new ModeloViewModel();
             mod.Data = "Saídas";
             mod.Valor = listaMesSaida.Count;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Compra Expressa";
+            mod.Valor = listaMesCompra.Count;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Zeramento de Estoque";
+            mod.Valor = listaMesZeramento.Count;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Transferência";
+            mod.Valor = listaMesTransf.Count;
             lista1.Add(mod);
             ViewBag.ListaSituacao = lista1;
             Session["ListaSituacao"] = lista1;
@@ -2170,6 +2191,9 @@ namespace ERP_CRM_Solution.Controllers
 
             Int32 q1 = (Int32)Session["Entradas"];
             Int32 q2 = (Int32)Session["Saidas"];
+            Int32 q3 = (Int32)Session["Zeramento"];
+            Int32 q4 = (Int32)Session["Transf"];
+            Int32 q5 = (Int32)Session["Compra"];
 
             desc.Add("Entradas");
             quant.Add(q1);
@@ -2177,6 +2201,15 @@ namespace ERP_CRM_Solution.Controllers
             desc.Add("Saídas");
             quant.Add(q2);
             cor.Add("#FFAE00");
+            desc.Add("Zeramento de Estoque");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+            desc.Add("Transferências");
+            quant.Add(q4);
+            cor.Add("#D63131");
+            desc.Add("Compras Expressas");
+            quant.Add(q5);
+            cor.Add("#27A1C6");
 
             Hashtable result = new Hashtable();
             result.Add("labels", desc);
@@ -2299,7 +2332,7 @@ namespace ERP_CRM_Solution.Controllers
             mov.MOEP_IN_CHAVE_ORIGEM = 5;
             mov.MOEP_IN_OPERACAO = 1;
             mov.MOEP_IN_ORIGEM = "Compra Expressa";
-            mov.MOEP_IN_TIPO_MOVIMENTO = 0;
+            mov.MOEP_IN_TIPO_MOVIMENTO = 5;
             mov.MOEP_QN_ALTERADA = vm.QTDE_PROD;
             mov.MOEP_QN_ANTES = qnAntes;
             mov.MOEP_QN_DEPOIS = vm.QTDE_PROD;
