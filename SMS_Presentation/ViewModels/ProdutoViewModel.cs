@@ -154,7 +154,9 @@ namespace ERP_CRM_Solution.ViewModels
         public string Embalagem { get; set; }
         public Nullable<int> PROD_IN_KIT { get; set; }
 
-        public bool AvisaMinima
+        public Nullable<int> EntradaSaida { get; set; }
+
+        public bool AvisaMinima 
         {
             get
             {

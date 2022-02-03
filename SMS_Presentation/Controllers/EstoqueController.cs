@@ -197,6 +197,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             listaMasterProdFili = null;
             Session["FiltroMvmtProd"] = false;
+            Session["FiltroMov"] = false;
             //Session["ListaProdEstoqueFilial"] = null;
             return View(objetoProd);
         }
@@ -738,6 +739,39 @@ namespace ERP_CRM_Solution.Controllers
             return View(vm);
         }
 
+        public ActionResult VerMovimentacaoEstoqueProdutoNova(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            List<SelectListItem> filtroEntradaSaida = new List<SelectListItem>();
+            filtroEntradaSaida.Add(new SelectListItem() { Text = "Entrada", Value = "1" });
+            filtroEntradaSaida.Add(new SelectListItem() { Text = "Saída", Value = "2" });
+            ViewBag.FiltroEntradaSaida = new SelectList(filtroEntradaSaida, "Value", "Text");
+
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
+
+            // Prepara view
+            PRODUTO_ESTOQUE_FILIAL pef = pefApp.GetItemById(id);
+            PRODUTO item = prodApp.GetItemById(pef.PROD_CD_ID);
+            List<MOVIMENTO_ESTOQUE_PRODUTO> lista = item.MOVIMENTO_ESTOQUE_PRODUTO.Where(x => x.FILI_CD_ID == pef.FILI_CD_ID).ToList();
+            if ((Boolean)Session["FiltroMvmtProd"])
+            {
+                Session["FiltroMvmtProd"] = false;
+                lista = lista.Where(x => x.MOEP_IN_TIPO_MOVIMENTO == (Int32)Session["EntradaSaida"]).ToList();
+                objetoProdAntes = item;
+            }
+
+            Session["ItemMovimento"] = pef;
+            Session["IdMovimento"] = id;
+            Session["ListaMovimento"] = lista;
+            ViewBag.Lista = lista;
+            objetoProdAntes = item;
+            ProdutoViewModel vm = Mapper.Map<PRODUTO, ProdutoViewModel>(item);
+            return View(vm);
+        }
+
         public ActionResult VoltarAnexoProduto()
         {
             if ((String)Session["Ativa"] == null)
@@ -924,6 +958,14 @@ namespace ERP_CRM_Solution.Controllers
 
         [HttpPost]
         public ActionResult FiltrarMovimentacaoEstoqueProduto(ProdutoViewModel vm, Int32? EntradaSaida)
+        {
+            Session["FiltroMvmtProd"] = true;
+            Session["EntradaSaida"] = vm.EntradaSaida;
+            return RedirectToAction("VerMovimentacaoEstoqueProduto", new { id = vm.PROD_CD_ID });
+        }
+
+        [HttpPost]
+        public ActionResult FiltrarMovimentacaoEstoqueProdutoNova(ProdutoViewModel vm)
         {
             Session["FiltroMvmtProd"] = true;
             Session["EntradaSaida"] = EntradaSaida;

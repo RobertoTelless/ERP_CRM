@@ -3384,6 +3384,7 @@
     <Content Include="Views\Compra\MontarTelaDashboardCompra.cshtml" />
     <Content Include="Views\Estoque\MontarTelaInventario.cshtml" />
     <Content Include="Views\ContaPagar\IncluirCPExpressa.cshtml" />
+    <Content Include="Views\Estoque\VerMovimentacaoEstoqueProdutoNova.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3404,8 +3405,12 @@
     <Folder Include="Imagens\2\Clientes\6\Fotos\" />
     <Folder Include="Imagens\2\Clientes\9\Anexos\" />
     <Folder Include="Imagens\2\Clientes\9\Fotos\" />
+    <Folder Include="Imagens\2\ContaPagar\0\Anexos\" />
     <Folder Include="Imagens\2\ContaPagar\3\Anexos\" />
     <Folder Include="Imagens\2\ContaPagar\4\Anexos\" />
+    <Folder Include="Imagens\2\ContaPagar\5\Anexos\" />
+    <Folder Include="Imagens\2\ContaPagar\6\Anexos\" />
+    <Folder Include="Imagens\2\ContaPagar\7\Anexos\" />
     <Folder Include="Imagens\2\ContaReceber\" />
     <Folder Include="Imagens\2\Equipamento\" />
     <Folder Include="Imagens\2\Filial\1\Anexos\" />
