@@ -3406,6 +3406,10 @@
     <Folder Include="Imagens\2\Clientes\9\Anexos\" />
     <Folder Include="Imagens\2\Clientes\9\Fotos\" />
     <Folder Include="Imagens\2\ContaPagar\0\Anexos\" />
+    <Folder Include="Imagens\2\ContaPagar\20\Anexos\" />
+    <Folder Include="Imagens\2\ContaPagar\21\Anexos\" />
+    <Folder Include="Imagens\2\ContaPagar\22\Anexos\" />
+    <Folder Include="Imagens\2\ContaPagar\23\Anexos\" />
     <Folder Include="Imagens\2\ContaPagar\3\Anexos\" />
     <Folder Include="Imagens\2\ContaPagar\4\Anexos\" />
     <Folder Include="Imagens\2\ContaPagar\5\Anexos\" />
