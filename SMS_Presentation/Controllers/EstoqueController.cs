@@ -222,6 +222,16 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VerMovimentacaoEstoqueProduto", new { id = id });
         }
 
+        public ActionResult RetirarFiltroMovimentacaoEstoqueProdutoNova(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["FiltroMvmtProd"] = false;
+            return RedirectToAction("VerMovimentacaoEstoqueProduto", new { id = (Int32)Session["IdMovimento"] });
+        }
+
         [HttpPost]
         public ActionResult FiltrarProduto(PRODUTO item)
         {
@@ -756,6 +766,8 @@ namespace ERP_CRM_Solution.Controllers
             PRODUTO_ESTOQUE_FILIAL pef = pefApp.GetItemById(id);
             PRODUTO item = prodApp.GetItemById(pef.PROD_CD_ID);
             List<MOVIMENTO_ESTOQUE_PRODUTO> lista = item.MOVIMENTO_ESTOQUE_PRODUTO.Where(x => x.FILI_CD_ID == pef.FILI_CD_ID).ToList();
+            
+            // Filtro
             if ((Boolean)Session["FiltroMvmtProd"])
             {
                 Session["FiltroMvmtProd"] = false;
@@ -967,9 +979,13 @@ namespace ERP_CRM_Solution.Controllers
         [HttpPost]
         public ActionResult FiltrarMovimentacaoEstoqueProdutoNova(ProdutoViewModel vm)
         {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
             Session["FiltroMvmtProd"] = true;
-            Session["EntradaSaida"] = EntradaSaida;
-            return RedirectToAction("VerMovimentacaoEstoqueProduto", new { id = vm.PROD_CD_ID });
+            Session["EntradaSaida"] = vm.EntradaSaida;
+            return RedirectToAction("VerMovimentacaoEstoqueProdutoNova", new { id = (Int32)Session["IdMovimento"] });
         }
 
         public SelectList GetTipoEntrada()
@@ -1454,16 +1470,15 @@ namespace ERP_CRM_Solution.Controllers
                             }
                             else if(vm.MOVMT_IN_OPERACAO == 3)
                             {
-                                mov.MOEP_IN_TIPO_MOVIMENTO = 3;
+                                mov.MOEP_IN_TIPO_MOVIMENTO = 2;
                                 mov.MOEP_IN_ORIGEM = "Zeramento de Estoque";
                             }
-                            else
+                            else if(vm.MOVMT_IN_OPERACAO == 4)
                             {
-                                mov.MOEP_IN_TIPO_MOVIMENTO = 4;
+                                mov.MOEP_IN_TIPO_MOVIMENTO = 2;
                                 mov.MOEP_IN_ORIGEM = "Tranferência entre filiais";
                             }
                             mov.MOEP_IN_CHAVE_ORIGEM = 1;
-
                             mov.PROD_CD_ID = vm.REGISTROS[i];
                             mov.MOEP_QN_QUANTIDADE = vm.QUANTIDADE[i];
                             mov.MOEP_DT_MOVIMENTO = vm.MOVMT_DT_MOVIMENTO;
@@ -1476,6 +1491,12 @@ namespace ERP_CRM_Solution.Controllers
                             mov.MOEP_QN_ALTERADA = vm.QUANTIDADE[i];
                             mov.MOEP_QN_DEPOIS = vm.QUANTIDADE[i];
                             listaMvmtProd.Add(mov);
+
+                            // Se Transferencia...
+                            if (vm.MOVMT_IN_OPERACAO == 4)
+                            {
+
+                            }
 
                             Int32 voltaPef = pefApp.ValidateEdit(pef, pefAntes, usuario);
                         }

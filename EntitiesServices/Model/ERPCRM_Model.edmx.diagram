@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="80115c82d7a64edf981abfe31c7c1bfe" Name="Diagram1">
+      <Diagram DiagramId="80115c82d7a64edf981abfe31c7c1bfe" Name="Diagram1" ZoomLevel="48">
         <EntityTypeShape EntityType="ERP_CRMModel.AGENDA" Width="1.5" PointX="7.5" PointY="201.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ERP_CRMModel.AGENDA_ANEXO" Width="1.5" PointX="9.75" PointY="216.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ERP_CRMModel.AGENDA_VINCULO" Width="1.5" PointX="24.75" PointY="217.375" IsExpanded="true" />

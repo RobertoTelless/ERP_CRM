@@ -143,14 +143,14 @@ namespace ApplicationServices.Services
                     String footer = _usuService.GetTemplate("PAGCPAG").TEMP_TX_DADOS;
 
                     // Prepara corpo do e-mail  
-                    header = header.Replace("{Nome}", item.CONTA_PAGAR.USUARIO.USUA_NM_NOME);
+                    header = header.Replace("{Nome}", cp.USUARIO.USUA_NM_NOME);
                     body = body.Replace("{Emissor}", usuario.ASSINANTE.ASSI_NM_NOME);
-                    footer = footer.Replace("{DataLanc}", item.CONTA_PAGAR.CAPA_DT_LANCAMENTO.Value.ToLongDateString());
+                    footer = footer.Replace("{DataLanc}", cp.CAPA_DT_LANCAMENTO.Value.ToLongDateString());
                     footer = footer.Replace("{Valor}", item.CPPA_VL_VALOR.ToString());
                     footer = footer.Replace("{DataVenc}", item.CPPA_DT_VENCIMENTO.Value.ToLongDateString());
                     footer = footer.Replace("{DataPag}", item.CPPA_DT_QUITACAO.Value.ToLongDateString());
                     footer = footer.Replace("{Desc}", item.CPPA_DS_DESCRICAO);
-                    footer = footer.Replace("{Numero}", item.CAPA_CD_ID.ToString());
+                    footer = footer.Replace("{Numero}", cp.CAPA_NR_DOCUMENTO);
 
                     // Concatena
                     String emailBody = header + body + footer;
@@ -162,7 +162,7 @@ namespace ApplicationServices.Services
                     mensagem.ASSUNTO = "Pagamento de Lançamento - Conta a Pagar";
                     mensagem.CORPO = emailBody;
                     mensagem.DEFAULT_CREDENTIALS = false;
-                    mensagem.EMAIL_DESTINO = item.CONTA_PAGAR.USUARIO.USUA_NM_EMAIL;
+                    mensagem.EMAIL_DESTINO = cp.USUARIO.USUA_NM_EMAIL;
                     mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
                     mensagem.ENABLE_SSL = true;
                     mensagem.NOME_EMISSOR = usuario.USUA_NM_NOME;
@@ -184,8 +184,8 @@ namespace ApplicationServices.Services
 
                     // Prepara texto
                     String texto = _usuService.GetTemplate("SMSCPAG").TEMP_TX_CORPO; ;
-                    texto = texto.Replace("{Nome}", item.CONTA_PAGAR.USUARIO.USUA_NM_NOME);
-                    texto = texto.Replace("{Numero}", item.CAPA_CD_ID.ToString());
+                    texto = texto.Replace("{Nome}", cp.USUARIO.USUA_NM_NOME);
+                    texto = texto.Replace("{Numero}", cp.CAPA_NR_DOCUMENTO);
                     texto = texto.Replace("{Emissor}", usuario.ASSINANTE.ASSI_NM_NOME);
                     String smsBody = texto;
                     String erro = null;

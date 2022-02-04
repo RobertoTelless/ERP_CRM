@@ -227,7 +227,7 @@ namespace ERP_CRM_Solution.Controllers
             atrasado.Add(new SelectListItem() { Text = "Sim", Value = "1" });
             atrasado.Add(new SelectListItem() { Text = "Não", Value = "2" });
             ViewBag.Atrasado = new SelectList(atrasado, "Value", "Text");
-            ViewBag.Contas = new SelectList(contaApp.GetAllItens(idAss), "COBA_CD_ID", "COBA_NM_NOME");
+            ViewBag.Contas = new SelectList(contaApp.GetAllItens(idAss).OrderBy(p => p.COBA_NM_NOME_EXIBE_OLD), "COBA_CD_ID", "COBA_NM_NOME_EXIBE_OLD");
             if ((Int32)Session["ErroSoma"] == 2)
             {
                 ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0083", CultureInfo.CurrentCulture));
@@ -745,9 +745,9 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Forn = new SelectList(fornApp.GetAllItens(idAss).OrderBy(x => x.FORN_NM_NOME).ToList<FORNECEDOR>(), "FORN_CD_ID", "FORN_NM_NOME");
             ViewBag.CC = new SelectList(ccApp.GetAllDespesas(idAss).OrderBy(x => x.CECU_NM_EXIBE).ToList<CENTRO_CUSTO>(), "CECU_CD_ID", "CECU_NM_EXIBE");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss), "USUA_CD_ID", "USUA_NM_NOME");
-            ViewBag.Contas = new SelectList(cpApp.GetAllItens(idAss), "COBA_CD_ID", "COBA_NM_NOME_EXIBE");
+            ViewBag.Contas = new SelectList(contaApp.GetAllItens(idAss).OrderBy(p => p.COBA_NM_NOME_EXIBE_OLD), "COBA_CD_ID", "COBA_NM_NOME_EXIBE_OLD");
             ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).Where(p => p.FOPA_IN_TIPO == 1).OrderBy(x => x.FOPA_NM_NOME).ToList<FORMA_PAGAMENTO>(), "FOPA_CD_ID", "FOPA_NM_NOME");
-            ViewBag.Periodicidade = new SelectList(perApp.GetAllItens(idAss), "PERI_CD_ID", "PERI_NM_NOME");
+            ViewBag.Periodicidade = new SelectList(perApp.GetAllItens(idAss).OrderBy(p => p.PERI_NM_NOME), "PERI_CD_ID", "PERI_NM_NOME");
             List<SelectListItem> tipoPag = new List<SelectListItem>();
             tipoPag.Add(new SelectListItem() { Text = "Pagamento Recorrente", Value = "1" });
             tipoPag.Add(new SelectListItem() { Text = "Parcelamento", Value = "2" });
@@ -826,7 +826,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Forn = new SelectList(fornApp.GetAllItens(idAss).OrderBy(x => x.FORN_NM_NOME).ToList<FORNECEDOR>(), "FORN_CD_ID", "FORN_NM_NOME");
             ViewBag.CC = new SelectList(ccApp.GetAllDespesas(idAss).OrderBy(x => x.CECU_NM_EXIBE).ToList<CENTRO_CUSTO>(), "CECU_CD_ID", "CECU_NM_EXIBE");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss), "USUA_CD_ID", "USUA_NM_NOME");
-            ViewBag.Contas = new SelectList(cpApp.GetAllItens(idAss), "COBA_CD_ID", "COBA_NM_NOME_EXIBE");
+            ViewBag.Contas = new SelectList(contaApp.GetAllItens(idAss).OrderBy(p => p.COBA_NM_NOME_EXIBE_OLD), "COBA_CD_ID", "COBA_NM_NOME_EXIBE_OLD");
             ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).OrderBy(x => x.FOPA_NM_NOME).ToList<FORMA_PAGAMENTO>(), "FOPA_CD_ID", "FOPA_NM_NOME");
             ViewBag.Periodicidade = new SelectList(perApp.GetAllItens(idAss), "PERI_CD_ID", "PERI_NM_NOME");
             List<SelectListItem> tipoPag = new List<SelectListItem>();
@@ -968,8 +968,8 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Forn = new SelectList(fornApp.GetAllItens(idAss).OrderBy(x => x.FORN_NM_NOME).ToList<FORNECEDOR>(), "FORN_CD_ID", "FORN_NM_NOME");
             ViewBag.CC = new SelectList(ccApp.GetAllDespesas(idAss).OrderBy(x => x.CECU_NM_EXIBE).ToList<CENTRO_CUSTO>(), "CECU_CD_ID", "CECU_NM_EXIBE");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss), "USUA_CD_ID", "USUA_NM_NOME");
-            ViewBag.Contas = new SelectList(cpApp.GetAllItens(idAss), "COBA_CD_ID", "COBA_NM_NOME_EXIBE");
-            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).OrderBy(x => x.FOPA_NM_NOME).ToList<FORMA_PAGAMENTO>(), "FOPA_CD_ID", "FOPA_NM_NOME");
+            ViewBag.Contas = new SelectList(contaApp.GetAllItens(idAss).OrderBy(p => p.COBA_NM_NOME_EXIBE_OLD), "COBA_CD_ID", "COBA_NM_NOME_EXIBE_OLD");
+            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).Where(p => p.FOPA_IN_TIPO == 1).OrderBy(x => x.FOPA_NM_NOME).ToList<FORMA_PAGAMENTO>(), "FOPA_CD_ID", "FOPA_NM_NOME");
             ViewBag.Periodicidade = new SelectList(perApp.GetAllItens(idAss), "PERI_CD_ID", "PERI_NM_NOME");
             ViewBag.Liquida = 0;
             List<SelectListItem> tipoDoc = new List<SelectListItem>();
@@ -1072,8 +1072,8 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Forn = new SelectList(fornApp.GetAllItens(idAss).OrderBy(x => x.FORN_NM_NOME).ToList<FORNECEDOR>(), "FORN_CD_ID", "FORN_NM_NOME");
             ViewBag.CC = new SelectList(ccApp.GetAllDespesas(idAss).OrderBy(x => x.CECU_NM_EXIBE).ToList<CENTRO_CUSTO>(), "CECU_CD_ID", "CECU_NM_EXIBE");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss), "USUA_CD_ID", "USUA_NM_NOME");
-            ViewBag.Contas = new SelectList(cpApp.GetAllItens(idAss), "COBA_CD_ID", "COBA_NM_NOME_EXIBE");
-            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).OrderBy(x => x.FOPA_NM_NOME).ToList<FORMA_PAGAMENTO>(), "FOPA_CD_ID", "FOPA_NM_NOME");
+            ViewBag.Contas = new SelectList(contaApp.GetAllItens(idAss).OrderBy(p => p.COBA_NM_NOME_EXIBE_OLD), "COBA_CD_ID", "COBA_NM_NOME_EXIBE_OLD");
+            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).Where(p => p.FOPA_IN_TIPO == 1).OrderBy(x => x.FOPA_NM_NOME).ToList<FORMA_PAGAMENTO>(), "FOPA_CD_ID", "FOPA_NM_NOME");
             ViewBag.Periodicidade = new SelectList(perApp.GetAllItens(idAss), "PERI_CD_ID", "PERI_NM_NOME");
             ViewBag.Liquida = 0;
             List<SelectListItem> tipoDoc = new List<SelectListItem>();
@@ -1477,16 +1477,20 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Atrasos = atraso;
 
             Session["TotalCP"] = listaTotal.Count;
-            Session["APagarMes"] = aPagar;
-            Session["Atraso"] = atraso;
-            Session["PagoMes"] = pago;
+            Session["APagarMes"] = pendentes;
+            Session["Atraso"] = atrasos;
+            Session["PagoMes"] = liquidadas;
 
             // Resumo Mes Pagamentos
-            List<DateTime> datas = listaTotal.Where(m => m.CAPA_DT_LIQUIDACAO != null).Select(p => p.CAPA_DT_LIQUIDACAO.Value.Date).Distinct().ToList();
+            List<DateTime> datas = listaTotal.Where(m => m.CAPA_IN_LIQUIDADA == 1).Select(p => p.CAPA_DT_LIQUIDACAO.Value.Date).Distinct().ToList();
             List<ModeloViewModel> lista = new List<ModeloViewModel>();
+            List<CONTA_PAGAR> lista5 = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 1).ToList();
             foreach (DateTime item in datas)
             {
-                Decimal conta = listaTotal.Where(p => p.CAPA_DT_LIQUIDACAO.Value.Date == item).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
+                List<CONTA_PAGAR> lista10 = lista5.Where(p => p.CAPA_DT_LIQUIDACAO.Value.Date == item.Date).ToList();
+                Decimal conta = lista10.Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
+
+                //Decimal conta = listaTotal.Where(p => p.CAPA_DT_LIQUIDACAO.Value.Date == item.Date).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
                 ModeloViewModel mod1 = new ModeloViewModel();
                 mod1.DataEmissao = item;
                 mod1.ValorDec = conta;
