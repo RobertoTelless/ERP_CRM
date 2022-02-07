@@ -5,7 +5,8 @@
             <li class="nav-header">
                 <div class="dropdown profile-element">
                     <span>
-                        <img alt="image" class="img-circle" src="@Url.Content((String)Session["Foto"])" style = "width: auto; height: auto; max-height: 50px; max-width: 50px;" />
+                        @*<img alt="image" class="img-circle" src="@Url.Content((String)Session["Foto"])" style = "width: auto; height: auto; max-height: 50px; max-width: 50px;" />*@
+                        <img alt="image" src="~/Imagens/Base/Logo_SystemBR.jpg" style = "width: auto; height: auto; max-height: 70px; max-width: 170px;" />
                     </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">
@@ -334,8 +335,6 @@
                         <li class="@Html.IsSelected(action: "MontarTelaTelefone")"><a href="@Url.Action("MontarTelaTelefone", "Telefone")">Telefones</a></li>
                         <li class="@Html.IsSelected(action: "MontarTelaNotificacaoGeral")"><a href="@Url.Action("MontarTelaNotificacaoGeral", "Notificacao")">Notificações</a></li>
                         <li class="@Html.IsSelected(action: "MontarTelaNoticia")"><a href="@Url.Action("MontarTelaNoticia", "Noticia")">Notícias</a></li>
-                        <li class="@Html.IsSelected(action: "MontarTelaGrupoCC")"><a href="@Url.Action("MontarTelaGrupoCC", "GrupoCC")">Grupo - Conta</a></li>
-                        <li class="@Html.IsSelected(action: "MontarTelaSubGrupo")"><a href="@Url.Action("MontarTelaSubGrupo", "GrupoCC")">SubGrupo - Conta</a></li>
     
     @*<li class="@Html.IsSelected(action: "MontarTelaAgendaCorp")"><a href="@Url.Action("MontarTelaAgendaCorp", "Agenda")">Agenda Corp.</a></li>
                         <li class="@Html.IsSelected(action: "MontarTelaConfiguracaoUsuario")"><a href="@Url.Action("MontarTelaConfiguracaoUsuario", "Configuracao")">Config. Usuário</a></li>*@

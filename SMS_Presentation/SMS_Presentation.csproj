@@ -819,6 +819,7 @@
     <Content Include="Imagens\Assinantes\2\Foto\FotoBase.jpg" />
     <Content Include="Imagens\Assinantes\2\Foto\FotoOficial_2.jpeg" />
     <Content Include="Imagens\Assinantes\2\Foto\Logo_RTI.png" />
+    <Content Include="Imagens\Base\Logo_SystemBR.jpg" />
     <Content Include="Imagens\Base\FotoBase.jpg" />
     <Content Include="Imagens\Base\FotoOficial_2.jpeg" />
     <Content Include="Imagens\Base\icone_imagem.jpg" />
@@ -3393,6 +3394,7 @@
     <Content Include="Views\TabelasAuxiliares\MontarTelaSubgrupo.cshtml" />
     <Content Include="Views\TabelasAuxiliares\IncluirSubgrupo.cshtml" />
     <Content Include="Views\TabelasAuxiliares\EditarSubgrupo.cshtml" />
+    <Content Include="Views\Usuario\MontarTelaDashboardAdministracao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

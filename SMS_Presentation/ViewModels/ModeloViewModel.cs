@@ -14,6 +14,7 @@ namespace ERP_CRM_Solution.ViewModels
         public Int32 Valor { get; set; }
         public Int32 Valor1 { get; set; }
         public Decimal ValorDec { get; set; }
+        public String Nome { get; set; }
 
     }
 }

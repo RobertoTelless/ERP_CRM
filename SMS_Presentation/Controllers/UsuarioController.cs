@@ -27,6 +27,8 @@ namespace ERP_CRM_Solution.Controllers
         private readonly ILogAppService logApp;
         private readonly INotificacaoAppService notiApp;
         private readonly IConfiguracaoAppService confApp;
+        private readonly IFilialAppService filApp;
+        private readonly IDepartamentoAppService depApp;
 
         private String msg;
         private Exception exception;
@@ -38,12 +40,14 @@ namespace ERP_CRM_Solution.Controllers
         List<LOG> listaMasterLog = new List<LOG>();
         String extensao;
 
-        public UsuarioController(IUsuarioAppService baseApps, ILogAppService logApps, INotificacaoAppService notiApps, IConfiguracaoAppService confApps)
+        public UsuarioController(IUsuarioAppService baseApps, ILogAppService logApps, INotificacaoAppService notiApps, IConfiguracaoAppService confApps, IFilialAppService filApps, IDepartamentoAppService depApps)
         {
             baseApp = baseApps;
             logApp = logApps;
             notiApp = notiApps;
             confApp = confApps;
+            filApp = filApps;
+            depApp = depApps;
         }
 
         [HttpGet]
@@ -99,7 +103,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             ViewBag.UsuariosBloqueados = listaUsu.Where(p => p.USUA_IN_BLOQUEADO == 1).ToList().Count;
-            ViewBag.UsuariosHoje = listaUsu.Where(p => p.USUA_IN_BLOQUEADO == 0 && p.USUA_DT_ACESSO == DateTime.Today.Date).ToList().Count;
+            ViewBag.UsuariosHoje = listaUsu.Where(p => p.USUA_IN_BLOQUEADO == 0 && p.USUA_DT_BLOQUEADO == DateTime.Today.Date).ToList().Count;
             ViewBag.Title = "Usuários";
 
             // Recupera numero de usuarios do assinante
@@ -315,16 +319,17 @@ namespace ERP_CRM_Solution.Controllers
 
             // Prepara listas
             ViewBag.Perfis = new SelectList((List<PERFIL>)Session["Perfis"], "PERF_CD_ID", "PERF_NM_NOME");
-            ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(idAss), "CARG_CD_ID", "CARG_NM_NOME");
+            ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(idAss).OrderBy(p => p.CARG_NM_NOME), "CARG_CD_ID", "CARG_NM_NOME");
+            ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss).OrderBy(x => x.FILI_NM_NOME).ToList<FILIAL>(), "FILI_CD_ID", "FILI_NM_NOME");
+            ViewBag.Deptos = new SelectList(depApp.GetAllItens(idAss).OrderBy(x => x.DEPT_NM_NOME).ToList<DEPARTAMENTO>(), "DEPT_CD_ID", "DEPT_NM_NOME");
 
-            // Verifica possibilidade
-            //Int32 numUsu = baseApp.GetAllItens(idAss).Count;
-            //PLANO plano = (PLANO)Session["Plano"];
-            //if (plano.PLAN_NR_USUARIOS <= numUsu)
-            //{
-            //    Session["MensUsuario"] = 50;
-            //    return RedirectToAction("MontarTelaUsuario", "Usuario");
-            //}
+            //Verifica possibilidade
+            Int32 num = baseApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumUsuarios"] <= num)
+            {
+                Session["MensUsuario"] = 50;
+                return RedirectToAction("MontarTelaUsuario", "Usuario");
+            }
 
             // Prepara view
             USUARIO item = new USUARIO();
@@ -348,6 +353,8 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Perfis = new SelectList((List<PERFIL>)Session["Perfis"], "PERF_CD_ID", "PERF_NM_NOME");
             ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(idAss), "CARG_CD_ID", "CARG_NM_NOME");
+            ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss).OrderBy(x => x.FILI_NM_NOME).ToList<FILIAL>(), "FILI_CD_ID", "FILI_NM_NOME");
+            ViewBag.Deptos = new SelectList(depApp.GetAllItens(idAss).OrderBy(x => x.DEPT_NM_NOME).ToList<DEPARTAMENTO>(), "DEPT_CD_ID", "DEPT_NM_NOME");
             if (ModelState.IsValid)
             {
                 try
@@ -456,6 +463,8 @@ namespace ERP_CRM_Solution.Controllers
             // Prepara view
             ViewBag.Perfis = new SelectList((List<PERFIL>)Session["Perfis"], "PERF_CD_ID", "PERF_NM_NOME");
             ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(idAss), "CARG_CD_ID", "CARG_NM_NOME");
+            ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss).OrderBy(x => x.FILI_NM_NOME).ToList<FILIAL>(), "FILI_CD_ID", "FILI_NM_NOME");
+            ViewBag.Deptos = new SelectList(depApp.GetAllItens(idAss).OrderBy(x => x.DEPT_NM_NOME).ToList<DEPARTAMENTO>(), "DEPT_CD_ID", "DEPT_NM_NOME");
             ViewBag.UsuarioLogado = usuario;
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             USUARIO item = baseApp.GetItemById(id);
@@ -473,6 +482,8 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Perfis = new SelectList((List<PERFIL>)Session["Perfis"], "PERF_CD_ID", "PERF_NM_NOME");
             ViewBag.Cargos = new SelectList(baseApp.GetAllCargos(idAss), "CARG_CD_ID", "CARG_NM_NOME");
+            ViewBag.Filiais = new SelectList(filApp.GetAllItens(idAss).OrderBy(x => x.FILI_NM_NOME).ToList<FILIAL>(), "FILI_CD_ID", "FILI_NM_NOME");
+            ViewBag.Deptos = new SelectList(depApp.GetAllItens(idAss).OrderBy(x => x.DEPT_NM_NOME).ToList<DEPARTAMENTO>(), "DEPT_CD_ID", "DEPT_NM_NOME");
             if (ModelState.IsValid)
             {
                 try
@@ -762,10 +773,9 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
-            // Verifica possibilidade
-            Int32 numUsu = baseApp.GetAllItens(idAss).Count;
-            PLANO plano = (PLANO)Session["Plano"];
-            if (plano.PLAN_NR_USUARIOS <= numUsu)
+            //Verifica possibilidade
+            Int32 num = baseApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumUsuarios"] <= num)
             {
                 Session["MensUsuario"] = 50;
                 return RedirectToAction("MontarTelaUsuario", "Usuario");
@@ -1642,6 +1652,175 @@ namespace ERP_CRM_Solution.Controllers
             
             // Prepara view
             return RedirectToAction("TrocarSenha", "ControleAcesso");
+        }
+
+        [HttpGet]
+        public ActionResult MontarTelaDashboardAdministracao()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
+
+            // Recupera listas usuarios
+            List<USUARIO> listaTotal = baseApp.GetAllItens(idAss);
+            List<USUARIO> bloqueados = listaTotal.Where(p => p.USUA_IN_BLOQUEADO == 1).ToList();
+
+            Int32 numUsuarios = listaTotal.Count;
+            Int32 numBloqueados = bloqueados.Count;
+            Int32 numAcessos = listaTotal.Sum(p => p.USUA_NR_ACESSOS).Value;
+            Int32 numFalhas = listaTotal.Sum(p => p.USUA_NR_FALHAS).Value;
+
+            ViewBag.NumUsuarios = numUsuarios;
+            ViewBag.NumBloqueados = numBloqueados;
+            ViewBag.NumAcessos = numAcessos;
+            ViewBag.NumFalhas = numFalhas;
+
+            Session["TotalUsuarios"] = listaTotal.Count;
+            Session["Bloqueados"] = numBloqueados;
+
+            // Recupera listas log
+            List<LOG> listaLog = logApp.GetAllItens(idAss);
+            Int32 log = listaLog.Count;
+            Int32 logDia = listaLog.Where(p => p.LOG_DT_DATA.Value.Date == DateTime.Today.Date).ToList().Count;
+            Int32 logMes = listaLog.Where(p => p.LOG_DT_DATA.Value.Month == DateTime.Today.Month & p.LOG_DT_DATA.Value.Year == DateTime.Today.Year).ToList().Count;
+
+            ViewBag.Log = log;
+            ViewBag.LogDia = logDia;
+            ViewBag.LogMes = logMes;
+
+            Session["TotalLog"] = log;
+            Session["LogDia"] = logDia;
+            Session["LogMes"] = logMes;
+
+            // Resumo Log Diario
+            List<DateTime> datasCR = listaLog.Where(m => m.LOG_DT_DATA != null).Select(p => p.LOG_DT_DATA.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> listaLogDia = new List<ModeloViewModel>();
+            foreach (DateTime item in datasCR)
+            {
+                Int32 conta = listaLog.Where(p => p.LOG_DT_DATA.Value.Date == item).ToList().Count;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.DataEmissao = item;
+                mod1.Valor = conta;
+                listaLogDia.Add(mod1);
+            }
+            ViewBag.ListaLogDia = listaLogDia;
+            ViewBag.ContaLogDia = listaLogDia.Count;
+            Session["ListaDatasLog"] = datasCR;
+            Session["ListaLogResumo"] = listaLogDia;
+
+            // Resumo Log Situacao  
+            List<String> opLog = listaLog.Select(p => p.LOG_NM_OPERACAO).Distinct().ToList();
+            List<ModeloViewModel> lista2 = new List<ModeloViewModel>();
+            foreach (String item in opLog)
+            {
+                Int32 conta1 = listaLog.Where(p => p.LOG_NM_OPERACAO == item).ToList().Count;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.Nome = item;
+                mod1.Valor = conta1;
+                lista2.Add(mod1);
+            }
+            ViewBag.ListaLogOp = lista2;
+            ViewBag.ContaLogOp = lista2.Count;
+            Session["ListaOpLog"] = opLog;
+            Session["ListaLogOp"] = lista2;
+
+            // Resumo Usuário Filial
+            List<Int32?> filiais = listaTotal.Select(p => p.FILI_CD_ID).Distinct().ToList();
+            List<ModeloViewModel> lista3 = new List<ModeloViewModel>();
+            foreach (Int32 item in filiais)
+            {
+                Int32 conta2 = listaTotal.Where(p => p.FILI_CD_ID == item).ToList().Count;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.Nome = filApp.GetItemById(item).FILI_NM_NOME;
+                mod1.Valor = conta2;
+                lista3.Add(mod1);
+            }
+            ViewBag.ListaUsuFilial = lista3;
+            ViewBag.ContaUsuFilial = lista3.Count;
+            Session["ListaFiliaisUsu"] = filiais;
+            Session["ListaUsuFilial"] = lista3;
+            Session["VoltaDash"] = 3;
+            return View(vm);
+        }
+
+        public JsonResult GetDadosGraficoDia()
+        {
+            List<ModeloViewModel> listaCP1 = (List<ModeloViewModel>)Session["ListaLogResumo"];
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (ModeloViewModel item in listaCP1)
+            {
+                dias.Add(item.DataEmissao.ToShortDateString());
+                valor.Add(item.Valor);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoOperacao()
+        {
+            List<ModeloViewModel> listaCP1 = (List<ModeloViewModel>)Session["ListaOpLog"];
+            List<String> op = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            op.Add(" ");
+            valor.Add(0);
+
+            foreach (ModeloViewModel item in listaCP1)
+            {
+                op.Add(item.Nome);
+                valor.Add(item.Valor);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", op);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoFilial()
+        {
+            List<ModeloViewModel> listaCP1 = (List<ModeloViewModel>)Session["ListaUsuFilial"];
+            List<String> filial = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            filial.Add(" ");
+            valor.Add(0);
+
+            foreach (ModeloViewModel item in listaCP1)
+            {
+                filial.Add(item.Nome);
+                valor.Add(item.Valor);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", filial);
+            result.Add("valores", valor);
+            return Json(result);
         }
 
     }

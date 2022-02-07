@@ -331,7 +331,7 @@ namespace ERP_CRM_Solution.Controllers
                 // Verifica retorno
                 if (volta == 1)
                 {
-                    return RedirectToAction("MontarTelaCP");
+                    //return RedirectToAction("MontarTelaCP");
                 }
 
                 // Sucesso

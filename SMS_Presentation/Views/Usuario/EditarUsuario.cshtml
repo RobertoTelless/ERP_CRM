@@ -268,7 +268,17 @@
                                                         Aprovador?
                                                         <br />
                                                         @Html.CheckBoxFor(m => m.Aprovador, new { @class = "checkbox i-checks", autofocus = true })
-                                                    </div>                                                
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Filial*
+                                                        @Html.DropDownListFor(m => m.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", autofocus = true, @style = "color:green; font-weight:bold"  })
+                                                        @Html.ValidationMessageFor(m => m.FILI_CD_ID, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Departamento
+                                                        @Html.DropDownListFor(m => m.DEPT_CD_ID, (SelectList)ViewBag.Deptos, "Selecionar", new { @class = "form-control", autofocus = true, @style = "color:green; font-weight:bold"  })
+                                                        @Html.ValidationMessageFor(m => m.DEPT_CD_ID, "", new { @style = "color:red" })
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

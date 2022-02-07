@@ -91,12 +91,30 @@
                             </div>
                         </div>
                     </div>
-                    @Html.ButtonLinkIndex(text: "Mensageria", action: "MontarTelaDashboardMensagens", controller: "Mensagem", buttonClass: "primary")
-                    @Html.ButtonLinkIndex(text: "CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
-                    @Html.ButtonLinkIndex(text: "Patrimônio", action: "MontarTelaDashboardEquipamento", controller: "Equipamento", buttonClass: "primary")                
-                    @Html.ButtonLinkIndex(text: "Estoque", action: "MontarTelaDashboardEstoque", controller: "Estoque", buttonClass: "primary")                
-                    @Html.ButtonLinkIndex(text: "Compras", action: "MontarTelaDashboardCompra", controller: "Compra", buttonClass: "primary")                
-                    @Html.ButtonLinkIndex(text: "Financeiro", action: "MontarTelaDashboardFinanceiro", controller: "ContaPagar", buttonClass: "primary")                
+                    @if ((Int32)Session["PermMens"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Mensageria", action: "MontarTelaDashboardMensagens", controller: "Mensagem", buttonClass: "primary")
+                    }
+                    @if ((Int32)Session["PermCRM"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
+                    }
+                    @if ((Int32)Session["PermPatrimonio"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Patrimônio", action: "MontarTelaDashboardEquipamento", controller: "Equipamento", buttonClass: "primary")                
+                    }
+                    @if ((Int32)Session["PermEstoque"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Estoque", action: "MontarTelaDashboardEstoque", controller: "Estoque", buttonClass: "primary")                
+                    }
+                    @if ((Int32)Session["PermCompra"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Compras", action: "MontarTelaDashboardCompra", controller: "Compra", buttonClass: "primary")                
+                    }
+                    @if ((Int32)Session["PermFinanceiro"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Financeiro", action: "MontarTelaDashboardFinanceiro", controller: "ContaPagar", buttonClass: "primary")                
+                    }
                 </div>
 
                 <div class="col-lg-4 col-md-4 col-sm-12">
@@ -135,7 +153,14 @@
                             </div>
                         </div>
                     </div>
-                    @Html.ButtonLinkIndex(text: "Service Desk", action: "MontarTelaDashboardServiceDesk", controller: "Servico", buttonClass: "primary")                
+                    @if ((Int32)Session["PermServDesk"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Service Desk", action: "MontarTelaDashboardServiceDesk", controller: "Servico", buttonClass: "primary")                
+                    }
+                    @if ((String)Session["PerfilSigla"] == "ADM" || (String)Session["PerfilSigla"] == "GER")
+                    {
+                        @Html.ButtonLinkIndex(text: "Administração", action: "MontarTelaDashboardAdministracao", controller: "Usuario", buttonClass: "success")                
+                    }
                 </div>
             </div>
 

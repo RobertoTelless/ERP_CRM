@@ -148,6 +148,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["Nome"] = usuario.USUA_NM_NOME;
                 Session["Foto"] = usuario.USUA_AQ_FOTO;
                 Session["Perfil"] = usuario.PERFIL;
+                Session["PerfilSigla"] = usuario.PERFIL.PERF_SG_SIGLA;
                 Session["FlagInicial"] = 0;
                 Session["FiltroData"] = 1;
                 Session["FiltroStatus"] = 1;
@@ -176,11 +177,13 @@ namespace ERP_CRM_Solution.Controllers
                 Session["NumProdutos"] = 0;
                 Session["NumFornecedor"] = 0;
                 Session["NumAtendimentos"] = 0;
+                Session["NumUsuarios"] = 0;
                 List<ASSINANTE_PLANO> plAss = usuario.ASSINANTE.ASSINANTE_PLANO.ToList();
                 List<PLANO> planos = new List<PLANO>();
                 foreach (var item in plAss)
                 {
                     planos.Add(item.PLANO);
+                    Session["NumUsuarios"] = item.PLANO.PLAN_NR_USUARIOS;
                     if (item.PLANO.PLAN_IN_MENSAGENS == 1)
                     {
                         Session["PermMens"] = 1;

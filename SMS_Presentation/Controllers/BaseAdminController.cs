@@ -190,6 +190,7 @@ namespace ERP_CRM_Solution.Controllers
             usu = cache.Get("usuario" + ((USUARIO)Session["UserCredentials"]).USUA_CD_ID) as USUARIO;
             vm = cache.Get("vm" + ((USUARIO)Session["UserCredentials"]).USUA_CD_ID) as UsuarioViewModel;
             noti = cache.Get("noti" + ((USUARIO)Session["UserCredentials"]).USUA_CD_ID) as List<NOTIFICACAO>;
+            ViewBag.Perfil = usu.PERFIL.PERF_SG_SIGLA;
 
             noti = notfApp.GetAllItensUser(usu.USUA_CD_ID, usu.ASSI_CD_ID);
             Session["Notificacoes"] = noti; 
