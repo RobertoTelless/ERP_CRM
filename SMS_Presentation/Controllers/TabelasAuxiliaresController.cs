@@ -46,6 +46,8 @@ namespace ERP_CRM_Solution.Controllers
         private readonly ISubcategoriaProdutoAppService spApp;
         private readonly ITamanhoAppService tamApp;
         private readonly IUnidadeAppService unApp;
+        private readonly IGrupoCCAppService grApp;
+        private readonly ISubgrupoAppService sgApp;
 
         private String msg;
         private Exception exception;
@@ -85,9 +87,15 @@ namespace ERP_CRM_Solution.Controllers
         UNIDADE objetoUN = new UNIDADE();
         UNIDADE objetoUNAntes = new UNIDADE();
         List<UNIDADE> listaMasterUN = new List<UNIDADE>();
+        GRUPO_CC objetoGR = new GRUPO_CC();
+        GRUPO_CC objetoGRAntes = new GRUPO_CC();
+        List<GRUPO_CC> listaMasterGR = new List<GRUPO_CC>();
+        SUBGRUPO objetoSG = new SUBGRUPO();
+        SUBGRUPO objetoSGAntes = new SUBGRUPO();
+        List<SUBGRUPO> listaMasterSG = new List<SUBGRUPO>();
         String extensao;
 
-        public TabelasAuxiliaresController(ICategoriaClienteAppService ccApps, ICargoAppService caApps, ICRMOrigemAppService orApps, IMotivoCancelamentoAppService mcApps, IMotivoEncerramentoAppService meApps, ITipoAcaoAppService taApps, ICategoriaFornecedorAppService cfApps, ICategoriaEquipamentoAppService ceApps, ICategoriaProdutoAppService cpApps, ISubcategoriaProdutoAppService spApps, ITamanhoAppService tamApps, IUnidadeAppService unApps)
+        public TabelasAuxiliaresController(ICategoriaClienteAppService ccApps, ICargoAppService caApps, ICRMOrigemAppService orApps, IMotivoCancelamentoAppService mcApps, IMotivoEncerramentoAppService meApps, ITipoAcaoAppService taApps, ICategoriaFornecedorAppService cfApps, ICategoriaEquipamentoAppService ceApps, ICategoriaProdutoAppService cpApps, ISubcategoriaProdutoAppService spApps, ITamanhoAppService tamApps, IUnidadeAppService unApps, IGrupoCCAppService grApps, ISubgrupoAppService sgApps)
         {
             ccApp = ccApps;
             caApp = caApps;
@@ -101,6 +109,8 @@ namespace ERP_CRM_Solution.Controllers
             spApp = spApps;
             tamApp = tamApps;
             unApp = unApps;
+            grApp = grApps;
+            sgApp = sgApps;
         }
 
         [HttpGet]
@@ -4146,7 +4156,7 @@ namespace ERP_CRM_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VEN" || usuario.PERFIL.PERF_SG_SIGLA == "VIS")
                 {
                     Session["MensUnidade"] = 2;
                     return RedirectToAction("MontarTelaUnidade");
@@ -4165,6 +4175,673 @@ namespace ERP_CRM_Solution.Controllers
             Session["ListaUnidade"] = null;
             return RedirectToAction("MontarTelaUnidade");
         }
+
+        [HttpGet]
+        public ActionResult MontarTelaGrupoCC()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+
+            // Carrega listas
+            if ((List<GRUPO_CC>)Session["ListaGrupoCC"] == null)
+            {
+                listaMasterGR = grApp.GetAllItens(idAss);
+                Session["ListaGrupoCC"] = listaMasterGR;
+            }
+            ViewBag.Listas = (List<GRUPO_CC>)Session["ListaGrupoCC"];
+            Session["GrupoCC"] = null;
+
+            // Indicadores
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
+            if (Session["MensGrupoCC"] != null)
+            {
+                if ((Int32)Session["MensGrupoCC"] == 2)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensGrupoCC"] == 3)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0115", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensGrupoCC"] == 4)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0114", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // Abre view
+            Session["VoltaGrupoCC"] = 1;
+            objetoGR = new GRUPO_CC();
+            return View(objetoGR);
+        }
+
+        public ActionResult RetirarFiltroGrupoCC()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Session["ListaGrupoCC"] = null;
+            return RedirectToAction("MontarTelaGrupoCC");
+        }
+
+        public ActionResult MostrarTudoGrupoCC()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            listaMasterGR = grApp.GetAllItensAdm(idAss);
+            Session["ListaGrupoCC"] = listaMasterGR;
+            return RedirectToAction("MontarTelaGrupoCC");
+        }
+
+        public ActionResult VoltarBaseGrupoCC()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            return RedirectToAction("MontarTelaGrupoCC");
+        }
+
+        [HttpGet]
+        public ActionResult IncluirGrupoCC()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensGrupoCC"] = 2;
+                    return RedirectToAction("MontarTelaGrupoCC");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara listas
+
+            // Prepara view
+            GRUPO_CC item = new GRUPO_CC();
+            GrupoCCViewModel vm = Mapper.Map<GRUPO_CC, GrupoCCViewModel>(item);
+            vm.ASSI_CD_ID = idAss;
+            vm.GRCC_IN_ATIVO = 1;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult IncluirGrupoCC(GrupoCCViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    GRUPO_CC item = Mapper.Map<GrupoCCViewModel, GRUPO_CC>(vm);
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = grApp.ValidateCreate(item, usuario);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensGrupoCC"] = 3;
+                        return RedirectToAction("MontarTelaGrupoCC");
+                    }
+
+                    // Sucesso
+                    listaMasterGR = new List<GRUPO_CC>();
+                    Session["ListaGrupoCC"] = null;
+                    Session["IdGrupoCC"] = item.GRCC_CD_ID;
+                    if ((Int32)Session["VoltaGrupoCC"] == 2)
+                    {
+                        return RedirectToAction("IncluirCC", "CentroCusto");
+                    }
+                    return RedirectToAction("MontarTelaGrupoCC");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditarGrupoCC(Int32 id)
+        {
+
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensGrupoCC"] = 2;
+                    return RedirectToAction("MontarTelaGrupoCC");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            GRUPO_CC item = grApp.GetItemById(id);
+            Session["GrupoCC"] = item;
+
+            // Indicadores
+            
+            // Mensagens
+            if (Session["MensGrupoCC"] != null)
+            {
+
+
+            }
+
+            objetoGRAntes = item;
+            Session["IdGrupoCC"] = id;
+            GrupoCCViewModel vm = Mapper.Map<GRUPO_CC, GrupoCCViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult EditarGrupoCC(GrupoCCViewModel vm)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    GRUPO_CC item = Mapper.Map<GrupoCCViewModel, GRUPO_CC>(vm);
+                    Int32 volta = grApp.ValidateEdit(item, objetoGRAntes, usuario);
+
+                    // Verifica retorno
+
+                    // Sucesso
+                    listaMasterGR = new List<GRUPO_CC>();
+                    Session["ListaGrupoCC"] = null;
+                    return RedirectToAction("MontarTelaGrupoCC");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        public ActionResult VoltarAnexoGrupoCC()
+        {
+
+            return RedirectToAction("EditarGrupoCC", new { id = (Int32)Session["IdGrupoCC"] });
+        }
+
+        [HttpGet]
+        public ActionResult ExcluirGrupoCC(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensGrupoCC"] = 2;
+                    return RedirectToAction("MontarTelaGrupoCC");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            GRUPO_CC item = grApp.GetItemById(id);
+            objetoGRAntes = (GRUPO_CC)Session["GrupoCC"];
+            item.GRCC_IN_ATIVO = 0;
+            Int32 volta = grApp.ValidateDelete(item, usuario);
+            if (volta == 1)
+            {
+                Session["MensGrupoCC"] = 4;
+                return RedirectToAction("MontarTelaGrupoCC");
+            }
+            Session["ListaGrupoCC"] = null;
+            return RedirectToAction("MontarTelaGrupoCC");
+        }
+
+        [HttpGet]
+        public ActionResult ReativarGrupoCC(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensGrupoCC"] = 2;
+                    return RedirectToAction("MontarTelaGrupoCC");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            GRUPO_CC item = grApp.GetItemById(id);
+            objetoGRAntes = (GRUPO_CC)Session["GrupoCC"];
+            item.GRCC_IN_ATIVO = 1;
+            Int32 volta = grApp.ValidateReativar(item, usuario);
+            Session["ListaGrupoCC"] = null;
+            return RedirectToAction("MontarTelaGrupoCC");
+        }
+
+        [HttpGet]
+        public ActionResult MontarTelaSubgrupo()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS" || usuario.PERFIL.PERF_SG_SIGLA == "VEN")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+
+            // Carrega listas
+            if ((List<SUBGRUPO>)Session["ListaSubgrupo"] == null)
+            {
+                listaMasterSG = sgApp.GetAllItens(idAss);
+                Session["ListaSubgrupo"] = listaMasterSG;
+            }
+            ViewBag.Listas = (List<SUBGRUPO>)Session["ListaSubgrupo"];
+            ViewBag.Cats = new SelectList(grApp.GetAllItens(idAss).OrderBy(x => x.GRCC_NM_NOME), "GRCC_CD_ID", "GRCC_NM_NOME");
+            Session["Subgrupo"] = null;
+
+            // Indicadores
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
+            if (Session["MensSubgrupo"] != null)
+            {
+                if ((Int32)Session["MensSubgrupo"] == 2)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensSubgrupo"] == 3)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0116", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensSubgrupo"] == 4)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0117", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // Abre view
+            Session["VoltaSubgrupo"] = 1;
+            objetoSG = new SUBGRUPO();
+            return View(objetoSG);
+        }
+
+        public ActionResult RetirarFiltroSubgrupo()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Session["ListaSubgrupo"] = null;
+            return RedirectToAction("MontarTelaSubgrupo");
+        }
+
+        public ActionResult MostrarTudoSubgrupo()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            listaMasterSG = sgApp.GetAllItensAdm(idAss);
+            Session["ListaSubgrupo"] = listaMasterSG;
+            return RedirectToAction("MontarTelaSubgrupo");
+        }
+
+        public ActionResult VoltarBaseSubgrupo()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            return RedirectToAction("MontarTelaSubgrupo");
+        }
+
+        [HttpGet]
+        public ActionResult IncluirSubgrupo()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensSubgrupo"] = 2;
+                    return RedirectToAction("MontarTelaSubgrupo");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara listas
+            ViewBag.Cats = new SelectList(grApp.GetAllItens(idAss).OrderBy(x => x.GRCC_NM_NOME), "GRCC_CD_ID", "GRCC_NM_NOME");
+            
+            // Prepara view
+            SUBGRUPO item = new SUBGRUPO();
+            SubgrupoViewModel vm = Mapper.Map<SUBGRUPO, SubgrupoViewModel>(item);
+            vm.ASSI_CD_ID = idAss;
+            vm.SUBG_IN_ATIVO = 1;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult IncluirSubgrupo(SubgrupoViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    SUBGRUPO item = Mapper.Map<SubgrupoViewModel, SUBGRUPO>(vm);
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = sgApp.ValidateCreate(item, usuario);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensSubgrupo"] = 3;
+                        return RedirectToAction("MontarTelaSubgrupo");
+                    }
+
+                    // Sucesso
+                    listaMasterSG = new List<SUBGRUPO>();
+                    Session["ListaSubgrupo"] = null;
+                    Session["IdSubgrupo"] = item.SUBG_CD_ID;
+                    if ((Int32)Session["VoltaSubgrupo"] == 2)
+                    {
+                        return RedirectToAction("IncluirCC", "CentroCusto");
+                    }
+                    return RedirectToAction("MontarTelaSubgrupo");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditarSubgrupo(Int32 id)
+        {
+
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensSubgrupo"] = 2;
+                    return RedirectToAction("MontarTelaSubgrupo");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            SUBGRUPO item = sgApp.GetItemById(id);
+            Session["Subgrupo"] = item;
+
+            // Indicadores
+
+            // Mensagens
+            if (Session["MensSubgrupo"] != null)
+            {
+
+
+            }
+
+            objetoSGAntes = item;
+            Session["IdSubgrupo"] = id;
+            SubgrupoViewModel vm = Mapper.Map<SUBGRUPO, SubgrupoViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult EditarSubgrupo(SubgrupoViewModel vm)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    SUBGRUPO item = Mapper.Map<SubgrupoViewModel, SUBGRUPO>(vm);
+                    Int32 volta = sgApp.ValidateEdit(item, objetoSGAntes, usuario);
+
+                    // Verifica retorno
+
+                    // Sucesso
+                    listaMasterSG = new List<SUBGRUPO>();
+                    Session["ListaSubgrupo"] = null;
+                    return RedirectToAction("MontarTelaSubgrupo");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        public ActionResult VoltarAnexoSubgrupo()
+        {
+
+            return RedirectToAction("EditarSubgrupo", new { id = (Int32)Session["IdSubgrupo"] });
+        }
+
+        [HttpGet]
+        public ActionResult ExcluirSubgrupo(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensSubgrupo"] = 2;
+                    return RedirectToAction("MontarTelaSubgrupo");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            SUBGRUPO item = sgApp.GetItemById(id);
+            objetoSGAntes = (SUBGRUPO)Session["Subgrupo"];
+            item.SUBG_IN_ATIVO = 0;
+            Int32 volta = sgApp.ValidateDelete(item, usuario);
+            if (volta == 1)
+            {
+                Session["MensSubgrupo"] = 4;
+                return RedirectToAction("MontarTelaSubgrupo");
+            }
+            Session["ListaSubgrupo"] = null;
+            return RedirectToAction("MontarTelaSubgrupo");
+        }
+
+        [HttpGet]
+        public ActionResult ReativarSubgrupo(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensSubgrupo"] = 2;
+                    return RedirectToAction("MontarTelaSubgrupo");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            SUBGRUPO item = sgApp.GetItemById(id);
+            objetoSGAntes = (SUBGRUPO)Session["Subgrupo"];
+            item.SUBG_IN_ATIVO = 1;
+            Int32 volta = sgApp.ValidateReativar(item, usuario);
+            Session["ListaSubgrupo"] = null;
+            return RedirectToAction("MontarTelaSubgrupo");
+        }
+
 
     }
 }

@@ -352,6 +352,7 @@
     <Compile Include="ViewModels\CategoriaAtendimentoViewModel.cs" />
     <Compile Include="ViewModels\CategoriaFornecedorViewModel.cs" />
     <Compile Include="ViewModels\CategoriaEquipamentoViewModel.cs" />
+    <Compile Include="ViewModels\GrupoCCViewModel.cs" />
     <Compile Include="ViewModels\CategoriaProdutoViewModel.cs" />
     <Compile Include="ViewModels\DepartamentoViewModel.cs" />
     <Compile Include="ViewModels\CategoriaServicoViewModel.cs" />
@@ -385,6 +386,7 @@
     <Compile Include="ViewModels\ProdutoTabelaPrecoViewModel.cs" />
     <Compile Include="ViewModels\ProdutoViewModel.cs" />
     <Compile Include="ViewModels\ServicoViewModel.cs" />
+    <Compile Include="ViewModels\SubgrupoViewModel.cs" />
     <Compile Include="ViewModels\SubcategoriaProdutoViewModel.cs" />
     <Compile Include="ViewModels\TamanhoViewModel.cs" />
     <Compile Include="ViewModels\TipoAcaoViewModel.cs" />
@@ -3385,6 +3387,12 @@
     <Content Include="Views\Estoque\MontarTelaInventario.cshtml" />
     <Content Include="Views\ContaPagar\IncluirCPExpressa.cshtml" />
     <Content Include="Views\Estoque\VerMovimentacaoEstoqueProdutoNova.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaGrupoCC.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirGrupoCC.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarGrupoCC.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaSubgrupo.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirSubgrupo.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarSubgrupo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

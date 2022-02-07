@@ -2074,7 +2074,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Clientes = new SelectList(cliApp.GetAllItens(idAss), "CLIE_CD_ID", "CLIE_NM_NOME");
             ViewBag.CC = new SelectList(ccApp.GetAllItens(idAss).Where(x => x.CECU_IN_TIPO == 1).OrderBy(x => x.CECU_NM_NOME).ToList<CENTRO_CUSTO>(), "CECU_CD_ID", "CECU_NM_NOME");
             ViewBag.Contas = new SelectList(cbApp.GetAllItens(idAss).OrderBy(p => p.COBA_NM_NOME_EXIBE_OLD), "COBA_CD_ID", "COBA_NM_NOME_EXIBE_OLD");
-            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).Where(p => p.FOPA_IN_TIPO == 2).OrderBy(x => x.FOPA_NM_NOME), "FOPA_CD_ID", "FOPA_NM_NOME");
+            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).Where(p => p.FOPA_IN_TIPO == 2 || p.FOPA_IN_TIPO == 3).OrderBy(x => x.FOPA_NM_NOME), "FOPA_CD_ID", "FOPA_NM_NOME");
             ViewBag.Periodicidade = new SelectList(perApp.GetAllItens(idAss).OrderBy(p => p.PERI_NM_NOME), "PERI_CD_ID", "PERI_NM_NOME");
             List<SelectListItem> tipoRec = new List<SelectListItem>();
             tipoRec.Add(new SelectListItem() { Text = "Recebimento Recorrente", Value = "1" });
@@ -2111,7 +2111,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Clientes = new SelectList(cliApp.GetAllItens(idAss), "CLIE_CD_ID", "CLIE_NM_NOME");
             ViewBag.CC = new SelectList(ccApp.GetAllItens(idAss).Where(x => x.CECU_IN_TIPO == 1).OrderBy(x => x.CECU_NM_NOME).ToList<CENTRO_CUSTO>(), "CECU_CD_ID", "CECU_NM_NOME");
             ViewBag.Contas = new SelectList(cbApp.GetAllItens(idAss).OrderBy(p => p.COBA_NM_NOME_EXIBE_OLD), "COBA_CD_ID", "COBA_NM_NOME_EXIBE_OLD");
-            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss), "FOPA_CD_ID", "FOPA_NM_NOME");
+            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).Where(p => p.FOPA_IN_TIPO == 2 || p.FOPA_IN_TIPO == 3).OrderBy(x => x.FOPA_NM_NOME), "FOPA_CD_ID", "FOPA_NM_NOME");
             ViewBag.Periodicidade = new SelectList(perApp.GetAllItens(idAss), "PERI_CD_ID", "PERI_NM_NOME");
             List<SelectListItem> tipoRec = new List<SelectListItem>();
             tipoRec.Add(new SelectListItem() { Text = "Recebimento Recorrente", Value = "1" });
@@ -2220,7 +2220,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Clientes = new SelectList(cliApp.GetAllItens(idAss), "CLIE_CD_ID", "CLIE_NM_NOME");
             ViewBag.CC = new SelectList(ccApp.GetAllItens(idAss).Where(x => x.CECU_IN_TIPO == 1).OrderBy(x => x.CECU_NM_NOME).ToList<CENTRO_CUSTO>(), "CECU_CD_ID", "CECU_NM_NOME");
             ViewBag.Contas = new SelectList(cbApp.GetAllItens(idAss).OrderBy(p => p.COBA_NM_NOME_EXIBE_OLD), "COBA_CD_ID", "COBA_NM_NOME_EXIBE_OLD");
-            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss), "FOPA_CD_ID", "FOPA_NM_NOME");
+            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).Where(p => p.FOPA_IN_TIPO == 2 || p.FOPA_IN_TIPO == 3).OrderBy(x => x.FOPA_NM_NOME), "FOPA_CD_ID", "FOPA_NM_NOME");
             ViewBag.Periodicidade = new SelectList(perApp.GetAllItens(idAss), "PERI_CD_ID", "PERI_NM_NOME");
             List<SelectListItem> tipoRec = new List<SelectListItem>();
             tipoRec.Add(new SelectListItem() { Text = "Recebimento Recorrente", Value = "1" });
@@ -2321,7 +2321,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Clientes = new SelectList(cliApp.GetAllItens(idAss), "CLIE_CD_ID", "CLIE_NM_NOME");
             ViewBag.CC = new SelectList(ccApp.GetAllItens(idAss).Where(x => x.CECU_IN_TIPO == 1).OrderBy(x => x.CECU_NM_NOME).ToList<CENTRO_CUSTO>(), "CECU_CD_ID", "CECU_NM_NOME");
             ViewBag.Contas = new SelectList(cbApp.GetAllItens(idAss).OrderBy(p => p.COBA_NM_NOME_EXIBE_OLD), "COBA_CD_ID", "COBA_NM_NOME_EXIBE_OLD");
-            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss), "FOPA_CD_ID", "FOPA_NM_NOME");
+            ViewBag.Formas = new SelectList(fpApp.GetAllItens(idAss).Where(p => p.FOPA_IN_TIPO == 2 || p.FOPA_IN_TIPO == 3).OrderBy(x => x.FOPA_NM_NOME), "FOPA_CD_ID", "FOPA_NM_NOME");
             ViewBag.Periodicidade = new SelectList(perApp.GetAllItens(idAss), "PERI_CD_ID", "PERI_NM_NOME");
             List<SelectListItem> tipoRec = new List<SelectListItem>();
             tipoRec.Add(new SelectListItem() { Text = "Recebimento Recorrente", Value = "1" });

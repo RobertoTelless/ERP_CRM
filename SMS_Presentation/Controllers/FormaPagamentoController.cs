@@ -109,7 +109,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["ListaForma"] = listaMasterFP;
             }
 
-            ViewBag.Listas = listaMasterFP;
+            ViewBag.Listas = (FORMA_PAGAMENTO)Session["ListaForma"];
             ViewBag.Title = "Formas de Pagamento";
             ViewBag.Contas = new SelectList(cbApp.GetAllItens(idAss), "COBA_CD_ID", "COBA_NM_NOME_EXIBE");
 

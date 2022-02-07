@@ -393,4 +393,16 @@
   <data name="M0113" xml:space="preserve">
     <value>Definição de automação de mensagens já cadastrada</value>
   </data>
+  <data name="M0114" xml:space="preserve">
+    <value>Impossível excluir este grupo. Ele está vinculaoa a outras informações</value>
+  </data>
+  <data name="M0115" xml:space="preserve">
+    <value>Grupo já cadastrado</value>
+  </data>
+  <data name="M0116" xml:space="preserve">
+    <value>Impossível excluir este subgrupo. Ele está vinculaoa a outras informações</value>
+  </data>
+  <data name="M0117" xml:space="preserve">
+    <value>Subgrupo já cadastrado</value>
+  </data>
 </root>
