@@ -33,6 +33,7 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IFornecedorAppService forApp;
         private readonly IConfiguracaoAppService confApp;
 
+
         private String msg;
         private Exception exception;
         EQUIPAMENTO objetoEqui = new EQUIPAMENTO();

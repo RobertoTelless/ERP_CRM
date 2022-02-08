@@ -257,6 +257,10 @@
                                             {
                                                 <td><span class="badge badge-primary">Liquidada</span></td>
                                             }
+                                            else if (cond.CAPA_NR_ATRASO > 0)
+                                            {
+                                                <td><span class="badge badge-danger">Em Atraso</span></td>
+                                            }
                                             else if (cond.CAPA_IN_PARCELADA == 1)
                                             {
                                                 <td><span class="badge badge-success">Parcelada</span></td>
@@ -264,10 +268,6 @@
                                             else if (cond.CAPA_IN_LIQUIDADA == 0)
                                             {
                                                 <td><span class="badge badge-warning">Em Aberto</span></td>
-                                            }
-                                            else if (cond.CAPA_NR_ATRASO > 0)
-                                            {
-                                                <td><span class="badge badge-danger">Em Atraso</span></td>
                                             }
                                             else
                                             {

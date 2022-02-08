@@ -183,7 +183,6 @@
                                     @Html.ButtonLinkIndex(text: "Novo Lançamento", controller: "ContaReceber", action: "IncluirCR")
                                 }
                                 @Html.ButtonLinkIndex(text: "Dashboard", controller: "ContaPagar", action: "MontarTelaDashboardFinanceiro")
-                                @Html.ButtonLinkIndex(text: "Voltar", controller: "ContaPagar", action: "Voltar")
                             </div>
                         </div>
                     </div>
@@ -214,7 +213,7 @@
                                     <tr>
                                         <th>Número</th>
                                         <th>Cliente</th>
-                                        <th>Centro de Custo</th>
+                                        <th>Plano de Conta</th>
                                         <th>Emissão</th>
                                         <th>Valor</th>
                                         <th>Vencimento</th>
@@ -254,6 +253,10 @@
                                             {
                                                 <td><span class="badge badge-primary">Liquidada</span></td>
                                             }
+                                            else if (cond.CARE_NR_ATRASO > 0)
+                                            {
+                                                <td><span class="badge badge-danger">Em Atraso</span></td>
+                                            }
                                             else if (cond.CARE_IN_PARCELADA == 1)
                                             {
                                                 <td><span class="badge badge-success">Parcelada</span></td>
@@ -261,10 +264,6 @@
                                             else if (cond.CARE_IN_LIQUIDADA == 0)
                                             {
                                                 <td><span class="badge badge-warning">Em Aberto</span></td>
-                                            }
-                                            else if (cond.CARE_NR_ATRASO > 0)
-                                            {
-                                                <td><span class="badge badge-danger">Em Atraso</span></td>
                                             }
                                             else
                                             {

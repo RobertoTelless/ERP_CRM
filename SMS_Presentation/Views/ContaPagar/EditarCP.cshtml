@@ -208,7 +208,7 @@
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12" style="color: darkblue; font-weight: bold">
                                                     Saldo
-                                                    @Html.TextBoxFor(m => m.CAPA_VL_SALDO, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    @Html.TextBoxFor(m => m.CAPA_VL_SALDO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                                 @if (Model.CAPA_NR_ATRASO > 0)
                                                 {
@@ -372,7 +372,7 @@
                                                             @Html.HiddenFor(m => m.CAPA_VL_SALDO)
                                                             <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                                 Valor Original
-                                                                @Html.TextBoxFor(m => m.CAPA_VL_VALOR, "{0:n2}",new { @class = "form-control", autofocus = true, @readonly="readonly", @id = "valor"})
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_VALOR, new { @class = "form-control", autofocus = true, @readonly="readonly", @id = "valor"})
                                                             </div>
                                                             <div class="col-lg-2 col-md-2 col-xs-12">
                                                                 Descontos(-)

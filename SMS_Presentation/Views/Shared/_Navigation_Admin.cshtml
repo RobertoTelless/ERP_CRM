@@ -37,7 +37,7 @@
             @*Mensageria*@
             @if ((Int32)Session["PermMens"] == 1)
             {
-                <li class="@Html.IsSelected(controller: "BaseAdmin")">
+                <li class="@Html.IsSelected(controller: "Mensagem")">
                     <a href="@Url.Action("MontarTelaDashboardMensagens", "Mensagem")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Mensageria</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
@@ -76,7 +76,7 @@
             @*CRM*@
             @if ((Int32)Session["PermCRM"] == 1)
             {
-                <li class="@Html.IsSelected(controller: "BaseAdmin")">
+                <li class="@Html.IsSelected(controller: "CRM")">
                     <a href="@Url.Action("MontarTelaDashboardCRM", "CRM")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">CRM</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
@@ -110,8 +110,8 @@
             @*Patrimonio*@
             @if ((Int32)Session["PermPatrimonio"] == 1)
             {
-                <li class="@Html.IsSelected(controller: "BaseAdmin")">
-                    <a href="@Url.Action("MontarTelaDashboardPatrimonio", "Patrimonio")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Patrimônio</span> <span class="fa arrow"></span></a>
+                <li class="@Html.IsSelected(controller: "Equipamento")">
+                    <a href="@Url.Action("MontarTelaDashboardPatrimonio", "Equipamento")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Patrimônio</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
                             @*<a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>*@
@@ -141,7 +141,7 @@
             @*Estoque*@
             @if ((Int32)Session["PermEstoque"] == 1)
             {
-                <li class="@Html.IsSelected(controller: "BaseAdmin")">
+                <li class="@Html.IsSelected(controller: "Estoque")">
                     <a href="@Url.Action("MontarTelaDashboardEstoque", "Estoque")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Estoque</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
@@ -171,7 +171,7 @@
             @*Compras*@
             @if ((Int32)Session["PermCompra"] == 1)
             {
-                <li class="@Html.IsSelected(controller: "BaseAdmin")">
+                <li class="@Html.IsSelected(controller: "Compra")">
                     <a href="@Url.Action("MontarTelaDashboardCompra", "Compra")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Compras</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
@@ -213,7 +213,7 @@
             @*Vendas*@
             @if ((Int32)Session["PermVenda"] == 1)
             {
-                <li class="@Html.IsSelected(controller: "BaseAdmin")">
+                <li class="@Html.IsSelected(controller: "Venda")">
                     <a href="@Url.Action("MontarTelaDashboardVenda", "Venda")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Vendas</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
@@ -263,7 +263,7 @@
             @*Servic Desk*@
             @if ((Int32)Session["PermServDesk"] == 1)
             {
-                <li class="@Html.IsSelected(controller: "BaseAdmin")">
+                <li class="@Html.IsSelected(controller: "Servico")">
                     <a href="@Url.Action("MontarTelaDashboardSerDesk", "Servico")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Service Desk</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
@@ -295,7 +295,7 @@
             @*Financeiro*@
             @if ((Int32)Session["PermFinanceiro"] == 1)
             {
-                <li class="@Html.IsSelected(controller: "BaseAdmin")">
+                <li class="@Html.IsSelected(controller: "ContaPagar")">
                     <a href="@Url.Action("MontarTelaDashboardFinanceiro", "ContaPagar")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Financeiro</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
@@ -326,7 +326,7 @@
             @*Administração*@
             @if (((EntitiesServices.Model.PERFIL)Session["Perfil"]).PERF_SG_SIGLA  == "ADM" || ((EntitiesServices.Model.PERFIL)Session["Perfil"]).PERF_SG_SIGLA  == "GER")
             {
-                <li class="@Html.IsSelected(controller: "BaseAdmin")">
+                <li class="@Html.IsSelected(controller: "Usuario")">
                     <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Administração</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "MontarTelaLog")"><a href="@Url.Action("MontarTelaLog", "Auditoria")">Auditoria</a></li>
@@ -345,7 +345,7 @@
             @*Administração Geral*@
             @if (((EntitiesServices.Model.PERFIL)Session["Perfil"]).PERF_SG_SIGLA  == "ADM")
             {
-                <li class="@Html.IsSelected(controller: "BaseAdmin")">
+                <li class="@Html.IsSelected(controller: "Assinante")">
                     <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Assinantes</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarBase")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Assinaturas</span> <span class="fa arrow"></span></a>
@@ -357,10 +357,11 @@
                     </ul>
                 </li>
             }
+            
             @*Configuração*@
             @if (((EntitiesServices.Model.PERFIL)Session["Perfil"]).PERF_SG_SIGLA == "ADM")
             {
-                <li class="@Html.IsSelected(controller: "BaseAdmin")">
+                <li class="@Html.IsSelected(controller: "Configuracao")">
                     <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Configurações</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Configuracao", cssClass: "in")">
                         @if (((EntitiesServices.Model.PERFIL)Session["Perfil"]).PERF_SG_SIGLA  == "ADM" || ((EntitiesServices.Model.PERFIL)Session["Perfil"]).PERF_SG_SIGLA  == "GER")
@@ -372,7 +373,7 @@
             }
 
             @*Institucional*@
-            <li class="@Html.IsSelected(controller: "BaseAdmin")">
+            <li class="@Html.IsSelected(controller: "Institucional")">
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Institucional</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Institucional", cssClass: "in")">
                     <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Fale Conosco</a></li>

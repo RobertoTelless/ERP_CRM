@@ -1464,8 +1464,9 @@ namespace ERP_CRM_Solution.Controllers
 
             // Recupera listas CP
             List<CONTA_PAGAR> listaTotal = cpApp.GetAllItens(idAss);
-            Decimal pago = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 1 && p.CAPA_DT_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
-            Decimal aPagar = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0 && p.CAPA_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CAPA_VL_VALOR).Value;
+            //Decimal pago = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 1 & p.CAPA_DT_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month & p.CAPA_DT_LIQUIDACAO.Value.Year == DateTime.Today.Date.Year).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
+            Decimal pago = cpApp.GetPagamentosMes(DateTime.Today.Date, idAss).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
+            Decimal aPagar = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0 & p.CAPA_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month & p.CAPA_DT_VENCIMENTO.Value.Year == DateTime.Today.Date.Year).Sum(p => p.CAPA_VL_VALOR).Value;
             Decimal atraso = listaTotal.Where(p => p.CAPA_NR_ATRASO > 0).Sum(p => p.CAPA_VL_VALOR).Value;
 
             Int32 liquidadas = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 1).Count();
@@ -1521,8 +1522,9 @@ namespace ERP_CRM_Solution.Controllers
 
             // Recupera listas CR
             List<CONTA_RECEBER> listaCRTotal = recApp.GetAllItens(idAss);
-            Decimal recebido = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 1 && p.CARE_DT_DATA_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CARE_VL_VALOR_RECEBIDO).Value;
-            Decimal aReceber = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 0 && p.CARE_DT_DATA_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CARE_VL_VALOR_RECEBIDO).Value;
+            //Decimal recebido = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 1 & p.CARE_DT_DATA_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month & p.CARE_DT_DATA_LIQUIDACAO.Value.Year == DateTime.Today.Date.Year).Sum(p => p.CARE_VL_VALOR_RECEBIDO).Value;
+            Decimal recebido = recApp.GetRecebimentosMes(DateTime.Today.Date, idAss).Sum(p => p.CARE_VL_VALOR_LIQUIDADO).Value;
+            Decimal aReceber = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 0 & p.CARE_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month & p.CARE_DT_VENCIMENTO.Value.Year == DateTime.Today.Date.Year).Sum(p => p.CARE_VL_VALOR);
             Decimal atrasoCR = listaCRTotal.Where(p => p.CARE_NR_ATRASO > 0).Sum(p => p.CARE_VL_VALOR);
 
             Int32 recebidas = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 1).Count();
