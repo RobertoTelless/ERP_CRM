@@ -996,6 +996,8 @@ namespace ERP_CRM_Solution.Controllers
             Session["IdCPVolta"] = 2;
             Session["IdCP"] = id;
             Session["IdContaBanco"] = forma.COBA_CD_ID;
+            Session["eParcela"] = 0;
+            Session["LiquidaCP"] = 0;
             ContaPagarViewModel vm = Mapper.Map<CONTA_PAGAR, ContaPagarViewModel>(item);
             vm.CAPA_VL_PARCELADO = vm.CAPA_VL_VALOR;
             vm.CAPA_DT_LIQUIDACAO = DateTime.Now;
@@ -1092,7 +1094,9 @@ namespace ERP_CRM_Solution.Controllers
                     CONTA_PAGAR item = Mapper.Map<ContaPagarViewModel, CONTA_PAGAR>(vm);
                     FORMA_PAGAMENTO forma = fpApp.GetItemById(item.FOPA_CD_ID.Value);
                     Session["eParcela"] = 0;
-                    Int32 volta = cpApp.ValidateEdit(item, objetoCPAntes, usuarioLogado, (Int32)Session["LiquidaCP"], (Int32)Session["eParcela"]);
+                    Int32 liq = (Int32)Session["LiquidaCP"];
+                    Int32 parc = (Int32)Session["eParcela"];
+                    Int32 volta = cpApp.ValidateEdit(item, objetoCPAntes, usuarioLogado, liq, parc);
 
                     // Verifica retorno
                     if (volta == 1)
@@ -1545,10 +1549,11 @@ namespace ERP_CRM_Solution.Controllers
             List<ModeloViewModel> listaCR = new List<ModeloViewModel>();
             foreach (DateTime item in datasCR)
             {
-                Decimal conta = listaCRTotal.Where(p => p.CARE_DT_DATA_LIQUIDACAO.Value.Date == item).Sum(p => p.CARE_VL_VALOR_LIQUIDADO).Value;
+                CONTA_RECEBER cr = listaCRTotal.Where(p => p.CARE_DT_DATA_LIQUIDACAO == item).FirstOrDefault();
+                Decimal? conta = listaCRTotal.Where(p => p.CARE_DT_DATA_LIQUIDACAO == item).Sum(p => p.CARE_VL_VALOR_RECEBIDO);
                 ModeloViewModel mod1 = new ModeloViewModel();
                 mod1.DataEmissao = item;
-                mod1.ValorDec = conta;
+                mod1.ValorDec = conta.Value;
                 listaCR.Add(mod1);
             }
             ViewBag.ListaRecDia = listaCR;

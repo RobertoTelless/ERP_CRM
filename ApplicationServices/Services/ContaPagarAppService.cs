@@ -526,7 +526,7 @@ namespace ApplicationServices.Services
                     }                  
                     
                     // Checa data
-                    if (item.CAPA_DT_LIQUIDACAO > DateTime.Now.Date)
+                    if (item.CAPA_DT_LIQUIDACAO.Value.Date > DateTime.Now.Date)
                     {
                         return 1;
                     }
