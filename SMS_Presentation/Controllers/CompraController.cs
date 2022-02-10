@@ -2730,8 +2730,8 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
-
             return View(vm);
         }
 

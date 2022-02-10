@@ -28,6 +28,7 @@ namespace EntitiesServices.Model
         public Nullable<decimal> CRPA_VL_TAXAS { get; set; }
         public Nullable<int> CRPA_IN_QUITADA { get; set; }
         public string CRPA_NR_PARCELA { get; set; }
+        public Nullable<int> CRPA_NR_ATRASO { get; set; }
     
         public virtual CONTA_RECEBER CONTA_RECEBER { get; set; }
     }

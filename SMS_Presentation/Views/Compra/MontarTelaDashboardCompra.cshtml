@@ -19,11 +19,12 @@
                         @Html.ButtonLinkIndex(text: "Fornecedores", action: "MontarTelaFornecedor", controller: "Fornecedor", buttonClass: "success")
                         @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
                         {
-                            @Html.ButtonLinkIndex(text: "Banco & Contas", action: "MontarTelaBanco", controller: "Banco", buttonClass: "primary")
-                            @Html.ButtonLinkIndex(text: "Plano de Contas", action: "MontarTelaCC", controller: "CentroCusto", buttonClass: "primary")
-                            @Html.ButtonLinkIndex(text: "Formas Pagamento", action: "MontarTelaFormaPagamento", controller: "FormaPagamento", buttonClass: "primary")
+                            @Html.ButtonLinkIndex(text: "Banco & Contas", action: "MontarTelaBanco", controller: "Banco", buttonClass: "success")
+                            @Html.ButtonLinkIndex(text: "Plano de Contas", action: "MontarTelaCC", controller: "CentroCusto", buttonClass: "success")
+                            @Html.ButtonLinkIndex(text: "Formas Pagamento", action: "MontarTelaFormaPagamento", controller: "FormaPagamento", buttonClass: "success")
                         }
-                        @Html.ButtonLinkIndex(text: "Compras", action: "MontarTelaPedidoCompra", controller: "Compra", buttonClass: "success")
+                        @Html.ButtonLinkIndex(text: "Compra Expressa", action: "MontarTelaCompraExpressa", controller: "Compra", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Compras", action: "MontarTelaPedidoCompra", controller: "Compra", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "Dashboard", controller: "Compra", action: "Voltar")
                     </div>
                     <br /><br />

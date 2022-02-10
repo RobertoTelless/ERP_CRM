@@ -1308,7 +1308,7 @@ namespace ERP_CRM_Solution.Controllers
                 lista.Add(new SelectListItem() { Text = "Zeramento de Estoque", Value = "3" });
                 lista.Add(new SelectListItem() { Text = "Transferência entre Filiais", Value = "4" });
             }
-            lista.Add(new SelectListItem() { Text = "Compra Expressa", Value = "5" });
+            //lista.Add(new SelectListItem() { Text = "Compra Expressa", Value = "5" });
             ViewBag.Lista = new SelectList(lista, "Value", "Text");
             ViewBag.Entradas = GetTipoEntrada();
             ViewBag.Saidas = GetTipoSaida();

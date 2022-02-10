@@ -32,6 +32,7 @@ namespace EntitiesServices.Model
         public Nullable<int> CPPA_IN_CHEQUE { get; set; }
         public string CPPA_NR_CHEQUE { get; set; }
         public Nullable<int> FOPA_CD_ID { get; set; }
+        public Nullable<int> CPPA_NR_ATRASO { get; set; }
     
         public virtual CONTA_BANCO CONTA_BANCO { get; set; }
         public virtual CONTA_PAGAR CONTA_PAGAR { get; set; }

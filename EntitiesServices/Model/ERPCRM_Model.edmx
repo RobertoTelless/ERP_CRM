@@ -675,6 +675,7 @@
           <Property Name="CPPA_IN_CHEQUE" Type="int" />
           <Property Name="CPPA_NR_CHEQUE" Type="varchar" MaxLength="50" />
           <Property Name="FOPA_CD_ID" Type="int" />
+          <Property Name="CPPA_NR_ATRASO" Type="int" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CONTA_PAGAR_RATEIO">
           <Key>
@@ -760,6 +761,7 @@
           <Property Name="CRPA_VL_TAXAS" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPA_IN_QUITADA" Type="int" />
           <Property Name="CRPA_NR_PARCELA" Type="varchar" MaxLength="50" />
+          <Property Name="CRPA_NR_ATRASO" Type="int" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CONTA_RECEBER_RATEIO">
           <Key>
@@ -8297,6 +8299,7 @@
           <NavigationProperty Name="CONTA_BANCO" Relationship="Self.FK_CONTA_PAGAR_PARCELA_CONTA_BANCO" FromRole="CONTA_PAGAR_PARCELA" ToRole="CONTA_BANCO" />
           <NavigationProperty Name="CONTA_PAGAR" Relationship="Self.FK_CONTA_PAGAR_PARCELA_CONTA_PAGAR" FromRole="CONTA_PAGAR_PARCELA" ToRole="CONTA_PAGAR" />
           <NavigationProperty Name="FORMA_PAGAMENTO" Relationship="Self.FK_CONTA_PAGAR_PARCELA_FORMA_PAGAMENTO" FromRole="CONTA_PAGAR_PARCELA" ToRole="FORMA_PAGAMENTO" />
+          <Property Name="CPPA_NR_ATRASO" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CONTA_PAGAR_RATEIO">
           <Key>
@@ -8397,6 +8400,7 @@
           <Property Name="CRPA_IN_QUITADA" Type="Int32" />
           <Property Name="CRPA_NR_PARCELA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CONTA_RECEBER" Relationship="Self.FK_CONTA_RECEBER_PARCELA_CONTA_RECEBER" FromRole="CONTA_RECEBER_PARCELA" ToRole="CONTA_RECEBER" />
+          <Property Name="CRPA_NR_ATRASO" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CONTA_RECEBER_RATEIO">
           <Key>
@@ -16156,6 +16160,7 @@
           <EntitySetMapping Name="CONTA_PAGAR_PARCELA">
             <EntityTypeMapping TypeName="ERP_CRMModel.CONTA_PAGAR_PARCELA">
               <MappingFragment StoreEntitySet="CONTA_PAGAR_PARCELA">
+                <ScalarProperty Name="CPPA_NR_ATRASO" ColumnName="CPPA_NR_ATRASO" />
                 <ScalarProperty Name="CPPA_CD_ID" ColumnName="CPPA_CD_ID" />
                 <ScalarProperty Name="CAPA_CD_ID" ColumnName="CAPA_CD_ID" />
                 <ScalarProperty Name="COBA_CD_ID" ColumnName="COBA_CD_ID" />
@@ -16249,6 +16254,7 @@
           <EntitySetMapping Name="CONTA_RECEBER_PARCELA">
             <EntityTypeMapping TypeName="ERP_CRMModel.CONTA_RECEBER_PARCELA">
               <MappingFragment StoreEntitySet="CONTA_RECEBER_PARCELA">
+                <ScalarProperty Name="CRPA_NR_ATRASO" ColumnName="CRPA_NR_ATRASO" />
                 <ScalarProperty Name="CRPA_CD_ID" ColumnName="CRPA_CD_ID" />
                 <ScalarProperty Name="CARE_CD_ID" ColumnName="CARE_CD_ID" />
                 <ScalarProperty Name="CRPA_IN_PARCELA" ColumnName="CRPA_IN_PARCELA" />

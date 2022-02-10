@@ -56,29 +56,29 @@
                             <div class="row">
                                 <div class="col-xs-4">
                                     <small class="stats-label">A Pagar (Mês)</small>
-                                    <h4>@ViewBag.APagar</h4>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.APagar)</h4>
                                 </div>
                                 <div class="col-xs-4">
                                     <small class="stats-label">Em Atraso</small>
-                                    <h4>@ViewBag.Atrasos</h4>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.Atraso)</h4>
                                 </div>
                                 <div class="col-xs-4">
                                     <small class="stats-label">Pago (Mês)</small>
-                                    <h4>@ViewBag.Pago</h4>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.Pago)</h4>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-4">
                                     <small class="stats-label">Recebido (Mês)</small>
-                                    <h4>@ViewBag.Recebido</h4>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.Recebido)</h4>
                                 </div>
                                 <div class="col-xs-4">
                                     <small class="stats-label">A Receber</small>
-                                    <h4>@ViewBag.AReceber</h4>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.AReceber)</h4>
                                 </div>
                                 <div class="col-xs-4">
                                     <small class="stats-label">Em Atraso</small>
-                                    <h4>@ViewBag.AtrasoCR</h4>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.AtrasoCR)</h4>
                                 </div>
                             </div>
                         </div>
