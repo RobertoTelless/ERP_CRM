@@ -477,7 +477,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateEdit(CONTA_PAGAR item, CONTA_PAGAR itemAntes, USUARIO usuario, Int32 liquida, Int32 eParcela)
+        public Int32 ValidateEdit(CONTA_PAGAR item, CONTA_PAGAR itemAntes, USUARIO usuario, Int32 liq, Int32 eParcx)
         {
             try
             {
@@ -517,7 +517,7 @@ namespace ApplicationServices.Services
 
 
                 //  ****** Se for Liquidação
-                if (liquida == 1)
+                if (item.CAPA_IN_LIQUIDA_NORMAL == 1)
                 {
                     // Verifica se é parcelada
                     if (item.CAPA_IN_PARCELADA == 1)
@@ -810,22 +810,22 @@ namespace ApplicationServices.Services
                 // ***** Se for Alteração comum
                 // Acerta objeto
                 item.CAPA_IN_ATIVO = 1;
-                if (eParcela == 0)
+                if (item.CAPA_IN_LIQUIDA_PARCELA == 0)
                 {
                     item.CAPA_VL_SALDO = item.CAPA_VL_VALOR;
                 }
 
                 // Monta Log
-                //LOG log2 = new LOG
-                //{
-                //    LOG_DT_DATA = DateTime.Now,
-                //    USUA_CD_ID = usuario.USUA_CD_ID,
-                //    ASSI_CD_ID = SessionMocks.IdAssinante,
-                //    LOG_NM_OPERACAO = "EditCARE",
-                //    LOG_IN_ATIVO = 1,
-                //    LOG_TX_REGISTRO = Serialization.SerializeJSON<CONTA_RECEBER>(item),
-                //    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<CONTA_RECEBER>(itemAntes)
-                //};
+                LOG log2 = new LOG
+                {
+                    LOG_DT_DATA = DateTime.Now,
+                    USUA_CD_ID = usuario.USUA_CD_ID,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
+                    LOG_NM_OPERACAO = "EditCAPA",
+                    LOG_IN_ATIVO = 1,
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<CONTA_PAGAR>(item),
+                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<CONTA_PAGAR>(itemAntes)
+                };
 
                 // Gera Notificação
                 NOTIFICACAO noti2 = new NOTIFICACAO();

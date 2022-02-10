@@ -996,8 +996,6 @@ namespace ERP_CRM_Solution.Controllers
             Session["IdCPVolta"] = 2;
             Session["IdCP"] = id;
             Session["IdContaBanco"] = forma.COBA_CD_ID;
-            Session["eParcela"] = 0;
-            Session["LiquidaCP"] = 0;
             ContaPagarViewModel vm = Mapper.Map<CONTA_PAGAR, ContaPagarViewModel>(item);
             vm.CAPA_VL_PARCELADO = vm.CAPA_VL_VALOR;
             vm.CAPA_DT_LIQUIDACAO = DateTime.Now;
@@ -1096,6 +1094,8 @@ namespace ERP_CRM_Solution.Controllers
                     Session["eParcela"] = 0;
                     Int32 liq = (Int32)Session["LiquidaCP"];
                     Int32 parc = (Int32)Session["eParcela"];
+                    item.CAPA_IN_LIQUIDA_NORMAL = liq;
+                    item.CAPA_IN_LIQUIDA_PARCELA = parc;
                     Int32 volta = cpApp.ValidateEdit(item, objetoCPAntes, usuarioLogado, liq, parc);
 
                     // Verifica retorno
@@ -1374,6 +1374,8 @@ namespace ERP_CRM_Solution.Controllers
                         cpEdit.CAPA_VL_VALOR_PAGO = cpEdit.CONTA_PAGAR_PARCELA.Where(x => x.CPPA_IN_QUITADA == 1).Sum(p => p.CPPA_VL_VALOR_PAGO);
                     }
                     Session["eParcela"] = 1;
+                    cpEdit.CAPA_IN_LIQUIDA_NORMAL = 0;
+                    cpEdit.CAPA_IN_LIQUIDA_PARCELA = 1;
                     volta = cpApp.ValidateEdit(cpEdit, rec, usuarioLogado, 0, 1);
 
                     // Sucesso
@@ -1469,17 +1471,20 @@ namespace ERP_CRM_Solution.Controllers
             // Recupera listas CP
             List<CONTA_PAGAR> listaTotal = cpApp.GetAllItens(idAss);
             //Decimal pago = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 1 & p.CAPA_DT_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month & p.CAPA_DT_LIQUIDACAO.Value.Year == DateTime.Today.Date.Year).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
-            Decimal pago = cpApp.GetPagamentosMes(DateTime.Today.Date, idAss).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
-            Decimal aPagar = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0 & p.CAPA_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month & p.CAPA_DT_VENCIMENTO.Value.Year == DateTime.Today.Date.Year).Sum(p => p.CAPA_VL_VALOR).Value;
-            Decimal atraso = listaTotal.Where(p => p.CAPA_NR_ATRASO > 0).Sum(p => p.CAPA_VL_VALOR).Value;
+            //Decimal pago = cpApp.GetPagamentosMes(DateTime.Today.Date, idAss).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
+            //Decimal aPagar = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0 & p.CAPA_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month & p.CAPA_DT_VENCIMENTO.Value.Year == DateTime.Today.Date.Year).Sum(p => p.CAPA_VL_VALOR).Value;
+            //Decimal atrasos = listaTotal.Where(p => p.CAPA_NR_ATRASO > 0 && p.CAPA_DT_VENCIMENTO < DateTime.Today.Date).Sum(p => p.CAPA_VL_VALOR).Value;
+            Decimal pago = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 1 && p.CAPA_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
+            Decimal aPagar = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0 && p.CAPA_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CAPA_VL_VALOR).Value;
+            Decimal atrasos = listaTotal.Where(p => p.CAPA_NR_ATRASO > 0 && p.CAPA_DT_VENCIMENTO < DateTime.Today.Date).Sum(p => p.CAPA_VL_VALOR).Value;
 
             Int32 liquidadas = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 1).Count();
-            Int32 atrasos = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0 & p.CAPA_NR_ATRASO > 0).Count();
-            Int32 pendentes = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0).Count();
+            Int32 atraso = listaTotal.Where(p => p.CAPA_NR_ATRASO > 0 && p.CAPA_DT_VENCIMENTO < DateTime.Today.Date).Count();
+            Int32 pendentes = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0 && p.CAPA_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month).Count();
 
             ViewBag.Pago = pago;
             ViewBag.APagar = aPagar;
-            ViewBag.Atrasos = atraso;
+            ViewBag.Atrasos = atrasos;
 
             Session["TotalCP"] = listaTotal.Count;
             Session["APagarMes"] = pendentes;
@@ -1514,7 +1519,7 @@ namespace ERP_CRM_Solution.Controllers
             lista1.Add(mod);
             mod = new ModeloViewModel();
             mod.Data = "Em Atraso";
-            mod.Valor = atrasos;
+            mod.Valor = atraso;
             lista1.Add(mod);
             mod = new ModeloViewModel();
             mod.Data = "Pendentes";
@@ -1527,17 +1532,25 @@ namespace ERP_CRM_Solution.Controllers
             // Recupera listas CR
             List<CONTA_RECEBER> listaCRTotal = recApp.GetAllItens(idAss);
             //Decimal recebido = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 1 & p.CARE_DT_DATA_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month & p.CARE_DT_DATA_LIQUIDACAO.Value.Year == DateTime.Today.Date.Year).Sum(p => p.CARE_VL_VALOR_RECEBIDO).Value;
-            Decimal recebido = recApp.GetRecebimentosMes(DateTime.Today.Date, idAss).Sum(p => p.CARE_VL_VALOR_LIQUIDADO).Value;
-            Decimal aReceber = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 0 & p.CARE_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month & p.CARE_DT_VENCIMENTO.Value.Year == DateTime.Today.Date.Year).Sum(p => p.CARE_VL_VALOR);
-            Decimal atrasoCR = listaCRTotal.Where(p => p.CARE_NR_ATRASO > 0).Sum(p => p.CARE_VL_VALOR);
+            //Decimal recebido = recApp.GetRecebimentosMes(DateTime.Today.Date, idAss).Sum(p => p.CARE_VL_VALOR_LIQUIDADO).Value;
+            //Decimal aReceber = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 0 & p.CARE_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month & p.CARE_DT_VENCIMENTO.Value.Year == DateTime.Today.Date.Year).Sum(p => p.CARE_VL_VALOR);
+            //Decimal atrasoCR = listaCRTotal.Where(p => p.CARE_NR_ATRASO > 0).Sum(p => p.CARE_VL_VALOR);
 
-            Int32 recebidas = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 1).Count();
-            Int32 atrasosCR = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 0 & p.CARE_NR_ATRASO > 0).Count();
-            Int32 pendentesCR = listaCRTotal.Where(p => p.CARE_IN_LIQUIDADA == 0).Count();
+            Decimal recebido = listaCRTotal.Where(p => p.CARE_IN_ATIVO == 1 && p.CARE_IN_LIQUIDADA == 1 && p.CARE_DT_DATA_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CARE_VL_VALOR_LIQUIDADO).Value;
+            Decimal sumReceber = listaCRTotal.Where(p => p.CARE_IN_ATIVO == 1 && p.CARE_IN_LIQUIDADA == 0 && p.CARE_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month && (p.CONTA_RECEBER_PARCELA == null || p.CONTA_RECEBER_PARCELA.Count == 0)).Sum(p => p.CARE_VL_VALOR);
+            sumReceber += (Decimal)listaCRTotal.Where(p => p.CARE_IN_ATIVO == 1 && p.CARE_IN_LIQUIDADA == 0 && p.CARE_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month && p.CONTA_RECEBER_PARCELA != null).SelectMany(p => p.CONTA_RECEBER_PARCELA).Where(x => x.CRPA_VL_VALOR != null && x.CRPA_DT_VENCIMENTO.Value.Month == DateTime.Now.Month).Sum(p => p.CRPA_VL_VALOR);
+            Decimal aReceber = sumReceber;
+            Decimal sumAtraso = listaCRTotal.Where(p => p.CARE_IN_ATIVO == 1 && p.CARE_NR_ATRASO > 0 && p.CARE_DT_VENCIMENTO < DateTime.Today.Date && (p.CONTA_RECEBER_PARCELA == null || p.CONTA_RECEBER_PARCELA.Count == 0)).Sum(p => p.CARE_VL_VALOR);
+            sumAtraso += (Decimal)listaCRTotal.Where(p => p.CARE_IN_ATIVO == 1 && p.CARE_NR_ATRASO > 0 && p.CARE_DT_VENCIMENTO < DateTime.Today.Date && p.CONTA_RECEBER_PARCELA != null).SelectMany(p => p.CONTA_RECEBER_PARCELA).Where(x => x.CRPA_VL_VALOR != null && x.CRPA_DT_VENCIMENTO.Value.Month == DateTime.Now.Month).Sum(p => p.CRPA_VL_VALOR);
+            Decimal atrasoCR = sumAtraso;
 
-            ViewBag.Recebido = recebidas;
-            ViewBag.AReceber = pendentesCR;
-            ViewBag.AtrasoCR = atrasosCR;
+            Int32 recebidas = listaCRTotal.Where(p => p.CARE_IN_ATIVO == 1 && p.CARE_IN_LIQUIDADA == 1 && p.CARE_DT_DATA_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month).Count();
+            Int32 atrasosCR = listaCRTotal.Where(p => p.CARE_IN_ATIVO == 1 && p.CARE_NR_ATRASO > 0 && p.CARE_DT_VENCIMENTO < DateTime.Today.Date && (p.CONTA_RECEBER_PARCELA == null || p.CONTA_RECEBER_PARCELA.Count == 0)).Count();
+            Int32 pendentesCR = listaCRTotal.Where(p => p.CARE_IN_ATIVO == 1 && p.CARE_IN_LIQUIDADA == 0 && p.CARE_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month && p.CONTA_RECEBER_PARCELA != null).Count();
+
+            ViewBag.Recebido = recebido;
+            ViewBag.AReceber = aReceber;
+            ViewBag.AtrasoCR = atrasoCR;
 
             Session["TotalCR"] = listaCRTotal.Count;
             Session["Recebido"] = recebidas;

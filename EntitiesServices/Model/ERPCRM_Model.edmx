@@ -638,6 +638,8 @@
           <Property Name="CAPA_NR_CHEQUE" Type="varchar" MaxLength="50" />
           <Property Name="CAPA_IN_TIPO_DOC" Type="int" />
           <Property Name="CAPA_DT_FINAL" Type="datetime" />
+          <Property Name="CAPA_IN_LIQUIDA_NORMAL" Type="int" />
+          <Property Name="CAPA_IN_LIQUIDA_PARCELA" Type="int" />
         </EntityType>
         <EntityType Name="CONTA_PAGAR_ANEXO">
           <Key>
@@ -8254,6 +8256,8 @@
           <NavigationProperty Name="PERIODICIDADE" Relationship="Self.FK_CONTA_PAGAR_PERIODICIDADE" FromRole="CONTA_PAGAR" ToRole="PERIODICIDADE" />
           <NavigationProperty Name="CONTA_PAGAR_RATEIO" Relationship="Self.FK_CONTA_PAGAR_RATEIO_CONTA_PAGAR" FromRole="CONTA_PAGAR" ToRole="CONTA_PAGAR_RATEIO" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_CONTA_PAGAR_USUARIO" FromRole="CONTA_PAGAR" ToRole="USUARIO" />
+          <Property Name="CAPA_IN_LIQUIDA_NORMAL" Type="Int32" />
+          <Property Name="CAPA_IN_LIQUIDA_PARCELA" Type="Int32" />
         </EntityType>
         <EntityType Name="CONTA_PAGAR_ANEXO">
           <Key>
@@ -16090,6 +16094,8 @@
           <EntitySetMapping Name="CONTA_PAGAR">
             <EntityTypeMapping TypeName="ERP_CRMModel.CONTA_PAGAR">
               <MappingFragment StoreEntitySet="CONTA_PAGAR">
+                <ScalarProperty Name="CAPA_IN_LIQUIDA_PARCELA" ColumnName="CAPA_IN_LIQUIDA_PARCELA" />
+                <ScalarProperty Name="CAPA_IN_LIQUIDA_NORMAL" ColumnName="CAPA_IN_LIQUIDA_NORMAL" />
                 <ScalarProperty Name="CAPA_CD_ID" ColumnName="CAPA_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="COBA_CD_ID" ColumnName="COBA_CD_ID" />

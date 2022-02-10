@@ -63,6 +63,8 @@ namespace EntitiesServices.Model
         public string CAPA_NR_CHEQUE { get; set; }
         public Nullable<int> CAPA_IN_TIPO_DOC { get; set; }
         public Nullable<System.DateTime> CAPA_DT_FINAL { get; set; }
+        public Nullable<int> CAPA_IN_LIQUIDA_NORMAL { get; set; }
+        public Nullable<int> CAPA_IN_LIQUIDA_PARCELA { get; set; }
     
         public virtual CENTRO_CUSTO CENTRO_CUSTO { get; set; }
         public virtual CONTA_BANCO CONTA_BANCO { get; set; }

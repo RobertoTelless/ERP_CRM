@@ -232,7 +232,7 @@ namespace ERP_CRM_Solution.Controllers
             // Indicadores
             List<CONTA_RECEBER> rec = crApp.GetAllItens(idAss);
             
-            Decimal aReceberDia = (Decimal)crApp.GetVencimentoAtual(idAss).Where(x => x.CARE_IN_ATIVO == 1 && x.CARE_IN_LIQUIDADA == 0 && x.CARE_DT_VENCIMENTO.Value.Day == DateTime.Now.Day && (x.CONTA_RECEBER_PARCELA == null || x.CONTA_RECEBER_PARCELA.Count == 0)).Sum(x => x.CARE_VL_SALDO);
+            Decimal aReceberDia = (Decimal)crApp.GetVencimentoAtual(idAss).Where(x => x.CARE_IN_ATIVO == 1 & x.CARE_IN_LIQUIDADA == 0 & x.CARE_DT_VENCIMENTO.Value.Date == DateTime.Now.Date & (x.CONTA_RECEBER_PARCELA == null || x.CONTA_RECEBER_PARCELA.Count == 0)).Sum(x => x.CARE_VL_SALDO);
             aReceberDia += (Decimal)rec.Where(x => x.CARE_IN_ATIVO == 1 && x.CARE_IN_LIQUIDADA == 0 && x.CARE_DT_VENCIMENTO.Value.Day == DateTime.Now.Day && x.CONTA_RECEBER_PARCELA != null).SelectMany(x => x.CONTA_RECEBER_PARCELA).Where(x => x.CRPA_VL_VALOR != null && x.CRPA_DT_VENCIMENTO.Value.Day == DateTime.Now.Day).Sum(x => x.CRPA_VL_VALOR);
             ViewBag.CRS = aReceberDia;
             
