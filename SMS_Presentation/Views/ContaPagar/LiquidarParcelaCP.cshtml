@@ -186,21 +186,19 @@
                                                     </div>
 	                                            }   
                                             </div>
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                                @if (Model.CPPA_IN_QUITADA == 0)
-	                                            {
-                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">      
-                                                        @if (Model.CONTA_PAGAR.FORMA_PAGAMENTO.FOPA_IN_CHEQUE == 1)
-                                                        {
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Número do Cheque
-                                                                @Html.TextBoxFor(m => m.CPPA_NR_CHEQUE, new { @class = "form-control", autofocus = true})
-                                                                @Html.ValidationMessageFor(m => m.CPPA_NR_CHEQUE, "",new { @style="color:red" })
-                                                            </div>                                                        
-                                                        }
-                                                    </div> 
-	                                            }   
-                                            </div>
+                                            @if (Model.CPPA_IN_QUITADA == 0)
+	                                        {
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">      
+                                                    @if (Model.CONTA_PAGAR.FORMA_PAGAMENTO.FOPA_IN_CHEQUE == 1)
+                                                    {
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Número do Cheque
+                                                            @Html.TextBoxFor(m => m.CPPA_NR_CHEQUE, new { @class = "form-control", autofocus = true})
+                                                            @Html.ValidationMessageFor(m => m.CPPA_NR_CHEQUE, "",new { @style="color:red" })
+                                                        </div>                                                        
+                                                    }
+                                                </div> 
+	                                        }   
                                         </div>
                                         <div class="form-group">
                                             <br />

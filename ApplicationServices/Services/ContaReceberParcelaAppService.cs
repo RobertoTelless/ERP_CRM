@@ -77,7 +77,7 @@ namespace ApplicationServices.Services
                 if (item.CRPA_IN_QUITADA == 0 & item.CRPA_VL_RECEBIDO > 0)
                 {
                     // Checa data
-                    if (item.CRPA_DT_QUITACAO > DateTime.Now.Date)
+                    if (item.CRPA_DT_QUITACAO.Value.Date > DateTime.Now.Date)
                     {
                         return 1;
                     }

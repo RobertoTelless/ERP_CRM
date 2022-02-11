@@ -275,32 +275,31 @@
                                                     @Html.TableLinkDetails(cond.CARE_CD_ID, "EditarCR", "fa-edit", "Editar Lançamento")
                                                     if (cond.CARE_IN_PARCELADA == 1)
                                                     {
-                                                        <a alt="Parcela" class="tbl-link fa-lg fa fa-money" href="/ContaReceber/EditarCR/@cond.CARE_CD_ID?parcelamento=true" target="_self" title="Parcela"></a>
+                                                        <a alt="Parcela" class="tbl-link fa-lg fa fa-align-justify" href="/ContaReceber/EditarCR/@cond.CARE_CD_ID?parcelamento=true" target="_self" title="Parcela"></a>
                                                     }
                                                     if (cond.CARE_IN_LIQUIDADA == 0 && cond.CARE_IN_PARCELADA == 0)
                                                     {
-                                                        <a alt="Parcela" class="tbl-link fa-lg fa fa-credit-card" href="/ContaReceber/EditarCR/@cond.CARE_CD_ID?liquidar=true" target="_self" title="Liquidar">&nbsp;</a>
+                                                        <a alt="Parcela" class="tbl-link fa-lg fa fa-check" href="/ContaReceber/EditarCR/@cond.CARE_CD_ID?liquidar=true" target="_self" title="Liquidar">&nbsp;</a>
                                                     }
                                                 }
                                                 else
                                                 {
                                                     @Html.TableLinkDetails(cond.CARE_CD_ID, "VerCR", "fa-search", "Consultar Lançamento")
                                                 }
-                                                @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
+                                                @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER" || ViewBag.Perfil == "OPR")
                                                 {
                                                     if (cond.CARE_IN_LIQUIDADA == 0)
                                                     {
                                                         if (cond.CARE_IN_ATIVO == 1)
                                                         {
                                                             <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/ContaReceber/ExcluirCR/@cond.CARE_CD_ID')" title="Excluir"></span>
-                                                            @*@Html.TableLinkDetails(cond.CARE_CD_ID, "ExcluirCR", "fa-trash-o", "Excluir Lançamento")*@
                                                         }
                                                         else
                                                         {
                                                             <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/ContaReceber/ReativarCR/@cond.CARE_CD_ID')" title="Reativar"></span>
-                                                            @*@Html.TableLinkDetails(cond.CARE_CD_ID, "ReativarCR", "fa-refresh", "Reativar Lançamento")*@
                                                         }
                                                     }
+                                                    @Html.TableLinkDetails(cond.CARE_CD_ID, "DuplicarCR", "fa-copy", "Duplicar")
                                                 }
                                             </td>
                                         </tr>

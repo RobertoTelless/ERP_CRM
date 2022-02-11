@@ -116,7 +116,10 @@
                             {
                                 <li id="parcela" class=""><a data-toggle="tab" href="#tab-2">Parcelas</a></li>
                             }
-                            <li id="liquidar" class=""><a data-toggle="tab" href="#tab-3">Liquidação</a></li>
+                            @if (Model.CARE_IN_PARCELADA == 0)
+	                        {
+                                <li id="liquidar" class=""><a data-toggle="tab" href="#tab-3">Liquidação</a></li>
+	                        }
                             @if (Model.CARE_IN_PARCELADA == 0)
                             {
                                 <li class=""><a data-toggle="tab" href="#tab-4">Recebimento Parcial</a></li>
@@ -374,173 +377,176 @@
                             }
 
                             @*Liquidação*@
-                            <div id="tab-3" class="tab-pane">
-                                <div class="panel-body">
-                                    @using (Html.BeginForm("EditarCR", "ContaReceber", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
-                                    {
-                                        <div class="row">
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
-                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                                    @Html.HiddenFor(m => m.CARE_CD_ID)
-                                                    @Html.HiddenFor(m => m.CARE_DS_DESCRICAO)
-                                                    @Html.HiddenFor(m => m.CARE_DT_COMPETENCIA)
-                                                    @Html.HiddenFor(m => m.CARE_DT_INICIO_PARCELA)
-                                                    @Html.HiddenFor(m => m.CARE_DT_LANCAMENTO)
-                                                    @Html.HiddenFor(m => m.CARE_DT_VENCIMENTO)
-                                                    @Html.HiddenFor(m => m.CARE_IN_ATIVO)
-                                                    @Html.HiddenFor(m => m.CARE_IN_LIQUIDADA)
-                                                    @Html.HiddenFor(m => m.CARE_IN_PAGA_PARCIAL)
-                                                    @Html.HiddenFor(m => m.CARE_IN_PARCELADA)
-                                                    @Html.HiddenFor(m => m.CARE_IN_PARCELAS)
-                                                    @Html.HiddenFor(m => m.CARE_IN_TIPO_LANCAMENTO)
-                                                    @Html.HiddenFor(m => m.CARE_NM_FAVORECIDO)
-                                                    @Html.HiddenFor(m => m.CARE_NM_FORMA_PAGAMENTO)
-                                                    @Html.HiddenFor(m => m.CARE_NR_DOCUMENTO)
-                                                    @Html.HiddenFor(m => m.CARE_TX_OBSERVACOES)
-                                                    @Html.HiddenFor(m => m.CARE_VL_PARCELADO)
-                                                    @Html.HiddenFor(m => m.CECU_CD_ID)
-                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
-                                                    @Html.HiddenFor(m => m.COBA_CD_ID)
-                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
-                                                    @Html.HiddenFor(m => m.FOPA_CD_ID)
-                                                    @Html.HiddenFor(m => m.PERI_CD_ID)
-                                                    @Html.HiddenFor(m => m.PEVE_CD_ID)
-                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                            @if (Model.CARE_IN_PARCELADA == 0)
+                            {
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="panel-body">
+                                        @using (Html.BeginForm("EditarCR", "ContaReceber", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                        {
+                                            <div class="row">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.CARE_CD_ID)
+                                                        @Html.HiddenFor(m => m.CARE_DS_DESCRICAO)
+                                                        @Html.HiddenFor(m => m.CARE_DT_COMPETENCIA)
+                                                        @Html.HiddenFor(m => m.CARE_DT_INICIO_PARCELA)
+                                                        @Html.HiddenFor(m => m.CARE_DT_LANCAMENTO)
+                                                        @Html.HiddenFor(m => m.CARE_DT_VENCIMENTO)
+                                                        @Html.HiddenFor(m => m.CARE_IN_ATIVO)
+                                                        @Html.HiddenFor(m => m.CARE_IN_LIQUIDADA)
+                                                        @Html.HiddenFor(m => m.CARE_IN_PAGA_PARCIAL)
+                                                        @Html.HiddenFor(m => m.CARE_IN_PARCELADA)
+                                                        @Html.HiddenFor(m => m.CARE_IN_PARCELAS)
+                                                        @Html.HiddenFor(m => m.CARE_IN_TIPO_LANCAMENTO)
+                                                        @Html.HiddenFor(m => m.CARE_NM_FAVORECIDO)
+                                                        @Html.HiddenFor(m => m.CARE_NM_FORMA_PAGAMENTO)
+                                                        @Html.HiddenFor(m => m.CARE_NR_DOCUMENTO)
+                                                        @Html.HiddenFor(m => m.CARE_TX_OBSERVACOES)
+                                                        @Html.HiddenFor(m => m.CARE_VL_PARCELADO)
+                                                        @Html.HiddenFor(m => m.CECU_CD_ID)
+                                                        @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                        @Html.HiddenFor(m => m.COBA_CD_ID)
+                                                        @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                        @Html.HiddenFor(m => m.FOPA_CD_ID)
+                                                        @Html.HiddenFor(m => m.PERI_CD_ID)
+                                                        @Html.HiddenFor(m => m.PEVE_CD_ID)
+                                                        @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            @if (Model.CARE_IN_LIQUIDADA == 1)
-                                            {
-                                                @Html.HiddenFor(m => m.CARE_VL_PARCIAL)
-                                                @Html.HiddenFor(m => m.CARE_VL_SALDO)
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        <div class="input-group">
-                                                            Liquidada
-                                                            <span class="input-group-btn">
-                                                                @Html.CheckBoxFor(m => m.Liquidada, new { @class = "checkbox i-checks", @readonly = "readonly" })
-                                                            </span>
+                                            <div class="row">
+                                                @if (Model.CARE_IN_LIQUIDADA == 1)
+                                                {
+                                                    @Html.HiddenFor(m => m.CARE_VL_PARCIAL)
+                                                    @Html.HiddenFor(m => m.CARE_VL_SALDO)
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            <div class="input-group">
+                                                                Liquidada
+                                                                <span class="input-group-btn">
+                                                                    @Html.CheckBoxFor(m => m.Liquidada, new { @class = "checkbox i-checks", @readonly = "readonly" })
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Data Liquidação
-                                                        @Html.TextBoxFor(m => m.CARE_DT_DATA_LIQUIDACAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Valor Original
-                                                        @Html.TextBoxFor(m => m.CARE_VL_VALOR, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Descontos(-)
-                                                        @Html.TextBoxFor(m => m.CARE_VL_DESCONTO, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Juros (+)
-                                                        @Html.TextBoxFor(m => m.CARE_VL_JUROS, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Taxas (+)
-                                                        @Html.TextBoxFor(m => m.CARE_VL_TAXAS, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Valor Recebido (=)
-                                                        @Html.TextBoxFor(m => m.CARE_VL_VALOR_RECEBIDO, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                    </div>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                if (Model.CARE_IN_PARCELADA == 0)
-                                                {
                                                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                         <div class="col-lg-2 col-md-2 col-xs-12">
                                                             Data Liquidação
-                                                            @Html.TextBoxFor(m => m.CARE_DT_DATA_LIQUIDACAO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", @id = "data", autofocus = true })
-                                                            @Html.ValidationMessageFor(m => m.CARE_DT_DATA_LIQUIDACAO, "", new { @style = "color:red" })
+                                                            @Html.TextBoxFor(m => m.CARE_DT_DATA_LIQUIDACAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                         </div>
-                                                    </div>
-                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                        @if (Model.CARE_IN_PAGA_PARCIAL == 0)
-                                                        {
-                                                            @Html.HiddenFor(m => m.CARE_VL_PARCIAL)
-                                                            @Html.HiddenFor(m => m.CARE_VL_SALDO)
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Valor Original
-                                                                @Html.TextBoxFor(m => m.CARE_VL_VALOR, new { @class = "form-control", autofocus = true, @readonly = "readonly", @id = "valor" })
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Descontos(-)
-                                                                @Html.TextBoxFor(m => m.CARE_VL_DESCONTO, new { @class = "form-control", autofocus = true, @id = "desc", onkeyup = "sum()" })
-                                                                @Html.ValidationMessageFor(m => m.CARE_VL_DESCONTO, "", new { @style = "color:red" })
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Juros (+)
-                                                                @Html.TextBoxFor(m => m.CARE_VL_JUROS, new { @class = "form-control", autofocus = true, @id = "juro", onkeyup = "sum()" })
-                                                                @Html.ValidationMessageFor(m => m.CARE_VL_JUROS, "", new { @style = "color:red" })
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Taxas (+)
-                                                                @Html.TextBoxFor(m => m.CARE_VL_TAXAS, new { @class = "form-control", autofocus = true, @id = "taxa", onkeyup = "sum()" })
-                                                                @Html.ValidationMessageFor(m => m.CARE_VL_TAXAS, "", new { @style = "color:red" })
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Valor Recebido (=)
-                                                                @Html.TextBoxFor(m => m.CARE_VL_VALOR_RECEBIDO, new { @class = "form-control", autofocus = true, @id = "rec" })
-                                                                @Html.ValidationMessageFor(m => m.CARE_VL_VALOR_RECEBIDO, "", new { @style = "color:red" })
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            @Html.HiddenFor(m => m.CARE_VL_VALOR)
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Valor já Pago
-                                                                @Html.TextBoxFor(m => m.CARE_VL_PARCIAL, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Saldo a Receber
-                                                                @Html.TextBoxFor(m => m.CARE_VL_SALDO, new { @class = "form-control", autofocus = true, @readonly = "readonly", @id = "saldo" })
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Descontos(-)
-                                                                @Html.TextBoxFor(m => m.CARE_VL_DESCONTO, new { @class = "form-control", autofocus = true, @id = "desc1", onkeyup = "sum1()" })
-                                                                @Html.ValidationMessageFor(m => m.CARE_VL_DESCONTO, "", new { @style = "color:red" })
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Juros (+)
-                                                                @Html.TextBoxFor(m => m.CARE_VL_JUROS, new { @class = "form-control", autofocus = true, @id = "juro1", onkeyup = "sum1()" })
-                                                                @Html.ValidationMessageFor(m => m.CARE_VL_JUROS, "", new { @style = "color:red" })
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Taxas (+)
-                                                                @Html.TextBoxFor(m => m.CARE_VL_TAXAS, new { @class = "form-control", autofocus = true, @id = "taxa1", onkeyup = "sum1()" })
-                                                                @Html.ValidationMessageFor(m => m.CARE_VL_TAXAS, "", new { @style = "color:red" })
-                                                            </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Valor Recebido (=)
-                                                                @Html.TextBoxFor(m => m.CARE_VL_VALOR_RECEBIDO, new { @class = "form-control", autofocus = true, @id = "rec1" })
-                                                                @Html.ValidationMessageFor(m => m.CARE_VL_VALOR_RECEBIDO, "", new { @style = "color:red" })
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="col-lg-12 col-md-12 col-xs-12">
-                                                            @Html.ButtonActionSubmit(text: "Confirma Liquidação de Lançamento", htmlAttributes: new { id = "basictoast", onclick = "Liquidar()" })
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Valor Original
+                                                            @Html.TextBoxFor(m => m.CARE_VL_VALOR, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Descontos(-)
+                                                            @Html.TextBoxFor(m => m.CARE_VL_DESCONTO, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Juros (+)
+                                                            @Html.TextBoxFor(m => m.CARE_VL_JUROS, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Taxas (+)
+                                                            @Html.TextBoxFor(m => m.CARE_VL_TAXAS, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Valor Recebido (=)
+                                                            @Html.TextBoxFor(m => m.CARE_VL_VALOR_RECEBIDO, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                         </div>
                                                     </div>
                                                 }
                                                 else
-                                                { 
-                                                    <h4>Esse lançamento foi parcelado. Só pode ser liquidado através da liquidação das parcelas individuais</h4>    
+                                                {
+                                                    if (Model.CARE_IN_PARCELADA == 0)
+                                                    {
+                                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Data Liquidação
+                                                                @Html.TextBoxFor(m => m.CARE_DT_DATA_LIQUIDACAO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", @id = "data", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CARE_DT_DATA_LIQUIDACAO, "", new { @style = "color:red" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                            @if (Model.CARE_IN_PAGA_PARCIAL == 0)
+                                                            {
+                                                                @Html.HiddenFor(m => m.CARE_VL_PARCIAL)
+                                                                @Html.HiddenFor(m => m.CARE_VL_SALDO)
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Valor Original
+                                                                    @Html.TextBoxFor(m => m.CARE_VL_VALOR, new { @class = "form-control", autofocus = true, @readonly = "readonly", @id = "valor" })
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Descontos(-)
+                                                                    @Html.TextBoxFor(m => m.CARE_VL_DESCONTO, new { @class = "form-control", autofocus = true, @id = "desc", onkeyup = "sum()" })
+                                                                    @Html.ValidationMessageFor(m => m.CARE_VL_DESCONTO, "", new { @style = "color:red" })
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Juros (+)
+                                                                    @Html.TextBoxFor(m => m.CARE_VL_JUROS, new { @class = "form-control", autofocus = true, @id = "juro", onkeyup = "sum()" })
+                                                                    @Html.ValidationMessageFor(m => m.CARE_VL_JUROS, "", new { @style = "color:red" })
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Taxas (+)
+                                                                    @Html.TextBoxFor(m => m.CARE_VL_TAXAS, new { @class = "form-control", autofocus = true, @id = "taxa", onkeyup = "sum()" })
+                                                                    @Html.ValidationMessageFor(m => m.CARE_VL_TAXAS, "", new { @style = "color:red" })
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Valor Recebido (=)
+                                                                    @Html.TextBoxFor(m => m.CARE_VL_VALOR_RECEBIDO, new { @class = "form-control", autofocus = true, @id = "rec" })
+                                                                    @Html.ValidationMessageFor(m => m.CARE_VL_VALOR_RECEBIDO, "", new { @style = "color:red" })
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.HiddenFor(m => m.CARE_VL_VALOR)
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Valor já Pago
+                                                                    @Html.TextBoxFor(m => m.CARE_VL_PARCIAL, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Saldo a Receber
+                                                                    @Html.TextBoxFor(m => m.CARE_VL_SALDO, new { @class = "form-control", autofocus = true, @readonly = "readonly", @id = "saldo" })
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Descontos(-)
+                                                                    @Html.TextBoxFor(m => m.CARE_VL_DESCONTO, new { @class = "form-control", autofocus = true, @id = "desc1", onkeyup = "sum1()" })
+                                                                    @Html.ValidationMessageFor(m => m.CARE_VL_DESCONTO, "", new { @style = "color:red" })
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Juros (+)
+                                                                    @Html.TextBoxFor(m => m.CARE_VL_JUROS, new { @class = "form-control", autofocus = true, @id = "juro1", onkeyup = "sum1()" })
+                                                                    @Html.ValidationMessageFor(m => m.CARE_VL_JUROS, "", new { @style = "color:red" })
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Taxas (+)
+                                                                    @Html.TextBoxFor(m => m.CARE_VL_TAXAS, new { @class = "form-control", autofocus = true, @id = "taxa1", onkeyup = "sum1()" })
+                                                                    @Html.ValidationMessageFor(m => m.CARE_VL_TAXAS, "", new { @style = "color:red" })
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Valor Recebido (=)
+                                                                    @Html.TextBoxFor(m => m.CARE_VL_VALOR_RECEBIDO, new { @class = "form-control", autofocus = true, @id = "rec1" })
+                                                                    @Html.ValidationMessageFor(m => m.CARE_VL_VALOR_RECEBIDO, "", new { @style = "color:red" })
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                @Html.ButtonActionSubmit(text: "Confirma Liquidação de Lançamento", htmlAttributes: new { id = "basictoast", onclick = "Liquidar()" })
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    { 
+                                                        <h4>Esse lançamento foi parcelado. Só pode ser liquidado através da liquidação das parcelas individuais</h4>    
+                                                    }
                                                 }
-                                            }
-                                        </div>
-                                    }
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
-                            </div>
+                            }
 
                             @*Parcial*@
                             @if (Model.CARE_IN_PARCELADA == 0)
@@ -947,19 +953,6 @@
                                             <div class="row">
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        <div class="input-group">
-                                                            Parcelado
-                                                            <span class="input-group-btn">
-                                                                @Html.CheckBoxFor(m => m.Parcelado, new { @class = "checkbox i-checks", @readonly = "readonly" })
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="row">
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Valor Parcelado
                                                         @Html.TextBoxFor(m => m.CARE_VL_PARCELADO, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                     </div>
@@ -1002,7 +995,7 @@
                                                                             <th>Valor</th>
                                                                             <th>Valor Recebido</th>
                                                                             <th>Descrição</th>
-                                                                            <th></th>
+                                                                            <th>Situação</th>
                                                                             <th class="td-one-action">Ações</th>
                                                                         </tr>
                                                                     </thead>
@@ -1017,11 +1010,15 @@
                                                                                 <td>@cond.CRPA_DS_DESCRICAO</td>
                                                                                 @if (cond.CRPA_IN_QUITADA == 1)
                                                                                 {
-                                                                                    <td><img src="~/Images/gallery/Rec_Sim.png" style="width: auto; height: auto; max-height: 30px; max-width: 25px;"></td>
+                                                                                    <td><span class="badge badge-primary">Liquidada</span></td>
                                                                                 }
-                                                                                else
+                                                                                else if (cond.CRPA_IN_QUITADA == 0 & cond.CRPA_DT_VENCIMENTO.Value.Date >= DateTime.Today.Date)
                                                                                 {
-                                                                                    <td><img src="~/Images/gallery/Rec_Nao.png" style="width: auto; height: auto; max-height: 30px; max-width: 25px;"></td>
+                                                                                    <td><span class="badge badge-warning">Aberta</span></td>
+                                                                                }
+                                                                                else if (cond.CRPA_IN_QUITADA == 0 & cond.CRPA_DT_VENCIMENTO.Value.Date < DateTime.Today.Date)
+                                                                                {
+                                                                                    <td><span class="badge badge-danger">Atraso</span></td>
                                                                                 }
                                                                                 <td class="td-one-action">
                                                                                     @Html.TableLinkDetails(cond.CRPA_CD_ID, "VerParcelaCR", "fa-search", "Consultar Parcela")

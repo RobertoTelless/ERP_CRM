@@ -22,8 +22,9 @@ namespace ApplicationServices.Services
         private readonly IFormaPagamentoAppService _fpService;
         private readonly IContaPagarService _cpService;
         private readonly IUsuarioService _usuService;
+        private readonly IConfiguracaoAppService _conService;
 
-        public ContaPagarParcelaAppService(IContaPagarParcelaService baseService, IContaBancariaService cbService, INotificacaoService notiService, IFormaPagamentoAppService fpService, IContaPagarService cpService, IUsuarioService usuService): base(baseService)
+        public ContaPagarParcelaAppService(IContaPagarParcelaService baseService, IContaBancariaService cbService, INotificacaoService notiService, IFormaPagamentoAppService fpService, IContaPagarService cpService, IUsuarioService usuService, IConfiguracaoAppService conService): base(baseService)
         {
             _baseService = baseService;
             _cbService = cbService;
@@ -31,6 +32,7 @@ namespace ApplicationServices.Services
             _fpService = fpService;
             _cpService = cpService;
             _usuService = usuService;
+            _conService = conService;
         }
 
         public CONTA_PAGAR_PARCELA GetItemById(Int32 id)
@@ -81,10 +83,10 @@ namespace ApplicationServices.Services
                 if (item.CPPA_IN_QUITADA == 0 & item.CPPA_DT_QUITACAO != null)
                 {
                     // Checa data
-                    if (item.CPPA_DT_QUITACAO > DateTime.Now.Date)
-                    {
-                        return 1;
-                    }
+                    //if (item.CPPA_DT_QUITACAO.Value.Date > DateTime.Today.Date)
+                    //{
+                    //    return 1;
+                    //}
 
                     // Verifica Valor
                     Decimal soma = item.CPPA_VL_VALOR.Value + item.CPPA_VL_TAXAS.Value + item.CPPA_VL_JUROS.Value - item.CPPA_VL_DESCONTO.Value;
@@ -156,7 +158,7 @@ namespace ApplicationServices.Services
                     String emailBody = header + body + footer;
 
                     // Monta e-mail
-                    CONFIGURACAO conf = _cpService.CarregaConfiguracao(usuario.ASSI_CD_ID);
+                    CONFIGURACAO conf = _conService.GetItemById(usuario.ASSI_CD_ID);
                     NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
                     Email mensagem = new Email();
                     mensagem.ASSUNTO = "Pagamento de Lançamento - Conta a Pagar";
@@ -177,51 +179,51 @@ namespace ApplicationServices.Services
                     Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
 
                     // Monta token
-                    String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
-                    byte[] textBytes = Encoding.UTF8.GetBytes(text);
-                    String token = Convert.ToBase64String(textBytes);
-                    String auth = "Basic " + token;
+                    //String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
+                    //byte[] textBytes = Encoding.UTF8.GetBytes(text);
+                    //String token = Convert.ToBase64String(textBytes);
+                    //String auth = "Basic " + token;
 
                     // Prepara texto
-                    String texto = _usuService.GetTemplate("SMSCPAG").TEMP_TX_CORPO; ;
-                    texto = texto.Replace("{Nome}", cp.USUARIO.USUA_NM_NOME);
-                    texto = texto.Replace("{Numero}", cp.CAPA_NR_DOCUMENTO);
-                    texto = texto.Replace("{Emissor}", usuario.ASSINANTE.ASSI_NM_NOME);
-                    String smsBody = texto;
-                    String erro = null;
+                    //String texto = _usuService.GetTemplate("SMSCPAG").TEMP_TX_CORPO; ;
+                    //texto = texto.Replace("{Nome}", cp.USUARIO.USUA_NM_NOME);
+                    //texto = texto.Replace("{Numero}", cp.CAPA_NR_DOCUMENTO);
+                    //texto = texto.Replace("{Emissor}", usuario.ASSINANTE.ASSI_NM_NOME);
+                    //String smsBody = texto;
+                    //String erro = null;
 
                     // inicia processo
-                    String resposta = String.Empty;
+                    //String resposta = String.Empty;
 
                     // Monta destinatarios
-                    try
-                    {
-                        String listaDest = "55" + Regex.Replace(item.CONTA_PAGAR.USUARIO.USUA_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
-                        var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
-                        httpWebRequest.Headers["Authorization"] = auth;
-                        httpWebRequest.ContentType = "application/json";
-                        httpWebRequest.Method = "POST";
-                        String customId = Cryptography.GenerateRandomPassword(8);
-                        String data = String.Empty;
-                        String json = String.Empty;
+                    //try
+                    //{
+                    //    String listaDest = "55" + Regex.Replace(item.CONTA_PAGAR.USUARIO.USUA_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+                    //    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
+                    //    httpWebRequest.Headers["Authorization"] = auth;
+                    //    httpWebRequest.ContentType = "application/json";
+                    //    httpWebRequest.Method = "POST";
+                    //    String customId = Cryptography.GenerateRandomPassword(8);
+                    //    String data = String.Empty;
+                    //    String json = String.Empty;
 
-                        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                        {
-                            json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
-                            streamWriter.Write(json);
-                        }
+                    //    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    //    {
+                    //        json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
+                    //        streamWriter.Write(json);
+                    //    }
 
-                        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                        {
-                            var result = streamReader.ReadToEnd();
-                            resposta = result;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        erro = ex.Message;
-                    }
+                    //    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    //    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    //    {
+                    //        var result = streamReader.ReadToEnd();
+                    //        resposta = result;
+                    //    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    erro = ex.Message;
+                    //}
 
                     // Acerta saldo
                     return 0;

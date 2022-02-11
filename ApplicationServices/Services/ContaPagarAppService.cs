@@ -578,15 +578,15 @@ namespace ApplicationServices.Services
                     conta.CONTA_BANCO_LANCAMENTO.Add(lanc);
 
                     // Monta Log
-                    LOG log = new LOG
-                    {
-                        LOG_DT_DATA = DateTime.Now,
-                        USUA_CD_ID = usuario.USUA_CD_ID,
-                        ASSI_CD_ID = usuario.ASSI_CD_ID,
-                        LOG_NM_OPERACAO = "LiquiCAPA",
-                        LOG_IN_ATIVO = 1,
-                        LOG_TX_REGISTRO = Serialization.SerializeJSON<CONTA_PAGAR>(item),
-                    };
+                    //LOG log = new LOG
+                    //{
+                    //    LOG_DT_DATA = DateTime.Now,
+                    //    USUA_CD_ID = usuario.USUA_CD_ID,
+                    //    ASSI_CD_ID = usuario.ASSI_CD_ID,
+                    //    LOG_NM_OPERACAO = "LiquiCAPA",
+                    //    LOG_IN_ATIVO = 1,
+                    //    LOG_TX_REGISTRO = Serialization.SerializeJSON<CONTA_PAGAR>(item),
+                    //};
 
                     // Gera Notificação
                     NOTIFICACAO noti = new NOTIFICACAO();
@@ -669,15 +669,15 @@ namespace ApplicationServices.Services
                     conta.CONTA_BANCO_LANCAMENTO.Add(lanc);
 
                     // Monta Log
-                    LOG log1 = new LOG()
-                    {
-                        LOG_DT_DATA = DateTime.Now,
-                        USUA_CD_ID = usuario.USUA_CD_ID,
-                        ASSI_CD_ID = usuario.ASSI_CD_ID,
-                        LOG_NM_OPERACAO = "ParcCAPA",
-                        LOG_IN_ATIVO = 1,
-                        LOG_TX_REGISTRO = Serialization.SerializeJSON<CONTA_PAGAR>(item),
-                    };
+                    //LOG log1 = new LOG()
+                    //{
+                    //    LOG_DT_DATA = DateTime.Now,
+                    //    USUA_CD_ID = usuario.USUA_CD_ID,
+                    //    ASSI_CD_ID = usuario.ASSI_CD_ID,
+                    //    LOG_NM_OPERACAO = "ParcCAPA",
+                    //    LOG_IN_ATIVO = 1,
+                    //    LOG_TX_REGISTRO = Serialization.SerializeJSON<CONTA_PAGAR>(item),
+                    //};
 
                     // Gera Notificação
                     NOTIFICACAO noti1 = new NOTIFICACAO();
@@ -816,16 +816,16 @@ namespace ApplicationServices.Services
                 }
 
                 // Monta Log
-                LOG log2 = new LOG
-                {
-                    LOG_DT_DATA = DateTime.Now,
-                    USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = usuario.ASSI_CD_ID,
-                    LOG_NM_OPERACAO = "EditCAPA",
-                    LOG_IN_ATIVO = 1,
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<CONTA_PAGAR>(item),
-                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<CONTA_PAGAR>(itemAntes)
-                };
+                //LOG log2 = new LOG
+                //{
+                //    LOG_DT_DATA = DateTime.Now,
+                //    USUA_CD_ID = usuario.USUA_CD_ID,
+                //    ASSI_CD_ID = usuario.ASSI_CD_ID,
+                //    LOG_NM_OPERACAO = "EditCAPA",
+                //    LOG_IN_ATIVO = 1,
+                //    LOG_TX_REGISTRO = Serialization.SerializeJSON<CONTA_PAGAR>(item),
+                //    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<CONTA_PAGAR>(itemAntes)
+                //};
 
                 // Gera Notificação
                 NOTIFICACAO noti2 = new NOTIFICACAO();

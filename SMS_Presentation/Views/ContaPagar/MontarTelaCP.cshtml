@@ -281,18 +281,18 @@
                                                         @Html.TableLinkDetails(cond.CAPA_CD_ID, "EditarCP", "fa-edit", "Editar")
                                                         if (cond.CAPA_IN_PARCELADA == 1)
                                                         {
-                                                            <a alt="Parcela" class="tbl-link fa-lg fa fa-money" href="/ContaPagar/EditarCP/@cond.CAPA_CD_ID?parcelamento=true" target="_self" title="Parcela">&nbsp;</a>
+                                                            <a alt="Parcela" class="tbl-link fa-lg fa fa-align-justify" href="/ContaPagar/EditarCP/@cond.CAPA_CD_ID?parcelamento=true" target="_self" title="Parcela">&nbsp;</a>
                                                         }
                                                         if (cond.CAPA_IN_LIQUIDADA == 0 && cond.CAPA_IN_PARCELADA == 0)
                                                         {
-                                                            <a alt="Parcela" class="tbl-link fa-lg fa fa-credit-card" href="/ContaPagar/EditarCP/@cond.CAPA_CD_ID?liquidar=true" target="_self" title="Liquidar">&nbsp;</a>
+                                                            <a alt="Parcela" class="tbl-link fa-lg fa fa-check" href="/ContaPagar/EditarCP/@cond.CAPA_CD_ID?liquidar=true" target="_self" title="Liquidar">&nbsp;</a>
                                                         }
                                                     }
                                                     else
                                                     {
                                                         @Html.TableLinkDetails(cond.CAPA_CD_ID, "VerCP", "fa-search", "Ver")
                                                     }
-                                                    if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
+                                                    if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER" || ViewBag.Perfil == "OPR")
                                                     {
                                                         if (cond.CAPA_IN_LIQUIDADA == 0)
                                                         {
@@ -305,11 +305,13 @@
                                                                 <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/ContaPagar/ReativarCP/@cond.CAPA_CD_ID')" title="Reativar"></span>
                                                             }
                                                         }
+                                                        @Html.TableLinkDetails(cond.CAPA_CD_ID, "DuplicarCP", "fa-copy", "Duplicar")
                                                     }
                                                 }
                                                 else
                                                 {
                                                     @Html.TableLinkDetails(cond.CAPA_CD_ID, "VerCP", "fa-search", "Ver")
+                                                    @Html.TableLinkDetails(cond.CAPA_CD_ID, "DuplicarCP", "fa-copy", "Duplicar")
                                                 }
                                             </td>
                                         </tr>
