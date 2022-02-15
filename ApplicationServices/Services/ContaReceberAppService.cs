@@ -395,45 +395,45 @@ namespace ApplicationServices.Services
         {
             try
             {
-                if (item.CENTRO_CUSTO != null)
-                {
-                    item.CENTRO_CUSTO = null;
-                }
-                if (item.CLIENTE != null)
-                {
-                    item.CLIENTE = null;
-                }
-                if (item.ASSINANTE != null)
-                {
-                    item.ASSINANTE = null;
-                }
-                if (item.CONTA_BANCO != null)
-                {
-                    item.CONTA_BANCO = null;
-                }
-                if (item.FILIAL != null)
-                {
-                    item.FILIAL = null;
-                }
-                if (item.FORMA_PAGAMENTO != null)
-                {
-                    item.FORMA_PAGAMENTO = null;
-                }
+                //if (item.CENTRO_CUSTO != null)
+                //{
+                //    item.CENTRO_CUSTO = null;
+                //}
+                //if (item.CLIENTE != null)
+                //{
+                //    item.CLIENTE = null;
+                //}
+                //if (item.ASSINANTE != null)
+                //{
+                //    item.ASSINANTE = null;
+                //}
+                //if (item.CONTA_BANCO != null)
+                //{
+                //    item.CONTA_BANCO = null;
+                //}
+                //if (item.FILIAL != null)
+                //{
+                //    item.FILIAL = null;
+                //}
+                //if (item.FORMA_PAGAMENTO != null)
+                //{
+                //    item.FORMA_PAGAMENTO = null;
+                //}
                 //if (item.PEDIDO_VENDA != null)
                 //{
                 //    item.PEDIDO_VENDA = null;
                 //}
-                if (item.PERIODICIDADE != null)
-                {
-                    item.PERIODICIDADE = null;
-                }
-                if (item.USUARIO != null)
-                {
-                    item.USUARIO = null;
-                }
+                //if (item.PERIODICIDADE != null)
+                //{
+                //    item.PERIODICIDADE = null;
+                //}
+                //if (item.USUARIO != null)
+                //{
+                //    item.USUARIO = null;
+                //}
 
                 //  ****** Se for Liquidação
-                if (dto.LiquidaCR == 1)
+                if (item.CARE_IN_LIQUIDA_NORMAL == 1)
                 {
                     // Verifica se é parcelada
                     if (item.CARE_IN_PARCELADA == 1)
@@ -521,7 +521,7 @@ namespace ApplicationServices.Services
                 }
 
                 //  ****** Se for Pagamento parcial
-                if (dto.ParcialCR == 1)
+                if (item.CARE_IN_PARCIAL == 1)
                 {
                     // Verifica se é parcelada
                     if (item.CARE_IN_PARCELADA == 1)

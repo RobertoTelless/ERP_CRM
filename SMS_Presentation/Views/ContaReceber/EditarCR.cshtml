@@ -533,7 +533,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                @Html.ButtonActionSubmit(text: "Confirma Liquidação de Lançamento", htmlAttributes: new { id = "basictoast", onclick = "Liquidar()" })
+                                                                @Html.ButtonActionSubmit(text: "Confirma Liquidação de Lançamento", htmlAttributes: new { id = "basictoast", onclick = "LiquidarCR()" })
                                                             </div>
                                                         </div>
                                                     }
@@ -1299,6 +1299,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
 
     <script>
+        function LiquidarCR() {
+            $.ajax({
+                url: '../LiquidarCRClick'
+                , type: 'POST'
+            });
+        }
+        function ParcialCR() {
+            $.ajax({
+                url: '../ParcialCRClick'
+                , type: 'POST'
+            });
+        }
+
         function Liquidar() {
             $.ajax({
                 url: '../Liquidar'

@@ -509,6 +509,185 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpGet]
+        public ActionResult IncluirCompraExpressa()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS" || usuario.PERFIL.PERF_SG_SIGLA == "VEN")
+                {
+                    Session["MensCompra"] = 2;
+                    return RedirectToAction("MontarTelaPedidoCompra", "Compra");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Session["ListaITPC"] = null;
+
+            // Verifica possibilidade
+            Int32 num = baseApp.GetAllItens(idAss).Count;
+            if ((Int32)Session["NumCompra"] <= num)
+            {
+                Session["MensCompra"] = 50;
+                return RedirectToAction("MontarTelaCompra", "Compra");
+            }
+
+            // Prepara listas
+            ViewBag.CC = new SelectList(ccApp.GetAllItens(idAss).OrderBy(p => p.CECU_NM_NOME), "CECU_CD_ID", "CECU_NM_NOME");
+            ViewBag.Filiais = new SelectList(baseApp.GetAllFilial(idAss).OrderBy(x => x.FILI_NM_NOME).ToList<FILIAL>(), "FILI_CD_ID", "FILI_NM_NOME");
+            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_NOME");
+            ViewBag.Formas = new SelectList(baseApp.GetAllFormas(idAss), "FOPA_CD_ID", "FOPA_NM_NOME");
+            ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.Fornecedores = new SelectList(forApp.GetAllItens(idAss).OrderBy(p => p.FORN_NM_NOME), "FORN_CD_ID", "FORN_NM_NOME");
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem() { Text = "Para Cotação", Value = "1" });
+            status.Add(new SelectListItem() { Text = "Em Cotação", Value = "2" });
+            status.Add(new SelectListItem() { Text = "Para Aprovação", Value = "3" });
+            status.Add(new SelectListItem() { Text = "Aprovada", Value = "4" });
+            status.Add(new SelectListItem() { Text = "Encerrada", Value = "5" });
+            status.Add(new SelectListItem() { Text = "Cancelada", Value = "6" });
+            ViewBag.Status = new SelectList(status, "Value", "Text");
+            List<PRODUTO> lista = proApp.GetAllItens(idAss).OrderBy(x => x.PROD_NM_NOME).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
+            ViewBag.Produtos = new SelectList(lista, "PROD_CD_ID", "PROD_NM_NOME");
+
+            // Prepara view
+            Session["VoltaPop"] = 1;
+            PEDIDO_COMPRA item = new PEDIDO_COMPRA();
+            PedidoCompraViewModel vm = Mapper.Map<PEDIDO_COMPRA, PedidoCompraViewModel>(item);
+            vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
+            vm.PECO_DT_DATA = DateTime.Today.Date;
+            vm.PECO_IN_ATIVO = 1;
+            vm.PECO_IN_STATUS = 1;
+            vm.USUA_CD_ID = usuario.USUA_CD_ID;
+            vm.PECO_DT_DATA = DateTime.Today.Date;
+            vm.PECO_DT_PREVISTA = DateTime.Today.Date.AddDays(30);
+            return View(vm);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult IncluirCompraExpressa(PedidoCompraViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            ViewBag.CC = new SelectList(ccApp.GetAllItens(idAss).OrderBy(p => p.CECU_NM_NOME), "CECU_CD_ID", "CECU_NM_NOME");
+            ViewBag.Filiais = new SelectList(baseApp.GetAllFilial(idAss).OrderBy(x => x.FILI_NM_NOME).ToList<FILIAL>(), "FILI_CD_ID", "FILI_NM_NOME");
+            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_NOME");
+            ViewBag.Formas = new SelectList(baseApp.GetAllFormas(idAss), "FOPA_CD_ID", "FOPA_NM_NOME");
+            ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.Fornecedores = new SelectList(forApp.GetAllItens(idAss).OrderBy(p => p.FORN_NM_NOME), "FORN_CD_ID", "FORN_NM_NOME");
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem() { Text = "Para Cotação", Value = "1" });
+            status.Add(new SelectListItem() { Text = "Em Cotação", Value = "2" });
+            status.Add(new SelectListItem() { Text = "Para Aprovação", Value = "3" });
+            status.Add(new SelectListItem() { Text = "Aprovada", Value = "4" });
+            status.Add(new SelectListItem() { Text = "Encerrada", Value = "5" });
+            status.Add(new SelectListItem() { Text = "Cancelada", Value = "6" });
+            ViewBag.Status = new SelectList(status, "Value", "Text");
+            //List<PRODUTO> lista = proApp.GetAllItens(idAss).OrderBy(x => x.PROD_NM_NOME).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
+            //ViewBag.Produtos = new SelectList(lista, "PROD_CD_ID", "PROD_NM_NOME");
+            Hashtable result = new Hashtable();
+
+            if (ModelState.IsValid)
+            {
+                if (Session["ListaITPC"] == null)
+                {
+                    ModelState.AddModelError("", "Nenhum Item de Pedido cadastrado no pedido");
+                    return View(vm);
+                }
+
+                try
+                {
+                    // Executa a operação
+                    PEDIDO_COMPRA item = Mapper.Map<PedidoCompraViewModel, PEDIDO_COMPRA>(vm);
+                    Int32 volta = baseApp.ValidateCreate(item, usuario);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensCompra"] = 3;
+                        return RedirectToAction("MontarTelaPedidoCompra");
+                    }
+
+                    // Acerta numero do pedido
+                    item.PECO_NR_NUMERO = item.PECO_CD_ID.ToString();
+                    volta = baseApp.ValidateEdit(item, item, usuario);
+
+                    // Cria pastas
+                    String caminho = "/Imagens/" + idAss.ToString() + "/PedidoCompra/" + item.PECO_CD_ID.ToString() + "/Anexos/";
+                    Directory.CreateDirectory(Server.MapPath(caminho));
+                    
+                    // Sucesso
+                    listaMaster = new List<PEDIDO_COMPRA>();
+                    Session["ListaCompra"] = null;
+
+                    foreach (var itpc in (List<ITEM_PEDIDO_COMPRA>)Session["ListaITPC"])
+                    {
+                        itpc.ITPC_NR_QUANTIDADE_REVISADA = itpc.ITPC_QN_QUANTIDADE;
+                        itpc.ITPC_IN_ATIVO = 1;
+                        itpc.PECO_CD_ID = item.PECO_CD_ID;
+
+                        if (itpc.ITPC_IN_TIPO == 1)
+                        {
+                            PRODUTO prod = proApp.GetItemById((Int32)itpc.PROD_CD_ID);
+                            itpc.UNID_CD_ID = prod.UNID_CD_ID;
+                            itpc.ITPC_VL_PRECO_SELECIONADO = prod.PRODUTO_TABELA_PRECO.Where(x => x.FILI_CD_ID == item.FILI_CD_ID).Count() > 0 ? prod.PRODUTO_TABELA_PRECO.Where(x => x.FILI_CD_ID == item.FILI_CD_ID).First().PRTP_VL_CUSTO : null;
+                        }
+                        Int32 voltaItem = baseApp.ValidateCreateItemCompra(itpc);
+                    }
+
+                    Session["ListaITPC"] = null;
+                    Session["IdVolta"] = item.PECO_CD_ID;
+                    if (Session["FileQueueCompra"] != null)
+                    {
+                        List<FileQueue> fq = (List<FileQueue>)Session["FileQueueCompra"];
+
+                        foreach(var file in fq)
+                        {
+                            UploadFileQueuePedidoCompra(file);
+                        }
+
+                        Session["FileQueueCompra"] = null;
+                    }
+
+                    Session["IdCompra"] = item.PECO_CD_ID;
+                    return RedirectToAction("EditarPedidoCompra", new { id = (Int32)Session["IdCompra"] });
+                }
+                catch (Exception ex)
+                {
+                    Session["ListaITPC"] = null;
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                Session["ListaITPC"] = null;
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
         public ActionResult EditarPedidoCompra(Int32 id)
         {
             // Verifica se tem usuario logado

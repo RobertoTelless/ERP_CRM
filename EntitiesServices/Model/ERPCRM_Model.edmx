@@ -730,6 +730,8 @@
           <Property Name="TITA_CD_ID" Type="int" />
           <Property Name="PEVE_DT_PREVISTA" Type="date" />
           <Property Name="CARE_IN_ABERTOS" Type="int" />
+          <Property Name="CARE_IN_LIQUIDA_NORMAL" Type="int" />
+          <Property Name="CARE_IN_PARCIAL" Type="int" />
         </EntityType>
         <EntityType Name="CONTA_RECEBER_ANEXO">
           <Key>
@@ -8367,6 +8369,8 @@
           <NavigationProperty Name="PERIODICIDADE" Relationship="Self.FK_CONTA_RECEBER_PERIODICIDADE" FromRole="CONTA_RECEBER" ToRole="PERIODICIDADE" />
           <NavigationProperty Name="CONTA_RECEBER_RATEIO" Relationship="Self.FK_CONTA_RECEBER_RATEIO_CONTA_RECEBER" FromRole="CONTA_RECEBER" ToRole="CONTA_RECEBER_RATEIO" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_CONTA_RECEBER_USUARIO" FromRole="CONTA_RECEBER" ToRole="USUARIO" />
+          <Property Name="CARE_IN_LIQUIDA_NORMAL" Type="Int32" />
+          <Property Name="CARE_IN_PARCIAL" Type="Int32" />
         </EntityType>
         <EntityType Name="CONTA_RECEBER_ANEXO">
           <Key>
@@ -16196,6 +16200,8 @@
           <EntitySetMapping Name="CONTA_RECEBER">
             <EntityTypeMapping TypeName="ERP_CRMModel.CONTA_RECEBER">
               <MappingFragment StoreEntitySet="CONTA_RECEBER">
+                <ScalarProperty Name="CARE_IN_PARCIAL" ColumnName="CARE_IN_PARCIAL" />
+                <ScalarProperty Name="CARE_IN_LIQUIDA_NORMAL" ColumnName="CARE_IN_LIQUIDA_NORMAL" />
                 <ScalarProperty Name="CARE_CD_ID" ColumnName="CARE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />

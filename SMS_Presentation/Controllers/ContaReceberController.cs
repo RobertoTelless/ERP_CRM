@@ -161,8 +161,6 @@ namespace ERP_CRM_Solution.Controllers
         [HttpPost]
         public DTO_CR Edicao()
         {
-            Session["LiquidaCR"] = 0;
-            Session["ParcialCR"] = 0;
             Session["Parcelamento"] = 0;
 
             DTO_CR dto = new DTO_CR();
@@ -2251,6 +2249,8 @@ namespace ERP_CRM_Solution.Controllers
             Session["ContaReceber"] = item;
             Session["IdVolta"] = id;
             Session["IdCrVolta"] = 2;
+            Session["LiquidaCR"] = 0;
+            Session["ParcialCR"] = 0;
             ContaReceberViewModel vm = Mapper.Map<CONTA_RECEBER, ContaReceberViewModel>(item);
             vm.CARE_VL_PARCELADO = vm.CARE_VL_VALOR;
             vm.CARE_DT_DATA_LIQUIDACAO = DateTime.Now;
@@ -2327,6 +2327,18 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
+        public void LiquidarCRClick()
+        {
+            Session["LiquidaCR"] = 1;
+        }
+
+        [HttpPost]
+        public void ParcialCRClick()
+        {
+            Session["ParcialCR"] = 1;
+        }
+
+        [HttpPost]
         public ActionResult EditarCR(ContaReceberViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -2358,6 +2370,10 @@ namespace ERP_CRM_Solution.Controllers
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     CONTA_RECEBER item = Mapper.Map<ContaReceberViewModel, CONTA_RECEBER>(vm);
                     DTO_CR dto = Edicao();
+                    Int32 liq = (Int32)Session["LiquidaCR"];
+                    Int32 parc = (Int32)Session["ParcialCR"];
+                    item.CARE_IN_LIQUIDA_NORMAL = liq;
+                    item.CARE_IN_PARCIAL = parc;
                     Int32 volta = crApp.ValidateEdit(item, (CONTA_RECEBER)Session["ContaReceber"], usuarioLogado, dto);
 
                     // Verifica retorno
