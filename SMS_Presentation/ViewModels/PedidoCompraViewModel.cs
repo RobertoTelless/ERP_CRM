@@ -51,19 +51,19 @@ namespace ERP_CRM_Solution.ViewModels
         [StringLength(250, ErrorMessage = "A DESCRIÇÃO deve conter no máximo 250.")]
         public string PECO_DS_DESCRICAO { get; set; }
         public Int32? FORN_CD_ID { get; set; }
+        public Nullable<int> PECO_IN_TIPO { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_PAGAR> CONTA_PAGAR { get; set; }
+        public virtual ASSINANTE ASSINANTE { get; set; }
+        public virtual CENTRO_CUSTO CENTRO_CUSTO { get; set; }
         public virtual FILIAL FILIAL { get; set; }
         public virtual FORMA_PAGAMENTO FORMA_PAGAMENTO { get; set; }
+        public virtual FORNECEDOR FORNECEDOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ITEM_PEDIDO_COMPRA> ITEM_PEDIDO_COMPRA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PEDIDO_COMPRA_ANEXO> PEDIDO_COMPRA_ANEXO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PEDIDO_COMPRA_ACOMPANHAMENTO> PEDIDO_COMPRA_ACOMPANHAMENTO { get; set; }
-        public virtual CENTRO_CUSTO CENTRO_CUSTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PEDIDO_COMPRA_ANEXO> PEDIDO_COMPRA_ANEXO { get; set; }
         public virtual USUARIO USUARIO { get; set; }
-        public virtual FORNECEDOR FORNECEDOR { get; set; }
     }
 }

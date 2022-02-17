@@ -196,7 +196,6 @@ namespace ApplicationServices.Services
                 // Completa objeto
                 item.PECO_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
-                item.PECO_IN_STATUS = 1;
                 item.USUA_CD_ID = usuario.USUA_CD_ID;               
 
                 // Monta Log
@@ -215,63 +214,86 @@ namespace ApplicationServices.Services
 
                 if (volta == 0)
                 {
-                    // Notifica comprador
-                    USUARIO comprador = _usuService.GetComprador(usuario.ASSI_CD_ID);
-                    NOTIFICACAO noti = new NOTIFICACAO();
-                    noti.CANO_CD_ID = 1;
-                    noti.ASSI_CD_ID = usuario.ASSI_CD_ID;
-                    noti.NOTI_DT_EMISSAO = DateTime.Today;
-                    noti.NOTI_IN_ATIVO = 1;
-                    noti.NOTI_IN_STATUS = 1;
-                    noti.USUA_CD_ID = comprador.USUA_CD_ID;
-                    noti.NOTI_DT_VALIDADE = DateTime.Today.AddDays(30);
-                    noti.NOTI_IN_NIVEL = 1;
-                    noti.NOTI_IN_VISTA = 0;
-                    noti.NOTI_NM_TITULO = "Aviso de Pedido de Compra";
-                    noti.NOTI_TX_TEXTO = "O Pedido de Compra " + item.PECO_NM_NOME + " de número " + item.PECO_NR_NUMERO + " está aguardando processamento de cotação";
-
-                    // Persiste notificação 
-                    Int32 volta1 = _notiService.Create(noti);
-
-                    // Configuracao
-                    CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
-
-                    // Recupera template
-                    String header = _tempService.GetByCode("CRIAPEDCOM").TEMP_TX_CABECALHO;
-                    String body = _tempService.GetByCode("CRIAPEDCOM").TEMP_TX_CORPO;
-                    String footer = _tempService.GetByCode("CRIAPEDCOM").TEMP_TX_DADOS;
-
-                    // Prepara campos
-                    body = body.Replace("{pedido}", item.PECO_NM_NOME);
-                    body = body.Replace("{numero}", item.PECO_NR_NUMERO);
-                    header = header.Replace("{nome}", comprador.USUA_NM_NOME);
-                    String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
-
-                    // Monta e-mail
-                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
-                    Email mensagem = new Email();
-                    mensagem.ASSUNTO = "Pedido de Compra - Criação";
-                    mensagem.CORPO = emailBody;
-                    mensagem.DEFAULT_CREDENTIALS = false;
-                    mensagem.EMAIL_DESTINO = comprador.USUA_NM_EMAIL;
-                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
-                    mensagem.ENABLE_SSL = true;
-                    mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
-                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
-                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
-                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
-                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
-                    mensagem.IS_HTML = true;
-                    mensagem.NETWORK_CREDENTIAL = net;
-
-                    // Envia mensagem
-                    try
+                    if (item.PECO_IN_STATUS != 5)
                     {
-                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                        // Notifica comprador
+                        USUARIO comprador = _usuService.GetComprador(usuario.ASSI_CD_ID);
+                        NOTIFICACAO noti = new NOTIFICACAO();
+                        noti.CANO_CD_ID = 1;
+                        noti.ASSI_CD_ID = usuario.ASSI_CD_ID;
+                        noti.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                        noti.NOTI_IN_ATIVO = 1;
+                        noti.NOTI_IN_STATUS = 1;
+                        noti.USUA_CD_ID = comprador.USUA_CD_ID;
+                        noti.NOTI_DT_VALIDADE = DateTime.Today.AddDays(30);
+                        noti.NOTI_IN_NIVEL = 1;
+                        noti.NOTI_IN_VISTA = 0;
+                        noti.NOTI_NM_TITULO = "Aviso de Pedido de Compra";
+                        noti.NOTI_TX_TEXTO = "O Pedido de Compra " + item.PECO_NM_NOME + " de número " + item.PECO_NR_NUMERO + " está aguardando processamento de cotação";
+
+                        // Persiste notificação 
+                        Int32 volta1 = _notiService.Create(noti);
+
+                        // Configuracao
+                        CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
+
+                        // Recupera template
+                        String header = _tempService.GetByCode("CRIAPEDCOM").TEMP_TX_CABECALHO;
+                        String body = _tempService.GetByCode("CRIAPEDCOM").TEMP_TX_CORPO;
+                        String footer = _tempService.GetByCode("CRIAPEDCOM").TEMP_TX_DADOS;
+
+                        // Prepara campos
+                        body = body.Replace("{pedido}", item.PECO_NM_NOME);
+                        body = body.Replace("{numero}", item.PECO_NR_NUMERO);
+                        header = header.Replace("{nome}", comprador.USUA_NM_NOME);
+                        String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
+
+                        // Monta e-mail
+                        NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                        Email mensagem = new Email();
+                        mensagem.ASSUNTO = "Pedido de Compra - Criação";
+                        mensagem.CORPO = emailBody;
+                        mensagem.DEFAULT_CREDENTIALS = false;
+                        mensagem.EMAIL_DESTINO = comprador.USUA_NM_EMAIL;
+                        mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                        mensagem.ENABLE_SSL = true;
+                        mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
+                        mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                        mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                        mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                        mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                        mensagem.IS_HTML = true;
+                        mensagem.NETWORK_CREDENTIAL = net;
+
+                        // Envia mensagem
+                        try
+                        {
+                            Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                        }
+                        catch (Exception ex)
+                        {
+                            String erro = ex.Message;
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        String erro = ex.Message;
+                        // Notifica comprador
+                        USUARIO comprador = _usuService.GetComprador(usuario.ASSI_CD_ID);
+                        NOTIFICACAO noti = new NOTIFICACAO();
+                        noti.CANO_CD_ID = 1;
+                        noti.ASSI_CD_ID = usuario.ASSI_CD_ID;
+                        noti.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                        noti.NOTI_IN_ATIVO = 1;
+                        noti.NOTI_IN_STATUS = 1;
+                        noti.USUA_CD_ID = comprador.USUA_CD_ID;
+                        noti.NOTI_DT_VALIDADE = DateTime.Today.AddDays(30);
+                        noti.NOTI_IN_NIVEL = 1;
+                        noti.NOTI_IN_VISTA = 0;
+                        noti.NOTI_NM_TITULO = "Aviso de Compra Expressa";
+                        noti.NOTI_TX_TEXTO = "O Compra Expressa " + item.PECO_NM_NOME + " de número " + item.PECO_NR_NUMERO + " foi efetuada, o estoque será atualizado e o lançamento de contas a pagar será gerado";
+
+                        // Persiste notificação 
+                        Int32 volta1 = _notiService.Create(noti);
                     }
                 }
                 return volta;

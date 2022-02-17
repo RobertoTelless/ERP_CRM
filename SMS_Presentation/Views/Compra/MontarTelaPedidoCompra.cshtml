@@ -198,7 +198,7 @@
                             <th>Data</th>
                             <th>Previsão</th>
                             <th>Status</th>
-                            <th>Itens</th>
+                            <th>Tipo</th>
                             <th class="td-one-action">Ações</th>
                         </tr>
                     </thead>
@@ -253,15 +253,15 @@
 
                         <td><span class="badge badge-danger">Cancelado</span></td>
                     }
-                    @if (cond.ITEM_PEDIDO_COMPRA != null)
+                    @if (cond.PECO_IN_TIPO == 1)
                     {
 
-                        <td>@cond.ITEM_PEDIDO_COMPRA.Where(x => x.ITPC_IN_ATIVO == 1).Count()</td>
+                        <td><span class="badge badge-success">Normal</span></td>
                      }
                     else
                     {
 
-                        <td>0</td>
+                        <td><span class="badge badge-primary">Expressa</span></td>
                     }
 
                     <td class="td-one-action">
@@ -348,7 +348,7 @@
                         else if (cond.PECO_IN_STATUS == 6)
                         {
                             <span>&nbsp;</span>
-                            @Html.TableLinkDetails(cond.PECO_CD_ID, "ReceberPedidoCompra", "fa-envelope-open", "Receber")
+                            @Html.TableLinkDetails(cond.PECO_CD_ID, "ReceberPedidoCompra", "fa-open-o", "Receber") 
                         }
                         else if (cond.PECO_IN_STATUS == 7 || cond.PECO_IN_STATUS == 8)
                         {

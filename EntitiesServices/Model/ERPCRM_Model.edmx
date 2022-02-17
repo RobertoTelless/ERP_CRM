@@ -1554,6 +1554,7 @@
           <Property Name="PECO_DT_FINAL" Type="date" />
           <Property Name="PECO_TX_OBSERVACAO" Type="text" />
           <Property Name="PECO_DS_DESCRICAO" Type="varchar" MaxLength="250" />
+          <Property Name="PECO_IN_TIPO" Type="int" />
         </EntityType>
         <EntityType Name="PEDIDO_COMPRA_ACOMPANHAMENTO">
           <Key>
@@ -9391,6 +9392,7 @@
           <NavigationProperty Name="PEDIDO_COMPRA_ACOMPANHAMENTO" Relationship="Self.FK_PEDIDO_COMPRA_ACOMPANHAMENTO_PEDIDO_COMPRA" FromRole="PEDIDO_COMPRA" ToRole="PEDIDO_COMPRA_ACOMPANHAMENTO" />
           <NavigationProperty Name="PEDIDO_COMPRA_ANEXO" Relationship="Self.FK_PEDIDO_COMPRA_ANEXO_PEDIDO_COMPRA" FromRole="PEDIDO_COMPRA" ToRole="PEDIDO_COMPRA_ANEXO" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_PEDIDO_COMPRA_USUARIO" FromRole="PEDIDO_COMPRA" ToRole="USUARIO" />
+          <Property Name="PECO_IN_TIPO" Type="Int32" />
         </EntityType>
         <EntityType Name="PEDIDO_COMPRA_ACOMPANHAMENTO">
           <Key>
@@ -17095,6 +17097,7 @@
           <EntitySetMapping Name="PEDIDO_COMPRA">
             <EntityTypeMapping TypeName="ERP_CRMModel.PEDIDO_COMPRA">
               <MappingFragment StoreEntitySet="PEDIDO_COMPRA">
+                <ScalarProperty Name="PECO_IN_TIPO" ColumnName="PECO_IN_TIPO" />
                 <ScalarProperty Name="PECO_CD_ID" ColumnName="PECO_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />
