@@ -207,6 +207,7 @@ namespace ApplicationServices.Services
                     LOG_NM_OPERACAO = "AddPECO",
                     LOG_IN_ATIVO = 1,
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<PEDIDO_COMPRA>(item)
+                
                 };
 
                 // Persiste pedido

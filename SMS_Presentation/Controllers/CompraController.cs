@@ -303,16 +303,24 @@ namespace ERP_CRM_Solution.Controllers
         [HttpPost]
         public void MontaListaItemPedido(ITEM_PEDIDO_COMPRA item)
         {
-            Task.Run(() =>
+            if (Session["ListaITPC"] == null)
             {
-                if (Session["ListaITPC"] == null)
-                {
-                    Session["ListaITPC"] = new List<ITEM_PEDIDO_COMPRA>();
-                }
-                List<ITEM_PEDIDO_COMPRA> lit = (List<ITEM_PEDIDO_COMPRA>)Session["ListaITPC"];
-                lit.Add(item);
-                Session["ListaITPC"] = lit;
-            });
+                Session["ListaITPC"] = new List<ITEM_PEDIDO_COMPRA>();
+            }
+            List<ITEM_PEDIDO_COMPRA> lit = (List<ITEM_PEDIDO_COMPRA>)Session["ListaITPC"];
+            lit.Add(item);
+            Session["ListaITPC"] = lit;
+
+            //Task.Run(() =>
+            //{            
+            //    if (Session["ListaITPC"] == null)
+            //    {
+            //        Session["ListaITPC"] = new List<ITEM_PEDIDO_COMPRA>();
+            //    }
+            //    List<ITEM_PEDIDO_COMPRA> lit = (List<ITEM_PEDIDO_COMPRA>)Session["ListaITPC"];
+            //    lit.Add(item);
+            //    Session["ListaITPC"] = lit;
+            //});
         }
 
         [HttpPost]
@@ -386,6 +394,7 @@ namespace ERP_CRM_Solution.Controllers
 
             // Prepara view
             Session["VoltaPop"] = 1;
+            Session["ListaITPC"] = null;
             PEDIDO_COMPRA item = new PEDIDO_COMPRA();
             PedidoCompraViewModel vm = Mapper.Map<PEDIDO_COMPRA, PedidoCompraViewModel>(item);
             vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
@@ -426,8 +435,8 @@ namespace ERP_CRM_Solution.Controllers
             status.Add(new SelectListItem() { Text = "Encerrada", Value = "5" });
             status.Add(new SelectListItem() { Text = "Cancelada", Value = "6" });
             ViewBag.Status = new SelectList(status, "Value", "Text");
-            //List<PRODUTO> lista = proApp.GetAllItens(idAss).OrderBy(x => x.PROD_NM_NOME).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
-            //ViewBag.Produtos = new SelectList(lista, "PROD_CD_ID", "PROD_NM_NOME");
+            List<PRODUTO> lista = proApp.GetAllItens(idAss).OrderBy(x => x.PROD_NM_NOME).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
+            ViewBag.Produtos = new SelectList(lista, "PROD_CD_ID", "PROD_NM_NOME");
             Hashtable result = new Hashtable();
 
             if (ModelState.IsValid)
@@ -478,7 +487,7 @@ namespace ERP_CRM_Solution.Controllers
                         Int32 voltaItem = baseApp.ValidateCreateItemCompra(itpc);
                     }
 
-                    Session["ListaITPC"] = null;
+                    //Session["ListaITPC"] = null;
                     Session["IdVolta"] = item.PECO_CD_ID;
                     if (Session["FileQueueCompra"] != null)
                     {

@@ -139,7 +139,7 @@
                                     @Html.ButtonLinkIndex(text: "Novo Pedido", controller: "Compra", action: "IncluirPedidoCompra")
                                 }
                                 @Html.ButtonLinkIndex(text: "Voltar", controller: "Compra", action: "Voltar")
-                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Compra", action: "MontarTelaDasboardCompra")
+                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Compra", action: "MontarTelaDashboardCompra")
                             </div>
                         </div>
                     </div>
@@ -184,7 +184,7 @@
         }
 
                 <div class="row">
-                    @if ((ViewBag.Listas as List
+                    @if (ViewBag.Listas != null && (ViewBag.Listas as List
                     <EntitiesServices.Model.PEDIDO_COMPRA>).Count > 0)
                     {
 
@@ -360,7 +360,23 @@
 
                     </tbody>
                 </table>}
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-2">
 
+                                </div>
+                                <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
+                                    <h2 style="font-weight: bold">Sua pesquisa não retornou nenhum resultado</h2>
+                                    <p>Tente outras opções de pesquisa</p>
+
+                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Compra", action: "RetirarFiltroCompra")
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                </div>
+                            </div>
+                        }
                 </div>
                 </div>
             </div>

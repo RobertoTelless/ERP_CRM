@@ -54,20 +54,23 @@
                     <div class="tabs-container">
                         @using (Html.BeginForm("IncluirPedidoCompra", "Compra", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                         {
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <br />
+                                @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
+                                <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão do pedido</button>
+                                @Html.ButtonLinkIndex(text: "Voltar", controller: "Compra", action: "MontarTelaPedidoCompra")
+                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Compra", action: "MontarTelaDashboardCompra")
+                            </div>
+
+
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
                 <li class=""><a data-toggle="tab" href="#tab-2">Itens do Pedido</a></li>
                 <li class=""><a data-toggle="tab" href="#tab-3">Imagens - Foto e Anexos</a></li>
                 <li class=""><a data-toggle="tab" href="#tab-4">Observações</a></li>
             </ul>
+                            
                             <div class="tab-content">
-                                <div class="form-group">
-                                    <br />
-                                    @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
-                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão do pedido</button>
-                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "Compra", action: "Voltar")
-                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Compra", action: "MontarTelaDasboardCompra")
-                                </div>
 
                                 @*Dados Gerais*@
                                 <div id="tab-1" class="tab-pane active">
@@ -82,6 +85,7 @@
                                                     @Html.HiddenFor(m => m.PECO_IN_ATIVO)
                                                     @Html.HiddenFor(m => m.PECO_IN_ATIVO)
                                                     @Html.HiddenFor(m => m.PECO_IN_TIPO)
+                                                    @Html.HiddenFor(m => m.PECO_IN_STATUS)
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
                                                         Filial*
                                                         @Html.DropDownListFor(m => m.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", id = "fili" })
@@ -92,23 +96,15 @@
                                                         @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control" })
                                                         @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
                                                     </div>
-                                                    <!--<div class="col-lg-4 col-md-4 col-xs-12">
-                                                        Fornecedor*
-                                                        <select name="FORN_CD_ID" id="lstForn" class="form-control" data-val="true" style="display: none;">
-                                                            <option value="">Selecionar</option>
-                                                        </select>-->
-                                                        @*@Html.DropDownListFor(m => m.FORN_CD_ID, (SelectList)ViewBag.Fornecedores, "Selecionar", new { @class = "form-control", @id = "forn" })
-                                                            @Html.ValidationMessageFor(m => m.FORN_CD_ID, "", new { @style = "color:red" })*@
-                                                    <!--</div>-->
-                                                </div>
-                                            </div>
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    <div class="col-lg-6 col-md-6 col-xs-12">
                                                         Nome*
                                                         @Html.TextBoxFor(m => m.PECO_NM_NOME, new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.PECO_NM_NOME, "", new { @style = "color:red" })
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Data*
                                                         @Html.TextBoxFor(m => m.PECO_DT_DATA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, id = "data" })
@@ -137,7 +133,7 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-6 col-md-6 col-xs-12">
                                                     @Html.HiddenFor(m => m.PECO_CD_ID)
                                                     Produto*
                                                     @Html.DropDownList("Produto", (SelectList)ViewBag.Produtos, "Selecionar", new { @class = "form-control", @id = "prod" })
@@ -264,11 +260,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
     <script src="~/Scripts/uploadAnexo.js"></script>
 
-    <script>
+    @*<script>
         $(function () {
             $('#prod').select2();
         });
-    </script>
+    </script>*@
 
     <script type="text/javascript" language="javascript">
         $(function () {
@@ -693,8 +689,8 @@
                 );
 
                 var data = {
-                    "ITPC_IN_TIPO": $('#tipo').val()
-                    , "PROD_CD_ID": $('#prod option:selected').val()
+                    //"ITPC_IN_TIPO": $('#tipo').val()
+                    "PROD_CD_ID": $('#prod option:selected').val()
                     , "ITPC_QN_QUANTIDADE": $('#qtde').val()
                     , "ITPC_TX_OBSERVACOES": $('#obs').val()
                 }
@@ -715,8 +711,8 @@
 
         function apagaRow(td) {
             var tr = $(td.closest('tr'));
-            var tipo = tr.find($('input[type=hidden][name=rowTipo]')).val();
-            if (tipo == 1) {
+            //var tipo = tr.find($('input[type=hidden][name=rowTipo]')).val();
+            //if (tipo == 1) {
 
                 var data = {
                     "ITPC_IN_TIPO": tr.find($('input[type=hidden][name=rowTipo]')).val()
@@ -740,7 +736,7 @@
                 var prod = $('#prod option[value="' + tr.find($('input[type=hidden][name=rowProd]')).val() + '"]');
                 prod.prop('disabled', false);
                 prod.css('background', '');
-            }
+            //}
 
             //if (tipo == 2) {
 
@@ -772,13 +768,14 @@
         }
 
         function isValidForm() {
-            if ($('#tipo').val() == "1") {
-                if ($("#tipo").val() != "" && $("#prod").val() != "" && $("#und").val() != "" && $('#qtde').val() != "") {
+            //if ($('#tipo').val() == "1") {
+                //if ($("#tipo").val() != "" && $("#prod").val() != "" && $("#und").val() != "" && $('#qtde').val() != "") {
+                if ($("#prod").val() != "" && $("#und").val() != "" && $('#qtde').val() != "") {
                     return true;
                 } else {
                     return false;
                 }
-            }
+        //    }
         //    else if ($('#tipo').val() == 2) {
         //        if ($("#tipo").val() != "" && $("#ins").val() != "" && $("#und").val() != "" && $('#qtde').val() != "") {
         //            return true;
