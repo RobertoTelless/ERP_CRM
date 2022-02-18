@@ -3425,6 +3425,7 @@
     <Content Include="Views\TabelasAuxiliares\EditarSubgrupo.cshtml" />
     <Content Include="Views\Usuario\MontarTelaDashboardAdministracao.cshtml" />
     <Content Include="Views\Compra\IncluirCompraExpressa.cshtml" />
+    <Content Include="Views\BaseAdmin\CarregarLandingPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
