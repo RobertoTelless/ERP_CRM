@@ -108,8 +108,8 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            Email
-                                            @*@Html.TextArea("emailPers", new { @class = "form-control", style = "max-width: 100%; min-width: 100%; max-height: 500px; height: 375px;", id = "emailPers" })*@
+                                            @*Email*@
+                                            @Html.TextArea("emailPers", new { @class = "form-control", style = "max-width: 100%; min-width: 100%; max-height: 500px; height: 375px;", id = "emailPers" })
                                         </div>
                                         <div class="modal-footer">
                                             @Html.ButtonActionSubmit(text: "Enviar apenas Email", htmlAttributes: new { id = "basictoast" })
@@ -117,6 +117,13 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div style="margin-top: 5px; margin-left: 0;" class="form-group">
+                                <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#smsModal">
+                                    Enviar para Cotação o Pedido de Compra?
+                                </button>
+                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMontarTelaPedidoCompra", controller: "Compra")
+                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Compra", action: "MontarTelaDashboardCompra")
                             </div>
 
                         <ul class="nav nav-tabs">
@@ -366,13 +373,13 @@
                                 </div>
                             </div>
 
-                            <div style="margin-top: 5px; margin-left: 0;" class="form-group">
+                            @*<div style="margin-top: 5px; margin-left: 0;" class="form-group">
                                 <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#smsModal">
                                     Enviar para Cotação o Pedido de Compra?
                                 </button>
                                 @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMontarTelaPedidoCompra", controller: "Compra")
-                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Compra", action: "MontarTelaDasboardCompra")
-                            </div>
+                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Compra", action: "MontarTelaDashboardCompra")
+                            </div>*@
                         </div>
                         }
                     </div>

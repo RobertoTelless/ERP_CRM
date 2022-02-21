@@ -782,8 +782,11 @@ namespace ApplicationServices.Services
                         mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
                         mensagem.NETWORK_CREDENTIAL = net;
                         mensagem.IS_HTML = true;
-                        mensagem.ATTACHMENT = new List<Attachment>();
-                        mensagem.ATTACHMENT.Add(anexo.First(x => x.FORN_CD_ID == f.FORN_CD_ID).ATTACHMENT);
+                        if (anexo.Count > 0)
+                        {
+                            mensagem.ATTACHMENT = new List<Attachment>();
+                            mensagem.ATTACHMENT.Add(anexo.First(x => x.FORN_CD_ID == f.FORN_CD_ID).ATTACHMENT);
+                        }
 
                         // Envia mensagem
                         Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);

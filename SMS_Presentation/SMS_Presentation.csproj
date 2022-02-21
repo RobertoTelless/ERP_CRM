@@ -862,6 +862,8 @@
     <Content Include="Images\Clayton.jpg" />
     <Content Include="Images\dashboard4_1.jpg" />
     <Content Include="Images\dashboard4_2.jpg" />
+    <Content Include="Images\Dash_Financeiro.png" />
+    <Content Include="Images\Dash_principal.png" />
     <Content Include="Images\email_1.jpg" />
     <Content Include="Images\email_2.jpg" />
     <Content Include="Images\email_3.jpg" />
@@ -1690,6 +1692,7 @@
     <Content Include="Images\icon_telefone.png" />
     <Content Include="Images\icon_unidade.png" />
     <Content Include="Images\icon_vaga.png" />
+    <Content Include="Images\Kanban_CRM.png" />
     <Content Include="Images\landing\avatar1.jpg" />
     <Content Include="Images\landing\avatar2.jpg" />
     <Content Include="Images\landing\avatar3.jpg" />

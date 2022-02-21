@@ -15,8 +15,8 @@ namespace ERP_CRM_Solution.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectToAction("Login", "ControleAcesso");
-
+            //return RedirectToAction("Login", "ControleAcesso");
+            return RedirectToAction("CarregarLandingPage", "BaseAdmin");
         }
 
         public ActionResult About()

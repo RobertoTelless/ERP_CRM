@@ -2358,6 +2358,9 @@
           <Property Name="USUA_TM_FINAL" Type="time" Precision="7" />
           <Property Name="USUA_IN_COMPRADOR" Type="int" />
           <Property Name="USUA_IN_APROVADOR" Type="int" />
+          <Property Name="USUA_IN_ESPECIAL" Type="int" />
+          <Property Name="USUA_IN_CRM" Type="int" />
+          <Property Name="USUA_IN_ERP" Type="int" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -10394,6 +10397,9 @@
           <NavigationProperty Name="TAREFA_VINCULO" Relationship="Self.FK_TAREFA_VINCULO_USUARIO" FromRole="USUARIO" ToRole="TAREFA_VINCULO" />
           <NavigationProperty Name="USUARIO_ANEXO" Relationship="Self.FK_USUARIO_ANEXO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_ANEXO" />
           <NavigationProperty Name="USUARIO_FUNCIONARIO" Relationship="Self.FK_USUARIO_FUNCIONARIO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_FUNCIONARIO" />
+          <Property Name="USUA_IN_ESPECIAL" Type="Int32" />
+          <Property Name="USUA_IN_CRM" Type="Int32" />
+          <Property Name="USUA_IN_ERP" Type="Int32" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -17938,6 +17944,9 @@
           <EntitySetMapping Name="USUARIO">
             <EntityTypeMapping TypeName="ERP_CRMModel.USUARIO">
               <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="USUA_IN_ERP" ColumnName="USUA_IN_ERP" />
+                <ScalarProperty Name="USUA_IN_CRM" ColumnName="USUA_IN_CRM" />
+                <ScalarProperty Name="USUA_IN_ESPECIAL" ColumnName="USUA_IN_ESPECIAL" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="PERF_CD_ID" ColumnName="PERF_CD_ID" />

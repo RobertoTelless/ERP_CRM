@@ -71,6 +71,9 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> USUA_IN_SISTEMA { get; set; }
         public Nullable<int> USUA_IN_COMPRADOR { get; set; }
         public Nullable<int> USUA_IN_APROVADOR { get; set; }
+        public Nullable<int> USUA_IN_ESPECIAL { get; set; }
+        public Nullable<int> USUA_IN_CRM { get; set; }
+        public Nullable<int> USUA_IN_ERP { get; set; }
 
         public bool Bloqueio
         {

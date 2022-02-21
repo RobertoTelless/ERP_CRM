@@ -12,7 +12,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>ERPSys | @ViewBag.Title</title>
-     ERP
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 
     <!-- Add jQuery Style direct - used for jQGrid plugin -->
@@ -45,6 +44,7 @@
                         <li><a class="page-scroll" href="#testimonials">Depoimentos</a></li>
                         <li><a class="page-scroll" href="#pricing">Planos & Preços</a></li>
                         <li><a class="page-scroll" href="#contact">Contato</a></li>
+                        <li><a class="page-scroll" style="color: darkkhaki" onclick="location.href='@Url.Action("Login", "ControleAcesso")'">Login</a></li>
                     </ul>
                 </div>
             </div>
@@ -67,11 +67,11 @@
                         </h1>
                         <p>Um conjunto de aplicativos integrados</p>
                         <p>
-                            <a class="btn btn-lg btn-primary" href="#" role="button">Leia Mais</a>
+                            <a class="btn btn-lg btn-primary" href="#features" role="button">Leia Mais</a>
                         </p>
                     </div>
                     <div class="carousel-image wow zoomIn">
-                        <img src="~/Images/landing/laptop.png" alt="laptop" />
+                        <img src="~/Images/Dash_principal.png" alt="prin" />
                     </div>
                 </div>
                 <!-- Set background for slide in css -->
@@ -83,10 +83,10 @@
                     <div class="carousel-caption blank">
                         <h1>ERPSys<br /> Tenha controle total sobre<br/>as atividades de sua empresa.</h1>
                         <p>Sua empresa na tela de seu dispositivo</p>
-                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Leia mais</a></p>
+                        <p><a class="btn btn-lg btn-primary" href="#features" role="button">Leia mais</a></p>
                     </div>
                     <div class="carousel-image wow zoomIn">
-                        <img src="~/Images/landing/laptop.png" alt="laptop" />
+                        <img src="~/Images/Dash_financeiro.png" alt="fin" />
                     </div>
                 </div>
                 <!-- Set background for slide in css -->
@@ -108,48 +108,48 @@
         <div class="row">
             <div class="col-sm-3">
                 <h2>Mensageria</h2>
-                <p>Aqui entra um texto pequeno descrevendo as funcionalidades de Mensageria</p>
-                <p><a class="navy-link" href="#" role="button">Detalhes &raquo;</a></p>
+                <p>Envie e programe mensagens de E-Mail e SMS para seus clientes</p>
+                <p><a class="navy-link" href="#Mensageria" role="button">Detalhes &raquo;</a></p>
             </div>
             <div class="col-sm-3">
                 <h2>CRM</h2>
-                <p>Aqui entra um texto pequeno descrevendo as funcionalidades de CRM</p>
-                <p><a class="navy-link" href="#" role="button">Detalhes &raquo;</a></p>
+                <p>Crie e controle processos e leads com visualização Kanban</p>
+                <p><a class="navy-link" href="#CRM" role="button">Detalhes &raquo;</a></p>
             </div>
             <div class="col-sm-3">
                 <h2>Controle Financeiro</h2>
                 <p>Controle seus pagamentos e recebimentos com total integração com demais funcionalidades do sistema</p>
-                <p><a class="navy-link" href="#" role="button">Detalhes &raquo;</a></p>
+                <p><a class="navy-link" href="#Financeiro" role="button">Detalhes &raquo;</a></p>
             </div>
             <div class="col-sm-3">
                 <h2>Controle de Estoque</h2>
                 <p>Controle de estoque flexível, integrado a todas as funcionalidades do sistema</p>
-                <p><a class="navy-link" href="#" role="button">Detalhes &raquo;</a></p>
+                <p><a class="navy-link" href="#Estoque" role="button">Detalhes &raquo;</a></p>
             </div>
             <div class="col-sm-3">
                 <h2>Controle de Patrimônio</h2>
                 <p>Controle de patrimônio flexível, integrado a todas as funcionalidades do sistema</p>
-                <p><a class="navy-link" href="#" role="button">Detalhes &raquo;</a></p>
+                <p><a class="navy-link" href="#Patrimonio" role="button">Detalhes &raquo;</a></p>
             </div>
             <div class="col-sm-3">
                 <h2>Controle de Compras</h2>
                 <p>Controle de Compras flexível, integrado a todas as funcionalidades do sistema</p>
-                <p><a class="navy-link" href="#" role="button">Detalhes &raquo;</a></p>
+                <p><a class="navy-link" href="#Compras" role="button">Detalhes &raquo;</a></p>
             </div>
             <div class="col-sm-3">
                 <h2>Controle de Vendas</h2>
                 <p>Controle de Vendas flexível, integrado a todas as funcionalidades do sistema</p>
-                <p><a class="navy-link" href="#" role="button">Detalhes &raquo;</a></p>
+                <p><a class="navy-link" href="#Vendas" role="button">Detalhes &raquo;</a></p>
             </div>
             <div class="col-sm-3">
                 <h2>Controle de Pós-Vendas</h2>
                 <p>Controle de Pós-Vendas flexível, integrado a todas as funcionalidades do sistema</p>
-                <p><a class="navy-link" href="#" role="button">Detalhes &raquo;</a></p>
+                <p><a class="navy-link" href="#Service" role="button">Detalhes &raquo;</a></p>
             </div>
             <div class="col-sm-3">
                 <h2>Agenda e Tarefas</h2>
                 <p>Controle de agenda e tarefas por usuário, flexível, fácil de usar e integrado ao sistema</p>
-                <p><a class="navy-link" href="#" role="button">Detalhes &raquo;</a></p>
+                <p><a class="navy-link" href="#Agenda" role="button">Detalhes &raquo;</a></p>
             </div>
         </div>
     </section>
@@ -289,35 +289,6 @@
         </div>
     </section>
 
-    @*<section class="features">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="navy-line"></div>
-                    <h1>Even more great feautres</h1>
-                    <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
-                </div>
-            </div>
-            <div class="row features-block">
-                <div class="col-lg-3 features-text wow fadeInLeft">
-                    <small>INSPINIA</small>
-                    <h2>Perfectly designed </h2>
-                    <p>INSPINIA Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with latest jQuery plugins.</p>
-                    <a href="" class="btn btn-primary">Learn more</a>
-                </div>
-                <div class="col-lg-6 text-right m-t-n-lg wow zoomIn">
-                    <img src="~/Images/landing/iphone.jpg" class="img-responsive" alt="dashboard">
-                </div>
-                <div class="col-lg-3 features-text text-right wow fadeInRight">
-                    <small>INSPINIA</small>
-                    <h2>Perfectly designed </h2>
-                    <p>INSPINIA Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with latest jQuery plugins.</p>
-                    <a href="" class="btn btn-primary">Learn more</a>
-                </div>
-            </div>
-        </div>
-
-    </section>*@
 
     <section class="timeline gray-section">
         <div class="container">
@@ -469,46 +440,6 @@
 
     </section>
 
-    @*<section class="features">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="navy-line"></div>
-                    <h1>More and more extra great feautres</h1>
-                    <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-5 col-lg-offset-1 features-text">
-                    <small>INSPINIA</small>
-                    <h2>Perfectly designed </h2>
-                    <i class="fa fa-bar-chart big-icon pull-right"></i>
-                    <p>INSPINIA Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with.</p>
-                </div>
-                <div class="col-lg-5 features-text">
-                    <small>INSPINIA</small>
-                    <h2>Perfectly designed </h2>
-                    <i class="fa fa-bolt big-icon pull-right"></i>
-                    <p>INSPINIA Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with.</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-5 col-lg-offset-1 features-text">
-                    <small>INSPINIA</small>
-                    <h2>Perfectly designed </h2>
-                    <i class="fa fa-clock-o big-icon pull-right"></i>
-                    <p>INSPINIA Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with.</p>
-                </div>
-                <div class="col-lg-5 features-text">
-                    <small>INSPINIA</small>
-                    <h2>Perfectly designed </h2>
-                    <i class="fa fa-users big-icon pull-right"></i>
-                    <p>INSPINIA Admin Theme is a premium admin dashboard template with flat design concept. It is fully responsive admin dashboard template built with Bootstrap 3+ Framework, HTML5 and CSS3, Media query. It has a huge collection of reusable UI components and integrated with.</p>
-                </div>
-            </div>
-        </div>
-
-    </section>*@
 
     <section id="pricing" class="pricing">
         <div class="container">

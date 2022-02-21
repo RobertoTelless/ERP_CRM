@@ -2457,7 +2457,6 @@ namespace ERP_CRM_Solution.Controllers
 
                 // Executa a operação
                 PEDIDO_COMPRA ped = baseApp.GetItemById(vm.PECO_CD_ID);
-
                 PEDIDO_COMPRA item = Mapper.Map<PedidoCompraViewModel, PEDIDO_COMPRA>(vm);
 
                 if (voltaSms == "1")
@@ -2515,22 +2514,22 @@ namespace ERP_CRM_Solution.Controllers
                     }                    
                 }
 
-                //if ((Session["EnviarCotacaoFornProd"] != null && ((List<PRODUTO_FORNECEDOR>)Session["EnviarCotacaoFornProd"]).Count != 0))
-                //{
-                //    if (Session["EnviarCotacaoFornProd"] != null && ((List<PRODUTO_FORNECEDOR>)Session["EnviarCotacaoFornProd"]).Count != 0)
-                //    {
-                //        List<PRODUTO_FORNECEDOR> lista = (List<PRODUTO_FORNECEDOR>)Session["EnviarCotacaoFornProd"];
-                //        var prodFornecedores = lista.GroupBy(x => x.FORN_CD_ID);
-                //        attachmentForn.AddRange(GeraAnexoProd(vm, ped, prodFornecedores));
-                //    }
+                if ((Session["EnviarCotacaoFornProd"] != null && ((List<PRODUTO_FORNECEDOR>)Session["EnviarCotacaoFornProd"]).Count != 0))
+                {
+                    if (Session["EnviarCotacaoFornProd"] != null && ((List<PRODUTO_FORNECEDOR>)Session["EnviarCotacaoFornProd"]).Count != 0)
+                    {
+                        List<PRODUTO_FORNECEDOR> lista = (List<PRODUTO_FORNECEDOR>)Session["EnviarCotacaoFornProd"];
+                        var prodFornecedores = lista.GroupBy(x => x.FORN_CD_ID);
+                        attachmentForn.AddRange(GeraAnexoProd(vm, ped, prodFornecedores));
+                    }
 
-                //    Session["EnviarCotacaoFornProd"] = null;
-                //}
-                //else
-                //{
-                //    var prodFornecedores = ped.ITEM_PEDIDO_COMPRA.Where(x => x.PRODUTO != null).SelectMany(x => x.PRODUTO.PRODUTO_FORNECEDOR.Where(y => y.PRFO_IN_ATIVO == 1)).GroupBy(x => x.FORN_CD_ID);
-                //    attachmentForn.AddRange(GeraAnexoProd(vm, ped, prodFornecedores));
-                //}
+                    Session["EnviarCotacaoFornProd"] = null;
+                }
+                else
+                {
+                    var prodFornecedores = ped.ITEM_PEDIDO_COMPRA.Where(x => x.PRODUTO != null).SelectMany(x => x.PRODUTO.PRODUTO_FORNECEDOR.Where(y => y.PRFO_IN_ATIVO == 1)).GroupBy(x => x.FORN_CD_ID);
+                    attachmentForn.AddRange(GeraAnexoProd(vm, ped, prodFornecedores));
+                }
 
                 Int32 volta = baseApp.ValidateEnvioCotacao(item, attachmentForn, emailPers, usuario, forn);
 

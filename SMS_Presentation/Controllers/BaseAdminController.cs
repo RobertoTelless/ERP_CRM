@@ -65,10 +65,6 @@ namespace ERP_CRM_Solution.Controllers
 
         public ActionResult CarregarLandingPage()
         {
-            if ((String)Session["Ativa"] == null)
-            {
-                return RedirectToAction("Login", "ControleAcesso");
-            }
             return View();
         }
 
@@ -239,6 +235,7 @@ namespace ERP_CRM_Solution.Controllers
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
             Session["MensPermissao"] = 0;
+            ViewBag.Especial = vm.USUA_IN_ESPECIAL;
             return View(vm);
         }
 
