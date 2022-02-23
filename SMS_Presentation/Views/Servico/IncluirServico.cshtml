@@ -162,14 +162,14 @@
                                             @Html.TextBoxFor(m => m.SERV_NR_DURACAO, new { @class = "form-control", autofocus = true })
                                             @Html.ValidationMessageFor(m => m.SERV_NR_DURACAO, "", new { @style = "color:red" })
                                         </div>
-                                        <div class="col-lg-8 col-md-8 col-xs-12">
+                                        <div class="col-lg-2 col-md-2 col-xs-12">
                                             Prazo Expresso
                                             @Html.TextBoxFor(m => m.SERV_NR_DURACAO_EXPRESSA, new { @class = "form-control", autofocus = true })
                                             @Html.ValidationMessageFor(m => m.SERV_NR_DURACAO_EXPRESSA, "", new { @style = "color:red" })
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-xs-12">
                                             Valor da Visita
-                                            @Html.TextBoxFor(m => m.SERV_VL_VISITA, "{0:n2}", new { @class = "form-control", autofocus = true })
+                                            @Html.TextBoxFor(m => m.SERV_VL_VISITA, new { @class = "form-control", autofocus = true })
                                             @Html.ValidationMessageFor(m => m.SERV_VL_VISITA, "", new { @style = "color:red" })
                                         </div>
                                     </div>

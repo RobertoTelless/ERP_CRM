@@ -82,7 +82,7 @@
                     <div class="form-group">
                         @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Servico")
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseServico", controller: "Servico")
-                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "Servico", action: "MontarTelaDashboard")
+                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "Servico", action: "MontarTelaDashboardServiceDesk")
                     </div>
 
                     <div class="tabs-container">
@@ -112,6 +112,11 @@
             @Html.HiddenFor(m => m.SERV_CD_ID)
             @Html.HiddenFor(m => m.SERV_DT_CADASTRO)
             @Html.HiddenFor(m => m.SERV_IN_ATIVO)
+            @Html.HiddenFor(m => m.SERV_NR_DURACAO)
+            @Html.HiddenFor(m => m.SERV_NR_DURACAO_EXPRESSA)
+            @Html.HiddenFor(m => m.SERV_VL_PRECO)
+            @Html.HiddenFor(m => m.SERV_VL_VALOR_EXPRESSO)
+            @Html.HiddenFor(m => m.SERV_VL_VISITA)
             Categoria*
             @Html.DropDownListFor(m => m.CASE_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })
             @Html.ValidationMessageFor(m => m.CASE_CD_ID, "", new { @style = "color:red" })
@@ -196,11 +201,11 @@
                 <td class="td-one-action">
                     @if (cond.SEAN_IN_TIPO == 1 || cond.SEAN_IN_TIPO == 2)
                     {
-@Html.TableLinkDetails(cond.SEAN_CD_ID, "VerAnexoCliente", "fa-camera", "Visualizar")}
+@Html.TableLinkDetails(cond.SEAN_CD_ID, "VerAnexoServico", "fa-camera", "Visualizar")}
 else if (cond.SEAN_IN_TIPO == 3)
 {
 <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.SEAN_AQ_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank"></a>}
-                    @Html.TableLinkDetails(cond.SEAN_CD_ID, "DownloadCliente", "fa-download", "Download")
+                    @Html.TableLinkDetails(cond.SEAN_CD_ID, "DownloadServico", "fa-download", "Download")
                 </td>
             </tr>}
                             </tbody>
@@ -226,22 +231,35 @@ else if (cond.SEAN_IN_TIPO == 3)
                                         {
                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    @Html.HiddenFor(m => m.SERV_CD_CODIGO)
+                                                    @Html.HiddenFor(m => m.SERV_CD_ID)
+                                                    @Html.HiddenFor(m => m.SERV_DS_DESCRICAO)
+                                                    @Html.HiddenFor(m => m.SERV_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.SERV_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.SERV_IN_LOCAL)
+                                                    @Html.HiddenFor(m => m.SERV_NM_NOME)
+                                                    @Html.HiddenFor(m => m.SERV_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CASE_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.NBSE_CD_ID)
+                                                    @Html.HiddenFor(m => m.UNID_CD_ID)
                                                     Prazo (Horas)*
                                                     @Html.TextBoxFor(m => m.SERV_NR_DURACAO, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.SERV_NR_DURACAO, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-8 col-md-8 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Prazo Expresso
                                                     @Html.TextBoxFor(m => m.SERV_NR_DURACAO_EXPRESSA, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.SERV_NR_DURACAO_EXPRESSA, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Valor da Visita
-                                                    @Html.TextBoxFor(m => m.SERV_VL_VISITA, "{0:n2}", new { @class = "form-control", autofocus = true })
+                                                    @Html.TextBoxFor(m => m.SERV_VL_VISITA, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.SERV_VL_VISITA, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                        <div class="form-group" style=" margin-left: 7px; margin-right:  7px;">
                                                 @Html.ButtonActionSubmit(text: "Confirma edição de Serviço", htmlAttributes: new { id = "basictoast" })
                                             </div>
                                         }
@@ -250,7 +268,6 @@ else if (cond.SEAN_IN_TIPO == 3)
                                     @using (Html.BeginForm("IncluirItemTabelaServico", "Servico", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container5" }))
                                     {
                         <div class="row">
-                            <hr />
                             <h4>Incluir Novo Preço</h4>
                             <br />
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
@@ -281,7 +298,6 @@ else if (cond.SEAN_IN_TIPO == 3)
                                 </div>
                             </div>
                         </div>}
-                                    <hr />
                                     <div class="row">
                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                             <div class="col-lg-12 col-md-12 col-xs-12">
@@ -349,18 +365,23 @@ else if (cond.SEAN_IN_TIPO == 3)
 <div class="row">
     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
         <div class="col-lg-12 col-md-12 col-xs-12">
-            @Html.HiddenFor(m => m.ASSI_CD_ID)
-            @Html.HiddenFor(m => m.CASE_CD_ID)
-            @Html.HiddenFor(m => m.FILI_CD_ID)
-            @Html.HiddenFor(m => m.NBSE_CD_ID)
             @Html.HiddenFor(m => m.SERV_CD_CODIGO)
             @Html.HiddenFor(m => m.SERV_CD_ID)
             @Html.HiddenFor(m => m.SERV_DS_DESCRICAO)
             @Html.HiddenFor(m => m.SERV_DT_CADASTRO)
             @Html.HiddenFor(m => m.SERV_IN_ATIVO)
+            @Html.HiddenFor(m => m.SERV_IN_LOCAL)
             @Html.HiddenFor(m => m.SERV_NM_NOME)
-            @Html.HiddenFor(m => m.SERV_VL_PRECO)
+            @Html.HiddenFor(m => m.ASSI_CD_ID)
+            @Html.HiddenFor(m => m.CASE_CD_ID)
+            @Html.HiddenFor(m => m.FILI_CD_ID)
+            @Html.HiddenFor(m => m.NBSE_CD_ID)
             @Html.HiddenFor(m => m.UNID_CD_ID)
+            @Html.HiddenFor(m => m.SERV_NR_DURACAO)
+            @Html.HiddenFor(m => m.SERV_NR_DURACAO_EXPRESSA)
+            @Html.HiddenFor(m => m.SERV_VL_PRECO)
+            @Html.HiddenFor(m => m.SERV_VL_VALOR_EXPRESSO)
+            @Html.HiddenFor(m => m.SERV_VL_VISITA)
             Observações
             @Html.TextAreaFor(m => m.SERV_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 400px;", autofocus = true })
             @Html.ValidationMessageFor(m => m.SERV_TX_OBSERVACOES, "", new { @style = "color:red" })
@@ -384,7 +405,8 @@ else if (cond.SEAN_IN_TIPO == 3)
                                                     <h5>Últimas Pedidos Emitidos</h5>
                                                 </div>
                                                 <div class="ibox-content">
-                                                    @if ((ViewBag.LstPedidos as List<EntitiesServices.Model.PEDIDO_VENDA>).Count > 0)
+                                                    <h1 class="no-margins">Em definição</h1>
+                                                    @*@if ((ViewBag.LstPedidos as List<EntitiesServices.Model.PEDIDO_VENDA>).Count > 0)
                                                     {
                                         <table class="table table-striped table-bordered table-hover dataTables-example">
                                             <thead style="background-color:lightsteelblue">
@@ -421,7 +443,7 @@ else if (cond.SEAN_IN_TIPO == 3)
                                 </tr>
 }
                                             </tbody>
-                                        </table>}
+                                        </table>}*@
                                                 </div>
                                             </div>
                                         </div>
@@ -441,10 +463,6 @@ else if (cond.SEAN_IN_TIPO == 3)
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <br />
-                    @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseServico", controller: "Servico")
                 </div>
             </div>
         </div>
@@ -673,7 +691,8 @@ else if (cond.SEAN_IN_TIPO == 3)
             $('#prtpCd').val(id);
             $('#filialModal').val(filial);
             $('#custoModal').val(custo);
-            $('#markupModal').val(markup + ",00");
+            //$('#markupModal').val(markup + ",00");
+            $('#markupModal').val(markup);
             $('#precoModal').val(preco);
             $('#precoPromoModal').val(precoPromo);
 

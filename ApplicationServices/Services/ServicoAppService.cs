@@ -175,26 +175,6 @@ namespace ApplicationServices.Services
                 }
 
                 // Ajusta objetos
-                if (item.ASSINANTE != null)
-                {
-                    item.ASSINANTE = null;
-                }
-                if (item.CATEGORIA_SERVICO != null)
-                {
-                    item.CATEGORIA_SERVICO = null;
-                }
-                if (item.FILIAL != null)
-                {
-                    item.FILIAL = null;
-                }
-                if (item.NOMENCLATURA_BRAS_SERVICOS!= null)
-                {
-                    item.NOMENCLATURA_BRAS_SERVICOS = null;
-                }
-                if (item.UNIDADE != null)
-                {
-                    item.UNIDADE = null;
-                }
 
                 // Acerta campos
                 item.SERV_IN_ATIVO = 0;
@@ -207,7 +187,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelSERV",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<SERVICO>(item)
+                    LOG_TX_REGISTRO = item.SERV_CD_ID.ToString() + "|" + item.SERV_CD_CODIGO.ToString() + "|" + item.SERV_DS_DESCRICAO + "|" + item.SERV_NM_NOME + "|" + item.SERV_NR_DURACAO.ToString() + "|" + item.SERV_NR_DURACAO_EXPRESSA.ToString()
                 };
 
                 // Persiste
@@ -236,7 +216,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatSERV",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<SERVICO>(item)
+                    LOG_TX_REGISTRO = item.SERV_CD_ID.ToString() + "|" + item.SERV_CD_CODIGO.ToString() + "|" + item.SERV_DS_DESCRICAO + "|" + item.SERV_NM_NOME + "|" + item.SERV_NR_DURACAO.ToString() + "|" + item.SERV_NR_DURACAO_EXPRESSA.ToString()
                 };
 
                 // Persiste
@@ -246,6 +226,7 @@ namespace ApplicationServices.Services
             {
                 throw;
             }
+
         }
 
     }

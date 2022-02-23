@@ -3454,6 +3454,8 @@
     <Folder Include="Imagens\2\ContaPagar\21\Anexos\" />
     <Folder Include="Imagens\2\ContaPagar\22\Anexos\" />
     <Folder Include="Imagens\2\ContaPagar\23\Anexos\" />
+    <Folder Include="Imagens\2\ContaPagar\29\Anexos\" />
+    <Folder Include="Imagens\2\ContaPagar\31\Anexos\" />
     <Folder Include="Imagens\2\ContaPagar\3\Anexos\" />
     <Folder Include="Imagens\2\ContaPagar\4\Anexos\" />
     <Folder Include="Imagens\2\ContaPagar\5\Anexos\" />
@@ -3517,7 +3519,11 @@
     <Folder Include="Imagens\2\Notificacao\6\Anexos\" />
     <Folder Include="Imagens\2\Notificacao\7\Anexos\" />
     <Folder Include="Imagens\2\Notificacao\8\Anexos\" />
-    <Folder Include="Imagens\2\PedidoCompra\" />
+    <Folder Include="Imagens\2\PedidoCompra\1\Anexos\" />
+    <Folder Include="Imagens\2\PedidoCompra\2\Anexos\" />
+    <Folder Include="Imagens\2\PedidoCompra\3\Anexos\" />
+    <Folder Include="Imagens\2\PedidoCompra\4\Anexos\" />
+    <Folder Include="Imagens\2\PedidoCompra\5\Anexos\" />
     <Folder Include="Imagens\2\Produtos\11\Anexos\" />
     <Folder Include="Imagens\2\Produtos\11\QR\" />
     <Folder Include="Imagens\2\Produtos\12\Anexos\" />

@@ -609,7 +609,6 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult EditarServico(ServicoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -686,7 +685,7 @@ namespace ERP_CRM_Solution.Controllers
             SERVICO item = servApp.GetItemById(id);
             objetoServAntes = item;
             item.SERV_IN_ATIVO = 0;
-            Int32 volta = servApp.ValidateEdit(item, item, usuario);
+            Int32 volta = servApp.ValidateDelete(item, usuario);
             if (volta == 1)
             {
                 Session["MensServico"] = 4;
@@ -1217,12 +1216,12 @@ namespace ERP_CRM_Solution.Controllers
                 table.AddCell(cell);
             }
 
-            cell = new PdfPCell(new Paragraph("Filial: " + serv.FILIAL.FILI_NM_NOME, meuFont));
-            cell.Border = 0;
-            cell.Colspan = 1;
-            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            table.AddCell(cell);
+            //cell = new PdfPCell(new Paragraph("Filial: " + serv.FILIAL.FILI_NM_NOME, meuFont));
+            //cell.Border = 0;
+            //cell.Colspan = 1;
+            //cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            //cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            //table.AddCell(cell);
 
             if (serv.UNIDADE != null)
             {
@@ -1247,7 +1246,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 cell = new PdfPCell(new Paragraph("Cod.NBS: " + serv.NOMENCLATURA_BRAS_SERVICOS.NBSE_NM_NOME, meuFont));
                 cell.Border = 0;
-                cell.Colspan = 1;
+                cell.Colspan = 2;
                 cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 cell.HorizontalAlignment = Element.ALIGN_LEFT;
                 table.AddCell(cell);
@@ -1256,7 +1255,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 cell = new PdfPCell(new Paragraph("Cod.NBS: -", meuFont));
                 cell.Border = 0;
-                cell.Colspan = 1;
+                cell.Colspan = 2;
                 cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 cell.HorizontalAlignment = Element.ALIGN_LEFT;
                 table.AddCell(cell);
