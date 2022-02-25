@@ -13,7 +13,6 @@ namespace ERP_CRM_Solution.ViewModels
         public int CRPA_CD_ID { get; set; }
         public int CARE_CD_ID { get; set; }
         public Nullable<int> CRPA_IN_PARCELA { get; set; }
-        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<decimal> CRPA_VL_VALOR { get; set; }
         [DataType(DataType.Date, ErrorMessage = "Deve ser uma data válida")]
         public Nullable<System.DateTime> CRPA_DT_VENCIMENTO { get; set; }

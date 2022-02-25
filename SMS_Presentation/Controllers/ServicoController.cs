@@ -318,7 +318,7 @@ namespace ERP_CRM_Solution.Controllers
         [HttpPost]
         public void MontarListaCusto(SERVICO_TABELA_PRECO item)
         {
-            Task.Run(() => {
+            //Task.Run(() => {
                 List<SERVICO_TABELA_PRECO> listaPr = new List<SERVICO_TABELA_PRECO>();
                 if (Session["ListaPrecoServico"] == null)
                 {                    
@@ -329,7 +329,7 @@ namespace ERP_CRM_Solution.Controllers
                 item.SETP_DT_DATA_REAJUSTE = DateTime.Now;
                 listaPr.Add(item);
                 Session["ListaPrecoServico"] = listaPr;
-            });
+            //});
         }
 
         [HttpPost]
@@ -987,7 +987,7 @@ namespace ERP_CRM_Solution.Controllers
             pdfDoc.Add(line1);
 
             // Grid
-            table = new PdfPTable(new float[] { 70f, 70f, 160f, 300f});
+            table = new PdfPTable(new float[] { 70f, 50f, 160f, 300f, 70f, 50f, 80f, 80f});
             table.WidthPercentage = 100;
             table.HorizontalAlignment = 0;
             table.SpacingBefore = 1f;
@@ -997,7 +997,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 VerticalAlignment = Element.ALIGN_MIDDLE, HorizontalAlignment = Element.ALIGN_LEFT
             };
-            cell.Colspan = 4;
+            cell.Colspan = 8;
             cell.BackgroundColor = BaseColor.LIGHT_GRAY;
             table.AddCell(cell);
 
@@ -1029,6 +1029,36 @@ namespace ERP_CRM_Solution.Controllers
             };
             cell.BackgroundColor = BaseColor.LIGHT_GRAY;
             table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Duração", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Duração Expressa", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Local", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Visita (R$)", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+
+
 
             foreach (SERVICO item in lista)
             {
@@ -1054,6 +1084,75 @@ namespace ERP_CRM_Solution.Controllers
                     HorizontalAlignment = Element.ALIGN_LEFT
                 };
                 table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph(item.SERV_NR_DURACAO.ToString(), meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph(item.SERV_NR_DURACAO_EXPRESSA.ToString(), meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                table.AddCell(cell);
+                if (item.SERV_IN_LOCAL == 1)
+                {
+                    cell = new PdfPCell(new Paragraph("Interno", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else if (item.SERV_IN_LOCAL == 2)
+                {
+                    cell = new PdfPCell(new Paragraph("Externo", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else
+                {
+                    cell = new PdfPCell(new Paragraph("Interno/Externo", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                if (item.SERV_VL_VISITA != null & item.SERV_IN_LOCAL != 1 )
+                {
+                    table.AddCell(cell);
+                    cell = new PdfPCell(new Paragraph(CrossCutting.Formatters.DecimalFormatter(item.SERV_VL_VISITA.Value), meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else if (item.SERV_VL_VISITA == null & item.SERV_IN_LOCAL != 1 )
+                {
+                    table.AddCell(cell);
+                    cell = new PdfPCell(new Paragraph("Não Definido", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else if (item.SERV_IN_LOCAL == 2)
+                {
+                    table.AddCell(cell);
+                    cell = new PdfPCell(new Paragraph("Não se Aplica", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
             }
             pdfDoc.Add(table);
 
@@ -1273,15 +1372,56 @@ namespace ERP_CRM_Solution.Controllers
             cell.Colspan = 2;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            table.AddCell(cell);
-
-            cell = new PdfPCell(new Paragraph("Preço: " + serv.SERV_VL_PRECO, meuFont));
+            table.AddCell(cell);     
+            
+            cell = new PdfPCell(new Paragraph("Local: " + (serv.SERV_IN_LOCAL.Value == 1 ? "Interno" : (serv.SERV_IN_LOCAL == 2 ? "Externo" : "Interno/Externo")), meuFont));
             cell.Border = 0;
-            cell.Colspan = 2;
+            cell.Colspan = 1;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
-            pdfDoc.Add(table);
+
+            cell = new PdfPCell(new Paragraph("Duração: " + serv.SERV_NR_DURACAO.ToString(), meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Duração Expressa: " + serv.SERV_NR_DURACAO_EXPRESSA.ToString(), meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            if (serv.SERV_VL_VISITA != null & serv.SERV_IN_LOCAL != 1)
+            {
+                cell = new PdfPCell(new Paragraph("Visita (R$): " + CrossCutting.Formatters.DecimalFormatter(serv.SERV_VL_VISITA.Value), meuFont));
+                cell.Border = 0;
+                cell.Colspan = 1;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                table.AddCell(cell);
+            }
+            else if (serv.SERV_VL_VISITA == null & serv.SERV_IN_LOCAL != 1)
+            {
+                cell = new PdfPCell(new Paragraph("Visita (R$): Não Definida", meuFont));
+                cell.Border = 0;
+                cell.Colspan = 1;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                table.AddCell(cell);
+            }
+            else if (serv.SERV_IN_LOCAL == 2)
+            {
+                cell = new PdfPCell(new Paragraph("Visita (R$): Não se Aplica", meuFont));
+                cell.Border = 0;
+                cell.Colspan = 1;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                table.AddCell(cell);
+            }
 
             //Descirição
             Chunk chunk = new Chunk("Descrição: " + serv.SERV_DS_DESCRICAO, FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK));

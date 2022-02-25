@@ -19,7 +19,8 @@
                             <input id="prtpCd" type="hidden" name="id" />
                             <div class="col-lg-3 col-md-3 col-xs-12">
                                 Filial
-                                @Html.DropDownListFor(m => m.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", autofocus = true, id = "filialModal" })
+                                @*@Html.DropDownListFor(m => m.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", autofocus = true, id = "filialModal" })*@
+                                @Html.TextBoxFor(m => m.FILIAL.FILI_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                             </div>
                             <div class="col-lg-2 col-md-2 col-xs-12">
                                 Custo
@@ -684,7 +685,11 @@ else if (cond.SEAN_IN_TIPO == 3)
             var markup = $('#markup').val() == "" ? 0 : $('#markup').val();
             custo = (parseFloat(custo.replace(',', '.')));
             markup = (parseFloat(markup.replace(',', '.')));
-            $('#preco').val((custo * markup).toFixed(2).replace('.', ','));
+            if (custo != "" && markup != "") {
+                markup = (parseFloat(custo) / 100) * markup;
+                $('#preco').val((parseFloat(custo) + parseFloat(markup)).toFixed(2).replace('.', ','));
+            }
+        //    $('#preco').val((custo * markup).toFixed(2).replace('.', ','));
         }
 
         function EditRow(id, filial, custo, markup, preco, precoPromo) {
@@ -704,7 +709,11 @@ else if (cond.SEAN_IN_TIPO == 3)
             var markup = $('#markup').val() == "" ? 0 : $('#markup').val();
             custo = (parseFloat(custo.replace(',', '.')));
             markup = (parseFloat(markup.replace(',', '.')));
-            $('#preco').val((custo * markup).toFixed(2).replace('.', ','));
+            if (custo != "" && markup != "") {
+                markup = (parseFloat(custo) / 100) * markup;
+                $('#preco').val((parseFloat(custo) + parseFloat(markup)).toFixed(2).replace('.', ','));
+            }
+        //    $('#preco').val((custo * markup).toFixed(2).replace('.', ','));
         }
     </script>
 

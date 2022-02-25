@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Net.Mail;
 
+
 namespace ERP_CRM_Solution.Controllers
 {
     public class CompraController : Controller

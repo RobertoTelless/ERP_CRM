@@ -119,26 +119,26 @@
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Valor Original
-                                                        @Html.TextBoxFor(m => m.CRPA_VL_VALOR, "{0:n2}", new { @class = "form-control", autofocus = true , @readonly="readonly", @id = "valor"})
+                                                        @Html.TextBoxFor(m => m.CRPA_VL_VALOR, new { @class = "form-control", autofocus = true , @readonly="readonly", @id = "valor"})
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Descontos(-)
-                                                        @Html.TextBoxFor(m => m.CRPA_VL_DESCONTO, "{0:n2}", new { @class = "form-control", autofocus = true, @id = "desc", onkeyup = "sum()"})
+                                                        @Html.TextBoxFor(m => m.CRPA_VL_DESCONTO,  new { @class = "form-control", autofocus = true, @id = "desc", onkeyup = "sum()"})
                                                         @Html.ValidationMessageFor(m => m.CRPA_VL_DESCONTO, "",new { @style="color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Juros (+)
-                                                        @Html.TextBoxFor(m => m.CRPA_VL_JUROS,"{0:n2}", new { @class = "form-control", autofocus = true, @id = "juro", onkeyup = "sum()"})
+                                                        @Html.TextBoxFor(m => m.CRPA_VL_JUROS, new { @class = "form-control", autofocus = true, @id = "juro", onkeyup = "sum()"})
                                                         @Html.ValidationMessageFor(m => m.CRPA_VL_JUROS, "",new { @style="color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Taxas (+)
-                                                        @Html.TextBoxFor(m => m.CRPA_VL_TAXAS, "{0:n2}", new { @class = "form-control", autofocus = true, @id = "taxa", onkeyup = "sum()"})
+                                                        @Html.TextBoxFor(m => m.CRPA_VL_TAXAS, new { @class = "form-control", autofocus = true, @id = "taxa", onkeyup = "sum()"})
                                                         @Html.ValidationMessageFor(m => m.CRPA_VL_TAXAS, "",new { @style="color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Valor Recebido (=)
-                                                        @Html.TextBoxFor(m => m.CRPA_VL_RECEBIDO, "{0:n2}", new { @class = "form-control", autofocus = true, @id = "rec", onkeyup = "sum()"})
+                                                        @Html.TextBoxFor(m => m.CRPA_VL_RECEBIDO, new { @class = "form-control", autofocus = true, @id = "rec", onkeyup = "sum()"})
                                                         @Html.ValidationMessageFor(m => m.CRPA_VL_RECEBIDO, "",new { @style="color:red" })
                                                     </div>
 	                                            }   
