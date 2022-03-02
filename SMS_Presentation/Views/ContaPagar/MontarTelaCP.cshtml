@@ -230,7 +230,7 @@
                                 <tbody>
                                     @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.CONTA_PAGAR>))
                                     {
-                                        <tr @(cond.CAPA_CD_ID == ViewBag.volta ? "style=background:#c7ffc7;" : "style=")>
+                                        <tr @(cond.CAPA_CD_ID == ViewBag.Volta ? "style=background:#c7ffc7;" : "style=")>
                                             <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.CAPA_DS_DESCRICAO')">@cond.CAPA_NR_DOCUMENTO</td>
                                             <td>@cond.CAPA_DT_LANCAMENTO.Value.ToShortDateString()</td>
                                             @if (cond.CENTRO_CUSTO != null)

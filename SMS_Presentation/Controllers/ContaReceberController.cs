@@ -303,7 +303,7 @@ namespace ERP_CRM_Solution.Controllers
 
             if ((Int32)Session["VoltaCR"] != 0)
             {
-                ViewBag.volta = Session["VoltaCR"];
+                ViewBag.Volta = Session["VoltaCR"];
                 Session["VoltaCR"] = 0;
             }
             // Abre view
@@ -2179,6 +2179,7 @@ namespace ERP_CRM_Solution.Controllers
                     listaCRMaster = new List<CONTA_RECEBER>();
                     Session["ListaCR"] = null;
                     Session["IdVolta"] = item.CARE_CD_ID;
+                    Session["VoltaCR"] = item.CARE_CD_ID;
 
                     if (Session["FileQueueCR"] != null)
                     {
@@ -2764,7 +2765,7 @@ namespace ERP_CRM_Solution.Controllers
                     // Sucesso
                     listaCRPMaster = new List<CONTA_RECEBER_PARCELA>();
                     Session["ListaCRP"] = null;
-                    return RedirectToAction("VoltarAnexoCR");
+                    return RedirectToAction("VoltarBaseCR");
                 }
                 catch (Exception ex)
                 {

@@ -273,7 +273,7 @@ namespace ERP_CRM_Solution.Controllers
 
             if ((Int32)Session["VoltaCP"] != 0)
             {
-                ViewBag.volta = (Int32)Session["VoltaCP"];
+                ViewBag.Volta = (Int32)Session["VoltaCP"];
                 Session["VoltaCP"] = 0;
             }
 
@@ -816,6 +816,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             else
             {
+                vm = Mapper.Map<CONTA_PAGAR, ContaPagarViewModel>(item);
                 vm.CAPA_DT_LANCAMENTO = DateTime.Today.Date;
                 vm.CAPA_IN_ATIVO = 1;
                 vm.CAPA_DT_COMPETENCIA = DateTime.Today.Date;
@@ -912,6 +913,7 @@ namespace ERP_CRM_Solution.Controllers
 
                     // Sucesso
                     Session["IdVolta"] = item.CAPA_CD_ID;
+                    Session["VoltaCP"] = item.CAPA_CD_ID;
                     if (Session["FileQueueCP"] != null)
                     {
                         List<FileQueue> fq = (List<FileQueue>)Session["FileQueueCP"];
@@ -1404,7 +1406,7 @@ namespace ERP_CRM_Solution.Controllers
 
                     listaCPMaster = new List<CONTA_PAGAR>();
                     Session["ListaCP"] = null;
-                    return RedirectToAction("VoltarAnexoCP");
+                    return RedirectToAction("VoltarBaseCP");
                 }
                 catch (Exception ex)
                 {

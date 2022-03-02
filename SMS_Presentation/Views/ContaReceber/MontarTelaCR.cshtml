@@ -226,7 +226,7 @@
                                 <tbody>
                                     @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.CONTA_RECEBER>))
                                     {
-                                        <tr @(cond.CARE_CD_ID == ViewBag.volta ? "style=background:#c7ffc7;" : "style=")>
+                                        <tr @(cond.CARE_CD_ID == ViewBag.Volta ? "style=background:#c7ffc7;" : "style=")>
                                             <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.CARE_DS_DESCRICAO')">@cond.CARE_NR_DOCUMENTO</td>
                                             @if (cond.CLIENTE != null)
                                             {

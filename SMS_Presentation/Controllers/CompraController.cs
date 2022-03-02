@@ -503,7 +503,9 @@ namespace ERP_CRM_Solution.Controllers
                     }
 
                     Session["IdCompra"] = item.PECO_CD_ID;
-                    return RedirectToAction("EditarPedidoCompra", new { id = (Int32)Session["IdCompra"] });
+                    //return RedirectToAction("EditarPedidoCompra", new { id = (Int32)Session["IdCompra"] });
+                    return RedirectToAction("MontarTelaPedidoCompra");
+
                 }
                 catch (Exception ex)
                 {
@@ -1501,6 +1503,7 @@ namespace ERP_CRM_Solution.Controllers
                 }
                 ViewBag.CustoTotal = custo;
                 Int32 volta = baseApp.ValidateReceber(item);
+                Int32 volta1 = baseApp.ValidateRecebido(item, usuario);
 
                 // Verifica retorno
                 CONTA_PAGAR cp = new CONTA_PAGAR();
@@ -1543,7 +1546,7 @@ namespace ERP_CRM_Solution.Controllers
                     cp.CAPA_VL_SALDO = valor;
                     cp.CECU_CD_ID = item.CECU_CD_ID;
                     cp.FOPA_CD_ID = 1;
-                    cp.FORN_CD_ID = (Int32)item.FORN_CD_ID;
+                    cp.FORN_CD_ID = forn.FORN_CD_ID;
                     cp.PECO_CD_ID = item.PECO_CD_ID;
                     cp.USUA_CD_ID = item.USUA_CD_ID;
                     cp.COBA_CD_ID = cbApp.GetContaPadrao(idAss).COBA_CD_ID;
@@ -2903,6 +2906,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            Session["VoltaProdutoDash"] = 6;
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);

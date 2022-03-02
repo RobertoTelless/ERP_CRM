@@ -528,6 +528,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("MontarTelaDashboardEstoque", "Estoque");
             }
+            if ((Int32)Session["VoltaProdutoDash"] == 6)
+            {
+                return RedirectToAction("MontarTelaDashboardCompra", "Compra");
+            }
             return RedirectToAction("MontarTelaProduto");
         }
 
