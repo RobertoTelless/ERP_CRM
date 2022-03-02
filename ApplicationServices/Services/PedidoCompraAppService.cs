@@ -1503,31 +1503,31 @@ namespace ApplicationServices.Services
                             Int32 voltaPef = _pefService.Create(pef);
                         }
 
-                        PRODUTO_TABELA_PRECO ptp = new PRODUTO_TABELA_PRECO();
-                        ptp.PROD_CD_ID = (Int32)itpc.PROD_CD_ID;
-                        ptp.FILI_CD_ID = ped.FILI_CD_ID;
-                        PRODUTO_TABELA_PRECO ptpAntes = _ptpService.CheckExist(ptp, idAss);
+                        //PRODUTO_TABELA_PRECO ptp = new PRODUTO_TABELA_PRECO();
+                        //ptp.PROD_CD_ID = (Int32)itpc.PROD_CD_ID;
+                        //ptp.FILI_CD_ID = ped.FILI_CD_ID;
+                        //PRODUTO_TABELA_PRECO ptpAntes = _ptpService.CheckExist(ptp, idAss);
 
-                        if (ptpAntes == null)
-                        {
-                            ptp.PRTP_IN_ATIVO = 1;
-                            ptp.PRTP_VL_CUSTO = itpc.ITPC_VL_PRECO_SELECIONADO;
+                        //if (ptpAntes == null)
+                        //{
+                        //    ptp.PRTP_IN_ATIVO = 1;
+                        //    ptp.PRTP_VL_CUSTO = itpc.ITPC_VL_PRECO_SELECIONADO;
 
-                            Int32 voltaPtp = _ptpService.Create(ptp);
-                        }
-                        else
-                        {
-                            ptp.PRTP_IN_ATIVO = 1;
-                            ptp.PRTP_VL_CUSTO = itpc.ITPC_VL_PRECO_SELECIONADO;
-                            ptp.PRTP_VL_PRECO = ptpAntes.PRTP_VL_PRECO;
-                            ptp.PRTP_VL_PRECO_PROMOCAO = ptp.PRTP_VL_PRECO_PROMOCAO;
-                            ptp.PRTP_VL_DESCONTO_MAXIMO = ptpAntes.PRTP_VL_DESCONTO_MAXIMO;
-                            ptp.PRTP_DT_DATA_REAJUSTE = ptpAntes.PRTP_DT_DATA_REAJUSTE;
-                            ptp.PRTP_NR_MARKUP = ptpAntes.PRTP_NR_MARKUP;
-                            ptp.PRTP_CD_ID = ptpAntes.PRTP_CD_ID;
+                        //    Int32 voltaPtp = _ptpService.Create(ptp);
+                        //}
+                        //else
+                        //{
+                        //    ptp.PRTP_IN_ATIVO = 1;
+                        //    ptp.PRTP_VL_CUSTO = itpc.ITPC_VL_PRECO_SELECIONADO;
+                        //    ptp.PRTP_VL_PRECO = ptpAntes.PRTP_VL_PRECO;
+                        //    ptp.PRTP_VL_PRECO_PROMOCAO = ptp.PRTP_VL_PRECO_PROMOCAO;
+                        //    ptp.PRTP_VL_DESCONTO_MAXIMO = ptpAntes.PRTP_VL_DESCONTO_MAXIMO;
+                        //    ptp.PRTP_DT_DATA_REAJUSTE = ptpAntes.PRTP_DT_DATA_REAJUSTE;
+                        //    ptp.PRTP_NR_MARKUP = ptpAntes.PRTP_NR_MARKUP;
+                        //    ptp.PRTP_CD_ID = ptpAntes.PRTP_CD_ID;
 
-                            Int32 voltaPtp = _ptpService.Edit(ptp);
-                        }
+                        //    Int32 voltaPtp = _ptpService.Edit(ptp);
+                        //}
                     }
                 }
 

@@ -269,6 +269,7 @@ namespace ERP_CRM_Solution.Controllers
             try
             {
                 Session["FiltroCompra"] = item;
+                Session["IdCompra"] = null;
                 // Executa a operação
                 List<PEDIDO_COMPRA> listaObj = new List<PEDIDO_COMPRA>();
                 Int32 volta = baseApp.ExecuteFilter(item.USUA_CD_ID, item.PECO_NM_NOME, item.PECO_NR_NUMERO, item.PECO_NR_NOTA_FISCAL, item.PECO_DT_DATA, item.PECO_DT_PREVISTA, item.PECO_IN_STATUS, idAss, out listaObj);
@@ -667,9 +668,64 @@ namespace ERP_CRM_Solution.Controllers
 
                         Session["FileQueueCompra"] = null;
                     }
-
                     Session["IdCompra"] = item.PECO_CD_ID;
-                    return RedirectToAction("EditarPedidoCompra", new { id = (Int32)Session["IdCompra"] });
+
+                    // Acerta estoque
+                    PEDIDO_COMPRA ped = baseApp.GetItemById(item.PECO_CD_ID);
+                    Int32 volta1 = baseApp.ValidateRecebido(ped, usuario);
+
+
+                    // Gera conta pagar
+                    CONTA_PAGAR cp = new CONTA_PAGAR();
+
+                    // Recupera fornecedor
+                    FORNECEDOR forn = forApp.GetItemById((Int32)ped.FORN_CD_ID);
+
+                    // Calcula valor
+                    Decimal valor = 0;
+
+                    foreach (var i in ped.ITEM_PEDIDO_COMPRA)
+                    {
+                        if (i.ITPC_VL_PRECO_SELECIONADO != null)
+                        {
+                            valor += (Int32)i.ITPC_NR_QUANTIDADE_REVISADA * (decimal)i.ITPC_VL_PRECO_SELECIONADO;
+                        }
+                    }
+
+                    // Gera CP
+                    cp.ASSI_CD_ID = usuario.ASSI_CD_ID;
+                    cp.CAPA_DS_DESCRICAO = "Lançamento a pagar referente ao pedido de compra " + ped.PECO_NM_NOME + " de número " + ped.PECO_NR_NUMERO;
+                    cp.CAPA_DT_COMPETENCIA = DateTime.Today.Date;
+                    cp.CAPA_DT_LANCAMENTO = DateTime.Today.Date;
+                    cp.CAPA_DT_VENCIMENTO = DateTime.Today.Date.AddDays(30);
+                    cp.CAPA_IN_ATIVO = 1;
+                    cp.CAPA_IN_LIQUIDADA = 0;
+                    cp.CAPA_IN_PAGA_PARCIAL = 0;
+                    cp.CAPA_IN_PARCELADA = 0;
+                    cp.CAPA_IN_PARCELAS = 0;
+                    cp.CAPA_IN_TIPO_LANCAMENTO = 1;
+                    cp.CAPA_NR_DOCUMENTO = ped.PECO_NR_NUMERO;
+                    cp.CAPA_VL_DESCONTO = 0;
+                    cp.CAPA_VL_JUROS = 0;
+                    cp.CAPA_VL_PARCELADO = 0;
+                    cp.CAPA_VL_PARCIAL = 0;
+                    cp.CAPA_VL_TAXAS = 0;
+                    cp.CAPA_VL_VALOR_PAGO = 0;
+                    cp.CAPA_VL_VALOR = valor;
+                    cp.CAPA_VL_SALDO = valor;
+                    cp.CECU_CD_ID = ped.CECU_CD_ID;
+                    cp.FOPA_CD_ID = 1;
+                    cp.FORN_CD_ID = forn.FORN_CD_ID;
+                    cp.PECO_CD_ID = ped.PECO_CD_ID;
+                    cp.USUA_CD_ID = ped.USUA_CD_ID;
+                    cp.COBA_CD_ID = cbApp.GetContaPadrao(idAss).COBA_CD_ID;
+
+                    listaMaster = new List<PEDIDO_COMPRA>();
+                    Session["ListaCompra"] = null;
+                    Session["ContaPagar"] = cp;
+                    Session["VoltaCompra"] = 1;
+                    Session["IdCompra"] = item.PECO_CD_ID;
+                    return RedirectToAction("IncluirCP", "ContaPagar", new { voltaCompra = 1 });
                 }
                 catch (Exception ex)
                 {
