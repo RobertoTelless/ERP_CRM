@@ -45,7 +45,7 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEnvioCotacao(PEDIDO_COMPRA item, String emailPersonalizado, USUARIO usuario);
         Int32 ValidateEnvioCotacao(PEDIDO_COMPRA item, List<AttachmentForn> anexo, String emailPersonalizado, USUARIO usuario, List<FORNECEDOR> forn);
         Int32 ValidateCotacao(PEDIDO_COMPRA item, USUARIO usuario);
-        String ValidateCreateMensagem(FORNECEDOR item, USUARIO usuario, Int32? idAss);
+        String ValidateCreateMensagem(FORNECEDOR item, USUARIO usuario, PEDIDO_COMPRA ped, Int32? idAss);
         Int32 ValidateEditItemCompraCotacao(ITEM_PEDIDO_COMPRA item);
         Int32 ValidateAprovacao(PEDIDO_COMPRA item);
         Int32 ValidateReprovacao(PEDIDO_COMPRA item);

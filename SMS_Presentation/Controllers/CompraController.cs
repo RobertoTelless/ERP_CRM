@@ -2514,6 +2514,7 @@ namespace ERP_CRM_Solution.Controllers
                     foreach (var f in (List<Int32>)Session["ListaEmailForn"])
                     {
                         var fornSms = forApp.GetItemById(f);
+                        Session["PedCompra"] = ped;
                         voltaSms = EnviaSmsCotacao(fornSms);
                     }                    
                 }
@@ -2753,7 +2754,8 @@ namespace ERP_CRM_Solution.Controllers
         {
             Int32 idAss = (Int32)Session["IdAssinante"];
             USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-            String volta = baseApp.ValidateCreateMensagem(item, usuarioLogado, idAss);
+            PEDIDO_COMPRA ped = (PEDIDO_COMPRA)Session["PedCompra"];
+            String volta = baseApp.ValidateCreateMensagem(item, usuarioLogado, ped, idAss);
             return volta;
         }
 

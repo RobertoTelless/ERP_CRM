@@ -275,6 +275,10 @@ namespace ApplicationServices.Services
                         {
                             String erro = ex.Message;
                         }
+
+
+
+
                     }
                     else
                     {
@@ -748,16 +752,14 @@ namespace ApplicationServices.Services
 
                         String tableContent = String.Empty;
 
-                        foreach (var pi in ped.ITEM_PEDIDO_COMPRA.Where(x => x.FORN_CD_ID == f.FORN_CD_ID).ToList<ITEM_PEDIDO_COMPRA>())
+                        //foreach (var pi in ped.ITEM_PEDIDO_COMPRA.Where(x => x.FORN_CD_ID == f.FORN_CD_ID).ToList<ITEM_PEDIDO_COMPRA>())
+                        foreach (var ipc in ped.ITEM_PEDIDO_COMPRA.Where(x => x.ITPC_IN_ATIVO == 1).ToList())
                         {
-                            if (pi.ITPC_IN_TIPO == 1)
-                            {
-                                tableContent += "<tr>"
-                                + "<td style=\"width:30%\">" + pi.PRODUTO.PROD_NM_NOME + "</td>"
-                                + "<td style=\"width:60%\">" + pi.ITPC_TX_OBSERVACOES + "</td>"
-                                + "<td style=\"width: 10%\">" + pi.ITPC_QN_QUANTIDADE + "</td>"
-                                + "</tr>";
-                            }
+                            tableContent += "<tr>"
+                            + "<td style=\"width:30%\">" + ipc.PRODUTO.PROD_NM_NOME + "</td>"
+                            + "<td style=\"width:60%\">" + ipc.ITPC_TX_OBSERVACOES + "</td>"
+                            + "<td style=\"width: 10%\">" + ipc.ITPC_QN_QUANTIDADE + "</td>"
+                            + "</tr>";
                         }
                         footer = table + tableContent + "</tbody>";
 
@@ -873,14 +875,11 @@ namespace ApplicationServices.Services
                     //Prepara dados
                     foreach (var ipc in ped.ITEM_PEDIDO_COMPRA.Where(x => x.ITPC_IN_ATIVO == 1).ToList())
                     {
-                        if (ipc.ITPC_IN_TIPO == 1)
-                        {
-                            tableContent += "<tr>"
-                            + "<td style=\"width:30%\">" + ipc.PRODUTO.PROD_NM_NOME + "</td>"
-                            + "<td style=\"width:60%\">" + ipc.ITPC_TX_OBSERVACOES + "</td>"
-                            + "<td style=\"width: 10%\">" + ipc.ITPC_QN_QUANTIDADE + "</td>"
-                            + "</tr>";
-                        }
+                        tableContent += "<tr>"
+                        + "<td style=\"width:30%\">" + ipc.PRODUTO.PROD_NM_NOME + "</td>"
+                        + "<td style=\"width:60%\">" + ipc.ITPC_TX_OBSERVACOES + "</td>"
+                        + "<td style=\"width: 10%\">" + ipc.ITPC_QN_QUANTIDADE + "</td>"
+                        + "</tr>";
                     }
 
                     footer = table + tableContent + "</tbody>";
@@ -944,7 +943,7 @@ namespace ApplicationServices.Services
             return 0;
         }
 
-        public String ValidateCreateMensagem(FORNECEDOR item, USUARIO usuario, Int32? idAss)
+        public String ValidateCreateMensagem(FORNECEDOR item, USUARIO usuario, PEDIDO_COMPRA ped, Int32? idAss)
         {
             try
             {
@@ -971,7 +970,9 @@ namespace ApplicationServices.Services
 
                 // Monta texto
                 String texto = _tempService.GetByCode("SMSCOTACAO").TEMP_TX_CORPO;
-                texto = texto.Replace("{Fornecedor}", forn.FORN_NM_NOME);
+                texto = texto.Replace("{Nome}", forn.FORN_NM_NOME);
+                texto = texto.Replace("{Numero}", ped.PECO_NR_NUMERO);
+                texto = texto.Replace("{Emissor}", "ERPSys");
 
                 // inicia processo
                 String smsBody = texto;
@@ -1389,7 +1390,7 @@ namespace ApplicationServices.Services
                 // Monta e-mail
                 NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
                 Email mensagem = new Email();
-                mensagem.ASSUNTO = "Pedido de Compra - Reprovação";
+                mensagem.ASSUNTO = "Pedido de Compra - Recebimento";
                 mensagem.CORPO = emailBody;
                 mensagem.DEFAULT_CREDENTIALS = false;
                 mensagem.EMAIL_DESTINO = usu.USUA_NM_EMAIL;
