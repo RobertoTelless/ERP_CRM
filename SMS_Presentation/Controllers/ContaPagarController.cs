@@ -812,6 +812,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 vm = Mapper.Map<CONTA_PAGAR, ContaPagarViewModel>((CONTA_PAGAR)Session["ContaPagar"]);
                 vm.USUA_CD_ID = usuario.USUA_CD_ID;
+                FORNECEDOR forn = fornApp.GetItemById(vm.FORN_CD_ID.Value);
+                Session["FornTela"] = forn.FORN_NM_NOME;
+                vm.FORN_CD_ID = forn.FORN_CD_ID;
+                vm.CAPA_NM_FORNECEDOR = forn.FORN_NM_NOME;
                 Session["ContaPagar"] = null;
             }
             else

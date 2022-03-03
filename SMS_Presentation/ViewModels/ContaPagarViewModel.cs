@@ -80,6 +80,7 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> CAPA_VL_PERCENTUAL { get; set; }
         public Nullable<int> CAPA_IN_TIPO_DOC { get; set; }
         public Nullable<int> CAPA_IN_PAGAMENTO { get; set; }
+        public string CAPA_NM_FORNECEDOR { get; set; }
 
         public String NomeFornecedor { get; set; }
 

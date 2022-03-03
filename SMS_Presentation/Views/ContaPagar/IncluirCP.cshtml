@@ -59,24 +59,35 @@
                                         <div class="row">
                                             <h4>Dados Gerais</h4>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
-                                                    @Html.HiddenFor(m => m.CAPA_IN_ATIVO)
-                                                    @Html.HiddenFor(m => m.CAPA_IN_LIQUIDADA)
-                                                    @Html.HiddenFor(m => m.CAPA_IN_PAGA_PARCIAL)
-                                                    @Html.HiddenFor(m => m.CAPA_IN_PARCELADA)
-                                                    @Html.HiddenFor(m => m.CAPA_IN_TIPO_LANCAMENTO)
-                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
-                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                                    Fornecedor
-                                                    <div class="input-group">
-                                                        <select name="FORN_CD_ID" id="lstForn" class="form-control" data-val="true" style="display: none;" autofocus>
-                                                            <option>Selecionar</option>
-                                                        </select>
-                                                        <span class="input-group-addon">
-                                                            @Html.TableLinkAction("IncluirFornecedor", "ContaPagar", null, "glyphicon glyphicon-plus", "Adicionar Fornecedor")
-                                                        </span>
+                                                @Html.HiddenFor(m => m.CAPA_IN_ATIVO)
+                                                @Html.HiddenFor(m => m.CAPA_IN_LIQUIDADA)
+                                                @Html.HiddenFor(m => m.CAPA_IN_PAGA_PARCIAL)
+                                                @Html.HiddenFor(m => m.CAPA_IN_PARCELADA)
+                                                @Html.HiddenFor(m => m.CAPA_IN_TIPO_LANCAMENTO)
+                                                @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                @if ((Int32)Session["VoltaCompra"] != 0)
+                                                {
+                                                    @Html.HiddenFor(m => m.FORN_CD_ID)
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        Fornecedor
+                                                        @Html.TextBoxFor(m => m.CAPA_NM_FORNECEDOR, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                     </div>
-                                                </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                                        Fornecedor
+                                                        <div class="input-group">
+                                                            <select name="FORN_CD_ID" id="lstForn" class="form-control" data-val="true" style="display: none;" autofocus>
+                                                                <option>Selecionar</option>
+                                                            </select>
+                                                            <span class="input-group-addon">
+                                                                @Html.TableLinkAction("IncluirFornecedor", "ContaPagar", null, "glyphicon glyphicon-plus", "Adicionar Fornecedor")
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                }
                                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                                     Plano de Contas
                                                     @Html.DropDownListFor(m => m.CECU_CD_ID, (SelectList)ViewBag.CC, "Selecionar", new { @class = "form-control", autofocus = true })

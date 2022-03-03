@@ -512,6 +512,16 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("MontarTelaFornecedor");
         }
 
+        public ActionResult IncluirCatFornecedor()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaCatFornecedor"] = 2;
+            return RedirectToAction("IncluirCatFornecedor", "TabelasAuxiliares");
+        }
+
         public ActionResult VoltarDashboard()
         {
             if ((String)Session["Ativa"] == null)

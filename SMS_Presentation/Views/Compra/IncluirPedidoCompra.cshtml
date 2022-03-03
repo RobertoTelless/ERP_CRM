@@ -136,7 +136,12 @@
                                                 <div class="col-lg-6 col-md-6 col-xs-12">
                                                     @Html.HiddenFor(m => m.PECO_CD_ID)
                                                     Produto*
-                                                    @Html.DropDownList("Produto", (SelectList)ViewBag.Produtos, "Selecionar", new { @class = "form-control", @id = "prod" })
+                                                    <div class="input-group">
+                                                        @Html.DropDownList("Produto", (SelectList)ViewBag.Produtos, "Selecionar", new { @class = "form-control", @id = "prod" })
+                                                        <span class="input-group-addon">
+                                                            @Html.TableLinkAction("IncluirProduto", "Compra", null, "glyphicon glyphicon-plus", "Adicionar Produto")
+                                                        </span>
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Quantidade*

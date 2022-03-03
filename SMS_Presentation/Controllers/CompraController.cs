@@ -1033,6 +1033,19 @@ namespace ERP_CRM_Solution.Controllers
             return View(item);
         }
 
+        [HttpGet]
+        public ActionResult IncluirProduto()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+
+            // Prepara view
+            Session["VoltaProduto"] = 4;
+            return RedirectToAction("IncluirProduto", "Produto");
+        }
+
         public ActionResult VoltarAnexoPedidoCompra()
         {
             if ((String)Session["Ativa"] == null)
@@ -1591,7 +1604,7 @@ namespace ERP_CRM_Solution.Controllers
                     cp.CAPA_IN_PARCELADA = 0;
                     cp.CAPA_IN_PARCELAS = 0;
                     cp.CAPA_IN_TIPO_LANCAMENTO = 1;
-                    cp.CAPA_NR_DOCUMENTO = item.PECO_NR_NUMERO;
+                    cp.CAPA_NR_DOCUMENTO = item.PECO_NR_NOTA_FISCAL;
                     cp.CAPA_VL_DESCONTO = 0;
                     cp.CAPA_VL_JUROS = 0;
                     cp.CAPA_VL_PARCELADO = 0;

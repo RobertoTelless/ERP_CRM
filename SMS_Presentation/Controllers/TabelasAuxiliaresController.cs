@@ -2517,6 +2517,10 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            if ((Int32)Session["VoltaCatFornecedor"] == 2)
+            {
+                return RedirectToAction("IncluirFornecedor", "Fornecedor");
+            }
             return RedirectToAction("MontarTelaCatFornecedor");
         }
 
@@ -2584,6 +2588,10 @@ namespace ERP_CRM_Solution.Controllers
                     listaMasterCF = new List<CATEGORIA_FORNECEDOR>();
                     Session["ListaCatFornecedor"] = null;
                     Session["IdCatFornecedor"] = item.CAFO_CD_ID;
+                    if ((Int32)Session["VoltaCatFornecedor"] == 2)
+                    {
+                        return RedirectToAction("IncluirFornecedor", "Fornecedor");
+                    }
                     return RedirectToAction("MontarTelaCatFornecedor");
                 }
                 catch (Exception ex)

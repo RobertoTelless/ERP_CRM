@@ -478,12 +478,17 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            if ((Int32)Session["VoltaProduto"] == 4)
+            {
+                return RedirectToAction("IncluirPedidoCompra", "Compra");
+            }
             if ((Int32)Session["Clonar"] == 1)
             {
                 Session["Clonar"] = 0;
                 listaMasterProd = new List<PRODUTO>();
                 Session["ListaProduto"] = null;
             }
+
             if ((Int32)Session["VoltaEstoque"] == 1)
             {
                 return RedirectToAction("MontarTelaEstoqueProduto", "Estoque");
@@ -735,6 +740,10 @@ namespace ERP_CRM_Solution.Controllers
                         {
                             Session["VoltaProduto"] = 0;
                             return RedirectToAction("IncluirCliente", "Cliente");
+                        }
+                        if ((Int32)Session["VoltaProduto"] == 4)
+                        {
+                            return RedirectToAction("IncluirPedidoCompra", "Compra");
                         }
                         return RedirectToAction("VoltarAnexoProduto");
                     }
