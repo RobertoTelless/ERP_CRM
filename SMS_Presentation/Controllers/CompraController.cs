@@ -1230,6 +1230,7 @@ namespace ERP_CRM_Solution.Controllers
         public void ProcessarFornecedor(Int32 id)
         {
             Session["FornCotacao"] = id;
+            Session["EscolheuForn"] = 1;
         }
 
         [HttpGet]
@@ -1270,6 +1271,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["IdVolta"] = id;
             Session["MensCompra"] = 0;
             Session["VoltaCompra"] = 9;
+            Session["EscolheuForn"] = 0;
             return View(vm);
         }
 
@@ -1301,9 +1303,14 @@ namespace ERP_CRM_Solution.Controllers
                     ModelState.AddModelError("", "Pedido de compra não possui itens");
                     return View((PedidoCompraViewModel)Session["VmAntes"]);
                 }
+                if ((Int32)Session["EscolheuForn"] == 0)
+                {
+                    ModelState.AddModelError("", "Nenhum fornecedor selecionado");
+                    return View((PedidoCompraViewModel)Session["VmAntes"]);
+                }
 
-                //item.FORN_CD_ID = (Int32)Session["FornCotacao"];
-                item.FORN_CD_ID = lf.First().FORN_CD_ID;
+                item.FORN_CD_ID = (Int32)Session["FornCotacao"];
+                //item.FORN_CD_ID = lf.First().FORN_CD_ID;
 
                 Decimal custo = 0;
                 foreach (var i in item.ITEM_PEDIDO_COMPRA)

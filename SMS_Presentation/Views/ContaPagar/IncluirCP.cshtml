@@ -69,7 +69,7 @@
                                                 @if ((Int32)Session["VoltaCompra"] != 0)
                                                 {
                                                     @Html.HiddenFor(m => m.FORN_CD_ID)
-                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <div class="col-lg-4 col-md-4 col-xs-12">
                                                         Fornecedor
                                                         @Html.TextBoxFor(m => m.CAPA_NM_FORNECEDOR, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                     </div>

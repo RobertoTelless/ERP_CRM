@@ -366,6 +366,9 @@
                                                                      <td>@forn.FORN_NM_RAZAO</td>
                                                                      <td>@forn.FORN_NM_EMAIL</td>
                                                                      <td>@forn.FORN_NM_TELEFONES</td>
+                                                                     @*<td>
+                                                                        <span id="check1" style="color: #337ab7; cursor: pointer; display: none;" title="Selecionar" class="fa fa-check fa-lg" onclick="ProcessarCotacao('@forn.FORN_CD_ID', $(this))"></span>
+                                                                     </td>*@
                                                                      <td><input type="checkbox" name="checkForn" onclick="ProcessarCotacao('@forn.FORN_CD_ID', $(this))" /></td>
                                                                  </tr>
                                                              }
