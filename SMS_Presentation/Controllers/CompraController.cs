@@ -88,7 +88,7 @@ namespace ERP_CRM_Solution.Controllers
 
         public JsonResult ValorTotal(Int32 qtde, Decimal valor)
         {
-            return Json(qtde * valor);
+                                                                                                        return Json(qtde * valor);
         }
 
         [HttpPost]
@@ -226,6 +226,10 @@ namespace ERP_CRM_Solution.Controllers
             status.Add(new SelectListItem() { Text = "Recebido", Value = "7" });
             status.Add(new SelectListItem() { Text = "Cancelado", Value = "8" });
             ViewBag.Status = new SelectList(status, "Value", "Text");
+            List<SelectListItem> tipo = new List<SelectListItem>();
+            tipo.Add(new SelectListItem() { Text = "Normal", Value = "1" });
+            tipo.Add(new SelectListItem() { Text = "Expressa", Value = "2" });
+            ViewBag.Tipos = new SelectList(tipo, "Value", "Text");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
 
             // Abre view
@@ -272,7 +276,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["IdCompra"] = null;
                 // Executa a operação
                 List<PEDIDO_COMPRA> listaObj = new List<PEDIDO_COMPRA>();
-                Int32 volta = baseApp.ExecuteFilter(item.USUA_CD_ID, item.PECO_NM_NOME, item.PECO_NR_NUMERO, item.PECO_NR_NOTA_FISCAL, item.PECO_DT_DATA, item.PECO_DT_PREVISTA, item.PECO_IN_STATUS, idAss, out listaObj);
+                Int32 volta = baseApp.ExecuteFilter(item.USUA_CD_ID, item.PECO_NM_NOME, item.PECO_NR_NUMERO, item.PECO_NR_NOTA_FISCAL, item.PECO_DT_DATA, item.PECO_DT_PREVISTA, item.PECO_IN_STATUS, item.PECO_IN_TIPO, idAss, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)
@@ -1303,14 +1307,14 @@ namespace ERP_CRM_Solution.Controllers
                     ModelState.AddModelError("", "Pedido de compra não possui itens");
                     return View((PedidoCompraViewModel)Session["VmAntes"]);
                 }
-                if ((Int32)Session["EscolheuForn"] == 0)
-                {
-                    ModelState.AddModelError("", "Nenhum fornecedor selecionado");
-                    return View((PedidoCompraViewModel)Session["VmAntes"]);
-                }
+                //if ((Int32)Session["EscolheuForn"] == 0)
+                //{
+                //    ModelState.AddModelError("", "Nenhum fornecedor selecionado");
+                //    return View((PedidoCompraViewModel)Session["VmAntes"]);
+                //}
 
-                item.FORN_CD_ID = (Int32)Session["FornCotacao"];
-                //item.FORN_CD_ID = lf.First().FORN_CD_ID;
+                //item.FORN_CD_ID = (Int32)Session["FornCotacao"];
+                item.FORN_CD_ID = lf.First().FORN_CD_ID;
 
                 Decimal custo = 0;
                 foreach (var i in item.ITEM_PEDIDO_COMPRA)
@@ -1821,15 +1825,15 @@ namespace ERP_CRM_Solution.Controllers
             USUARIO usuario = (USUARIO)Session["UserCredentials"];
 
             ViewBag.Fornecedores = new SelectList(((List<FORNECEDOR>)Session["Fornecedores"]).OrderBy(p => p.FORN_NM_NOME), "FORN_CD_ID", "FORN_NM_NOME");
-            vm.VALOR_TOTAL = (decimal)Session["CustoTotal"];
+            //vm.VALOR_TOTAL = (decimal)Session["CustoTotal"];
             Session["CustoTotal"] = 0;
             try
             {
-                if (vm.FORN_CD_ID == 0)
-                {
-                    ModelState.AddModelError("", "Fornecedor não selecionado");
-                    return View(vm);
-                }
+                //if (vm.FORN_CD_ID == 0)
+                //{
+                //    ModelState.AddModelError("", "Fornecedor não selecionado");
+                //    return View(vm);
+                //}
 
                 // Executa a operação
                 PEDIDO_COMPRA item = Mapper.Map<PedidoCompraViewModel, PEDIDO_COMPRA>(vm);
@@ -2984,6 +2988,16 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+
+
+
+
+
+
+
+
+
+
             Session["VoltaProdutoDash"] = 6;
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;

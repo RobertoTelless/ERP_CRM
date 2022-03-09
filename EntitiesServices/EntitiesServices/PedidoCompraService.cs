@@ -121,9 +121,9 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<PEDIDO_COMPRA> ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32 idAss)
+        public List<PEDIDO_COMPRA> ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32? tipo, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(usuaId, nome, numero, nf, data, dataPrevista, status, idAss);
+            return _baseRepository.ExecuteFilter(usuaId, nome, numero, nf, data, dataPrevista, status, tipo, idAss);
         }
 
         public List<PEDIDO_COMPRA> ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status, Int32 idAss)

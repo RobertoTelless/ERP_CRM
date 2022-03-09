@@ -162,7 +162,7 @@
                             </div>
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                    <div class="col-lg-3 col-md-3 col-xs-12" style="color:green; font-weight: bold">
                                         Número
                                         @Html.TextBoxFor(m => m.PECO_NR_NUMERO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                     </div>
@@ -366,10 +366,7 @@
                                                                      <td>@forn.FORN_NM_RAZAO</td>
                                                                      <td>@forn.FORN_NM_EMAIL</td>
                                                                      <td>@forn.FORN_NM_TELEFONES</td>
-                                                                     @*<td>
-                                                                        <span id="check1" style="color: #337ab7; cursor: pointer; display: none;" title="Selecionar" class="fa fa-check fa-lg" onclick="ProcessarCotacao('@forn.FORN_CD_ID', $(this))"></span>
-                                                                     </td>*@
-                                                                     <td><input type="checkbox" name="checkForn" onclick="ProcessarCotacao('@forn.FORN_CD_ID', $(this))" /></td>
+                                                                     <td><input type="checkbox" id="checkForn" onclick="ProcessarCotacao('@forn.FORN_CD_ID')" /></td>
                                                                  </tr>
                                                              }
                                                         </tbody>
@@ -381,14 +378,14 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <br />
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     @Html.ButtonActionSubmit(text: "Processar Cotação do Pedido de Compra?", htmlAttributes: new { id = "basictoast" })
                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMontarTelaPedidoCompra", controller: "Compra")
                                     @Html.ButtonLinkIndex(text: "Dashboard", controller: "Compra", action: "MontarTelaDasboardCompra")
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                         }
                     </div>
@@ -463,10 +460,25 @@
         }
     </script>
 
-    <script>
+    @*<script>
         function ProcessarCotacao(forn, elm) {
-            $('input[name=checkForn]').prop('checked', false);
-            $(elm).prop('checked', true);
+            //$('input[name=checkForn]').prop('checked', false);
+            //$(elm).prop('checked', true);
+
+            $.ajax({
+                url: '../ProcessarFornecedor'
+                , type: 'POST'
+                , data: {
+                    forn: forn
+                }
+            });
+        }
+    </script>*@
+
+    <script>
+        function ProcessarCotacao(forn) {
+            //$('input[name=checkForn]').prop('checked', false);
+            //$(elm).prop('checked', true);
 
             $.ajax({
                 url: '../ProcessarFornecedor'
@@ -477,6 +489,7 @@
             });
         }
     </script>
+
 
     <script type="text/javascript">
         $(document).ready(function () {

@@ -50,8 +50,282 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-warning pull-right">Hoje</span>
+                            <h5>Resumo Compras</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Pedidos (Mês)</small>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.APagar)</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Pedidos (Total)</small>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.Atraso)</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Encerrados (Mês)</small>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.Pago)</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Encerrados</small>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.Recebido)</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Pendentes</small>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.AReceber)</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Em Atraso</small>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.AtrasoCR)</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>         
             </div>
 
+            @*Indicadores*@
+            <br />
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Indicadores</h5>
+                        </div>
+                        <div class="ibox-content ibox-heading">
+                            <h3><i class="fa fa-line-chart"></i> Indicadores</h3>
+                            <small><i class="fa fa-tim"></i> Valores acumulados/atualizados até hoje</small>
+                        </div>
+                        <div class="ibox-content" style="height: 1800px">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Compras/Mês</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaCompraMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Mês</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaCompraMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Nome</td>
+                                                                    <td>@cond.Valor1</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Compras/Mês</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="barChartCM" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Compras por Situação</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaCompraSituacao as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Situação</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaCompraSituacao as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Nome</td>
+                                                                    <td>@cond.Valor</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Compras por Situação</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="doughnutChartCS" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Compras/Fornecedor</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaCompraForn as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Fornecedor</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaCompraForn as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Nome</td>
+                                                                    <td>@cond.Valor1</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Produtos Mais Comprados</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaCompraProd as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Produto</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaCompraProd as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Nome</td>
+                                                                    <td>@cond.Valor1</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Pedidos em Atraso</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaCompraAtraso as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Faixa</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaCompraAtraso as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Nome</td>
+                                                                    <td>@cond.Valor</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Pedidos Recebidos no Prazo</h4>
+                                        </div>
+                                        <div class="ibox-content">
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        
+        
+        
+        
+        
         </div>
     </div>
 </div>

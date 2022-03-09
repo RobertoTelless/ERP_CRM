@@ -31,7 +31,7 @@ namespace ApplicationServices.Interfaces
         List<FILIAL> GetAllFilial(Int32 idAss);
 
         PEDIDO_COMPRA_ANEXO GetAnexoById(Int32 id);
-        Int32 ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32 idAss, out List<PEDIDO_COMPRA> objeto);
+        Int32 ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32? tipo, Int32 idAss, out List<PEDIDO_COMPRA> objeto);
         Int32 ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status, Int32 idAss, out List<PEDIDO_COMPRA> objeto);
         List<PEDIDO_COMPRA> GetEncerrados(Int32 idAss);
         List<PEDIDO_COMPRA> GetAtrasados(Int32 idAss);

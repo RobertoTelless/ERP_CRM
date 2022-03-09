@@ -141,7 +141,7 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32 idAss, out List<PEDIDO_COMPRA> objeto)
+        public Int32 ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32? tipo, Int32 idAss, out List<PEDIDO_COMPRA> objeto)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(usuaId, nome, numero, nf, data, dataPrevista, status, idAss);
+                objeto = _baseService.ExecuteFilter(usuaId, nome, numero, nf, data, dataPrevista, status, tipo, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -196,7 +196,7 @@ namespace ApplicationServices.Services
                 // Completa objeto
                 item.PECO_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
-                item.USUA_CD_ID = usuario.USUA_CD_ID;               
+                item.USUA_CD_ID = usuario.USUA_CD_ID;
 
                 // Monta Log
                 LOG log = new LOG
@@ -245,7 +245,7 @@ namespace ApplicationServices.Services
 
                         // Prepara campos
                         body = body.Replace("{pedido}", item.PECO_NM_NOME);
-                        body = body.Replace("{numero}", item.PECO_NR_NUMERO);
+                        body = body.Replace("{numero}", item.PECO_CD_ID.ToString());
                         header = header.Replace("{nome}", comprador.USUA_NM_NOME);
                         String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
 

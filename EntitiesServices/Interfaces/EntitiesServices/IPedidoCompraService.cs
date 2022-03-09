@@ -33,7 +33,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<FILIAL> GetAllFilial(Int32 idAss);
         
         PEDIDO_COMPRA_ANEXO GetAnexoById(Int32 id);
-        List<PEDIDO_COMPRA> ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32 idAss);
+        List<PEDIDO_COMPRA> ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32? tipo, Int32 idAss);
         List<PEDIDO_COMPRA> ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status, Int32 idAss);
         
         ITEM_PEDIDO_COMPRA GetItemCompraById(Int32 id);

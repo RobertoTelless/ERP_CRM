@@ -2250,6 +2250,7 @@
     <Content Include="Imagens\2\Equipamento\4\Anexos\FornecedorLista_07012022.pdf" />
     <Content Include="Imagens\2\Equipamento\5\Anexos\FornecedorLista_07012022.pdf" />
     <None Include="Properties\PublishProfiles\ERPCondominio - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ERPMKT - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ERPSysNet - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ERPSysNet - Web Deploy1.pubxml" />
     <None Include="Properties\PublishProfiles\ERPSysNet - Web Deploy2.pubxml" />

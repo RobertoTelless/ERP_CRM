@@ -105,7 +105,7 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<PEDIDO_COMPRA> ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32 idAss)
+        public List<PEDIDO_COMPRA> ExecuteFilter(Int32? usuaId, String nome, String numero, String nf, DateTime? data, DateTime? dataPrevista, Int32? status, Int32? tipo, Int32 idAss)
         {
             List<PEDIDO_COMPRA> lista = new List<PEDIDO_COMPRA>();
             IQueryable<PEDIDO_COMPRA> query = Db.PEDIDO_COMPRA;
@@ -128,6 +128,10 @@ namespace DataServices.Repositories
             if (status != null && status != 0)
             {
                 query = query.Where(p => p.PECO_IN_STATUS == status);
+            }
+            if (tipo != null && tipo != 0)
+            {
+                query = query.Where(p => p.PECO_IN_TIPO == tipo);
             }
             if (query != null)
             {
