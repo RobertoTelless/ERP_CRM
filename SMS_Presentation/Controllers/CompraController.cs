@@ -2906,6 +2906,11 @@ namespace ERP_CRM_Solution.Controllers
             }
         }
 
+        /// <summary>Incluirs the acompanhamento.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public ActionResult IncluirAcompanhamento(Int32 id)
         {
             if ((String)Session["Ativa"] == null)
@@ -2988,22 +2993,221 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            Int32 idAss = (Int32)Session["IdAssinante"];
 
+            // Estatisticas
+            List<PEDIDO_COMPRA> listaGeral = baseApp.GetAllItens(idAss);
+            Int32 pedidosMes = listaGeral.Where(p => p.PECO_DT_DATA.Value.Month == DateTime.Today.Date.Month & p.PECO_DT_DATA.Value.Year == DateTime.Today.Date.Year).ToList().Count;
+            Int32 pedidosTotal = listaGeral.Count;
+            Int32 encerradosMes = listaGeral.Where(p => p.PECO_DT_FINAL.Value.Month == DateTime.Today.Date.Month & p.PECO_DT_FINAL.Value.Year == DateTime.Today.Date.Year & p.PECO_IN_STATUS == 7).ToList().Count;
+            Int32 encerradosTotal = listaGeral.Where(p => p.PECO_IN_STATUS == 7).ToList().Count;
+            Int32 pendentes = listaGeral.Where(p => p.PECO_IN_STATUS != 7 & p.PECO_IN_STATUS != 8).ToList().Count;
+            Int32 atraso = listaGeral.Where(p => p.PECO_IN_STATUS != 7 & p.PECO_IN_STATUS != 8 & p.PECO_DT_PREVISTA.Value < DateTime.Today.Date).ToList().Count;
 
+            ViewBag.PedidosMes = pedidosMes;
+            ViewBag.PedidosTotal = pedidosTotal;
+            ViewBag.EncerradosMes = encerradosMes;
+            ViewBag.Encerrados = encerradosTotal;
+            ViewBag.Pendentes = pendentes;
+            ViewBag.Atrasos = atraso;
 
+            // Compra / Dia
+            List<DateTime> datas = listaGeral.Where(m => m.PECO_IN_STATUS != 8 & m.PECO_DT_DATA.Value.Month == DateTime.Today.Date.Month & m.PECO_DT_DATA.Value.Year == DateTime.Today.Date.Year).Select(p => p.PECO_DT_DATA.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> listaMod = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32? conta = listaGeral.Where(p => p.PECO_DT_DATA == item).ToList().Count;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.DataEmissao = item;
+                mod1.Valor1 = conta.Value;
+                listaMod.Add(mod1);
+            }
+            ViewBag.ListaComprasDia = listaMod;
+            Session["ListaDatas"] = datas;
+            Session["ListaComprasDia"] = listaMod;
 
+            // Compras por Situação
+            Int32 sit1 = listaGeral.Where(p => p.PECO_IN_STATUS == 1).ToList().Count;
+            Int32 sit2 = listaGeral.Where(p => p.PECO_IN_STATUS == 2).ToList().Count;
+            Int32 sit3 = listaGeral.Where(p => p.PECO_IN_STATUS == 3).ToList().Count;
+            Int32 sit4 = listaGeral.Where(p => p.PECO_IN_STATUS == 4).ToList().Count;
+            Int32 sit5 = listaGeral.Where(p => p.PECO_IN_STATUS == 5).ToList().Count;
+            Int32 sit6 = listaGeral.Where(p => p.PECO_IN_STATUS == 6).ToList().Count;
+            Int32 sit7 = listaGeral.Where(p => p.PECO_IN_STATUS == 7).ToList().Count;
+            Int32 sit8 = listaGeral.Where(p => p.PECO_IN_STATUS == 8).ToList().Count;
 
+            List<ModeloViewModel> lista1 = new List<ModeloViewModel>();
+            ModeloViewModel mod = new ModeloViewModel();
+            mod.Data = "Para Cotação";
+            mod.Valor = sit1;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Em Cotação";
+            mod.Valor = sit2;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Para Aprovação";
+            mod.Valor = sit3;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Aprovada";
+            mod.Valor = sit4;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Para Receber";
+            mod.Valor = sit5;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Em Recebimento";
+            mod.Valor = sit6;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Encerradas";
+            mod.Valor = sit7;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Cancaladas";
+            mod.Valor = sit8;
+            lista1.Add(mod);
+            ViewBag.ListaSituacao = lista1;
+            Session["ListaSituacao"] = lista1;
 
+            Session["PC"] = sit1;
+            Session["EC"] = sit2;
+            Session["PA"] = sit3;
+            Session["AP"] = sit4;
+            Session["PR"] = sit5;
+            Session["ER"] = sit6;
+            Session["EN"] = sit7;
+            Session["CA"] = sit8;
 
+            // Compras por Fornecedor
+            List<FORNECEDOR> listaForn = forApp.GetAllItens(idAss);
+            List<Int32> forns = listaGeral.Where(m => m.PECO_IN_STATUS != 8 & (m.FORN_CD_ID != null & m.FORN_CD_ID != 0)).Select(p => p.FORN_CD_ID.Value).Distinct().ToList();
+            List<ModeloViewModel> listaMod1 = new List<ModeloViewModel>();
+            foreach (Int32 item in forns)
+            {
+                Int32? conta = listaGeral.Where(p => p.FORN_CD_ID == item).ToList().Count;
+                String nome = listaForn.First(p => p.FORN_CD_ID == item).FORN_NM_NOME;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.Nome = nome;
+                mod1.Valor1 = conta.Value;
+                listaMod1.Add(mod1);
+            }
+            listaMod1 = listaMod1.OrderByDescending(p => p.Valor1).ToList();
+            ViewBag.ListaCompraForn = listaMod1.Take(10);
 
+            // Produtos Mais comprados
+            List<PRODUTO> listaProd = proApp.GetAllItens(idAss);
+            List<ITEM_PEDIDO_COMPRA> listaItens = listaGeral.Where(p => p.PECO_IN_STATUS != 8).SelectMany(p => p.ITEM_PEDIDO_COMPRA).Where(x => x.ITPC_IN_ATIVO == 1).ToList();
+            List<Int32> prods = listaItens.Select(p => p.PROD_CD_ID.Value).Distinct().ToList();
+            List<ModeloViewModel> listaMod2 = new List<ModeloViewModel>();
+            foreach (Int32 item in prods)
+            {
+                Int32? conta = listaItens.Where(p => p.PROD_CD_ID == item).ToList().Count;
+                String nome = listaProd.First(p => p.PROD_CD_ID == item).PROD_NM_NOME;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.Nome = nome;
+                mod1.Valor1 = conta.Value;
+                listaMod2.Add(mod1);
+            }
+            listaMod2 = listaMod2.OrderByDescending(p => p.Valor1).ToList();
+            ViewBag.ListaCompraProd = listaMod2.Take(10);
+
+            // Compra Atraso
+            List<PEDIDO_COMPRA> atraso1 = listaGeral.Where(p => p.PECO_DT_PREVISTA < DateTime.Today.Date & DateTime.Today.Date.AddDays(-10) < p.PECO_DT_PREVISTA).ToList();
+            List<PEDIDO_COMPRA> atraso2 = listaGeral.Where(p => p.PECO_DT_PREVISTA < DateTime.Today.Date & (DateTime.Today.Date.AddDays(-10) < p.PECO_DT_PREVISTA & DateTime.Today.Date.AddDays(-30) > p.PECO_DT_PREVISTA)).ToList();
+            List<PEDIDO_COMPRA> atraso3 = listaGeral.Where(p => p.PECO_DT_PREVISTA < DateTime.Today.Date & DateTime.Today.Date.AddDays(-30) > p.PECO_DT_PREVISTA).ToList();
+            List<ModeloViewModel> listaMod3 = new List<ModeloViewModel>();
+            ModeloViewModel mod2 = new ModeloViewModel();
+            mod2.Nome = "< 10 dias";
+            mod2.Valor1 = atraso1.Count;
+            listaMod3.Add(mod2);
+            mod2 = new ModeloViewModel();
+            mod2.Nome = "> 10 dias e < 30 dias";
+            mod2.Valor1 = atraso2.Count;
+            listaMod3.Add(mod2);
+            mod2 = new ModeloViewModel();
+            mod2.Nome = "> 30 dias";
+            mod2.Valor1 = atraso3.Count;
+            listaMod3.Add(mod2);
+            ViewBag.ListaCompraAtraso = listaMod3;
 
 
             Session["VoltaProdutoDash"] = 6;
-            Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
             return View(vm);
         }
+
+        public JsonResult GetDadosGraficoComprasDia()
+        {
+            List<ModeloViewModel> listaCP1 = (List<ModeloViewModel>)Session["ListaComprasDia"];
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (ModeloViewModel item in listaCP1)
+            {
+                dias.Add(item.DataEmissao.ToShortDateString());
+                valor.Add(item.Valor1);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoSituacao()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["PC"];
+            Int32 q2 = (Int32)Session["EC"];
+            Int32 q3 = (Int32)Session["PA"];
+            Int32 q4 = (Int32)Session["AP"];
+            Int32 q5 = (Int32)Session["PR"];
+            Int32 q6 = (Int32)Session["ER"];
+            Int32 q7 = (Int32)Session["EN"];
+            Int32 q8 = (Int32)Session["CA"];
+
+            desc.Add("Para Cotação");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Em Cotação");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+            desc.Add("Para Aprovação");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+            desc.Add("Aprovada");
+            quant.Add(q4);
+            cor.Add("#359E18");
+            desc.Add("Para Recebimento");
+            quant.Add(q5);
+            cor.Add("#FFAE00");
+            desc.Add("Em Recebimento");
+            quant.Add(q6);
+            cor.Add("#FF7F00");
+            desc.Add("Encerradas");
+            quant.Add(q7);
+            cor.Add("#FF7F00");
+            desc.Add("Canceladas");
+            quant.Add(q8);
+            cor.Add("#FF7F00");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+
 
     }
 }
