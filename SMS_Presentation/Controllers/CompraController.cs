@@ -396,6 +396,10 @@ namespace ERP_CRM_Solution.Controllers
             status.Add(new SelectListItem() { Text = "Cancelada", Value = "6" });
             ViewBag.Status = new SelectList(status, "Value", "Text");
             List<PRODUTO> lista = proApp.GetAllItens(idAss).OrderBy(x => x.PROD_NM_NOME).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
+            List<SelectListItem> tipo = new List<SelectListItem>();
+            tipo.Add(new SelectListItem() { Text = "Normal", Value = "1" });
+            tipo.Add(new SelectListItem() { Text = "Expressa", Value = "2" });
+            ViewBag.Tipo = new SelectList(tipo, "Value", "Text");
             ViewBag.Produtos = new SelectList(lista, "PROD_CD_ID", "PROD_NM_NOME");
 
             // Prepara view
@@ -407,7 +411,6 @@ namespace ERP_CRM_Solution.Controllers
             vm.PECO_DT_DATA = DateTime.Today.Date;
             vm.PECO_IN_ATIVO = 1;
             vm.PECO_IN_STATUS = 1;
-            vm.PECO_IN_TIPO = 1;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             vm.PECO_DT_DATA = DateTime.Today.Date;
             vm.PECO_DT_PREVISTA = DateTime.Today.Date.AddDays(30);
@@ -443,6 +446,10 @@ namespace ERP_CRM_Solution.Controllers
             status.Add(new SelectListItem() { Text = "Cancelada", Value = "6" });
             ViewBag.Status = new SelectList(status, "Value", "Text");
             List<PRODUTO> lista = proApp.GetAllItens(idAss).OrderBy(x => x.PROD_NM_NOME).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
+            List<SelectListItem> tipo = new List<SelectListItem>();
+            tipo.Add(new SelectListItem() { Text = "Normal", Value = "1" });
+            tipo.Add(new SelectListItem() { Text = "Expressa", Value = "2" });
+            ViewBag.Tipo = new SelectList(tipo, "Value", "Text");
             ViewBag.Produtos = new SelectList(lista, "PROD_CD_ID", "PROD_NM_NOME");
             Hashtable result = new Hashtable();
 
@@ -465,6 +472,12 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         Session["MensCompra"] = 3;
                         return RedirectToAction("MontarTelaPedidoCompra");
+                    }
+
+                    // Acerta status para expressa
+                    if (item.PECO_IN_TIPO == 2)
+                    {
+                        item.PECO_IN_STATUS = 2;
                     }
 
                     // Acerta numero do pedido
@@ -581,11 +594,12 @@ namespace ERP_CRM_Solution.Controllers
             vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
             vm.PECO_DT_DATA = DateTime.Today.Date;
             vm.PECO_IN_ATIVO = 1;
-            vm.PECO_IN_STATUS = 5;
+            vm.PECO_IN_STATUS = 2;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             vm.PECO_DT_DATA = DateTime.Today.Date;
             vm.PECO_DT_PREVISTA = DateTime.Today.Date.AddDays(30);
             vm.PECO_IN_TIPO = 2;
+            vm.PECO_DT_FINAL = DateTime.MinValue;
             return View(vm);
         }
 
@@ -1637,7 +1651,7 @@ namespace ERP_CRM_Solution.Controllers
                 listaMaster = new List<PEDIDO_COMPRA>();
                 Session["ListaCompra"] = null;
                 Session["ContaPagar"] = cp;
-                Session["VoltaCompra"] = 1;
+                Session["VoltaCompra"] = 0;
                 Session["IdCompra"] = item.PECO_CD_ID;
                 return RedirectToAction("IncluirCP", "ContaPagar", new { voltaCompra = 1 });
             }

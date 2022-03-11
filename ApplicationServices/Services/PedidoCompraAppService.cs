@@ -213,7 +213,7 @@ namespace ApplicationServices.Services
                 // Persiste pedido
                 Int32 volta = _baseService.Create(item, log);
 
-                if (volta == 0)
+                if (volta == 0 & item.PECO_IN_TIPO == 1)
                 {
                     if (item.PECO_IN_STATUS != 5)
                     {
@@ -924,7 +924,14 @@ namespace ApplicationServices.Services
             PEDIDO_COMPRA ped = _baseService.GetItemById(item.PECO_CD_ID);
 
             // Acerta campos
-            item.PECO_IN_STATUS = 3;
+            if (item.PECO_IN_TIPO == 1)
+            {
+                item.PECO_IN_STATUS = 3;
+            }
+            else if (item.PECO_IN_TIPO == 2)
+            {
+                item.PECO_IN_STATUS = 5;
+            }
 
             // Monta Log
             LOG log = new LOG
@@ -1372,46 +1379,49 @@ namespace ApplicationServices.Services
                 // Persiste notificação 
                 Int32 volta1 = _notiService.Create(noti);
 
-                // Configuracao
-                CONFIGURACAO conf = _confService.GetItemById(item.ASSI_CD_ID);
-
-                // Recupera template
-                USUARIO usu = _usuService.GetItemById(item.USUA_CD_ID);
-                String header = _tempService.GetByCode("RECPEDCOM").TEMP_TX_CABECALHO;
-                String body = _tempService.GetByCode("RECPEDCOM").TEMP_TX_CORPO;
-                String footer = _tempService.GetByCode("RECPEDCOM").TEMP_TX_DADOS;
-
-                // Prepara campos
-                body = body.Replace("{pedido}", item.PECO_NM_NOME);
-                body = body.Replace("{numero}", item.PECO_NR_NUMERO);
-                header = header.Replace("{nome}", usu.USUA_NM_NOME);
-                String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
-
-                // Monta e-mail
-                NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
-                Email mensagem = new Email();
-                mensagem.ASSUNTO = "Pedido de Compra - Recebimento";
-                mensagem.CORPO = emailBody;
-                mensagem.DEFAULT_CREDENTIALS = false;
-                mensagem.EMAIL_DESTINO = usu.USUA_NM_EMAIL;
-                mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
-                mensagem.ENABLE_SSL = true;
-                mensagem.NOME_EMISSOR = usu.ASSINANTE.ASSI_NM_NOME;
-                mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
-                mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
-                mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
-                mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
-                mensagem.IS_HTML = true;
-                mensagem.NETWORK_CREDENTIAL = net;
-
-                // Envia mensagem
-                try
+                if (item.PECO_IN_TIPO == 1)
                 {
-                    Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
-                }
-                catch (Exception ex)
-                {
-                    String erro = ex.Message;
+                    // Configuracao
+                    CONFIGURACAO conf = _confService.GetItemById(item.ASSI_CD_ID);
+
+                    // Recupera template
+                    USUARIO usu = _usuService.GetItemById(item.USUA_CD_ID);
+                    String header = _tempService.GetByCode("RECPEDCOM").TEMP_TX_CABECALHO;
+                    String body = _tempService.GetByCode("RECPEDCOM").TEMP_TX_CORPO;
+                    String footer = _tempService.GetByCode("RECPEDCOM").TEMP_TX_DADOS;
+
+                    // Prepara campos
+                    body = body.Replace("{pedido}", item.PECO_NM_NOME);
+                    body = body.Replace("{numero}", item.PECO_NR_NUMERO);
+                    header = header.Replace("{nome}", usu.USUA_NM_NOME);
+                    String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = "Pedido de Compra - Recebimento";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = usu.USUA_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = usu.ASSINANTE.ASSI_NM_NOME;
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.IS_HTML = true;
+                    mensagem.NETWORK_CREDENTIAL = net;
+
+                    // Envia mensagem
+                    try
+                    {
+                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                    }
+                    catch (Exception ex)
+                    {
+                        String erro = ex.Message;
+                    }
                 }
                 return volta;
             }
@@ -1427,7 +1437,6 @@ namespace ApplicationServices.Services
             {
                 item.PECO_IN_STATUS = 7;
                 item.PECO_DT_FINAL = DateTime.Today.Date;
-
                 Int32 volta = _baseService.Edit(item);
 
                 return volta;
@@ -1468,7 +1477,7 @@ namespace ApplicationServices.Services
                         mov.MOEP_IN_CHAVE_ORIGEM = 3;
                         mov.MOEP_IN_ORIGEM = "Compra";
                         mov.MOEP_IN_OPERACAO = 1;
-                        mov.MOEP_IN_TIPO_MOVIMENTO = 0;
+                        mov.MOEP_IN_TIPO_MOVIMENTO = 1;
                         mov.MOEP_QN_QUANTIDADE = (Int32)itpc.ITPC_NR_QUANTIDADE_RECEBIDA;
                         mov.PROD_CD_ID = (Int32)itpc.PROD_CD_ID;
                         mov.USUA_CD_ID = ped.USUA_CD_ID;
