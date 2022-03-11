@@ -411,6 +411,7 @@ namespace ERP_CRM_Solution.Controllers
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             vm.PECO_DT_DATA = DateTime.Today.Date;
             vm.PECO_DT_PREVISTA = DateTime.Today.Date.AddDays(30);
+            vm.PECO_DT_FINAL = DateTime.MinValue;
             return View(vm);
         }
 
@@ -2999,7 +3000,7 @@ namespace ERP_CRM_Solution.Controllers
             List<PEDIDO_COMPRA> listaGeral = baseApp.GetAllItens(idAss);
             Int32 pedidosMes = listaGeral.Where(p => p.PECO_DT_DATA.Value.Month == DateTime.Today.Date.Month & p.PECO_DT_DATA.Value.Year == DateTime.Today.Date.Year).ToList().Count;
             Int32 pedidosTotal = listaGeral.Count;
-            Int32 encerradosMes = listaGeral.Where(p => p.PECO_DT_FINAL.Value.Month == DateTime.Today.Date.Month & p.PECO_DT_FINAL.Value.Year == DateTime.Today.Date.Year & p.PECO_IN_STATUS == 7).ToList().Count;
+            Int32 encerradosMes = listaGeral.Where(p => p.PECO_DT_FINAL != null & p.PECO_DT_FINAL.Value.Month == DateTime.Today.Date.Month & p.PECO_DT_FINAL.Value.Year == DateTime.Today.Date.Year & p.PECO_IN_STATUS == 7).ToList().Count;
             Int32 encerradosTotal = listaGeral.Where(p => p.PECO_IN_STATUS == 7).ToList().Count;
             Int32 pendentes = listaGeral.Where(p => p.PECO_IN_STATUS != 7 & p.PECO_IN_STATUS != 8).ToList().Count;
             Int32 atraso = listaGeral.Where(p => p.PECO_IN_STATUS != 7 & p.PECO_IN_STATUS != 8 & p.PECO_DT_PREVISTA.Value < DateTime.Today.Date).ToList().Count;
@@ -3066,7 +3067,7 @@ namespace ERP_CRM_Solution.Controllers
             mod.Valor = sit7;
             lista1.Add(mod);
             mod = new ModeloViewModel();
-            mod.Data = "Cancaladas";
+            mod.Data = "Canceladas";
             mod.Valor = sit8;
             lista1.Add(mod);
             ViewBag.ListaSituacao = lista1;
@@ -3095,7 +3096,14 @@ namespace ERP_CRM_Solution.Controllers
                 listaMod1.Add(mod1);
             }
             listaMod1 = listaMod1.OrderByDescending(p => p.Valor1).ToList();
-            ViewBag.ListaCompraForn = listaMod1.Take(10);
+            if (listaMod1.Count > 10)
+            {
+                ViewBag.ListaCompraForn = listaMod1;
+            }
+            else
+            {
+                ViewBag.ListaCompraForn = listaMod1;
+            }
 
             // Produtos Mais comprados
             List<PRODUTO> listaProd = proApp.GetAllItens(idAss);
@@ -3112,7 +3120,14 @@ namespace ERP_CRM_Solution.Controllers
                 listaMod2.Add(mod1);
             }
             listaMod2 = listaMod2.OrderByDescending(p => p.Valor1).ToList();
-            ViewBag.ListaCompraProd = listaMod2.Take(10);
+            if (listaMod2.Count > 10)
+            {
+                ViewBag.ListaCompraProd = listaMod2;
+            }
+            else
+            {
+                ViewBag.ListaCompraProd = listaMod2;
+            }
 
             // Compra Atraso
             List<PEDIDO_COMPRA> atraso1 = listaGeral.Where(p => p.PECO_DT_PREVISTA < DateTime.Today.Date & DateTime.Today.Date.AddDays(-10) < p.PECO_DT_PREVISTA).ToList();
@@ -3132,7 +3147,19 @@ namespace ERP_CRM_Solution.Controllers
             mod2.Valor1 = atraso3.Count;
             listaMod3.Add(mod2);
             ViewBag.ListaCompraAtraso = listaMod3;
+            Session["PedidosAtraso"] = listaMod3;
 
+            // Pedidos recebidos no prazo
+            List<PEDIDO_COMPRA> prazo = listaGeral.Where(p => p.PECO_DT_PREVISTA > DateTime.Today.Date & p.PECO_IN_STATUS == 7).ToList();
+            ViewBag.RecebidosPrazo = prazo.Count;
+            Session["RecebidosPrazo"] = prazo;
+
+            // Produtos com estoque abaixo do minimo
+            Int32? idFilial = null;
+            List<PRODUTO_ESTOQUE_FILIAL> listaBase = proApp.RecuperarQuantidadesFiliais(idFilial, idAss);
+            List<PRODUTO_ESTOQUE_FILIAL> pontoPedido = listaBase.Where(x => x.PREF_QN_ESTOQUE < x.PRODUTO.PROD_QN_QUANTIDADE_MINIMA).OrderByDescending(p => p.PREF_QN_ESTOQUE).ToList();
+            ViewBag.EstoqueMinimo = pontoPedido;
+            Session["EstoqueMinimo"] = pontoPedido;
 
             Session["VoltaProdutoDash"] = 6;
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
@@ -3186,19 +3213,19 @@ namespace ERP_CRM_Solution.Controllers
             cor.Add("#FF7F00");
             desc.Add("Aprovada");
             quant.Add(q4);
-            cor.Add("#359E18");
+            cor.Add("#744d61");
             desc.Add("Para Recebimento");
             quant.Add(q5);
-            cor.Add("#FFAE00");
+            cor.Add("#f2e6b1");
             desc.Add("Em Recebimento");
             quant.Add(q6);
-            cor.Add("#FF7F00");
+            cor.Add("#e6b1f2");
             desc.Add("Encerradas");
             quant.Add(q7);
-            cor.Add("#FF7F00");
+            cor.Add("#739d84");
             desc.Add("Canceladas");
             quant.Add(q8);
-            cor.Add("#FF7F00");
+            cor.Add("#FF0000");
 
             Hashtable result = new Hashtable();
             result.Add("labels", desc);

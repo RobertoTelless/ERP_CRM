@@ -147,10 +147,17 @@
                                                         Valor Total (R$)
                                                         @Html.TextBox(name: "Valor", value: (decimal)ViewBag.CustoTotal, htmlAttributes: new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                     </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12" style="color: steelblue; font-weight: bold">
-                                                        Nota Fiscal
-                                                        @Html.TextBoxFor(m => m.PECO_NR_NOTA_FISCAL, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                    </div>
+                                                    @if (Model.PECO_IN_STATUS == 7)
+                                                    {
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Encerramento
+                                                            @Html.TextBoxFor(m => m.PECO_DT_FINAL, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12" style="color: steelblue; font-weight: bold">
+                                                            Nota Fiscal
+                                                            @Html.TextBoxFor(m => m.PECO_NR_NOTA_FISCAL, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        </div>
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
