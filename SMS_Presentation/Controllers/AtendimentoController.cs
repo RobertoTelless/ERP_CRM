@@ -2042,7 +2042,7 @@ namespace ERP_CRM_Solution.Controllers
             Int32 volta = tarApp.ValidateCreate(tarefa, usuarioLogado);
 
             // Cria pastas
-            String caminho = "/Imagens/" + idAss.ToString() + "/Tarefas/" + tarefa.TARE_CD_ID.ToString() + "/Anexos/";
+            String caminho = "/Imagens/" + idAss.ToString() + "/Tarefa/" + tarefa.TARE_CD_ID.ToString() + "/Anexos/";
             Directory.CreateDirectory(Server.MapPath(caminho));
 
             if (volta == 0)
