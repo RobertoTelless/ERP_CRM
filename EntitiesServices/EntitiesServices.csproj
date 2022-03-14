@@ -479,6 +479,9 @@
     <Compile Include="Model\ATENDIMENTO_ANEXO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ATENDIMENTO_CRM.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\BANCO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>

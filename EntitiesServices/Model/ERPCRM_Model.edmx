@@ -200,6 +200,15 @@
           <Property Name="ATAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="ATAN_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="ATENDIMENTO_CRM">
+          <Key>
+            <PropertyRef Name="ATCR_CD_ID" />
+          </Key>
+          <Property Name="ATCR_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ATEN_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CRM1_CD_ID" Type="int" Nullable="false" />
+          <Property Name="ATCR_IN_ATIVO" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="BANCO">
           <Key>
             <PropertyRef Name="BANC_CD_ID" />
@@ -1890,6 +1899,7 @@
           <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
           <Property Name="FORN_CD_ID" Type="int" Nullable="false" />
           <Property Name="PRFO_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="PRFO_NR_DIAS_ENTREGA" Type="int" />
         </EntityType>
         <EntityType Name="PRODUTO_GRADE">
           <Key>
@@ -2700,6 +2710,30 @@
             </Principal>
             <Dependent Role="ATENDIMENTO">
               <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_CRM_ATENDIMENTO">
+          <End Role="ATENDIMENTO" Type="Self.ATENDIMENTO" Multiplicity="1" />
+          <End Role="ATENDIMENTO_CRM" Type="Self.ATENDIMENTO_CRM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATENDIMENTO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_CRM">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_CRM_CRM">
+          <End Role="CRM" Type="Self.CRM" Multiplicity="1" />
+          <End Role="ATENDIMENTO_CRM" Type="Self.ATENDIMENTO_CRM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_CRM">
+              <PropertyRef Name="CRM1_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6077,6 +6111,7 @@
           <EntitySet Name="ATENDIMENTO_ACOMPANHAMENTO" EntityType="Self.ATENDIMENTO_ACOMPANHAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ATENDIMENTO_AGENDA" EntityType="Self.ATENDIMENTO_AGENDA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ATENDIMENTO_ANEXO" EntityType="Self.ATENDIMENTO_ANEXO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ATENDIMENTO_CRM" EntityType="Self.ATENDIMENTO_CRM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BANCO" EntityType="Self.BANCO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CARGO" EntityType="Self.CARGO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_AGENDA" EntityType="Self.CATEGORIA_AGENDA" Schema="dbo" store:Type="Tables" />
@@ -6312,6 +6347,14 @@
           <AssociationSet Name="FK_ATENDIMENTO_CLIENTE" Association="Self.FK_ATENDIMENTO_CLIENTE">
             <End Role="CLIENTE" EntitySet="CLIENTE" />
             <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_CRM_ATENDIMENTO" Association="Self.FK_ATENDIMENTO_CRM_ATENDIMENTO">
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+            <End Role="ATENDIMENTO_CRM" EntitySet="ATENDIMENTO_CRM" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_CRM_CRM" Association="Self.FK_ATENDIMENTO_CRM_CRM">
+            <End Role="CRM" EntitySet="CRM" />
+            <End Role="ATENDIMENTO_CRM" EntitySet="ATENDIMENTO_CRM" />
           </AssociationSet>
           <AssociationSet Name="FK_ATENDIMENTO_DEPARTAMENTO" Association="Self.FK_ATENDIMENTO_DEPARTAMENTO">
             <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
@@ -7700,6 +7743,7 @@
           <NavigationProperty Name="USUARIO1" Relationship="Self.FK_ATENDIMENTO_USUARIO1" FromRole="ATENDIMENTO" ToRole="USUARIO" />
           <NavigationProperty Name="NOTIFICACAO" Relationship="Self.FK_NOTIFICACAO_ATENDIMENTO" FromRole="ATENDIMENTO" ToRole="NOTIFICACAO" />
           <NavigationProperty Name="ORDEM_SERVICO" Relationship="Self.FK_ORDEM_SERVICO_ATENDIMENTO" FromRole="ATENDIMENTO" ToRole="ORDEM_SERVICO" />
+          <NavigationProperty Name="ATENDIMENTO_CRM" Relationship="ERP_CRMModel.FK_ATENDIMENTO_CRM_ATENDIMENTO" FromRole="ATENDIMENTO" ToRole="ATENDIMENTO_CRM" />
         </EntityType>
         <EntityType Name="ATENDIMENTO_ACOMPANHAMENTO">
           <Key>
@@ -8462,6 +8506,7 @@
           <NavigationProperty Name="MOTIVO_ENCERRAMENTO" Relationship="Self.FK_CRM_MOTIVO_ENCERRAMENTO" FromRole="CRM" ToRole="MOTIVO_ENCERRAMENTO" />
           <NavigationProperty Name="TIPO_CRM" Relationship="Self.FK_CRM_TIPO_CRM" FromRole="CRM" ToRole="TIPO_CRM" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_CRM_USUARIO" FromRole="CRM" ToRole="USUARIO" />
+          <NavigationProperty Name="ATENDIMENTO_CRM" Relationship="ERP_CRMModel.FK_ATENDIMENTO_CRM_CRM" FromRole="CRM" ToRole="ATENDIMENTO_CRM" />
         </EntityType>
         <EntityType Name="CRM_ACAO">
           <Key>
@@ -9798,6 +9843,7 @@
           <Property Name="PRFO_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="FORNECEDOR" Relationship="Self.FK_PRODUTO_FORNECEDOR_FORNECEDOR" FromRole="PRODUTO_FORNECEDOR" ToRole="FORNECEDOR" />
           <NavigationProperty Name="PRODUTO" Relationship="Self.FK_PRODUTO_FORNECEDOR_PRODUTO" FromRole="PRODUTO_FORNECEDOR" ToRole="PRODUTO" />
+          <Property Name="PRFO_NR_DIAS_ENTREGA" Type="Int32" />
         </EntityType>
         <EntityType Name="PRODUTO_GRADE">
           <Key>
@@ -15474,7 +15520,51 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="USUARIO_FUNCIONARIO" EntitySet="USUARIO_FUNCIONARIO" />
           </AssociationSet>
+          <EntitySet Name="ATENDIMENTO_CRM" EntityType="ERP_CRMModel.ATENDIMENTO_CRM" />
+          <AssociationSet Name="FK_ATENDIMENTO_CRM_ATENDIMENTO" Association="ERP_CRMModel.FK_ATENDIMENTO_CRM_ATENDIMENTO">
+            <End Role="ATENDIMENTO" EntitySet="ATENDIMENTO" />
+            <End Role="ATENDIMENTO_CRM" EntitySet="ATENDIMENTO_CRM" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATENDIMENTO_CRM_CRM" Association="ERP_CRMModel.FK_ATENDIMENTO_CRM_CRM">
+            <End Role="CRM" EntitySet="CRM" />
+            <End Role="ATENDIMENTO_CRM" EntitySet="ATENDIMENTO_CRM" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ATENDIMENTO_CRM">
+          <Key>
+            <PropertyRef Name="ATCR_CD_ID" />
+          </Key>
+          <Property Name="ATCR_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ATEN_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CRM1_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="ATCR_IN_ATIVO" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="ATENDIMENTO" Relationship="ERP_CRMModel.FK_ATENDIMENTO_CRM_ATENDIMENTO" FromRole="ATENDIMENTO_CRM" ToRole="ATENDIMENTO" />
+          <NavigationProperty Name="CRM" Relationship="ERP_CRMModel.FK_ATENDIMENTO_CRM_CRM" FromRole="ATENDIMENTO_CRM" ToRole="CRM" />
+        </EntityType>
+        <Association Name="FK_ATENDIMENTO_CRM_ATENDIMENTO">
+          <End Type="ERP_CRMModel.ATENDIMENTO" Role="ATENDIMENTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO_CRM" Role="ATENDIMENTO_CRM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATENDIMENTO">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_CRM">
+              <PropertyRef Name="ATEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATENDIMENTO_CRM_CRM">
+          <End Type="ERP_CRMModel.CRM" Role="CRM" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ATENDIMENTO_CRM" Role="ATENDIMENTO_CRM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Principal>
+            <Dependent Role="ATENDIMENTO_CRM">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -17475,6 +17565,7 @@
           <EntitySetMapping Name="PRODUTO_FORNECEDOR">
             <EntityTypeMapping TypeName="ERP_CRMModel.PRODUTO_FORNECEDOR">
               <MappingFragment StoreEntitySet="PRODUTO_FORNECEDOR">
+                <ScalarProperty Name="PRFO_NR_DIAS_ENTREGA" ColumnName="PRFO_NR_DIAS_ENTREGA" />
                 <ScalarProperty Name="PRFO_CD_ID" ColumnName="PRFO_CD_ID" />
                 <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
                 <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
@@ -18041,6 +18132,16 @@
                 <ScalarProperty Name="USFU_DT_CNH_VALIDADE" ColumnName="USFU_DT_CNH_VALIDADE" />
                 <ScalarProperty Name="USFU_NM_CNH_CATEGORIA" ColumnName="USFU_NM_CNH_CATEGORIA" />
                 <ScalarProperty Name="USFU_NR_CNS" ColumnName="USFU_NR_CNS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ATENDIMENTO_CRM">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ATENDIMENTO_CRM">
+              <MappingFragment StoreEntitySet="ATENDIMENTO_CRM">
+                <ScalarProperty Name="ATCR_IN_ATIVO" ColumnName="ATCR_IN_ATIVO" />
+                <ScalarProperty Name="CRM1_CD_ID" ColumnName="CRM1_CD_ID" />
+                <ScalarProperty Name="ATEN_CD_ID" ColumnName="ATEN_CD_ID" />
+                <ScalarProperty Name="ATCR_CD_ID" ColumnName="ATCR_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

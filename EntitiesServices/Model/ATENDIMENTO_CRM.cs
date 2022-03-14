@@ -12,15 +12,14 @@ namespace EntitiesServices.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class PRODUTO_FORNECEDOR
+    public partial class ATENDIMENTO_CRM
     {
-        public int PRFO_CD_ID { get; set; }
-        public int PROD_CD_ID { get; set; }
-        public int FORN_CD_ID { get; set; }
-        public int PRFO_IN_ATIVO { get; set; }
-        public Nullable<int> PRFO_NR_DIAS_ENTREGA { get; set; }
+        public int ATCR_CD_ID { get; set; }
+        public int ATEN_CD_ID { get; set; }
+        public int CRM1_CD_ID { get; set; }
+        public string ATCR_IN_ATIVO { get; set; }
     
-        public virtual FORNECEDOR FORNECEDOR { get; set; }
-        public virtual PRODUTO PRODUTO { get; set; }
+        public virtual ATENDIMENTO ATENDIMENTO { get; set; }
+        public virtual CRM CRM { get; set; }
     }
 }

@@ -137,6 +137,7 @@
                             <li class="@ViewBag.Acompanhamento"><a data-toggle="tab" href="#tab-4">Acompanhamentos</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-5">Agendamento</a></li>
                             <li class="@ViewBag.AgenLista"><a data-toggle="tab" href="#tab-6">Agendamentos - Lista</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-9">CRM - Lista</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-7">Observações</a></li>
                             <li class="@ViewBag.OrdemServico"><a data-toggle="tab" href="#tab-8">Ordens de Serviço</a></li>
                         </ul>
@@ -641,6 +642,96 @@
                                     </div>
                                 </div>
                             </div>
+                        
+                            @*CRM - Lista*@
+                            <div id="tab-9" class="tab-pane">
+                                <div class="panel-body">
+                                    <h5>CRM Associados</h5>
+                                    <br />
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-sm-12 col-md-12 col-xs-12">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Data</th>
+                                                            <th>Título</th>
+                                                            <th>Origem</th>
+                                                            <th>Status</th>
+                                                            <th>Situação</th>
+                                                            <th>Ações</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (ViewBag.ListaCRM != null && ViewBag.ListaCRM.Count > 0)
+                                                        {
+                                                            foreach (var cond in (List<EntitiesServices.Model.CRM>)ViewBag.ListaCRM)
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.CRM1_DT_CRIACAO.Value.ToShortDateString()</td>
+                                                                    <td>@cond.CRM1_NM_NOME</td>
+                                                                    @if (cond.CRM_ORIGEM != null)
+	                                                                {
+                                                                        <td style="width: auto">@cond.CRM_ORIGEM.CROR_NM_NOME</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td style="width: auto">-</td>
+                                                                    }
+                                                                    @if (cond.CRM1_IN_STATUS == 1)
+	                                                                {
+                                                                        <td><span class="badge badge-warning">Prospecção</span></td>
+                                                                    }
+                                                                    else if (cond.CRM1_IN_STATUS == 2)
+                                                                    {
+                                                                        <td><span class="badge badge-primary">Contato Realizado</span></td>
+                                                                    }
+                                                                    else if (cond.CRM1_IN_STATUS == 3)
+                                                                    {
+                                                                        <td><span class="badge badge-primary">Proposta Apresentada</span></td>
+                                                                    }
+                                                                    else if (cond.CRM1_IN_STATUS == 4)
+                                                                    {
+                                                                        <td><span class="badge badge-primary">Negociação</span></td>
+                                                                    }
+                                                                    else if (cond.CRM1_IN_STATUS == 5)
+                                                                    {
+                                                                        <td><span class="badge badge-success">Encerrado</span></td>
+                                                                    }
+                                                                    @if (cond.CRM1_IN_ATIVO == 1)
+	                                                                {
+                                                                        <td><span class="badge badge-primary">Ativo</span></td>
+                                                                    }
+                                                                    else if (cond.CRM1_IN_ATIVO == 2)
+                                                                    {
+                                                                        <td><span class="badge badge-warning">Arquivado</span></td>
+                                                                    }
+                                                                    else if (cond.CRM1_IN_ATIVO == 3)
+                                                                    {
+                                                                        <td><span class="badge badge-warning">Cancelado</span></td>
+                                                                    }
+                                                                    else if (cond.CRM1_IN_ATIVO == 4)
+                                                                    {
+                                                                        <td><span class="badge badge-danger">Falhado</span></td>
+                                                                    }
+                                                                    else if (cond.CRM1_IN_ATIVO == 5)
+                                                                    {
+                                                                        <td><span class="badge badge-success">Sucesso</span></td>
+                                                                    }                                                                 
+                                                                    <td>
+                                                                        @Html.TableLinkDetails(cond.CRM1_CD_ID, "VisualizarProcessoCRM", "fa-search", "Ver")
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
                         </div>
                     </div>
                 </div>

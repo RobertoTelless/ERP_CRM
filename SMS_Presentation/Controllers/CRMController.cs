@@ -41,6 +41,7 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IMensagemAppService menApp;
         private readonly IAgendaAppService ageApp;
         private readonly IClienteAppService cliApp;
+        private readonly IAtendimentoAppService ateApp;
 
         private String msg;
         private Exception exception;
@@ -49,7 +50,7 @@ namespace ERP_CRM_Solution.Controllers
         List<CRM> listaMaster = new List<CRM>();
         String extensao;
 
-        public CRMController(ICRMAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps)
+        public CRMController(ICRMAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -58,6 +59,7 @@ namespace ERP_CRM_Solution.Controllers
             menApp = menApps;
             ageApp = ageApps;
             cliApp = cliApps;
+            ateApp = ateApps;
         }
 
         [HttpGet]
@@ -136,6 +138,7 @@ namespace ERP_CRM_Solution.Controllers
             fav.Add(new SelectListItem() { Text = "Não", Value = "0" });
             ViewBag.Favorito = new SelectList(fav, "Value", "Text");
             Session["IncluirCRM"] = 0;
+            Session["CRMVoltaAtendimento"] = 0;
 
             // Indicadores
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
@@ -378,6 +381,10 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("MontarTelaCRM", "CRM");
             }
             if ((Int32)Session["VoltaCRM"] == 12)
+            {
+                return RedirectToAction("VoltarAnexoAtendimento", "Atendimento");
+            }
+            if ((Int32)Session["VoltaCRM"] == 30)
             {
                 return RedirectToAction("VoltarAnexoAtendimento", "Atendimento");
             }
@@ -1136,6 +1143,15 @@ namespace ERP_CRM_Solution.Controllers
             vm.CRM1_DT_CRIACAO = DateTime.Today.Date;
             vm.CRM1_IN_ATIVO = 1;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
+            if ((Int32)Session["CRMVoltaAtendimento"] == 1)
+            {
+                ATENDIMENTO aten = (ATENDIMENTO)Session["Atendimento"];
+                String result = Regex.Replace(aten.ATEN_DS_DESCRICAO, @"<[^>]*>", String.Empty);
+                String noHTML = Regex.Replace(aten.ATEN_DS_DESCRICAO, @"<[^>]+>|&nbsp;", String.Empty).Trim();
+                vm.CRM1_DS_DESCRICAO = noHTML;
+                vm.CRM1_NM_NOME = aten.ATEN_NM_ASSUNTO;
+                vm.CLIE_CD_ID = aten.CLIE_CD_ID.Value; 
+            }
             return View(vm);
         }
 
@@ -1214,11 +1230,26 @@ namespace ERP_CRM_Solution.Controllers
                         Session["FileQueueCRM"] = null;
                     }
 
+                    // Processa voltas
                     if ((Int32)Session["VoltaCRM"] == 3)
                     {
                         Session["VoltaCRM"] = 0;
+                        Session["CRMAtendimento"] = 0;
                         return RedirectToAction("IncluirProcessoCRM", "CRM");
                     }
+                    if ((Int32)Session["CRMVoltaAtendimento"] == 1)
+                    {
+                        ATENDIMENTO aten = (ATENDIMENTO)Session["Atendimento"];
+                        ATENDIMENTO_CRM crm = new ATENDIMENTO_CRM();
+                        crm.ATEN_CD_ID = aten.ATEN_CD_ID;
+                        crm.CRM1_CD_ID = item.CRM1_CD_ID;
+                        aten.ATENDIMENTO_CRM.Add(crm);
+                        Int32 voltaA = ateApp.ValidateEdit(aten, aten, usuario);
+                        Session["CRMVoltaAtendimento"] = 0;
+                        return RedirectToAction("VoltarAnexoAtendimento", "Atendimento");
+                    }
+
+                    Session["CRMAtendimento"] = 0;
                     return RedirectToAction("MontarTelaCRM");
                 }
                 catch (Exception ex)

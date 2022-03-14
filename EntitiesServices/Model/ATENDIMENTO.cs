@@ -22,6 +22,7 @@ namespace EntitiesServices.Model
             this.ATENDIMENTO_ANEXO = new HashSet<ATENDIMENTO_ANEXO>();
             this.NOTIFICACAO = new HashSet<NOTIFICACAO>();
             this.ORDEM_SERVICO = new HashSet<ORDEM_SERVICO>();
+            this.ATENDIMENTO_CRM = new HashSet<ATENDIMENTO_CRM>();
         }
     
         public int ATEN_CD_ID { get; set; }
@@ -73,5 +74,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<NOTIFICACAO> NOTIFICACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDEM_SERVICO> ORDEM_SERVICO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ATENDIMENTO_CRM> ATENDIMENTO_CRM { get; set; }
     }
 }

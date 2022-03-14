@@ -184,14 +184,15 @@ namespace ERP_CRM_Solution.Controllers
             // Carrega listas
             if (Session["ListaAgenda"] == null)
             {
-                if ((Int32)Session["AgendaCorp"] == 0)
-                {
-                    listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).Where(p => p.AGEN_IN_CORPORATIVA == 0).ToList();
-                }
-                else
-                {
-                    listaMaster = baseApp.GetAllItens(idAss).Where(p => p.AGEN_IN_CORPORATIVA == 1).ToList();
-                }
+                listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).ToList();
+                //if ((Int32)Session["AgendaCorp"] == 0)
+                //{
+                //    listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).Where(p => p.AGEN_IN_CORPORATIVA == 0).ToList();
+                //}
+                //else
+                //{
+                //    listaMaster = baseApp.GetAllItens(idAss).Where(p => p.AGEN_IN_CORPORATIVA == 1).ToList();
+                //}
                 Session["ListaAgenda"] = listaMaster;
             }
             ViewBag.Listas = ((List<AGENDA>)Session["ListaAgenda"]).OrderBy(x => x.AGEN_DT_DATA.Date).ThenBy(x => x.AGEN_HR_HORA).ToList<AGENDA>();

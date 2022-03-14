@@ -178,5 +178,6 @@ namespace EntitiesServices.Model
         public virtual DbSet<USUARIO> USUARIO { get; set; }
         public virtual DbSet<USUARIO_ANEXO> USUARIO_ANEXO { get; set; }
         public virtual DbSet<USUARIO_FUNCIONARIO> USUARIO_FUNCIONARIO { get; set; }
+        public virtual DbSet<ATENDIMENTO_CRM> ATENDIMENTO_CRM { get; set; }
     }
 }

@@ -462,6 +462,9 @@
         <AssociationConnector Association="ERP_CRMModel.FK_TRANSPORTADORA_ANEXO_TRANSPORTADORA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_ANEXO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_FUNCIONARIO_USUARIO" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_CRM" Width="1.5" PointX="29.25" PointY="229.5" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_CRM_ATENDIMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_CRM_CRM" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

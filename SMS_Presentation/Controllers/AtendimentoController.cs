@@ -237,7 +237,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["ConsultaAtendimento"] = 0;
 
             // Carrega listas
-            if ((Session["ListaAtendimento"] == null || ((List<ATENDIMENTO>)Session["ListaAtendimento"]).Count == 0) && Session["AT"] == null)
+            if ((Session["ListaAtendimento"] == null))
             {
                 Session["AT"] = 1;
                 listaMaster = baseApp.GetAllItens(idAss).Where(x => x.ATEN_IN_STATUS != 3).ToList();
@@ -295,6 +295,9 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Produtos = new SelectList(proApp.GetAllItens(idAss).OrderBy(p => p.PROD_NM_NOME), "PROD_CD_ID", "PROD_NM_NOME");
             ViewBag.Tipos = new SelectList(caApp.GetAllItens(idAss).OrderBy(x => x.CAAT_NM_NOME).ToList<CATEGORIA_ATENDIMENTO>(), "CAAT_CD_ID", "CAAT_NM_NOME");
             ViewBag.Departamentos = new SelectList(depApp.GetAllItens(idAss).OrderBy(x => x.DEPT_NM_NOME).ToList<DEPARTAMENTO>(), "DEPT_CD_ID", "DEPT_NM_NOME");
+            Session["VoltaAcompanhamento"] = false;
+            Session["VoltaOrdemServico"] = 0;
+            Session["IncluiCRM"] = 0;
 
             if (Session["MensAtendimento"] != null)
             {
@@ -834,39 +837,6 @@ namespace ERP_CRM_Solution.Controllers
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     Int32 volta = baseApp.ValidateCreate(item, usuarioLogado);
 
-                    ATENDIMENTO at = new ATENDIMENTO
-                    {
-                        ATEN_CD_ID = item.ATEN_CD_ID,
-                        ASSI_CD_ID = item.ASSI_CD_ID,
-                        USUA_CD_ID = item.USUA_CD_ID,
-                        CAAT_CD_ID = item.CAAT_CD_ID,
-                        CLIE_CD_ID = item.CLIE_CD_ID,
-                        PROD_CD_ID = item.PROD_CD_ID,
-                        PEVE_CD_ID = item.PEVE_CD_ID,
-                        DEPT_CD_ID = item.DEPT_CD_ID,
-                        SERV_CD_ID = item.SERV_CD_ID,
-                        ATEN_DT_INICIO = item.ATEN_DT_INICIO,
-                        ATEN_DT_ENCERRAMENTO = item.ATEN_DT_ENCERRAMENTO,
-                        ATEN_DS_DESCRICAO = item.ATEN_DS_DESCRICAO,
-                        ATEN_IN_STATUS = item.ATEN_IN_STATUS,
-                        ATEN_IN_ATIVO = item.ATEN_IN_ATIVO,
-                        ATEN_DS_ENCERRAMENTO = item.ATEN_DS_ENCERRAMENTO,
-                        ATEN_DT_CANCELAMENTO = item.ATEN_DT_CANCELAMENTO,
-                        ATEN_DS_CANCELAMENTO = item.ATEN_DS_CANCELAMENTO,
-                        ATEN_TX_OBSERVACOES = item.ATEN_TX_OBSERVACOES,
-                        ATEN_HR_INICIO = item.ATEN_HR_INICIO,
-                        ATEN_HR_CANCELAMENTO = item.ATEN_HR_CANCELAMENTO,
-                        ATEN_HR_ENCERRAMENTO = item.ATEN_HR_ENCERRAMENTO,
-                        ATEN_NM_ASSUNTO = item.ATEN_NM_ASSUNTO,
-                        ATEN_IN_PRIORIDADE = item.ATEN_IN_PRIORIDADE,
-                        ATEN_IN_TIPO = item.ATEN_IN_TIPO,
-                        ATEN_IN_DESTINO = item.ATEN_IN_DESTINO,
-                        ATEN_DT_PREVISTA = item.ATEN_DT_PREVISTA,
-                        ATEN_IN_SLA = item.ATEN_IN_SLA,
-                        ATEN_NR_NUMERO = item.ATEN_CD_ID.ToString()
-                    };
-                    Int32 voltaEdit = baseApp.ValidateEdit(at, item, usuarioLogado);
-
                     // Verifica retorno
                     if (volta == 1)
                     {
@@ -878,6 +848,10 @@ namespace ERP_CRM_Solution.Controllers
                         ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0114", CultureInfo.CurrentCulture));
                         return View(vm);
                     }
+
+                    // Acerta numero
+                    item.ATEN_NR_NUMERO = item.ATEN_CD_ID.ToString();
+                    Int32 voltaEdit = baseApp.ValidateEdit(item, item, usuarioLogado);
 
                     // Cria pastas
                     String caminho = "/Imagens/" + idAss.ToString() + "/Atendimentos/" + item.ATEN_CD_ID.ToString() + "/Anexos/";
@@ -1030,6 +1004,14 @@ namespace ERP_CRM_Solution.Controllers
             }
             ViewBag.Agendamentos = lstAgenda;
 
+            var listCRM = item.ATENDIMENTO_CRM;
+            List<CRM> listaCRM = new List<CRM>();
+            foreach (var aa in listCRM)
+            {
+                listaCRM.Add(crmApp.GetById(aa.CRM1_CD_ID));
+            }
+            ViewBag.ListaCRM = listaCRM;
+
             if (Session["TarefaAtendimento"] != null)
             {
                 if ((Int32)Session["TarefaAtendimento"] == 0)
@@ -1105,6 +1087,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             Session["IdAtendimento"] = id;
+            Session["IdVolta"] = id;
             Session["IdOrdemServico"] = null;
             Session["VoltaAtendimento"] = 1;
             return View(vm);
@@ -1272,6 +1255,7 @@ namespace ERP_CRM_Solution.Controllers
                     Session["MensAtendimento"] = 0;
                     //listaMaster = new List<ATENDIMENTO>();
                     //SessionMocks.listaAtendimento = null;
+                    Session["ListaAtendimento"] = null;
                     if ((Int32)Session["VoltaAtendimento"] == 2)
                     {
                         return RedirectToAction("EditarAtendimento", new { id = (Int32)Session["IdVolta"] });
@@ -2075,6 +2059,28 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             return RedirectToAction("VoltarAnexoAtendimento");
+        }
+
+        public ActionResult GerarCRMAtendimento()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["CRMVoltaAtendimento"] = 1;
+            Session["VoltaCRM"] = 1;
+            Session["IncluiCRM"] = 1;
+            return RedirectToAction("IncluirProcessoCRM", "CRM");
+        }
+
+        public ActionResult VisualizarProcessoCRM(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaCRM"] = 30;
+            return RedirectToAction("VisualizarProcessoCRM", "CRM", new { id = id });
         }
 
         public ActionResult GerarRelatorioResumo()

@@ -113,7 +113,7 @@ namespace ApplicationServices.Services
                 item.ATEN_IN_STATUS = 1;
                 item.ATEN_IN_DESTINO = usuario.USUA_CD_ID;
                 CLIENTE cli = _cliService.GetItemById(item.CLIE_CD_ID.Value);
-                CONFIGURACAO conf = _confService.GetItemById(1);
+                CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
 
                 // Monta Log
                 LOG log = new LOG
@@ -165,6 +165,16 @@ namespace ApplicationServices.Services
 
                     // Persiste agenda
                     Int32 volta1 = _ageService.ValidateCreate(age, usuario);
+
+                    // Vincula Agenda   
+                    ATENDIMENTO_AGENDA ag = new ATENDIMENTO_AGENDA();
+                    ag.AGEN_CD_ID = age.AGEN_CD_ID;
+                    ag.ATEN_CD_ID = item.ATEN_CD_ID;
+                    ag.ATAG_IN_ATIVO = 1;
+
+                    ATENDIMENTO itemEdit = _baseService.GetItemById(item.ATEN_CD_ID);
+                    itemEdit.ATENDIMENTO_AGENDA.Add(ag);
+                    Int32 volta5 = _baseService.Edit(itemEdit);
 
                     // Recupera template e-mail
                     String header = _usuService.GetByCode("ATENCLI").TEMP_TX_CABECALHO;
@@ -317,7 +327,7 @@ namespace ApplicationServices.Services
                 }
 
                 // Monta token
-                CONFIGURACAO conf = _confService.GetItemById(1);
+                CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
                 String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
                 byte[] textBytes = Encoding.UTF8.GetBytes(text);
                 String token = Convert.ToBase64String(textBytes);
@@ -423,18 +433,9 @@ namespace ApplicationServices.Services
                 }
 
                 // Monta Log
-                LOG log = new LOG
-                {
-                    ASSI_CD_ID = usuario.ASSI_CD_ID,
-                    LOG_DT_DATA = DateTime.Now,
-                    USUA_CD_ID = usuario.USUA_CD_ID,
-                    LOG_NM_OPERACAO = "EditATEN",
-                    LOG_IN_ATIVO = 1,
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ATENDIMENTO>(item),
-                };
 
                 // Persiste
-                Int32 volta = _baseService.Edit(item, log);
+                Int32 volta = _baseService.Edit(item);
 
                 if (item.ATEN_IN_STATUS == 3)
                 {
@@ -454,7 +455,7 @@ namespace ApplicationServices.Services
 
                     // Concatena
                     String emailBody = header + body;
-                    CONFIGURACAO conf = _confService.GetItemById(1);
+                    CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
 
                     // Monta e-mail
                     NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
@@ -496,7 +497,7 @@ namespace ApplicationServices.Services
 
                         // Concatena
                         String emailBody = header + body;
-                        CONFIGURACAO conf = _confService.GetItemById(1);
+                        CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
 
                         // Monta e-mail
                         NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
