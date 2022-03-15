@@ -23,8 +23,9 @@ namespace ApplicationServices.Services
         private readonly IConfiguracaoService _confService;
         private readonly IClienteService _cliService;
         private readonly IUsuarioService _usuaService;
+        private readonly IServicoService _serService;
 
-        public AtendimentoAppService(IAtendimentoService baseService, INotificacaoService notiService, IAgendaAppService ageService, ITemplateAppService usuService, IConfiguracaoService confService, IClienteService cliService, IUsuarioService usuaService): base(baseService)
+        public AtendimentoAppService(IAtendimentoService baseService, INotificacaoService notiService, IAgendaAppService ageService, ITemplateAppService usuService, IConfiguracaoService confService, IClienteService cliService, IUsuarioService usuaService, IServicoService serService): base(baseService)
         {
             _baseService = baseService;
             _notiService = notiService;
@@ -33,6 +34,7 @@ namespace ApplicationServices.Services
             _confService = confService;
             _cliService = cliService;
             _usuaService = usuaService;
+            _serService = serService;
         }
          
         public List<ATENDIMENTO> GetAllItens(Int32 idAss)

@@ -37,6 +37,11 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IFilialAppService filApp;
         //private readonly IPedidoVendaAppService pedvApp;
         private readonly IServicoTabelaPrecoAppService stbApp;
+        private readonly IAtendimentoAppService ateApp;
+        private readonly ICategoriaAtendimentoAppService caApp;
+        private readonly IClienteAppService cliApp;
+        private readonly IProdutoAppService proApp;
+        private readonly IUsuarioAppService usuApp;
 
         private String msg;
         private Exception exception;
@@ -48,7 +53,7 @@ namespace ERP_CRM_Solution.Controllers
         List<LOG> listaMasterLog = new List<LOG>();
         String extensao;
 
-        public ServicoController(IServicoAppService servApps, ILogAppService logApps, IUnidadeAppService unApps, ICategoriaServicoAppService csApps, IFilialAppService filApps, IServicoTabelaPrecoAppService stbApps)
+        public ServicoController(IServicoAppService servApps, ILogAppService logApps, IUnidadeAppService unApps, ICategoriaServicoAppService csApps, IFilialAppService filApps, IServicoTabelaPrecoAppService stbApps, IAtendimentoAppService ateApps, ICategoriaAtendimentoAppService caApps, IClienteAppService cliApps, IProdutoAppService proApps, IUsuarioAppService usuApps)
         {
             servApp = servApps;
             logApp = logApps;
@@ -57,6 +62,11 @@ namespace ERP_CRM_Solution.Controllers
             filApp = filApps;
             //pedvApp = pedvApps;
             stbApp = stbApps;
+            ateApp = ateApps;
+            caApp = caApps;
+            cliApp = cliApps; 
+            proApp = proApps;
+            usuApp = usuApps;
         }
 
         [HttpGet]
@@ -1475,8 +1485,422 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
 
+            // Estatisticas
+            List<ATENDIMENTO> listaGeral = ateApp.GetAllItens(idAss);
+            Int32 atendMes = listaGeral.Where(p => p.ATEN_DT_INICIO.Value.Month == DateTime.Today.Date.Month & p.ATEN_DT_INICIO.Value.Year == DateTime.Today.Date.Year).ToList().Count;
+            Int32 atendTotal = listaGeral.Count;
+            Int32 encerradosTotal = listaGeral.Where(p => p.ATEN_IN_STATUS == 5).ToList().Count;
+            Int32 atraso = listaGeral.Where(p => p.ATEN_IN_STATUS != 5 & p.ATEN_IN_STATUS != 3 & p.ATEN_DT_PREVISTA.Value < DateTime.Today.Date).ToList().Count;
+            List<ATENDIMENTO> listaEnc = listaGeral.Where(p => p.ATEN_IN_STATUS == 5).ToList();
+            Int32 encerradosMes = listaEnc.Where(p => p.ATEN_DT_ENCERRAMENTO != null & p.ATEN_DT_ENCERRAMENTO.Value.Month == DateTime.Today.Date.Month & p.ATEN_DT_ENCERRAMENTO.Value.Year == DateTime.Today.Date.Year & p.ATEN_IN_STATUS == 5).ToList().Count;
+            List<ATENDIMENTO> listaSLA = listaGeral.Where(p => p.CATEGORIA_ATENDIMENTO.CAAT_IN_SLA != null).ToList();
+            Int32 foraSLA = listaSLA.Where(p => p.ATEN_IN_STATUS != 5 & p.ATEN_IN_STATUS != 3 & (p.ATEN_DT_INICIO.Value.AddHours(p.CATEGORIA_ATENDIMENTO.CAAT_IN_SLA.Value) < DateTime.Today.Date)).ToList().Count;
+
+            ViewBag.TotalMes = atendMes;
+            ViewBag.Total = atendTotal;
+            ViewBag.EncerradosMes = encerradosMes;
+            ViewBag.Encerrados = encerradosTotal;
+            ViewBag.Atraso = atraso;
+            ViewBag.ForaSLA = foraSLA;
+
+            // Atendimento por Data
+            List<DateTime> datas = listaGeral.Where(m => m.ATEN_IN_STATUS != 3 & m.ATEN_DT_INICIO.Value.Month == DateTime.Today.Date.Month & m.ATEN_DT_INICIO.Value.Year == DateTime.Today.Date.Year).Select(p => p.ATEN_DT_INICIO.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> listaMod = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32? conta = listaGeral.Where(p => p.ATEN_DT_INICIO.Value.Date == item).ToList().Count;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.DataEmissao = item;
+                mod1.Valor1 = conta.Value;
+                listaMod.Add(mod1);
+            }
+            ViewBag.ListaAtendDia = listaMod;
+            Session["ListaDatas"] = datas;
+            Session["ListaAtendDia"] = listaMod;
+
+            // Atendimento por Status
+            Int32 sit1 = listaGeral.Where(p => p.ATEN_IN_STATUS == 1).ToList().Count;
+            Int32 sit2 = listaGeral.Where(p => p.ATEN_IN_STATUS == 2).ToList().Count;
+            Int32 sit3 = listaGeral.Where(p => p.ATEN_IN_STATUS == 3).ToList().Count;
+            Int32 sit4 = listaGeral.Where(p => p.ATEN_IN_STATUS == 4).ToList().Count;
+            Int32 sit5 = listaGeral.Where(p => p.ATEN_IN_STATUS == 5).ToList().Count;
+
+            List<ModeloViewModel> lista1 = new List<ModeloViewModel>();
+            ModeloViewModel mod = new ModeloViewModel();
+            mod.Data = "Criado";
+            mod.Valor = sit1;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Pendente";
+            mod.Valor = sit2;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Cancelado";
+            mod.Valor = sit3;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Em Execução";
+            mod.Valor = sit4;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Encerrado";
+            mod.Valor = sit5;
+            lista1.Add(mod);
+            ViewBag.ListaSituacao = lista1;
+            Session["ListaSituacao"] = lista1;
+
+            Session["CR"] = sit1;
+            Session["PE"] = sit2;
+            Session["CA"] = sit3;
+            Session["EX"] = sit4;
+            Session["EN"] = sit5;
+
+            // Atendimento por Categoria
+            List<CATEGORIA_ATENDIMENTO> cats = caApp.GetAllItens(idAss);
+            Int32 num = 0;
+            List<ModeloViewModel> lista2 = new List<ModeloViewModel>();
+            ModeloViewModel mod3 = new ModeloViewModel();
+            foreach (var item in cats)
+            {
+                num = listaGeral.Where(p => p.CAAT_CD_ID == item.CAAT_CD_ID).ToList().Count;
+                mod3 = new ModeloViewModel();
+                mod3.Data = item.CAAT_NM_NOME;
+                mod3.Valor = num;
+                lista2.Add(mod3);
+
+            }
+            ViewBag.ListaCategoria = lista2;
+            Session["ListaCategoria"] = lista2;
+
+            // Atendimento por Cliente
+            List<CLIENTE> listaForn = cliApp.GetAllItens(idAss);
+            List<Int32> forns = listaGeral.Where(m => m.ATEN_IN_STATUS != 3 & (m.CLIE_CD_ID != null & m.CLIE_CD_ID != 0)).Select(p => p.CLIE_CD_ID.Value).Distinct().ToList();
+            List<ModeloViewModel> listaMod4 = new List<ModeloViewModel>();
+            foreach (Int32 item in forns)
+            {
+                Int32? conta4 = listaGeral.Where(p => p.CLIE_CD_ID == item).ToList().Count;
+                String nome4 = listaForn.First(p => p.CLIE_CD_ID == item).CLIE_NM_NOME;
+                ModeloViewModel mod4 = new ModeloViewModel();
+                mod4.Nome = nome4;
+                mod4.Valor1 = conta4.Value;
+                listaMod4.Add(mod4);
+            }
+            listaMod4 = listaMod4.OrderByDescending(p => p.Valor1).ToList();
+            ViewBag.ListaAtendCliente = listaMod4;
+
+            // Atendimento por Produto
+            List<PRODUTO> listaProd = proApp.GetAllItens(idAss);
+            List<Int32> prods = listaGeral.Where(m => m.ATEN_IN_STATUS != 3 & (m.PROD_CD_ID != null & m.PROD_CD_ID != 0)).Select(p => p.PROD_CD_ID.Value).Distinct().ToList();
+            List<ModeloViewModel> listaMod5 = new List<ModeloViewModel>();
+            foreach (Int32 item in prods)
+            {
+                Int32? conta5 = listaGeral.Where(p => p.PROD_CD_ID == item).ToList().Count;
+                String nome5 = listaProd.First(p => p.PROD_CD_ID == item).PROD_NM_NOME;
+                ModeloViewModel mod5 = new ModeloViewModel();
+                mod5.Nome = nome5;
+                mod5.Valor1 = conta5.Value;
+                listaMod5.Add(mod5);
+            }
+            listaMod5 = listaMod5.OrderByDescending(p => p.Valor1).ToList();
+            ViewBag.ListaAtendProduto = listaMod5;
+
+            // Atendimento por Serviço
+            List<SERVICO> listaServ = servApp.GetAllItens(idAss);
+            List<Int32> servs = listaGeral.Where(m => m.ATEN_IN_STATUS != 3 & (m.SERV_CD_ID != null & m.SERV_CD_ID != 0)).Select(p => p.SERV_CD_ID.Value).Distinct().ToList();
+            List<ModeloViewModel> listaMod6 = new List<ModeloViewModel>();
+            foreach (Int32 item in servs)
+            {
+                Int32? conta6 = listaGeral.Where(p => p.SERV_CD_ID == item).ToList().Count;
+                String nome6 = listaServ.First(p => p.SERV_CD_ID == item).SERV_NM_NOME;
+                ModeloViewModel mod6 = new ModeloViewModel();
+                mod6.Nome = nome6;
+                mod6.Valor1 = conta6.Value;
+                listaMod6.Add(mod6);
+            }
+            listaMod6 = listaMod6.OrderByDescending(p => p.Valor1).ToList();
+            ViewBag.ListaAtendServico = listaMod6;
+
+            // Atendimento por Atribuição
+            List<USUARIO> usus = usuApp.GetAllItens(idAss);
+            Int32 num7 = 0;
+            List<ModeloViewModel> lista7 = new List<ModeloViewModel>();
+            ModeloViewModel mod7 = new ModeloViewModel();
+            foreach (var item in usus)
+            {
+                num7 = listaGeral.Where(p => p.USUA_CD_ID == item.USUA_CD_ID).ToList().Count;
+                mod7 = new ModeloViewModel();
+                mod7.Data = item.USUA_NM_NOME;
+                mod7.Valor = num7;
+                lista7.Add(mod7);
+
+            }
+            ViewBag.ListaUsuario = lista7;
+            Session["ListaUsuario"] = lista7;
+
+            // Atendimento por Prioridade
+            Int32 pri1 = listaGeral.Where(p => p.ATEN_IN_PRIORIDADE == 1).ToList().Count;
+            Int32 pri2 = listaGeral.Where(p => p.ATEN_IN_PRIORIDADE == 2).ToList().Count;
+            Int32 pri3 = listaGeral.Where(p => p.ATEN_IN_PRIORIDADE == 3).ToList().Count;
+            Int32 pri4 = listaGeral.Where(p => p.ATEN_IN_PRIORIDADE == 4).ToList().Count;
+
+            List<ModeloViewModel> lista8 = new List<ModeloViewModel>();
+            ModeloViewModel mod8 = new ModeloViewModel();
+            mod8.Data = "Normal";
+            mod8.Valor = pri1;
+            lista8.Add(mod);
+            mod8 = new ModeloViewModel();
+            mod8.Data = "Baixa";
+            mod8.Valor = pri2;
+            lista8.Add(mod);
+            mod8 = new ModeloViewModel();
+            mod8.Data = "Alta";
+            mod8.Valor = pri3;
+            lista8.Add(mod);
+            mod8 = new ModeloViewModel();
+            mod8.Data = "Urgente";
+            mod8.Valor = pri4;
+            lista8.Add(mod);
+            ViewBag.ListaPrioridade = lista8;
+            Session["ListaPrioridade"] = lista8;
+
+            Session["NO"] = pri1;
+            Session["BA"] = pri2;
+            Session["AL"] = pri3;
+            Session["UR"] = pri4;
+
+            // Atendimento por Tipo
+            Int32 tipo1 = listaGeral.Where(p => p.ATEN_IN_TIPO == 1).ToList().Count;
+            Int32 tipo2 = listaGeral.Where(p => p.ATEN_IN_TIPO == 2).ToList().Count;
+
+            List<ModeloViewModel> lista9 = new List<ModeloViewModel>();
+            ModeloViewModel mod9 = new ModeloViewModel();
+            mod9.Data = "Interno";
+            mod9.Valor = tipo1;
+            lista9.Add(mod);
+            mod9 = new ModeloViewModel();
+            mod9.Data = "Baixa";
+            mod8.Valor = tipo2;
+            lista9.Add(mod);
+            ViewBag.ListaTipo= lista9;
+            Session["ListaTipo"] = lista9;
+
+            Session["IN"] = tipo1;
+            Session["EX"] = tipo2;
+
+            // tempo medio de atendimento por usuario
+            List<ATENDIMENTO> lista10 = listaGeral.Where(p => p.ATEN_IN_STATUS == 5).ToList();
+            List<ModeloViewModel> listaMod10 = new List<ModeloViewModel>();
+            List<ModeloViewModel> listaMod11 = new List<ModeloViewModel>();
+            List<ModeloViewModel> listaMod12 = new List<ModeloViewModel>();
+            ModeloViewModel mod10 = new ModeloViewModel();
+            foreach (var item in lista10)
+            {
+                TimeSpan diff = item.ATEN_DT_ENCERRAMENTO.Value - item.ATEN_DT_INICIO.Value;
+                double hours = diff.TotalHours;
+                mod10 = new ModeloViewModel();
+                mod10.ValorDouble = hours;
+                mod10.Valor = item.USUA_CD_ID.Value;
+                listaMod10.Add(mod10);
+            }
+            ModeloViewModel mod12 = new ModeloViewModel();
+            foreach (var item1 in usus)
+            {
+                listaMod11 = listaMod10.Where(p => p.Valor == item1.USUA_CD_ID).ToList();
+                Int32 conta = listaMod11.Count;
+                if (conta > 0)
+                {
+                    Double soma = listaMod11.Sum(p => p.ValorDouble);
+                    Double media = soma / conta;
+                    mod12 = new ModeloViewModel();
+                    mod12.ValorDouble = soma;
+                    mod12.ValorDouble2 = media;
+                    mod12.Data = item1.USUA_NM_NOME;
+                    listaMod12.Add(mod12);
+                }
+            }
+            ViewBag.ListaTempoUsuario = listaMod12;
+            Session["ListaTempoUsuario"] = listaMod12;
             return View(vm);
         }
+
+        public JsonResult GetDadosGraficoAtendDia()
+        {
+            List<ModeloViewModel> listaCP1 = (List<ModeloViewModel>)Session["ListaAtendDia"];
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+            listaCP1 = listaCP1.OrderBy(p => p.DataEmissao).ToList();
+
+            foreach (ModeloViewModel item in listaCP1)
+            {
+                dias.Add(item.DataEmissao.ToShortDateString());
+                valor.Add(item.Valor1);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoSituacao()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["CR"];
+            Int32 q2 = (Int32)Session["PE"];
+            Int32 q3 = (Int32)Session["CA"];
+            Int32 q4 = (Int32)Session["EX"];
+            Int32 q5 = (Int32)Session["EN"];
+
+            desc.Add("Criado");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Pendente");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+            desc.Add("Cancelado");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+            desc.Add("Em Execução");
+            quant.Add(q4);
+            cor.Add("#744d61");
+            desc.Add("Encerrado");
+            quant.Add(q5);
+            cor.Add("#f2e6b1");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoCategoria()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+            Int32 ind = 0;
+
+            String[] cores = new String[5];
+            cores[0] = "#359E18";
+            cores[1] = "#FFAE00";
+            cores[2] = "#FF7F00";
+            cores[3] = "#744d61";
+            cores[4] = "#f2e6b1";
+
+            List<ModeloViewModel> lista2 = (List<ModeloViewModel>)Session["ListaCategoria"];
+            foreach (var item in lista2)
+            {
+                desc.Add(item.Data);
+                quant.Add(item.Valor);
+                cor.Add(cores[ind]);
+                ind++;
+                if (ind > 4)
+                {
+                    ind = 0;
+                }
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoAtribuicao()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+            Int32 ind = 0;
+
+            String[] cores = new String[5];
+            cores[0] = "#359E18";
+            cores[1] = "#FFAE00";
+            cores[2] = "#FF7F00";
+            cores[3] = "#744d61";
+            cores[4] = "#f2e6b1";
+
+            List<ModeloViewModel> lista2 = (List<ModeloViewModel>)Session["ListaUsuario"];
+            foreach (var item in lista2)
+            {
+                desc.Add(item.Data);
+                quant.Add(item.Valor);
+                cor.Add(cores[ind]);
+                ind++;
+                if (ind > 4)
+                {
+                    ind = 0;
+                }
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoPrioridade()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["NO"];
+            Int32 q2 = (Int32)Session["BA"];
+            Int32 q3 = (Int32)Session["AL"];
+            Int32 q4 = (Int32)Session["UR"];
+
+            desc.Add("Normal");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Baixa");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+            desc.Add("Alta");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+            desc.Add("Urgente");
+            quant.Add(q4);
+            cor.Add("#744d61");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoTipo()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["IN"];
+            Int32 q2 = (Int32)Session["EX"];
+
+            desc.Add("Interno");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Externo");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
 
     }
 }

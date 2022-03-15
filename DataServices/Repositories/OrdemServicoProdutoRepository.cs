@@ -13,7 +13,6 @@ namespace DataServices.Repositories
     {
         public ORDEM_SERVICO_PRODUTO CheckExist(ORDEM_SERVICO_PRODUTO item)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<ORDEM_SERVICO_PRODUTO> query = Db.ORDEM_SERVICO_PRODUTO;
             query = query.Where(x => x.ORSE_CD_ID == item.ORSE_CD_ID);
             query = query.Where(x => x.PROD_CD_ID == item.PROD_CD_ID);
@@ -22,7 +21,6 @@ namespace DataServices.Repositories
 
         public List<ORDEM_SERVICO_PRODUTO> GetAllByOs(Int32 id)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<ORDEM_SERVICO_PRODUTO> query = Db.ORDEM_SERVICO_PRODUTO.Where(x => x.OSPR_IN_ATIVO == 1);
             query = query.Where(x => x.ORSE_CD_ID == id);
             return query.ToList();

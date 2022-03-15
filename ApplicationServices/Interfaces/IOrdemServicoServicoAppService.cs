@@ -15,5 +15,6 @@ namespace ApplicationServices.Interfaces
 
         ORDEM_SERVICO_SERVICO CheckExist(ORDEM_SERVICO_SERVICO item);
         List<ORDEM_SERVICO_SERVICO> GetAllByOs(Int32 id);
+
     }
 }

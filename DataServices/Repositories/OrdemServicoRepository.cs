@@ -13,9 +13,8 @@ namespace DataServices.Repositories
 {
     public class OrdemServicoRepository: RepositoryBase<ORDEM_SERVICO>, IOrdemServicoRepository
     {
-        public ORDEM_SERVICO CheckExist(ORDEM_SERVICO conta)
+        public ORDEM_SERVICO CheckExist(ORDEM_SERVICO conta, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<ORDEM_SERVICO> query = Db.ORDEM_SERVICO;
             query = query.Where(x => x.ASSI_CD_ID == idAss);
             query = query.Where(x => x.ATEN_CD_ID == conta.ATEN_CD_ID);
@@ -27,16 +26,13 @@ namespace DataServices.Repositories
 
         public ORDEM_SERVICO GetItemById(Int32 id)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<ORDEM_SERVICO> query = Db.ORDEM_SERVICO;
-            query = query.Where(x => x.ASSI_CD_ID == idAss);
             query = query.Where(x => x.ORSE_CD_ID == id);
             return query.FirstOrDefault();
         }
 
-        public List<ORDEM_SERVICO> GetAllItens()
+        public List<ORDEM_SERVICO> GetAllItens(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<ORDEM_SERVICO> query = Db.ORDEM_SERVICO.Where(x => x.ORSE_IN_ATIVO == 1);
             query = query.Where(x => x.ASSI_CD_ID == idAss);
             query = query.Include(x => x.ORDEM_SERVICO_PRODUTO);
@@ -44,17 +40,15 @@ namespace DataServices.Repositories
             return query.ToList<ORDEM_SERVICO>();
         }
 
-        public List<ORDEM_SERVICO> GetAllItensAdm()
+        public List<ORDEM_SERVICO> GetAllItensAdm(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<ORDEM_SERVICO> query = Db.ORDEM_SERVICO;
             query = query.Where(x => x.ASSI_CD_ID == idAss);
             return query.ToList<ORDEM_SERVICO>();
         }
 
-        public List<ORDEM_SERVICO> ExecuteFilter(Int32? catOS, Int32? idClie, Int32? idUsu, DateTime? dtCriacao, Int32? status, Int32? idDept, Int32? idServ, Int32? idProd, Int32? idAten)
+        public List<ORDEM_SERVICO> ExecuteFilter(Int32? catOS, Int32? idClie, Int32? idUsu, DateTime? dtCriacao, Int32? status, Int32? idDept, Int32? idServ, Int32? idProd, Int32? idAten, Int32? idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             List<ORDEM_SERVICO> lista = new List<ORDEM_SERVICO>();
             IQueryable<ORDEM_SERVICO> query = Db.ORDEM_SERVICO.Where(x => x.ORSE_IN_ATIVO == 1);
             if (catOS != null)

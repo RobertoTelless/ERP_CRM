@@ -22,7 +22,7 @@ namespace ModelServices.EntitiesServices
         private readonly IOrdemServicoRepository _baseRepository;
         private readonly IOrdemServicoAnexoRepository _anexoRepository;
         private readonly ILogRepository _logRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public OrdemServicoService(IOrdemServicoRepository baseRepository, IOrdemServicoAnexoRepository anexoRepository, ILogRepository logRepository) : base(baseRepository)
         {
@@ -31,9 +31,9 @@ namespace ModelServices.EntitiesServices
             _logRepository = logRepository;
         }
 
-        public ORDEM_SERVICO CheckExist(ORDEM_SERVICO conta)
+        public ORDEM_SERVICO CheckExist(ORDEM_SERVICO conta, Int32 idAss)
         {
-            ORDEM_SERVICO item = _baseRepository.CheckExist(conta);
+            ORDEM_SERVICO item = _baseRepository.CheckExist(conta, idAss);
             return item;
         }
 
@@ -43,14 +43,14 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<ORDEM_SERVICO> GetAllItens()
+        public List<ORDEM_SERVICO> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<ORDEM_SERVICO> GetAllItensAdm()
+        public List<ORDEM_SERVICO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
         public ORDEM_SERVICO_ANEXO GetAnexoById(Int32 id)
@@ -58,9 +58,9 @@ namespace ModelServices.EntitiesServices
             return _anexoRepository.GetItemById(id);
         }
 
-        public List<ORDEM_SERVICO> ExecuteFilter(Int32? catOS, Int32? idClie, Int32? idUsu, DateTime? dtCriacao, Int32? status, Int32? idDept, Int32? idServ, Int32? idProd, Int32? idAten)
+        public List<ORDEM_SERVICO> ExecuteFilter(Int32? catOS, Int32? idClie, Int32? idUsu, DateTime? dtCriacao, Int32? status, Int32? idDept, Int32? idServ, Int32? idProd, Int32? idAten, Int32? idAss)
         {
-            return _baseRepository.ExecuteFilter(catOS, idClie, idUsu, dtCriacao, status, idDept, idServ, idProd, idAten);
+            return _baseRepository.ExecuteFilter(catOS, idClie, idUsu, dtCriacao, status, idDept, idServ, idProd, idAten, idAss);
         }
 
         public Int32 Create(ORDEM_SERVICO item, LOG log)

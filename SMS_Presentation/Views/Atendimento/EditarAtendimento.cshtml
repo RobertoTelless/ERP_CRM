@@ -204,8 +204,8 @@
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
-                                                    Categoria*
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Categoria
                                                     @Html.TextBoxFor(m => m.CATEGORIA_ATENDIMENTO.CAAT_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-xs-12">
@@ -213,21 +213,31 @@
                                                     @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Departamento
                                                     @Html.DropDownListFor(m => m.DEPT_CD_ID, (SelectList)ViewBag.Deps, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.DEPT_CD_ID, "", new { @style = "color:red" })
                                                 </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    SLA
+                                                    @Html.TextBoxFor(m => m.CATEGORIA_ATENDIMENTO.CAAT_IN_SLA, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    Produto
-                                                    @Html.TextBoxFor(m => m.PRODUTO.PROD_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    Serviço
-                                                    @Html.TextBoxFor(m => m.SERVICO.SERV_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                </div>
+                                                @if (Model.PROD_CD_ID != null)
+                                                {
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Produto
+                                                        @Html.TextBoxFor(m => m.PRODUTO.PROD_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    </div>
+                                                }
+                                                @if (Model.SERV_CD_ID != null)
+                                                {
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Serviço
+                                                        @Html.TextBoxFor(m => m.SERVICO.SERV_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    </div>
+                                                }
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Data Início
                                                     @Html.TextBoxFor(m => m.ATEN_DT_INICIO, new { @class = "form-control", autofocus = true, @readonly = "readonly", @style = "color:green; font-weight:bold" })

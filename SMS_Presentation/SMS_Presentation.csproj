@@ -3631,6 +3631,7 @@
     <Folder Include="Imagens\4\Usuario\14\Anexos\" />
     <Folder Include="Imagens\Assinantes\2\Anexos\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\OrdemServico\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

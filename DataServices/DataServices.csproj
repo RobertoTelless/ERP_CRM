@@ -226,6 +226,13 @@
     <Compile Include="Repositories\MotivoEncerramentoRepository.cs" />
     <Compile Include="Repositories\MovimentoEstoqueProdutoRepository.cs" />
     <Compile Include="Repositories\NomencBrasServicosRepository.cs" />
+    <Compile Include="Repositories\OrdemServicoAcompanhamentoRepository.cs" />
+    <Compile Include="Repositories\OrdemServicoAgendaRepository.cs" />
+    <Compile Include="Repositories\OrdemServicoAnexoRepository.cs" />
+    <Compile Include="Repositories\OrdemServicoComentarioRepository.cs" />
+    <Compile Include="Repositories\OrdemServicoProdutoRepository.cs" />
+    <Compile Include="Repositories\OrdemServicoRepository.cs" />
+    <Compile Include="Repositories\OrdemServicoServicoRepository.cs" />
     <Compile Include="Repositories\PedidoCompraAcompanhamentoRepository.cs" />
     <Compile Include="Repositories\PedidoCompraAnexoRepository.cs" />
     <Compile Include="Repositories\PedidoCompraRepository.cs" />

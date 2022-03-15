@@ -19,7 +19,7 @@
                         @Html.ButtonLinkIndex(text: "Produtos", action: "MontarTelaProduto", controller: "Produto", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Formas de Pagamento", action: "MontarTelaFormaPagamento", controller: "FormaPagamento", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Atendimentos", action: "MontarTelaAtendimento", controller: "Atendimento", buttonClass: "primary")
-                        @Html.ButtonLinkIndex(text: "Ordens de Serviço", action: "MontarTelaOremServico", controller: "OrdemServico", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Ordens de Serviço", action: "MontarTelaOrdemServico", controller: "OrdemServico", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "Dashboard", controller: "Servico", action: "Voltar")
                     </div>
                     <br /><br />
@@ -45,8 +45,286 @@
                         </div>
                     </div>
                 </div>
+            
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-warning pull-right">Hoje</span>
+                            <h5>Resumo Atendimentos</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Total</small>
+                                    <h4>@ViewBag.Total</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Total (Mês)</small>
+                                    <h4>@ViewBag.TotalMes</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Em Atraso</small>
+                                    <h4>@ViewBag.Atraso</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Encerrados</small>
+                                    <h4>@ViewBag.Encerrados</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Encerrados (Mês)</small>
+                                    <h4>@ViewBag.EncerradosMes</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Fora SLA</small>
+                                    <h4>@ViewBag.ForaSLA</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>      
             </div>
+        
+            @*Indicadores*@
+            <br />
+            <div class="row">
 
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Indicadores</h5>
+                        </div>
+                        <div class="ibox-content ibox-heading">
+                            <h3><i class="fa fa-line-chart"></i> Indicadores</h3>
+                            <small><i class="fa fa-tim"></i> Valores acumulados/atualizados até hoje</small>
+                        </div>
+                        <div class="ibox-content" style="height: 1800px">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Atendimentos por Data - Mês Corrente</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="barChartATD" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                        @Html.ButtonLinkIndex(text: "Ver Todas as Datas", action: "MontarTelaVerTodasDatas", controller: "Atendimento", buttonClass: "success")
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Atendimentos por Situação</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="doughnutChartCS" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                         
+                            </div>
+                        
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Atendimentos por Categoria</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="doughnutChartCT" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Atendimentos por Cliente - Mais Solicitados</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaAtendCliente as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Cliente</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaAtendCliente as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Take(10))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Nome</td>
+                                                                    <td>@cond.Valor1</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                                @Html.ButtonLinkIndex(text: "Ver Todos Clientes", action: "MontarTelaVerTodosClientes", controller: "Atendimento", buttonClass: "success")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Atendimentos por Produto - Mais Solicitados</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaAtendProduto as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Produto</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaAtendProduto as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Take(10))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Nome</td>
+                                                                    <td>@cond.Valor1</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                                @Html.ButtonLinkIndex(text: "Ver Todos Produtos", action: "MontarTelaVerTodosProdutos", controller: "Atendimento", buttonClass: "success")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Atendimentos por Serviço - Mais Solicitados</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaAtendServico as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Serviço</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaAtendServico as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Take(10))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Nome</td>
+                                                                    <td>@cond.Valor1</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                                @Html.ButtonLinkIndex(text: "Ver Todos Serviços", action: "MontarTelaVerTodosServicos   ", controller: "Atendimento", buttonClass: "success")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Atendimentos por Atribuição</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="doughnutChartAT" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Atendimentos por Prioridade</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="doughnutChartPR" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Atendimentos por Tipo</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="doughnutChartTI" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Tempos Médios de Atendimento por Usuário</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaTempoUsuario as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Usuário</th>
+                                                                <th>Horas Totais</th>
+                                                                <th>Média por Atendimento</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaTempoUsuario as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Take(10))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Data</td>
+                                                                    <td>@CrossCutting.Formatters.DecimalFormatter(Convert.ToDecimal(cond.ValorDouble))</td>
+                                                                    <td>@CrossCutting.Formatters.DecimalFormatter(Convert.ToDecimal(cond.ValorDouble2))</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>        
         </div>
     </div>
 </div>
@@ -143,11 +421,41 @@
 
         });
     </script>
-    @*<script type="text/javascript">
+
+    <script type="text/javascript">
         $(document).ready(function () {
 
             $.ajax({
-                url: '../Estoque/GetDadosGraficoMovimentosTipo'
+                url: '../Servico/GetDadosGraficoAtendDia'
+                , type: 'POST'
+                , success: function (result) {
+                var barData = {
+                    labels: result.dias,
+                    datasets: [
+                        {
+                            label: "Atendimentos por Dia",
+                            backgroundColor: 'rgba(26,179,148,0.5)',
+                            pointBorderColor: "#fff",
+                            data: result.valores
+                        }
+                    ]
+                };
+
+                var barOptions = {
+                    responsive: true
+                };
+
+                var ctx2 = document.getElementById("barChartATD").getContext("2d");
+                new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
+              }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '../Servico/GetDadosGraficoSituacao'
                 , type: 'POST'
                 , success: function (result) {
                 var doughnutData = {
@@ -160,7 +468,7 @@
                 var doughnutOptions = {
                    responsive: true
                 };
-                var ctx4 = document.getElementById("doughnutChartEst").getContext("2d");
+                var ctx4 = document.getElementById("doughnutChartCS").getContext("2d");
                 new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
               }
             });
@@ -170,31 +478,94 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: '../Estoque/GetDadosGraficoMovimentos'
+                url: '../Servico/GetDadosGraficoCategoria'
                 , type: 'POST'
                 , success: function (result) {
-                var barData = {
-                    labels: result.dias,
-                    datasets: [
-                        {
-                            label: "Movimentos por Dia",
-                            backgroundColor: 'rgba(26,179,148,0.5)',
-                            pointBorderColor: "#fff",
-                            data: result.valores
-                        }
-                    ]
+                var doughnutData = {
+                   labels: result.labels,
+                   datasets: [{
+                     data: result.valores,
+                     backgroundColor: result.cores
+                   }]
                 };
-
-                var barOptions = {
-                    responsive: true
+                var doughnutOptions = {
+                   responsive: true
                 };
-
-                var ctx2 = document.getElementById("barChartEst").getContext("2d");
-                new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
+                var ctx4 = document.getElementById("doughnutChartCT").getContext("2d");
+                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
               }
             });
         });
-    </script>*@
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '../Servico/GetDadosGraficoAtribuicao'
+                , type: 'POST'
+                , success: function (result) {
+                var doughnutData = {
+                   labels: result.labels,
+                   datasets: [{
+                     data: result.valores,
+                     backgroundColor: result.cores
+                   }]
+                };
+                var doughnutOptions = {
+                   responsive: true
+                };
+                var ctx4 = document.getElementById("doughnutChartAT").getContext("2d");
+                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+              }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '../Servico/GetDadosGraficoPrioridade'
+                , type: 'POST'
+                , success: function (result) {
+                var doughnutData = {
+                   labels: result.labels,
+                   datasets: [{
+                     data: result.valores,
+                     backgroundColor: result.cores
+                   }]
+                };
+                var doughnutOptions = {
+                   responsive: true
+                };
+                var ctx4 = document.getElementById("doughnutChartPR").getContext("2d");
+                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+              }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '../Servico/GetDadosGraficoTipo'
+                , type: 'POST'
+                , success: function (result) {
+                var doughnutData = {
+                   labels: result.labels,
+                   datasets: [{
+                     data: result.valores,
+                     backgroundColor: result.cores
+                   }]
+                };
+                var doughnutOptions = {
+                   responsive: true
+                };
+                var ctx4 = document.getElementById("doughnutChartTI").getContext("2d");
+                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+              }
+            });
+        });
+    </script>
 
 
     @if (ViewBag.Message != null)

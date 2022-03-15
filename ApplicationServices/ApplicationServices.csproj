@@ -193,6 +193,10 @@
     <Compile Include="Interfaces\IFormaPagamentoAppService.cs" />
     <Compile Include="Interfaces\IMensagemAutomacaoAppService.cs" />
     <Compile Include="Interfaces\IMovimentoEstoqueProdutoAppService.cs" />
+    <Compile Include="Interfaces\IOrdemServicoAgendaAppService.cs" />
+    <Compile Include="Interfaces\IOrdemServicoAppService.cs" />
+    <Compile Include="Interfaces\IOrdemServicoProdutoAppService.cs" />
+    <Compile Include="Interfaces\IOrdemServicoServicoAppService.cs" />
     <Compile Include="Interfaces\IPedidoCompraAppService.cs" />
     <Compile Include="Interfaces\IProdutoAppService.cs" />
     <Compile Include="Interfaces\IProdutoEstoqueFilialAppService.cs" />
@@ -260,6 +264,10 @@
     <Compile Include="Services\FormaPagamentoAppService.cs" />
     <Compile Include="Services\MensagemAutomacaoAppService.cs" />
     <Compile Include="Services\MovimentoEstoqueProdutoAppService.cs" />
+    <Compile Include="Services\OrdemServicoAgendaAppService.cs" />
+    <Compile Include="Services\OrdemServicoAppService.cs" />
+    <Compile Include="Services\OrdemServicoProdutoAppService.cs" />
+    <Compile Include="Services\OrdemServicoServicoAppService.cs" />
     <Compile Include="Services\PedidoCompraAppService.cs" />
     <Compile Include="Services\ProdutoAppService.cs" />
     <Compile Include="Services\ProdutoEstoqueFilialAppService.cs" />

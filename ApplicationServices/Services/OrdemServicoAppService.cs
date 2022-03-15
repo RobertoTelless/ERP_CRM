@@ -34,23 +34,23 @@ namespace ApplicationServices.Services
             _confService = confService;
         }
 
-        public ORDEM_SERVICO CheckExist(ORDEM_SERVICO conta)
+        public ORDEM_SERVICO CheckExist(ORDEM_SERVICO conta, Int32 idAss)
         {
-            return _baseService.CheckExist(conta);
+            return _baseService.CheckExist(conta, idAss);
         }
 
         public ORDEM_SERVICO GetItemById(Int32 id)
         {
             return _baseService.GetItemById(id);
         }
-        public List<ORDEM_SERVICO> GetAllItens()
+        public List<ORDEM_SERVICO> GetAllItens(Int32 idAss)
         {
-            return _baseService.GetAllItens();
+            return _baseService.GetAllItens(idAss);
         }
 
-        public List<ORDEM_SERVICO> GetAllItensAdm()
+        public List<ORDEM_SERVICO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseService.GetAllItensAdm();
+            return _baseService.GetAllItensAdm(idAss);
         }
 
         public ORDEM_SERVICO_ANEXO GetAnexoById(Int32 id)
@@ -59,7 +59,7 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public Int32 ExecuteFilter(Int32? catOS, Int32? idClie, Int32? idUsu, DateTime? dtCriacao, Int32? status, Int32? idDept, Int32? idServ, Int32? idProd, Int32? idAten, out List<ORDEM_SERVICO> objeto)
+        public Int32 ExecuteFilter(Int32? catOS, Int32? idClie, Int32? idUsu, DateTime? dtCriacao, Int32? status, Int32? idDept, Int32? idServ, Int32? idProd, Int32? idAten, Int32? idAss, out List<ORDEM_SERVICO> objeto)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(catOS, idClie, idUsu, dtCriacao, status, idDept, idServ, idProd, idAten);
+                objeto = _baseService.ExecuteFilter(catOS, idClie, idUsu, dtCriacao, status, idDept, idServ, idProd, idAten, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -191,7 +191,7 @@ namespace ApplicationServices.Services
                 // Monta Log
                 LOG log = new LOG
                 {
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "EditORSE",
@@ -366,213 +366,213 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateEdit(ORDEM_SERVICO item, ORDEM_SERVICO itemAntes)
-        {
-            if (item.ATENDIMENTO != null)
-            {
-                item.ATENDIMENTO = null;
-            }
-            if (item.ASSINANTE != null)
-            {
-                item.ASSINANTE = null;
-            }
-            if (item.CATEGORIA_ORDEM_SERVICO != null)
-            {
-                item.CATEGORIA_ORDEM_SERVICO = null;
-            }
-            if (item.CLIENTE != null)
-            {
-                item.CLIENTE = null;
-            }
-            if (item.DEPARTAMENTO != null)
-            {
-                item.DEPARTAMENTO = null;
-            }
-            if (item.PRODUTO != null)
-            {
-                item.PRODUTO = null;
-            }
-            if (item.SERVICO != null)
-            {
-                item.SERVICO = null;
-            }
-            if (item.USUARIO != null)
-            {
-                item.USUARIO = null;
-            }
-            if (item.FILIAL != null)
-            {
-                item.FILIAL = null;
-            }
+        //public Int32 ValidateEdit(ORDEM_SERVICO item, ORDEM_SERVICO itemAntes)
+        //{
+        //    if (item.ATENDIMENTO != null)
+        //    {
+        //        item.ATENDIMENTO = null;
+        //    }
+        //    if (item.ASSINANTE != null)
+        //    {
+        //        item.ASSINANTE = null;
+        //    }
+        //    if (item.CATEGORIA_ORDEM_SERVICO != null)
+        //    {
+        //        item.CATEGORIA_ORDEM_SERVICO = null;
+        //    }
+        //    if (item.CLIENTE != null)
+        //    {
+        //        item.CLIENTE = null;
+        //    }
+        //    if (item.DEPARTAMENTO != null)
+        //    {
+        //        item.DEPARTAMENTO = null;
+        //    }
+        //    if (item.PRODUTO != null)
+        //    {
+        //        item.PRODUTO = null;
+        //    }
+        //    if (item.SERVICO != null)
+        //    {
+        //        item.SERVICO = null;
+        //    }
+        //    if (item.USUARIO != null)
+        //    {
+        //        item.USUARIO = null;
+        //    }
+        //    if (item.FILIAL != null)
+        //    {
+        //        item.FILIAL = null;
+        //    }
 
-            try
-            {
-                Int32 volta = _baseService.Edit(item);
+        //    try
+        //    {
+        //        Int32 volta = _baseService.Edit(item);
 
-                if (item.ORSE_IN_STATUS == 3)
-                {
-                    // Recupera template e-mail
-                    String header = _usuService.GetByCode("OSENCERRAR").TEMP_TX_CABECALHO;
-                    String body = _usuService.GetByCode("OSENCERRAR").TEMP_TX_CORPO;
-                    String footer = _usuService.GetByCode("OSENCERRAR").TEMP_TX_DADOS;
+        //        if (item.ORSE_IN_STATUS == 3)
+        //        {
+        //            // Recupera template e-mail
+        //            String header = _usuService.GetByCode("OSENCERRAR").TEMP_TX_CABECALHO;
+        //            String body = _usuService.GetByCode("OSENCERRAR").TEMP_TX_CORPO;
+        //            String footer = _usuService.GetByCode("OSENCERRAR").TEMP_TX_DADOS;
 
-                    // Prepara corpo do e-mail  
-                    CLIENTE cli = _cliService.GetItemById(item.CLIE_CD_ID.Value);
-                    String frase = String.Empty;
-                    body = body.Replace("{numero}", item.ORSE_NR_NUMERO.ToString());
-                    body = body.Replace("{data}", item.ORSE_DT_INICIO.Value.ToShortDateString());
-                    body = body.Replace("{Assunto}", item.ORSE_DS_DESCRICAO);
-                    body = body.Replace("{DataPrevista}", item.ORSE_DT_PREVISTA.Value.ToShortDateString());
-                    body = body.Replace("{frase}", "");
-                    header = header.Replace("{Nome}", cli.CLIE_NM_NOME);
+        //            // Prepara corpo do e-mail  
+        //            CLIENTE cli = _cliService.GetItemById(item.CLIE_CD_ID.Value);
+        //            String frase = String.Empty;
+        //            body = body.Replace("{numero}", item.ORSE_NR_NUMERO.ToString());
+        //            body = body.Replace("{data}", item.ORSE_DT_INICIO.Value.ToShortDateString());
+        //            body = body.Replace("{Assunto}", item.ORSE_DS_DESCRICAO);
+        //            body = body.Replace("{DataPrevista}", item.ORSE_DT_PREVISTA.Value.ToShortDateString());
+        //            body = body.Replace("{frase}", "");
+        //            header = header.Replace("{Nome}", cli.CLIE_NM_NOME);
 
-                    // Concatena
-                    String emailBody = header + body;
-                    CONFIGURACAO conf = _confService.GetItemById(1);
+        //            // Concatena
+        //            String emailBody = header + body;
+        //            CONFIGURACAO conf = _confService.GetItemById(1);
 
-                    // Monta e-mail
-                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
-                    Email mensagem = new Email();
-                    mensagem.ASSUNTO = "Ordem Serviço - Cliente";
-                    mensagem.CORPO = emailBody;
-                    mensagem.DEFAULT_CREDENTIALS = false;
-                    mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
-                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
-                    mensagem.ENABLE_SSL = true;
-                    mensagem.NOME_EMISSOR = SessionMocks.UserCredentials.USUA_NM_NOME;
-                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
-                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
-                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
-                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
-                    mensagem.NETWORK_CREDENTIAL = net;
+        //            // Monta e-mail
+        //            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+        //            Email mensagem = new Email();
+        //            mensagem.ASSUNTO = "Ordem Serviço - Cliente";
+        //            mensagem.CORPO = emailBody;
+        //            mensagem.DEFAULT_CREDENTIALS = false;
+        //            mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
+        //            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+        //            mensagem.ENABLE_SSL = true;
+        //            mensagem.NOME_EMISSOR = usu.USUA_NM_NOME;
+        //            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+        //            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+        //            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+        //            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+        //            mensagem.NETWORK_CREDENTIAL = net;
 
-                    Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
-                }
-                if (item.ORSE_IN_STATUS == 5 || item.ORSE_IN_STATUS == 6)
-                {
-                    // Recupera template e-mail
-                    String header = _usuService.GetByCode("OSENVAPROV").TEMP_TX_CABECALHO;
-                    String body = _usuService.GetByCode("OSENVAPROV").TEMP_TX_CORPO;
-                    String footer = _usuService.GetByCode("OSENVAPROV").TEMP_TX_DADOS;
+        //            Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+        //        }
+        //        if (item.ORSE_IN_STATUS == 5 || item.ORSE_IN_STATUS == 6)
+        //        {
+        //            // Recupera template e-mail
+        //            String header = _usuService.GetByCode("OSENVAPROV").TEMP_TX_CABECALHO;
+        //            String body = _usuService.GetByCode("OSENVAPROV").TEMP_TX_CORPO;
+        //            String footer = _usuService.GetByCode("OSENVAPROV").TEMP_TX_DADOS;
 
-                    // Prepara corpo do e-mail  
-                    CLIENTE cli = _cliService.GetItemById(item.CLIE_CD_ID.Value);
-                    String frase = String.Empty;
-                    body = body.Replace("{numero}", item.ORSE_NR_NUMERO.ToString());
-                    body = body.Replace("{data}", item.ORSE_DT_INICIO.Value.ToShortDateString());
-                    body = body.Replace("{Assunto}", item.ORSE_DS_DESCRICAO);
-                    body = body.Replace("{DataPrevista}", item.ORSE_DT_PREVISTA.Value.ToShortDateString());
-                    body = body.Replace("{frase}", "");
-                    header = header.Replace("{Nome}", cli.CLIE_NM_NOME);
+        //            // Prepara corpo do e-mail  
+        //            CLIENTE cli = _cliService.GetItemById(item.CLIE_CD_ID.Value);
+        //            String frase = String.Empty;
+        //            body = body.Replace("{numero}", item.ORSE_NR_NUMERO.ToString());
+        //            body = body.Replace("{data}", item.ORSE_DT_INICIO.Value.ToShortDateString());
+        //            body = body.Replace("{Assunto}", item.ORSE_DS_DESCRICAO);
+        //            body = body.Replace("{DataPrevista}", item.ORSE_DT_PREVISTA.Value.ToShortDateString());
+        //            body = body.Replace("{frase}", "");
+        //            header = header.Replace("{Nome}", cli.CLIE_NM_NOME);
 
-                    // Concatena
-                    String emailBody = header + body;
-                    CONFIGURACAO conf = _confService.GetItemById(1);
+        //            // Concatena
+        //            String emailBody = header + body;
+        //            CONFIGURACAO conf = _confService.GetItemById(1);
 
-                    // Monta e-mail
-                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
-                    Email mensagem = new Email();
-                    mensagem.ASSUNTO = "Ordem Serviço - Cliente";
-                    mensagem.CORPO = emailBody;
-                    mensagem.DEFAULT_CREDENTIALS = false;
-                    mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
-                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
-                    mensagem.ENABLE_SSL = true;
-                    mensagem.NOME_EMISSOR = SessionMocks.UserCredentials.USUA_NM_NOME;
-                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
-                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
-                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
-                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
-                    mensagem.NETWORK_CREDENTIAL = net;
+        //            // Monta e-mail
+        //            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+        //            Email mensagem = new Email();
+        //            mensagem.ASSUNTO = "Ordem Serviço - Cliente";
+        //            mensagem.CORPO = emailBody;
+        //            mensagem.DEFAULT_CREDENTIALS = false;
+        //            mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
+        //            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+        //            mensagem.ENABLE_SSL = true;
+        //            mensagem.NOME_EMISSOR = SessionMocks.UserCredentials.USUA_NM_NOME;
+        //            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+        //            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+        //            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+        //            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+        //            mensagem.NETWORK_CREDENTIAL = net;
 
-                    Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
-                }
-                if (item.ORSE_IN_STATUS == 6)
-                {
-                    // Recupera template e-mail
-                    String header = _usuService.GetByCode("OSAPROV").TEMP_TX_CABECALHO;
-                    String body = _usuService.GetByCode("OSAPROV").TEMP_TX_CORPO;
-                    String footer = _usuService.GetByCode("OSAPROV").TEMP_TX_DADOS;
+        //            Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+        //        }
+        //        if (item.ORSE_IN_STATUS == 6)
+        //        {
+        //            // Recupera template e-mail
+        //            String header = _usuService.GetByCode("OSAPROV").TEMP_TX_CABECALHO;
+        //            String body = _usuService.GetByCode("OSAPROV").TEMP_TX_CORPO;
+        //            String footer = _usuService.GetByCode("OSAPROV").TEMP_TX_DADOS;
 
-                    // Prepara corpo do e-mail  
-                    CLIENTE cli = _cliService.GetItemById(item.CLIE_CD_ID.Value);
-                    String frase = String.Empty;
-                    body = body.Replace("{numero}", item.ORSE_NR_NUMERO.ToString());
-                    body = body.Replace("{data}", item.ORSE_DT_INICIO.Value.ToShortDateString());
-                    body = body.Replace("{Assunto}", item.ORSE_DS_DESCRICAO);
-                    body = body.Replace("{DataPrevista}", item.ORSE_DT_PREVISTA.Value.ToShortDateString());
-                    body = body.Replace("{frase}", "");
-                    header = header.Replace("{Nome}", cli.CLIE_NM_NOME);
+        //            // Prepara corpo do e-mail  
+        //            CLIENTE cli = _cliService.GetItemById(item.CLIE_CD_ID.Value);
+        //            String frase = String.Empty;
+        //            body = body.Replace("{numero}", item.ORSE_NR_NUMERO.ToString());
+        //            body = body.Replace("{data}", item.ORSE_DT_INICIO.Value.ToShortDateString());
+        //            body = body.Replace("{Assunto}", item.ORSE_DS_DESCRICAO);
+        //            body = body.Replace("{DataPrevista}", item.ORSE_DT_PREVISTA.Value.ToShortDateString());
+        //            body = body.Replace("{frase}", "");
+        //            header = header.Replace("{Nome}", cli.CLIE_NM_NOME);
 
-                    // Concatena
-                    String emailBody = header + body;
-                    CONFIGURACAO conf = _confService.GetItemById(1);
+        //            // Concatena
+        //            String emailBody = header + body;
+        //            CONFIGURACAO conf = _confService.GetItemById(1);
 
-                    // Monta e-mail
-                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
-                    Email mensagem = new Email();
-                    mensagem.ASSUNTO = "Ordem Serviço - Cliente";
-                    mensagem.CORPO = emailBody;
-                    mensagem.DEFAULT_CREDENTIALS = false;
-                    mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
-                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
-                    mensagem.ENABLE_SSL = true;
-                    mensagem.NOME_EMISSOR = SessionMocks.UserCredentials.USUA_NM_NOME;
-                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
-                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
-                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
-                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
-                    mensagem.NETWORK_CREDENTIAL = net;
+        //            // Monta e-mail
+        //            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+        //            Email mensagem = new Email();
+        //            mensagem.ASSUNTO = "Ordem Serviço - Cliente";
+        //            mensagem.CORPO = emailBody;
+        //            mensagem.DEFAULT_CREDENTIALS = false;
+        //            mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
+        //            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+        //            mensagem.ENABLE_SSL = true;
+        //            mensagem.NOME_EMISSOR = SessionMocks.UserCredentials.USUA_NM_NOME;
+        //            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+        //            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+        //            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+        //            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+        //            mensagem.NETWORK_CREDENTIAL = net;
 
-                    Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
-                }
-                if (item.ORSE_IN_STATUS == 7)
-                {
-                    // Recupera template e-mail
-                    String header = _usuService.GetByCode("OSRECUSA").TEMP_TX_CABECALHO;
-                    String body = _usuService.GetByCode("OSRECUSA").TEMP_TX_CORPO;
-                    String footer = _usuService.GetByCode("OSRECUSA").TEMP_TX_DADOS;
+        //            Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+        //        }
+        //        if (item.ORSE_IN_STATUS == 7)
+        //        {
+        //            // Recupera template e-mail
+        //            String header = _usuService.GetByCode("OSRECUSA").TEMP_TX_CABECALHO;
+        //            String body = _usuService.GetByCode("OSRECUSA").TEMP_TX_CORPO;
+        //            String footer = _usuService.GetByCode("OSRECUSA").TEMP_TX_DADOS;
 
-                    // Prepara corpo do e-mail  
-                    CLIENTE cli = _cliService.GetItemById(item.CLIE_CD_ID.Value);
-                    String frase = String.Empty;
-                    body = body.Replace("{numero}", item.ORSE_NR_NUMERO.ToString());
-                    body = body.Replace("{data}", item.ORSE_DT_INICIO.Value.ToShortDateString());
-                    body = body.Replace("{Assunto}", item.ORSE_DS_DESCRICAO);
-                    body = body.Replace("{DataPrevista}", item.ORSE_DT_PREVISTA.Value.ToShortDateString());
-                    body = body.Replace("{frase}", "");
-                    header = header.Replace("{Nome}", cli.CLIE_NM_NOME);
+        //            // Prepara corpo do e-mail  
+        //            CLIENTE cli = _cliService.GetItemById(item.CLIE_CD_ID.Value);
+        //            String frase = String.Empty;
+        //            body = body.Replace("{numero}", item.ORSE_NR_NUMERO.ToString());
+        //            body = body.Replace("{data}", item.ORSE_DT_INICIO.Value.ToShortDateString());
+        //            body = body.Replace("{Assunto}", item.ORSE_DS_DESCRICAO);
+        //            body = body.Replace("{DataPrevista}", item.ORSE_DT_PREVISTA.Value.ToShortDateString());
+        //            body = body.Replace("{frase}", "");
+        //            header = header.Replace("{Nome}", cli.CLIE_NM_NOME);
 
-                    // Concatena
-                    String emailBody = header + body;
-                    CONFIGURACAO conf = _confService.GetItemById(1);
+        //            // Concatena
+        //            String emailBody = header + body;
+        //            CONFIGURACAO conf = _confService.GetItemById(1);
 
-                    // Monta e-mail
-                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
-                    Email mensagem = new Email();
-                    mensagem.ASSUNTO = "Ordem Serviço - Cliente";
-                    mensagem.CORPO = emailBody;
-                    mensagem.DEFAULT_CREDENTIALS = false;
-                    mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
-                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
-                    mensagem.ENABLE_SSL = true;
-                    mensagem.NOME_EMISSOR = SessionMocks.UserCredentials.USUA_NM_NOME;
-                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
-                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
-                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
-                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
-                    mensagem.NETWORK_CREDENTIAL = net;
+        //            // Monta e-mail
+        //            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+        //            Email mensagem = new Email();
+        //            mensagem.ASSUNTO = "Ordem Serviço - Cliente";
+        //            mensagem.CORPO = emailBody;
+        //            mensagem.DEFAULT_CREDENTIALS = false;
+        //            mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
+        //            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+        //            mensagem.ENABLE_SSL = true;
+        //            mensagem.NOME_EMISSOR = SessionMocks.UserCredentials.USUA_NM_NOME;
+        //            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+        //            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+        //            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+        //            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+        //            mensagem.NETWORK_CREDENTIAL = net;
 
-                    Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
-                }
+        //            Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+        //        }
 
-                return volta;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
+        //        return volta;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         public Int32 ValidateDelete(ORDEM_SERVICO item, USUARIO usuario)
         {
@@ -625,7 +625,7 @@ namespace ApplicationServices.Services
                 // Monta Log
                 LOG log = new LOG
                 {
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
@@ -694,7 +694,7 @@ namespace ApplicationServices.Services
                 // Monta Log
                 LOG log = new LOG
                 {
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,

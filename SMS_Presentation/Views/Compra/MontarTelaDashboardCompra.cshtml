@@ -91,7 +91,7 @@
             </div>
 
             @*Indicadores*@
-            <br />
+            <!--<br />
             <div class="row">
 
                 <div class="col-lg-12">
@@ -354,7 +354,213 @@
                         </div>
                     </div>
                 </div>
+            </div>-->   
+        
+            @*Indicadores*@
+            <br />
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Indicadores</h5>
+                        </div>
+                        <div class="ibox-content ibox-heading">
+                            <h3><i class="fa fa-line-chart"></i> Indicadores</h3>
+                            <small><i class="fa fa-tim"></i> Valores acumulados/atualizados até hoje</small>
+                        </div>
+                        <div class="ibox-content" style="height: 1800px">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Compras por Data - Mês Corrente</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="barChartCM" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Gráfico de Compras por Situação</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="doughnutChartCS" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Compras por Fornecedor - Mais Solicitados</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaCompraForn as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Fornecedor</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaCompraForn as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Take(10))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Nome</td>
+                                                                    <td>@cond.Valor1</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                                @Html.ButtonLinkIndex(text: "Ver Todos Fornecedores", action: "MontarTelaVerTodosFornecedores", controller: "Compra", buttonClass: "success")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Produtos Mais Comprados</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaCompraProd as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Produto</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaCompraProd as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Take(10))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Nome</td>
+                                                                    <td>@cond.Valor1</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                                @Html.ButtonLinkIndex(text: "Ver Todos Produtos", action: "MontarTelaVerTodosProdutos", controller: "Compra", buttonClass: "success")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Pedidos em Atraso</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.ListaCompraAtraso as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Faixa</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaCompraAtraso as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.Nome</td>
+                                                                    <td>@cond.Valor1</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                                @Html.ButtonLinkIndex(text: "Ver Todos", controller: "Compra", action: "VerPedidosAtraso", buttonClass: "white")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Pedidos Recebidos no Prazo</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <h1 class="no-margins">@ViewBag.RecebidosPrazo</h1>
+                                            <small>Para mais detalhes clique em Ver</small>
+                                            <br />
+                                            <br />
+                                            @Html.ButtonLinkIndex(text: "Ver", controller: "Compra", action: "VerPedidosPrazo", buttonClass: "white")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Produtos - Estoque abaixo do mínimo</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                @if ((ViewBag.EstoqueMinimo as List<EntitiesServices.Model.PRODUTO_ESTOQUE_FILIAL>).Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Filal</th>
+                                                                <th>Produto</th>
+                                                                <th>Marca</th>
+                                                                <th>Estoque Atual</th>
+                                                                <th>Estoque Mínimo</th>                                                            
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.EstoqueMinimo as List<EntitiesServices.Model.PRODUTO_ESTOQUE_FILIAL>).Take(10))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.FILIAL.FILI_NM_NOME</td>
+                                                                    <td>@cond.PRODUTO.PROD_NM_NOME</td>
+                                                                    <td>@cond.PRODUTO.PROD_NM_MARCA</td>
+                                                                    <td>@cond.PREF_QN_ESTOQUE</td>
+                                                                    <td>@cond.PRODUTO.PROD_QN_QUANTIDADE_MINIMA</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                                @Html.ButtonLinkIndex(text: "Ver Todos", action: "MontarTelaVerTodosEstoqueMinimo", controller: "Compra", buttonClass: "success")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                       
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>   
+        
+        
+        
+        
+        
+        
         </div>
     </div>
 </div>

@@ -11,7 +11,6 @@ namespace EntitiesServices.Interfaces.Services
     public interface IOrdemServicoComentarioService : IServiceBase<ORDEM_SERVICO_COMENTARIOS>
     {
         Int32 Create(ORDEM_SERVICO_COMENTARIOS item);
-
         List<ORDEM_SERVICO_COMENTARIOS> GetByOs(ORDEM_SERVICO item);
     }
 }

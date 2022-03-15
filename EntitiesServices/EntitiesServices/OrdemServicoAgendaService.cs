@@ -15,7 +15,7 @@ namespace EntitiesServices.Services
     public class OrdemServicoAgendaService : ServiceBase<ORDEM_SERVICO_AGENDA>, IOrdemServicoAgendaService
     {
         private readonly IOrdemServicoAgendaRepository _baseRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public OrdemServicoAgendaService(IOrdemServicoAgendaRepository baseRepository) : base(baseRepository)
         {

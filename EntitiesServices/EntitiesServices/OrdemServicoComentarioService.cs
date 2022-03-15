@@ -15,7 +15,7 @@ namespace EntitiesServices.Services
     public class OrdemServicoComentarioService : ServiceBase<ORDEM_SERVICO_COMENTARIOS>, IOrdemServicoComentarioService
     {
         private readonly IOrdemServicoComentarioRepository _baseRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public OrdemServicoComentarioService(IOrdemServicoComentarioRepository baseRepository) : base(baseRepository)
         {

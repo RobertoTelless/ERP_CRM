@@ -53,6 +53,7 @@ namespace ERP_CRM_Solution.ViewModels
         [DataType(DataType.Date, ErrorMessage = "Deve ser uma data válida")]
         public Nullable<System.DateTime> ATEN_DT_PREVISTA { get; set; }
         public Nullable<Int32> SERV_CD_ID { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<int> ATEN_IN_SLA { get; set; }
         public string ATEN_NR_NUMERO { get; set; }
         public Nullable<int> ATEN_IN_CRM { get; set; }
