@@ -1379,7 +1379,7 @@ namespace ApplicationServices.Services
                 // Persiste notificação 
                 Int32 volta1 = _notiService.Create(noti);
 
-                if (item.PECO_IN_TIPO == 1)
+                if (item.PECO_IN_TIPO == 1 || item.PECO_IN_TIPO == 2)
                 {
                     // Configuracao
                     CONFIGURACAO conf = _confService.GetItemById(item.ASSI_CD_ID);

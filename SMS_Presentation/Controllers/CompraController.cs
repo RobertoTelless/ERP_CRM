@@ -1651,7 +1651,7 @@ namespace ERP_CRM_Solution.Controllers
                 listaMaster = new List<PEDIDO_COMPRA>();
                 Session["ListaCompra"] = null;
                 Session["ContaPagar"] = cp;
-                Session["VoltaCompra"] = 0;
+                Session["VoltaCompra"] = 1;
                 Session["IdCompra"] = item.PECO_CD_ID;
                 return RedirectToAction("IncluirCP", "ContaPagar", new { voltaCompra = 1 });
             }
