@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntitiesServices.Interfaces.Services
+namespace ModelServices.Interfaces.EntitiesServices
 {
     public interface IOrdemServicoProdutoService : IServiceBase<ORDEM_SERVICO_PRODUTO>
     {

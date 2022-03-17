@@ -98,6 +98,7 @@ namespace EntitiesServices.Model
         public Nullable<int> USUA_IN_ESPECIAL { get; set; }
         public Nullable<int> USUA_IN_CRM { get; set; }
         public Nullable<int> USUA_IN_ERP { get; set; }
+        public Nullable<int> USUA_IN_TECNICO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA> AGENDA { get; set; }

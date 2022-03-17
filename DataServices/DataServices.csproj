@@ -180,6 +180,7 @@
     <Compile Include="Repositories\CargoRepository.cs" />
     <Compile Include="Repositories\CategoriaAtendimentoRepository.cs" />
     <Compile Include="Repositories\CategoriaEquipamentoRepository.cs" />
+    <Compile Include="Repositories\CategoriaOrdemServicoRepository.cs" />
     <Compile Include="Repositories\CategoriaProdutoRepository.cs" />
     <Compile Include="Repositories\CategoriaServicoRepository.cs" />
     <Compile Include="Repositories\ContaPagarAnexoRepository.cs" />

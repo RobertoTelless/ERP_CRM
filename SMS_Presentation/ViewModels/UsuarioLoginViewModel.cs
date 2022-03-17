@@ -67,6 +67,7 @@ namespace ERP_CRM_Solution.ViewModels
         [StringLength(20, ErrorMessage = "O RG deve ter no máximo 20 caracteres.")]
         public string USUA_NR_RG { get; set; }
         public Nullable<int> USUA_IN_SISTEMA { get; set; }
+        public Nullable<int> USUA_IN_TECNICO { get; set; }
 
         public bool Bloqueio
         {

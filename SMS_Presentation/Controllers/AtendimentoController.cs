@@ -325,9 +325,9 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0072", CultureInfo.CurrentCulture));
                 }
-                if ((Int32)Session["MensFornecedor"] == 70)
+                if ((Int32)Session["MensAtendimento"] == 70)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0081", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0112", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -773,7 +773,7 @@ namespace ERP_CRM_Solution.Controllers
             prior.Add(new SelectListItem() { Text = "Alta", Value = "3" });
             prior.Add(new SelectListItem() { Text = "Urgente", Value = "4" });
             ViewBag.Prioridade = new SelectList(prior, "Value", "Text");
-            Session["VoltaCliente"] = 2;
+            Session["VoltaCliente"] = 6;
             Session["AT"] = null;
 
             // Prepara view
@@ -1770,7 +1770,7 @@ namespace ERP_CRM_Solution.Controllers
             if (fileName.Length > 250)
             {
                 Session["MensAtendimento"] = 51;
-                return RedirectToAction("VoltarAnexoFornecedor");
+                return RedirectToAction("VoltarAnexoAtendimento");
             }
             String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/Atendimentos/" + item.ATEN_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);

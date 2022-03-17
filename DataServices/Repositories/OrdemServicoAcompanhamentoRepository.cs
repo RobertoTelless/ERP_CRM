@@ -1,10 +1,11 @@
-﻿using EntitiesServices.Model;
-using EntitiesServices.Work_Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using EntitiesServices.Model;
+using ModelServices.Interfaces.Repositories;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EntitiesServices.Work_Classes;
+using System.Data.Entity;
+using CrossCutting;
 
 namespace DataServices.Repositories
 {

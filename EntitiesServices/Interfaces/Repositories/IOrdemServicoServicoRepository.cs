@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntitiesServices.Interfaces.Repositories
+namespace ModelServices.Interfaces.Repositories
 {
     public interface IOrdemServicoServicoRepository : IRepositoryBase<ORDEM_SERVICO_SERVICO>
     {

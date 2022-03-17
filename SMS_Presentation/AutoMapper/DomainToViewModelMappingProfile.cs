@@ -89,6 +89,9 @@ namespace MvcMapping.Mappers
             CreateMap<ITEM_PEDIDO_COMPRA, ItemPedidoCompraViewModel>();
             CreateMap<GRUPO_CC, GrupoCCViewModel>();
             CreateMap<SUBGRUPO, SubgrupoViewModel>();
+            CreateMap<ORDEM_SERVICO, OrdemServicoViewModel>();
+            CreateMap<ORDEM_SERVICO_COMENTARIOS, OrdemServicoComentarioViewModel>();
+            CreateMap<ORDEM_SERVICO_ACOMPANHAMENTO, OrdemServicoAcompanhamentoViewModel>();
 
         }
     }

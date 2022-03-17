@@ -17,6 +17,7 @@ namespace ApplicationServices.Interfaces
         List<USUARIO> GetAllItens(Int32 idAss);
         List<USUARIO> GetAllItensBloqueados(Int32 idAss);
         List<USUARIO> GetAllItensAcessoHoje(Int32 idAss);
+        List<USUARIO> GetAllTecnicos(Int32 idAss);
         USUARIO_ANEXO GetAnexoById(Int32 id);
         List<NOTIFICACAO> GetAllItensUser(Int32 id, Int32 idAss);
         List<NOTIFICACAO> GetNotificacaoNovas(Int32 id, Int32 idAss);
@@ -38,6 +39,7 @@ namespace ApplicationServices.Interfaces
         USUARIO GetAdministrador(Int32 idAss);
         USUARIO GetComprador(Int32 idAss);
         USUARIO GetAprovador(Int32 idAss);
+        USUARIO GetTecnico(Int32 idAss);
         List<CARGO> GetAllCargos(Int32 idAss);
     }
 }

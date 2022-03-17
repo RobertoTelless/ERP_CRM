@@ -105,6 +105,11 @@ namespace ModelServices.EntitiesServices
             return _usuarioRepository.GetAllItens(idAss);
         }
 
+        public List<USUARIO> GetAllTecnicos(Int32 idAss)
+        {
+            return _usuarioRepository.GetAllTecnicos(idAss);
+        }
+
         public List<CARGO> GetAllCargos(Int32 idAss)
         {
             return _carRepository.GetAllItens(idAss);
@@ -123,6 +128,11 @@ namespace ModelServices.EntitiesServices
         public USUARIO GetComprador(Int32 idAss)
         {
             return _usuarioRepository.GetComprador(idAss);
+        }
+
+        public USUARIO GetTecnico(Int32 idAss)
+        {
+            return _usuarioRepository.GetTecnico(idAss);
         }
 
         public USUARIO GetAprovador(Int32 idAss)

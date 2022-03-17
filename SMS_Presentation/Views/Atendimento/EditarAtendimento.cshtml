@@ -98,7 +98,8 @@
                             {
                                 @Html.ButtonLinkIndex(text: "Encerrar", action: "EncerrarAtendimento", controller: "Atendimento")
                             }
-
+                            @Html.ButtonLinkIndex(text: "Dashboard", controller: "Servico", action: "MontarTelaDashboardServiceDesk")
+                            @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaAtendimento", controller: "Atendimento")
                             @if ((Model.ORDEM_SERVICO == null || Model.ORDEM_SERVICO.Count == 0) & (Model.ATEN_IN_STATUS == 1 || Model.ATEN_IN_STATUS == 2 || Model.ATEN_IN_STATUS == 4))
                             {
                                 @Html.ButtonLinkIndex(text: "Gerar Ordem de Serviço", action: "GerarOSAtendimento", controller: "Atendimento")
@@ -125,8 +126,6 @@
 	                        {
                                 @Html.ButtonLinkIndex(text: "Ver Processo CRM", action: "VerCRMAtendimento", controller: "Atendimento")
 	                        }
-                            @Html.ButtonLinkIndex(text: "Dashboard", controller: "Servico", action: "MontarTelaDashboardServiceDesk")
-                            @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaAtendimento", controller: "Atendimento")
                         </div>
                     </row>
                     <div class="tabs-container">

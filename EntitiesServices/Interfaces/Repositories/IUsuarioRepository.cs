@@ -21,6 +21,8 @@ namespace ModelServices.Interfaces.Repositories
         USUARIO GetAdministrador(Int32 idAss);
         USUARIO GetComprador(Int32 idAss);
         USUARIO GetAprovador(Int32 idAss);
+        USUARIO GetTecnico(Int32 idAss);
+        List<USUARIO> GetAllTecnicos(Int32 idAss);
         USUARIO GetByEmailOnly(String email);
     }
 }

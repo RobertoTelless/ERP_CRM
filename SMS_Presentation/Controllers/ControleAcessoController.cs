@@ -177,6 +177,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["NumProdutos"] = 0;
                 Session["NumFornecedor"] = 0;
                 Session["NumAtendimentos"] = 0;
+                Session["NumOrdemServico"] = 0;
                 Session["NumUsuarios"] = 0;
                 List<ASSINANTE_PLANO> plAss = usuario.ASSINANTE.ASSINANTE_PLANO.ToList();
                 List<PLANO> planos = new List<PLANO>();
@@ -241,7 +242,7 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         Session["PermServDesk"] = 1;
                         Session["NumAtendimentos"] = item.PLANO.PLAN_IN_ATENDIMENTOS;
-                        Session["NumOS"] = item.PLANO.PLAN_IN_OS;
+                        Session["NumOrdemServico"] = item.PLANO.PLAN_IN_OS;
                         Session["NumServicos"] = item.PLANO.PLAN_IN_SERVICOS;
                     }
                 }

@@ -71,10 +71,27 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
+        public USUARIO GetTecnico(Int32 idAss)
+        {
+            IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
+            query = query.Where(p => p.USUA_IN_TECNICO.Value == 1);
+            query = query.Include(p => p.ASSINANTE);
+            query = query.Include(p => p.PERFIL);
+            return query.FirstOrDefault();
+        }
+
         public List<USUARIO> GetAllItens(Int32 idAss)
         {
             IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
             query = query.Where(p => p.USUA_IN_BLOQUEADO == 0);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
+            return query.ToList();
+        }
+
+        public List<USUARIO> GetAllTecnicos(Int32 idAss)
+        {
+            IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
+            query = query.Where(p => p.USUA_IN_TECNICO.Value == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }

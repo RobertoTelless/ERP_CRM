@@ -494,4 +494,7 @@
     <value>Cliente não possui celular cadastrado</value>
     <comment>CLIENTE - SMS</comment>
   </data>
+  <data name="M0123" xml:space="preserve">
+    <value>Impossivel excluir esta Ordem de Serviço pois existem registros vinculados a ela</value>
+  </data>
 </root>

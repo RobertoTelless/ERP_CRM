@@ -61,7 +61,7 @@
                                         <div class="row">
                                             <br />
                                             <div class="form-group" style="margin-top: -20px; margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                @*<div class="col-lg-3 col-md-3 col-xs-12">
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                     @Html.HiddenFor(m => m.ATEN_IN_ATIVO)
                                                     @Html.HiddenFor(m => m.ATEN_IN_STATUS)
@@ -76,8 +76,13 @@
                                                             @Html.TableLinkAction("IncluirCliente", "Cliente", new { voltaCliente = "1" }, "glyphicon glyphicon-plus", "Inserir Cliente")
                                                         </span>
                                                     </div>
-                                                </div>
+                                                </div>*@
                                                  <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.ATEN_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.ATEN_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.ATEN_IN_DESTINO)
+                                                    @Html.HiddenFor(m => m.ATEN_HR_INICIO)
                                                     Responsável
                                                     @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
@@ -87,6 +92,18 @@
                                                     @Html.DropDownListFor(m => m.DEPT_CD_ID, (SelectList)ViewBag.Deps, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.DEPT_CD_ID, "", new { @style = "color:red" })
                                                 </div>
+                                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                                    Nome do Cliente*
+                                                    <div class="input-group">
+                                                        <select name="CLIE_CD_ID" id="lstCliente" class="form-control" data-val="true" style="display: none;">
+                                                            @*<option>Selecionar</option>*@
+                                                        </select>
+                                                        @Html.ValidationMessageFor(m => m.CLIE_CD_ID, "", new { @style = "color:red" })
+                                                        <span class="input-group-btn">
+                                                            @Html.ButtonLinkIndex(text: "Novo Cliente", action: "IncluirCliente", controller: "Cliente", buttonClass: "primary")
+                                                        </span>
+                                                    </div>
+                                                </div> 
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-3 col-md-3 col-xs-12">

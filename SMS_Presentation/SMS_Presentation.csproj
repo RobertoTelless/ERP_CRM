@@ -327,6 +327,7 @@
     <Compile Include="Controllers\MensagemController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
+    <Compile Include="Controllers\OrdemServicoController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Controllers\ServicoController.cs" />
     <Compile Include="Controllers\TabelasAuxiliaresController.cs" />
@@ -377,6 +378,9 @@
     <Compile Include="ViewModels\MovimentacaoAvulsaGridViewModel.cs" />
     <Compile Include="ViewModels\MovimentacaoAvulsaViewModel.cs" />
     <Compile Include="ViewModels\MovimentoEntradaViewModel.cs" />
+    <Compile Include="ViewModels\OrdemServicoAcompanhamentoViewModel.cs" />
+    <Compile Include="ViewModels\OrdemServicoComentarioViewModel.cs" />
+    <Compile Include="ViewModels\OrdemServicoViewModel.cs" />
     <Compile Include="ViewModels\PedidoCompraAcompanhamentoViewModel.cs" />
     <Compile Include="ViewModels\PedidoCompraViewModel.cs" />
     <Compile Include="ViewModels\ProdutoKitViewModel.cs" />
@@ -3435,6 +3439,26 @@
     <Content Include="Views\Usuario\MontarTelaDashboardAdministracao.cshtml" />
     <Content Include="Views\Compra\IncluirCompraExpressa.cshtml" />
     <Content Include="Views\BaseAdmin\CarregarLandingPage.cshtml" />
+    <Content Include="Views\OrdemServico\MontarTelaOrdemServico.cshtml" />
+    <Content Include="Views\OrdemServico\MontarTelaOrdemServicoKanban.cshtml" />
+    <Content Include="Views\OrdemServico\IncluirOrdemServico.cshtml" />
+    <Content Include="Views\OrdemServico\CancelarOrdemServico.cshtml" />
+    <Content Include="Views\OrdemServico\EncerrarOrdemServico.cshtml" />
+    <Content Include="Views\OrdemServico\ExcluirOrdemServico.cshtml" />
+    <Content Include="Views\OrdemServico\ReativarOrdemServico.cshtml" />
+    <Content Include="Views\OrdemServico\EditarOrdemServico.cshtml" />
+    <Content Include="Views\OrdemServico\VerOrdemServico.cshtml" />
+    <Content Include="Views\OrdemServico\VerAnexoOrdemServico.cshtml" />
+    <Content Include="Views\OrdemServico\IncluirAcompanhamento.cshtml" />
+    <Content Include="Views\OrdemServico\IncluirComentario.cshtml" />
+    <Content Include="Views\OrdemServico\IncluirAgendamento.cshtml" />
+    <Content Include="Views\OrdemServico\ExcluirOSProduto.cshtml" />
+    <Content Include="Views\OrdemServico\ReativarOSProduto.cshtml" />
+    <Content Include="Views\OrdemServico\ExcluirOSServico.cshtml" />
+    <Content Include="Views\OrdemServico\ReativarOSServico.cshtml" />
+    <Content Include="Views\OrdemServico\EnviarAprovacaoOrdemServico.cshtml" />
+    <Content Include="Views\OrdemServico\AprovarOrdemServico.cshtml" />
+    <Content Include="Views\OrdemServico\RecusarOrdemServico.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3631,7 +3655,6 @@
     <Folder Include="Imagens\4\Usuario\14\Anexos\" />
     <Folder Include="Imagens\Assinantes\2\Anexos\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\OrdemServico\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

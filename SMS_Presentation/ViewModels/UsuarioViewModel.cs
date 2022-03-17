@@ -74,6 +74,7 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> USUA_IN_ESPECIAL { get; set; }
         public Nullable<int> USUA_IN_CRM { get; set; }
         public Nullable<int> USUA_IN_ERP { get; set; }
+        public Nullable<int> USUA_IN_TECNICO { get; set; }
 
         public bool Bloqueio
         {
@@ -166,6 +167,22 @@ namespace ERP_CRM_Solution.ViewModels
             set
             {
                 USUA_IN_APROVADOR = (value == true) ? 1 : 0;
+            }
+        }
+
+        public bool Tecnico
+        {
+            get
+            {
+                if (USUA_IN_TECNICO == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                USUA_IN_TECNICO = (value == true) ? 1 : 0;
             }
         }
 

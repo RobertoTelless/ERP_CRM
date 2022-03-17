@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace SystemBRPresentation.ViewModels
+namespace ERP_CRM_Solution.ViewModels
 {
     public class OrdemServicoAcompanhamentoViewModel
     {

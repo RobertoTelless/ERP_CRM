@@ -9,9 +9,6 @@ using ApplicationServices.Interfaces;
 using ModelServices.Interfaces.EntitiesServices;
 using CrossCutting;
 using System.Text.RegularExpressions;
-using System.Net;
-using System.IO;
-using EntitiesServices.Interfaces.Services;
 
 namespace ApplicationServices.Services
 {
@@ -24,9 +21,9 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public CATEGORIA_ORDEM_SERVICO CheckExist(CATEGORIA_ORDEM_SERVICO item)
+        public CATEGORIA_ORDEM_SERVICO CheckExist(CATEGORIA_ORDEM_SERVICO item, Int32 idAss)
         {
-            return _baseService.CheckExist(item);
+            return _baseService.CheckExist(item, idAss);
         }
 
         public CATEGORIA_ORDEM_SERVICO GetItemById(Int32 id)
@@ -34,21 +31,21 @@ namespace ApplicationServices.Services
             return _baseService.GetItemById(id);
         }
 
-        public List<CATEGORIA_ORDEM_SERVICO> GetAllItens()
+        public List<CATEGORIA_ORDEM_SERVICO> GetAllItens(Int32 idAss)
         {
-            return _baseService.GetAllItens();
+            return _baseService.GetAllItens(idAss);
         }
 
-        public List<CATEGORIA_ORDEM_SERVICO> GetAllItensAdm()
+        public List<CATEGORIA_ORDEM_SERVICO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseService.GetAllItensAdm();
+            return _baseService.GetAllItensAdm(idAss);
         }
 
         public Int32 ValidateCreate(CATEGORIA_ORDEM_SERVICO item, USUARIO usuario)
         {
             try
             {
-                if (_baseService.CheckExist(item) != null)
+                if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
                     return 1;
                 }
@@ -58,7 +55,7 @@ namespace ApplicationServices.Services
                 // Monta Log
                 LOG log = new LOG
                 {
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddCAOS",
@@ -92,7 +89,7 @@ namespace ApplicationServices.Services
                 // Monta Log
                 LOG log = new LOG
                 {
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "EditCAOS",
@@ -143,7 +140,7 @@ namespace ApplicationServices.Services
                 // Monta Log
                 LOG log = new LOG
                 {
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
@@ -170,7 +167,7 @@ namespace ApplicationServices.Services
                 // Monta Log
                 LOG log = new LOG
                 {
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,

@@ -1,16 +1,20 @@
-﻿using EntitiesServices.Interfaces.Repositories;
-using EntitiesServices.Interfaces.Services;
-using EntitiesServices.Model;
-using ModelServices.EntitiesServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using EntitiesServices.Model;
+using EntitiesServices.Work_Classes;
+using ModelServices.Interfaces.Repositories;
+using ModelServices.Interfaces.EntitiesServices;
+using CrossCutting;
+using System.Data.Entity;
+using System.Data;
 
-namespace EntitiesServices.Services
+namespace ModelServices.EntitiesServices
 {
     public class OrdemServicoProdutoService : ServiceBase<ORDEM_SERVICO_PRODUTO>, IOrdemServicoProdutoService
     {

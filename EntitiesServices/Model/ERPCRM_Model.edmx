@@ -2371,6 +2371,7 @@
           <Property Name="USUA_IN_ESPECIAL" Type="int" />
           <Property Name="USUA_IN_CRM" Type="int" />
           <Property Name="USUA_IN_ERP" Type="int" />
+          <Property Name="USUA_IN_TECNICO" Type="int" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -10446,6 +10447,7 @@
           <Property Name="USUA_IN_ESPECIAL" Type="Int32" />
           <Property Name="USUA_IN_CRM" Type="Int32" />
           <Property Name="USUA_IN_ERP" Type="Int32" />
+          <Property Name="USUA_IN_TECNICO" Type="Int32" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -18035,6 +18037,7 @@
           <EntitySetMapping Name="USUARIO">
             <EntityTypeMapping TypeName="ERP_CRMModel.USUARIO">
               <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="USUA_IN_TECNICO" ColumnName="USUA_IN_TECNICO" />
                 <ScalarProperty Name="USUA_IN_ERP" ColumnName="USUA_IN_ERP" />
                 <ScalarProperty Name="USUA_IN_CRM" ColumnName="USUA_IN_CRM" />
                 <ScalarProperty Name="USUA_IN_ESPECIAL" ColumnName="USUA_IN_ESPECIAL" />

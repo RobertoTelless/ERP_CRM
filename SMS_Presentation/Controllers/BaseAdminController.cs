@@ -160,6 +160,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["MensServico"] = 0;
             Session["MensCR"] = 0;
             Session["MensCP"] = 0;
+            Session["MensOrdemServico"] = 0;
 
             Session["VoltaNotificacao"] = 3;
             Session["VoltaNoticia"] = 1;
@@ -190,7 +191,7 @@ namespace ERP_CRM_Solution.Controllers
 
             noti = notfApp.GetAllItensUser(usu.USUA_CD_ID, usu.ASSI_CD_ID);
             Session["Notificacoes"] = noti; 
-            Session["ListaNovas"] = noti.Where(p => p.NOTI_IN_VISTA == 0).ToList();
+            Session["ListaNovas"] = noti.Where(p => p.NOTI_IN_VISTA == 0).ToList().Take(5);
             Session["NovasNotificacoes"] = noti.Where(p => p.NOTI_IN_VISTA == 0).Count();
             Session["Nome"] = usu.USUA_NM_NOME;
 

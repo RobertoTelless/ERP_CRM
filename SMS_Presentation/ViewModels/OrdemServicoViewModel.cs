@@ -6,7 +6,7 @@ using System.Web;
 using EntitiesServices.Attributes;
 using EntitiesServices.Model;
 
-namespace SystemBRPresentation.ViewModels
+namespace ERP_CRM_Solution.ViewModels
 {
     public class OrdemServicoViewModel
     {

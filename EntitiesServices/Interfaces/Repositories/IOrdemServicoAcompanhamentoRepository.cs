@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataServices.Repositories
+namespace ModelServices.Interfaces.Repositories
 {
     public interface IOrdemServicoAcompanhamentoRepository : IRepositoryBase<ORDEM_SERVICO_ACOMPANHAMENTO>
     {

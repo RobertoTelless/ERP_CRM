@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntitiesServices.Interfaces.Services
+namespace ModelServices.Interfaces.EntitiesServices
 {
     public interface ICategoriaOrdemServicoService : IServiceBase<CATEGORIA_ORDEM_SERVICO>
     {
@@ -16,9 +16,9 @@ namespace EntitiesServices.Interfaces.Services
         Int32 Edit(CATEGORIA_ORDEM_SERVICO perfil);
         Int32 Delete(CATEGORIA_ORDEM_SERVICO perfil, LOG log);
 
-        CATEGORIA_ORDEM_SERVICO CheckExist(CATEGORIA_ORDEM_SERVICO item);
+        CATEGORIA_ORDEM_SERVICO CheckExist(CATEGORIA_ORDEM_SERVICO item, Int32 idAss);
         CATEGORIA_ORDEM_SERVICO GetItemById(Int32 id);
-        List<CATEGORIA_ORDEM_SERVICO> GetAllItens();
-        List<CATEGORIA_ORDEM_SERVICO> GetAllItensAdm();
+        List<CATEGORIA_ORDEM_SERVICO> GetAllItens(Int32 idAss);
+        List<CATEGORIA_ORDEM_SERVICO> GetAllItensAdm(Int32 idAss);
     }
 }

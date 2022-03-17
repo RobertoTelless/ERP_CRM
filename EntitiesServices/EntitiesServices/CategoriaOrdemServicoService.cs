@@ -1,23 +1,26 @@
-﻿using EntitiesServices.Interfaces.Repositories;
-using EntitiesServices.Interfaces.Services;
-using EntitiesServices.Model;
-using ModelServices.EntitiesServices;
-using ModelServices.Interfaces.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using EntitiesServices.Model;
+using EntitiesServices.Work_Classes;
+using ModelServices.Interfaces.Repositories;
+using ModelServices.Interfaces.EntitiesServices;
+using CrossCutting;
+using System.Data.Entity;
+using System.Data;
 
-namespace EntitiesServices.Services
+namespace ModelServices.EntitiesServices
 {
     public class CategoriaOrdemServicoService : ServiceBase<CATEGORIA_ORDEM_SERVICO>, ICategoriaOrdemServicoService
     {
         private readonly ICategoriaOrdemServicoRepository _baseRepository;
         private readonly ILogRepository _logRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public CategoriaOrdemServicoService(ICategoriaOrdemServicoRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
         {
@@ -25,9 +28,9 @@ namespace EntitiesServices.Services
             _logRepository = logRepository;
         }
 
-        public CATEGORIA_ORDEM_SERVICO CheckExist(CATEGORIA_ORDEM_SERVICO item)
+        public CATEGORIA_ORDEM_SERVICO CheckExist(CATEGORIA_ORDEM_SERVICO item, Int32 idAss)
         {
-            return _baseRepository.CheckExist(item);
+            return _baseRepository.CheckExist(item, idAss);
         }
 
         public CATEGORIA_ORDEM_SERVICO GetItemById(Int32 id)
@@ -35,14 +38,14 @@ namespace EntitiesServices.Services
             return _baseRepository.GetItemById(id);
         }
 
-        public List<CATEGORIA_ORDEM_SERVICO> GetAllItens()
+        public List<CATEGORIA_ORDEM_SERVICO> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<CATEGORIA_ORDEM_SERVICO> GetAllItensAdm()
+        public List<CATEGORIA_ORDEM_SERVICO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
         public Int32 Create(CATEGORIA_ORDEM_SERVICO item, LOG log)

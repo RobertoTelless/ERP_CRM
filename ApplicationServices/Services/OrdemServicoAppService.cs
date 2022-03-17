@@ -10,8 +10,6 @@ using ModelServices.Interfaces.EntitiesServices;
 using CrossCutting;
 using System.Text.RegularExpressions;
 using System.Net;
-using System.IO;
-using EntitiesServices.Interfaces.Services;
 
 namespace ApplicationServices.Services
 {
@@ -115,7 +113,7 @@ namespace ApplicationServices.Services
 
                 // Concatena
                 String emailBody = header + body;
-                CONFIGURACAO conf = _confService.GetItemById(1);
+                CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
 
                 // Monta e-mail
                 NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
@@ -198,7 +196,6 @@ namespace ApplicationServices.Services
                     LOG_IN_ATIVO = 1,
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<ORDEM_SERVICO>(item),
                 };
-
                 Int32 volta = _baseService.Edit(item, log);
 
                 if (item.ORSE_IN_STATUS == 3)
@@ -220,7 +217,7 @@ namespace ApplicationServices.Services
 
                     // Concatena
                     String emailBody = header + body;
-                    CONFIGURACAO conf = _confService.GetItemById(1);
+                    CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
 
                     // Monta e-mail
                     NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
@@ -240,7 +237,7 @@ namespace ApplicationServices.Services
 
                     Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
                 }
-                if (item.ORSE_IN_STATUS == 5 || item.ORSE_IN_STATUS == 6)
+                if (item.ORSE_IN_STATUS == 5)
                 {
                     // Recupera template e-mail
                     String header = _usuService.GetByCode("OSENVAPROV").TEMP_TX_CABECALHO;
@@ -259,12 +256,12 @@ namespace ApplicationServices.Services
 
                     // Concatena
                     String emailBody = header + body;
-                    CONFIGURACAO conf = _confService.GetItemById(1);
+                    CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
 
                     // Monta e-mail
                     NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
                     Email mensagem = new Email();
-                    mensagem.ASSUNTO = "Ordem Serviço - Cliente";
+                    mensagem.ASSUNTO = "Ordem Serviço - Envio para aprovação";
                     mensagem.CORPO = emailBody;
                     mensagem.DEFAULT_CREDENTIALS = false;
                     mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
@@ -276,7 +273,6 @@ namespace ApplicationServices.Services
                     mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
                     mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
                     mensagem.NETWORK_CREDENTIAL = net;
-
                     Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
                 }
                 if (item.ORSE_IN_STATUS == 6)
@@ -298,12 +294,12 @@ namespace ApplicationServices.Services
 
                     // Concatena
                     String emailBody = header + body;
-                    CONFIGURACAO conf = _confService.GetItemById(1);
+                    CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
 
                     // Monta e-mail
                     NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
                     Email mensagem = new Email();
-                    mensagem.ASSUNTO = "Ordem Serviço - Cliente";
+                    mensagem.ASSUNTO = "Ordem Serviço - Aprovação";
                     mensagem.CORPO = emailBody;
                     mensagem.DEFAULT_CREDENTIALS = false;
                     mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
@@ -343,6 +339,45 @@ namespace ApplicationServices.Services
                     NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
                     Email mensagem = new Email();
                     mensagem.ASSUNTO = "Ordem Serviço - Cliente";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = usuario.USUA_NM_NOME;
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.NETWORK_CREDENTIAL = net;
+
+                    Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                }
+                if (item.ORSE_IN_STATUS == 4)
+                {
+                    // Recupera template e-mail
+                    String header = _usuService.GetByCode("OSCANC").TEMP_TX_CABECALHO;
+                    String body = _usuService.GetByCode("OSCANC").TEMP_TX_CORPO;
+                    String footer = _usuService.GetByCode("OSCANC").TEMP_TX_DADOS;
+
+                    // Prepara corpo do e-mail  
+                    CLIENTE cli = _cliService.GetItemById(item.CLIE_CD_ID.Value);
+                    String frase = String.Empty;
+                    body = body.Replace("{numero}", item.ORSE_NR_NUMERO.ToString());
+                    body = body.Replace("{data}", item.ORSE_DT_INICIO.Value.ToShortDateString());
+                    body = body.Replace("{Assunto}", item.ORSE_DS_DESCRICAO);
+                    body = body.Replace("{DataPrevista}", item.ORSE_DT_PREVISTA.Value.ToShortDateString());
+                    body = body.Replace("{frase}", "");
+                    header = header.Replace("{Nome}", cli.CLIE_NM_NOME);
+
+                    // Concatena
+                    String emailBody = header + body;
+                    CONFIGURACAO conf = _confService.GetItemById(1);
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = "Ordem Serviço - Cancelamento";
                     mensagem.CORPO = emailBody;
                     mensagem.DEFAULT_CREDENTIALS = false;
                     mensagem.EMAIL_DESTINO = cli.CLIE_NM_EMAIL;
@@ -619,6 +654,11 @@ namespace ApplicationServices.Services
                     item.FILIAL = null;
                 }
 
+                // Verifica vinculos
+                if (item.ORDEM_SERVICO_ACOMPANHAMENTO.Count > 0 || item.ORDEM_SERVICO_COMENTARIOS.Count > 0 )
+                {
+                    return 1;
+                }
                 // Acerta campos
                 item.ORSE_IN_ATIVO = 0;
 

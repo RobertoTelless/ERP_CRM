@@ -56,6 +56,11 @@ namespace ApplicationServices.Services
             return _usuarioService.GetAllItens(idAss);
         }
 
+        public List<USUARIO> GetAllTecnicos(Int32 idAss)
+        {
+            return _usuarioService.GetAllTecnicos(idAss);
+        }
+
         public List<CARGO> GetAllCargos(Int32 idAss)
         {
             return _usuarioService.GetAllCargos(idAss);
@@ -69,6 +74,11 @@ namespace ApplicationServices.Services
         public USUARIO GetComprador(Int32 idAss)
         {
             return _usuarioService.GetComprador(idAss);
+        }
+
+        public USUARIO GetTecnico(Int32 idAss)
+        {
+            return _usuarioService.GetTecnico(idAss);
         }
 
         public USUARIO GetAprovador(Int32 idAss)

@@ -13,7 +13,6 @@ using ModelServices.Interfaces.EntitiesServices;
 using CrossCutting;
 using System.Data.Entity;
 using System.Data;
-using EntitiesServices.Interfaces.Repositories;
 
 namespace ModelServices.EntitiesServices
 {
