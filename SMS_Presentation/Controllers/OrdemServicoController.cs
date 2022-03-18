@@ -408,7 +408,8 @@ namespace ERP_CRM_Solution.Controllers
 
             // Indicadores
             ViewBag.OrdensServico = ((List<ORDEM_SERVICO>)Session["ListaOrdemServico"]).Count;
-
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+            
             // Carrega listas
             ViewBag.Categorias = new SelectList(cosApp.GetAllItens(idAss), "CAOS_CD_ID", "CAOS_NM_NOME");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(x => x.USUA_NM_NOME).ToList<USUARIO>(), "USUA_CD_ID", "USUA_NM_NOME");
