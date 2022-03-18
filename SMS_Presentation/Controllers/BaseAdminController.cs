@@ -161,7 +161,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["MensCR"] = 0;
             Session["MensCP"] = 0;
             Session["MensOrdemServico"] = 0;
-
+            Session["IdOrdemServico"] = 0;
             Session["VoltaNotificacao"] = 3;
             Session["VoltaNoticia"] = 1;
             Session["AgendaCorp"] = 0;

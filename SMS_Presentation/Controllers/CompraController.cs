@@ -172,7 +172,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["ListaCompra"] = listaMaster;
             }
 
-            ViewBag.Listas = (List<PEDIDO_COMPRA>)Session["ListaCompra"];
+            ViewBag.Listas = ((List<PEDIDO_COMPRA>)Session["ListaCompra"]).OrderByDescending(p => p.PECO_DT_DATA).ToList();
             ViewBag.Title = "Pedidos de Compra";
 
             // Indicadores

@@ -1,7 +1,484 @@
-﻿
-@{
-    ViewBag.Title = "AprovarOrdemServico";
+﻿@using Presentation.Extensions
+@model EntitiesServices.Model.ORDEM_SERVICO
+@{ Layout = "~/Views/Shared/_Layout_Admin.cshtml"; }
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Ordens de Serviço</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaOrdemServico", "OrdemServico")">Ordens de Serviço</a>
+            </li>
+            <li>
+                <a href="@Url.Action("EditarOrdemServico", "OrdemServico")">Ordens de Serviço - Edição</a>
+            </li>
+            <li class="active">
+                <strong>Ordens de Serviço - Aprovação</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Ordens de Serviço - Aprovação</h5>
+                </div>
+                <div class="ibox-content">
+                    <row>
+                        <div class="form-group">
+                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAnexoOrdemServico", controller: "OrdemServico")
+                            @Html.ButtonLinkIndex(text: "Dashboard", controller: "Servico", action: "MontarTelaDashboardServiceDesk")
+                        </div>
+                    </row>
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">Produto</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-3">Serviço</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            @*Cancelamento*@
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("AprovarOrdemServico", "OrdemServico", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken() 
+                                        if (!ViewData.ModelState.IsValid)
+                                        {
+                                            <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                            </div> 
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                @Html.HiddenFor(m => m.ATEN_CD_ID)
+                                                @Html.HiddenFor(m => m.ORSE_DS_DESCRICAO)
+                                                @Html.HiddenFor(m => m.ORSE_DS_ENCERRAMENTO)
+                                                @Html.HiddenFor(m => m.ORSE_DT_ENCERRAMENTO)
+                                                @Html.HiddenFor(m => m.ORSE_DT_INICIO)
+                                                @Html.HiddenFor(m => m.ORSE_DT_PREVISTA)
+                                                @Html.HiddenFor(m => m.ORSE_DT_CRIACAO)
+                                                @Html.HiddenFor(m => m.PROD_CD_ID)
+                                                @Html.HiddenFor(m => m.SERV_CD_ID)
+                                                @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                @Html.HiddenFor(m => m.DEPT_CD_ID)
+                                                @Html.HiddenFor(m => m.ORSE_IN_STATUS)
+                                                @Html.HiddenFor(m => m.ORSE_IN_ATIVO)
+                                                @Html.HiddenFor(m => m.ORSE_TX_OBSERVACOES)
+                                                @Html.HiddenFor(m => m.ORSE_DS_DESCRICAO)
+                                                @Html.HiddenFor(m => m.CAOS_CD_ID)
+                                                @Html.HiddenFor(m => m.ATEN_CD_ID)
+                                                @Html.HiddenFor(m => m.ORSE_IN_VISITA)
+                                                @Html.HiddenFor(m => m.ORSE_NR_NOTA_FISCAL)
+                                                @Html.HiddenFor(m => m.ORSE_NR_NUMERO)
+                                                @Html.HiddenFor(m => m.ORSE_CD_ID)
+                                                @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                 <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Cliente*
+                                                    @Html.TextBoxFor(m => m.CLIENTE.CLIE_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Categoria*
+                                                    @Html.TextBoxFor(m => m.CATEGORIA_ORDEM_SERVICO.CAOS_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Responsável
+                                                    @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Departamento
+                                                    @Html.TextBoxFor(m => m.DEPARTAMENTO.DEPT_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Data Início
+                                                    @Html.TextBoxFor(m => m.ORSE_DT_INICIO, new { @class = "form-control", autofocus = true, @readonly = "readonly", @style = "color:green; font-weight:bold" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Data Prevista
+                                                    @Html.TextBoxFor(m => m.ORSE_DT_PREVISTA, new { @class = "form-control", autofocus = true, @id = "dtPrevista", @readonly = "readonly", @style = "font-weight:bold" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Descrição*
+                                                    @Html.TextAreaFor(m => m.ORSE_DS_DESCRICAO, new { @class = "form-control summernote", style = "width: 100%; height: 100px;", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    @Html.ButtonActionSubmit(text: "Aprovar Ordem de Serviço", htmlAttributes: new { id = "basictoast" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        }
+                                </div>
+                            </div>
+
+                            @*Produto*@
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                     <div class="row">
+                                         <h3>Produtos</h3>
+                                         <div class="form-group">
+                                             <div class="col-sm-12 col-md-12 col-xs-12">
+                                                <table id="tblProd" class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Produto</th>
+                                                            <th>Preço (R$)</th>
+                                                            <th>Preço Promoção (R$)</th>
+                                                            <th>Quantidade</th>
+                                                            <th>Preço Total (R$)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                       @if (Model.ORDEM_SERVICO_PRODUTO != null && Model.ORDEM_SERVICO_PRODUTO.Count > 0)
+                                                       { 
+                                                            foreach (var cond in Model.ORDEM_SERVICO_PRODUTO.Where(x => x.OSPR_IN_ATIVO == 1).ToList<EntitiesServices.Model.ORDEM_SERVICO_PRODUTO>())
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.PRODUTO.PROD_NM_NOME</td>
+                                                                    <td>@cond.OSPR_VL_PRECO_NOVO</td>
+                                                                    <td>@cond.OSPR_VL_PRECO_PROMO</td>
+                                                                    <td>@cond.OSPR_IN_QUANTIDADE</td>
+                                                                    <td>@CrossCutting.Formatters.DecimalFormatter((Int32)cond.OSPR_IN_QUANTIDADE * (Decimal)cond.OSPR_VL_PRECO_NOVO)</td>
+                                                                </tr>
+                                                            }
+                                                       }
+                                                    </tbody>
+                                                </table>
+                                                 @if (Model.ORDEM_SERVICO_PRODUTO != null && Model.ORDEM_SERVICO_PRODUTO.Count > 0)
+                                                 { 
+                                                     <div id="vlrTotalProd">
+                                                         <strong>Total Produtos:</strong> R$@CrossCutting.Formatters.DecimalFormatter(Model.ORDEM_SERVICO_PRODUTO.Sum(x => (Int32)x.OSPR_IN_QUANTIDADE * (Decimal)x.OSPR_VL_PRECO_NOVO))
+                                                     </div>
+                                                 }
+                                            </div>
+                                         </div>
+                                     </div>
+                                </div>
+                            </div>
+
+                              @*Servio*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                     <div class="row">
+                                         <h3>Serviços</h3>
+                                         <div class="form-group">
+                                             <div class="col-sm-12 col-md-12 col-xs-12">
+                                                <table id="tblServ" class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Serviço</th>
+                                                            <th>Preço (R$)</th>
+                                                            <th>Preço Promoção (R$)</th>
+                                                            <th>Quantidade</th>
+                                                            <th>Preço Total (R$)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.ORDEM_SERVICO_SERVICO != null && Model.ORDEM_SERVICO_SERVICO.Count > 0)
+                                                        { 
+                                                             foreach (var cond in Model.ORDEM_SERVICO_SERVICO.Where(x => x.OSSE_IN_ATIVO == 1).ToList<EntitiesServices.Model.ORDEM_SERVICO_SERVICO>())
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.SERVICO.SERV_NM_NOME</td>
+                                                                    <td>@cond.OSSE_VL_PRECO_NOVO</td>
+                                                                    <td>@cond.OSSE_VL_PRECO_PROMO</td>
+                                                                    <td>@cond.OSSE_IN_QUANTIDADE</td>
+                                                                    <td>@CrossCutting.Formatters.DecimalFormatter((Int32)cond.OSSE_IN_QUANTIDADE * (Decimal)cond.OSSE_VL_PRECO_NOVO)</td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                                 @if (Model.ORDEM_SERVICO_SERVICO != null && Model.ORDEM_SERVICO_SERVICO.Count > 0)
+                                                 { 
+                                                     <div id="vlrTotalServ">
+                                                         <strong>Total Serviços:</strong> R$@CrossCutting.Formatters.DecimalFormatter(Model.ORDEM_SERVICO_SERVICO.Sum(x => (Int32)x.OSSE_IN_QUANTIDADE * (Decimal)x.OSSE_VL_PRECO_NOVO))
+                                                     </div>
+                                                 }
+                                            </div>
+                                         </div>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/Content/plugins/summernote/summernote.css")
+}
+@section Scripts {
+    @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/plugins/summernote")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.summernote').summernote();
+
+        });
+
+        var edit = function () {
+            $('.click2edit').summernote({ focus: true });
+        };
+
+        var save = function () {
+            var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
+            $('.click2edit').destroy();
+        };
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.datetime-picker').datetimepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    controlType: 'select',
+                    showSecond: "false",
+                    timeFormat: 'HH:mm',
+                    locale: 'pt-br',
+                    hourText: 'Hora',
+                    minuteText: 'Minuto',
+                    secondText: 'Segundo',
+                    currentText: 'Agora',
+                    closeText: 'Feito',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $("#dn").mask("99/99/9999");
+            $("#tel").mask("(99) 9999-9999");
+            $("#tel1").mask("(99) 99999-9999");
+            $("#hora").mask("99:99:99");
+            $("#datatime").mask("99/99/9999 99:99:99");
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 52], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Chama o evento após selecionar um valor
+            $('#pessoa').on('change', function () {
+                //Verifica se o valor é igual a 1 e mostra a divCnpj
+                if (this.value == '2') {
+                    $("#PF").hide();
+                    $("#PJ").show();
+                }
+                //Se o tempo for mé igual a 2 mostra a divCpf
+                else if (this.value == '1') {
+                    $("#PJ").hide();
+                    $("#PF").show();
+                }
+                else if (this.value == '3') {
+                    $("#PF").hide();
+                    $("#PJ").show();
+                }
+
+                //Se não for nem 1 nem 2 esconde as duas
+                else {
+                    $("#PJ").hide();
+                    $("#PF").hide();
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Encerrameto em andamento!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                    + shortCutFunction
+                    + "](\""
+                    + msg
+                    + (title ? "\", \"" + title : '')
+                    + "\")\n\ntoastr.options = "
+                    + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+<script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+</script>}
 }
 
-<h2>AprovarOrdemServico</h2>
 

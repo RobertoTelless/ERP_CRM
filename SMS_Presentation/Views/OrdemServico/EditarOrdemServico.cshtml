@@ -1,7 +1,1256 @@
-﻿
+﻿@using Presentation.Extensions
+@model ERP_CRM_Solution.ViewModels.OrdemServicoViewModel
 @{
-    ViewBag.Title = "EditarOrdemServico";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Ordens de Serviço</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaOrdemServico", "OrdemServico")">Ordens de Serviço</a>
+            </li>
+            <li class="active">
+                <strong>Ordens de Serviço - Consulta & Edição</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Ordens de Serviço - Edição</h5>
+                </div>
+                <div class="ibox-content">
+                    @Html.AntiForgeryToken()
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <row>
+                        <div class="form-group">
+                            @if (Model.ORSE_IN_STATUS == 1 || Model.ORSE_IN_STATUS == 2)
+                            {
+                                @Html.ButtonLinkIndex(text: "Cancelar", action: "CancelarOrdemServico", controller: "OrdemServico")
+                            }
+                            @if (Model.ORSE_IN_STATUS == 1 || Model.ORSE_IN_STATUS == 2)
+                            {
+                                @Html.ButtonLinkIndex(text: "Encerrar", action: "EncerrarOrdemServico", controller: "OrdemServico")
+                            }
+                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseOrdemServico", controller: "OrdemServico")
+                            @Html.ButtonLinkIndex(text: "Dashboard", controller: "Servico", action: "MontarTelaDashboardServiceDesk")
+                        </div>
+                    </row>
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="@ViewBag.TabGeral"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            <li class="@ViewBag.TabProd"><a data-toggle="tab" href="#tab-10">Produto</a></li>
+                            <li class="@ViewBag.TabServ"><a data-toggle="tab" href="#tab-11">Serviço</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">Anexos</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-3">Cancelamento</a></li>
+                            <li class="@ViewBag.TabAcomp"><a data-toggle="tab" href="#tab-4">Acompanhamentos</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-5">Agendamento</a></li>
+                            <li class="@ViewBag.TabAgend"><a data-toggle="tab" href="#tab-6">Agendamentos - Lista</a></li>
+                            @if (ViewBag.Perfil == "ADM")
+                            {
+                                <li class="@ViewBag.Comments"><a data-toggle="tab" href="#tab-9">Comentários Internos</a></li>
+                            }
+                            <li class=""><a data-toggle="tab" href="#tab-7">Observações</a></li>
+                            @if (Model.ATEN_CD_ID != null)
+                            { 
+                                <li class=""><a data-toggle="tab" href="#tab-8">Atendimento de Origem</a></li>
+                            }
+                        </ul>
+                        <div class="tab-content">
+                            @*Dados Gerais*@
+                            <div id="tab-1" class="tab-pane @ViewBag.TabGeral">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarOrdemServico", "OrdemServico", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Ordem de Serviço", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group" >
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.ATEN_CD_ID)
+                                                    @Html.HiddenFor(m => m.ORSE_DS_ENCERRAMENTO)
+                                                    @Html.HiddenFor(m => m.ORSE_DT_ENCERRAMENTO)
+                                                    @Html.HiddenFor(m => m.ORSE_DT_INICIO)
+                                                    @Html.HiddenFor(m => m.ORSE_DT_PREVISTA)
+                                                    @Html.HiddenFor(m => m.ORSE_DT_CRIACAO)
+                                                    @Html.HiddenFor(m => m.PROD_CD_ID)
+                                                    @Html.HiddenFor(m => m.SERV_CD_ID)
+                                                    @Html.HiddenFor(m => m.ORSE_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.ORSE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.CAOS_CD_ID)
+                                                    @Html.HiddenFor(m => m.ATEN_CD_ID)
+                                                    @Html.HiddenFor(m => m.ORSE_IN_VISITA)
+                                                    @Html.HiddenFor(m => m.ORSE_NR_NOTA_FISCAL)
+                                                    @Html.HiddenFor(m => m.ORSE_NR_NUMERO)
+                                                    @Html.HiddenFor(m => m.ORSE_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    Status
+                                                    @if (Model.ORSE_IN_STATUS == 999)
+                                                    {
+                                                        @Html.TextBox("status", "Criado", new { style = "color: orange; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }
+                                                    else if (Model.ORSE_IN_STATUS == 1)
+                                                    {
+                                                        @Html.TextBox("status", "Para Aprovação", new { style = "color: blue; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }
+                                                    else if (Model.ORSE_IN_STATUS == 3)
+                                                    {
+                                                        @Html.TextBox("status", "Finalizado ", new { style = "color: green; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }
+                                                    else if (Model.ORSE_IN_STATUS == 4)
+                                                    {
+                                                        @Html.TextBox("status", "Cancelado", new { style = "color: red; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }
+                                                    else if (Model.ORSE_IN_STATUS == 4)
+                                                    {
+                                                        @Html.TextBox("status", "Em Aprovação", new { style = "color: orange; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }
+                                                    else if (Model.ORSE_IN_STATUS == 4)
+                                                    {
+                                                        @Html.TextBox("status", "Aprovado", new { style = "color: green; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }
+                                                    else if (Model.ORSE_IN_STATUS == 4)
+                                                    {
+                                                        @Html.TextBox("status", "Recusado", new { style = "color: red; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBox("status", "-", new { style = "color: red; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Cliente
+                                                    @Html.TextBoxFor(m => m.CLIENTE.CLIE_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Responsável
+                                                    @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Departamento
+                                                    @Html.DropDownListFor(m => m.DEPT_CD_ID, (SelectList)ViewBag.Depts, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.DEPT_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" >
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Categoria*
+                                                    @Html.TextBoxFor(m => m.CATEGORIA_ORDEM_SERVICO.CAOS_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Número*
+                                                    @Html.TextBoxFor(m => m.ORSE_NR_NUMERO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Data Início
+                                                    @Html.TextBoxFor(m => m.ORSE_DT_INICIO, new { @class = "form-control", autofocus = true, @readonly = "readonly", @style = "color:green; font-weight:bold" })
+                                                    @Html.ValidationMessageFor(m => m.ORSE_DT_INICIO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Forma de Pagamento
+                                                    @Html.DropDownListFor(m => m.FOPA_CD_ID, (SelectList)ViewBag.FormaPagamento, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.FOPA_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" >
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Filial
+                                                    @Html.TextBoxFor(m => m.FILIAL.FILI_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Equipamento
+                                                    @Html.TextBoxFor(m => m.ORSE_NM_EQUIPAMENTO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.ORSE_NM_EQUIPAMENTO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Número Equipamento
+                                                    @Html.TextBoxFor(m => m.ORSE_NR_EQUIPAMENTO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.ORSE_NR_EQUIPAMENTO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Técnico
+                                                    @Html.DropDownListFor(m => m.ORSE_IN_TECNICO, (SelectList)ViewBag.Tecnicos, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.ORSE_IN_TECNICO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Valor Total (R$)
+                                                    @Html.TextBox("vlrTotal", (decimal)ViewBag.ValorTotal, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" >
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Descrição*
+                                                    @if (ViewBag.Perfil == "ADM")
+                                                    {
+                                                        @Html.TextAreaFor(m => m.ORSE_DS_DESCRICAO, new { @class = "form-control summernote", style = "width: 100%; height: 100px;", autofocus = true })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextAreaFor(m => m.ORSE_DS_DESCRICAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly = "readonly" })
+                                                    }
+                                                    @Html.ValidationMessageFor(m => m.ORSE_DS_DESCRICAO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            @if (Model.ORSE_IN_STATUS == 3)
+                                            {
+                                                <hr />
+                                                <div class="form-group" >
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data/Hora de Encerramento
+                                                        @Html.TextBoxFor(m => m.ORSE_DT_ENCERRAMENTO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" >
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        Anotações de Encerramento
+                                                        @Html.TextAreaFor(m => m.ORSE_DS_ENCERRAMENTO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly = "readonly" })
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <hr />
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Ordem de Serviço", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                </div>
+                            </div>
 
-<h2>EditarOrdemServico</h2>
+                            @*Imagens - Foto e Anexos*@
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <hr />
+                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                            <h4>Anexos</h4>
+                                            <br />
+                                            <div class="form-group">
+                                                @using (Html.BeginForm("UploadFileOrdemServico", "OrdemServico", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container2" }))
+                                                {
+                                                    <div class="ibox-content">
+                                                        @if (Model.ORDEM_SERVICO_ANEXO != null && Model.ORDEM_SERVICO_ANEXO.Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead style="background-color:lightsteelblue">
+                                                                    <tr>
+                                                                        <th>Título</th>
+                                                                        <th>Data</th>
+                                                                        <th>Tipo</th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.ORDEM_SERVICO_ANEXO))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.ORSX_NM_TITULO</td>
+                                                                            <td>@cond.ORSX_DT_ANEXO.ToShortDateString()</td>
+                                                                            @if (cond.ORSX_IN_TIPO == 1)
+                                                                            {
+                                                                                <td>Imagem</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Arquivo</td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @if (cond.ORSX_IN_TIPO == 1 || cond.ORSX_IN_TIPO == 2)
+                                                                                {
+                                                                                    @Html.TableLinkDetails(cond.ORSX_CD_ID, "VerAnexoOrdemServico", "fa-camera", "Visualizar")
+                                                                                }
+                                                                                @if (cond.ORSX_IN_TIPO == 3)
+                                                                                {
+                                                                                    <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.ORSX_AQ_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank"></a>
+                                                                                }
+                                                                                @Html.TableLinkDetails(cond.ORSX_CD_ID, "DownloadOrdemServico", "fa-download", "Download")
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                            <input style="float:left; margin-right:5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                            <input style="float:left;" type="submit" value="Incluir Anexo" class="btn btn-sm btn-success" />
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Cancelamento*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarOrdemServico", "OrdemServico", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        <div class="row">
+                                            <div class="form-group" >
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data/Hora de Cancelamento
+                                                    @Html.TextBoxFor(m => m.ORSE_DT_CANCELAMENTO, new { @class = "form-control", autofocus = true, @readonly = "readonly", @style = "color:red; font-weight:bold" })
+                                                </div>
+                                                @*<div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Hora Cancelamento
+                                                        @Html.TextBoxFor(m => m.ATEN_HR_CANCELAMENTO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>*@
+                                            </div>
+                                            <div class="form-group" >
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Anotações de Cancelamento
+                                                    @Html.TextAreaFor(m => m.ORSE_DS_MOTIVO_CANCELAMENTO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+
+                            @*Acompanhamentos*@
+                            <div id="tab-4" class="tab-pane @ViewBag.TabAcomp">
+                                <div class="panel-body">
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4>Acompanhamentos:</h4>
+                                            @if (Model.ORDEM_SERVICO_ACOMPANHAMENTO != null && Model.ORDEM_SERVICO_ACOMPANHAMENTO.Count > 0)
+                                            {
+                                                foreach (var item in (Model.ORDEM_SERVICO_ACOMPANHAMENTO).OrderByDescending(a => a.ORSA_DT_ACOMPANHAMENTO))
+                                                {
+                                                    <div class="social-feed-box">
+                                                        <div class="social-avatar">
+                                                            <a href="" class="pull-left">
+                                                                <img src="@Url.Content(item.USUARIO.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 70px; max-width: 90px;">
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <a href="#">
+                                                                    @item.USUARIO.USUA_NM_NOME
+                                                                </a>
+                                                                <small class="text-muted">@(item.ORSA_DT_ACOMPANHAMENTO == null? DateTime.Now.ToLongDateString() : item.ORSA_DT_ACOMPANHAMENTO.Value.ToLongDateString()) as @(item.ORSA_DT_ACOMPANHAMENTO == null ? DateTime.Now.ToShortTimeString() : item.ORSA_DT_ACOMPANHAMENTO.Value.ToShortTimeString())</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="social-body">
+                                                            <p>
+                                                                @item.ORSA_DS_DESCRICAO
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group">
+                                        @Html.ButtonLinkIndex(text: "Incluir Acompanhamento", action: "IncluirAcompanhamento", controller: "OrdemServico")
+                                        @*@Html.ButtonLinkIndex(text: "Incluir Acompanhamento e Encerrar", action: "IncluirAcompanhamentoEncerrar", controller: "OrdemServico")*@
+                                    </div>
+                                </div>
+                            </div>
+
+                             @*Comentários*@
+                            <div id="tab-9" class="tab-pane @ViewBag.Comments">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4>Comentários:</h4>
+                                            @if (Model.ORDEM_SERVICO_COMENTARIOS != null && Model.ORDEM_SERVICO_COMENTARIOS.Count > 0)
+                                            {
+                                                foreach (var item in (Model.ORDEM_SERVICO_COMENTARIOS).OrderByDescending(a => a.ORSC_DT_CRIACAO))
+                                                {
+                                                    <div class="">
+                                                        <div class="social-avatar">
+                                                            <a href="" class="pull-left">
+                                                                <img src="@Url.Content(item.USUARIO.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 70px; max-width: 90px;">
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <a href="#">
+                                                                    @item.USUARIO.USUA_NM_NOME
+                                                                </a>
+                                                                <small class="text-muted">@(item.ORSC_DT_CRIACAO == null? DateTime.Now.ToLongDateString() : item.ORSC_DT_CRIACAO.ToLongDateString()) as @(item.ORSC_DT_CRIACAO == null ? DateTime.Now.ToShortTimeString() : item.ORSC_DT_CRIACAO.ToShortTimeString())</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="social-body">
+                                                            <p class="message-box message-partner">@item.ORSC_TX_COMENTARIO</p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group">
+                                        @Html.ButtonLinkIndex(text: "Incluir Comentário", action: "IncluirComentario", controller: "OrdemServico")
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Agendamento*@
+                            <div id="tab-5" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("IncluirAgendamento", "OrdemServico", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container2" }))
+                                    {
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-sm-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ORSE_CD_ID)
+                                                    Categoria
+                                                    @Html.DropDownList("CAAG_CD_ID", (SelectList)ViewBag.CatsAgenda, "Selecionar", new { @class = "form-control", @data_val = "true" })
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-xs-12">
+                                                    Data
+                                                    @Html.TextBox(name: "AGEN_DT_DATA", value: DateTime.Now.Date.ToString("dd//MM/yyyy"), format: "{0:dd/MM/yyyy}", htmlAttributes: new { @class = "form-control data2", autofocus = true })
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-xs-12">
+                                                    Hora
+                                                    <div class="input-group date" id="datetimepicker3">
+                                                        @Html.TextBox(name: "AGEN_HR_HORA", value: DateTime.Now.TimeOfDay, htmlAttributes: new { @class = "form-control time-picker", autofocus = true, @id = "hora" })
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-xs-12">
+                                                    Contato
+                                                    @Html.DropDownList("AGEN_CD_USUARIO", (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", @id = "AGEN_CD_USUARIO", @data_val = "true" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12 col-md-12 col-xs-12">
+                                                    Título
+                                                    @Html.TextBox(name: "AGEN_NM_TITULO", value: null, htmlAttributes: new { @class = "form-control", autofocus = true })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12 col-md-12 col-xs-12">
+                                                    Descrição
+                                                    @Html.TextArea(name: "AGEN_DS_DESCRICAO", value: null, htmlAttributes: new { @class = "form-control", autofocus = true })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Incluir Agendamento", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Agendamentos - Lista*@
+                            <div id="tab-6" class="tab-pane @ViewBag.TabAgend">
+                                <div class="panel-body">
+                                    <h5>Agendamentos</h5>
+                                    <br />
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-sm-12 col-md-12 col-xs-12">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Data</th>
+                                                            <th>Hora</th>
+                                                            <th>Título</th>
+                                                            <th>Categoria</th>
+                                                            <th>Ações</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (ViewBag.Agendamentos != null && ViewBag.Agendamentos.Count > 0)
+                                                        {
+                                                            foreach (var cond in (List<EntitiesServices.Model.AGENDA>)ViewBag.Agendamentos)
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.AGEN_DT_DATA.ToShortDateString()</td>
+                                                                    <td>@cond.AGEN_HR_HORA.ToString()</td>
+                                                                    <td>@cond.AGEN_NM_TITULO</td>
+                                                                    <td>@cond.CATEGORIA_AGENDA.CAAG_NM_NOME</td>
+                                                                    <td>
+                                                                        @Html.TableLinkDetails(cond.AGEN_CD_ID, "EditarAgenda", "fa-edit", "Editar")
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Observações*@
+                            <div id="tab-7" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarOrdemServico", "OrdemServico", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Ordem de Serviço", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group" >
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.ATEN_CD_ID)
+                                                    @Html.HiddenFor(m => m.ORSE_DS_DESCRICAO)
+                                                    @Html.HiddenFor(m => m.ORSE_DS_ENCERRAMENTO)
+                                                    @Html.HiddenFor(m => m.ORSE_DT_ENCERRAMENTO)
+                                                    @Html.HiddenFor(m => m.ORSE_DT_INICIO)
+                                                    @Html.HiddenFor(m => m.ORSE_DT_PREVISTA)
+                                                    @Html.HiddenFor(m => m.ORSE_DT_CRIACAO)
+                                                    @Html.HiddenFor(m => m.PROD_CD_ID)
+                                                    @Html.HiddenFor(m => m.SERV_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    @Html.HiddenFor(m => m.DEPT_CD_ID)
+                                                    @Html.HiddenFor(m => m.ORSE_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.ORSE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.CAOS_CD_ID)
+                                                    @Html.HiddenFor(m => m.ATEN_CD_ID)
+                                                    @Html.HiddenFor(m => m.ORSE_IN_VISITA)
+                                                    @Html.HiddenFor(m => m.ORSE_NR_NOTA_FISCAL)
+                                                    @Html.HiddenFor(m => m.ORSE_NR_NUMERO)
+                                                    @Html.HiddenFor(m => m.ORSE_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    Observações
+                                                    @Html.TextAreaFor(m => m.ORSE_TX_OBSERVACOES, new { @class = "form-control summernote", style = "width: 100%; height: 400px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.ORSE_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Ordem de Serviço", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Atendimento Origem*@
+                            <div id="tab-8" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                            <div class="form-group" >
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Atendimento
+                                                    @if (Model.ATENDIMENTO != null && Model.ATENDIMENTO.ATEN_NR_NUMERO != null)
+                                                    {
+                                                        @Html.TextBoxFor(m => m.ATENDIMENTO.ATEN_NR_NUMERO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBox("ATEN_NR_NUMERO", "Atendimento sem número", new { @class = "form-control", autofocus = true, @readonly = "readonly" });
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                             @*Produto*@
+                            <div id="tab-10" class="tab-pane @ViewBag.TabProd">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("IncluirProdutoOS_Inline", "OrdemServico", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    { 
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Produto
+                                                    <select name="PROD_CD_ID" id="lstProduto" class="form-control" data-val="true" style="display: none;" onchange="DesativaServico($(this).val())">
+                                                        <option value="">Selecionar</option>
+                                                    </select>
+                                                    @Html.ValidationMessageFor(m => m.PROD_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                 <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Quantidade
+                                                    @Html.TextBoxFor(m => m.qtde, new { @class = "form-control touchspin2", autofocus = true, @id = "qtde" })
+                                                    @Html.ValidationMessageFor(m => m.qtde, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Preço
+                                                    @Html.TextBoxFor(m => m.preco, new { @class = "form-control", autofocus = true, @id = "preco" })
+                                                    @Html.ValidationMessageFor(m => m.preco, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Preço Promoção
+                                                    @Html.TextBoxFor(m => m.promo, new { @class = "form-control", autofocus = true, @id = "promo" })
+                                                    @Html.ValidationMessageFor(m => m.preco, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Descrição*
+                                                    @Html.TextAreaFor(m => m.item_obs, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @id = "desc" })
+                                                    @Html.ValidationMessageFor(m => m.item_obs, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <input type="button" class="btn btn-sm btn-warning" onclick="IncluirProd()" value="Incluir Produto" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                     <div class="row">
+                                         <h3>Produtos</h3>
+                                         <div class="form-group">
+                                             <div class="col-sm-12 col-md-12 col-xs-12">
+                                                <table id="tblProd" class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Produto</th>
+                                                            <th>Preço (R$)</th>
+                                                            <th>Preço Promoção (R$)</th>
+                                                            <th>Quantidade</th>
+                                                            <th>Preço Total (R$)</th>
+                                                            <th>Ações</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                       @if (Model.ORDEM_SERVICO_PRODUTO != null && Model.ORDEM_SERVICO_PRODUTO.Count > 0)
+                                                       { 
+                                                            foreach (var cond in Model.ORDEM_SERVICO_PRODUTO.Where(x => x.OSPR_IN_ATIVO == 1).ToList<EntitiesServices.Model.ORDEM_SERVICO_PRODUTO>())
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.PRODUTO.PROD_NM_NOME</td>
+                                                                    <td>@cond.OSPR_VL_PRECO_NOVO</td>
+                                                                    <td>@cond.OSPR_VL_PRECO_PROMO</td>
+                                                                    <td>@cond.OSPR_IN_QUANTIDADE</td>
+                                                                    <td>@CrossCutting.Formatters.DecimalFormatter((Int32)cond.OSPR_IN_QUANTIDADE * (Decimal)cond.OSPR_VL_PRECO_NOVO)</td>
+                                                                    <td class="td-one-action">
+                                                                        @if (cond.OSPR_IN_ATIVO == 1)
+                                                                        {
+                                                                            @Html.TableLinkDetails(cond.OSPR_CD_ID, "ExcluirOSProduto", "fa-trash-o", "Excluir")
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.TableLinkDetails(cond.OSPR_CD_ID, "ReativarOSProduto", "fa-refresh", "Reativar")
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                       }
+                                                    </tbody>
+                                                </table>
+                                                 @if (Model.ORDEM_SERVICO_PRODUTO != null && Model.ORDEM_SERVICO_PRODUTO.Count > 0)
+                                                 { 
+                                                     <div id="vlrTotalProd">
+                                                         <strong>Total Produtos:</strong> R$@CrossCutting.Formatters.DecimalFormatter(Model.ORDEM_SERVICO_PRODUTO.Sum(x => (Int32)x.OSPR_IN_QUANTIDADE * (Decimal)x.OSPR_VL_PRECO_NOVO))
+                                                     </div>
+                                                 }
+                                            </div>
+                                         </div>
+                                     </div>
+                                </div>
+                            </div>
+
+                              @*Servio*@
+                            <div id="tab-11" class="tab-pane @ViewBag.TabServ">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("IncluirServicoOS_Inline", "OrdemServico", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    { 
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Serviço
+                                                    <select name="SERV_CD_ID" id="lstServico" class="form-control" data-val="true" style="display: none;" onchange="DesativaProduto($(this).val())">
+                                                        <option value="">Selecionar</option>
+                                                    </select>
+                                                    @Html.ValidationMessageFor(m => m.SERV_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                 <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Quantidade
+                                                    @Html.TextBoxFor(m => m.qtde, new { @class = "form-control touchspin2", autofocus = true, @id = "qtdeServ" })
+                                                    @Html.ValidationMessageFor(m => m.qtde, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Preço
+                                                    @Html.TextBoxFor(m => m.preco, new { @class = "form-control", autofocus = true, @id = "precoServ" })
+                                                    @Html.ValidationMessageFor(m => m.preco, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Preço Promoção
+                                                    @Html.TextBoxFor(m => m.promo, new { @class = "form-control", autofocus = true, @id = "promoServ" })
+                                                    @Html.ValidationMessageFor(m => m.preco, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Descrição*
+                                                    @Html.TextAreaFor(m => m.item_obs, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @id = "descServ" })
+                                                    @Html.ValidationMessageFor(m => m.item_obs, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <input type="button" class="btn btn-sm btn-warning" onclick="IncluirServ()" value="Incluir Servico" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                     <div class="row">
+                                         <h3>Serviços</h3>
+                                         <div class="form-group">
+                                             <div class="col-sm-12 col-md-12 col-xs-12">
+                                                <table id="tblServ" class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Serviço</th>
+                                                            <th>Preço (R$)</th>
+                                                            <th>Preço Promoção (R$)</th>
+                                                            <th>Quantidade</th>
+                                                            <th>Preço Total (R$)</th>
+                                                            <th>Ações</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.ORDEM_SERVICO_SERVICO != null && Model.ORDEM_SERVICO_SERVICO.Count > 0)
+                                                        { 
+                                                             foreach (var cond in Model.ORDEM_SERVICO_SERVICO.Where(x => x.OSSE_IN_ATIVO == 1).ToList<EntitiesServices.Model.ORDEM_SERVICO_SERVICO>())
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.SERVICO.SERV_NM_NOME</td>
+                                                                    <td>@cond.OSSE_VL_PRECO_NOVO</td>
+                                                                    <td>@cond.OSSE_VL_PRECO_PROMO</td>
+                                                                    <td>@cond.OSSE_IN_QUANTIDADE</td>
+                                                                    <td>@CrossCutting.Formatters.DecimalFormatter((Int32)cond.OSSE_IN_QUANTIDADE * (Decimal)cond.OSSE_VL_PRECO_NOVO)</td>
+                                                                    <td class="td-one-action">
+                                                                        @if (cond.OSSE_IN_ATIVO == 1)
+                                                                        {
+                                                                            @Html.TableLinkDetails(cond.OSSE_CD_ID, "ExcluirOSServico", "fa-trash-o", "Excluir")
+                                                                        }
+                                                                        else
+                                                                        { 
+                                                                            @Html.TableLinkDetails(cond.OSSE_CD_ID, "ReativarOSServico", "fa-refresh", "Reativar")
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                                 @if (Model.ORDEM_SERVICO_SERVICO != null && Model.ORDEM_SERVICO_SERVICO.Count > 0)
+                                                 { 
+                                                     <div id="vlrTotalServ">
+                                                         <strong>Total Serviços:</strong> R$@CrossCutting.Formatters.DecimalFormatter(Model.ORDEM_SERVICO_SERVICO.Sum(x => (Int32)x.OSSE_IN_QUANTIDADE * (Decimal)x.OSSE_VL_PRECO_NOVO))
+                                                     </div>
+                                                 }
+                                            </div>
+                                         </div>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/Content/plugins/summernote/summernote.css")
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+
+    <style>
+        .message-box {
+          padding: 6px 10px;
+          border-radius: 6px 0 6px 0;
+          position: relative;
+          background: rgba(100, 170, 0, .1);
+          border: 2px solid rgba(100, 170, 0, .1);
+          color: #6c6c6c;
+          font-size: 12px;
+          width: auto;
+          margin-left: 55px;
+        }
+
+        .message-box:after {
+          content: "";
+          position: absolute;
+          border: 10px solid transparent;
+          border-top: 10px solid rgba(100, 170, 0, .2);
+          border-right: none;
+          bottom: -22px;
+          right: 10px;
+        }
+
+        .message-partner {
+          background: rgba(0, 114, 135, .1);
+          border: 2px solid rgba(0, 114, 135, .1);
+          align-self: flex-start;
+        }
+
+        .message-partner:after {
+          right: auto;
+          bottom: auto;
+          top: -22px;
+          left: 9px;
+          border: 10px solid transparent;
+          border-bottom: 10px solid rgba(0, 114, 135, .2);
+          border-left: none;
+        }
+    </style>
+}
+@section Scripts {
+    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.datetimepicker"></script>
+
+    @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+     <script>
+        $(function () {
+            $("#lstProduto").select2({
+                //data: filterSelect,
+                ajax: {
+                    url: '/Produto/BuscaNome',
+                    type: 'POST',
+                    data: function (params) {
+                        var query = {
+                            nome: params.term
+                        }
+                        return query
+                    },
+                    processResults: function (data) {
+                        console.log(data);
+                        return {
+                            results: data
+                        }
+                    }
+                },
+                allowClear: true,
+                placeholder: 'Busque por nome',
+                minimumInputLength: 1
+            });
+        });
+
+         $(function () {
+            $("#lstServico").select2({
+                //data: filterSelect,
+                ajax: {
+                    url: '/Servico/BuscaNome',
+                    type: 'POST',
+                    data: function (params) {
+                        var query = {
+                            nome: params.term
+                        }
+                        return query
+                    },
+                    processResults: function (data) {
+                        console.log(data);
+                        return {
+                            results: data
+                        }
+                    }
+                },
+                allowClear: true,
+                placeholder: 'Busque por nome',
+                minimumInputLength: 1
+            });
+         });
+
+         function IncluirProd() {
+             var prod = $('#lstProduto').val();
+             var qtde = $('#qtde').val();
+             var preco = $('#preco').val();
+             var promo = $('#promo').val();
+             var desc = $('#desc').val();
+
+             var data = {
+                 PROD_CD_ID: prod
+                 , qtde: qtde
+                 , preco: preco
+                 , item_obs: desc
+                 , promo: promo
+             }
+             $.ajax({
+                 url: '../IncluirProdutoOS_Inline'
+                 , type: 'POST'
+                 , data: data
+                 , success: function (r) {
+                     if (prod != "") {
+                         $('table#tblProd > tbody').append('<tr>'
+                             + '<td>' + $('#lstProduto option:selected').text() + '</td>'
+                             + '<td>' + preco + '</td>'
+                             + '<td>' + promo + '</td>'
+                             + '<td>' + qtde + '</td>'
+                             + '<td>' + parseFloat(qtde * preco.replace(',', '.')).toFixed(2) + '</td>'
+                             + '<td><a alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" href="/OrdemServico/ExcluirOSProduto/' + r.id + '" target="_self" title="Excluir"> </a></td></tr>'
+                         );
+                     }
+
+                     $('#vlrTotalProd').html('<strong>Valor Produtos: </strong> R$' + r.vlrTotal);
+
+                     $('.select2-selection__clear').click();
+                     $('#qtde').val("");
+                     $('#preco').val("");
+                     $('#promo').val("");
+                     $('#desc').val("");
+                 }
+             });
+         }
+
+         function IncluirServ() {
+             var serv = $('#lstServico').val();
+             var qtde = $('#qtdeServ').val();
+             var preco = $('#precoServ').val();
+             var promo = $('#promoServ').val();
+             var desc = $('#descServ').val();
+
+             var data = {
+                 SERV_CD_ID: serv
+                 , qtde: qtde
+                 , preco: preco
+                 , item_obs: desc
+                 , promo: promo
+             }
+             $.ajax({
+                 url: '../IncluirServicoOS_Inline'
+                 , type: 'POST'
+                 , data: data
+                 , success: function (r) {
+                     if (serv != "") {
+                         console.log('a');
+                         $('table#tblServ > tbody').append('<tr>'
+                             + '<td>' + $('#lstServico option:selected').text() + '</td>'
+                             + '<td>' + preco + '</td>'
+                             + '<td>' + promo + '</td>'
+                             + '<td>' + qtde + '</td>'
+                             + '<td>' + parseFloat(qtde * preco.replace(',', '.')).toFixed(2) + '</td>'
+                             + '<td><a alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" href="/OrdemServico/ExcluirOSServico/' + r.id + '" target="_self" title="Excluir"></a></td></tr>'
+                         );
+                     }
+
+                     $('#vlrTotalServ').html('<strong>Valor Serviços: </strong> R$' + r.vlrTotal);
+
+                     $('.select2-selection__clear').click();
+                     $('#qtdeServ').val("");
+                     $('#precoServ').val("");
+                     $('#promoServ').val("");
+                     $('#descServ').val("");
+                 }
+             });
+         }
+    </script>
+
+    <script>
+        function DesativaServico(val) {
+            if (val != "") {
+                $.ajax({
+                    url: '../GetCustoProduto'
+                    , type: 'POST'
+                    , data: {
+                        id: val
+                    }
+                    , success: function (r) {
+                        $('#preco').val("");
+                        if (r.preco != null) {
+                            $('#preco').val(r.preco);
+                        }
+                        if (r.promo != null) {
+                            $('#promo').val(r.promo);
+                        }
+                    }
+                    , error: function () {
+                        $('#preco').val("");
+                        $('#promo').val("");
+                    }
+                });
+            }
+        }
+
+        function DesativaProduto(val) {
+            if (val != "") {
+                $.ajax({
+                    url: '../GetCustoServico'
+                    , type: 'POST'
+                    , data: {
+                        id: val
+                    }
+                    , success: function (r) {
+                        $('#precoServ').val("");
+                        if (r.preco != null) {
+                            $('#precoServ').val(r.preco);
+                        }
+                        if (r.promo != null) {
+                            $('#promoServ').val(r.promo);
+                        }
+                    }
+                    , error: function () {
+                        $('#precoServ').val("");
+                        $('#promoServ').val("");
+                    }
+                });
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('.time-picker').datetimepicker({
+                datepicker: false,
+                format: 'H:i'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker3').click(function () {
+                $('.time-picker').datetimepicker('show');
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.summernote').summernote();
+
+        });
+
+        var edit = function () {
+            $('.click2edit').summernote({ focus: true });
+        };
+
+        var save = function () {
+            var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
+            $('.click2edit').destroy();
+        };
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+
+        $(function () {
+            $('.data2').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.datetime-picker').datetimepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    controlType: 'select',
+                    showSecond: "false",
+                    timeFormat: 'HH:mm',
+                    locale: 'pt-br',
+                    hourText: 'Hora',
+                    minuteText: 'Minuto',
+                    secondText: 'Segundo',
+                    currentText: 'Agora',
+                    closeText: 'Feito',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $("#dn").mask("99/99/9999");
+            $("#tel").mask("(99) 9999-9999");
+            $("#tel1").mask("(99) 99999-9999");
+            $("#data").mask("99/99/9999");
+            $("#hora").mask("99:99");
+            $("#datatime").mask("99/99/9999 99:99:99");
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Edição em andamento!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                    + shortCutFunction
+                    + "](\""
+                    + msg
+                    + (title ? "\", \"" + title : '')
+                    + "\")\n\ntoastr.options = "
+                    + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}
 

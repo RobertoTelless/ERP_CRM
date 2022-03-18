@@ -207,13 +207,13 @@ namespace Presentation.Start
             kernel.Bind<IPeriodicidadeService>().To<PeriodicidadeService>();
             kernel.Bind<IMensagemAutomacaoService>().To<MensagemAutomacaoService>();
             kernel.Bind<IPedidoCompraService>().To<PedidoCompraService>();
-            kernel.Bind<IOrdemServicoServicoAppService>().To<OrdemServicoServicoAppService>();
             kernel.Bind<IOrdemServicoAcompanhamentoService>().To<OrdemServicoAcompanhamentoService>();
             kernel.Bind<IOrdemServicoAgendaService>().To<OrdemServicoAgendaService>();
             kernel.Bind<IOrdemServicoComentarioService>().To<OrdemServicoComentarioService>();
             kernel.Bind<IOrdemServicoProdutoService>().To<OrdemServicoProdutoService>();
             kernel.Bind<IOrdemServicoServicoService>().To<OrdemServicoServicoService>();
             kernel.Bind<ICategoriaOrdemServicoService>().To<CategoriaOrdemServicoService>();
+            kernel.Bind<IOrdemServicoService>().To<OrdemServicoService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();

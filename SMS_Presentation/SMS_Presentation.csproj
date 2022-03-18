@@ -3444,7 +3444,6 @@
     <Content Include="Views\Compra\IncluirCompraExpressa.cshtml" />
     <Content Include="Views\BaseAdmin\CarregarLandingPage.cshtml" />
     <Content Include="Views\OrdemServico\MontarTelaOrdemServico.cshtml" />
-    <Content Include="Views\OrdemServico\MontarTelaOrdemServicoKanban.cshtml" />
     <Content Include="Views\OrdemServico\IncluirOrdemServico.cshtml" />
     <Content Include="Views\OrdemServico\CancelarOrdemServico.cshtml" />
     <Content Include="Views\OrdemServico\EncerrarOrdemServico.cshtml" />

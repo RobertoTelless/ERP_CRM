@@ -208,7 +208,7 @@
                     </thead>
                     <tbody>
                         @foreach (var cond in (ViewBag.Listas as List
-                                        <EntitiesServices.Model.PEDIDO_COMPRA>))
+                                        <EntitiesServices.Model.PEDIDO_COMPRA>).OrderByDescending(p => p.PECO_DT_DATA))
                         {
 
                 <tr>
