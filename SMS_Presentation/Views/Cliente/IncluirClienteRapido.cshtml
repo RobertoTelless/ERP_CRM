@@ -40,6 +40,22 @@
                             </ul>
 
                             <div class="tab-content">
+                                <div class="form-group">
+                                    <br />
+                                    @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
+                                    <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Salvar e Encerrar</button>
+                                    <button class="btnReturn btn btn-sm btn-success" id="basictoast" type="button">Salvar e Incluir Novo Contato</button>
+                                    @if ((Int32)Session["VoltaMensagem"] == 30)
+                                    {
+                                        @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaDashboardMensagem", controller: "Mensagem")
+                                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "Cliente", action: "Voltar")
+                                    }
+                                    else
+                                    {
+                                        @Html.ButtonLinkIndex(text: "Voltar", action: "CarregarBase", controller: "BaseAdmin")
+                                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "Cliente", action: "Voltar")
+                                    }
+                                </div>
                                 @*Dados Gerais*@
                                 <div id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
@@ -168,14 +184,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <br />
                                     @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
                                     <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Salvar e Encerrar</button>
                                     <button class="btnReturn btn btn-sm btn-success" id="basictoast" type="button">Salvar e Incluir Novo Contato</button>
                                     @Html.ButtonLinkIndex(text: "Voltar", action: "CarregarBase", controller: "BaseAdmin")
                                     @Html.ButtonLinkIndex(text: "Dashboard", controller: "Cliente", action: "Voltar")
-                                </div>
+                                </div>*@
                             </div>
                         }
                     </div>

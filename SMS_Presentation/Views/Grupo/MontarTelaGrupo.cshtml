@@ -62,7 +62,14 @@
                             {
                                 @Html.ButtonLinkIndex(text: "Novo Grupo", controller: "Grupo", action: "IncluirGrupo")
                             }
-                            @Html.ButtonLinkIndex(text: "Dashboard", controller: "Grupo", action: "Voltar")
+                            @if ((Int32)Session["VoltaMensagem"] == 40)
+                            {
+                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Mensagem", action: "MontarTelaDashboardMensagens")
+                            }
+                            else
+                            {
+                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Grupo", action: "Voltar")
+                            }
                         </div>
                     </div>
 

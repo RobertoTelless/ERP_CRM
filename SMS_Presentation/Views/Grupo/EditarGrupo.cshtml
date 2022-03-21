@@ -57,7 +57,19 @@
                     <div class="tabs-container">
                         @using (Html.BeginForm("EditarGrupo", "Grupo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                         {
-
+                            <div class="form-group">
+                                <br />
+                                @Html.ButtonActionSubmit(text: "Confirma Edição", htmlAttributes: new { id = "basictoast" })
+                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseGrupo", controller: "Grupo")
+                                @if ((Int32)Session["VoltaMensagem"] == 40)
+                                {
+                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Mensagem", action: "MontarTelaDashboardMensagens")
+                                }
+                                else
+                                {
+                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Grupo", action: "Voltar")
+                                }
+                            </div>
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
                             </ul>
@@ -165,12 +177,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <br />
                                     @Html.ButtonActionSubmit(text: "Confirma Edição", htmlAttributes: new { id = "basictoast" })
                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseGrupo", controller: "Grupo")
-                                    @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "Grupo")
-                                </div>
+                                    @if ((Int32)Session["VoltaMensagem"] == 40)
+                                    {
+                                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "Mensagem", action: "MontarTelaDashboardMensagens")
+                                    }
+                                    else
+                                    {
+                                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "Grupo", action: "Voltar")
+                                    }
+                                </div>*@
                             </div>
                         }
                     </div>

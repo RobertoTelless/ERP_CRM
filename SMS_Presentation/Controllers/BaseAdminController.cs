@@ -165,6 +165,8 @@ namespace ERP_CRM_Solution.Controllers
             Session["VoltaNotificacao"] = 3;
             Session["VoltaNoticia"] = 1;
             Session["AgendaCorp"] = 0;
+            Session["VoltaMensagem"] = 0;
+            Session["VoltaCRM"] = 0;
 
             USUARIO usu = new USUARIO();
             UsuarioViewModel vm = new UsuarioViewModel();

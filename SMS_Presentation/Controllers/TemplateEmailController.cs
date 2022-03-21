@@ -64,7 +64,7 @@ namespace SMS_Presentation.Controllers
         public ActionResult Voltar()
         {
 
-            return RedirectToAction("CarregarBase", "BaseAdmin");
+            return RedirectToAction("MontarTelaDashboardMensagens", "Mensagem");
         }
 
         [HttpGet]

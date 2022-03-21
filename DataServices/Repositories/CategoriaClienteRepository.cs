@@ -29,12 +29,14 @@ namespace DataServices.Repositories
         public List<CATEGORIA_CLIENTE> GetAllItens(Int32 idAss)
         {
             IQueryable<CATEGORIA_CLIENTE> query = Db.CATEGORIA_CLIENTE.Where(p => p.CACL_IN_ATIVO == 1);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
         public List<CATEGORIA_CLIENTE> GetAllItensAdm(Int32 idAss)
         {
             IQueryable<CATEGORIA_CLIENTE> query = Db.CATEGORIA_CLIENTE;
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
     }

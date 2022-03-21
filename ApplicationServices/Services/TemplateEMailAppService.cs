@@ -153,7 +153,7 @@ namespace ApplicationServices.Services
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelTEEM",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<TEMPLATE_EMAIL>(item)
+                    LOG_TX_REGISTRO = "Template: " + item.TEEM_NM_NOME
                 };
 
                 // Persiste

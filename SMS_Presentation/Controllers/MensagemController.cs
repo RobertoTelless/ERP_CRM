@@ -206,10 +206,10 @@ namespace ERP_CRM_Solution.Controllers
             // Abre view
             Session["VoltaMensagem"] = 1;
             objeto = new MENSAGENS();
-            if (Session["FiltroMensagem"] != null)
-            {
-                objeto = (MENSAGENS)Session["FiltroMensagem"];
-            }
+            //if (Session["FiltroMensagem"] != null)
+            //{
+            //    objeto = (MENSAGENS)Session["FiltroMensagem"];
+            //}
             return View(objeto);
         }
 
@@ -245,8 +245,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             listaMaster = baseApp.GetAllItensAdm(idAss).Where(p => p.MENS_IN_TIPO == 2 & p.MENS_DT_CRIACAO.Value.Month == DateTime.Today.Date.Month).OrderByDescending(m => m.MENS_DT_CRIACAO).ToList();
-            Session["ListaMensagem"] = null;
-            Session["FiltroMensagem"] = listaMaster;
+            Session["ListaMensagem"] = listaMaster;
             return RedirectToAction("MontarTelaMensagemSMS");
         }
 
@@ -264,8 +263,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             listaMaster = baseApp.GetAllItens(idAss).Where(p => p.MENS_IN_TIPO == 2).OrderByDescending(m => m.MENS_DT_CRIACAO).ToList();
-            Session["ListaMensagem"] = null;
-            Session["FiltroMensagem"] = listaMaster;
+            Session["ListaMensagem"] = listaMaster;
             return RedirectToAction("MontarTelaMensagemSMS");
         }
 
@@ -944,7 +942,7 @@ namespace ERP_CRM_Solution.Controllers
                         String customId = Cryptography.GenerateRandomPassword(8);
                         if (vetor == String.Empty)
                         {
-                            vetor += "{\"to\": \"," + listaDest + ", \", \"text\": \"," + texto + "\", \"from\": \"ERPSys\"}";
+                            vetor = "{\"to\": \"," + listaDest + ", \", \"text\": \"," + texto + "\", \"from\": \"ERPSys\"}";
                         }
                         else
                         {
@@ -1205,10 +1203,10 @@ namespace ERP_CRM_Solution.Controllers
             // Abre view
             Session["VoltaMensagem"] = 1;
             objeto = new MENSAGENS();
-            if (Session["FiltroMensagem"] != null)
-            {
-                objeto = (MENSAGENS)Session["FiltroMensagem"];
-            }
+            //if (Session["FiltroMensagem"] != null)
+            //{
+            //    objeto = (MENSAGENS)Session["FiltroMensagem"];
+            //}
             return View(objeto);
         }
 
@@ -1244,8 +1242,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             listaMaster = baseApp.GetAllItensAdm(idAss).Where(p => p.MENS_IN_TIPO == 1 & p.MENS_DT_CRIACAO.Value.Month == DateTime.Today.Date.Month).OrderByDescending(m => m.MENS_DT_CRIACAO).ToList();
-            Session["ListaMensagem"] = null;
-            Session["FiltroMensagem"] = listaMaster;
+            Session["ListaMensagem"] = listaMaster;
             return RedirectToAction("MontarTelaMensagemEMail");
         }
 
@@ -1263,8 +1260,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             listaMaster = baseApp.GetAllItens(idAss).Where(p => p.MENS_IN_TIPO == 1).OrderByDescending(m => m.MENS_DT_CRIACAO).ToList();
-            Session["ListaMensagem"] = null;
-            Session["FiltroMensagem"] = listaMaster;
+            Session["ListaMensagem"] = listaMaster;
             return RedirectToAction("MontarTelaMensagemEMail");
         }
 
@@ -1890,6 +1886,8 @@ namespace ERP_CRM_Solution.Controllers
                             dest.MENS_CD_ID = mens.MENS_CD_ID;
                             mens.MENSAGENS_DESTINOS.Add(dest);
                             mens.MENS_DT_ENVIO = DateTime.Now;
+                            mens.MENS_NM_CABECALHO = header;
+                            mens.MENS_NM_RODAPE = footer;
                             mens.MENS_TX_TEXTO = body;
                             volta = baseApp.ValidateEdit(mens, mens);
                         }
@@ -2006,6 +2004,8 @@ namespace ERP_CRM_Solution.Controllers
                         mens.MENSAGENS_DESTINOS.Add(dest);
                         mens.MENS_DT_ENVIO = DateTime.Now;
                         mens.MENS_TX_TEXTO = body;
+                        mens.MENS_NM_CABECALHO = header;
+                        mens.MENS_NM_RODAPE = footer;
                         volta = baseApp.ValidateEdit(mens, mens);
                     }
                     else
@@ -2125,12 +2125,12 @@ namespace ERP_CRM_Solution.Controllers
                             link = temp.TEEM_LK_LINK;                    
                         }
 
-                        // Prepara cabeçalho
-                        header = header.Replace("{Nome}", cliente.CLIE_NM_NOME);
+                        //// Prepara cabeçalho
+                        //header = header.Replace("{Nome}", cliente.CLIE_NM_NOME);
 
-                        // Prepara rodape
-                        ASSINANTE assi = (ASSINANTE)Session["Assinante"];
-                        footer = footer.Replace("{Assinatura}", assi.ASSI_NM_NOME);
+                        //// Prepara rodape
+                        //ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+                        //footer = footer.Replace("{Assinatura}", assi.ASSI_NM_NOME);
                     
                         // Trata corpo
                         StringBuilder str = new StringBuilder();
@@ -2150,7 +2150,7 @@ namespace ERP_CRM_Solution.Controllers
                             str.AppendLine("<a href='" + link + "'>Clique aqui para maiores informações</a>");
                         }
                         body = str.ToString();                  
-                        String emailBody = header + body + footer;
+                        //String emailBody = header + body + footer;
 
                         // Checa e monta anexos
                         List<System.Net.Mail.Attachment> listaAnexo = new List<System.Net.Mail.Attachment>();
@@ -2168,7 +2168,10 @@ namespace ERP_CRM_Solution.Controllers
                         foreach (CLIENTE item in listaCli)
                         {
                             // Prepara cabeçalho
-                            String emailBody1 = body;
+                            header = header.Replace("{Nome}", item.CLIE_NM_NOME);
+                            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+                            footer = footer.Replace("{Assinatura}", assi.ASSI_NM_NOME);
+                            String emailBody = header + body + footer;
 
                             // Monta e-mail
                             NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
@@ -2326,6 +2329,8 @@ namespace ERP_CRM_Solution.Controllers
                             dest.MENS_CD_ID = mens.MENS_CD_ID;
                             mens.MENSAGENS_DESTINOS.Add(dest);
                             mens.MENS_DT_ENVIO = DateTime.Now;
+                            mens.MENS_NM_CABECALHO = header;
+                            mens.MENS_NM_RODAPE = footer;
                             mens.MENS_TX_TEXTO = body;
                             volta = baseApp.ValidateEdit(mens, mens);
                         }
@@ -2573,6 +2578,8 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.SMSAgenda = agSMS.Count;
             Session["EMailAgenda"] = emAg;
             ViewBag.EmailAgenda = emAg.Count;
+            Session["VoltaMensagem"] = 0;
+            Session["ListaMensagem"] = null;
 
             // Resumo Mes E-Mail
             List<MENSAGENS> lme = lm.Where(p => p.MENS_IN_TIPO == 1).ToList();
@@ -2980,6 +2987,27 @@ namespace ERP_CRM_Solution.Controllers
             Session["ListaFalha"] = listaBase;
             Session["ListaDatasFalha"] = datas;
             return View();
+        }
+
+        public ActionResult MostrarClientes()
+        {
+            // Prepara grid
+            Session["VoltaMensagem"] = 30;
+            return RedirectToAction("MontarTelaCliente", "Cliente");
+        }
+
+        public ActionResult MostrarGrupos()
+        {
+            // Prepara grid
+            Session["VoltaMensagem"] = 40;
+            return RedirectToAction("MontarTelaGrupo", "Grupo");
+        }
+
+        public ActionResult IncluirClienteRapido()
+        {
+            // Prepara grid
+            Session["VoltaMensagem"] = 30;
+            return RedirectToAction("IncluirClienteRapido", "Cliente");
         }
 
     }
