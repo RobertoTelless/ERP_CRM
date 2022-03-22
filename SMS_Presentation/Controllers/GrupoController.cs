@@ -244,6 +244,29 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Clientes = new SelectList(cliApp.GetAllItens(idAss).OrderBy(p => p.CLIE_NM_NOME), "CLIE_CD_ID", "CLIE_NM_NOME");
+            ViewBag.Cats = new SelectList(menApp.GetAllTipos(idAss).OrderBy(p => p.CACL_NM_NOME), "CACL_CD_ID", "CACL_NM_NOME");
+            ViewBag.UF = new SelectList(menApp.GetAllUF().OrderBy(p => p.UF_SG_SIGLA), "UF_CD_ID", "UF_NM_NOME");
+            ViewBag.Sexo = new SelectList(cliApp.GetAllSexo().OrderBy(p => p.SEXO_NM_NOME), "SEXO_CD_ID", "SEXO_NM_NOME");
+            List<SelectListItem> dias = new List<SelectListItem>();
+            for (int i = 1; i < 32; i++)
+            {
+                dias.Add(new SelectListItem() { Text = i.ToString(), Value = i.ToString() });
+            }
+            ViewBag.Dias = new SelectList(dias, "Value", "Text");
+            List<SelectListItem> meses = new List<SelectListItem>();
+            meses.Add(new SelectListItem() { Text = "Janeiro", Value = "1" });
+            meses.Add(new SelectListItem() { Text = "Fevereiro", Value = "2" });
+            meses.Add(new SelectListItem() { Text = "Março", Value = "3" });
+            meses.Add(new SelectListItem() { Text = "Abril", Value = "4" });
+            meses.Add(new SelectListItem() { Text = "Maio", Value = "5" });
+            meses.Add(new SelectListItem() { Text = "Junho", Value = "6" });
+            meses.Add(new SelectListItem() { Text = "Julho", Value = "7" });
+            meses.Add(new SelectListItem() { Text = "Agosto", Value = "8" });
+            meses.Add(new SelectListItem() { Text = "Setembro", Value = "9" });
+            meses.Add(new SelectListItem() { Text = "Outubro", Value = "10" });
+            meses.Add(new SelectListItem() { Text = "Novembro", Value = "11" });
+            meses.Add(new SelectListItem() { Text = "Dezembro", Value = "12" });
+            ViewBag.Meses = new SelectList(meses, "Value", "Text");
             if (ModelState.IsValid)
             {
                 try

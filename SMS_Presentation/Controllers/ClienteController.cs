@@ -84,6 +84,11 @@ namespace ERP_CRM_Solution.Controllers
                 Session["VoltaMensagem"] = 0;
                 return RedirectToAction("MontarTelaDashboardMensagens", "Mensagem");
             }
+            if ((Int32)Session["VoltaMensagem"] == 40)
+            {
+                Session["VoltaMensagem"] = 0;
+                return RedirectToAction("MontarTelaDashboardCRMNovo", "CRM");
+            }
             return RedirectToAction("CarregarBase", "BaseAdmin");
         }
 
@@ -3362,6 +3367,10 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         Session["VoltaCliente"] = 0;
                         return RedirectToAction("IncluirClienteRapido", "Cliente");
+                    }
+                    if ((Int32)Session["VoltaMensagem"] == 30)
+                    {
+                        return RedirectToAction("MontarTelaCliente", "Cliente");
                     }
                     return RedirectToAction("CarregarBase", "BaseAdmin");
                 }

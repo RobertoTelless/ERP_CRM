@@ -169,15 +169,18 @@ namespace DataServices.Repositories
             {
                 if (grupo.DIA != null)
                 {
-                    query = query.Where(p => DbFunctions.TruncateTime(p.CLIE_DT_NASCIMENTO).Value.Day == Convert.ToInt32(grupo.DIA));
+                    Int32 dia = Convert.ToInt32(grupo.DIA);
+                    query = query.Where(p => DbFunctions.TruncateTime(p.CLIE_DT_NASCIMENTO).Value.Day == dia);
                 }
                 if (grupo.MES != null)
                 {
-                    query = query.Where(p => DbFunctions.TruncateTime(p.CLIE_DT_NASCIMENTO).Value.Month == Convert.ToInt32(grupo. MES));
+                    Int32 mes = Convert.ToInt32(grupo.MES);
+                    query = query.Where(p => DbFunctions.TruncateTime(p.CLIE_DT_NASCIMENTO).Value.Month == mes);
                 }
                 if (grupo.ANO != null)
                 {
-                    query = query.Where(p => DbFunctions.TruncateTime(p.CLIE_DT_NASCIMENTO).Value.Year == Convert.ToInt32(grupo.ANO));
+                    Int32 ano = Convert.ToInt32(grupo.ANO);
+                    query = query.Where(p => DbFunctions.TruncateTime(p.CLIE_DT_NASCIMENTO).Value.Year == ano);
                 }
             }
             if (query != null)

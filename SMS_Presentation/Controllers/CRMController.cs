@@ -4283,5 +4283,19 @@ namespace ERP_CRM_Solution.Controllers
             return Json(result);
         }
 
+        public ActionResult MostrarClientes()
+        {
+            // Prepara grid
+            Session["VoltaMensagem"] = 40;
+            return RedirectToAction("MontarTelaCliente", "Cliente");
+        }
+
+        public ActionResult IncluirClienteRapido()
+        {
+            // Prepara grid
+            Session["VoltaMensagem"] = 40;
+            return RedirectToAction("IncluirClienteRapido", "Cliente");
+        }
+
     }
 }

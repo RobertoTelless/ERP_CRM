@@ -47,7 +47,12 @@
                                     <button class="btnReturn btn btn-sm btn-success" id="basictoast" type="button">Salvar e Incluir Novo Contato</button>
                                     @if ((Int32)Session["VoltaMensagem"] == 30)
                                     {
-                                        @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaDashboardMensagem", controller: "Mensagem")
+                                        @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaCliente", controller: "Cliente")
+                                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "Cliente", action: "Voltar")
+                                    }
+                                    else if ((Int32)Session["VoltaMensagem"] == 40)
+                                    {
+                                        @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaCliente", controller: "Cliente")
                                         @Html.ButtonLinkIndex(text: "Dashboard", controller: "Cliente", action: "Voltar")
                                     }
                                     else
