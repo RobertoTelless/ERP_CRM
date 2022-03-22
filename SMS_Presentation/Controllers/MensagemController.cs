@@ -831,7 +831,10 @@ namespace ERP_CRM_Solution.Controllers
                 grupo = gruApp.GetItemById(vm.GRUPO.Value);
                 foreach (GRUPO_CLIENTE item in grupo.GRUPO_CLIENTE)
                 {
-                    listaCli.Add(item.CLIENTE);
+                    if (item.GRCL_IN_ATIVO == 1)
+                    {
+                        listaCli.Add(item.CLIENTE);
+                    }
                 }
                 escopo = 2;
             }
@@ -1647,7 +1650,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
-            Session["EMailAgenda"] = emApp.GetAllItens(idAss).OrderBy(p => p.EMAG_DT_AGENDAMENTO).ToList();
+            Session["EMailAgenda"] = emApp.GetAllItens(idAss).OrderByDescending(p => p.EMAG_DT_AGENDAMENTO).ToList();
             MENSAGENS mens = new MENSAGENS();
             ViewBag.Listas = (List<EMAIL_AGENDAMENTO>)Session["EMailAgenda"];
             Session["VoltaMensagem"] = 3;
@@ -1680,7 +1683,10 @@ namespace ERP_CRM_Solution.Controllers
                 grupo = gruApp.GetItemById(vm.GRUPO.Value);
                 foreach (GRUPO_CLIENTE item in grupo.GRUPO_CLIENTE)
                 {
-                    listaCli.Add(item.CLIENTE);
+                    if (item.GRCL_IN_ATIVO == 1)
+                    {
+                        listaCli.Add(item.CLIENTE);
+                    }
                 }
                 escopo = 2;
             }
@@ -1877,6 +1883,12 @@ namespace ERP_CRM_Solution.Controllers
                         // Grava mensagem/destino e erros
                         if (erro == null)
                         {
+                            String cab = Regex.Replace(header, "<.*?>", String.Empty);
+                            String cor = Regex.Replace(body, "<.*?>", String.Empty);
+                            String foot = Regex.Replace(footer, "<.*?>", String.Empty);
+                            String tex = cab + " " + cor + " " + foot;
+                            tex = tex.Replace("\r\n", " ");
+
                             MENSAGENS_DESTINOS dest = new MENSAGENS_DESTINOS();
                             dest.MEDE_IN_ATIVO = 1;
                             dest.MEDE_IN_POSICAO = 1;
@@ -1889,6 +1901,7 @@ namespace ERP_CRM_Solution.Controllers
                             mens.MENS_NM_CABECALHO = header;
                             mens.MENS_NM_RODAPE = footer;
                             mens.MENS_TX_TEXTO = body;
+                            mens.MENS_TX_TEXTO_LIMPO = tex;
                             volta = baseApp.ValidateEdit(mens, mens);
                         }
                         else
@@ -1994,6 +2007,12 @@ namespace ERP_CRM_Solution.Controllers
                     // Grava mensagem/destino e erros
                     if (erro == null)
                     {
+                        String cab = Regex.Replace(header, "<.*?>", String.Empty);
+                        String cor = Regex.Replace(body, "<.*?>", String.Empty);
+                        String foot = Regex.Replace(footer, "<.*?>", String.Empty);
+                        String tex = cab + " " + cor + " " + foot;
+                        tex = tex.Replace("\r\n", " ");
+
                         MENSAGENS_DESTINOS dest = new MENSAGENS_DESTINOS();
                         dest.MEDE_IN_ATIVO = 1;
                         dest.MEDE_IN_POSICAO = 1;
@@ -2006,6 +2025,7 @@ namespace ERP_CRM_Solution.Controllers
                         mens.MENS_TX_TEXTO = body;
                         mens.MENS_NM_CABECALHO = header;
                         mens.MENS_NM_RODAPE = footer;
+                        mens.MENS_TX_TEXTO_LIMPO = tex;
                         volta = baseApp.ValidateEdit(mens, mens);
                     }
                     else
@@ -2208,6 +2228,12 @@ namespace ERP_CRM_Solution.Controllers
                             // Grava mensagem/destino e erros
                             if (erro == null)
                             {
+                                String cab = Regex.Replace(header, "<.*?>", String.Empty);
+                                String cor = Regex.Replace(body, "<.*?>", String.Empty);
+                                String foot = Regex.Replace(footer, "<.*?>", String.Empty);
+                                String tex = cab + " " + cor + " " + foot;
+                                tex = tex.Replace("\r\n", " ");
+
                                 MENSAGENS_DESTINOS dest = new MENSAGENS_DESTINOS();
                                 dest.MEDE_IN_ATIVO = 1;
                                 dest.MEDE_IN_POSICAO = 1;
@@ -2217,6 +2243,10 @@ namespace ERP_CRM_Solution.Controllers
                                 dest.MENS_CD_ID = mens.MENS_CD_ID;
                                 mens.MENSAGENS_DESTINOS.Add(dest);
                                 mens.MENS_DT_ENVIO = DateTime.Now;
+                                mens.MENS_TX_TEXTO = body;
+                                mens.MENS_NM_CABECALHO = header;
+                                mens.MENS_NM_RODAPE = footer;
+                                mens.MENS_TX_TEXTO_LIMPO = tex;
                                 volta = baseApp.ValidateEdit(mens, mens);
                             }
                             else
@@ -2320,6 +2350,12 @@ namespace ERP_CRM_Solution.Controllers
                         // Grava mensagem/destino e erros
                         if (erro == null)
                         {
+                            String cab1 = Regex.Replace(header, "<.*?>", String.Empty);
+                            String cor = Regex.Replace(body, "<.*?>", String.Empty);
+                            String foot = Regex.Replace(footer, "<.*?>", String.Empty);
+                            String tex = cab1 + " " + cor + " " + foot;
+                            tex = tex.Replace("\r\n", " ");
+
                             MENSAGENS_DESTINOS dest = new MENSAGENS_DESTINOS();
                             dest.MEDE_IN_ATIVO = 1;
                             dest.MEDE_IN_POSICAO = 1;
@@ -2332,6 +2368,7 @@ namespace ERP_CRM_Solution.Controllers
                             mens.MENS_NM_CABECALHO = header;
                             mens.MENS_NM_RODAPE = footer;
                             mens.MENS_TX_TEXTO = body;
+                            mens.MENS_TX_TEXTO_LIMPO = tex;
                             volta = baseApp.ValidateEdit(mens, mens);
                         }
                         else
@@ -2373,10 +2410,41 @@ namespace ERP_CRM_Solution.Controllers
                 grupo = gruApp.GetItemById(vm.GRUPO.Value);
                 foreach (GRUPO_CLIENTE item in grupo.GRUPO_CLIENTE)
                 {
-                    listaCli.Add(item.CLIENTE);
+                    if (item.GRCL_IN_ATIVO == 1)
+                    {
+                        listaCli.Add(item.CLIENTE);
+                    }
                 }
                 escopo = 2;
             }
+
+            // Recupera textos
+            String body = String.Empty;
+            String header = String.Empty;
+            String footer = String.Empty;
+            if (vm.TEEM_CD_ID != null)
+            {
+                TEMPLATE_EMAIL temp = temaApp.GetItemById(vm.TEEM_CD_ID.Value);
+                body = temp.TEEM_TX_CORPO;
+                header = temp.TEEM_TX_CABECALHO;
+                footer = temp.TEEM_TX_DADOS;
+            }
+            else
+            {
+                body = vm.MENS_TX_TEXTO;
+                header = vm.MENS_NM_CABECALHO;
+                footer = vm.MENS_NM_RODAPE;
+            }
+            String cab = Regex.Replace(header, "<.*?>", String.Empty);
+            String cor = Regex.Replace(body, "<.*?>", String.Empty);
+            String foot = Regex.Replace(footer, "<.*?>", String.Empty);
+            String tex = cab + " " + cor + " " + foot;
+            tex = tex.Replace("\r\n", " ");
+
+            // Regrava mensagem
+            MENSAGENS mensX = baseApp.GetItemById(vm.MENS_CD_ID);
+            mensX.MENS_TX_TEXTO_LIMPO = tex;
+            Int32 vol1 = baseApp.ValidateEdit(mensX, mensX);
 
             // Processa e-mail
             CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);

@@ -186,7 +186,7 @@
                                             <td style="width: auto">@cond.MENS_NM_CAMPANHA</td>
                                             @if (cond.MENS_IN_TIPO == 1)
                                             {
-                                                <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.MENS_TX_TEXTO')">Ver Conteúdo</td>
+                                                <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.MENS_TX_TEXTO_LIMPO')">Ver Conteúdo</td>
                                             }
                                             else
                                             {
@@ -292,6 +292,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>    
     <script src="~/Scripts/uploadAnexo.js"></script>
     @Scripts.Render("~/plugins/summernote")
+    
     
     <script>
         $(function () {

@@ -1306,6 +1306,7 @@
           <Property Name="MENS_NM_LINK" Type="varchar" MaxLength="500" />
           <Property Name="MENS_TX_SMS" Type="varchar" MaxLength="250" />
           <Property Name="MENS_IN_CRM" Type="int" />
+          <Property Name="MENS_TX_TEXTO_LIMPO" Type="text" />
         </EntityType>
         <EntityType Name="MENSAGENS_DESTINOS">
           <Key>
@@ -9125,6 +9126,7 @@
           <NavigationProperty Name="TEMPLATE_EMAIL" Relationship="Self.FK_MENSAGENS_TEMPLATE_EMAIL" FromRole="MENSAGENS" ToRole="TEMPLATE_EMAIL" />
           <NavigationProperty Name="TEMPLATE_SMS" Relationship="Self.FK_MENSAGENS_TEMPLATE_SMS" FromRole="MENSAGENS" ToRole="TEMPLATE_SMS" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_MENSAGENS_USUARIO" FromRole="MENSAGENS" ToRole="USUARIO" />
+          <Property Name="MENS_TX_TEXTO_LIMPO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="MENSAGENS_DESTINOS">
           <Key>
@@ -16924,6 +16926,7 @@
           <EntitySetMapping Name="MENSAGENS">
             <EntityTypeMapping TypeName="ERP_CRMModel.MENSAGENS">
               <MappingFragment StoreEntitySet="MENSAGENS">
+                <ScalarProperty Name="MENS_TX_TEXTO_LIMPO" ColumnName="MENS_TX_TEXTO_LIMPO" />
                 <ScalarProperty Name="MENS_CD_ID" ColumnName="MENS_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />

@@ -82,12 +82,10 @@
                                     <tr>
                                         <th style="width: auto">Tipo</th>
                                         <th style="width: auto">Data Criação</th>
-                                        <th style="width: auto">Data Envio</th>
+                                        <th style="width: auto">Agendamento</th>
                                         <th style="width: auto">Campanha</th>
                                         <th style="width: auto">Conteúdo</th>
-                                        <th style="width: auto">Agendamento</th>
-                                        <th style="width: auto">Destinos</th>
-                                        <th style="width: auto">Falhas</th>
+                                        <th style="width: auto">Destino</th>
                                         <th class="td-one-action">Ações</th>
                                     </tr>
                                 </thead>
@@ -108,23 +106,6 @@
                                                 <td><span class="badge badge-warning">WhatsApp</span></td>
                                             }
                                             <td style="width: auto">@cond.MENSAGENS.MENS_DT_CRIACAO.Value.ToShortDateString() @cond.MENSAGENS.MENS_DT_CRIACAO.Value.ToShortTimeString()</td>
-                                            @if (cond.MENSAGENS.MENS_DT_ENVIO != null)
-                                            {
-                                                <td style="width: auto">@cond.MENSAGENS.MENS_DT_ENVIO.Value.ToShortDateString() @cond.MENSAGENS.MENS_DT_ENVIO.Value.ToShortTimeString()</td>
-                                            }
-                                            else
-                                            {
-                                                <td>-</td>
-                                            }
-                                            <td style="width: auto">@cond.MENSAGENS.MENS_NM_CAMPANHA</td>
-                                            @if (cond.MENSAGENS.MENS_IN_TIPO == 1)
-                                            {
-                                                <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.MENSAGENS.MENS_TX_TEXTO')">Ver Conteúdo</td>
-                                            }
-                                            else
-                                            {
-                                                <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.MENSAGENS.MENS_TX_SMS')">Ver Conteúdo</td>
-                                            }
                                             @if (cond.MENSAGENS.MENS_DT_AGENDAMENTO != null)
                                             {
                                                 <td style="width: auto">@cond.MENSAGENS.MENS_DT_AGENDAMENTO.Value.ToShortDateString() @cond.MENSAGENS.MENS_DT_AGENDAMENTO.Value.ToShortTimeString()</td>
@@ -133,17 +114,25 @@
                                             {
                                                 <td>-</td>
                                             }
-                                            <td style="width: auto">@cond.MENSAGENS.MENSAGENS_DESTINOS.Count</td>
-                                            @if (cond.MENSAGENS.MENS_TX_RETORNO != null)
+                                            <td style="width: auto">@cond.MENSAGENS.MENS_NM_CAMPANHA</td>
+                                            @if (cond.MENSAGENS.MENS_IN_TIPO == 1)
                                             {
-                                                <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDescFalhas('@cond.MENSAGENS.MENS_TX_RETORNO')">Ver Falhas</td>
+                                                <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.MENSAGENS.MENS_TX_TEXTO_LIMPO')">Ver Conteúdo</td>
                                             }
                                             else
                                             {
-                                                <td>Não</td>
+                                                <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.MENSAGENS.MENS_TX_SMS')">Ver Conteúdo</td>
                                             }
+                                            @if (cond.CLIE_CD_ID != null)
+                                            {
+                                                <td style="width: auto">@cond.CLIENTE.CLIE_NM_NOME</td>
+                                            }
+                                            else
+                                            {
+                                                <td>-</td>
+                                            }                                      
                                             <td class="td-one-action">
-                                                @Html.TableLinkDetails(cond.MENSAGENS.MENS_CD_ID, "VerMensagem", "fa-search", "Consultar")
+                                                @Html.TableLinkDetails(cond.MENSAGENS.MENS_CD_ID, "VerMensagemEMail", "fa-search", "Consultar")
                                             </td>
                                         </tr>
                                     }

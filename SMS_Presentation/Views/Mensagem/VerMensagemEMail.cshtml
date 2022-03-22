@@ -26,13 +26,13 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Mensagens E-Mail - Consulta</h5>&nbsp;&nbsp;&nbsp;
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarMensagemAnexoSMS", controller: "Mensagem", buttonClass: "primary")
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAnexoMensagemEMail", controller: "Mensagem", buttonClass: "primary")
                     @if ((Int32)Session["PermCRM"] == 1)
                     {
                         @Html.ButtonLinkIndex(text: "Criar Processo CRM", controller: "Mensagem", action: "ConverterMensagemCRMEMail")
                     }
                     @Html.ButtonLinkIndex(text: "Dashboard Mensagens", controller: "Mensagem", action: "MontarTelaDashboardMensagens")
-                    @Html.ButtonLinkIndex(text: "Início", controller: "Mensagem", action: "Voltar")
+                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Mensagem", action: "Voltar")
                 </div>
 
                 <div class="ibox-content">

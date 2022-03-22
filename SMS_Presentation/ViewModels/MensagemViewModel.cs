@@ -50,6 +50,7 @@ namespace ERP_CRM_Solution.ViewModels
         public String LINK { get; set; }
         public Int32? GRUPO { get; set; }
         public String MODELO { get; set; }
+        public string MENS_TX_TEXTO_LIMPO { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

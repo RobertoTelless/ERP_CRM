@@ -63,11 +63,11 @@
                                             @Html.HiddenFor(m => m.USUA_CD_ID)
                                             @Html.HiddenFor(m => m.MENS_IN_TIPO)
                                             <h4 style="color:navy">Seleção dos Destinos da Mensagem</h4>
-                                            <h5>Selecione um nome de contato ou um grupo de contatos para enviar a mensagem. Ao escolher um nome de contato, ela terá prevalência sobre o grupo</h5>
+                                            <h5>Selecione um nome de cliente ou um grupo de clientes para enviar a mensagem. Ao escolher um nome de cliente, ela terá prevalência sobre o grupo</h5>
                                             <br />
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-5 col-md-5 col-xs-12">
-                                                    Nome do Contato
+                                                    Nome do Cliente
                                                     <select name="ID" id="lstCliente" class="form-control" data-val="true" style="display: none;">
                                                         @*<option>Selecionar</option>*@
                                                     </select>
@@ -100,16 +100,14 @@
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     <div class="input-group">
                                                         Modelo E-Mail
-                                                        @Html.DropDownListFor(m => m.TEEM_CD_ID, (SelectList)ViewBag.Temp, "Selecionar", new { @class = "form-control", autofocus = true, @id = "temp"})
-                                                        <span class="input-group-btn">
-                                                            <span class="btn btn-warning btn-sm" id="btnBusca" onclick="PesquisaTemplateEMail($('#temp').val(), $(this), 1)">Ativar</span>
-                                                        </span>
+                                                        @*@Html.DropDownListFor(m => m.TEEM_CD_ID, (SelectList)ViewBag.Temp, "Selecionar", new { @class = "form-control", autofocus = true, @id = "temp", onchange="PesquisaTemplateEMail($(this).val()))}*@
+                                                        @Html.DropDownListFor(m => m.TEEM_CD_ID, (SelectList)ViewBag.Temp, "Selecionar", new { @class = "form-control", autofocus = true, @id = "temp", onchange = "ValidaDiv($(this).val())" })
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr />
                                         <div class="row" id="EM1">
+                                            <hr />
                                             <h4 style="color:navy">Conteúdo da Mensagem</h4>
                                             <h5>A tag {Nome} está disponível no cabeçalho e se usada será exibido o nome do contato</h5>
                                             <br />
@@ -140,7 +138,6 @@
                                                 <br />
                                                 <div class="form-group">
                                                     <div>
-                                                        <hr />
                                                         <table style="width: 100%;" class="table table-striped table-bordered table-hover" id="myFiles">
                                                             <thead style="background-color:lightsteelblue">
                                                                 <tr>
@@ -325,6 +322,20 @@
                 });
         });
     </script>
+    <script type="text/javascript">
+        function ValidaDiv(valPessoa) {
+            if (valPessoa == 0) {
+                $("#EM1").show();
+            } else { //Se não for 1, 2 ou 4 esconde as duas
+                $("#EM1").hide();
+            }
+        }
+
+        $(document).ready(function () {
+            ValidaDiv($('#temp').val());
+        });
+    </script> 
+
     @*<script type="text/javascript">
         function ValidaDiv(valTipo) {
             if (valTipo = 0) {
@@ -357,7 +368,7 @@
         }
     </script>*@
     <script>
-        function PesquisaTemplate(temp, btn, tipo) {
+        function PesquisaTemplate(temp) {
             data = {
                 temp: temp
             }
@@ -366,16 +377,16 @@
                 , type: 'POST'
                 , data: data
                 , success: function (r) {
-                    if (r.STATUS = 0)
-                    {
+                    //if (r.STATUS = 0)
+                    //{
                         $('#cab').val(r.MENS_NM_CABECALHO);
                         $('#cor').val(r.MENS_TX_CORPO);
-                        $('#rod').val(r.MENS_NM_DADOS);
+                        $('#rod').val(r.MENS_NM_RODAPE);
                         $('#link').val(r.MENS_LK_LINK);
-                    }
-                    else {
-                        $('#arq').val(r.MODELO);
-                    }
+                //    }
+                //    else {
+                //        $('#arq').val(r.MODELO);
+                //    }
                 }
             });
         }
