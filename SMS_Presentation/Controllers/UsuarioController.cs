@@ -107,7 +107,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Title = "Usuários";
 
             // Recupera numero de usuarios do assinante
-            Session["NumUsuarios"] = listaUsu.Count;
+            Session["NumeroUsuarios"] = listaUsu.Count;
             Int32 usuariosPossiveis = 1000;
             ViewBag.UsuariosPossiveis = usuariosPossiveis;
 
@@ -325,6 +325,7 @@ namespace ERP_CRM_Solution.Controllers
 
             //Verifica possibilidade
             Int32 num = baseApp.GetAllItens(idAss).Count;
+            Int32 cc = (Int32)Session["NumUsuarios"];
             if ((Int32)Session["NumUsuarios"] <= num)
             {
                 Session["MensUsuario"] = 50;

@@ -821,6 +821,7 @@
     <Content Include="Imagens\2\TemplatesHTML\13\Arquivos\modelo.html" />
     <Content Include="Imagens\2\TemplatesHTML\14\Arquivos\modelo.html" />
     <Content Include="Imagens\2\TemplatesHTML\15\Arquivos\modelo.html" />
+    <Content Include="Imagens\2\Usuario\15\Fotos\a4.jpg" />
     <Content Include="Imagens\2\Usuario\1\Foto\FotoBase.jpg" />
     <Content Include="Imagens\2\Usuario\1\Foto\FotoOficial_2.jpeg" />
     <Content Include="Imagens\2\Usuario\2\Anexos\full_height.jpg" />
@@ -3651,6 +3652,7 @@
     <Folder Include="Imagens\2\Tarefa\3\Anexos\" />
     <Folder Include="Imagens\2\Tarefa\8\Anexos\" />
     <Folder Include="Imagens\2\TemplatesHTML\4\Arquivos\" />
+    <Folder Include="Imagens\2\Usuario\15\Anexos\" />
     <Folder Include="Imagens\2\Usuario\1\Anexos\" />
     <Folder Include="Imagens\2\Usuario\3\Anexos\" />
     <Folder Include="Imagens\2\Usuario\4\Anexos\" />

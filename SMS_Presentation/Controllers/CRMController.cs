@@ -4084,7 +4084,7 @@ namespace ERP_CRM_Solution.Controllers
                     Session["MensCRM"] = 2;
                     return RedirectToAction("MontarTelaCRM", "CRM");
                 }
-                if ((Int32)Session["PermMens"] == 0)
+                if ((Int32)Session["PermCRM"] == 0)
                 {
                     Session["MensPermissao"] = 2;
                     return RedirectToAction("CarregarBase", "BaseAdmin");

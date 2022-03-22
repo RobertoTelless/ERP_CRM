@@ -244,9 +244,23 @@ namespace ERP_CRM_Solution.Controllers
                         Session["NumAtendimentos"] = item.PLANO.PLAN_IN_ATENDIMENTOS;
                         Session["NumOrdemServico"] = item.PLANO.PLAN_IN_OS;
                         Session["NumServicos"] = item.PLANO.PLAN_IN_SERVICOS;
+                        Session["NumClientes"] = item.PLANO.PLAN_NR_CONTATOS;
                     }
                 }
                 Session["Planos"] = planos;
+
+                // Se perfil CRM
+                if (usuario.PERFIL.PERF_SG_SIGLA == "CRM")
+                {
+                    Session["PermMens"] = 0;
+                    Session["PermPatrimonio"] = 0;
+                    Session["PermPosVenda"] = 0;
+                    Session["PermFinanceiro"] = 0;
+                    Session["PermEstoque"] = 0;
+                    Session["PermCompra"] = 0;
+                    Session["PermVenda"] = 0;
+                    Session["PermServDesk"] = 0;
+                }
 
                 // Route
                 if (usuario.USUA_IN_PROVISORIO == 1)
