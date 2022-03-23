@@ -186,7 +186,7 @@
                                             <td class="td-one-action">
                                                 @if (ViewBag.Perfil != "VIS")
                                                 {
-                                                    @Html.TableLinkDetails(cond.MENS_CD_ID, "VerMensagem", "fa-search", "Consultar")
+                                                    @Html.TableLinkDetails(cond.MENS_CD_ID, "VerMensagemSMS", "fa-search", "Consultar")
                                                     if (cond.MENS_IN_ATIVO == 1)
                                                     {
                                                         <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Mensagem/ExcluirMensagemSMS/@cond.MENS_CD_ID')" title="Excluir"></span>
@@ -202,7 +202,7 @@
                                                 }
                                                 else
                                                 {
-                                                    @Html.TableLinkDetails(cond.MENS_CD_ID, "VerMensagem", "fa-search", "Consultar")
+                                                    @Html.TableLinkDetails(cond.MENS_CD_ID, "VerMensagemSMS", "fa-search", "Consultar")
                                                 }
                                             </td>
                                         </tr>

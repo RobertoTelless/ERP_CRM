@@ -29,9 +29,9 @@ using System.Threading.Tasks;
 using CrossCutting;
 using System.Net.Mail;
 using System.Net.Http;
-//using SendGrid;
-//using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace ERP_CRM_Solution.Controllers
 {
@@ -530,7 +530,7 @@ namespace ERP_CRM_Solution.Controllers
                 try
                 {
                     // Checa mensagens
-                    if (String.IsNullOrEmpty(vm.MENS_TX_SMS))
+                    if (String.IsNullOrEmpty(vm.MENS_TX_SMS) & vm.TEEM_CD_ID == null)
                     {
                         Session["MensMensagem"] = 3;
                         return RedirectToAction("IncluirMensagemSMS");
@@ -847,25 +847,39 @@ namespace ERP_CRM_Solution.Controllers
             String auth = "Basic " + token;
 
             // Prepara texto
-            String texto = vm.MENS_TX_SMS;
+            String texto = String.Empty;
+            String link = String.Empty;
+            if (vm.TEEM_CD_ID != null)
+            {
+                TEMPLATE_SMS temp = temApp.GetItemById(vm.TEEM_CD_ID.Value);
+                texto = temp.TSMS_TX_CORPO;
+                link = temp.TSMS_LK_LINK;
+            }
+            else
+            {
+                texto = vm.MENS_TX_SMS;
+                link = vm.MENS_NM_LINK;
+            }
 
             // Prepara corpo do SMS e trata link
             StringBuilder str = new StringBuilder();
-            str.AppendLine(vm.MENS_TX_SMS);
-            if (!String.IsNullOrEmpty(vm.MENS_NM_LINK))
+            str.AppendLine(texto);
+            if (!String.IsNullOrEmpty(link))
             {
-                if (!vm.MENS_NM_LINK.Contains("www."))
+                if (!link.Contains("www."))
                 {
-                    vm.MENS_NM_LINK = "www." + vm.MENS_NM_LINK;
+                    link = "www." + link;
                 }
-                if (!vm.MENS_NM_LINK.Contains("http://"))
+                if (!link.Contains("http://"))
                 {
-                    vm.MENS_NM_LINK = "http://" + vm.MENS_NM_LINK;
+                    link = "http://" + link;
                 }
-                str.AppendLine("<a href='" + vm.MENS_NM_LINK + "'>Clique aqui para maiores informações</a>");
-                texto += "  " + vm.MENS_NM_LINK;
+                //str.AppendLine("<a href='" + link + "'>Clique aqui para maiores informações</a>");
+                str.AppendLine(link + " Clique aqui para maiores informações");
+                texto += "  " + link;
             }
             String body = str.ToString();
+            body = body.Replace("\r\n", " ");
             String smsBody = body;
                 
             // inicia processo
@@ -890,11 +904,11 @@ namespace ERP_CRM_Solution.Controllers
                         if (vm.MENS_DT_AGENDAMENTO != null)
                         {
                             data = vm.MENS_DT_AGENDAMENTO.Value.Year.ToString() + "-" + vm.MENS_DT_AGENDAMENTO.Value.Month.ToString() + "-" + vm.MENS_DT_AGENDAMENTO.Value.Day.ToString() + "T" + vm.MENS_DT_AGENDAMENTO.Value.ToShortTimeString() + ":00";
-                            json = String.Concat("{\"scheduleTime\": \"", data ,"\",\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
+                            json = String.Concat("{\"scheduleTime\": \"", data ,"\",\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", body, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
                         }
                         else
                         {
-                            json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
+                            json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", body, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
                         }
                         streamWriter.Write(json);
                     }
@@ -923,6 +937,7 @@ namespace ERP_CRM_Solution.Controllers
                     dest.MENS_CD_ID = mens.MENS_CD_ID;
                     mens.MENSAGENS_DESTINOS.Add(dest);
                     mens.MENS_DT_ENVIO = DateTime.Now;
+                    mens.MENS_TX_SMS = body;
                     volta = baseApp.ValidateEdit(mens, mens);
                 }
                 else
@@ -1657,6 +1672,92 @@ namespace ERP_CRM_Solution.Controllers
             return View(mens);
         }
 
+        public static async Task SendEmailAssync(Email email)
+        {
+            try
+            {
+                MailMessage mensagem = new MailMessage();
+                SmtpClient smtp = new SmtpClient();
+                mensagem.From = new MailAddress(email.EMAIL_EMISSOR, email.NOME_EMISSOR);
+                mensagem.To.Add(email.EMAIL_DESTINO);
+                mensagem.Subject = email.ASSUNTO;
+                mensagem.IsBodyHtml = true;
+                mensagem.Body = email.CORPO;
+                mensagem.Priority = email.PRIORIDADE;
+                mensagem.IsBodyHtml = true;
+                if (email.ATTACHMENT != null)
+                {
+                    foreach (var attachment in email.ATTACHMENT)
+                    {
+                        mensagem.Attachments.Add(attachment);
+                    }
+                }
+                smtp.EnableSsl = email.ENABLE_SSL;
+                smtp.Port = Convert.ToInt32(email.PORTA);
+                smtp.Host = email.SMTP;
+                smtp.UseDefaultCredentials = email.DEFAULT_CREDENTIALS;
+                smtp.Credentials = new System.Net.NetworkCredential(email.EMAIL_EMISSOR, email.SENHA_EMISSOR);
+                await smtp.SendMailAsync(mensagem);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public string SendEmail(Email email)
+        {
+            var tasks = new List<Task>();
+            var smtp = new SmtpClient();
+            smtp.EnableSsl = email.ENABLE_SSL;
+            smtp.Port = Convert.ToInt32(email.PORTA);
+            smtp.Host = email.SMTP;
+            smtp.UseDefaultCredentials = email.DEFAULT_CREDENTIALS;
+            smtp.Credentials = new System.Net.NetworkCredential(email.EMAIL_EMISSOR, email.SENHA_EMISSOR);
+            //foreach (var emailAddress in EmailList)
+            //{
+            //    var message = new MailMessage("myemail@gmail.com", emailAddress);
+            //    message.Subject = "hi";
+            //    tasks.Add(client.SendMailAsync(message));
+            //}
+
+            MailMessage mensagem = new MailMessage();
+            mensagem.From = new MailAddress(email.EMAIL_EMISSOR, email.NOME_EMISSOR);
+            mensagem.To.Add(email.EMAIL_DESTINO);
+            mensagem.Subject = email.ASSUNTO;
+            mensagem.IsBodyHtml = true;
+            mensagem.Body = email.CORPO;
+            mensagem.Priority = email.PRIORIDADE;
+            mensagem.IsBodyHtml = true;
+            if (email.ATTACHMENT != null)
+            {
+                foreach (var attachment in email.ATTACHMENT)
+                {
+                    mensagem.Attachments.Add(attachment);
+                }
+            }
+            tasks.Add(smtp.SendMailAsync(mensagem));
+            while (tasks.Count > 0)
+            {
+                var idx = Task.WaitAny(tasks.ToArray());
+                tasks.RemoveAt(idx);
+            }
+            return "done";
+        }
+
+        public static async Task Execute(Email email)
+        {
+            var apiKey = "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";
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress(email.EMAIL_EMISSOR, email.NOME_EMISSOR);
+            var subject = email.ASSUNTO;
+            var to = new EmailAddress(email.EMAIL_DESTINO);
+            var plainTextContent = "and easy to do anywhere, even with C#";
+            var htmlContent = email.CORPO;
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg);
+        }
+
         [ValidateInput(false)]
         public Int32 ProcessarEnvioMensagemEMail(MensagemViewModel vm, USUARIO usuario)
         {
@@ -1989,6 +2090,9 @@ namespace ERP_CRM_Solution.Controllers
                     try
                     {
                         Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                        //Execute(mensagem).Wait();
+                        //var task = SendEmailAssync(mensagem);
+                        //String ret = SendEmail(mensagem);
                     }
                     catch (Exception ex)
                     {
@@ -2214,6 +2318,7 @@ namespace ERP_CRM_Solution.Controllers
                             try
                             {
                                 Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                            
                             }
                             catch (Exception ex)
                             {
