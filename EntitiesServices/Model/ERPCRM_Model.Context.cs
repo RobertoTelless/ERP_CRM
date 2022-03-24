@@ -179,5 +179,11 @@ namespace EntitiesServices.Model
         public virtual DbSet<USUARIO_ANEXO> USUARIO_ANEXO { get; set; }
         public virtual DbSet<USUARIO_FUNCIONARIO> USUARIO_FUNCIONARIO { get; set; }
         public virtual DbSet<ATENDIMENTO_CRM> ATENDIMENTO_CRM { get; set; }
+        public virtual DbSet<CRM_COMERCIAL> CRM_COMERCIAL { get; set; }
+        public virtual DbSet<CRM_COMERCIAL_ACAO> CRM_COMERCIAL_ACAO { get; set; }
+        public virtual DbSet<CRM_COMERCIAL_ANEXO> CRM_COMERCIAL_ANEXO { get; set; }
+        public virtual DbSet<CRM_COMERCIAL_COMENTARIO_NOVA> CRM_COMERCIAL_COMENTARIO_NOVA { get; set; }
+        public virtual DbSet<CRM_COMERCIAL_CONTATO> CRM_COMERCIAL_CONTATO { get; set; }
+        public virtual DbSet<CRM_COMERCIAL_ITEM> CRM_COMERCIAL_ITEM { get; set; }
     }
 }

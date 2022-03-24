@@ -465,6 +465,33 @@
         <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_CRM" Width="1.5" PointX="29.25" PointY="229.5" />
         <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_CRM_ATENDIMENTO" />
         <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_CRM_CRM" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL" Width="1.5" PointX="29" PointY="248.5" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_ACAO" Width="1.5" PointX="32.25" PointY="239.625" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_ANEXO" Width="1.5" PointX="31.25" PointY="266.5" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_COMENTARIO_NOVA" Width="1.5" PointX="35.25" PointY="232.125" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_CONTATO" Width="1.5" PointX="31.25" PointY="262.875" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_ITEM" Width="1.5" PointX="31.25" PointY="233.375" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_CLIENTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_CRM_COMERCIAL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_ANEXO_CRM_COMERCIAL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_COMENTARIO_NOVA_CRM_COMERCIAL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_CONTATO_CRM_COMERCIAL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_CRM_ORIGEM" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_FILIAL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_FORMA_ENVIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_FORMA_FRETE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_CRM_COMERCIAL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_MOTIVO_CANCELAMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_MOTIVO_ENCERRAMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_TIPO_CRM" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_TIPO_ACAO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_USUARIO1" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_COMENTARIO_NOVA_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_PRODUTO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

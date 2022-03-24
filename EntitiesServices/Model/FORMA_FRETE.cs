@@ -18,6 +18,7 @@ namespace EntitiesServices.Model
         public FORMA_FRETE()
         {
             this.PEDIDO_VENDA = new HashSet<PEDIDO_VENDA>();
+            this.CRM_COMERCIAL = new HashSet<CRM_COMERCIAL>();
         }
     
         public int FOFR_CD_ID { get; set; }
@@ -28,5 +29,7 @@ namespace EntitiesServices.Model
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PEDIDO_VENDA> PEDIDO_VENDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_COMERCIAL> CRM_COMERCIAL { get; set; }
     }
 }

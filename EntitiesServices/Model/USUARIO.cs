@@ -54,6 +54,10 @@ namespace EntitiesServices.Model
             this.TAREFA_VINCULO = new HashSet<TAREFA_VINCULO>();
             this.USUARIO_ANEXO = new HashSet<USUARIO_ANEXO>();
             this.USUARIO_FUNCIONARIO = new HashSet<USUARIO_FUNCIONARIO>();
+            this.CRM_COMERCIAL = new HashSet<CRM_COMERCIAL>();
+            this.CRM_COMERCIAL_ACAO = new HashSet<CRM_COMERCIAL_ACAO>();
+            this.CRM_COMERCIAL_ACAO1 = new HashSet<CRM_COMERCIAL_ACAO>();
+            this.CRM_COMERCIAL_COMENTARIO_NOVA = new HashSet<CRM_COMERCIAL_COMENTARIO_NOVA>();
         }
     
         public int USUA_CD_ID { get; set; }
@@ -180,5 +184,13 @@ namespace EntitiesServices.Model
         public virtual ICollection<USUARIO_ANEXO> USUARIO_ANEXO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USUARIO_FUNCIONARIO> USUARIO_FUNCIONARIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_COMERCIAL> CRM_COMERCIAL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_COMERCIAL_ACAO> CRM_COMERCIAL_ACAO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_COMERCIAL_ACAO> CRM_COMERCIAL_ACAO1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_COMERCIAL_COMENTARIO_NOVA> CRM_COMERCIAL_COMENTARIO_NOVA { get; set; }
     }
 }

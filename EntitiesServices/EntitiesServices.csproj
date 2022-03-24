@@ -351,6 +351,11 @@
     <Compile Include="Interfaces\Repositories\IContaReceberParcelaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaReceberRateioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaReceberRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMComercialComentarioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMComercialAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMComercialAcaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMComercialContatoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMComercialRepository.cs" />
     <Compile Include="Interfaces\Repositories\IDepartamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoCCRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
@@ -381,6 +386,7 @@
     <Compile Include="Interfaces\Repositories\IFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoContatoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMComercialItemRepository.cs" />
     <Compile Include="Interfaces\Repositories\IItemPedidoCompraRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMensagemAutomacaoDatasRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMensagemAnexoRepository.cs" />
@@ -613,6 +619,24 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CRM_COMENTARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_COMERCIAL.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_COMERCIAL_ACAO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_COMERCIAL_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_COMERCIAL_COMENTARIO_NOVA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_COMERCIAL_CONTATO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_COMERCIAL_ITEM.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CRM_CONTATO.cs">

@@ -853,6 +853,112 @@
           <Property Name="CRCM_DS_COMENTARIO" Type="varchar" MaxLength="5000" />
           <Property Name="CRCM_IN_ATIVO" Type="int" />
         </EntityType>
+        <EntityType Name="CRM_COMERCIAL">
+          <Key>
+            <PropertyRef Name="CRMC_CD_ID" />
+          </Key>
+          <Property Name="CRMC_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CLIE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="TICR_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="FILI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CROR_CD_ID" Type="int" />
+          <Property Name="FOEN_CD_ID" Type="int" />
+          <Property Name="FOFR_CD_ID" Type="int" />
+          <Property Name="CRMC_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="CRMC_NR_NUMERO" Type="varchar" MaxLength="20" />
+          <Property Name="CRMC_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CRMC_DS_DESCRICAO" Type="varchar" MaxLength="250" />
+          <Property Name="CRMC_DS_INFORMACOES_GERAIS" Type="varchar" MaxLength="1000" />
+          <Property Name="CRMC_DT_CRIACAO" Type="date" Nullable="false" />
+          <Property Name="CRMC_DT_VALIDADE" Type="date" Nullable="false" />
+          <Property Name="CRMC_DT_PREVISTA" Type="date" Nullable="false" />
+          <Property Name="CRMC_IN_STATUS" Type="int" Nullable="false" />
+          <Property Name="CRMC_IN_ESTRELA" Type="int" Nullable="false" />
+          <Property Name="CRMC_DT_VENCIMENTO" Type="date" />
+          <Property Name="CRMC_DT_FATURAMENTO" Type="date" />
+          <Property Name="CRMC_DT_TROCA_STATUS" Type="date" Nullable="false" />
+          <Property Name="CRMC_DT_APROVACAO" Type="date" />
+          <Property Name="CRMC_DT_CANCELAMENTO" Type="date" />
+          <Property Name="MOCA_CD_ID" Type="int" />
+          <Property Name="CRMC_DS_JUSTIFICATIVA_CANCELAMENTO" Type="varchar" MaxLength="500" />
+          <Property Name="CRMC_DT_ENCERRAMENTO" Type="date" />
+          <Property Name="MOEN_CD_ID" Type="int" />
+          <Property Name="CRMC_DS_JUSTIFICATIVA_ENCERRAMENTO" Type="varchar" MaxLength="500" />
+          <Property Name="CRMC_TX_OBSERVACAO" Type="text" />
+          <Property Name="CRMC_IN_DUMMY" Type="int" />
+          <Property Name="CRMC_AQ_IMAGEM" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="CRM_COMERCIAL_ACAO">
+          <Key>
+            <PropertyRef Name="CRCA_CD_ID" />
+          </Key>
+          <Property Name="CRCA_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CRMC_CD_ID" Type="int" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" />
+          <Property Name="USUA_CD_ID2" Type="int" />
+          <Property Name="TIAC_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CRCA_DT_ACAO" Type="date" Nullable="false" />
+          <Property Name="CRCA_NM_TITULO" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="CRCA_DS_DESCRICAO" Type="varchar" MaxLength="500" />
+          <Property Name="CRCA_DT_PREVISTA" Type="date" Nullable="false" />
+          <Property Name="CRCA_IN_STATUS" Type="int" Nullable="false" />
+          <Property Name="CRCA_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CRM_COMERCIAL_ANEXO">
+          <Key>
+            <PropertyRef Name="CRCA_CD_ID" />
+          </Key>
+          <Property Name="CRCA_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CRMC_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CRCA_DT_ANEXO" Type="date" Nullable="false" />
+          <Property Name="CRCA_NM_TITULO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CRCA_IN_TIPO" Type="int" Nullable="false" />
+          <Property Name="CRCA_AQ_ARQUIVO" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="CRCA_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CRM_COMERCIAL_COMENTARIO_NOVA">
+          <Key>
+            <PropertyRef Name="CRCC_CD_ID" />
+          </Key>
+          <Property Name="CRCC_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CRMC_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CRCC_DT_COMENTARIO" Type="date" Nullable="false" />
+          <Property Name="CRCC_DS_COMENTARIO" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="CRCC_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CRM_COMERCIAL_CONTATO">
+          <Key>
+            <PropertyRef Name="CRCO_CD_ID" />
+          </Key>
+          <Property Name="CRCO_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CRMC_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CRCO_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CRCO_NM_CARGO" Type="varchar" MaxLength="50" />
+          <Property Name="CRCO_NR_TELEFONE" Type="varchar" MaxLength="50" />
+          <Property Name="CRCO_NR_CELULAR" Type="varchar" MaxLength="50" />
+          <Property Name="CRCO_NM_EMAIL" Type="varchar" MaxLength="150" />
+          <Property Name="CRCO_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="CRCO_IN_PRINCIPAL" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CRM_COMERCIAL_ITEM">
+          <Key>
+            <PropertyRef Name="CRCI_CD_ID" />
+          </Key>
+          <Property Name="CRCI_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CRMC_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CRCI_QN_QUANTIDADE" Type="int" />
+          <Property Name="CRCI_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="CRCI_TX_OBSERVACAO" Type="text" />
+          <Property Name="CRCI_VL_VALOR" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CRCI_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
+          <Property Name="CRCI_DT_JUSTIFICATIVA" Type="date" />
+          <Property Name="CRCI_VL_PRODUTO" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
         <EntityType Name="CRM_CONTATO">
           <Key>
             <PropertyRef Name="CRCO_CD_ID" />
@@ -3663,6 +3769,258 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CRM_COMERCIAL_ACAO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL_ACAO" Type="Self.CRM_COMERCIAL_ACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ACAO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ACAO_CRM_COMERCIAL">
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL_ACAO" Type="Self.CRM_COMERCIAL_ACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_COMERCIAL">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ACAO">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ACAO_TIPO_ACAO">
+          <End Role="TIPO_ACAO" Type="Self.TIPO_ACAO" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL_ACAO" Type="Self.CRM_COMERCIAL_ACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_ACAO">
+              <PropertyRef Name="TIAC_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ACAO">
+              <PropertyRef Name="TIAC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ACAO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="CRM_COMERCIAL_ACAO" Type="Self.CRM_COMERCIAL_ACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ACAO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ACAO_USUARIO1">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="CRM_COMERCIAL_ACAO" Type="Self.CRM_COMERCIAL_ACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ACAO">
+              <PropertyRef Name="USUA_CD_ID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ANEXO_CRM_COMERCIAL">
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL_ANEXO" Type="Self.CRM_COMERCIAL_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_COMERCIAL">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ANEXO">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_COMENTARIO_NOVA_CRM_COMERCIAL">
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL_COMENTARIO_NOVA" Type="Self.CRM_COMERCIAL_COMENTARIO_NOVA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_COMERCIAL">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_COMENTARIO_NOVA">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_COMENTARIO_NOVA_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL_COMENTARIO_NOVA" Type="Self.CRM_COMERCIAL_COMENTARIO_NOVA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_COMENTARIO_NOVA">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_CONTATO_CRM_COMERCIAL">
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL_CONTATO" Type="Self.CRM_COMERCIAL_CONTATO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_COMERCIAL">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_CONTATO">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_CRM_ORIGEM">
+          <End Role="CRM_ORIGEM" Type="Self.CRM_ORIGEM" Multiplicity="0..1" />
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_ORIGEM">
+              <PropertyRef Name="CROR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="CROR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_FILIAL">
+          <End Role="FILIAL" Type="Self.FILIAL" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_FORMA_ENVIO">
+          <End Role="FORMA_ENVIO" Type="Self.FORMA_ENVIO" Multiplicity="0..1" />
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORMA_ENVIO">
+              <PropertyRef Name="FOEN_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="FOEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_FORMA_FRETE">
+          <End Role="FORMA_FRETE" Type="Self.FORMA_FRETE" Multiplicity="0..1" />
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORMA_FRETE">
+              <PropertyRef Name="FOFR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="FOFR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ITEM_CRM_COMERCIAL">
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL_ITEM" Type="Self.CRM_COMERCIAL_ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_COMERCIAL">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ITEM">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ITEM_PRODUTO">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL_ITEM" Type="Self.CRM_COMERCIAL_ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ITEM">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_MOTIVO_CANCELAMENTO">
+          <End Role="MOTIVO_CANCELAMENTO" Type="Self.MOTIVO_CANCELAMENTO" Multiplicity="0..1" />
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MOTIVO_CANCELAMENTO">
+              <PropertyRef Name="MOCA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="MOCA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_MOTIVO_ENCERRAMENTO">
+          <End Role="MOTIVO_ENCERRAMENTO" Type="Self.MOTIVO_ENCERRAMENTO" Multiplicity="0..1" />
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MOTIVO_ENCERRAMENTO">
+              <PropertyRef Name="MOEN_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="MOEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_TIPO_CRM">
+          <End Role="TIPO_CRM" Type="Self.TIPO_CRM" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_CRM">
+              <PropertyRef Name="TICR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="TICR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="CRM_COMERCIAL" Type="Self.CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CRM_CONTATO_CRM">
           <End Role="CRM" Type="Self.CRM" Multiplicity="1" />
           <End Role="CRM_CONTATO" Type="Self.CRM_CONTATO" Multiplicity="*" />
@@ -6151,6 +6509,12 @@
           <EntitySet Name="CRM_ACAO" EntityType="Self.CRM_ACAO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRM_ANEXO" EntityType="Self.CRM_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRM_COMENTARIO" EntityType="Self.CRM_COMENTARIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CRM_COMERCIAL" EntityType="Self.CRM_COMERCIAL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CRM_COMERCIAL_ACAO" EntityType="Self.CRM_COMERCIAL_ACAO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CRM_COMERCIAL_ANEXO" EntityType="Self.CRM_COMERCIAL_ANEXO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CRM_COMERCIAL_COMENTARIO_NOVA" EntityType="Self.CRM_COMERCIAL_COMENTARIO_NOVA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CRM_COMERCIAL_CONTATO" EntityType="Self.CRM_COMERCIAL_CONTATO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CRM_COMERCIAL_ITEM" EntityType="Self.CRM_COMERCIAL_ITEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRM_CONTATO" EntityType="Self.CRM_CONTATO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRM_ORIGEM" EntityType="Self.CRM_ORIGEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DEPARTAMENTO" EntityType="Self.DEPARTAMENTO" Schema="dbo" store:Type="Tables" />
@@ -6665,6 +7029,90 @@
           <AssociationSet Name="FK_CRM_COMENTARIO_USUARIO" Association="Self.FK_CRM_COMENTARIO_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="CRM_COMENTARIO" EntitySet="CRM_COMENTARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ACAO_ASSINANTE" Association="Self.FK_CRM_COMERCIAL_ACAO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CRM_COMERCIAL_ACAO" EntitySet="CRM_COMERCIAL_ACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ACAO_CRM_COMERCIAL" Association="Self.FK_CRM_COMERCIAL_ACAO_CRM_COMERCIAL">
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+            <End Role="CRM_COMERCIAL_ACAO" EntitySet="CRM_COMERCIAL_ACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ACAO_TIPO_ACAO" Association="Self.FK_CRM_COMERCIAL_ACAO_TIPO_ACAO">
+            <End Role="TIPO_ACAO" EntitySet="TIPO_ACAO" />
+            <End Role="CRM_COMERCIAL_ACAO" EntitySet="CRM_COMERCIAL_ACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ACAO_USUARIO" Association="Self.FK_CRM_COMERCIAL_ACAO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CRM_COMERCIAL_ACAO" EntitySet="CRM_COMERCIAL_ACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ACAO_USUARIO1" Association="Self.FK_CRM_COMERCIAL_ACAO_USUARIO1">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CRM_COMERCIAL_ACAO" EntitySet="CRM_COMERCIAL_ACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ANEXO_CRM_COMERCIAL" Association="Self.FK_CRM_COMERCIAL_ANEXO_CRM_COMERCIAL">
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+            <End Role="CRM_COMERCIAL_ANEXO" EntitySet="CRM_COMERCIAL_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ASSINANTE" Association="Self.FK_CRM_COMERCIAL_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_CLIENTE" Association="Self.FK_CRM_COMERCIAL_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_COMENTARIO_NOVA_CRM_COMERCIAL" Association="Self.FK_CRM_COMERCIAL_COMENTARIO_NOVA_CRM_COMERCIAL">
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+            <End Role="CRM_COMERCIAL_COMENTARIO_NOVA" EntitySet="CRM_COMERCIAL_COMENTARIO_NOVA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_COMENTARIO_NOVA_USUARIO" Association="Self.FK_CRM_COMERCIAL_COMENTARIO_NOVA_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CRM_COMERCIAL_COMENTARIO_NOVA" EntitySet="CRM_COMERCIAL_COMENTARIO_NOVA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_CONTATO_CRM_COMERCIAL" Association="Self.FK_CRM_COMERCIAL_CONTATO_CRM_COMERCIAL">
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+            <End Role="CRM_COMERCIAL_CONTATO" EntitySet="CRM_COMERCIAL_CONTATO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_CRM_ORIGEM" Association="Self.FK_CRM_COMERCIAL_CRM_ORIGEM">
+            <End Role="CRM_ORIGEM" EntitySet="CRM_ORIGEM" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_FILIAL" Association="Self.FK_CRM_COMERCIAL_FILIAL">
+            <End Role="FILIAL" EntitySet="FILIAL" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_FORMA_ENVIO" Association="Self.FK_CRM_COMERCIAL_FORMA_ENVIO">
+            <End Role="FORMA_ENVIO" EntitySet="FORMA_ENVIO" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_FORMA_FRETE" Association="Self.FK_CRM_COMERCIAL_FORMA_FRETE">
+            <End Role="FORMA_FRETE" EntitySet="FORMA_FRETE" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ITEM_CRM_COMERCIAL" Association="Self.FK_CRM_COMERCIAL_ITEM_CRM_COMERCIAL">
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+            <End Role="CRM_COMERCIAL_ITEM" EntitySet="CRM_COMERCIAL_ITEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ITEM_PRODUTO" Association="Self.FK_CRM_COMERCIAL_ITEM_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="CRM_COMERCIAL_ITEM" EntitySet="CRM_COMERCIAL_ITEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_MOTIVO_CANCELAMENTO" Association="Self.FK_CRM_COMERCIAL_MOTIVO_CANCELAMENTO">
+            <End Role="MOTIVO_CANCELAMENTO" EntitySet="MOTIVO_CANCELAMENTO" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_MOTIVO_ENCERRAMENTO" Association="Self.FK_CRM_COMERCIAL_MOTIVO_ENCERRAMENTO">
+            <End Role="MOTIVO_ENCERRAMENTO" EntitySet="MOTIVO_ENCERRAMENTO" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_TIPO_CRM" Association="Self.FK_CRM_COMERCIAL_TIPO_CRM">
+            <End Role="TIPO_CRM" EntitySet="TIPO_CRM" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_USUARIO" Association="Self.FK_CRM_COMERCIAL_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
           </AssociationSet>
           <AssociationSet Name="FK_CRM_CONTATO_CRM" Association="Self.FK_CRM_CONTATO_CRM">
             <End Role="CRM" EntitySet="CRM" />
@@ -7629,6 +8077,8 @@
           <NavigationProperty Name="TIPO_TAREFA" Relationship="Self.FK_TIPO_TAREFA_ASSINANTE" FromRole="ASSINANTE" ToRole="TIPO_TAREFA" />
           <NavigationProperty Name="TRANSPORTADORA" Relationship="Self.FK_TRANSPORTADORA_ASSINANTE" FromRole="ASSINANTE" ToRole="TRANSPORTADORA" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_ASSINANTE" FromRole="ASSINANTE" ToRole="USUARIO" />
+          <NavigationProperty Name="CRM_COMERCIAL_ACAO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_ASSINANTE" FromRole="ASSINANTE" ToRole="CRM_COMERCIAL_ACAO" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ASSINANTE" FromRole="ASSINANTE" ToRole="CRM_COMERCIAL" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -8042,6 +8492,7 @@
           <NavigationProperty Name="MENSAGENS_DESTINOS" Relationship="Self.FK_MENSAGENS_DESTINOS_CLIENTE" FromRole="CLIENTE" ToRole="MENSAGENS_DESTINOS" />
           <NavigationProperty Name="ORDEM_SERVICO" Relationship="Self.FK_ORDEM_SERVICO_CLIENTE" FromRole="CLIENTE" ToRole="ORDEM_SERVICO" />
           <NavigationProperty Name="PEDIDO_VENDA" Relationship="Self.FK_PEDIDO_VENDA_CLIENTE" FromRole="CLIENTE" ToRole="PEDIDO_VENDA" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_CLIENTE" FromRole="CLIENTE" ToRole="CRM_COMERCIAL" />
         </EntityType>
         <EntityType Name="CLIENTE_ANEXO">
           <Key>
@@ -8583,6 +9034,7 @@
           <Property Name="CROR_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CRM_ORIGEM_ASSINANTE" FromRole="CRM_ORIGEM" ToRole="ASSINANTE" />
           <NavigationProperty Name="CRM" Relationship="Self.FK_CRM_CRM_ORIGEM" FromRole="CRM_ORIGEM" ToRole="CRM" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_CRM_ORIGEM" FromRole="CRM_ORIGEM" ToRole="CRM_COMERCIAL" />
         </EntityType>
         <EntityType Name="DEPARTAMENTO">
           <Key>
@@ -8752,6 +9204,7 @@
           <NavigationProperty Name="SERVICO_TABELA_PRECO" Relationship="Self.FK_SERVICO_TABELA_PRECO_FILIAL" FromRole="FILIAL" ToRole="SERVICO_TABELA_PRECO" />
           <NavigationProperty Name="TRANSPORTADORA" Relationship="Self.FK_TRANSPORTADORA_FILIAL" FromRole="FILIAL" ToRole="TRANSPORTADORA" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_FILIAL" FromRole="FILIAL" ToRole="USUARIO" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_FILIAL" FromRole="FILIAL" ToRole="CRM_COMERCIAL" />
         </EntityType>
         <EntityType Name="FORMA_ENVIO">
           <Key>
@@ -8763,6 +9216,7 @@
           <Property Name="FOEN_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_FORMA_ENVIO_ASSINANTE" FromRole="FORMA_ENVIO" ToRole="ASSINANTE" />
           <NavigationProperty Name="PEDIDO_VENDA" Relationship="Self.FK_PEDIDO_VENDA_Forma_ENVIO" FromRole="FORMA_ENVIO" ToRole="PEDIDO_VENDA" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_FORMA_ENVIO" FromRole="FORMA_ENVIO" ToRole="CRM_COMERCIAL" />
         </EntityType>
         <EntityType Name="FORMA_FRETE">
           <Key>
@@ -8774,6 +9228,7 @@
           <Property Name="FOFR_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_FORMA_FRETE_ASSINANTE" FromRole="FORMA_FRETE" ToRole="ASSINANTE" />
           <NavigationProperty Name="PEDIDO_VENDA" Relationship="Self.FK_PEDIDO_VENDA_Forma_FRETE" FromRole="FORMA_FRETE" ToRole="PEDIDO_VENDA" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_FORMA_FRETE" FromRole="FORMA_FRETE" ToRole="CRM_COMERCIAL" />
         </EntityType>
         <EntityType Name="FORMA_PAGAMENTO">
           <Key>
@@ -9156,6 +9611,7 @@
           <Property Name="MOCA_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_MOTIVO_CANCELAMENTO_ASSINANTE" FromRole="MOTIVO_CANCELAMENTO" ToRole="ASSINANTE" />
           <NavigationProperty Name="CRM" Relationship="Self.FK_CRM_MOTIVO_CANCELAMENTO" FromRole="MOTIVO_CANCELAMENTO" ToRole="CRM" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_MOTIVO_CANCELAMENTO" FromRole="MOTIVO_CANCELAMENTO" ToRole="CRM_COMERCIAL" />
         </EntityType>
         <EntityType Name="MOTIVO_ENCERRAMENTO">
           <Key>
@@ -9167,6 +9623,7 @@
           <Property Name="MOEN_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_MOTIVO_ENCERRAMENTO_ASSINANTE" FromRole="MOTIVO_ENCERRAMENTO" ToRole="ASSINANTE" />
           <NavigationProperty Name="CRM" Relationship="Self.FK_CRM_MOTIVO_ENCERRAMENTO" FromRole="MOTIVO_ENCERRAMENTO" ToRole="CRM" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_MOTIVO_ENCERRAMENTO" FromRole="MOTIVO_ENCERRAMENTO" ToRole="CRM_COMERCIAL" />
         </EntityType>
         <EntityType Name="MOVIMENTO_ESTOQUE_PRODUTO">
           <Key>
@@ -9796,6 +10253,7 @@
           <NavigationProperty Name="SUBCATEGORIA_PRODUTO" Relationship="Self.FK_PRODUTO_SUBCATEGORIA_PRODUTO" FromRole="PRODUTO" ToRole="SUBCATEGORIA_PRODUTO" />
           <NavigationProperty Name="PRODUTO_TABELA_PRECO" Relationship="Self.FK_PRODUTO_TABELA_PRECO_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_TABELA_PRECO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_PRODUTO_UNIDADE" FromRole="PRODUTO" ToRole="UNIDADE" />
+          <NavigationProperty Name="CRM_COMERCIAL_ITEM" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_PRODUTO" FromRole="PRODUTO" ToRole="CRM_COMERCIAL_ITEM" />
         </EntityType>
         <EntityType Name="PRODUTO_ANEXO">
           <Key>
@@ -10200,6 +10658,7 @@
           <Property Name="TIAC_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_TIPO_ACAO_ASSINANTE" FromRole="TIPO_ACAO" ToRole="ASSINANTE" />
           <NavigationProperty Name="CRM_ACAO" Relationship="Self.FK_CRM_ACAO_TIPO_ACAO" FromRole="TIPO_ACAO" ToRole="CRM_ACAO" />
+          <NavigationProperty Name="CRM_COMERCIAL_ACAO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_TIPO_ACAO" FromRole="TIPO_ACAO" ToRole="CRM_COMERCIAL_ACAO" />
         </EntityType>
         <EntityType Name="TIPO_CONTA">
           <Key>
@@ -10229,6 +10688,7 @@
           <Property Name="TICR_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_TIPO_CRM_ASSINANTE" FromRole="TIPO_CRM" ToRole="ASSINANTE" />
           <NavigationProperty Name="CRM" Relationship="Self.FK_CRM_TIPO_CRM" FromRole="TIPO_CRM" ToRole="CRM" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_TIPO_CRM" FromRole="TIPO_CRM" ToRole="CRM_COMERCIAL" />
         </EntityType>
         <EntityType Name="TIPO_GRUPO">
           <Key>
@@ -10450,6 +10910,10 @@
           <Property Name="USUA_IN_CRM" Type="Int32" />
           <Property Name="USUA_IN_ERP" Type="Int32" />
           <Property Name="USUA_IN_TECNICO" Type="Int32" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_USUARIO" FromRole="USUARIO" ToRole="CRM_COMERCIAL" />
+          <NavigationProperty Name="CRM_COMERCIAL_ACAO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_USUARIO" FromRole="USUARIO" ToRole="CRM_COMERCIAL_ACAO" />
+          <NavigationProperty Name="CRM_COMERCIAL_ACAO1" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_USUARIO1" FromRole="USUARIO" ToRole="CRM_COMERCIAL_ACAO" />
+          <NavigationProperty Name="CRM_COMERCIAL_COMENTARIO_NOVA" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_COMENTARIO_NOVA_USUARIO" FromRole="USUARIO" ToRole="CRM_COMERCIAL_COMENTARIO_NOVA" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -15533,6 +15997,96 @@
             <End Role="CRM" EntitySet="CRM" />
             <End Role="ATENDIMENTO_CRM" EntitySet="ATENDIMENTO_CRM" />
           </AssociationSet>
+          <EntitySet Name="CRM_COMERCIAL" EntityType="ERP_CRMModel.CRM_COMERCIAL" />
+          <EntitySet Name="CRM_COMERCIAL_ACAO" EntityType="ERP_CRMModel.CRM_COMERCIAL_ACAO" />
+          <EntitySet Name="CRM_COMERCIAL_ANEXO" EntityType="ERP_CRMModel.CRM_COMERCIAL_ANEXO" />
+          <EntitySet Name="CRM_COMERCIAL_COMENTARIO_NOVA" EntityType="ERP_CRMModel.CRM_COMERCIAL_COMENTARIO_NOVA" />
+          <EntitySet Name="CRM_COMERCIAL_CONTATO" EntityType="ERP_CRMModel.CRM_COMERCIAL_CONTATO" />
+          <EntitySet Name="CRM_COMERCIAL_ITEM" EntityType="ERP_CRMModel.CRM_COMERCIAL_ITEM" />
+          <AssociationSet Name="FK_CRM_COMERCIAL_ACAO_ASSINANTE" Association="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CRM_COMERCIAL_ACAO" EntitySet="CRM_COMERCIAL_ACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ASSINANTE" Association="ERP_CRMModel.FK_CRM_COMERCIAL_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_CLIENTE" Association="ERP_CRMModel.FK_CRM_COMERCIAL_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ACAO_CRM_COMERCIAL" Association="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_CRM_COMERCIAL">
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+            <End Role="CRM_COMERCIAL_ACAO" EntitySet="CRM_COMERCIAL_ACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ANEXO_CRM_COMERCIAL" Association="ERP_CRMModel.FK_CRM_COMERCIAL_ANEXO_CRM_COMERCIAL">
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+            <End Role="CRM_COMERCIAL_ANEXO" EntitySet="CRM_COMERCIAL_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_COMENTARIO_NOVA_CRM_COMERCIAL" Association="ERP_CRMModel.FK_CRM_COMERCIAL_COMENTARIO_NOVA_CRM_COMERCIAL">
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+            <End Role="CRM_COMERCIAL_COMENTARIO_NOVA" EntitySet="CRM_COMERCIAL_COMENTARIO_NOVA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_CONTATO_CRM_COMERCIAL" Association="ERP_CRMModel.FK_CRM_COMERCIAL_CONTATO_CRM_COMERCIAL">
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+            <End Role="CRM_COMERCIAL_CONTATO" EntitySet="CRM_COMERCIAL_CONTATO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_CRM_ORIGEM" Association="ERP_CRMModel.FK_CRM_COMERCIAL_CRM_ORIGEM">
+            <End Role="CRM_ORIGEM" EntitySet="CRM_ORIGEM" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_FILIAL" Association="ERP_CRMModel.FK_CRM_COMERCIAL_FILIAL">
+            <End Role="FILIAL" EntitySet="FILIAL" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_FORMA_ENVIO" Association="ERP_CRMModel.FK_CRM_COMERCIAL_FORMA_ENVIO">
+            <End Role="FORMA_ENVIO" EntitySet="FORMA_ENVIO" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_FORMA_FRETE" Association="ERP_CRMModel.FK_CRM_COMERCIAL_FORMA_FRETE">
+            <End Role="FORMA_FRETE" EntitySet="FORMA_FRETE" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ITEM_CRM_COMERCIAL" Association="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_CRM_COMERCIAL">
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+            <End Role="CRM_COMERCIAL_ITEM" EntitySet="CRM_COMERCIAL_ITEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_MOTIVO_CANCELAMENTO" Association="ERP_CRMModel.FK_CRM_COMERCIAL_MOTIVO_CANCELAMENTO">
+            <End Role="MOTIVO_CANCELAMENTO" EntitySet="MOTIVO_CANCELAMENTO" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_MOTIVO_ENCERRAMENTO" Association="ERP_CRMModel.FK_CRM_COMERCIAL_MOTIVO_ENCERRAMENTO">
+            <End Role="MOTIVO_ENCERRAMENTO" EntitySet="MOTIVO_ENCERRAMENTO" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_TIPO_CRM" Association="ERP_CRMModel.FK_CRM_COMERCIAL_TIPO_CRM">
+            <End Role="TIPO_CRM" EntitySet="TIPO_CRM" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_USUARIO" Association="ERP_CRMModel.FK_CRM_COMERCIAL_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CRM_COMERCIAL" EntitySet="CRM_COMERCIAL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ACAO_TIPO_ACAO" Association="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_TIPO_ACAO">
+            <End Role="TIPO_ACAO" EntitySet="TIPO_ACAO" />
+            <End Role="CRM_COMERCIAL_ACAO" EntitySet="CRM_COMERCIAL_ACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ACAO_USUARIO" Association="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CRM_COMERCIAL_ACAO" EntitySet="CRM_COMERCIAL_ACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ACAO_USUARIO1" Association="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_USUARIO1">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CRM_COMERCIAL_ACAO" EntitySet="CRM_COMERCIAL_ACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_COMENTARIO_NOVA_USUARIO" Association="ERP_CRMModel.FK_CRM_COMERCIAL_COMENTARIO_NOVA_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CRM_COMERCIAL_COMENTARIO_NOVA" EntitySet="CRM_COMERCIAL_COMENTARIO_NOVA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_COMERCIAL_ITEM_PRODUTO" Association="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="CRM_COMERCIAL_ITEM" EntitySet="CRM_COMERCIAL_ITEM" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ATENDIMENTO_CRM">
           <Key>
@@ -15566,6 +16120,390 @@
             </Principal>
             <Dependent Role="ATENDIMENTO_CRM">
               <PropertyRef Name="CRM1_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CRM_COMERCIAL">
+          <Key>
+            <PropertyRef Name="CRMC_CD_ID" />
+          </Key>
+          <Property Name="CRMC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CLIE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="TICR_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="FILI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CROR_CD_ID" Type="Int32" />
+          <Property Name="FOEN_CD_ID" Type="Int32" />
+          <Property Name="FOFR_CD_ID" Type="Int32" />
+          <Property Name="CRMC_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="CRMC_NR_NUMERO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CRMC_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRMC_DS_DESCRICAO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CRMC_DS_INFORMACOES_GERAIS" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CRMC_DT_CRIACAO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CRMC_DT_VALIDADE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CRMC_DT_PREVISTA" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CRMC_IN_STATUS" Type="Int32" Nullable="false" />
+          <Property Name="CRMC_IN_ESTRELA" Type="Int32" Nullable="false" />
+          <Property Name="CRMC_DT_VENCIMENTO" Type="DateTime" Precision="0" />
+          <Property Name="CRMC_DT_FATURAMENTO" Type="DateTime" Precision="0" />
+          <Property Name="CRMC_DT_TROCA_STATUS" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CRMC_DT_APROVACAO" Type="DateTime" Precision="0" />
+          <Property Name="CRMC_DT_CANCELAMENTO" Type="DateTime" Precision="0" />
+          <Property Name="MOCA_CD_ID" Type="Int32" />
+          <Property Name="CRMC_DS_JUSTIFICATIVA_CANCELAMENTO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CRMC_DT_ENCERRAMENTO" Type="DateTime" Precision="0" />
+          <Property Name="MOEN_CD_ID" Type="Int32" />
+          <Property Name="CRMC_DS_JUSTIFICATIVA_ENCERRAMENTO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CRMC_TX_OBSERVACAO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRMC_IN_DUMMY" Type="Int32" />
+          <Property Name="CRMC_AQ_IMAGEM" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ASSINANTE" FromRole="CRM_COMERCIAL" ToRole="ASSINANTE" />
+          <NavigationProperty Name="CLIENTE" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_CLIENTE" FromRole="CRM_COMERCIAL" ToRole="CLIENTE" />
+          <NavigationProperty Name="CRM_COMERCIAL_ACAO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_CRM_COMERCIAL" FromRole="CRM_COMERCIAL" ToRole="CRM_COMERCIAL_ACAO" />
+          <NavigationProperty Name="CRM_COMERCIAL_ANEXO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ANEXO_CRM_COMERCIAL" FromRole="CRM_COMERCIAL" ToRole="CRM_COMERCIAL_ANEXO" />
+          <NavigationProperty Name="CRM_COMERCIAL_COMENTARIO_NOVA" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_COMENTARIO_NOVA_CRM_COMERCIAL" FromRole="CRM_COMERCIAL" ToRole="CRM_COMERCIAL_COMENTARIO_NOVA" />
+          <NavigationProperty Name="CRM_COMERCIAL_CONTATO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_CONTATO_CRM_COMERCIAL" FromRole="CRM_COMERCIAL" ToRole="CRM_COMERCIAL_CONTATO" />
+          <NavigationProperty Name="CRM_ORIGEM" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_CRM_ORIGEM" FromRole="CRM_COMERCIAL" ToRole="CRM_ORIGEM" />
+          <NavigationProperty Name="FILIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_FILIAL" FromRole="CRM_COMERCIAL" ToRole="FILIAL" />
+          <NavigationProperty Name="FORMA_ENVIO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_FORMA_ENVIO" FromRole="CRM_COMERCIAL" ToRole="FORMA_ENVIO" />
+          <NavigationProperty Name="FORMA_FRETE" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_FORMA_FRETE" FromRole="CRM_COMERCIAL" ToRole="FORMA_FRETE" />
+          <NavigationProperty Name="CRM_COMERCIAL_ITEM" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_CRM_COMERCIAL" FromRole="CRM_COMERCIAL" ToRole="CRM_COMERCIAL_ITEM" />
+          <NavigationProperty Name="MOTIVO_CANCELAMENTO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_MOTIVO_CANCELAMENTO" FromRole="CRM_COMERCIAL" ToRole="MOTIVO_CANCELAMENTO" />
+          <NavigationProperty Name="MOTIVO_ENCERRAMENTO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_MOTIVO_ENCERRAMENTO" FromRole="CRM_COMERCIAL" ToRole="MOTIVO_ENCERRAMENTO" />
+          <NavigationProperty Name="TIPO_CRM" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_TIPO_CRM" FromRole="CRM_COMERCIAL" ToRole="TIPO_CRM" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_USUARIO" FromRole="CRM_COMERCIAL" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="CRM_COMERCIAL_ACAO">
+          <Key>
+            <PropertyRef Name="CRCA_CD_ID" />
+          </Key>
+          <Property Name="CRCA_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CRMC_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" />
+          <Property Name="USUA_CD_ID2" Type="Int32" />
+          <Property Name="TIAC_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CRCA_DT_ACAO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CRCA_NM_TITULO" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CRCA_DS_DESCRICAO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CRCA_DT_PREVISTA" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CRCA_IN_STATUS" Type="Int32" Nullable="false" />
+          <Property Name="CRCA_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_ASSINANTE" FromRole="CRM_COMERCIAL_ACAO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_CRM_COMERCIAL" FromRole="CRM_COMERCIAL_ACAO" ToRole="CRM_COMERCIAL" />
+          <NavigationProperty Name="TIPO_ACAO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_TIPO_ACAO" FromRole="CRM_COMERCIAL_ACAO" ToRole="TIPO_ACAO" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_USUARIO" FromRole="CRM_COMERCIAL_ACAO" ToRole="USUARIO" />
+          <NavigationProperty Name="USUARIO1" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_USUARIO1" FromRole="CRM_COMERCIAL_ACAO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="CRM_COMERCIAL_ANEXO">
+          <Key>
+            <PropertyRef Name="CRCA_CD_ID" />
+          </Key>
+          <Property Name="CRCA_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CRMC_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CRCA_DT_ANEXO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CRCA_NM_TITULO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CRCA_IN_TIPO" Type="Int32" Nullable="false" />
+          <Property Name="CRCA_AQ_ARQUIVO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CRCA_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ANEXO_CRM_COMERCIAL" FromRole="CRM_COMERCIAL_ANEXO" ToRole="CRM_COMERCIAL" />
+        </EntityType>
+        <EntityType Name="CRM_COMERCIAL_COMENTARIO_NOVA">
+          <Key>
+            <PropertyRef Name="CRCC_CD_ID" />
+          </Key>
+          <Property Name="CRCC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CRMC_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CRCC_DT_COMENTARIO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CRCC_DS_COMENTARIO" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CRCC_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_COMENTARIO_NOVA_CRM_COMERCIAL" FromRole="CRM_COMERCIAL_COMENTARIO_NOVA" ToRole="CRM_COMERCIAL" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_COMENTARIO_NOVA_USUARIO" FromRole="CRM_COMERCIAL_COMENTARIO_NOVA" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="CRM_COMERCIAL_CONTATO">
+          <Key>
+            <PropertyRef Name="CRCO_CD_ID" />
+          </Key>
+          <Property Name="CRCO_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CRMC_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CRCO_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRCO_NM_CARGO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRCO_NR_TELEFONE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRCO_NR_CELULAR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CRCO_NM_EMAIL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CRCO_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="CRCO_IN_PRINCIPAL" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_CONTATO_CRM_COMERCIAL" FromRole="CRM_COMERCIAL_CONTATO" ToRole="CRM_COMERCIAL" />
+        </EntityType>
+        <EntityType Name="CRM_COMERCIAL_ITEM">
+          <Key>
+            <PropertyRef Name="CRCI_CD_ID" />
+          </Key>
+          <Property Name="CRCI_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CRMC_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CRCI_QN_QUANTIDADE" Type="Int32" />
+          <Property Name="CRCI_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="CRCI_TX_OBSERVACAO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRCI_VL_VALOR" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CRCI_DS_JUSTIFICATIVA" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CRCI_DT_JUSTIFICATIVA" Type="DateTime" Precision="0" />
+          <Property Name="CRCI_VL_PRODUTO" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_CRM_COMERCIAL" FromRole="CRM_COMERCIAL_ITEM" ToRole="CRM_COMERCIAL" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_PRODUTO" FromRole="CRM_COMERCIAL_ITEM" ToRole="PRODUTO" />
+        </EntityType>
+        <Association Name="FK_CRM_COMERCIAL_ACAO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL_ACAO" Role="CRM_COMERCIAL_ACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ACAO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_CLIENTE">
+          <End Type="ERP_CRMModel.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ACAO_CRM_COMERCIAL">
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL_ACAO" Role="CRM_COMERCIAL_ACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_COMERCIAL">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ACAO">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ANEXO_CRM_COMERCIAL">
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL_ANEXO" Role="CRM_COMERCIAL_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_COMERCIAL">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ANEXO">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_COMENTARIO_NOVA_CRM_COMERCIAL">
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL_COMENTARIO_NOVA" Role="CRM_COMERCIAL_COMENTARIO_NOVA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_COMERCIAL">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_COMENTARIO_NOVA">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_CONTATO_CRM_COMERCIAL">
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL_CONTATO" Role="CRM_COMERCIAL_CONTATO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_COMERCIAL">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_CONTATO">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_CRM_ORIGEM">
+          <End Type="ERP_CRMModel.CRM_ORIGEM" Role="CRM_ORIGEM" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_ORIGEM">
+              <PropertyRef Name="CROR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="CROR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_FILIAL">
+          <End Type="ERP_CRMModel.FILIAL" Role="FILIAL" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FILIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="FILI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_FORMA_ENVIO">
+          <End Type="ERP_CRMModel.FORMA_ENVIO" Role="FORMA_ENVIO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORMA_ENVIO">
+              <PropertyRef Name="FOEN_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="FOEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_FORMA_FRETE">
+          <End Type="ERP_CRMModel.FORMA_FRETE" Role="FORMA_FRETE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORMA_FRETE">
+              <PropertyRef Name="FOFR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="FOFR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ITEM_CRM_COMERCIAL">
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL_ITEM" Role="CRM_COMERCIAL_ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_COMERCIAL">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ITEM">
+              <PropertyRef Name="CRMC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_MOTIVO_CANCELAMENTO">
+          <End Type="ERP_CRMModel.MOTIVO_CANCELAMENTO" Role="MOTIVO_CANCELAMENTO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MOTIVO_CANCELAMENTO">
+              <PropertyRef Name="MOCA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="MOCA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_MOTIVO_ENCERRAMENTO">
+          <End Type="ERP_CRMModel.MOTIVO_ENCERRAMENTO" Role="MOTIVO_ENCERRAMENTO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MOTIVO_ENCERRAMENTO">
+              <PropertyRef Name="MOEN_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="MOEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_TIPO_CRM">
+          <End Type="ERP_CRMModel.TIPO_CRM" Role="TIPO_CRM" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_CRM">
+              <PropertyRef Name="TICR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="TICR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL" Role="CRM_COMERCIAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ACAO_TIPO_ACAO">
+          <End Type="ERP_CRMModel.TIPO_ACAO" Role="TIPO_ACAO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL_ACAO" Role="CRM_COMERCIAL_ACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_ACAO">
+              <PropertyRef Name="TIAC_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ACAO">
+              <PropertyRef Name="TIAC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ACAO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL_ACAO" Role="CRM_COMERCIAL_ACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ACAO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ACAO_USUARIO1">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL_ACAO" Role="CRM_COMERCIAL_ACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ACAO">
+              <PropertyRef Name="USUA_CD_ID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_COMENTARIO_NOVA_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL_COMENTARIO_NOVA" Role="CRM_COMERCIAL_COMENTARIO_NOVA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_COMENTARIO_NOVA">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_COMERCIAL_ITEM_PRODUTO">
+          <End Type="ERP_CRMModel.PRODUTO" Role="PRODUTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_COMERCIAL_ITEM" Role="CRM_COMERCIAL_ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_COMERCIAL_ITEM">
+              <PropertyRef Name="PROD_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -18148,6 +19086,118 @@
                 <ScalarProperty Name="CRM1_CD_ID" ColumnName="CRM1_CD_ID" />
                 <ScalarProperty Name="ATEN_CD_ID" ColumnName="ATEN_CD_ID" />
                 <ScalarProperty Name="ATCR_CD_ID" ColumnName="ATCR_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CRM_COMERCIAL">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CRM_COMERCIAL">
+              <MappingFragment StoreEntitySet="CRM_COMERCIAL">
+                <ScalarProperty Name="CRMC_AQ_IMAGEM" ColumnName="CRMC_AQ_IMAGEM" />
+                <ScalarProperty Name="CRMC_IN_DUMMY" ColumnName="CRMC_IN_DUMMY" />
+                <ScalarProperty Name="CRMC_TX_OBSERVACAO" ColumnName="CRMC_TX_OBSERVACAO" />
+                <ScalarProperty Name="CRMC_DS_JUSTIFICATIVA_ENCERRAMENTO" ColumnName="CRMC_DS_JUSTIFICATIVA_ENCERRAMENTO" />
+                <ScalarProperty Name="MOEN_CD_ID" ColumnName="MOEN_CD_ID" />
+                <ScalarProperty Name="CRMC_DT_ENCERRAMENTO" ColumnName="CRMC_DT_ENCERRAMENTO" />
+                <ScalarProperty Name="CRMC_DS_JUSTIFICATIVA_CANCELAMENTO" ColumnName="CRMC_DS_JUSTIFICATIVA_CANCELAMENTO" />
+                <ScalarProperty Name="MOCA_CD_ID" ColumnName="MOCA_CD_ID" />
+                <ScalarProperty Name="CRMC_DT_CANCELAMENTO" ColumnName="CRMC_DT_CANCELAMENTO" />
+                <ScalarProperty Name="CRMC_DT_APROVACAO" ColumnName="CRMC_DT_APROVACAO" />
+                <ScalarProperty Name="CRMC_DT_TROCA_STATUS" ColumnName="CRMC_DT_TROCA_STATUS" />
+                <ScalarProperty Name="CRMC_DT_FATURAMENTO" ColumnName="CRMC_DT_FATURAMENTO" />
+                <ScalarProperty Name="CRMC_DT_VENCIMENTO" ColumnName="CRMC_DT_VENCIMENTO" />
+                <ScalarProperty Name="CRMC_IN_ESTRELA" ColumnName="CRMC_IN_ESTRELA" />
+                <ScalarProperty Name="CRMC_IN_STATUS" ColumnName="CRMC_IN_STATUS" />
+                <ScalarProperty Name="CRMC_DT_PREVISTA" ColumnName="CRMC_DT_PREVISTA" />
+                <ScalarProperty Name="CRMC_DT_VALIDADE" ColumnName="CRMC_DT_VALIDADE" />
+                <ScalarProperty Name="CRMC_DT_CRIACAO" ColumnName="CRMC_DT_CRIACAO" />
+                <ScalarProperty Name="CRMC_DS_INFORMACOES_GERAIS" ColumnName="CRMC_DS_INFORMACOES_GERAIS" />
+                <ScalarProperty Name="CRMC_DS_DESCRICAO" ColumnName="CRMC_DS_DESCRICAO" />
+                <ScalarProperty Name="CRMC_NM_NOME" ColumnName="CRMC_NM_NOME" />
+                <ScalarProperty Name="CRMC_NR_NUMERO" ColumnName="CRMC_NR_NUMERO" />
+                <ScalarProperty Name="CRMC_IN_ATIVO" ColumnName="CRMC_IN_ATIVO" />
+                <ScalarProperty Name="FOFR_CD_ID" ColumnName="FOFR_CD_ID" />
+                <ScalarProperty Name="FOEN_CD_ID" ColumnName="FOEN_CD_ID" />
+                <ScalarProperty Name="CROR_CD_ID" ColumnName="CROR_CD_ID" />
+                <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="TICR_CD_ID" ColumnName="TICR_CD_ID" />
+                <ScalarProperty Name="CLIE_CD_ID" ColumnName="CLIE_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="CRMC_CD_ID" ColumnName="CRMC_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CRM_COMERCIAL_ACAO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CRM_COMERCIAL_ACAO">
+              <MappingFragment StoreEntitySet="CRM_COMERCIAL_ACAO">
+                <ScalarProperty Name="CRCA_IN_ATIVO" ColumnName="CRCA_IN_ATIVO" />
+                <ScalarProperty Name="CRCA_IN_STATUS" ColumnName="CRCA_IN_STATUS" />
+                <ScalarProperty Name="CRCA_DT_PREVISTA" ColumnName="CRCA_DT_PREVISTA" />
+                <ScalarProperty Name="CRCA_DS_DESCRICAO" ColumnName="CRCA_DS_DESCRICAO" />
+                <ScalarProperty Name="CRCA_NM_TITULO" ColumnName="CRCA_NM_TITULO" />
+                <ScalarProperty Name="CRCA_DT_ACAO" ColumnName="CRCA_DT_ACAO" />
+                <ScalarProperty Name="TIAC_CD_ID" ColumnName="TIAC_CD_ID" />
+                <ScalarProperty Name="USUA_CD_ID2" ColumnName="USUA_CD_ID2" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="CRMC_CD_ID" ColumnName="CRMC_CD_ID" />
+                <ScalarProperty Name="CRCA_CD_ID" ColumnName="CRCA_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CRM_COMERCIAL_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CRM_COMERCIAL_ANEXO">
+              <MappingFragment StoreEntitySet="CRM_COMERCIAL_ANEXO">
+                <ScalarProperty Name="CRCA_IN_ATIVO" ColumnName="CRCA_IN_ATIVO" />
+                <ScalarProperty Name="CRCA_AQ_ARQUIVO" ColumnName="CRCA_AQ_ARQUIVO" />
+                <ScalarProperty Name="CRCA_IN_TIPO" ColumnName="CRCA_IN_TIPO" />
+                <ScalarProperty Name="CRCA_NM_TITULO" ColumnName="CRCA_NM_TITULO" />
+                <ScalarProperty Name="CRCA_DT_ANEXO" ColumnName="CRCA_DT_ANEXO" />
+                <ScalarProperty Name="CRMC_CD_ID" ColumnName="CRMC_CD_ID" />
+                <ScalarProperty Name="CRCA_CD_ID" ColumnName="CRCA_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CRM_COMERCIAL_COMENTARIO_NOVA">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CRM_COMERCIAL_COMENTARIO_NOVA">
+              <MappingFragment StoreEntitySet="CRM_COMERCIAL_COMENTARIO_NOVA">
+                <ScalarProperty Name="CRCC_IN_ATIVO" ColumnName="CRCC_IN_ATIVO" />
+                <ScalarProperty Name="CRCC_DS_COMENTARIO" ColumnName="CRCC_DS_COMENTARIO" />
+                <ScalarProperty Name="CRCC_DT_COMENTARIO" ColumnName="CRCC_DT_COMENTARIO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="CRMC_CD_ID" ColumnName="CRMC_CD_ID" />
+                <ScalarProperty Name="CRCC_CD_ID" ColumnName="CRCC_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CRM_COMERCIAL_CONTATO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CRM_COMERCIAL_CONTATO">
+              <MappingFragment StoreEntitySet="CRM_COMERCIAL_CONTATO">
+                <ScalarProperty Name="CRCO_IN_PRINCIPAL" ColumnName="CRCO_IN_PRINCIPAL" />
+                <ScalarProperty Name="CRCO_IN_ATIVO" ColumnName="CRCO_IN_ATIVO" />
+                <ScalarProperty Name="CRCO_NM_EMAIL" ColumnName="CRCO_NM_EMAIL" />
+                <ScalarProperty Name="CRCO_NR_CELULAR" ColumnName="CRCO_NR_CELULAR" />
+                <ScalarProperty Name="CRCO_NR_TELEFONE" ColumnName="CRCO_NR_TELEFONE" />
+                <ScalarProperty Name="CRCO_NM_CARGO" ColumnName="CRCO_NM_CARGO" />
+                <ScalarProperty Name="CRCO_NM_NOME" ColumnName="CRCO_NM_NOME" />
+                <ScalarProperty Name="CRMC_CD_ID" ColumnName="CRMC_CD_ID" />
+                <ScalarProperty Name="CRCO_CD_ID" ColumnName="CRCO_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CRM_COMERCIAL_ITEM">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CRM_COMERCIAL_ITEM">
+              <MappingFragment StoreEntitySet="CRM_COMERCIAL_ITEM">
+                <ScalarProperty Name="CRCI_VL_PRODUTO" ColumnName="CRCI_VL_PRODUTO" />
+                <ScalarProperty Name="CRCI_DT_JUSTIFICATIVA" ColumnName="CRCI_DT_JUSTIFICATIVA" />
+                <ScalarProperty Name="CRCI_DS_JUSTIFICATIVA" ColumnName="CRCI_DS_JUSTIFICATIVA" />
+                <ScalarProperty Name="CRCI_VL_VALOR" ColumnName="CRCI_VL_VALOR" />
+                <ScalarProperty Name="CRCI_TX_OBSERVACAO" ColumnName="CRCI_TX_OBSERVACAO" />
+                <ScalarProperty Name="CRCI_IN_ATIVO" ColumnName="CRCI_IN_ATIVO" />
+                <ScalarProperty Name="CRCI_QN_QUANTIDADE" ColumnName="CRCI_QN_QUANTIDADE" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+                <ScalarProperty Name="CRMC_CD_ID" ColumnName="CRMC_CD_ID" />
+                <ScalarProperty Name="CRCI_CD_ID" ColumnName="CRCI_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

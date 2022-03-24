@@ -191,6 +191,11 @@
     <Compile Include="Repositories\ContaReceberParcelaRepository.cs" />
     <Compile Include="Repositories\ContaReceberRateioRepository.cs" />
     <Compile Include="Repositories\ContaReceberRepository.cs" />
+    <Compile Include="Repositories\CRMComercialAnexoRepository.cs" />
+    <Compile Include="Repositories\CRMComercialComentarioRepository.cs" />
+    <Compile Include="Repositories\CRMComercialAcaoRepository.cs" />
+    <Compile Include="Repositories\CRMComercialContatoRepository.cs" />
+    <Compile Include="Repositories\CRMComercialRepository.cs" />
     <Compile Include="Repositories\DepartamentoRepository.cs" />
     <Compile Include="Repositories\GrupoCCRepository.cs" />
     <Compile Include="Repositories\CentroCustoRepository.cs" />
@@ -217,6 +222,7 @@
     <Compile Include="Repositories\FornecedorRepository.cs" />
     <Compile Include="Repositories\GrupoContatoRepository.cs" />
     <Compile Include="Repositories\GrupoRepository.cs" />
+    <Compile Include="Repositories\CRMComercialItemRepository.cs" />
     <Compile Include="Repositories\ItemPedidoCompraRepository.cs" />
     <Compile Include="Repositories\MensagemAutomacaoDatasRepository.cs" />
     <Compile Include="Repositories\MensagemAnexoRepository.cs" />

@@ -85,6 +85,8 @@ namespace EntitiesServices.Model
             this.TIPO_TAREFA = new HashSet<TIPO_TAREFA>();
             this.TRANSPORTADORA = new HashSet<TRANSPORTADORA>();
             this.USUARIO = new HashSet<USUARIO>();
+            this.CRM_COMERCIAL_ACAO = new HashSet<CRM_COMERCIAL_ACAO>();
+            this.CRM_COMERCIAL = new HashSet<CRM_COMERCIAL>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -248,5 +250,9 @@ namespace EntitiesServices.Model
         public virtual ICollection<TRANSPORTADORA> TRANSPORTADORA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USUARIO> USUARIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_COMERCIAL_ACAO> CRM_COMERCIAL_ACAO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_COMERCIAL> CRM_COMERCIAL { get; set; }
     }
 }
