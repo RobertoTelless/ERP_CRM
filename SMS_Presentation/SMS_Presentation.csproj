@@ -359,6 +359,11 @@
     <Compile Include="ViewModels\CategoriaAtendimentoViewModel.cs" />
     <Compile Include="ViewModels\CategoriaFornecedorViewModel.cs" />
     <Compile Include="ViewModels\CategoriaEquipamentoViewModel.cs" />
+    <Compile Include="ViewModels\CRMComercialComentarioViewModel.cs" />
+    <Compile Include="ViewModels\CRMComercialAcaoViewModel.cs" />
+    <Compile Include="ViewModels\CRMComercialContatoViewModel.cs" />
+    <Compile Include="ViewModels\CRMComercialDTOViewModel.cs" />
+    <Compile Include="ViewModels\CRMComercialViewModel.cs" />
     <Compile Include="ViewModels\GrupoCCViewModel.cs" />
     <Compile Include="ViewModels\CategoriaProdutoViewModel.cs" />
     <Compile Include="ViewModels\DepartamentoViewModel.cs" />

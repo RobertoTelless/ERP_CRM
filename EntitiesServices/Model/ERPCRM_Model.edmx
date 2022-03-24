@@ -889,6 +889,7 @@
           <Property Name="CRMC_TX_OBSERVACAO" Type="text" />
           <Property Name="CRMC_IN_DUMMY" Type="int" />
           <Property Name="CRMC_AQ_IMAGEM" Type="varchar" MaxLength="250" />
+          <Property Name="CRMC_DT_REPROVACAO" Type="date" />
         </EntityType>
         <EntityType Name="CRM_COMERCIAL_ACAO">
           <Key>
@@ -958,6 +959,8 @@
           <Property Name="CRCI_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
           <Property Name="CRCI_DT_JUSTIFICATIVA" Type="date" />
           <Property Name="CRCI_VL_PRODUTO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CRCI_QN_QUANTIDADE_REVISADA" Type="int" />
+          <Property Name="CRCI_DT_APROVACAO" Type="date" />
         </EntityType>
         <EntityType Name="CRM_CONTATO">
           <Key>
@@ -16174,6 +16177,7 @@
           <NavigationProperty Name="MOTIVO_ENCERRAMENTO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_MOTIVO_ENCERRAMENTO" FromRole="CRM_COMERCIAL" ToRole="MOTIVO_ENCERRAMENTO" />
           <NavigationProperty Name="TIPO_CRM" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_TIPO_CRM" FromRole="CRM_COMERCIAL" ToRole="TIPO_CRM" />
           <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_USUARIO" FromRole="CRM_COMERCIAL" ToRole="USUARIO" />
+          <Property Name="CRMC_DT_REPROVACAO" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="CRM_COMERCIAL_ACAO">
           <Key>
@@ -16254,6 +16258,8 @@
           <Property Name="CRCI_VL_PRODUTO" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_CRM_COMERCIAL" FromRole="CRM_COMERCIAL_ITEM" ToRole="CRM_COMERCIAL" />
           <NavigationProperty Name="PRODUTO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_PRODUTO" FromRole="CRM_COMERCIAL_ITEM" ToRole="PRODUTO" />
+          <Property Name="CRCI_QN_QUANTIDADE_REVISADA" Type="Int32" />
+          <Property Name="CRCI_DT_APROVACAO" Type="DateTime" Precision="0" />
         </EntityType>
         <Association Name="FK_CRM_COMERCIAL_ACAO_ASSINANTE">
           <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
@@ -19092,6 +19098,7 @@
           <EntitySetMapping Name="CRM_COMERCIAL">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_COMERCIAL">
               <MappingFragment StoreEntitySet="CRM_COMERCIAL">
+                <ScalarProperty Name="CRMC_DT_REPROVACAO" ColumnName="CRMC_DT_REPROVACAO" />
                 <ScalarProperty Name="CRMC_AQ_IMAGEM" ColumnName="CRMC_AQ_IMAGEM" />
                 <ScalarProperty Name="CRMC_IN_DUMMY" ColumnName="CRMC_IN_DUMMY" />
                 <ScalarProperty Name="CRMC_TX_OBSERVACAO" ColumnName="CRMC_TX_OBSERVACAO" />
@@ -19188,6 +19195,8 @@
           <EntitySetMapping Name="CRM_COMERCIAL_ITEM">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_COMERCIAL_ITEM">
               <MappingFragment StoreEntitySet="CRM_COMERCIAL_ITEM">
+                <ScalarProperty Name="CRCI_DT_APROVACAO" ColumnName="CRCI_DT_APROVACAO" />
+                <ScalarProperty Name="CRCI_QN_QUANTIDADE_REVISADA" ColumnName="CRCI_QN_QUANTIDADE_REVISADA" />
                 <ScalarProperty Name="CRCI_VL_PRODUTO" ColumnName="CRCI_VL_PRODUTO" />
                 <ScalarProperty Name="CRCI_DT_JUSTIFICATIVA" ColumnName="CRCI_DT_JUSTIFICATIVA" />
                 <ScalarProperty Name="CRCI_DS_JUSTIFICATIVA" ColumnName="CRCI_DS_JUSTIFICATIVA" />

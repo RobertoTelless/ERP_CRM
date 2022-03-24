@@ -92,7 +92,10 @@ namespace MvcMapping.Mappers
             CreateMap<ORDEM_SERVICO, OrdemServicoViewModel>();
             CreateMap<ORDEM_SERVICO_COMENTARIOS, OrdemServicoComentarioViewModel>();
             CreateMap<ORDEM_SERVICO_ACOMPANHAMENTO, OrdemServicoAcompanhamentoViewModel>();
-
+            CreateMap<CRM_COMERCIAL, CRMComercialViewModel>();
+            CreateMap<CRM_COMERCIAL_ACAO, CRMComercialAcaoViewModel>();
+            CreateMap<CRM_COMERCIAL_CONTATO, CRMComercialContatoViewModel>();
+            CreateMap<CRM_COMERCIAL_COMENTARIO_NOVA, CRMComercialComentarioViewModel>();
         }
     }
 }

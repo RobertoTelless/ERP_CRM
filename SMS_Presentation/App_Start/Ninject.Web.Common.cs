@@ -139,6 +139,7 @@ namespace Presentation.Start
             kernel.Bind<IOrdemServicoProdutoAppService>().To<OrdemServicoProdutoAppService>();
             kernel.Bind<IOrdemServicoServicoAppService>().To<OrdemServicoServicoAppService>();
             kernel.Bind<ICategoriaOrdemServicoAppService>().To<CategoriaOrdemServicoAppService>();
+            kernel.Bind<ICRMComercialAppService>().To<CRMComercialAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -214,6 +215,7 @@ namespace Presentation.Start
             kernel.Bind<IOrdemServicoServicoService>().To<OrdemServicoServicoService>();
             kernel.Bind<ICategoriaOrdemServicoService>().To<CategoriaOrdemServicoService>();
             kernel.Bind<IOrdemServicoService>().To<OrdemServicoService>();
+            kernel.Bind<ICRMComercialService>().To<CRMComercialService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -342,6 +344,12 @@ namespace Presentation.Start
             kernel.Bind<IOrdemServicoRepository>().To<OrdemServicoRepository>();
             kernel.Bind<IOrdemServicoServicoRepository>().To<OrdemServicoServicoRepository>();
             kernel.Bind<ICategoriaOrdemServicoRepository>().To<CategoriaOrdemServicoRepository>();
+            kernel.Bind<ICRMComercialAcaoRepository>().To<CRMComercialAcaoRepository>();
+            kernel.Bind<ICRMComercialAnexoRepository>().To<CRMComercialAnexoRepository>();
+            kernel.Bind<ICRMComercialComentarioRepository>().To<CRMComercialComentarioRepository>();
+            kernel.Bind<ICRMComercialContatoRepository>().To<CRMComercialContatoRepository>();
+            kernel.Bind<ICRMComercialItemRepository>().To<CRMComercialItemRepository>();
+            kernel.Bind<ICRMComercialRepository>().To<CRMComercialRepository>();
 
         }
     }

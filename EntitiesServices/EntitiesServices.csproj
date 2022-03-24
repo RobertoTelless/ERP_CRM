@@ -197,6 +197,7 @@
     <Compile Include="EntitiesServices\ContaReceberParcelaService.cs" />
     <Compile Include="EntitiesServices\ContaReceberRateioService.cs" />
     <Compile Include="EntitiesServices\ContaReceberService.cs" />
+    <Compile Include="EntitiesServices\CRMComercialService.cs" />
     <Compile Include="EntitiesServices\DepartamentoService.cs" />
     <Compile Include="EntitiesServices\EquipamentoService.cs" />
     <Compile Include="EntitiesServices\FichaTecnicaService.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Interfaces\EntitiesServices\IContaReceberParcelaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaReceberRateioService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaReceberService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ICRMComercialService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IDepartamentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IEquipamentoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFichaTecnicaService.cs" />

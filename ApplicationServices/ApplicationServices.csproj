@@ -188,6 +188,7 @@
     <Compile Include="Interfaces\IContaReceberAppService.cs" />
     <Compile Include="Interfaces\IContaReceberParcelaAppService.cs" />
     <Compile Include="Interfaces\IContaReceberRateioAppService.cs" />
+    <Compile Include="Interfaces\ICRMComercialAppService.cs" />
     <Compile Include="Interfaces\IDepartamentoAppService.cs" />
     <Compile Include="Interfaces\IEquipamentoAppService.cs" />
     <Compile Include="Interfaces\IFichaTecnicaAppService.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="Services\ContaReceberAppService.cs" />
     <Compile Include="Services\ContaReceberParcelaAppService.cs" />
     <Compile Include="Services\ContaReceberrRateioAppService.cs" />
+    <Compile Include="Services\CRMComercialAppService.cs" />
     <Compile Include="Services\DepartamentoAppService.cs" />
     <Compile Include="Services\EquipamentoAppService.cs" />
     <Compile Include="Services\FichaTecnicaAppService.cs" />

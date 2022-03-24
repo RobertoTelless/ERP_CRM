@@ -275,10 +275,6 @@ namespace ApplicationServices.Services
                         {
                             String erro = ex.Message;
                         }
-
-
-
-
                     }
                     else
                     {

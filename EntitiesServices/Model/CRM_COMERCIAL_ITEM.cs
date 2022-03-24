@@ -24,6 +24,8 @@ namespace EntitiesServices.Model
         public string CRCI_DS_JUSTIFICATIVA { get; set; }
         public Nullable<System.DateTime> CRCI_DT_JUSTIFICATIVA { get; set; }
         public Nullable<decimal> CRCI_VL_PRODUTO { get; set; }
+        public Nullable<int> CRCI_QN_QUANTIDADE_REVISADA { get; set; }
+        public Nullable<System.DateTime> CRCI_DT_APROVACAO { get; set; }
     
         public virtual CRM_COMERCIAL CRM_COMERCIAL { get; set; }
         public virtual PRODUTO PRODUTO { get; set; }
