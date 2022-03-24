@@ -320,6 +320,7 @@
     <Compile Include="Controllers\ContaPagarController.cs" />
     <Compile Include="Controllers\ContaReceberController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
+    <Compile Include="Controllers\CRMComercialController.cs" />
     <Compile Include="Controllers\CRMController.cs" />
     <Compile Include="Controllers\EquipamentoController.cs" />
     <Compile Include="Controllers\EstoqueController.cs" />
@@ -3702,6 +3703,7 @@
     <Folder Include="Imagens\4\Usuario\14\Anexos\" />
     <Folder Include="Imagens\Assinantes\2\Anexos\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\CRMComercial\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
