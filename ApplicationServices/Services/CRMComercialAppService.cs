@@ -1577,8 +1577,16 @@ namespace ApplicationServices.Services
                 if (String.IsNullOrEmpty(item.CRMC_DS_JUSTIFICATIVA_CANCELAMENTO))
                 {
                     return 1;
-                }                
-                
+                }
+                if (item.CRMC_DT_CANCELAMENTO > DateTime.Today.Date)
+                {
+                    return 2;
+                }
+                if (item.CRMC_DT_CANCELAMENTO < item.CRMC_DT_CRIACAO)
+                {
+                    return 3;
+                }
+
                 // Acerta campos
                 item.CRMC_IN_STATUS = 8;
                 item.CRMC_DT_CANCELAMENTO = DateTime.Today.Date;

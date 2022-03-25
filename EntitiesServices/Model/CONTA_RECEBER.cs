@@ -63,6 +63,7 @@ namespace EntitiesServices.Model
         public Nullable<int> CARE_IN_ABERTOS { get; set; }
         public Nullable<int> CARE_IN_LIQUIDA_NORMAL { get; set; }
         public Nullable<int> CARE_IN_PARCIAL { get; set; }
+        public Nullable<int> CRMC_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CENTRO_CUSTO CENTRO_CUSTO { get; set; }

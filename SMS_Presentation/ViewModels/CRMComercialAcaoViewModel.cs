@@ -33,6 +33,7 @@ namespace ERP_CRM_Solution.ViewModels
         public System.DateTime CRCA_DT_PREVISTA { get; set; }
         public int CRCA_IN_STATUS { get; set; }
         public int CRCA_IN_ATIVO { get; set; }
+        public Nullable<int> CRIA_AGENDA { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CRM_COMERCIAL CRM_COMERCIAL { get; set; }

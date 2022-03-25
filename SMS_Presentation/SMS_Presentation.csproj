@@ -384,6 +384,7 @@
     <Compile Include="ViewModels\FichaTecnicaViewModel.cs" />
     <Compile Include="ViewModels\FormaPagamentoViewModel.cs" />
     <Compile Include="ViewModels\InventarioViewModel.cs" />
+    <Compile Include="ViewModels\ItemProcessoCRMViewModel.cs" />
     <Compile Include="ViewModels\ItemPedidoCompraViewModel.cs" />
     <Compile Include="ViewModels\MensagemAutomaçãoViewModel.cs" />
     <Compile Include="ViewModels\MensagemAuotomacaoDatasViewModel.cs" />
@@ -3474,6 +3475,32 @@
     <Content Include="Views\OrdemServico\EnviarAprovacaoOrdemServico.cshtml" />
     <Content Include="Views\OrdemServico\AprovarOrdemServico.cshtml" />
     <Content Include="Views\OrdemServico\RecusarOrdemServico.cshtml" />
+    <Content Include="Views\CRMComercial\MontarTelaCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\MontarTelaKanbanCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\IncluirProcessoCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\VerAnexoCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\CancelarProcessoCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\EditarProcessoCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\VisualizarProcessoCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\EditarContatoComercial.cshtml" />
+    <Content Include="Views\CRMComercial\IncluirContatoComercial.cshtml" />
+    <Content Include="Views\CRMComercial\AcompanhamentoProcessoCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\EnviarEMailContatoComercial.cshtml" />
+    <Content Include="Views\CRMComercial\EnviarSMSContatoComercial.cshtml" />
+    <Content Include="Views\CRMComercial\EnviarSMSClienteComercial.cshtml" />
+    <Content Include="Views\CRMComercial\IncluirComentarioCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\EditarAcaoComercial.cshtml" />
+    <Content Include="Views\CRMComercial\VerAcaoComercial.cshtml" />
+    <Content Include="Views\CRMComercial\VerAcoesUsuarioCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\IncluirAcaoComercial.cshtml" />
+    <Content Include="Views\CRMComercial\VerCRMExpansaoComercial.cshtml" />
+    <Content Include="Views\CRMComercial\VerProcessosStatusExpansaoComercial.cshtml" />
+    <Content Include="Views\CRMComercial\EnviarEMailCliente.cshtml" />
+    <Content Include="Views\CRMComercial\MontarTelaDashboardCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\AprovarProcessoCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\ReprovarProcessoCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\ProcessarEncerrarProcessoCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\EntregarItemProcessoCRM.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3703,7 +3730,6 @@
     <Folder Include="Imagens\4\Usuario\14\Anexos\" />
     <Folder Include="Imagens\Assinantes\2\Anexos\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\CRMComercial\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

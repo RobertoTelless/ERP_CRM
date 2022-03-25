@@ -741,6 +741,7 @@
           <Property Name="CARE_IN_ABERTOS" Type="int" />
           <Property Name="CARE_IN_LIQUIDA_NORMAL" Type="int" />
           <Property Name="CARE_IN_PARCIAL" Type="int" />
+          <Property Name="CRMC_CD_ID" Type="int" />
         </EntityType>
         <EntityType Name="CONTA_RECEBER_ANEXO">
           <Key>
@@ -890,6 +891,7 @@
           <Property Name="CRMC_IN_DUMMY" Type="int" />
           <Property Name="CRMC_AQ_IMAGEM" Type="varchar" MaxLength="250" />
           <Property Name="CRMC_DT_REPROVACAO" Type="date" />
+          <Property Name="CRMC_NR_NOTA_FISCAL" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="CRM_COMERCIAL_ACAO">
           <Key>
@@ -8875,6 +8877,7 @@
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_CONTA_RECEBER_USUARIO" FromRole="CONTA_RECEBER" ToRole="USUARIO" />
           <Property Name="CARE_IN_LIQUIDA_NORMAL" Type="Int32" />
           <Property Name="CARE_IN_PARCIAL" Type="Int32" />
+          <Property Name="CRMC_CD_ID" Type="Int32" />
         </EntityType>
         <EntityType Name="CONTA_RECEBER_ANEXO">
           <Key>
@@ -16178,6 +16181,7 @@
           <NavigationProperty Name="TIPO_CRM" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_TIPO_CRM" FromRole="CRM_COMERCIAL" ToRole="TIPO_CRM" />
           <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_USUARIO" FromRole="CRM_COMERCIAL" ToRole="USUARIO" />
           <Property Name="CRMC_DT_REPROVACAO" Type="DateTime" Precision="0" />
+          <Property Name="CRMC_NR_NOTA_FISCAL" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CRM_COMERCIAL_ACAO">
           <Key>
@@ -17246,6 +17250,7 @@
           <EntitySetMapping Name="CONTA_RECEBER">
             <EntityTypeMapping TypeName="ERP_CRMModel.CONTA_RECEBER">
               <MappingFragment StoreEntitySet="CONTA_RECEBER">
+                <ScalarProperty Name="CRMC_CD_ID" ColumnName="CRMC_CD_ID" />
                 <ScalarProperty Name="CARE_IN_PARCIAL" ColumnName="CARE_IN_PARCIAL" />
                 <ScalarProperty Name="CARE_IN_LIQUIDA_NORMAL" ColumnName="CARE_IN_LIQUIDA_NORMAL" />
                 <ScalarProperty Name="CARE_CD_ID" ColumnName="CARE_CD_ID" />
@@ -19098,6 +19103,7 @@
           <EntitySetMapping Name="CRM_COMERCIAL">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_COMERCIAL">
               <MappingFragment StoreEntitySet="CRM_COMERCIAL">
+                <ScalarProperty Name="CRMC_NR_NOTA_FISCAL" ColumnName="CRMC_NR_NOTA_FISCAL" />
                 <ScalarProperty Name="CRMC_DT_REPROVACAO" ColumnName="CRMC_DT_REPROVACAO" />
                 <ScalarProperty Name="CRMC_AQ_IMAGEM" ColumnName="CRMC_AQ_IMAGEM" />
                 <ScalarProperty Name="CRMC_IN_DUMMY" ColumnName="CRMC_IN_DUMMY" />

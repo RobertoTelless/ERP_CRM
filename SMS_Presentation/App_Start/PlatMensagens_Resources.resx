@@ -408,4 +408,7 @@
   <data name="M0118" xml:space="preserve">
     <value>Impossível incluir/reativar ordens de serviço. Número de ordens de serviço ativas excede o contratado no Plano de Assinatura</value>
   </data>
+  <data name="M0119" xml:space="preserve">
+    <value>Justificativa de cancelamento não preenchida</value>
+  </data>
 </root>

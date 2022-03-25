@@ -66,6 +66,8 @@ namespace ERP_CRM_Solution.ViewModels
         public string CRMC_AQ_IMAGEM { get; set; }
         [DataType(DataType.Date, ErrorMessage = "A DATA DE REPROVAÇÃO deve ser uma data válida")]
         public Nullable<System.DateTime> CRMC_DT_REPROVACAO { get; set; }
+        public Nullable<decimal> VALOR_TOTAL { get; set; }
+        public string CRMC_NR_NOTA_FISCAL { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }
