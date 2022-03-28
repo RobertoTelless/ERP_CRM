@@ -963,6 +963,7 @@
           <Property Name="CRCI_VL_PRODUTO" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRCI_QN_QUANTIDADE_REVISADA" Type="int" />
           <Property Name="CRCI_DT_APROVACAO" Type="date" />
+          <Property Name="CRCI_IN_TESTE" Type="int" />
         </EntityType>
         <EntityType Name="CRM_CONTATO">
           <Key>
@@ -16264,6 +16265,7 @@
           <NavigationProperty Name="PRODUTO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_PRODUTO" FromRole="CRM_COMERCIAL_ITEM" ToRole="PRODUTO" />
           <Property Name="CRCI_QN_QUANTIDADE_REVISADA" Type="Int32" />
           <Property Name="CRCI_DT_APROVACAO" Type="DateTime" Precision="0" />
+          <Property Name="CRCI_IN_TESTE" Type="Int32" />
         </EntityType>
         <Association Name="FK_CRM_COMERCIAL_ACAO_ASSINANTE">
           <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
@@ -19201,6 +19203,7 @@
           <EntitySetMapping Name="CRM_COMERCIAL_ITEM">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_COMERCIAL_ITEM">
               <MappingFragment StoreEntitySet="CRM_COMERCIAL_ITEM">
+                <ScalarProperty Name="CRCI_IN_TESTE" ColumnName="CRCI_IN_TESTE" />
                 <ScalarProperty Name="CRCI_DT_APROVACAO" ColumnName="CRCI_DT_APROVACAO" />
                 <ScalarProperty Name="CRCI_QN_QUANTIDADE_REVISADA" ColumnName="CRCI_QN_QUANTIDADE_REVISADA" />
                 <ScalarProperty Name="CRCI_VL_PRODUTO" ColumnName="CRCI_VL_PRODUTO" />

@@ -171,6 +171,27 @@ namespace ApplicationServices.Services
             }
         }
 
+        public Int32 ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status, Int32 idAss, out List<CRM_COMERCIAL> objeto)
+        {
+            try
+            {
+                objeto = new List<CRM_COMERCIAL>();
+                Int32 volta = 0;
+
+                // Processa filtro
+                objeto = _baseService.ExecuteFilterDash(nmr, dtFinal, nome, usu, status, idAss);
+                if (objeto.Count == 0)
+                {
+                    volta = 1;
+                }
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public Int32 ValidateCreate(CRM_COMERCIAL item, USUARIO usuario)
         {
             try

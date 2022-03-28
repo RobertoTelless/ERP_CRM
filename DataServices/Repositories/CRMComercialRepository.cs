@@ -170,6 +170,47 @@ namespace DataServices.Repositories
             query = query.Include(p => p.USUARIO);
             return query.ToList();
         }
+
+        public List<CRM_COMERCIAL> ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status, Int32 idAss)
+        {
+            List<CRM_COMERCIAL> lista = new List<CRM_COMERCIAL>();
+            IQueryable<CRM_COMERCIAL> query = Db.CRM_COMERCIAL;
+            if (status != null)
+            {
+                query = query.Where(x => x.CRMC_IN_STATUS == status);
+            }
+            if (!String.IsNullOrEmpty(nmr))
+            {
+                query = query.Where(p => p.CRMC_NR_NUMERO == nmr);
+            }
+            if (!String.IsNullOrEmpty(nome))
+            {
+                query = query.Where(p => p.CRMC_NM_NOME.Contains(nome));
+            }
+            if (usu != null && usu != 0)
+            {
+                query = query.Where(p => p.USUA_CD_ID == usu);
+            }
+            if (query != null)
+            {
+                query = query.Where(p => p.ASSI_CD_ID == idAss);
+                query = query.Where(p => p.CRMC_IN_ATIVO == 1);
+                query = query.OrderBy(a => a.CRMC_DT_CRIACAO).ThenBy(a => a.CRMC_IN_STATUS);
+                query = query.Include(p => p.USUARIO);
+                lista = query.ToList<CRM_COMERCIAL>();
+
+                if (dtFinal != null)
+                {
+                    lista = lista.Where(x => x.CRMC_DT_ENCERRAMENTO == dtFinal).ToList<CRM_COMERCIAL>();
+                }
+                if (status == null)
+                {
+                    lista = lista.Where(p => p.CRMC_DT_PREVISTA < DateTime.Today.Date && p.CRMC_IN_STATUS != 7 && p.CRMC_IN_STATUS != 8).ToList<CRM_COMERCIAL>();
+                }
+            }
+            return lista;
+        }
+
     }
 }
  

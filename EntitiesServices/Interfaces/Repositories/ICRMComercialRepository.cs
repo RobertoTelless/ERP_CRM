@@ -21,5 +21,6 @@ namespace ModelServices.Interfaces.Repositories
         List<CRM_COMERCIAL> GetEncerrados(Int32 idAss);
         List<CRM_COMERCIAL> GetCancelados(Int32 idAss);
         List<CRM_COMERCIAL> GetAllItensAdmUser(Int32 id, Int32 idAss);
+        List<CRM_COMERCIAL> ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status, Int32 idAss);
     }
 }

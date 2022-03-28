@@ -44,6 +44,8 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IAtendimentoAppService ateApp;
         private readonly IProdutoAppService proApp;
         private readonly IContaBancariaAppService cbApp;
+        private readonly IProdutotabelaPrecoAppService ptpApp;
+        private readonly ITemplateAppService tempApp;
 
         private String msg;
         private Exception exception;
@@ -52,7 +54,7 @@ namespace ERP_CRM_Solution.Controllers
         List<CRM_COMERCIAL> listaMaster = new List<CRM_COMERCIAL>();
         String extensao;
 
-        public CRMComercialController(ICRMComercialAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps, IProdutoAppService proApps, IContaBancariaAppService cbApps)
+        public CRMComercialController(ICRMComercialAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps, IProdutoAppService proApps, IContaBancariaAppService cbApps, IProdutotabelaPrecoAppService ptpApps, ITemplateAppService tempApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -64,6 +66,8 @@ namespace ERP_CRM_Solution.Controllers
             ateApp = ateApps;
             proApp = proApps;
             cbApp = cbApps;
+            ptpApp = ptpApps;
+            tempApp = tempApps;
         }
 
         [HttpGet]
@@ -4478,12 +4482,12 @@ namespace ERP_CRM_Solution.Controllers
 
             // Prepara view
             CRM_COMERCIAL_ITEM item = baseApp.GetItemCRMById(id);
-            ItemPedidoCompraViewModel vm = Mapper.Map<ITEM_PEDIDO_COMPRA, ItemPedidoCompraViewModel>(item);
+            ItemProcessoCRMViewModel vm = Mapper.Map<CRM_COMERCIAL_ITEM, ItemProcessoCRMViewModel>(item);
             return View(vm);
         }
 
         [HttpPost]
-        public ActionResult ReceberItemPedidoCompra(ItemPedidoCompraViewModel vm)
+        public ActionResult EntregarItemProcessoCRM(ItemProcessoCRMViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -4494,27 +4498,27 @@ namespace ERP_CRM_Solution.Controllers
 
             try
             {
-                if (vm.ITPC_NR_QUANTIDADE_REVISADA != vm.ITPC_NR_QUANTIDADE_RECEBIDA && vm.ITPC_DS_JUSTIFICATIVA == null)
+                if (vm.CRCI_QN_QUANTIDADE != vm.CRCI_QN_QUANTIDADE_REVISADA && vm.CRCI_DS_JUSTIFICATIVA == null)
                 {
-                    ModelState.AddModelError("", "Para quantidade recebida diferente do previsto, necessário justificativa");
+                    ModelState.AddModelError("", "Para quantidade enviada diferente do previsto, necessário justificativa");
                     return View(vm);
                 }
 
                 // Executa a operação
-                ITEM_PEDIDO_COMPRA item = Mapper.Map<ItemPedidoCompraViewModel, ITEM_PEDIDO_COMPRA>(vm);
-                Int32 volta = baseApp.ValidateItemRecebido(item, usuario);
+                CRM_COMERCIAL_ITEM item = Mapper.Map<ItemProcessoCRMViewModel, CRM_COMERCIAL_ITEM>(vm);
+                Int32 volta = baseApp.ValidateItemEntregue(item, usuario);
 
                 // Verifica retorno
                 if (volta == 2)
                 {
-                    Session["PedidoRecebido"] = vm.PECO_CD_ID;
-                    return RedirectToAction("MontarTelaPedidoCompra");
+                    Session["PedidoEntregue"] = vm.CRMC_CD_ID;
+                    return RedirectToAction("MontarTelaCRMComercial");
                 }
 
                 // Sucesso
-                listaMaster = new List<PEDIDO_COMPRA>();
-                Session["ListaCompra"] = null;
-                return RedirectToAction("ReceberPedidoCompra", new { id = Session["IdVolta"] });
+                listaMaster = new List<CRM_COMERCIAL>();
+                Session["ListaCRM"] = null;
+                return RedirectToAction("MontarTelaCRMComercial");
             }
             catch (Exception ex)
             {
@@ -4523,11 +4527,1005 @@ namespace ERP_CRM_Solution.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult ReceberItemPedidoCRM(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
 
+            // Prepara view
+            CRM_COMERCIAL_ITEM item = baseApp.GetItemCRMById(id);
+            ItemProcessoCRMViewModel vm = Mapper.Map<CRM_COMERCIAL_ITEM, ItemProcessoCRMViewModel>(item);
+            return View(vm);
+        }
 
+        [HttpPost]
+        public ActionResult ReceberItemPedidoCompra(ItemProcessoCRMViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
 
+            try
+            {
+                if (vm.CRCI_QN_QUANTIDADE != vm.CRCI_QN_QUANTIDADE_REVISADA && vm.CRCI_DT_JUSTIFICATIVA == null)
+                {
+                    ModelState.AddModelError("", "Para quantidade enviada diferente do previsto, necessário justificativa");
+                    return View(vm);
+                }
 
+                // Executa a operação
+                CRM_COMERCIAL_ITEM item = Mapper.Map<ItemProcessoCRMViewModel, CRM_COMERCIAL_ITEM>(vm);
+                Int32 volta = baseApp.ValidateItemEntregue(item, usuario);
 
+                // Verifica retorno
+                if (volta == 2)
+                {
+                    Session["PedidoEntregue"] = vm.CRMC_CD_ID;
+                    return RedirectToAction("MontarTelaCRMComercial");
+                }
 
+                // Sucesso
+                listaMaster = new List<CRM_COMERCIAL>();
+                Session["ListaCRM"] = null;
+                return RedirectToAction("MontarTelaCRMComercial");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View(vm);
+            }
+        }
+
+        public ActionResult VerItemPedidoCRMComercial(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            CRM_COMERCIAL_ITEM item = baseApp.GetItemCRMById(id);
+            ItemProcessoCRMViewModel vm = Mapper.Map<CRM_COMERCIAL_ITEM, ItemProcessoCRMViewModel>(item);
+            return View(vm);
+        }
+
+        public ActionResult VerAtrasadosComercial()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Prepara view
+            ViewBag.Usuarios = new SelectList(((List<USUARIO>)Session["Usuarios"]).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+
+            if (Session["ListaComercialAtrasados"] == null || ((List<CRM_COMERCIAL>)Session["ListaComercialAtrasados"]).Count == 0)
+            {
+                Session["ListaComercialAtrasados"] = baseApp.GetAllItens(idAss).Where(p => p.CRMC_DT_PREVISTA < DateTime.Today.Date && p.CRMC_IN_STATUS != 7 && p.CRMC_IN_STATUS != 8).ToList();
+            }
+
+            // Abre view
+            List<CRM_COMERCIAL> lista = (List<CRM_COMERCIAL>)Session["ListaComercialAtrasados"];
+            ViewBag.Pedidos = ((List<CRM_COMERCIAL>)Session["ListaComercialAtrasados"]).Count;
+            ViewBag.Atrasadas = lista.Count(p => p.CRMC_DT_PREVISTA < DateTime.Today.Date && p.CRMC_IN_STATUS != 7 && p.CRMC_IN_STATUS != 8);
+            ViewBag.AtrasadasLista = lista.Where(p => p.CRMC_DT_PREVISTA < DateTime.Today.Date && p.CRMC_IN_STATUS != 7 && p.CRMC_IN_STATUS != 8).ToList();
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
+            if (Session["MensCRMComercial"] != null && (Int32)Session["MensCRMComercial"] == 1)
+            {
+                ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0010", CultureInfo.CurrentCulture));
+                Session["MensCRMComercial"] = null;
+            }
+
+            objeto = new CRM_COMERCIAL();
+            Session["VoltaCRMComercial"] = 1;
+            Session["VoltaConsulta"] = 3;
+            return View(objeto);
+        }
+
+        [HttpPost]
+        public ActionResult FiltrarAtrasadosComercial(CRM_COMERCIAL item)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            try
+            {
+                Session["FiltroComercialAtrasados"] = item;
+                // Executa a operação
+                List<CRM_COMERCIAL> listaObj = new List<CRM_COMERCIAL>();
+                Int32 volta = baseApp.ExecuteFilterDash(item.CRMC_NR_NUMERO, item.CRMC_DT_ENCERRAMENTO, item.CRMC_NM_NOME, item.USUA_CD_ID, null, idAss, out listaObj);
+
+                // Verifica retorno
+                if (volta == 1)
+                {
+                    Session["MensCRMComercial"] = 1;
+                    return RedirectToAction("VerAtrasadosComercial");
+                }
+
+                // Sucesso
+                Session["ListaComercialAtrasados"] = listaObj;
+                return RedirectToAction("VerAtrasadosComercial");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return RedirectToAction("VerAtrasadosComercial");
+
+            }
+        }
+
+        public ActionResult RetirarFiltroAtrasadosComercial()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            Session["FiltroComercialAtrasados"] = null;
+            Session["ListaComercialAtrasados"] = null;
+            return RedirectToAction("VerAtrasadosComercial");
+        }
+
+        public ActionResult VerEncerradosComercial()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Prepara view
+            ViewBag.Usuarios = new SelectList(((List<USUARIO>)Session["Usuarios"]).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+
+            if (Session["ListaComercialEncerrados"] == null || ((List<CRM_COMERCIAL>)Session["ListaComercialEncerrados"]).Count == 0)
+            {
+                Session["ListaComercialEncerrados"] = baseApp.GetAllItens(idAss).Where(p => p.CRMC_IN_STATUS == 7).ToList();
+            }
+
+            // Abre view
+            List<CRM_COMERCIAL> lista = (List<CRM_COMERCIAL>)Session["ListaComercialEncerrados"];
+
+            ViewBag.Pedidos = lista.Count;
+            ViewBag.EncerradasLista = lista;
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
+            if (Session["MensCRMComercial"] != null && (Int32)Session["MensCRMComercial"] == 1)
+            {
+                ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0010", CultureInfo.CurrentCulture));
+                Session["MensCRMComercial"] = null;
+            }
+
+            objeto = new CRM_COMERCIAL();
+            Session["VoltaCRMComercial"] = 1;
+            Session["VoltaConsulta"] = 3;
+            return View(objeto);
+        }
+
+        [HttpPost]
+        public ActionResult FiltrarEncerradosComercial(CRM_COMERCIAL item)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            try
+            {
+                Session["FiltroComercialEncerrados"] = item;
+                // Executa a operação
+                List<CRM_COMERCIAL> listaObj = new List<CRM_COMERCIAL>();
+                Int32 volta = baseApp.ExecuteFilterDash(item.CRMC_NR_NUMERO, item.CRMC_DT_ENCERRAMENTO, item.CRMC_NM_NOME, item.USUA_CD_ID, 7, idAss, out listaObj);
+
+                // Verifica retorno
+                if (volta == 1)
+                {
+                    Session["MensCRMComercial"] = 1;
+                    return RedirectToAction("VerEncerradosComercial");
+                }
+
+                // Sucesso
+                Session["ListaComercialEncerrados"] = listaObj;
+                return RedirectToAction("VerEncerradosComercial");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return RedirectToAction("VerEncerradosComercial");
+
+            }
+        }
+
+        public ActionResult RetirarFiltroEncerradosComercial()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            Session["FiltroComercialEncerrados"] = null;
+            Session["ListaComercialEncerrados"] = null;
+            return RedirectToAction("VerEncerradosComercial");
+        }
+
+        public ActionResult VerCanceladosComercial()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Prepara view
+            ViewBag.Usuarios = new SelectList(((List<USUARIO>)Session["Usuarios"]).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+
+            if (Session["ListaComercialCancelados"] == null || ((List<PEDIDO_COMPRA>)Session["ListaComercialCancelados"]).Count == 0)
+            {
+                Session["ListaComercialCancelados"] = baseApp.GetAllItens(idAss).Where(p => p.CRMC_IN_STATUS == 8).ToList();
+            }
+
+            // Abre view
+            List<CRM_COMERCIAL> lista = (List<CRM_COMERCIAL>)Session["ListaComercialCancelados"];
+            ViewBag.Pedidos = lista.Count;
+            ViewBag.CanceladasLista = lista;
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
+            if (Session["MensCRMComercial"] != null && (Int32)Session["MensCRMComercial"] == 1)
+            {
+                ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0010", CultureInfo.CurrentCulture));
+                Session["MensCRMComercial"] = null;
+            }
+
+            objeto = new CRM_COMERCIAL();
+            Session["VoltaCompra"] = 1;
+            Session["VoltaConsulta"] = 3;
+            return View(objeto);
+        }
+
+        [HttpPost]
+        public ActionResult FiltrarCanceladosComercial(CRM_COMERCIAL item)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            try
+            {
+                Session["FiltroComercialCancelados"] = item;
+                // Executa a operação
+                List<CRM_COMERCIAL> listaObj = new List<CRM_COMERCIAL>();
+                Int32 volta = baseApp.ExecuteFilterDash(item.CRMC_NR_NUMERO, item.CRMC_DT_ENCERRAMENTO, item.CRMC_NM_NOME, item.USUA_CD_ID, 8, idAss, out listaObj);
+
+                // Verifica retorno
+                if (volta == 1)
+                {
+                    Session["MensCRMComercial"] = 1;
+                    return RedirectToAction("VerCanceladosComercial");
+                }
+
+                // Sucesso
+                Session["ListaComercialCancelados"] = listaObj;
+                return RedirectToAction("VerCanceladosComercial");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return RedirectToAction("VerCanceladosComercial");
+
+            }
+        }
+
+        public ActionResult RetirarFiltroCanceladosComercial()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            Session["FiltroComercialCancelados"] = null;
+            Session["ListaComercialCancelados"] = null;
+            return RedirectToAction("VerCanceladosComercial");
+        }
+
+        [HttpPost]
+        public JsonResult AtualizaItemInlineComercial(CRM_COMERCIAL_ITEM item)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            Hashtable result = new Hashtable();
+
+            try
+            {
+                // Executa a operação
+                Int32 volta = baseApp.ValidateEditItemCRM(item);
+
+                // Verifica retorno
+                if (volta == 0)
+                {
+                    result.Add("success", "Item editado com sucesso!");
+                    if (item.CRCI_VL_VALOR != null)
+                    {
+                        result.Add("vlrTotal", item.CRCI_QN_QUANTIDADE * item.CRCI_VL_VALOR);
+                    }
+                }
+                else
+                {
+                    result.Add("error", "Falha ao editar item");
+                }
+
+                Decimal custo = 0;
+                foreach (var i in baseApp.GetItemById(item.CRMC_CD_ID).CRM_COMERCIAL_ITEM)
+                {
+                    if (i.CRCI_VL_VALOR != null)
+                    {
+                        custo += (Int32)i.CRCI_QN_QUANTIDADE * (Decimal)i.CRCI_VL_VALOR;
+                    }
+                }
+                result.Add("custoGeral", custo);
+
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                result.Add("error", ex.Message);
+                return Json(result);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditarItemPedidoCRMComercial(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Prepara view
+            ViewBag.Produtos = new SelectList(proApp.GetAllItens(idAss).OrderBy(p => p.PROD_NM_NOME), "PROD_CD_ID", "PROD_NM_NOME");
+            ViewBag.Unidades = new SelectList(proApp.GetAllUnidades(idAss).OrderBy(p => p.UNID_NM_NOME), "UNID_CD_ID", "UNID_NM_NOME");
+
+            CRM_COMERCIAL_ITEM item = baseApp.GetItemCRMById(id);
+            objetoAntes = (CRM_COMERCIAL)Session["CRMComercial"];
+            ItemProcessoCRMViewModel vm = Mapper.Map<CRM_COMERCIAL_ITEM, ItemProcessoCRMViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditarItemPedidoCRMComercial(ItemProcessoCRMViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            ViewBag.Produtos = new SelectList(proApp.GetAllItens(idAss).OrderBy(p => p.PROD_NM_NOME), "PROD_CD_ID", "PROD_NM_NOME");
+            ViewBag.Unidades = new SelectList(proApp.GetAllUnidades(idAss).OrderBy(p => p.UNID_NM_NOME), "UNID_CD_ID", "UNID_NM_NOME");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM_COMERCIAL_ITEM item = Mapper.Map<ItemProcessoCRMViewModel, CRM_COMERCIAL_ITEM>(vm);
+                    Int32 volta = baseApp.ValidateEditItemCRM(item);
+
+                    // Verifica retorno
+                    return RedirectToAction("VoltarAnexoCRMComercial");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpPost]
+        public void EditarItemCRMComercialInline(Int32? id, Int32? qtde, decimal? preco)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            if (id != null)
+            {
+                CRM_COMERCIAL_ITEM item = baseApp.GetItemCRMById((Int32)id);
+                item.CRCI_QN_QUANTIDADE = qtde;
+                item.CRCI_VL_VALOR = preco;
+                Int32 volta = baseApp.ValidateEditItemCRM(item);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ExcluirItemCRMComercial(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            CRM_COMERCIAL_ITEM item = baseApp.GetItemCRMById(id);
+            ItemProcessoCRMViewModel vm = Mapper.Map<CRM_COMERCIAL_ITEM, ItemProcessoCRMViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult ExcluirItemCRMComercial(ItemProcessoCRMViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            try
+            {
+                // Executa a operação
+                CRM_COMERCIAL_ITEM item = Mapper.Map<ItemProcessoCRMViewModel, CRM_COMERCIAL_ITEM>(vm);
+                Int32 volta = baseApp.ValidateDeleteItemCRM(item);
+
+                Session["IdVolta"] = item.CRMC_CD_ID;
+                return RedirectToAction("VoltarAnexoCRMComercial");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ReativarItemCRMComercial(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            CRM_COMERCIAL_ITEM item = baseApp.GetItemCRMById(id);
+            ItemProcessoCRMViewModel vm = Mapper.Map<CRM_COMERCIAL_ITEM, ItemProcessoCRMViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult ReativarItemCRMComercial(ItemProcessoCRMViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            try
+            {
+                // Executa a operação
+                CRM_COMERCIAL_ITEM item = Mapper.Map<ItemProcessoCRMViewModel, CRM_COMERCIAL_ITEM>(vm);
+                CRM_COMERCIAL ped = baseApp.GetItemById(item.CRMC_CD_ID);
+
+                if (ped.CRM_COMERCIAL_ITEM.Where(x => x.PROD_CD_ID == item.PROD_CD_ID && x.CRCI_IN_ATIVO == 1).ToList().Count > 0)
+                {
+                    ModelState.AddModelError("", "PRODUTO já existente no pedido");
+                    return View(vm);
+                }
+
+                Int32 volta = baseApp.ValidateReativarItemCRM(item);
+                Session["IdVolta"] = item.CRMC_CD_ID;
+                return RedirectToAction("VoltarAnexoCRMComercial");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult IncluirItemCRMComercial()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Prepara view
+            List<PRODUTO> lista = proApp.GetAllItens(idAss).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
+            ViewBag.Produtos = new SelectList(proApp.GetAllItens(idAss).OrderBy(p => p.PROD_NM_NOME), "PROD_CD_ID", "PROD_NM_NOME");
+            ViewBag.Unidades = new SelectList(proApp.GetAllUnidades(idAss).OrderBy(p => p.UNID_NM_NOME), "UNID_CD_ID", "UNID_NM_NOME");
+
+            CRM_COMERCIAL_ITEM item = new CRM_COMERCIAL_ITEM();
+            ItemProcessoCRMViewModel vm = Mapper.Map<CRM_COMERCIAL_ITEM, ItemProcessoCRMViewModel>(item);
+            vm.CRMC_CD_ID = (Int32)Session["IdVolta"];
+            vm.CRCI_IN_ATIVO = 1;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult IncluirItemCRMComercial(ItemProcessoCRMViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            List<PRODUTO> lista = proApp.GetAllItens(idAss).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
+            ViewBag.Produtos = new SelectList(proApp.GetAllItens(idAss).OrderBy(p => p.PROD_NM_NOME), "PROD_CD_ID", "PROD_NM_NOME");
+            ViewBag.Unidades = new SelectList(proApp.GetAllUnidades(idAss).OrderBy(p => p.UNID_NM_NOME), "UNID_CD_ID", "UNID_NM_NOME");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    vm.CRCI_QN_QUANTIDADE_REVISADA = vm.CRCI_QN_QUANTIDADE;
+                    Int32 a = baseApp.GetItemById(vm.CRMC_CD_ID).FILI_CD_ID == null ? (Int32)Session["IdFilial"] : (Int32)baseApp.GetItemById(vm.CRMC_CD_ID).FILI_CD_ID;
+                    PRODUTO_TABELA_PRECO b = ptpApp.GetByProdFilial((Int32)vm.PROD_CD_ID, a);
+                    vm.CRCI_VL_VALOR = b == null || b.PRTP_VL_PRECO == null ? 0 : b.PRTP_VL_PRECO;
+                    var prod = proApp.GetItemById((Int32)vm.PROD_CD_ID);
+
+                    // Executa a operação
+                    CRM_COMERCIAL_ITEM item = Mapper.Map<ItemProcessoCRMViewModel, CRM_COMERCIAL_ITEM>(vm);
+                    Int32 volta = baseApp.ValidateCreateItemCRM(item);
+
+                    if ((Int32)Session["IdVolta"] == 0)
+                    {
+                        return RedirectToAction("IncluirItemCRMComercial");
+                    }
+
+                    // Verifica retorno
+                    return RedirectToAction("VoltarAnexoCRMComercial");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    ModelState.AddModelError("", ex.Message);
+                    return RedirectToAction("VoltarAnexoCRMComercial");
+                }
+            }
+            else
+            {
+                return RedirectToAction("VoltarAnexoCRMComercial");
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetTemplate()
+        {
+            var result = new Hashtable();
+            result.Add("TEMP_TX_CORPO", tempApp.GetByCode("COTFORN").TEMP_TX_CORPO);
+            return Json(result);
+        }
+
+        [HttpGet]
+        public ActionResult ProcessarEnviarAprovacaoCRMComercial(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            CRM_COMERCIAL item = baseApp.GetItemById(id);
+            Decimal custo = 0;
+            foreach (var i in item.CRM_COMERCIAL_ITEM)
+            {
+                if (i.CRCI_VL_VALOR != null)
+                {
+                    custo += (Int32)i.CRCI_QN_QUANTIDADE * (Decimal)i.CRCI_VL_VALOR;
+                }
+            }
+            ViewBag.CustoTotal = custo;
+            CRMComercialViewModel vm = Mapper.Map<CRM_COMERCIAL, CRMComercialViewModel>(item);
+            Session["IdVolta"] = id;
+            Session["MensCRMComercial"] = 0;
+            Session["VoltaCRMComercial"] = 8;
+            return View(vm);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult ProcessarEnviarAprovacaoCRMComercial(CRMComercialViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            try
+            {
+                // Executa a operação
+                CRM_COMERCIAL item = Mapper.Map<CRMComercialViewModel, CRM_COMERCIAL>(vm);
+                Decimal custo = 0;
+                foreach (var i in item.CRM_COMERCIAL_ITEM)
+                {
+                    if (i.CRCI_VL_VALOR != null)
+                    {
+                        custo += (Int32)i.CRCI_QN_QUANTIDADE * (Decimal)i.CRCI_VL_VALOR;
+                    }
+                }
+                ViewBag.CustoTotal = custo;
+                Int32 volta = baseApp.ValidateEnvioAprovacao(item, null, usuario);
+
+                // Sucesso
+                Session["MensCRMComercial"] = 0;
+                listaMaster = new List<CRM_COMERCIAL>();
+                Session["ListaCRMComercial"] = null;
+                Session["IdCRMComercial"] = item.CRMC_CD_ID;
+                return RedirectToAction("MontarTelaCRMComercial");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View(objeto);
+            }
+        }
+
+        public ActionResult IncluirAcompanhamento(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            CRM_COMERCIAL_COMENTARIO_NOVA coment = new CRM_COMERCIAL_COMENTARIO_NOVA();
+            CRMComercialComentarioViewModel vm = Mapper.Map<CRM_COMERCIAL_COMENTARIO_NOVA, CRMComercialComentarioViewModel>(coment);
+            Session["IdVolta"] = id;
+            vm.CRCC_DT_COMENTARIO = DateTime.Now;
+            vm.CRCC_IN_ATIVO = 1;
+            vm.CRMC_CD_ID = id;
+            vm.USUARIO = usuario;
+            vm.USUA_CD_ID = usuario.USUA_CD_ID;
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult IncluirAcompanhamento(CRMComercialComentarioViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            Session["VoltaAcompanhamento"] = true;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM_COMERCIAL_COMENTARIO_NOVA item = Mapper.Map<CRMComercialComentarioViewModel, CRM_COMERCIAL_COMENTARIO_NOVA>(vm);
+                    Int32 volta = baseApp.ValidateCreateAcompanhamento(item);
+
+                    // Verifica retorno
+
+                    // Sucesso
+                    return RedirectToAction("VoltarAnexoPedidoCompra");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+       [HttpGet]
+        public ActionResult MontarTelaDashboardCRMComercialCompleto()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if ((Int32)Session["PermCompra"] == 0)
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Estatisticas
+            List<CRM_COMERCIAL> listaGeral = baseApp.GetAllItens(idAss);
+            Int32 pedidosMes = listaGeral.Where(p => p.CRMC_DT_CRIACAO.Month == DateTime.Today.Date.Month & p.CRMC_DT_CRIACAO.Year == DateTime.Today.Date.Year).ToList().Count;
+            Int32 pedidosTotal = listaGeral.Count;
+            Int32 encerradosMes = listaGeral.Where(p => p.CRMC_DT_ENCERRAMENTO != null & p.CRMC_DT_ENCERRAMENTO.Value.Month == DateTime.Today.Date.Month & p.CRMC_DT_ENCERRAMENTO.Value.Year == DateTime.Today.Date.Year & p.CRMC_IN_STATUS == 7).ToList().Count;
+            Int32 encerradosTotal = listaGeral.Where(p => p.CRMC_IN_STATUS == 7).ToList().Count;
+            Int32 pendentes = listaGeral.Where(p => p.CRMC_IN_STATUS != 7 & p.CRMC_IN_STATUS != 8).ToList().Count;
+            Int32 atraso = listaGeral.Where(p => p.CRMC_IN_STATUS != 7 & p.CRMC_IN_STATUS != 8 & p.CRMC_DT_PREVISTA < DateTime.Today.Date).ToList().Count;
+
+            ViewBag.PedidosMes = pedidosMes;
+            ViewBag.PedidosTotal = pedidosTotal;
+            ViewBag.EncerradosMes = encerradosMes;
+            ViewBag.Encerrados = encerradosTotal;
+            ViewBag.Pendentes = pendentes;
+            ViewBag.Atrasos = atraso;
+
+            // Vendas / Dia
+            List<DateTime> datas = listaGeral.Where(m => m.CRMC_IN_STATUS != 8 & m.CRMC_DT_CRIACAO.Month == DateTime.Today.Date.Month & m.CRMC_DT_CRIACAO.Year == DateTime.Today.Date.Year).Select(p => p.CRMC_DT_CRIACAO.Date).Distinct().ToList();
+            List<ModeloViewModel> listaMod = new List<ModeloViewModel>();
+            foreach (DateTime item in datas)
+            {
+                Int32? conta = listaGeral.Where(p => p.CRMC_DT_CRIACAO == item).ToList().Count;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.DataEmissao = item;
+                mod1.Valor1 = conta.Value;
+                listaMod.Add(mod1);
+            }
+            ViewBag.ListaComprasDia = listaMod;
+            Session["ListaDatas"] = datas;
+            Session["ListaVendasDia"] = listaMod;
+
+            // Compras por Situação
+            Int32 sit1 = listaGeral.Where(p => p.CRMC_IN_STATUS == 1).ToList().Count;
+            Int32 sit2 = listaGeral.Where(p => p.CRMC_IN_STATUS == 2).ToList().Count;
+            Int32 sit3 = listaGeral.Where(p => p.CRMC_IN_STATUS == 3).ToList().Count;
+            Int32 sit4 = listaGeral.Where(p => p.CRMC_IN_STATUS == 4).ToList().Count;
+            Int32 sit5 = listaGeral.Where(p => p.CRMC_IN_STATUS == 5).ToList().Count;
+            Int32 sit6 = listaGeral.Where(p => p.CRMC_IN_STATUS == 6).ToList().Count;
+            Int32 sit7 = listaGeral.Where(p => p.CRMC_IN_STATUS == 7).ToList().Count;
+            Int32 sit8 = listaGeral.Where(p => p.CRMC_IN_STATUS == 8).ToList().Count;
+
+            List<ModeloViewModel> lista1 = new List<ModeloViewModel>();
+            ModeloViewModel mod = new ModeloViewModel();
+            mod.Data = "Oportunidades";
+            mod.Valor = sit1;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Propostas";
+            mod.Valor = sit2;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Em Aprovação";
+            mod.Valor = sit3;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Aprovados";
+            mod.Valor = sit4;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Reprovados";
+            mod.Valor = sit5;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Vendidos";
+            mod.Valor = sit6;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Encerrados";
+            mod.Valor = sit7;
+            lista1.Add(mod);
+            mod = new ModeloViewModel();
+            mod.Data = "Cancelados";
+            mod.Valor = sit8;
+            lista1.Add(mod);
+            ViewBag.ListaSituacao = lista1;
+            Session["ListaSituacao"] = lista1;
+
+            Session["PC"] = sit1;
+            Session["EC"] = sit2;
+            Session["PA"] = sit3;
+            Session["AP"] = sit4;
+            Session["PR"] = sit5;
+            Session["ER"] = sit6;
+            Session["EN"] = sit7;
+            Session["CA"] = sit8;
+
+            // Vendas por Cliente
+            List<CLIENTE> listaForn = cliApp.GetAllItens(idAss);
+            List<Int32> forns = listaGeral.Where(m => m.CRMC_IN_STATUS != 8 & (m.CLIE_CD_ID != null & m.CLIE_CD_ID != 0)).Select(p => p.CLIE_CD_ID).Distinct().ToList();
+            List<ModeloViewModel> listaMod1 = new List<ModeloViewModel>();
+            foreach (Int32 item in forns)
+            {
+                Int32? conta = listaGeral.Where(p => p.CLIE_CD_ID == item).ToList().Count;
+                String nome = listaForn.First(p => p.CLIE_CD_ID == item).CLIE_NM_NOME;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.Nome = nome;
+                mod1.Valor1 = conta.Value;
+                listaMod1.Add(mod1);
+            }
+            listaMod1 = listaMod1.OrderByDescending(p => p.Valor1).ToList();
+            if (listaMod1.Count > 10)
+            {
+                ViewBag.ListaCompraForn = listaMod1;
+            }
+            else
+            {
+                ViewBag.ListaCompraForn = listaMod1;
+            }
+
+            // Produtos Mais vendidos
+            List<PRODUTO> listaProd = proApp.GetAllItens(idAss);
+            List<CRM_COMERCIAL_ITEM> listaItens = listaGeral.Where(p => p.CRMC_IN_STATUS != 8).SelectMany(p => p.CRM_COMERCIAL_ITEM).Where(x => x.CRCI_IN_ATIVO == 1).ToList();
+            List<Int32> prods = listaItens.Select(p => p.PROD_CD_ID).Distinct().ToList();
+            List<ModeloViewModel> listaMod2 = new List<ModeloViewModel>();
+            foreach (Int32 item in prods)
+            {
+                Int32? conta = listaItens.Where(p => p.PROD_CD_ID == item).ToList().Count;
+                String nome = listaProd.First(p => p.PROD_CD_ID == item).PROD_NM_NOME;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.Nome = nome;
+                mod1.Valor1 = conta.Value;
+                listaMod2.Add(mod1);
+            }
+            listaMod2 = listaMod2.OrderByDescending(p => p.Valor1).ToList();
+            if (listaMod2.Count > 10)
+            {
+                ViewBag.ListaCompraProd = listaMod2;
+            }
+            else
+            {
+                ViewBag.ListaCompraProd = listaMod2;
+            }
+
+            // Pedidos Atraso
+            List<CRM_COMERCIAL> atraso1 = listaGeral.Where(p => p.CRMC_DT_PREVISTA < DateTime.Today.Date & DateTime.Today.Date.AddDays(-10) < p.CRMC_DT_PREVISTA).ToList();
+            List<CRM_COMERCIAL> atraso2 = listaGeral.Where(p => p.CRMC_DT_PREVISTA < DateTime.Today.Date & (DateTime.Today.Date.AddDays(-10) < p.CRMC_DT_PREVISTA & DateTime.Today.Date.AddDays(-30) > p.CRMC_DT_PREVISTA)).ToList();
+            List<CRM_COMERCIAL> atraso3 = listaGeral.Where(p => p.CRMC_DT_PREVISTA < DateTime.Today.Date & DateTime.Today.Date.AddDays(-30) > p.CRMC_DT_PREVISTA).ToList();
+            List<ModeloViewModel> listaMod3 = new List<ModeloViewModel>();
+            ModeloViewModel mod2 = new ModeloViewModel();
+            mod2.Nome = "< 10 dias";
+            mod2.Valor1 = atraso1.Count;
+            listaMod3.Add(mod2);
+            mod2 = new ModeloViewModel();
+            mod2.Nome = "> 10 dias e < 30 dias";
+            mod2.Valor1 = atraso2.Count;
+            listaMod3.Add(mod2);
+            mod2 = new ModeloViewModel();
+            mod2.Nome = "> 30 dias";
+            mod2.Valor1 = atraso3.Count;
+            listaMod3.Add(mod2);
+            ViewBag.ListaCompraAtraso = listaMod3;
+            Session["PedidosAtraso"] = listaMod3;
+
+            // Pedidos entregues no prazo
+            List<CRM_COMERCIAL> prazo = listaGeral.Where(p => p.CRMC_DT_PREVISTA > DateTime.Today.Date & p.CRMC_IN_STATUS == 7).ToList();
+            ViewBag.RecebidosPrazo = prazo.Count;
+            Session["RecebidosPrazo"] = prazo;
+
+            // Produtos com estoque abaixo do minimo
+            Int32? idFilial = null;
+            List<PRODUTO_ESTOQUE_FILIAL> listaBase = proApp.RecuperarQuantidadesFiliais(idFilial, idAss);
+            List<PRODUTO_ESTOQUE_FILIAL> pontoPedido = listaBase.Where(x => x.PREF_QN_ESTOQUE < x.PRODUTO.PROD_QN_QUANTIDADE_MINIMA).OrderByDescending(p => p.PREF_QN_ESTOQUE).ToList();
+            ViewBag.EstoqueMinimo = pontoPedido;
+            Session["EstoqueMinimo"] = pontoPedido;
+
+            Session["VoltaProdutoDash"] = 6;
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+            UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
+            return View(vm);
+        }
+
+        public JsonResult GetDadosGraficoVendasDia()
+        {
+            List<ModeloViewModel> listaCP1 = (List<ModeloViewModel>)Session["ListaVendasDia"];
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (ModeloViewModel item in listaCP1)
+            {
+                dias.Add(item.DataEmissao.ToShortDateString());
+                valor.Add(item.Valor1);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoSituacao()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["PC"];
+            Int32 q2 = (Int32)Session["EC"];
+            Int32 q3 = (Int32)Session["PA"];
+            Int32 q4 = (Int32)Session["AP"];
+            Int32 q5 = (Int32)Session["PR"];
+            Int32 q6 = (Int32)Session["ER"];
+            Int32 q7 = (Int32)Session["EN"];
+            Int32 q8 = (Int32)Session["CA"];
+
+            desc.Add("Oportunidades");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Propostas");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+            desc.Add("Em Aprovação");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+            desc.Add("Aprovados");
+            quant.Add(q4);
+            cor.Add("#744d61");
+            desc.Add("Reprovados");
+            quant.Add(q5);
+            cor.Add("#f2e6b1");
+            desc.Add("Vendidos");
+            quant.Add(q6);
+            cor.Add("#e6b1f2");
+            desc.Add("Encerrados");
+            quant.Add(q7);
+            cor.Add("#739d84");
+            desc.Add("Cancelados");
+            quant.Add(q8);
+            cor.Add("#FF0000");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
     }
 }

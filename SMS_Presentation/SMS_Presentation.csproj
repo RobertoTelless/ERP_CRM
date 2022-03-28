@@ -3501,6 +3501,18 @@
     <Content Include="Views\CRMComercial\ReprovarProcessoCRMComercial.cshtml" />
     <Content Include="Views\CRMComercial\ProcessarEncerrarProcessoCRMComercial.cshtml" />
     <Content Include="Views\CRMComercial\EntregarItemProcessoCRM.cshtml" />
+    <Content Include="Views\CRMComercial\ReceberItemPedidoCRM.cshtml" />
+    <Content Include="Views\CRMComercial\VerItemPedidoCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\VerAtrasadosComercial.cshtml" />
+    <Content Include="Views\CRMComercial\VerEncerradosComercial.cshtml" />
+    <Content Include="Views\CRMComercial\VerCanceladosComercial.cshtml" />
+    <Content Include="Views\CRMComercial\EditarItemPedidoCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\ExcluirItemCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\ReativarItemCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\IncluirItemCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\ProcessarEnviarAprovacaoCRMComercial.cshtml" />
+    <Content Include="Views\CRMComercial\IncluirAcompanhamento.cshtml" />
+    <Content Include="Views\CRMComercial\MontarTelaDashboardCRMComercialCompleto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -42,6 +42,7 @@ namespace ApplicationServices.Interfaces
         USUARIO GetUserById(Int32 id);
         CRM_COMERCIAL_ANEXO GetAnexoById(Int32 id);
         Int32 ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca, Int32? estrela, Int32 idAss, out List<CRM_COMERCIAL> objeto);
+        Int32 ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status, Int32 idAss, out List<CRM_COMERCIAL> objeto);
 
         CRM_COMERCIAL_CONTATO GetContatoById(Int32 id);
         CRM_COMERCIAL_ACAO GetAcaoById(Int32 id);

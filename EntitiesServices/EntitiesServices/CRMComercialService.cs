@@ -156,6 +156,11 @@ namespace ModelServices.EntitiesServices
 
         }
 
+        public List<CRM_COMERCIAL> ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status, Int32 idAss)
+        {
+            return _baseRepository.ExecuteFilterDash(nmr, dtFinal, nome, usu, status, idAss);
+        }
+
         public Int32 Create(CRM_COMERCIAL item, LOG log)
         {
             using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))
