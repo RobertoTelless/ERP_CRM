@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using EntitiesServices.Model;
 
-namespace SystemBRPresentation.ViewModels
+namespace ERP_CRM_Solution.ViewModels
 {
     public class CategoriaAtendimentoViewModel
     {

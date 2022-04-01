@@ -43,7 +43,7 @@ namespace ERP_CRM_Solution.ViewModels
         public string PROD_AQ_FOTO { get; set; }
         [Required(ErrorMessage = "Campo COMPOSTO obrigatorio")]
         public Nullable<int> PROD_IN_COMPOSTO { get; set; }
-        [StringLength(10, ErrorMessage = "O CÓDIGO deve conter no minimo 1 e no máximo 10 caracteres.")]
+        [StringLength(20, ErrorMessage = "O CÓDIGO deve conter no minimo 1 e no máximo 20 caracteres.")]
         public String PROD_CD_CODIGO { get; set; }
         [Required(ErrorMessage = "Campo TIPO DE PRODUTO obrigatorio")]
         public Nullable<int> PROD_IN_TIPO_PRODUTO { get; set; }
@@ -153,6 +153,8 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<decimal> PRTP_VL_CUSTO { get; set; }
         public string Embalagem { get; set; }
         public Nullable<int> PROD_IN_KIT { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<int> PROD_NR_DIAS_PREPARACAO { get; set; }
 
         public Nullable<int> EntradaSaida { get; set; }
 

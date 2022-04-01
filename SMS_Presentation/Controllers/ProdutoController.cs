@@ -421,7 +421,7 @@ namespace ERP_CRM_Solution.Controllers
                     idFilial = item.FILI_CD_ID;
                 }
                 List<PRODUTO_ESTOQUE_FILIAL> listaObj = new List<PRODUTO_ESTOQUE_FILIAL>();
-                Int32 volta = prodApp.ExecuteFilterEstoque(idFilial, item.PRODUTO.PROD_NM_NOME, item.PRODUTO.PROD_NM_MARCA, item.PRODUTO.PROD_CD_CODIGO, item.PRODUTO.PROD_NR_BARCODE, item.PRODUTO.CAPR_CD_ID, item.PRODUTO.PROD_IN_TIPO_PRODUTO.Value, idAss, out listaObj);
+                Int32 volta = prodApp.ExecuteFilterEstoque(idFilial, item.PRODUTO.PROD_NM_NOME, item.PRODUTO.PROD_NM_MARCA, item.PRODUTO.PROD_CD_CODIGO, item.PRODUTO.PROD_CD_CODIGO, item.PRODUTO.CAPR_CD_ID, item.PRODUTO.PROD_IN_TIPO_PRODUTO.Value, idAss, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)

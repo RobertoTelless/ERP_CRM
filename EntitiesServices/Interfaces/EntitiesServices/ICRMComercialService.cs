@@ -24,7 +24,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<CRM_COMERCIAL> GetAllItens(Int32 idAss);
         List<CRM_COMERCIAL> GetAllItensAdm(Int32 idAss);
         List<CRM_COMERCIAL> GetAllItensAdmUser(Int32 id, Int32 idAss);
-        List<CRM_COMERCIAL> ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca, Int32? estrela, Int32 idAss);
+        List<CRM_COMERCIAL> ExecuteFilter(Int32? status, DateTime? inicio, DateTime? prevista, String numero, String nota, Int32? estrela,  String nome, String busca, Int32 idAss);
         List<CRM_COMERCIAL> ExecuteFilterDash(String nmr, DateTime? dtFinal, String nome, Int32? usu, Int32? status, Int32 idAss);
 
         List<CRM_COMERCIAL> GetAtrasados(Int32 idAss);

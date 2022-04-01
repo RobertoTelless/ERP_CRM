@@ -3513,6 +3513,13 @@
     <Content Include="Views\CRMComercial\ProcessarEnviarAprovacaoCRMComercial.cshtml" />
     <Content Include="Views\CRMComercial\IncluirAcompanhamento.cshtml" />
     <Content Include="Views\CRMComercial\MontarTelaDashboardCRMComercialCompleto.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaCatAtendimento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirCatAtendimento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarCatAtendimento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaDepartamento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirDepartamento.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarDepartamento.cshtml" />
+    <Content Include="Views\ControleAcesso\Login - Cópia .cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

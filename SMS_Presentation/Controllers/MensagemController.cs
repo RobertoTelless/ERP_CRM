@@ -1707,6 +1707,9 @@ namespace ERP_CRM_Solution.Controllers
 
         public string SendEmail(Email email)
         {
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+            
             var tasks = new List<Task>();
             var smtp = new SmtpClient();
             smtp.EnableSsl = email.ENABLE_SSL;
@@ -1745,9 +1748,9 @@ namespace ERP_CRM_Solution.Controllers
             return "done";
         }
 
-        public static async Task Execute(Email email)
+        public static async Task Execute(Email email, String apiKey)
         {
-            var apiKey = "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";
+            //var apiKey = "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";
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress(email.EMAIL_EMISSOR, email.NOME_EMISSOR);
             var subject = email.ASSUNTO;

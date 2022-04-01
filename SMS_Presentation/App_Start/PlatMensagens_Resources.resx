@@ -289,7 +289,7 @@
     <value>Essa mensagem já foi convertida em processo CRM</value>
   </data>
   <data name="M0066" xml:space="preserve">
-    <value>Categoria de Cliente já cadastrada</value>
+    <value>Categoria já cadastrada</value>
   </data>
   <data name="M0067" xml:space="preserve">
     <value>Cargo já cadastrado</value>
@@ -410,5 +410,11 @@
   </data>
   <data name="M0119" xml:space="preserve">
     <value>Justificativa de cancelamento não preenchida</value>
+  </data>
+  <data name="M0120" xml:space="preserve">
+    <value>Departamento já cadastrado</value>
+  </data>
+  <data name="M0121" xml:space="preserve">
+    <value>Impossível excluir este departamento. Ele está vinculada a outras informações</value>
   </data>
 </root>

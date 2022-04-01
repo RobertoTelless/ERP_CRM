@@ -115,6 +115,7 @@ namespace EntitiesServices.Model
         public Nullable<int> PROD_QN_CONTAGEM { get; set; }
         public Nullable<decimal> PRTP_VL_CUSTO { get; set; }
         public Nullable<int> PROD_IN_KIT { get; set; }
+        public Nullable<int> PROD_NR_DIAS_PREPARACAO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -892,6 +892,8 @@
           <Property Name="CRMC_AQ_IMAGEM" Type="varchar" MaxLength="250" />
           <Property Name="CRMC_DT_REPROVACAO" Type="date" />
           <Property Name="CRMC_NR_NOTA_FISCAL" Type="varchar" MaxLength="20" />
+          <Property Name="CRMC_NM_CLIENTE" Type="varchar" MaxLength="150" />
+          <Property Name="CRMC_DT_FINAL" Type="date" />
         </EntityType>
         <EntityType Name="CRM_COMERCIAL_ACAO">
           <Key>
@@ -1968,6 +1970,7 @@
           <Property Name="PROD_QN_CONTAGEM" Type="int" />
           <Property Name="PRTP_VL_CUSTO" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PROD_IN_KIT" Type="int" />
+          <Property Name="PROD_NR_DIAS_PREPARACAO" Type="int" />
         </EntityType>
         <EntityType Name="PRODUTO_ANEXO">
           <Key>
@@ -2043,6 +2046,8 @@
           <Property Name="PROR_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PROR_NM_NOME" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="PROR_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="PROR_NR_NUMERO" Type="varchar" MaxLength="5" />
+          <Property Name="PROR_NM_EXIBE" Type="varchar" MaxLength="158" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="PRODUTO_TABELA_PRECO">
           <Key>
@@ -10261,6 +10266,7 @@
           <NavigationProperty Name="PRODUTO_TABELA_PRECO" Relationship="Self.FK_PRODUTO_TABELA_PRECO_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_TABELA_PRECO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_PRODUTO_UNIDADE" FromRole="PRODUTO" ToRole="UNIDADE" />
           <NavigationProperty Name="CRM_COMERCIAL_ITEM" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_PRODUTO" FromRole="PRODUTO" ToRole="CRM_COMERCIAL_ITEM" />
+          <Property Name="PROD_NR_DIAS_PREPARACAO" Type="Int32" />
         </EntityType>
         <EntityType Name="PRODUTO_ANEXO">
           <Key>
@@ -10347,6 +10353,8 @@
           <Property Name="PROR_NM_NOME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PROR_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="PRODUTO" Relationship="Self.FK_PRODUTO_PRODUTO_ORIGEM" FromRole="PRODUTO_ORIGEM" ToRole="PRODUTO" />
+          <Property Name="PROR_NR_NUMERO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PROR_NM_EXIBE" Type="String" MaxLength="158" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="PRODUTO_TABELA_PRECO">
           <Key>
@@ -16183,6 +16191,8 @@
           <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_USUARIO" FromRole="CRM_COMERCIAL" ToRole="USUARIO" />
           <Property Name="CRMC_DT_REPROVACAO" Type="DateTime" Precision="0" />
           <Property Name="CRMC_NR_NOTA_FISCAL" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CRMC_NM_CLIENTE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CRMC_DT_FINAL" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="CRM_COMERCIAL_ACAO">
           <Key>
@@ -18399,6 +18409,7 @@
           <EntitySetMapping Name="PRODUTO">
             <EntityTypeMapping TypeName="ERP_CRMModel.PRODUTO">
               <MappingFragment StoreEntitySet="PRODUTO">
+                <ScalarProperty Name="PROD_NR_DIAS_PREPARACAO" ColumnName="PROD_NR_DIAS_PREPARACAO" />
                 <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />
@@ -18556,6 +18567,8 @@
           <EntitySetMapping Name="PRODUTO_ORIGEM">
             <EntityTypeMapping TypeName="ERP_CRMModel.PRODUTO_ORIGEM">
               <MappingFragment StoreEntitySet="PRODUTO_ORIGEM">
+                <ScalarProperty Name="PROR_NM_EXIBE" ColumnName="PROR_NM_EXIBE" />
+                <ScalarProperty Name="PROR_NR_NUMERO" ColumnName="PROR_NR_NUMERO" />
                 <ScalarProperty Name="PROR_CD_ID" ColumnName="PROR_CD_ID" />
                 <ScalarProperty Name="PROR_NM_NOME" ColumnName="PROR_NM_NOME" />
                 <ScalarProperty Name="PROR_IN_ATIVO" ColumnName="PROR_IN_ATIVO" />
@@ -19105,6 +19118,8 @@
           <EntitySetMapping Name="CRM_COMERCIAL">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_COMERCIAL">
               <MappingFragment StoreEntitySet="CRM_COMERCIAL">
+                <ScalarProperty Name="CRMC_DT_FINAL" ColumnName="CRMC_DT_FINAL" />
+                <ScalarProperty Name="CRMC_NM_CLIENTE" ColumnName="CRMC_NM_CLIENTE" />
                 <ScalarProperty Name="CRMC_NR_NOTA_FISCAL" ColumnName="CRMC_NR_NOTA_FISCAL" />
                 <ScalarProperty Name="CRMC_DT_REPROVACAO" ColumnName="CRMC_DT_REPROVACAO" />
                 <ScalarProperty Name="CRMC_AQ_IMAGEM" ColumnName="CRMC_AQ_IMAGEM" />

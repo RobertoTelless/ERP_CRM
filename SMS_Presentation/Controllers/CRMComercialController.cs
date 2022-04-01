@@ -85,6 +85,15 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("CarregarBase", "BaseAdmin");
         }
 
+        public ActionResult VoltarAcompanhamentoCRMComercial()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("AcompanhamentoProcessoCRMComercial", new { id = (Int32)Session["IdCRM"] });
+        }
+
         [HttpPost]
         public JsonResult GetPrecoProduto(Int32 id, Int32? fili)
         {
@@ -427,7 +436,7 @@ namespace ERP_CRM_Solution.Controllers
                 // Executa a operação
                 List<CRM_COMERCIAL> listaObj = new List<CRM_COMERCIAL>();
                 Session["FiltroCRM"] = item;
-                Int32 volta = baseApp.ExecuteFilter(item.CRMC_IN_STATUS, item.CRMC_DT_CRIACAO, item.CRMC_DT_CANCELAMENTO, item.CROR_CD_ID, item.CRMC_IN_ATIVO, item.CRMC_NM_NOME, item.CRMC_DS_DESCRICAO, item.CRMC_IN_ESTRELA, idAss, out listaObj);
+                Int32 volta = baseApp.ExecuteFilter(item.CRMC_IN_STATUS, item.CRMC_DT_CRIACAO, item.CRMC_DT_PREVISTA, item.CRMC_NR_NUMERO, item.CRMC_NR_NOTA_FISCAL, item.CRMC_IN_ESTRELA, item.CRMC_NM_NOME, item.CRMC_NM_CLIENTE, idAss, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)
@@ -1215,7 +1224,7 @@ namespace ERP_CRM_Solution.Controllers
             vm.CRMC_IN_STATUS = 1;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             vm.CRMC_DT_PREVISTA = DateTime.Today.Date.AddDays(30);
-            vm.CRMC_DT_ENCERRAMENTO = DateTime.MinValue;
+            vm.CRMC_DT_FINAL = DateTime.MinValue;
             return View(vm);
         }
 

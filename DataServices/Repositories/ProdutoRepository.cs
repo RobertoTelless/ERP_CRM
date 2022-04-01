@@ -160,7 +160,7 @@ namespace DataServices.Repositories
             }
             if (!String.IsNullOrEmpty(barcode))
             {
-                query = query.Where(p => p.PRODUTO.PROD_NR_BARCODE == barcode);
+                query = query.Where(p => p.PRODUTO.PROD_CD_CODIGO == barcode);
             }
             if (categoria != null)
             {

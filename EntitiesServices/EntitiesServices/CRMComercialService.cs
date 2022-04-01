@@ -150,9 +150,9 @@ namespace ModelServices.EntitiesServices
             return _comRepository.GetItemById(id);
         }
 
-        public List<CRM_COMERCIAL> ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca, Int32? estrela, Int32 idAss)
+        public List<CRM_COMERCIAL> ExecuteFilter(Int32? status, DateTime? inicio, DateTime? prevista, String numero, String nota, Int32? estrela,  String nome, String busca, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(status, inicio, final, origem, adic, nome, busca, estrela, idAss);
+            return _baseRepository.ExecuteFilter(status, inicio, prevista, numero, nota, estrela, nome, busca, idAss);
 
         }
 

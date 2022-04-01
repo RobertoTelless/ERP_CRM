@@ -68,6 +68,7 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<System.DateTime> CRMC_DT_REPROVACAO { get; set; }
         public Nullable<decimal> VALOR_TOTAL { get; set; }
         public string CRMC_NR_NOTA_FISCAL { get; set; }
+        public Nullable<System.DateTime> CRMC_DT_FINAL { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }

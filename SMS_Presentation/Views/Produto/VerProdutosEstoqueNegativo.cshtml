@@ -34,8 +34,8 @@
                     <div class="ibox-content">
                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                             <div class="col-lg-2 col-md-2 col-xs-12">
-                                Código de Barras
-                                @Html.TextBoxFor(m => m.PRODUTO.PROD_NR_BARCODE, new { @class = "form-control", autofocus = true })
+                                Código (SKU)
+                                @Html.TextBoxFor(m => m.PRODUTO.PROD_CD_CODIGO, new { @class = "form-control", autofocus = true })
                             </div>
                             @if (ViewBag.Perfil == "ADM")
                             {
@@ -91,7 +91,7 @@
                                         <th>Categoria</th>
                                         <th>Subcategoria</th>
                                         <th>Tipo</th>
-                                        <th>Código de Barras</th>
+                                        <th>Código (SKU)</th>
                                         <th>Marca</th>
                                         <th>Modelo</th>
                                         <th>Fabricante</th>
@@ -130,7 +130,7 @@
                                             {
                                                 <td><span class="badge badge-success">Insumo</span></td>
                                             }
-                                            <td>@cond.PRODUTO.PROD_NR_BARCODE</td>
+                                            <td>@cond.PRODUTO.PROD_CD_CODIGO</td>
                                             <td>@cond.PRODUTO.PROD_NM_MARCA</td>
                                             <td>@cond.PRODUTO.PROD_NM_MODELO</td>
                                             <td>@cond.PRODUTO.PROD_NM_FABRICANTE</td>

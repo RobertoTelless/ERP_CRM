@@ -334,7 +334,7 @@
                                                     <br />
                                                     <div class="row">
                                                         <div class="col-lg-3 col-md-3 col-xs-12">
-                                                            Código
+                                                            Código (SKU)
                                                             @Html.TextBoxFor(m => m.PROD_CD_CODIGO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                             @Html.ValidationMessageFor(m => m.PROD_CD_CODIGO, "", new { @style = "color:red" })
                                                         </div>
@@ -1436,6 +1436,11 @@
                                                 {
                                                     <div class="row">
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Código GTIN/EAN
+                                                                @Html.TextBoxFor(m => m.PROD_CD_GTIN_EAN, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.PROD_CD_GTIN_EAN, "", new { @style = "color:red" })
+                                                            </div>
                                                             <div class="col-lg-4 col-md-4 col-xs-12">
                                                                 @Html.HiddenFor(x => x.PROD_CD_ID)
                                                                 @Html.HiddenFor(x => x.ASSI_CD_ID)
@@ -1523,6 +1528,11 @@
                                                                 Peso Bruto (Kg)
                                                                 @Html.TextBoxFor(m => m.PROD_QN_PESO_BRUTO, new { @class = "form-control", autofocus = true })
                                                                 @Html.ValidationMessageFor(m => m.PROD_QN_PESO_BRUTO, "", new { @style = "color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Preparação (Dias)
+                                                                @Html.TextBoxFor(m => m.PROD_NR_DIAS_PREPARACAO, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.PROD_NR_DIAS_PREPARACAO, "", new { @style = "color:red" })
                                                             </div>
                                                         </div>
 

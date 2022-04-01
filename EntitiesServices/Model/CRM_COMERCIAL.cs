@@ -58,6 +58,8 @@ namespace EntitiesServices.Model
         public string CRMC_AQ_IMAGEM { get; set; }
         public Nullable<System.DateTime> CRMC_DT_REPROVACAO { get; set; }
         public string CRMC_NR_NOTA_FISCAL { get; set; }
+        public string CRMC_NM_CLIENTE { get; set; }
+        public Nullable<System.DateTime> CRMC_DT_FINAL { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }

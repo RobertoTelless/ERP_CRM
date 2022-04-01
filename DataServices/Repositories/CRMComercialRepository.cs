@@ -71,7 +71,7 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<CRM_COMERCIAL> ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca, Int32? estrela, Int32 idAss)
+        public List<CRM_COMERCIAL> ExecuteFilter(Int32? status, DateTime? inicio, DateTime? prevista, String numero, String nota, Int32? estrela, String nome, String busca, Int32 idAss)
         {
             List<CRM_COMERCIAL> lista = new List<CRM_COMERCIAL>();
             IQueryable<CRM_COMERCIAL> query = Db.CRM_COMERCIAL;
@@ -79,40 +79,21 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.CRMC_IN_STATUS == status);
             }
-            if (origem != null)
-            {
-                query = query.Where(p => p.CROR_CD_ID == origem);
-            }
             if (estrela != null)
             {
                 query = query.Where(p => p.CRMC_IN_ESTRELA == estrela);
             }
-            if (adic != null)
-            {
-                if (adic == 1)
-                {
-                    query = query.Where(p => p.CRMC_IN_ATIVO == 1);
-                }
-                else if (adic == 2)
-                {
-                    query = query.Where(p => p.CRMC_IN_ATIVO == 2);
-                }
-                else if (adic == 3)
-                {
-                    query = query.Where(p => p.CRMC_IN_ATIVO == 3);
-                }
-                else if (adic == 4)
-                {
-                    query = query.Where(p => p.CRMC_IN_ATIVO == 4);
-                }
-                else if (adic == 5)
-                {
-                    query = query.Where(p => p.CRMC_IN_ATIVO == 5);
-                }
-            }
             if (!String.IsNullOrEmpty(nome))
             {
                 query = query.Where(p => p.CRMC_NM_NOME.Contains(nome) || p.CRMC_DS_DESCRICAO.Contains(nome));        
+            }
+            if (!String.IsNullOrEmpty(numero))
+            {
+                query = query.Where(p => p.CRMC_NR_NUMERO.Contains(numero));
+            }
+            if (!String.IsNullOrEmpty(nota))
+            {
+                query = query.Where(p => p.CRMC_NR_NOTA_FISCAL.Contains(nota));
             }
             if (!String.IsNullOrEmpty(busca))
             {
@@ -120,11 +101,11 @@ namespace DataServices.Repositories
             }
             if (inicio != null)
             {
-                query = query.Where(p => DbFunctions.TruncateTime(p.CRM_COMERCIAL_ACAO.Where(m => m.CRCA_IN_ATIVO == 1).OrderByDescending(m => m.CRCA_DT_PREVISTA).FirstOrDefault().CRCA_DT_PREVISTA) >= DbFunctions.TruncateTime(inicio));
+                query = query.Where(p => p.CRMC_DT_CRIACAO == inicio);
             }
-            if (final != null)
+            if (prevista != null)
             {
-                query = query.Where(p => DbFunctions.TruncateTime(p.CRM_COMERCIAL_ACAO.Where(m => m.CRCA_IN_ATIVO == 1).OrderByDescending(m => m.CRCA_DT_PREVISTA).FirstOrDefault().CRCA_DT_PREVISTA) <= DbFunctions.TruncateTime(final));
+                query = query.Where(p => p.CRMC_DT_PREVISTA == prevista);
             }
             if (query != null)
             {

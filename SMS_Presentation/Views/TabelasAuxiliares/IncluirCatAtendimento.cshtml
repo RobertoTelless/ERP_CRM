@@ -1,20 +1,21 @@
 ﻿@using Presentation.Extensions
-@model ERP_CRM_Solution.ViewModels.ItemProcessoCRMViewModel
-@{ Layout = "~/Views/Shared/_Layout_Admin.cshtml"; }
-
+@model ERP_CRM_Solution.ViewModels.CategoriaAtendimentoViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="page-title">
-        <h3 class="title">Processos CRM Comercial</h3>
+        <h3 class="title">Tabelas Auxiliares</h3>
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
             </li>
             <li>
-                <a href="@Url.Action("MontarTelaCRMComercial", "CRMComercial")">Processos CRM Comercial</a>
+                <a href="@Url.Action("MontarTelaCatAtendimento", "TabelasAuxiliares")">Categorias de Atendimento</a>
             </li>
             <li class="active">
-                <strong>Itens do Pedido - Recebimento</strong>
+                <strong>Categorias - Inclusão</strong>
             </li>
         </ol>
         <br />
@@ -23,11 +24,16 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Itens do Pedido - Recebimento</h5>
+                    <h5>Categorias de Atendimento - Inclusão</h5>
                 </div>
-                @using (Html.BeginForm("ReceberItemPedidoCRM", "CRMComercial", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                @using (Html.BeginForm("IncluirCatAtendimento", "TabelasAuxiliares", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                 {
                     <div class="ibox-content">
+                        <div class="form-group">
+                            @Html.ButtonActionSubmit(text: "Confirma Inclusão da Categoria", htmlAttributes: new { id = "basictoast" })
+                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCatAtendimento", controller: "TabelasAuxiliares")
+                            @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "TabelasAuxiliares")
+                        </div>
                         @Html.AntiForgeryToken()
                         @if (!ViewData.ModelState.IsValid)
                         {
@@ -35,56 +41,35 @@
                                 <button type="button" class="close" data-dismiss="alert">Fechar</button>
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                             </div>
-                         }
-                        <div class="row">
-                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                @Html.HiddenFor(m => m.CRMC_CD_ID)
-                                @Html.HiddenFor(m => m.CRCI_IN_ATIVO)
-                                @Html.HiddenFor(m => m.CRCI_CD_ID)
-                                @Html.HiddenFor(m => m.PROD_CD_ID)
-                                @Html.HiddenFor(m => m.CRCI_DT_APROVACAO)
-                                @Html.HiddenFor(m => m.CRCI_TX_OBSERVACAO)
-                                <div id="prodContainer" class="col-lg-3 col-md-3 col-xs-12">
-                                    Produto*
-                                    @Html.TextBoxFor(m => m.PRODUTO.PROD_NM_NOME, new { @class = "form-control", @id = "prod", @readonly = "readonly" })
-                                </div>
-                                <div class="col-lg-1 col-md-1 col-xs-12">
-                                    Preço
-                                    @Html.TextBoxFor(m => m.PRODUTO.PROD_VL_CUSTO, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Quantidade*
-                                    @Html.TextBoxFor(m => m.CRCI_QN_QUANTIDADE, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(m => m.CRCI_QN_QUANTIDADE, "", new { @style = "color:red" })
-                                </div>
-                            </div>
-                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Quantidade Revisada
-                                    @Html.TextBoxFor(m => m.CRCI_QN_QUANTIDADE_REVISADA, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(m => m.CRCI_QN_QUANTIDADE_REVISADA, "", new { @style = "color:red" })
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Preço Unitário
-                                    @Html.TextBoxFor(m => m.CRCI_VL_VALOR, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(m => m.CRCI_VL_VALOR, "", new { @style = "color:red" })
+                        }
+
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+
+                                @*Dados Gerais*@
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CAAT_IN_ATIVO)
+                                                    Nome da Categoria*
+                                                    @Html.TextBoxFor(m => m.CAAT_NM_NOME, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAAT_NM_NOME, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                    Justificativa
-                                    @Html.TextAreaFor(m => m.CRCI_DS_JUSTIFICATIVA, new { @class = "form-control", style = "width: 1020px; height: 100px;", autofocus = true })
-                                    @Html.ValidationMessageFor(m => m.CRCI_DS_JUSTIFICATIVA, "", new { @style = "color:red" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.ButtonActionSubmit(text: "Confirma Envio de Item de Pedido", htmlAttributes: new { id = "basictoast" })
-                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAnexoPedidoCompra", controller: "Compra")
-                            @Html.ButtonLinkIndex(text: "Dashboard", controller: "Compra", action: "MontarTelaDashboardCompra")
                         </div>
                     </div>
-                 }
+                }
             </div>
         </div>
     </div>
@@ -95,34 +80,54 @@
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
-    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
     @Styles.Render("~/plugins/toastrStyles")
 }
 @section Scripts {
-    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/uploadAnexo.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'Excel' },
+                    { extend: 'pdf', title: 'PDF' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
 
     <script type="text/javascript">
         $(function () {
             $("#cpf").mask("999.999.999-99");
             $("#cnpj").mask("99.999.999/9999-99");
             $("#cep").mask("99999-999");
-        });</script>
-    @Scripts.Render("~/plugins/iCheck")
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-
-        });</script>
+            $("#data1").mask("99/99/9999");
+            $("#data2").mask("99/99/9999");
+        });
+    </script>
     <script type="text/javascript" language="javascript">
         $(function () {
             $('.date-picker').datepicker(
@@ -144,36 +149,36 @@
                     label: "Selecione uma data",
                     text: false
                 });
-        });</script>
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#ITPC_IN_TIPO').change(function () {
-                var ddlValue = $(this).val();
 
-                if (ddlValue == "1") {
-                    $('#prod').show();
-                    $('#ins').hide();
-                }
-                else if (ddlValue == "2") {
-                    $('#prod').hide();
-                    $('#ins').show();
-                }
+            $('body').addClass('light-navbar');
+
+            $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 52], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
             });
-        });</script>
+
+        });
+    </script>
+
+    @Scripts.Render("~/plugins/iCheck")
 
     <script type="text/javascript">
         $(document).ready(function () {
-            var ddlValue = $('#ITPC_IN_TIPO').val();
 
-            if (ddlValue == "1") {
-                $('#prod').show();
-                $('#ins').hide();
-            }
-            else if (ddlValue == "2") {
-                $('#prod').hide();
-                $('#ins').show();
-            }
-        });</script>
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -187,7 +192,7 @@
 
             $('#basictoast').click(function () {
                 // Display a success toast, with a title
-                toastr.success('Edição em andamento!')
+                toastr.success('Inclusão em andamento')
             });
             $('#showtoast').click(function () {
                 var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
@@ -273,82 +278,21 @@
                 toastr.clear();
             });
 
-        });</script>
+        });
+    </script>
 
     <script>
-        function DesativaInsumo() {
-            var optProd = $('#prod option:selected').val();
-
-            $.ajax({
-                url: '../Compra/GetCustoProduto'
-                , type: 'POST'
-                , data: {
-                    id: $('#prod option:selected').val()
-                }
-                , async: false
-                , success: function (r) {
-                    $('#custo').val(r.custo == null ? "-" : r.custo);
-                    $('#unidade').val(r.unidade == null ? "-" : r.unidade);
-                    $('#markup').val(r.markup == null ? "-" : r.markup);
-                }
-            });
-
-            if (optProd != "") {
-                $('#insContainer').css("display", "none");
-            } else {
-                $('#insContainer').css("display", "block");
-            }
-        }
-
-        function DesativaProduto() {
-            var optIns = $('#ins option:selected').val();
-
-            $.ajax({
-                url: '../Compra/GetCustoInsumo'
-                , type: 'POST'
-                , data: {
-                    id: $('#ins option:selected').val()
-                }
-                , async: false
-                , success: function (r) {
-                    $('#custo').val(r.custo == null ? "-" : r.custo);
-                    $('#unidade').val(r.unidade == null ? "-" : r.unidade);
-                }
-            });
-
-            if (optIns != "") {
-                $('#prodContainer').css("display", "none");
-            } else {
-                $('#prodContainer').css("display", "block");
-            }
-        }
-
-        function DesativaInsProd() {
-            var optTipo = $('#tipo option:selected').val();
-
-            if (optTipo != "") {
-                if (optTipo == 1) {
-                    $('#insContainer').css("display", "none");
-                    $('#prodContainer').css("display", "block");
-                    $("#ins").val($("#ins option:first").val());
-                } else {
-                    $('#prodContainer').css("display", "none");
-                    $('#insContainer').css("display", "block");
-                    $("#prod").val($("#prod option:first").val());
-                }
-            } else {
-                $('#prodContainer').css("display", "block");
-                $('#insContainer').css("display", "block");
-            }
-        }
+        SendFiles(null, 'Notificacao', 'IncluirNotificacao', 'UploadFileNotificacao_Inclusao', 'MontarTelaNotificacaoGeral');
     </script>
 
     @if (ViewBag.Message != null)
     {
-<script type="text/javascript">
+        <script type="text/javascript">
             window.onload = function () {
                   alert("@ViewBag.Message");
             };
-</script>
+        </script>
+    }
 }
-}
+
+

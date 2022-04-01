@@ -150,7 +150,7 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca,  Int32? estrela, Int32 idAss, out List<CRM_COMERCIAL> objeto)
+        public Int32 ExecuteFilter(Int32? status, DateTime? inicio, DateTime? prevista, String numero, String nota, Int32? estrela, String nome, String busca, Int32 idAss, out List<CRM_COMERCIAL> objeto)
         {
             try
             {
@@ -158,7 +158,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(status, inicio, final, origem, adic, nome, busca, estrela, idAss);
+                objeto = _baseService.ExecuteFilter(status, inicio, prevista, numero, nota, estrela, nome, busca, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;

@@ -23,6 +23,8 @@ namespace EntitiesServices.Model
         public int PROR_CD_ID { get; set; }
         public string PROR_NM_NOME { get; set; }
         public int PROR_IN_ATIVO { get; set; }
+        public string PROR_NR_NUMERO { get; set; }
+        public string PROR_NM_EXIBE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PRODUTO> PRODUTO { get; set; }
