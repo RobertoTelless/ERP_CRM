@@ -2179,42 +2179,48 @@ namespace ERP_CRM_Solution.Controllers
                             }
                         }
 
+                        // Monta mensagem
+                        NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                        Email mensagem = new Email();
+                        mensagem.ASSUNTO = vm.MENS_NM_CAMPANHA != null ? vm.MENS_NM_CAMPANHA : "Assunto Diverso";
+                        mensagem.CORPO = emailBody;
+                        mensagem.DEFAULT_CREDENTIALS = false;
+                        mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                        mensagem.ENABLE_SSL = true;
+                        mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
+                        mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                        mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                        mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                        mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                        mensagem.NETWORK_CREDENTIAL = net;
+                        mensagem.ATTACHMENT = listaAnexo;
+
+                        // Monta destinos
+                        MailAddressCollection col = new MailAddressCollection();
                         foreach (CLIENTE item in listaCli)
                         {
-                            // Monta e-mail
-                            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
-                            Email mensagem = new Email();
-                            mensagem.ASSUNTO = vm.MENS_NM_CAMPANHA != null ? vm.MENS_NM_CAMPANHA : "Assunto Diverso";
-                            mensagem.CORPO = emailBody;
-                            mensagem.DEFAULT_CREDENTIALS = false;
-                            mensagem.EMAIL_DESTINO = item.CLIE_NM_EMAIL;
-                            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
-                            mensagem.ENABLE_SSL = true;
-                            mensagem.NOME_EMISSOR = item.ASSINANTE.ASSI_NM_NOME;
-                            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
-                            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
-                            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
-                            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
-                            mensagem.NETWORK_CREDENTIAL = net;
-                            mensagem.ATTACHMENT = listaAnexo;
+                            col.Add(item.CLIE_NM_EMAIL);
+                        }
 
-                            // Envia mensagem
-                            try
+                        // Envia mensagem
+                        try
+                        {
+                            Int32 voltaMail = CommunicationPackage.SendEmailCollection(mensagem, col);
+                        }
+                        catch (Exception ex)
+                        {
+                            erro = ex.Message;
+                            if (ex.GetType() == typeof(SmtpFailedRecipientException))
                             {
-                                Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                                var se = (SmtpFailedRecipientException)ex;
+                                erro += se.FailedRecipient;
                             }
-                            catch (Exception ex)
-                            {
-                                erro = ex.Message;
-                                if (ex.GetType() == typeof(SmtpFailedRecipientException))
-                                {
-                                    var se = (SmtpFailedRecipientException)ex;
-                                    erro += se.FailedRecipient;
-                                }
-                            }
+                        }
 
-                            // Grava mensagem/destino e erros
-                            if (erro == null)
+                        // Grava mensagem/destino e erros
+                        if (erro == null)
+                        {
+                            foreach (CLIENTE item in listaCli)
                             {
                                 MENSAGENS_DESTINOS dest = new MENSAGENS_DESTINOS();
                                 dest.MEDE_IN_ATIVO = 1;
@@ -2228,13 +2234,13 @@ namespace ERP_CRM_Solution.Controllers
                                 mens.MENS_TX_TEXTO = body;
                                 volta = baseApp.ValidateEdit(mens, mens);
                             }
-                            else
-                            {
-                                mens.MENS_TX_RETORNO = erro;
-                                volta = baseApp.ValidateEdit(mens, mens);
-                            }
-                            erro = null;
                         }
+                        else
+                        {
+                            mens.MENS_TX_RETORNO = erro;
+                            volta = baseApp.ValidateEdit(mens, mens);
+                        }
+                        erro = null;
                         return volta;
                     }
                     else
@@ -2251,14 +2257,7 @@ namespace ERP_CRM_Solution.Controllers
                             footer = temp.TEEM_TX_DADOS;
                             link = temp.TEEM_LK_LINK;                    
                         }
-
-                        //// Prepara cabeçalho
-                        //header = header.Replace("{Nome}", cliente.CLIE_NM_NOME);
-
-                        //// Prepara rodape
-                        //ASSINANTE assi = (ASSINANTE)Session["Assinante"];
-                        //footer = footer.Replace("{Assinatura}", assi.ASSI_NM_NOME);
-                    
+                   
                         // Trata corpo
                         StringBuilder str = new StringBuilder();
                         str.AppendLine(body);
@@ -2277,7 +2276,6 @@ namespace ERP_CRM_Solution.Controllers
                             str.AppendLine("<a href='" + link + "'>Clique aqui para maiores informações</a>");
                         }
                         body = str.ToString();                  
-                        //String emailBody = header + body + footer;
 
                         // Checa e monta anexos
                         List<System.Net.Mail.Attachment> listaAnexo = new List<System.Net.Mail.Attachment>();
@@ -2291,37 +2289,71 @@ namespace ERP_CRM_Solution.Controllers
                             }
                         }
 
-                        // Loop de envio
-                        foreach (CLIENTE item in listaCli)
-                        {
-                            // Prepara cabeçalho
-                            header = header.Replace("{Nome}", item.CLIE_NM_NOME);
-                            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
-                            footer = footer.Replace("{Assinatura}", assi.ASSI_NM_NOME);
-                            String emailBody = header + body + footer;
+                        // Prepara rodape
+                        ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+                        footer = footer.Replace("{Assinatura}", assi.ASSI_NM_NOME);
 
-                            // Monta e-mail
-                            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
-                            Email mensagem = new Email();
-                            mensagem.ASSUNTO = vm.MENS_NM_CAMPANHA != null ? vm.MENS_NM_CAMPANHA : "Assunto Diverso";
+                        // Monta Mensagem
+                        NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                        Email mensagem = new Email();
+                        mensagem.ASSUNTO = vm.MENS_NM_CAMPANHA != null ? vm.MENS_NM_CAMPANHA : "Assunto Diverso";
+                        mensagem.DEFAULT_CREDENTIALS = false;
+                        mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                        mensagem.ENABLE_SSL = true;
+                        mensagem.NOME_EMISSOR = assi.ASSI_NM_NOME;
+                        mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                        mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                        mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                        mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                        mensagem.NETWORK_CREDENTIAL = net;
+                        mensagem.ATTACHMENT = listaAnexo;
+
+                        // Checa cabeçalho e envia
+                        if (header.Contains("{Nome}"))
+                        {
+                            foreach (CLIENTE item in listaCli)
+                            {
+                                // Prepara cabeçalho
+                                header = header.Replace("{Nome}", item.CLIE_NM_NOME);
+                                String emailBody = header + body + footer;
+
+                                // Monta e-mail
+                                mensagem.CORPO = emailBody;
+                                mensagem.EMAIL_DESTINO = item.CLIE_NM_EMAIL;
+
+                                // Envia mensagem
+                                try
+                                {
+                                    Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    erro = ex.Message;
+                                    if (ex.GetType() == typeof(SmtpFailedRecipientException))
+                                    {
+                                        var se = (SmtpFailedRecipientException)ex;
+                                        erro += se.FailedRecipient;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            String emailBody = header + body + footer;
                             mensagem.CORPO = emailBody;
-                            mensagem.DEFAULT_CREDENTIALS = false;
-                            mensagem.EMAIL_DESTINO = item.CLIE_NM_EMAIL;
-                            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
-                            mensagem.ENABLE_SSL = true;
-                            mensagem.NOME_EMISSOR = item.ASSINANTE.ASSI_NM_NOME;
-                            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
-                            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
-                            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
-                            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
-                            mensagem.NETWORK_CREDENTIAL = net;
-                            mensagem.ATTACHMENT = listaAnexo;
+
+                            MailAddressCollection col = new MailAddressCollection();
+                            foreach (CLIENTE item in listaCli)
+                            {
+                                col.Add(item.CLIE_NM_EMAIL);
+                            }
 
                             // Envia mensagem
                             try
                             {
-                                Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
-                            
+                                Int32 voltaMail = CommunicationPackage.SendEmailCollection(mensagem, col);
+
                             }
                             catch (Exception ex)
                             {
@@ -2332,7 +2364,11 @@ namespace ERP_CRM_Solution.Controllers
                                     erro += se.FailedRecipient;
                                 }
                             }
+                        }
 
+                        // Loop de retorno
+                        foreach (CLIENTE item in listaCli)
+                        {
                             // Grava mensagem/destino e erros
                             if (erro == null)
                             {
@@ -2402,7 +2438,6 @@ namespace ERP_CRM_Solution.Controllers
                         str.AppendLine("<a href='" + link + "'>Clique aqui para maiores informações</a>");
                     }
                     body = str.ToString();                  
-                    String emailBody = header + body + footer;
 
                     // Checa e monta anexos
                     List<System.Net.Mail.Attachment> listaAnexo = new List<System.Net.Mail.Attachment>();
@@ -2416,52 +2451,56 @@ namespace ERP_CRM_Solution.Controllers
                         }
                     }
 
-                    // Loop de envio
+                    // Monta Mensagem
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = vm.MENS_NM_CAMPANHA != null ? vm.MENS_NM_CAMPANHA : "Assunto Diverso";
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = assi.ASSI_NM_NOME;
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.NETWORK_CREDENTIAL = net;
+                    mensagem.ATTACHMENT = listaAnexo;
+
+                    String emailBody = header + body + footer;
+                    mensagem.CORPO = emailBody;
+
+                    MailAddressCollection col = new MailAddressCollection();
                     foreach (CLIENTE item in listaCli)
                     {
-                        // Prepara cabeçalho
-                        String cab = header.Replace("{Nome}", item.CLIE_NM_NOME);
-                        String emailBody1 = cab + body + footer;
+                        col.Add(item.CLIE_NM_EMAIL);
+                    }
 
-                        // Monta e-mail
-                        NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
-                        Email mensagem = new Email();
-                        mensagem.ASSUNTO = vm.MENS_NM_CAMPANHA != null ? vm.MENS_NM_CAMPANHA : "Assunto Diverso";
-                        mensagem.CORPO = emailBody1;
-                        mensagem.DEFAULT_CREDENTIALS = false;
-                        mensagem.EMAIL_DESTINO = item.CLIE_NM_EMAIL;
-                        mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
-                        mensagem.ENABLE_SSL = true;
-                        mensagem.NOME_EMISSOR = item.ASSINANTE.ASSI_NM_NOME;
-                        mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
-                        mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
-                        mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
-                        mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
-                        mensagem.NETWORK_CREDENTIAL = net;
-                        mensagem.ATTACHMENT = listaAnexo;
+                    // Envia mensagem
+                    try
+                    {
+                        Int32 voltaMail = CommunicationPackage.SendEmailCollection(mensagem, col);
 
-                        // Envia mensagem
-                        try
+                    }
+                    catch (Exception ex)
+                    {
+                        erro = ex.Message;
+                        if (ex.GetType() == typeof(SmtpFailedRecipientException))
                         {
-                            Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                            var se = (SmtpFailedRecipientException)ex;
+                            erro += se.FailedRecipient;
                         }
-                        catch (Exception ex)
-                        {
-                            erro = ex.Message;
-                            if (ex.GetType() == typeof(SmtpFailedRecipientException))
-                            {
-                                var se = (SmtpFailedRecipientException)ex;
-                                erro += se.FailedRecipient;
-                            }
-                        }
+                    }
 
+                    // Loop de retorno
+                    foreach (CLIENTE item in listaCli)
+                    {
                         // Grava mensagem/destino e erros
                         if (erro == null)
                         {
-                            String cab1 = Regex.Replace(header, "<.*?>", String.Empty);
+                            String cab = Regex.Replace(header, "<.*?>", String.Empty);
                             String cor = Regex.Replace(body, "<.*?>", String.Empty);
                             String foot = Regex.Replace(footer, "<.*?>", String.Empty);
-                            String tex = cab1 + " " + cor + " " + foot;
+                            String tex = cab + " " + cor + " " + foot;
                             tex = tex.Replace("\r\n", " ");
 
                             MENSAGENS_DESTINOS dest = new MENSAGENS_DESTINOS();
@@ -2473,9 +2512,9 @@ namespace ERP_CRM_Solution.Controllers
                             dest.MENS_CD_ID = mens.MENS_CD_ID;
                             mens.MENSAGENS_DESTINOS.Add(dest);
                             mens.MENS_DT_ENVIO = DateTime.Now;
+                            mens.MENS_TX_TEXTO = body;
                             mens.MENS_NM_CABECALHO = header;
                             mens.MENS_NM_RODAPE = footer;
-                            mens.MENS_TX_TEXTO = body;
                             mens.MENS_TX_TEXTO_LIMPO = tex;
                             volta = baseApp.ValidateEdit(mens, mens);
                         }
@@ -2734,14 +2773,22 @@ namespace ERP_CRM_Solution.Controllers
             List<CLIENTE> cli = cliApp.GetAllItens(idAss);
             List<GRUPO> gru = gruApp.GetAllItens(idAss);
 
+            // Abre destinos
+            Int32 tot = le.SelectMany(p => p.MENSAGENS_DESTINOS).ToList().Count;
+            Int32 totMes = lm.SelectMany(p => p.MENSAGENS_DESTINOS).ToList().Count;
+            Int32 smsTot = le.Where(p => p.MENS_IN_TIPO == 2).SelectMany(p => p.MENSAGENS_DESTINOS).ToList().Count;
+            Int32 smsMes = lm.Where(p => p.MENS_IN_TIPO == 2).SelectMany(p => p.MENSAGENS_DESTINOS).ToList().Count;
+            Int32 emailTot = le.Where(p => p.MENS_IN_TIPO == 1).SelectMany(p => p.MENSAGENS_DESTINOS).ToList().Count;
+            Int32 emailMes = lm.Where(p => p.MENS_IN_TIPO == 1).SelectMany(p => p.MENSAGENS_DESTINOS).ToList().Count;
+
             // Estatisticas Mensagens
             ViewBag.Total = lt.Count;
-            ViewBag.TotalEnviado = le.Count;
-            ViewBag.TotalMes = lm.Count;
-            ViewBag.SMSEnviado = le.Where(p => p.MENS_IN_TIPO == 2).ToList().Count;
-            ViewBag.EmailsEnviado = le.Where(p => p.MENS_IN_TIPO == 1).ToList().Count;
-            ViewBag.SMSMes = lm.Where(p => p.MENS_IN_TIPO == 2).ToList().Count;
-            ViewBag.EmailsMes = lm.Where(p => p.MENS_IN_TIPO == 1).ToList().Count;
+            ViewBag.TotalEnviado = tot;
+            ViewBag.TotalMes = totMes;
+            ViewBag.SMSEnviado = smsTot;
+            ViewBag.EmailsEnviado = emailTot;
+            ViewBag.SMSMes = smsMes;
+            ViewBag.EmailsMes = emailMes;
             ViewBag.Falhas = lt.Where(p => p.MENS_TX_RETORNO != null).ToList().Count;
             ViewBag.FalhasMes = lm.Where(p => p.MENS_TX_RETORNO != null).ToList().Count;
             ViewBag.Clientes = cli.Count;
@@ -2763,7 +2810,7 @@ namespace ERP_CRM_Solution.Controllers
             List<ModeloViewModel> lista = new List<ModeloViewModel>();
             foreach (DateTime item in datas)
             {
-                Int32 conta = lme.Where(p => p.MENS_DT_ENVIO.Value.Date == item).Count();
+                Int32 conta = lme.Where(p => p.MENS_DT_ENVIO.Value.Date == item).SelectMany(p => p.MENSAGENS_DESTINOS).Count();
                 ModeloViewModel mod = new ModeloViewModel();
                 mod.DataEmissao = item;
                 mod.Valor = conta;
@@ -2771,6 +2818,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             ViewBag.ListaEMailMes = lista;
             ViewBag.ContaEMailMes = lme.Count;
+
             Session["ListaEMail"] = lme;
             Session["ListaDatasEMail"] = datas;
 
@@ -2780,7 +2828,7 @@ namespace ERP_CRM_Solution.Controllers
             List<ModeloViewModel> lista1 = new List<ModeloViewModel>();
             foreach (DateTime item in datas1)
             {
-                Int32 conta = lms.Where(p => p.MENS_DT_ENVIO.Value.Date == item).Count();
+                Int32 conta = lms.Where(p => p.MENS_DT_ENVIO.Value.Date == item).SelectMany(p => p.MENSAGENS_DESTINOS).Count();
                 ModeloViewModel mod = new ModeloViewModel();
                 mod.DataEmissao = item;
                 mod.Valor = conta;
@@ -2921,8 +2969,7 @@ namespace ERP_CRM_Solution.Controllers
 
             foreach (DateTime item in datas)
             {
-                listaDia = listaCP1.Where(p => p.MENS_DT_ENVIO.Value.Date == item).ToList();
-                Int32 contaDia = listaDia.Count();
+                Int32 contaDia = listaCP1.Where(p => p.MENS_DT_ENVIO.Value.Date == item).SelectMany(p => p.MENSAGENS_DESTINOS).ToList().Count;
                 dias.Add(item.ToShortDateString());
                 valor.Add(contaDia);
             }

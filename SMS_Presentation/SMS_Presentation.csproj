@@ -1715,6 +1715,7 @@
     <Content Include="Images\icon_telefone.png" />
     <Content Include="Images\icon_unidade.png" />
     <Content Include="Images\icon_vaga.png" />
+    <Content Include="Images\Imagem_Teste.jpg" />
     <Content Include="Images\Kanban_CRM.png" />
     <Content Include="Images\landing\avatar1.jpg" />
     <Content Include="Images\landing\avatar2.jpg" />
@@ -3132,7 +3133,7 @@
     <Content Include="Views\Shared\_TopNavbar_Admin_Y.cshtml" />
     <Content Include="Views\BaseAdmin\CarregarBase.cshtml" />
     <Content Include="Views\BaseAdmin\CarregarDesenvolvimento.cshtml" />
-    <Content Include="Views\ControleAcesso\Login.cshtml" />
+    <Content Include="Views\ControleAcesso\Login_XXX.cshtml" />
     <Content Include="Views\ControleAcesso\TrocarSenha.cshtml" />
     <Content Include="Views\ControleAcesso\TrocarSenhaInicio.cshtml" />
     <Content Include="Views\ControleAcesso\GerarSenha.cshtml" />
@@ -3519,7 +3520,8 @@
     <Content Include="Views\TabelasAuxiliares\MontarTelaDepartamento.cshtml" />
     <Content Include="Views\TabelasAuxiliares\IncluirDepartamento.cshtml" />
     <Content Include="Views\TabelasAuxiliares\EditarDepartamento.cshtml" />
-    <Content Include="Views\ControleAcesso\Login - Cópia .cshtml" />
+    <Content Include="Views\ControleAcesso\Login.cshtml" />
+    <Content Include="Views\BaseAdmin\Contato.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

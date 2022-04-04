@@ -95,6 +95,11 @@ namespace ERP_CRM_Solution.Controllers
             return Json(hash);
         }
 
+        public ActionResult Contato()
+        {
+            return View();
+        }
+
         public ActionResult CarregarBase()
         {
             if ((String)Session["Ativa"] == null)
