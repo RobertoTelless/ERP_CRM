@@ -1178,6 +1178,8 @@
           <Property Name="FORE_TX_MENSAGEM" Type="text" />
           <Property Name="FORE_IN_ATIVO" Type="int" />
           <Property Name="FORE_IN_STATUS" Type="int" />
+          <Property Name="FORE_NM_CIDADE" Type="varchar" MaxLength="50" />
+          <Property Name="UF_CD_ID" Type="int" />
         </EntityType>
         <EntityType Name="FORNECEDOR">
           <Key>
@@ -4392,6 +4394,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FORMULARIO_RESPOSTA_UF">
+          <End Role="UF" Type="Self.UF" Multiplicity="0..1" />
+          <End Role="FORMULARIO_RESPOSTA" Type="Self.FORMULARIO_RESPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UF">
+              <PropertyRef Name="UF_CD_ID" />
+            </Principal>
+            <Dependent Role="FORMULARIO_RESPOSTA">
+              <PropertyRef Name="UF_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FORNECEDOR_ANEXO_FORNECEDOR">
           <End Role="FORNECEDOR" Type="Self.FORNECEDOR" Multiplicity="1" />
           <End Role="FORNECEDOR_ANEXO" Type="Self.FORNECEDOR_ANEXO" Multiplicity="*" />
@@ -7245,6 +7259,10 @@
             <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
             <End Role="FORMA_PAGAMENTO" EntitySet="FORMA_PAGAMENTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_FORMULARIO_RESPOSTA_UF" Association="Self.FK_FORMULARIO_RESPOSTA_UF">
+            <End Role="UF" EntitySet="UF" />
+            <End Role="FORMULARIO_RESPOSTA" EntitySet="FORMULARIO_RESPOSTA" />
+          </AssociationSet>
           <AssociationSet Name="FK_FORNECEDOR_ANEXO_FORNECEDOR" Association="Self.FK_FORNECEDOR_ANEXO_FORNECEDOR">
             <End Role="FORNECEDOR" EntitySet="FORNECEDOR" />
             <End Role="FORNECEDOR_ANEXO" EntitySet="FORNECEDOR_ANEXO" />
@@ -9291,6 +9309,9 @@
           <Property Name="FORE_TX_MENSAGEM" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="FORE_IN_ATIVO" Type="Int32" />
           <Property Name="FORE_IN_STATUS" Type="Int32" />
+          <Property Name="FORE_NM_CIDADE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UF_CD_ID" Type="Int32" />
+          <NavigationProperty Name="UF" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_UF" FromRole="FORMULARIO_RESPOSTA" ToRole="UF" />
         </EntityType>
         <EntityType Name="FORNECEDOR">
           <Key>
@@ -10819,6 +10840,7 @@
           <NavigationProperty Name="FILIAL" Relationship="Self.FK_FILIAL_UF" FromRole="UF" ToRole="FILIAL" />
           <NavigationProperty Name="FORNECEDOR" Relationship="Self.FK_FORNECEDOR_UF" FromRole="UF" ToRole="FORNECEDOR" />
           <NavigationProperty Name="TELEFONE" Relationship="Self.FK_TELEFONE_UF" FromRole="UF" ToRole="TELEFONE" />
+          <NavigationProperty Name="FORMULARIO_RESPOSTA" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_UF" FromRole="UF" ToRole="FORMULARIO_RESPOSTA" />
         </EntityType>
         <EntityType Name="UNIDADE">
           <Key>
@@ -16102,6 +16124,10 @@
             <End Role="PRODUTO" EntitySet="PRODUTO" />
             <End Role="CRM_COMERCIAL_ITEM" EntitySet="CRM_COMERCIAL_ITEM" />
           </AssociationSet>
+          <AssociationSet Name="FK_FORMULARIO_RESPOSTA_UF" Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_UF">
+            <End Role="UF" EntitySet="UF" />
+            <End Role="FORMULARIO_RESPOSTA" EntitySet="FORMULARIO_RESPOSTA" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ATENDIMENTO_CRM">
           <Key>
@@ -16526,6 +16552,18 @@
             </Principal>
             <Dependent Role="CRM_COMERCIAL_ITEM">
               <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FORMULARIO_RESPOSTA_UF">
+          <End Type="ERP_CRMModel.UF" Role="UF" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.FORMULARIO_RESPOSTA" Role="FORMULARIO_RESPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UF">
+              <PropertyRef Name="UF_CD_ID" />
+            </Principal>
+            <Dependent Role="FORMULARIO_RESPOSTA">
+              <PropertyRef Name="UF_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -17629,6 +17667,8 @@
           <EntitySetMapping Name="FORMULARIO_RESPOSTA">
             <EntityTypeMapping TypeName="ERP_CRMModel.FORMULARIO_RESPOSTA">
               <MappingFragment StoreEntitySet="FORMULARIO_RESPOSTA">
+                <ScalarProperty Name="UF_CD_ID" ColumnName="UF_CD_ID" />
+                <ScalarProperty Name="FORE_NM_CIDADE" ColumnName="FORE_NM_CIDADE" />
                 <ScalarProperty Name="FORE_CD_ID" ColumnName="FORE_CD_ID" />
                 <ScalarProperty Name="FORE_DT_CADASTRO" ColumnName="FORE_DT_CADASTRO" />
                 <ScalarProperty Name="FORE_NM_NOME" ColumnName="FORE_NM_NOME" />

@@ -23,6 +23,7 @@ namespace EntitiesServices.Model
             this.FILIAL = new HashSet<FILIAL>();
             this.FORNECEDOR = new HashSet<FORNECEDOR>();
             this.TELEFONE = new HashSet<TELEFONE>();
+            this.FORMULARIO_RESPOSTA = new HashSet<FORMULARIO_RESPOSTA>();
         }
     
         public int UF_CD_ID { get; set; }
@@ -42,5 +43,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<FORNECEDOR> FORNECEDOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TELEFONE> TELEFONE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FORMULARIO_RESPOSTA> FORMULARIO_RESPOSTA { get; set; }
     }
 }

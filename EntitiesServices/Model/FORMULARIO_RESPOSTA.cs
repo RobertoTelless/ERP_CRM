@@ -33,5 +33,9 @@ namespace EntitiesServices.Model
         public string FORE_TX_MENSAGEM { get; set; }
         public Nullable<int> FORE_IN_ATIVO { get; set; }
         public Nullable<int> FORE_IN_STATUS { get; set; }
+        public string FORE_NM_CIDADE { get; set; }
+        public Nullable<int> UF_CD_ID { get; set; }
+    
+        public virtual UF UF { get; set; }
     }
 }

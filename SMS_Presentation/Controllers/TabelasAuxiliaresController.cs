@@ -51,6 +51,8 @@ namespace ERP_CRM_Solution.Controllers
         private readonly ISubgrupoAppService sgApp;
         private readonly ICategoriaAtendimentoAppService catApp;
         private readonly IDepartamentoAppService depApp;
+        private readonly ICategoriaServicoAppService serApp;
+        private readonly ICategoriaOrdemServicoAppService osApp;
 
         private String msg;
         private Exception exception;
@@ -103,8 +105,14 @@ namespace ERP_CRM_Solution.Controllers
         DEPARTAMENTO objetoDEP = new DEPARTAMENTO();
         DEPARTAMENTO objetoDEPAntes = new DEPARTAMENTO();
         List<DEPARTAMENTO> listaMasterDEP = new List<DEPARTAMENTO>();
+        CATEGORIA_SERVICO objetoSER = new CATEGORIA_SERVICO();
+        CATEGORIA_SERVICO objetoSERAntes = new CATEGORIA_SERVICO();
+        List<CATEGORIA_SERVICO> listaMasterSER = new List<CATEGORIA_SERVICO>();
+        CATEGORIA_ORDEM_SERVICO objetoOS = new CATEGORIA_ORDEM_SERVICO();
+        CATEGORIA_ORDEM_SERVICO objetoOSAntes = new CATEGORIA_ORDEM_SERVICO();
+        List<CATEGORIA_ORDEM_SERVICO> listaMasterOS = new List<CATEGORIA_ORDEM_SERVICO>();
 
-        public TabelasAuxiliaresController(ICategoriaClienteAppService ccApps, ICargoAppService caApps, ICRMOrigemAppService orApps, IMotivoCancelamentoAppService mcApps, IMotivoEncerramentoAppService meApps, ITipoAcaoAppService taApps, ICategoriaFornecedorAppService cfApps, ICategoriaEquipamentoAppService ceApps, ICategoriaProdutoAppService cpApps, ISubcategoriaProdutoAppService spApps, ITamanhoAppService tamApps, IUnidadeAppService unApps, IGrupoCCAppService grApps, ISubgrupoAppService sgApps, ICategoriaAtendimentoAppService catApps, IDepartamentoAppService depApps)
+        public TabelasAuxiliaresController(ICategoriaClienteAppService ccApps, ICargoAppService caApps, ICRMOrigemAppService orApps, IMotivoCancelamentoAppService mcApps, IMotivoEncerramentoAppService meApps, ITipoAcaoAppService taApps, ICategoriaFornecedorAppService cfApps, ICategoriaEquipamentoAppService ceApps, ICategoriaProdutoAppService cpApps, ISubcategoriaProdutoAppService spApps, ITamanhoAppService tamApps, IUnidadeAppService unApps, IGrupoCCAppService grApps, ISubgrupoAppService sgApps, ICategoriaAtendimentoAppService catApps, IDepartamentoAppService depApps, ICategoriaOrdemServicoAppService osApps, ICategoriaServicoAppService serApps)
         {
             ccApp = ccApps;
             caApp = caApps;
@@ -122,6 +130,8 @@ namespace ERP_CRM_Solution.Controllers
             sgApp = sgApps;
             catApp = catApps;
             depApp = depApps;
+            osApp = osApps;
+            serApp = serApps;
         }
 
         [HttpGet]
@@ -5517,7 +5527,661 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("MontarTelaDepartamento");
         }
 
+        [HttpGet]
+        public ActionResult MontarTelaCatServico()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
 
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+
+            // Carrega listas
+            if ((List<CATEGORIA_SERVICO>)Session["ListaCatServico"] == null)
+            {
+                listaMasterSER = serApp.GetAllItens(idAss);
+                Session["ListaCatServico"] = listaMasterSER;
+            }
+            ViewBag.Listas = (List<CATEGORIA_SERVICO>)Session["ListaCatServico"];
+            Session["CatServico"] = null;
+
+            // Indicadores
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
+            if (Session["MensCatServico"] != null)
+            {
+                if ((Int32)Session["MensCatServico"] == 2)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCatServico"] == 3)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0066", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCatServico"] == 4)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0069", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // Abre view
+            Session["VoltaCatServico"] = 1;
+            objetoSER = new CATEGORIA_SERVICO();
+            return View(objetoSER);
+        }
+
+        public ActionResult RetirarFiltroCatServico()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Session["ListaCatServico"] = null;
+            return RedirectToAction("MontarTelaCatServico");
+        }
+
+        public ActionResult MostrarTudoCatServico()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            listaMasterSER = serApp.GetAllItensAdm(idAss);
+            Session["ListaCatServico"] = listaMasterSER;
+            return RedirectToAction("MontarTelaCatServico");
+        }
+
+        public ActionResult VoltarBaseCatServico()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            return RedirectToAction("MontarTelaCatServico");
+        }
+
+        [HttpGet]
+        public ActionResult IncluirCatServico()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensCatServico"] = 2;
+                    return RedirectToAction("MontarTelaCatServico");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara listas
+
+            // Prepara view
+            CATEGORIA_SERVICO item = new CATEGORIA_SERVICO();
+            CategoriaServicoViewModel vm = Mapper.Map<CATEGORIA_SERVICO, CategoriaServicoViewModel>(item);
+            vm.ASSI_CD_ID = idAss;
+            vm.CASE_IN_ATIVO = 1;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult IncluirCatServico(CategoriaServicoViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CATEGORIA_SERVICO item = Mapper.Map<CategoriaServicoViewModel, CATEGORIA_SERVICO>(vm);
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = serApp.ValidateCreate(item, usuario);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensCatServico"] = 3;
+                        return RedirectToAction("MontarTelaCatServico");
+                    }
+
+                    // Sucesso
+                    listaMasterSER = new List<CATEGORIA_SERVICO>();
+                    Session["ListaCatServico"] = null;
+                    Session["IdCatServico"] = item.CASE_CD_ID;
+                    return RedirectToAction("MontarTelaCatServico");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditarCatServico(Int32 id)
+        {
+
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensCatServico"] = 2;
+                    return RedirectToAction("MontarTelaCatServico");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            CATEGORIA_SERVICO item = serApp.GetItemById(id);
+            Session["CatServico"] = item;
+
+            // Indicadores
+
+            // Mensagens
+            if (Session["MensCatServico"] != null)
+            {
+
+
+            }
+
+            objetoSERAntes = item;
+            Session["IdCatServico"] = id;
+            CategoriaServicoViewModel vm = Mapper.Map<CATEGORIA_SERVICO, CategoriaServicoViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult EditarCatServico(CategoriaServicoViewModel vm)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    CATEGORIA_SERVICO item = Mapper.Map<CategoriaServicoViewModel, CATEGORIA_SERVICO>(vm);
+                    Int32 volta = serApp.ValidateEdit(item, objetoSERAntes, usuario);
+
+                    // Verifica retorno
+
+                    // Sucesso
+                    listaMasterSER = new List<CATEGORIA_SERVICO>();
+                    Session["ListaCatServico"] = null;
+                    return RedirectToAction("MontarTelaCatServico");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        public ActionResult VoltarAnexoCatServico()
+        {
+
+            return RedirectToAction("EditarCatServico", new { id = (Int32)Session["IdCatServico"] });
+        }
+
+        [HttpGet]
+        public ActionResult ExcluirCatServico(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensCatServico"] = 2;
+                    return RedirectToAction("MontarTelaCatServico");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            CATEGORIA_SERVICO item = serApp.GetItemById(id);
+            objetoSERAntes = (CATEGORIA_SERVICO)Session["CatServico"];
+            item.CASE_IN_ATIVO = 0;
+            Int32 volta = serApp.ValidateDelete(item, usuario);
+            if (volta == 1)
+            {
+                Session["MensCatServico"] = 4;
+                return RedirectToAction("MontarTelaCatServico");
+            }
+            Session["ListaCatServico"] = null;
+            return RedirectToAction("MontarTelaCatServico");
+        }
+
+        [HttpGet]
+        public ActionResult ReativarCatServico(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensCatServico"] = 2;
+                    return RedirectToAction("MontarTelaCatServico");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            CATEGORIA_SERVICO item = serApp.GetItemById(id);
+            objetoSERAntes = (CATEGORIA_SERVICO)Session["CatServico"];
+            item.CASE_IN_ATIVO = 1;
+            Int32 volta = serApp.ValidateReativar(item, usuario);
+            Session["ListaCatServico"] = null;
+            return RedirectToAction("MontarTelaCatServico");
+        }
+
+        [HttpGet]
+        public ActionResult MontarTelaCatOS()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+
+            // Carrega listas
+            if ((List<CATEGORIA_ORDEM_SERVICO>)Session["ListaCatOS"] == null)
+            {
+                listaMasterOS= osApp.GetAllItens(idAss);
+                Session["ListaCatOS"] = listaMasterOS;
+            }
+            ViewBag.Listas = (List<CATEGORIA_ORDEM_SERVICO>)Session["ListaCatOS"];
+            Session["CatOS"] = null;
+
+            // Indicadores
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
+            if (Session["MensCatOS"] != null)
+            {
+                if ((Int32)Session["MensCatOS"] == 2)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCatOS"] == 3)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0066", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCatOS"] == 4)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0069", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // Abre view
+            Session["VoltaCatOS"] = 1;
+            objetoOS= new CATEGORIA_ORDEM_SERVICO();
+            return View(objetoOS);
+        }
+
+        public ActionResult RetirarFiltroCatOS()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Session["ListaCatOS"] = null;
+            return RedirectToAction("MontarTelaCatOS");
+        }
+
+        public ActionResult MostrarTudoCatOS()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            listaMasterOS = osApp.GetAllItensAdm(idAss);
+            Session["ListaCatOS"] = listaMasterOS;
+            return RedirectToAction("MontarTelaCatOS");
+        }
+
+        public ActionResult VoltarBaseCatOS()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            return RedirectToAction("MontarTelaCatOS");
+        }
+
+        [HttpGet]
+        public ActionResult IncluirCatOS()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensCatOS"] = 2;
+                    return RedirectToAction("MontarTelaCatOS");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara listas
+
+            // Prepara view
+            CATEGORIA_ORDEM_SERVICO item = new CATEGORIA_ORDEM_SERVICO();
+            CategoriaOrdemServicoViewModel vm = Mapper.Map<CATEGORIA_ORDEM_SERVICO, CategoriaOrdemServicoViewModel>(item);
+            vm.ASSI_CD_ID = idAss;
+            vm.CAOS_IN_ATIVO = 1;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult IncluirCatOS(CategoriaOrdemServicoViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CATEGORIA_ORDEM_SERVICO item = Mapper.Map<CategoriaOrdemServicoViewModel, CATEGORIA_ORDEM_SERVICO>(vm);
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = osApp.ValidateCreate(item, usuario);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensCatOS"] = 3;
+                        return RedirectToAction("MontarTelaCatOS");
+                    }
+
+                    // Sucesso
+                    listaMasterOS= new List<CATEGORIA_ORDEM_SERVICO>();
+                    Session["ListaCatOS"] = null;
+                    Session["IdCatOS"] = item.CAOS_CD_ID;
+                    return RedirectToAction("MontarTelaCatOS");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditarCatOS(Int32 id)
+        {
+
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensCatOS"] = 2;
+                    return RedirectToAction("MontarTelaCatOS");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            CATEGORIA_ORDEM_SERVICO item = osApp.GetItemById(id);
+            Session["CatOS"] = item;
+
+            // Indicadores
+
+            // Mensagens
+            if (Session["MensCatOS"] != null)
+            {
+
+
+            }
+
+            objetoOSAntes = item;
+            Session["IdCatOS"] = id;
+            CategoriaOrdemServicoViewModel vm = Mapper.Map<CATEGORIA_ORDEM_SERVICO, CategoriaOrdemServicoViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult EditarCatOS(CategoriaOrdemServicoViewModel vm)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    CATEGORIA_ORDEM_SERVICO item = Mapper.Map<CategoriaOrdemServicoViewModel, CATEGORIA_ORDEM_SERVICO>(vm);
+                    Int32 volta = osApp.ValidateEdit(item, objetoOSAntes, usuario);
+
+                    // Verifica retorno
+
+                    // Sucesso
+                    listaMasterOS = new List<CATEGORIA_ORDEM_SERVICO>();
+                    Session["ListaCatOS"] = null;
+                    return RedirectToAction("MontarTelaCatOS");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        public ActionResult VoltarAnexoCatOS()
+        {
+
+            return RedirectToAction("EditarCatOS", new { id = (Int32)Session["IdCatOS"] });
+        }
+
+        [HttpGet]
+        public ActionResult ExcluirCatOS(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensCatOS"] = 2;
+                    return RedirectToAction("MontarTelaCatOS");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            CATEGORIA_ORDEM_SERVICO item = osApp.GetItemById(id);
+            objetoOSAntes = (CATEGORIA_ORDEM_SERVICO)Session["CatOS"];
+            item.CAOS_IN_ATIVO = 0;
+            Int32 volta = osApp.ValidateDelete(item, usuario);
+            if (volta == 1)
+            {
+                Session["MensCatOS"] = 4;
+                return RedirectToAction("MontarTelaCatOS");
+            }
+            Session["ListaCatOS"] = null;
+            return RedirectToAction("MontarTelaCatOS");
+        }
+
+        [HttpGet]
+        public ActionResult ReativarCatOS(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                {
+                    Session["MensCatOS"] = 2;
+                    return RedirectToAction("MontarTelaCatOS");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            CATEGORIA_ORDEM_SERVICO item = osApp.GetItemById(id);
+            objetoOSAntes = (CATEGORIA_ORDEM_SERVICO)Session["CatOS"];
+            item.CAOS_IN_ATIVO = 1;
+            Int32 volta = osApp.ValidateReativar(item, usuario);
+            Session["ListaCatOS"] = null;
+            return RedirectToAction("MontarTelaCatOS");
+        }
 
 
 

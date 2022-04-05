@@ -140,6 +140,7 @@ namespace Presentation.Start
             kernel.Bind<IOrdemServicoServicoAppService>().To<OrdemServicoServicoAppService>();
             kernel.Bind<ICategoriaOrdemServicoAppService>().To<CategoriaOrdemServicoAppService>();
             kernel.Bind<ICRMComercialAppService>().To<CRMComercialAppService>();
+            kernel.Bind<IFormularioRespostaAppService>().To<FormularioRespostaAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -216,6 +217,7 @@ namespace Presentation.Start
             kernel.Bind<ICategoriaOrdemServicoService>().To<CategoriaOrdemServicoService>();
             kernel.Bind<IOrdemServicoService>().To<OrdemServicoService>();
             kernel.Bind<ICRMComercialService>().To<CRMComercialService>();
+            kernel.Bind<IFormularioRespostaService>().To<FormularioRespostaService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -350,6 +352,7 @@ namespace Presentation.Start
             kernel.Bind<ICRMComercialContatoRepository>().To<CRMComercialContatoRepository>();
             kernel.Bind<ICRMComercialItemRepository>().To<CRMComercialItemRepository>();
             kernel.Bind<ICRMComercialRepository>().To<CRMComercialRepository>();
+            kernel.Bind<IFormularioRespostaRepository>().To<FormularioRespostaRepository>();
 
         }
     }

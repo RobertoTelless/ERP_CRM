@@ -183,6 +183,7 @@
     <Compile Include="Repositories\CategoriaOrdemServicoRepository.cs" />
     <Compile Include="Repositories\CategoriaProdutoRepository.cs" />
     <Compile Include="Repositories\CategoriaServicoRepository.cs" />
+    <Compile Include="Repositories\FormularioRespostaRepository.cs" />
     <Compile Include="Repositories\ContaPagarAnexoRepository.cs" />
     <Compile Include="Repositories\ContaPagarParcelaRepository.cs" />
     <Compile Include="Repositories\ContaPagarRateioRepository.cs" />

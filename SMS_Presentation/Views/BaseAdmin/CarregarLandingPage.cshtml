@@ -45,7 +45,7 @@
                         <li><a class="page-scroll" href="#pricing">Planos & Preços</a></li>
                         <li><a class="page-scroll" href="#contact">Contato</a></li>
                         <li><a class="page-scroll" style="color: darkkhaki" onclick="location.href='@Url.Action("Login", "ControleAcesso")'">Login</a></li>
-                        <li><a class="page-scroll" style="color: limegreen" onclick="location.href='@Url.Action("Contato", "BaseAdmin")'">Contato</a></li>
+                        <li><a class="page-scroll" style="color: limegreen" onclick="location.href='@Url.Action("IncluirContato", "BaseAdmin")'">Contato</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,6 +55,8 @@
         <ol class="carousel-indicators">
             <li data-target="#inSlider" data-slide-to="0" class="active"></li>
             <li data-target="#inSlider" data-slide-to="1"></li>
+            <li data-target="#inSlider" data-slide-to="2"></li>
+            <li data-target="#inSlider" data-slide-to="3"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
             <div class="item active">
@@ -72,7 +74,7 @@
                         </p>
                     </div>
                     <div class="carousel-image wow zoomIn">
-                        <img src="~/Images/Dash_principal.png" alt="prin" />
+                        <img src="~/Images/Dash_principal.png" style="width: 600px; height: 300px; max-height: 400px; max-width: 800px;" alt="prin" />
                     </div>
                 </div>
                 <!-- Set background for slide in css -->
@@ -87,12 +89,44 @@
                         <p><a class="btn btn-lg btn-primary" href="#features" role="button">Leia mais</a></p>
                     </div>
                     <div class="carousel-image wow zoomIn">
-                        <img src="~/Images/Dash_financeiro.png" alt="fin" />
+                        <img src="~/Images/Dash_financeiro.png" style="width: 600px; height: 300px; max-height: 800px; max-width: 800px;" alt="fin" />
                     </div>
-                </div>
+                </div> 
                 <!-- Set background for slide in css -->
                 <div class="header-back two"></div>
             </div>
+
+            <div class="item">
+                <div class="container">
+                    <div class="carousel-caption blank">
+                        <h1>ERPSys<br /> Tenha controle total sobre<br/>as atividades de sua empresa.</h1>
+                        <p>Sua empresa na tela de seu dispositivo</p>
+                        <p><a class="btn btn-lg btn-primary" href="#features" role="button">Leia mais</a></p>
+                    </div>
+                    <div class="carousel-image wow zoomIn">
+                        <img src="~/Images/Tela_Kanban.jpg" style="width: 600px; height: 300px; max-height: 800px; max-width: 800px;" alt="kan" />
+                    </div>
+                </div>
+                <!-- Set background for slide in css -->
+                <div class="header-back three"></div>
+            </div>
+
+            <div class="item">
+                <div class="container">
+                    <div class="carousel-caption blank">
+                        <h1>ERPSys<br /> Tenha controle total sobre<br/>as atividades de sua empresa.</h1>
+                        <p>Sua empresa na tela de seu dispositivo</p>
+                        <p><a class="btn btn-lg btn-primary" href="#features" role="button">Leia mais</a></p>
+                    </div>
+                    <div class="carousel-image wow zoomIn">
+                        <img src="~/Images/Tela_SD.jpg" style="width: 600px; height: 300px; max-height: 800px; max-width: 800px;" alt="fin" />
+                    </div>
+                </div>
+                <!-- Set background for slide in css -->
+                <div class="header-back four"></div>
+            </div>
+
+
         </div>
         <a class="left carousel-control" href="#inSlider" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -221,7 +255,7 @@
                 <a href="" class="btn btn-primary">Leia Mais</a>
             </div>
             <div class="col-lg-6 text-right wow fadeInRight">
-                <img src="~/Images/landing/dashboard.png" alt="dashboard" class="img-responsive pull-right">
+                <img src="~/Images/Tela_Kanban.jpg" alt="dashboard" class="img-responsive pull-right">
             </div>
         </div>
     </section>
@@ -256,27 +290,9 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="team-member wow zoomIn">
-                        <img src="~/Images/FotoOficial.jpg" class="img-responsive img-circle" alt="">
+                        <img src="~/Imagens/Base\FotoOficial_2.jpeg" class="img-responsive img-circle img-small" alt="">
                         <h4><span class="navy">Roberto</span> Telles</h4>
                         <p>Texto falando bem do Roberto.</p>
-                        <ul class="list-inline social-icon">
-                            <li>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-4 wow fadeInRight">
-                    <div class="team-member">
-                        <img src="~/Images/teste.png" class="img-responsive img-circle img-small" alt="">
-                        <h4><span class="navy">Thomas</span> Mitt</h4>
-                        <p>Texto falando mal do Thomas.</p>
                         <ul class="list-inline social-icon">
                             <li>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
@@ -324,7 +340,7 @@
                                     Lançamento e disponibilização da versão preliminar do ERPSys.
                                 </p>
                                 <a href="#" class="btn btn-xs btn-primary"> Mais...</a>
-                                <span class="vertical-date"> 6a Feira <br /> <small>18 de Fevereiro, 2022</small> </span>
+                                <span class="vertical-date"> 6a Feira <br /> <small>15 de Abril, 2022</small> </span>
                             </div>
                         </div>
 
@@ -337,7 +353,7 @@
                                 <h2>Módulos XXXXXXX</h2>
                                 <p>Texto descrevendo os módulos disponibilizados</p>
                                 <a href="#" class="btn btn-xs btn-primary"> Mais...</a>
-                                <span class="vertical-date"> 6a Feira <br /> <small>15 de Março, 2022</small> </span>
+                                <span class="vertical-date"> 6a Feira <br /> <small>30 de abril, 2022</small> </span>
                             </div>
                         </div>
 
@@ -350,7 +366,7 @@
                                 <h2>Módulos YYYYYYYY</h2>
                                 <p>Texto descrevendo os módulos disponibilizados </p>
                                 <a href="#" class="btn btn-xs btn-primary"> Mais...</a>
-                                <span class="vertical-date"> 2a Feira <br /> <small>1 de Abril, 2022</small> </span>
+                                <span class="vertical-date"> 2a Feira <br /> <small>15 de maio, 2022</small> </span>
                             </div>
                         </div>
                     </div>

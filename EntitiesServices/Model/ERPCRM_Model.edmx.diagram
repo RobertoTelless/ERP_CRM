@@ -492,6 +492,7 @@
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_USUARIO1" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_COMENTARIO_NOVA_USUARIO" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_PRODUTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_UF" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

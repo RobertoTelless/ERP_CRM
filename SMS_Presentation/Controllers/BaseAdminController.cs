@@ -30,6 +30,7 @@ namespace ERP_CRM_Solution.Controllers
         private readonly ITipoPessoaAppService tpApp;
         //private readonly IClienteAppService cliApp;
         private readonly ITelefoneAppService telApp;
+        private readonly IFormularioRespostaAppService frApp;
 
         private String msg;
         private Exception exception;
@@ -37,7 +38,7 @@ namespace ERP_CRM_Solution.Controllers
         USUARIO objetoAntes = new USUARIO();
         List<USUARIO> listaMaster = new List<USUARIO>();
 
-        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, ITelefoneAppService telApps)
+        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, ITelefoneAppService telApps, IFormularioRespostaAppService frApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -50,6 +51,7 @@ namespace ERP_CRM_Solution.Controllers
             tpApp = tpApps;
             telApp = telApps;
             //cliApp = cliApps;
+            frApp = frApps;
         }
 
         public ActionResult CarregarAdmin()
@@ -95,9 +97,45 @@ namespace ERP_CRM_Solution.Controllers
             return Json(hash);
         }
 
-        public ActionResult Contato()
+        [HttpGet]
+        public ActionResult IncluirContato()
         {
-            return View();
+            // Prepara view
+            ViewBag.UF = new SelectList(frApp.GetAllUF(), "UF_CD_ID", "UF_SG_SIGLA");
+            FORMULARIO_RESPOSTA item = new FORMULARIO_RESPOSTA();
+            FormularioRespostaViewModel vm = Mapper.Map<FORMULARIO_RESPOSTA, FormularioRespostaViewModel>(item);
+            vm.FORE_IN_ATIVO = 1;
+            vm.FORE_IN_STATUS = 1;
+            vm.FORE_DT_CADASTRO = DateTime.Today.Date;
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult IncluirContato(FormularioRespostaViewModel vm)
+        {
+            ViewBag.UF = new SelectList(frApp.GetAllUF(), "UF_CD_ID", "UF_SG_SIGLA");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    FORMULARIO_RESPOSTA item = Mapper.Map<FormularioRespostaViewModel, FORMULARIO_RESPOSTA>(vm);
+                    Int32 volta = frApp.ValidateCreate(item);
+                    
+                    // Verifica retorno
+                    return RedirectToAction("CarregarLandingPage");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
         }
 
         public ActionResult CarregarBase()

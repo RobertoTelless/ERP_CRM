@@ -97,6 +97,8 @@ namespace MvcMapping.Mappers
             CreateMap<CRMContatoViewModel, CRM_COMERCIAL_CONTATO>();
             CreateMap<CRMComercialComentarioViewModel, CRM_COMERCIAL_COMENTARIO_NOVA>();
             CreateMap<CategoriaAtendimentoViewModel, CATEGORIA_ATENDIMENTO>();
+            CreateMap<CategoriaOrdemServicoViewModel, CATEGORIA_ORDEM_SERVICO>();
+            CreateMap<FormularioRespostaViewModel, FORMULARIO_RESPOSTA>();
 
         }
     }

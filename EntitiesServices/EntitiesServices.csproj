@@ -190,6 +190,7 @@
     <Compile Include="EntitiesServices\CategoriaProdutoService.cs" />
     <Compile Include="EntitiesServices\CategoriaServicoService.cs" />
     <Compile Include="EntitiesServices\CentroCustoService.cs" />
+    <Compile Include="EntitiesServices\FormularioRespostaService.cs" />
     <Compile Include="EntitiesServices\ContaBancariaService.cs" />
     <Compile Include="EntitiesServices\ContaPagarParcelaService.cs" />
     <Compile Include="EntitiesServices\ContaPagarRateioService.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="Interfaces\EntitiesServices\ICategoriaProdutoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaServicoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICentroCustoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IFormularioRespostaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaBancariaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaPagarParcelaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaPagarRateioService.cs" />
@@ -359,6 +361,7 @@
     <Compile Include="Interfaces\Repositories\ICRMComercialContatoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMComercialRepository.cs" />
     <Compile Include="Interfaces\Repositories\IDepartamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFormularioRespostaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoCCRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />

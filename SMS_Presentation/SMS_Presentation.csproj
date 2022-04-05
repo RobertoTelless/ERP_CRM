@@ -360,11 +360,13 @@
     <Compile Include="ViewModels\CategoriaAtendimentoViewModel.cs" />
     <Compile Include="ViewModels\CategoriaFornecedorViewModel.cs" />
     <Compile Include="ViewModels\CategoriaEquipamentoViewModel.cs" />
+    <Compile Include="ViewModels\CategoriaOrdemServicoViewModel.cs" />
     <Compile Include="ViewModels\CRMComercialComentarioViewModel.cs" />
     <Compile Include="ViewModels\CRMComercialAcaoViewModel.cs" />
     <Compile Include="ViewModels\CRMComercialContatoViewModel.cs" />
     <Compile Include="ViewModels\CRMComercialDTOViewModel.cs" />
     <Compile Include="ViewModels\CRMComercialViewModel.cs" />
+    <Compile Include="ViewModels\FormularioRespostaViewModel.cs" />
     <Compile Include="ViewModels\GrupoCCViewModel.cs" />
     <Compile Include="ViewModels\CategoriaProdutoViewModel.cs" />
     <Compile Include="ViewModels\DepartamentoViewModel.cs" />
@@ -1747,6 +1749,9 @@
     <Content Include="Images\p_big2.jpg" />
     <Content Include="Images\p_big3.jpg" />
     <Content Include="Images\qrcodebase.png" />
+    <Content Include="Images\Tela_Kanban.jpg" />
+    <Content Include="Images\Tela_SD.jpg" />
+    <Content Include="Images\teste_1.jpg" />
     <Content Include="Images\zender_logo.png" />
     <Content Include="PdfViewer\build\pdf.js" />
     <Content Include="PdfViewer\build\pdf.worker.js" />
@@ -3522,6 +3527,13 @@
     <Content Include="Views\TabelasAuxiliares\EditarDepartamento.cshtml" />
     <Content Include="Views\ControleAcesso\Login.cshtml" />
     <Content Include="Views\BaseAdmin\Contato.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaCatServico.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirCatServico.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarCatServico.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\MontarTelaCatOS.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\IncluirCatOS.cshtml" />
+    <Content Include="Views\TabelasAuxiliares\EditarCatOS.cshtml" />
+    <Content Include="Views\BaseAdmin\IncluirContato.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -181,6 +181,7 @@
     <Compile Include="Interfaces\ICategoriaProdutoAppService.cs" />
     <Compile Include="Interfaces\ICategoriaServicoAppService.cs" />
     <Compile Include="Interfaces\ICentroCustoAppService.cs" />
+    <Compile Include="Interfaces\IFormularioRespostaAppService.cs" />
     <Compile Include="Interfaces\IContaBancariaAppService.cs" />
     <Compile Include="Interfaces\IContaPagarAppService.cs" />
     <Compile Include="Interfaces\IContaPagarParcelaAppService.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="Services\CategoriaProdutoAppService.cs" />
     <Compile Include="Services\CategoriaServicoAppService.cs" />
     <Compile Include="Services\CentroCustoAppService.cs" />
+    <Compile Include="Services\FormularioRespostaAppService.cs" />
     <Compile Include="Services\ContaBancariaAppService.cs" />
     <Compile Include="Services\ContaPagarAppService.cs" />
     <Compile Include="Services\ContaPagarParcelaAppService.cs" />
