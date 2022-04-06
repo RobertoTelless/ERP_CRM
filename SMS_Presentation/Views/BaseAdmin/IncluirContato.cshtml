@@ -35,6 +35,10 @@
                                 <h5 style="color:green">Informe seus dados de contato e as informações que deseja</h5>
                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                     <div class="col-lg-6 col-md-6 col-xs-12">
+                                        @Html.HiddenFor(m => m.FORE_IN_ESTRELA)
+                                        @Html.HiddenFor(m => m.FORE_IN_ATIVO)
+                                        @Html.HiddenFor(m => m.FORE_DT_CADASTRO)
+                                        @Html.HiddenFor(m => m.FORE_IN_STATUS)
                                         Nome*
                                         @Html.TextBoxFor(m => m.FORE_NM_NOME, new { @class = "form-control", autofocus = true })
                                         @Html.ValidationMessageFor(m => m.FORE_NM_NOME, "", new { @style = "color:red" })

@@ -14,6 +14,14 @@ namespace EntitiesServices.Model
     
     public partial class FORMULARIO_RESPOSTA
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public FORMULARIO_RESPOSTA()
+        {
+            this.FORMULARIO_RESPOSTA_ACAO = new HashSet<FORMULARIO_RESPOSTA_ACAO>();
+            this.FORMULARIO_RESPOSTA_ANEXO = new HashSet<FORMULARIO_RESPOSTA_ANEXO>();
+            this.FORMULARIO_RESPOSTA_COMENTARIO = new HashSet<FORMULARIO_RESPOSTA_COMENTARIO>();
+        }
+    
         public int FORE_CD_ID { get; set; }
         public Nullable<System.DateTime> FORE_DT_CADASTRO { get; set; }
         public string FORE_NM_NOME { get; set; }
@@ -35,7 +43,20 @@ namespace EntitiesServices.Model
         public Nullable<int> FORE_IN_STATUS { get; set; }
         public string FORE_NM_CIDADE { get; set; }
         public Nullable<int> UF_CD_ID { get; set; }
+        public Nullable<int> USUA_CD_ID { get; set; }
+        public Nullable<System.DateTime> FORE_DT_CANCELAMENTO { get; set; }
+        public string FORE_DS_JUSTIFICATIVA_CANCELAMENTO { get; set; }
+        public Nullable<System.DateTime> FORE_DT_ENCERRAMENTO { get; set; }
+        public string FORE_DS_MOTIVO_ENCERRAMENTO { get; set; }
+        public Nullable<int> FORE_IN_ESTRELA { get; set; }
     
         public virtual UF UF { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FORMULARIO_RESPOSTA_ACAO> FORMULARIO_RESPOSTA_ACAO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FORMULARIO_RESPOSTA_ANEXO> FORMULARIO_RESPOSTA_ANEXO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FORMULARIO_RESPOSTA_COMENTARIO> FORMULARIO_RESPOSTA_COMENTARIO { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
     }
 }

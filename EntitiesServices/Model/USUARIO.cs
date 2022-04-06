@@ -58,6 +58,10 @@ namespace EntitiesServices.Model
             this.CRM_COMERCIAL_ACAO = new HashSet<CRM_COMERCIAL_ACAO>();
             this.CRM_COMERCIAL_ACAO1 = new HashSet<CRM_COMERCIAL_ACAO>();
             this.CRM_COMERCIAL_COMENTARIO_NOVA = new HashSet<CRM_COMERCIAL_COMENTARIO_NOVA>();
+            this.FORMULARIO_RESPOSTA = new HashSet<FORMULARIO_RESPOSTA>();
+            this.FORMULARIO_RESPOSTA_ACAO = new HashSet<FORMULARIO_RESPOSTA_ACAO>();
+            this.FORMULARIO_RESPOSTA_ACAO1 = new HashSet<FORMULARIO_RESPOSTA_ACAO>();
+            this.FORMULARIO_RESPOSTA_COMENTARIO = new HashSet<FORMULARIO_RESPOSTA_COMENTARIO>();
         }
     
         public int USUA_CD_ID { get; set; }
@@ -192,5 +196,13 @@ namespace EntitiesServices.Model
         public virtual ICollection<CRM_COMERCIAL_ACAO> CRM_COMERCIAL_ACAO1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_COMERCIAL_COMENTARIO_NOVA> CRM_COMERCIAL_COMENTARIO_NOVA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FORMULARIO_RESPOSTA> FORMULARIO_RESPOSTA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FORMULARIO_RESPOSTA_ACAO> FORMULARIO_RESPOSTA_ACAO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FORMULARIO_RESPOSTA_ACAO> FORMULARIO_RESPOSTA_ACAO1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FORMULARIO_RESPOSTA_COMENTARIO> FORMULARIO_RESPOSTA_COMENTARIO { get; set; }
     }
 }

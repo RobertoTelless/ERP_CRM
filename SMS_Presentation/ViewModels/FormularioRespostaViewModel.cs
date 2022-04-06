@@ -41,6 +41,12 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> FORE_IN_STATUS { get; set; }
         public string FORE_NM_CIDADE { get; set; }
         public Nullable<int> UF_CD_ID { get; set; }
+        public Nullable<int> USUA_CD_ID { get; set; }
+        public Nullable<System.DateTime> FORE_DT_CANCELAMENTO { get; set; }
+        public string FORE_DS_JUSTIFICATIVA_CANCELAMENTO { get; set; }
+        public Nullable<System.DateTime> FORE_DT_ENCERRAMENTO { get; set; }
+        public string FORE_DS_MOTIVO_ENCERRAMENTO { get; set; }
+        public Nullable<int> FORE_IN_ESTRELA { get; set; }
 
         public bool Mensageria
         {
@@ -164,6 +170,13 @@ namespace ERP_CRM_Solution.ViewModels
         }
 
         public virtual UF UF { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FORMULARIO_RESPOSTA_ACAO> FORMULARIO_RESPOSTA_ACAO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FORMULARIO_RESPOSTA_ANEXO> FORMULARIO_RESPOSTA_ANEXO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FORMULARIO_RESPOSTA_COMENTARIO> FORMULARIO_RESPOSTA_COMENTARIO { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
 
     }
 }

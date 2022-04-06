@@ -185,5 +185,8 @@ namespace EntitiesServices.Model
         public virtual DbSet<CRM_COMERCIAL_COMENTARIO_NOVA> CRM_COMERCIAL_COMENTARIO_NOVA { get; set; }
         public virtual DbSet<CRM_COMERCIAL_CONTATO> CRM_COMERCIAL_CONTATO { get; set; }
         public virtual DbSet<CRM_COMERCIAL_ITEM> CRM_COMERCIAL_ITEM { get; set; }
+        public virtual DbSet<FORMULARIO_RESPOSTA_ACAO> FORMULARIO_RESPOSTA_ACAO { get; set; }
+        public virtual DbSet<FORMULARIO_RESPOSTA_ANEXO> FORMULARIO_RESPOSTA_ANEXO { get; set; }
+        public virtual DbSet<FORMULARIO_RESPOSTA_COMENTARIO> FORMULARIO_RESPOSTA_COMENTARIO { get; set; }
     }
 }

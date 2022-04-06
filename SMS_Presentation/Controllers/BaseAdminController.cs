@@ -107,6 +107,7 @@ namespace ERP_CRM_Solution.Controllers
             vm.FORE_IN_ATIVO = 1;
             vm.FORE_IN_STATUS = 1;
             vm.FORE_DT_CADASTRO = DateTime.Today.Date;
+            vm.FORE_IN_ESTRELA = 0;
             return View(vm);
         }
 

@@ -493,6 +493,16 @@
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_COMENTARIO_NOVA_USUARIO" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_COMERCIAL_ITEM_PRODUTO" />
         <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_UF" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA_ACAO" Width="1.5" PointX="15.75" PointY="108.25" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA_ANEXO" Width="1.5" PointX="5" PointY="3" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA_COMENTARIO" Width="1.5" PointX="18.75" PointY="106.75" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_ACAO_FORMULARIO_RESPOSTA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_ANEXO_FORMULARIO_RESPOSTA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_COMENTARIO_FORMULARIO_RESPOSTA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_ACAO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_ACAO_USUARIO1" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_COMENTARIO_USUARIO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -701,6 +701,15 @@
     <Compile Include="Model\FORMULARIO_RESPOSTA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\FORMULARIO_RESPOSTA_ACAO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FORMULARIO_RESPOSTA_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FORMULARIO_RESPOSTA_COMENTARIO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\FORNECEDOR.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
