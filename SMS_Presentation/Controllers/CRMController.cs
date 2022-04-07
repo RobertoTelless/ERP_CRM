@@ -2271,7 +2271,7 @@ namespace ERP_CRM_Solution.Controllers
             CRM_ACAO acao = acoes.Where(p => p.CRAC_IN_STATUS == 1).FirstOrDefault();
             Session["Acoes"] = acoes;
             Session["CRM"] = item;
-            Session["VoltaCRM"] = 10;
+            Session["VoltaCRM"] = 11;
             ViewBag.Acoes = acoes;
             ViewBag.Acao = acao;
             return View(vm);

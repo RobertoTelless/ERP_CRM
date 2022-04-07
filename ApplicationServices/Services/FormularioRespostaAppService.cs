@@ -69,7 +69,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateCreate(FORMULARIO_RESPOSTA item)
+        public Int32 ValidateCreate(FORMULARIO_RESPOSTA item, Int32? tipo)
         {
             try
             {
@@ -80,44 +80,47 @@ namespace ApplicationServices.Services
                 // Persiste
                 Int32 volta = _baseService.Create(item);
 
-                // Envia e-mail de confirmação
-                CONFIGURACAO conf = _confService.GetAll().First();
-
-                // Recupera template
-                String header = _tempService.GetByCode("RESPFORM").TEMP_TX_CABECALHO;
-                String body = _tempService.GetByCode("RESPFORM").TEMP_TX_CORPO;
-                String footer = _tempService.GetByCode("RESPFORM").TEMP_TX_DADOS;
-
-                // Prepara campos
-                header = header.Replace("{nome}", item.FORE_NM_NOME);
-                body = body.Replace("{data}", DateTime.Today.ToLongDateString());
-                String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
-
-                // Monta e-mail
-                NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
-                Email mensagem = new Email();
-                mensagem.ASSUNTO = "Solicitação de Informações - ERPSys";
-                mensagem.CORPO = emailBody;
-                mensagem.DEFAULT_CREDENTIALS = false;
-                mensagem.EMAIL_DESTINO = item.FORE_NM_EMAIL;
-                mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
-                mensagem.ENABLE_SSL = true;
-                mensagem.NOME_EMISSOR = "ERPSys";
-                mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
-                mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
-                mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
-                mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
-                mensagem.IS_HTML = true;
-                mensagem.NETWORK_CREDENTIAL = net;
-
-                // Envia mensagem
-                try
+                if (tipo.Value == 1)
                 {
-                    Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
-                }
-                catch (Exception ex)
-                {
-                    String erro = ex.Message;
+                    // Envia e-mail de confirmação
+                    CONFIGURACAO conf = _confService.GetAll().First();
+
+                    // Recupera template
+                    String header = _tempService.GetByCode("RESPFORM").TEMP_TX_CABECALHO;
+                    String body = _tempService.GetByCode("RESPFORM").TEMP_TX_CORPO;
+                    String footer = _tempService.GetByCode("RESPFORM").TEMP_TX_DADOS;
+
+                    // Prepara campos
+                    header = header.Replace("{nome}", item.FORE_NM_NOME);
+                    body = body.Replace("{data}", DateTime.Today.ToLongDateString());
+                    String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = "Solicitação de Informações - ERPSys";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = item.FORE_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = "ERPSys";
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.IS_HTML = true;
+                    mensagem.NETWORK_CREDENTIAL = net;
+
+                    // Envia mensagem
+                    try
+                    {
+                        Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+                    }
+                    catch (Exception ex)
+                    {
+                        String erro = ex.Message;
+                    }
                 }
                 return volta;
             }
@@ -177,6 +180,61 @@ namespace ApplicationServices.Services
 
                 // Persiste
                 return _baseService.Edit(item);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public List<FORMULARIO_RESPOSTA_ACAO> GetAllAcoes()
+        {
+            List<FORMULARIO_RESPOSTA_ACAO> lista = _baseService.GetAllAcoes();
+            return lista;
+        }
+        public FORMULARIO_RESPOSTA_ANEXO GetAnexoById(Int32 id)
+        {
+            FORMULARIO_RESPOSTA_ANEXO lista = _baseService.GetAnexoById(id);
+            return lista;
+        }
+
+        public FORMULARIO_RESPOSTA_COMENTARIO GetComentarioById(Int32 id)
+        {
+            FORMULARIO_RESPOSTA_COMENTARIO lista = _baseService.GetComentarioById(id);
+            return lista;
+        }
+
+        public FORMULARIO_RESPOSTA_ACAO GetAcaoById(Int32 id)
+        {
+            FORMULARIO_RESPOSTA_ACAO lista = _baseService.GetAcaoById(id);
+            return lista;
+        }
+
+        public Int32 ValidateEditAcao(FORMULARIO_RESPOSTA_ACAO item)
+        {
+            try
+            {
+                // Persiste
+                return _baseService.EditAcao(item);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ValidateCreateAcao(FORMULARIO_RESPOSTA_ACAO item, USUARIO usuario)
+        {
+            try
+            {
+                item.FRAC_IN_ATIVO = 1;
+
+                // Recupera CRM
+                FORMULARIO_RESPOSTA crm = _baseService.GetItemById(item.FORE_CD_ID);
+
+                // Persiste
+                Int32 volta = _baseService.CreateAcao(item);
+                return volta;
             }
             catch (Exception ex)
             {

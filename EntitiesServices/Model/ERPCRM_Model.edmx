@@ -1186,6 +1186,7 @@
           <Property Name="FORE_DT_ENCERRAMENTO" Type="date" />
           <Property Name="FORE_DS_MOTIVO_ENCERRAMENTO" Type="varchar" MaxLength="500" />
           <Property Name="FORE_IN_ESTRELA" Type="int" />
+          <Property Name="FORE_NM_PROCESSO" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="FORMULARIO_RESPOSTA_ACAO">
           <Key>
@@ -9481,6 +9482,7 @@
           <NavigationProperty Name="FORMULARIO_RESPOSTA_ANEXO" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_ANEXO_FORMULARIO_RESPOSTA" FromRole="FORMULARIO_RESPOSTA" ToRole="FORMULARIO_RESPOSTA_ANEXO" />
           <NavigationProperty Name="FORMULARIO_RESPOSTA_COMENTARIO" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_COMENTARIO_FORMULARIO_RESPOSTA" FromRole="FORMULARIO_RESPOSTA" ToRole="FORMULARIO_RESPOSTA_COMENTARIO" />
           <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_USUARIO" FromRole="FORMULARIO_RESPOSTA" ToRole="USUARIO" />
+          <Property Name="FORE_NM_PROCESSO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="FORNECEDOR">
           <Key>
@@ -17999,6 +18001,7 @@
           <EntitySetMapping Name="FORMULARIO_RESPOSTA">
             <EntityTypeMapping TypeName="ERP_CRMModel.FORMULARIO_RESPOSTA">
               <MappingFragment StoreEntitySet="FORMULARIO_RESPOSTA">
+                <ScalarProperty Name="FORE_NM_PROCESSO" ColumnName="FORE_NM_PROCESSO" />
                 <ScalarProperty Name="FORE_IN_ESTRELA" ColumnName="FORE_IN_ESTRELA" />
                 <ScalarProperty Name="FORE_DS_MOTIVO_ENCERRAMENTO" ColumnName="FORE_DS_MOTIVO_ENCERRAMENTO" />
                 <ScalarProperty Name="FORE_DT_ENCERRAMENTO" ColumnName="FORE_DT_ENCERRAMENTO" />

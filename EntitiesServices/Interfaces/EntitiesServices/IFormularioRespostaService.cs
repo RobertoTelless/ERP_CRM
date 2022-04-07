@@ -22,5 +22,12 @@ namespace ModelServices.Interfaces.EntitiesServices
         UF GetUFbySigla(String sigla);
 
         List<FORMULARIO_RESPOSTA> ExecuteFilter(String nome, String email, String celular, String cidade, Int32? uf);
+        
+        List<FORMULARIO_RESPOSTA_ACAO> GetAllAcoes();
+        FORMULARIO_RESPOSTA_ANEXO GetAnexoById(Int32 id);
+        FORMULARIO_RESPOSTA_COMENTARIO GetComentarioById(Int32 id);
+        FORMULARIO_RESPOSTA_ACAO GetAcaoById(Int32 id);
+        Int32 EditAcao(FORMULARIO_RESPOSTA_ACAO item);
+        Int32 CreateAcao(FORMULARIO_RESPOSTA_ACAO item);
     }
 }

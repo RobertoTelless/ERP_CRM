@@ -47,6 +47,7 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<System.DateTime> FORE_DT_ENCERRAMENTO { get; set; }
         public string FORE_DS_MOTIVO_ENCERRAMENTO { get; set; }
         public Nullable<int> FORE_IN_ESTRELA { get; set; }
+        public string FORE_NM_PROCESSO { get; set; }
 
         public bool Mensageria
         {

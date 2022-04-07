@@ -9,7 +9,7 @@ namespace ApplicationServices.Interfaces
 {
     public interface IFormularioRespostaAppService : IAppServiceBase<FORMULARIO_RESPOSTA>
     {
-        Int32 ValidateCreate(FORMULARIO_RESPOSTA perfil);
+        Int32 ValidateCreate(FORMULARIO_RESPOSTA perfil, Int32 ? tipo);
         Int32 ValidateEdit(FORMULARIO_RESPOSTA perfil, FORMULARIO_RESPOSTA perfilAntes, USUARIO usuario);
         Int32 ValidateEdit(FORMULARIO_RESPOSTA item, FORMULARIO_RESPOSTA itemAntes);
         Int32 ValidateDelete(FORMULARIO_RESPOSTA perfil, USUARIO usuario);
@@ -21,5 +21,13 @@ namespace ApplicationServices.Interfaces
 
         List<UF> GetAllUF();
         UF GetUFbySigla(String sigla);
+
+        List<FORMULARIO_RESPOSTA_ACAO> GetAllAcoes();
+        FORMULARIO_RESPOSTA_ANEXO GetAnexoById(Int32 id);
+        FORMULARIO_RESPOSTA_COMENTARIO GetComentarioById(Int32 id);
+        FORMULARIO_RESPOSTA_ACAO GetAcaoById(Int32 id);
+        Int32 ValidateEditAcao(FORMULARIO_RESPOSTA_ACAO item);
+        Int32 ValidateCreateAcao(FORMULARIO_RESPOSTA_ACAO item, USUARIO usuario);
+
     }
 }

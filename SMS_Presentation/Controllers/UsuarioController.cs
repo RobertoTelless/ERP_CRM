@@ -342,7 +342,7 @@ namespace ERP_CRM_Solution.Controllers
             vm.USUA_IN_LOGADO = 0;
             vm.USUA_IN_LOGIN_PROVISORIO = 0;
             vm.USUA_IN_PROVISORIO = 0;
-            vm.USUA_IN_SISTEMA = 1;
+            vm.USUA_IN_SISTEMA = 0;
             vm.USUA_NR_ACESSOS = 0;
             vm.USUA_NR_FALHAS = 0;
             return View(vm);

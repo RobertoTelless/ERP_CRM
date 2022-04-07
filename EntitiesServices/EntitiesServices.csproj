@@ -355,6 +355,9 @@
     <Compile Include="Interfaces\Repositories\IContaReceberParcelaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaReceberRateioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaReceberRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFormularioRespostaComentarioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFormularioRespostaAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFormularioRespostaAcaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMComercialComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMComercialAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMComercialAcaoRepository.cs" />

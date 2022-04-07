@@ -53,6 +53,13 @@
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                     @Html.HiddenFor(m => m.USUA_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.USUA_IN_SISTEMA)
+                                                    @Html.HiddenFor(m => m.USUA_IN_BLOQUEADO)
+                                                    @Html.HiddenFor(m => m.USUA_IN_LOGADO)
+                                                    @Html.HiddenFor(m => m.USUA_IN_LOGIN_PROVISORIO)
+                                                    @Html.HiddenFor(m => m.USUA_IN_PROVISORIO)
+                                                    @Html.HiddenFor(m => m.USUA_NR_ACESSOS)
+                                                    @Html.HiddenFor(m => m.USUA_NR_FALHAS)
                                                     Perfil de Acesso*
                                                     @Html.DropDownListFor(m => m.PERF_CD_ID, (SelectList)ViewBag.Perfis, "Selecionar", new { @class = "form-control", autofocus = true, @style = "color:green; font-weight:bold"  })
                                                     @Html.ValidationMessageFor(m => m.PERF_CD_ID, "", new { @style = "color:red" })

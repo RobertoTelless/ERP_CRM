@@ -49,6 +49,7 @@ namespace EntitiesServices.Model
         public Nullable<System.DateTime> FORE_DT_ENCERRAMENTO { get; set; }
         public string FORE_DS_MOTIVO_ENCERRAMENTO { get; set; }
         public Nullable<int> FORE_IN_ESTRELA { get; set; }
+        public string FORE_NM_PROCESSO { get; set; }
     
         public virtual UF UF { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

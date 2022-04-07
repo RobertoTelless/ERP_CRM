@@ -99,6 +99,11 @@ namespace MvcMapping.Mappers
             CreateMap<CATEGORIA_ATENDIMENTO, CategoriaAtendimentoViewModel>();
             CreateMap<CATEGORIA_ORDEM_SERVICO, CategoriaOrdemServicoViewModel>();
             CreateMap<FORMULARIO_RESPOSTA, FormularioRespostaViewModel>();
+            CreateMap<FORMULARIO_RESPOSTA_COMENTARIO, FormularioRespostaComentarioViewModel>();
+            CreateMap<FORMULARIO_RESPOSTA_ACAO, FormularioRespostaAcaoViewModel>();
+
+
+
         }
     }
 }

@@ -362,6 +362,8 @@
     <Compile Include="ViewModels\CategoriaFornecedorViewModel.cs" />
     <Compile Include="ViewModels\CategoriaEquipamentoViewModel.cs" />
     <Compile Include="ViewModels\CategoriaOrdemServicoViewModel.cs" />
+    <Compile Include="ViewModels\FormularioRespostaAcaoViewModel.cs" />
+    <Compile Include="ViewModels\FormularioRespostaComentarioViewModel.cs" />
     <Compile Include="ViewModels\CRMComercialComentarioViewModel.cs" />
     <Compile Include="ViewModels\CRMComercialAcaoViewModel.cs" />
     <Compile Include="ViewModels\CRMComercialContatoViewModel.cs" />
@@ -3653,6 +3655,25 @@
     <Content Include="Views\Shared\_Layout_Limpo.cshtml" />
     <Content Include="Views\Shared\_Navigation_Limpo.cshtml" />
     <Content Include="Scripts\tinymce\langs\README.md" />
+    <Content Include="Views\BaseAdmin\MontarTelaCRMSolicitacao.cshtml" />
+    <Content Include="Views\BaseAdmin\MontarTelaCRMFR.cshtml" />
+    <Content Include="Views\BaseAdmin\MontarTelaKanbanCRMFR.cshtml" />
+    <Content Include="Views\BaseAdmin\IncluirProcessoCRMFR.cshtml" />
+    <Content Include="Views\BaseAdmin\VerAnexoCRMFR.cshtml" />
+    <Content Include="Views\BaseAdmin\CancelarProcessoCRMFR.cshtml" />
+    <Content Include="Views\BaseAdmin\EncerrarProcessoCRMFR.cshtml" />
+    <Content Include="Views\BaseAdmin\EditarProcessoCRMFR.cshtml" />
+    <Content Include="Views\BaseAdmin\VisualizarProcessoCRMFR.cshtml" />
+    <Content Include="Views\BaseAdmin\AcompanhamentoProcessoCRMFR.cshtml" />
+    <Content Include="Views\BaseAdmin\EnviarSMSClienteFR.cshtml" />
+    <Content Include="Views\BaseAdmin\IncluirComentarioCRMFR.cshtml" />
+    <Content Include="Views\BaseAdmin\EditarAcaoFR.cshtml" />
+    <Content Include="Views\BaseAdmin\VerAcao.cshtml" />
+    <Content Include="Views\BaseAdmin\VerAcaoFR.cshtml" />
+    <Content Include="Views\BaseAdmin\VerAcoesUsuarioCRMFR.cshtml" />
+    <Content Include="Views\BaseAdmin\IncluirAcaoFR.cshtml" />
+    <Content Include="Views\BaseAdmin\EnviarEMailCliente.cshtml" />
+    <Content Include="Views\BaseAdmin\EnviarEMailClienteFR.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

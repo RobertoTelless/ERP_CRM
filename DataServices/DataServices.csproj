@@ -183,6 +183,9 @@
     <Compile Include="Repositories\CategoriaOrdemServicoRepository.cs" />
     <Compile Include="Repositories\CategoriaProdutoRepository.cs" />
     <Compile Include="Repositories\CategoriaServicoRepository.cs" />
+    <Compile Include="Repositories\FormularioRespostaComentarioRepository.cs" />
+    <Compile Include="Repositories\FormularioRespostaAnexoRepository.cs" />
+    <Compile Include="Repositories\FormularioRespostaAcaoRepository.cs" />
     <Compile Include="Repositories\FormularioRespostaRepository.cs" />
     <Compile Include="Repositories\ContaPagarAnexoRepository.cs" />
     <Compile Include="Repositories\ContaPagarParcelaRepository.cs" />
