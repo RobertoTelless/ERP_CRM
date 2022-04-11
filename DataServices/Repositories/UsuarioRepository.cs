@@ -127,6 +127,13 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
+        public List<USUARIO> GetAllSistema()
+        {
+            IQueryable<USUARIO> query = Db.USUARIO;
+            query = query.Where(p => p.USUA_IN_SISTEMA == 1);
+            return query.ToList();
+        }
+
         public List<USUARIO> ExecuteFilter(Int32? perfilId, Int32? cargoId, String nome, String login, String email, Int32 idAss)
         {
             List<USUARIO> lista = new List<USUARIO>();

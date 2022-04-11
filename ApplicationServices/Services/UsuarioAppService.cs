@@ -51,6 +51,11 @@ namespace ApplicationServices.Services
             return _usuarioService.GetAllUsuarios(idAss);
         }
 
+        public List<USUARIO> GetAllSistema()
+        {
+            return _usuarioService.GetAllSistema();
+        }
+
         public List<USUARIO> GetAllItens(Int32 idAss)
         {
             return _usuarioService.GetAllItens(idAss);

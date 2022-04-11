@@ -34,6 +34,7 @@
                         @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaCRMFR", controller: "BaseAdmin")
                         @Html.ButtonLinkIndex(text: "Dashboard Assinaturas", action: "MontarTelaDashboardCRMFR", controller: "BaseAdmin", buttonClass: "primary")                
                     </div>
+
                     <div class="row">
                         @if ((ViewBag.Lista as List<EntitiesServices.Model.FORMULARIO_RESPOSTA_ACAO>).Count > 0)
                         {

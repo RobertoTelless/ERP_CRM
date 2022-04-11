@@ -100,6 +100,11 @@ namespace ModelServices.EntitiesServices
             return _usuarioRepository.GetAllUsuarios(idAss);
         }
 
+        public List<USUARIO> GetAllSistema()
+        {
+            return _usuarioRepository.GetAllSistema();
+        }
+
         public List<USUARIO> GetAllItens(Int32 idAss)
         {
             return _usuarioRepository.GetAllItens(idAss);

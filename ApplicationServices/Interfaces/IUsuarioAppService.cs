@@ -41,5 +41,7 @@ namespace ApplicationServices.Interfaces
         USUARIO GetAprovador(Int32 idAss);
         USUARIO GetTecnico(Int32 idAss);
         List<CARGO> GetAllCargos(Int32 idAss);
+        List<USUARIO> GetAllSistema();
+
     }
 }

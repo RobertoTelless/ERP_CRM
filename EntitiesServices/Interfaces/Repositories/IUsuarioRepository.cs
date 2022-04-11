@@ -24,5 +24,6 @@ namespace ModelServices.Interfaces.Repositories
         USUARIO GetTecnico(Int32 idAss);
         List<USUARIO> GetAllTecnicos(Int32 idAss);
         USUARIO GetByEmailOnly(String email);
+        List<USUARIO> GetAllSistema();
     }
 }

@@ -36,6 +36,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<USUARIO> GetAllItensAcessoHoje(Int32 idAss);
         List<USUARIO> GetAllTecnicos(Int32 idAss);
         List<USUARIO> ExecuteFilter(Int32? perfilId, Int32? cargoId, String nome, String login, String email, Int32 idAss);
+        List<USUARIO> GetAllSistema();
 
         TEMPLATE GetTemplateByCode(String codigo);
         USUARIO_ANEXO GetAnexoById(Int32 id);
