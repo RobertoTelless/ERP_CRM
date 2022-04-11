@@ -28,10 +28,14 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<FORMULARIO_RESPOSTA> ExecuteFilter(String nome, String email, String celular, String cidade, Int32? uf)
+        public List<FORMULARIO_RESPOSTA> ExecuteFilter(Int32? status, String nome, String email, String celular, String cidade, Int32? uf)
         {
             List<FORMULARIO_RESPOSTA> lista = new List<FORMULARIO_RESPOSTA>();
             IQueryable<FORMULARIO_RESPOSTA> query = Db.FORMULARIO_RESPOSTA;
+            if (status > 0)
+            {
+                query = query.Where(p => p.FORE_IN_STATUS == status);
+            }
             if (!String.IsNullOrEmpty(nome))
             {
                 query = query.Where(p => p.FORE_NM_NOME.Contains(nome));

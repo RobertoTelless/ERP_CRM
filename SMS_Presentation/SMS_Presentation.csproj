@@ -3225,6 +3225,7 @@
     <Content Include="TemplatesHTML\CRALTLAN\CRALTLAN.html" />
     <Content Include="TemplatesHTML\CRPARREC\CRPARREC.html" />
     <Content Include="TemplatesHTML\FINPATR1\FINPATR1.html" />
+    <Content Include="Views\BaseAdmin\IncluirContato.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -3651,11 +3652,9 @@
     <Content Include="Views\TabelasAuxiliares\MontarTelaCatOS.cshtml" />
     <Content Include="Views\TabelasAuxiliares\IncluirCatOS.cshtml" />
     <Content Include="Views\TabelasAuxiliares\EditarCatOS.cshtml" />
-    <Content Include="Views\BaseAdmin\IncluirContato.cshtml" />
     <Content Include="Views\Shared\_Layout_Limpo.cshtml" />
     <Content Include="Views\Shared\_Navigation_Limpo.cshtml" />
     <Content Include="Scripts\tinymce\langs\README.md" />
-    <Content Include="Views\BaseAdmin\MontarTelaCRMSolicitacao.cshtml" />
     <Content Include="Views\BaseAdmin\MontarTelaCRMFR.cshtml" />
     <Content Include="Views\BaseAdmin\MontarTelaKanbanCRMFR.cshtml" />
     <Content Include="Views\BaseAdmin\IncluirProcessoCRMFR.cshtml" />
@@ -3668,11 +3667,9 @@
     <Content Include="Views\BaseAdmin\EnviarSMSClienteFR.cshtml" />
     <Content Include="Views\BaseAdmin\IncluirComentarioCRMFR.cshtml" />
     <Content Include="Views\BaseAdmin\EditarAcaoFR.cshtml" />
-    <Content Include="Views\BaseAdmin\VerAcao.cshtml" />
     <Content Include="Views\BaseAdmin\VerAcaoFR.cshtml" />
     <Content Include="Views\BaseAdmin\VerAcoesUsuarioCRMFR.cshtml" />
     <Content Include="Views\BaseAdmin\IncluirAcaoFR.cshtml" />
-    <Content Include="Views\BaseAdmin\EnviarEMailCliente.cshtml" />
     <Content Include="Views\BaseAdmin\EnviarEMailClienteFR.cshtml" />
   </ItemGroup>
   <ItemGroup>

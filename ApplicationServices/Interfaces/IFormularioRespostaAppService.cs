@@ -17,7 +17,7 @@ namespace ApplicationServices.Interfaces
 
         List<FORMULARIO_RESPOSTA> GetAllItens();
         FORMULARIO_RESPOSTA GetItemById(Int32 id);
-        Int32 ExecuteFilter(String nome, String email, String celular, String cidade, Int32? uf, out List<FORMULARIO_RESPOSTA> objeto);
+        Int32 ExecuteFilter(Int32? status, String nome, String email, String celular, String cidade, Int32? uf, out List<FORMULARIO_RESPOSTA> objeto);
 
         List<UF> GetAllUF();
         UF GetUFbySigla(String sigla);

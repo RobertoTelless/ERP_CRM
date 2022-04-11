@@ -1187,6 +1187,8 @@
           <Property Name="FORE_DS_MOTIVO_ENCERRAMENTO" Type="varchar" MaxLength="500" />
           <Property Name="FORE_IN_ESTRELA" Type="int" />
           <Property Name="FORE_NM_PROCESSO" Type="varchar" MaxLength="100" />
+          <Property Name="CROR_CD_ID" Type="int" />
+          <Property Name="FORE_DS_DESCRICAO" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="FORMULARIO_RESPOSTA_ACAO">
           <Key>
@@ -4511,6 +4513,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FORMULARIO_RESPOSTA_CRM_ORIGEM">
+          <End Role="CRM_ORIGEM" Type="Self.CRM_ORIGEM" Multiplicity="0..1" />
+          <End Role="FORMULARIO_RESPOSTA" Type="Self.FORMULARIO_RESPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_ORIGEM">
+              <PropertyRef Name="CROR_CD_ID" />
+            </Principal>
+            <Dependent Role="FORMULARIO_RESPOSTA">
+              <PropertyRef Name="CROR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FORMULARIO_RESPOSTA_UF">
           <End Role="UF" Type="Self.UF" Multiplicity="0..1" />
           <End Role="FORMULARIO_RESPOSTA" Type="Self.FORMULARIO_RESPOSTA" Multiplicity="*" />
@@ -7415,6 +7429,10 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="FORMULARIO_RESPOSTA_COMENTARIO" EntitySet="FORMULARIO_RESPOSTA_COMENTARIO" />
           </AssociationSet>
+          <AssociationSet Name="FK_FORMULARIO_RESPOSTA_CRM_ORIGEM" Association="Self.FK_FORMULARIO_RESPOSTA_CRM_ORIGEM">
+            <End Role="CRM_ORIGEM" EntitySet="CRM_ORIGEM" />
+            <End Role="FORMULARIO_RESPOSTA" EntitySet="FORMULARIO_RESPOSTA" />
+          </AssociationSet>
           <AssociationSet Name="FK_FORMULARIO_RESPOSTA_UF" Association="Self.FK_FORMULARIO_RESPOSTA_UF">
             <End Role="UF" EntitySet="UF" />
             <End Role="FORMULARIO_RESPOSTA" EntitySet="FORMULARIO_RESPOSTA" />
@@ -9225,6 +9243,7 @@
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CRM_ORIGEM_ASSINANTE" FromRole="CRM_ORIGEM" ToRole="ASSINANTE" />
           <NavigationProperty Name="CRM" Relationship="Self.FK_CRM_CRM_ORIGEM" FromRole="CRM_ORIGEM" ToRole="CRM" />
           <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_CRM_ORIGEM" FromRole="CRM_ORIGEM" ToRole="CRM_COMERCIAL" />
+          <NavigationProperty Name="FORMULARIO_RESPOSTA" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_CRM_ORIGEM" FromRole="CRM_ORIGEM" ToRole="FORMULARIO_RESPOSTA" />
         </EntityType>
         <EntityType Name="DEPARTAMENTO">
           <Key>
@@ -9483,6 +9502,9 @@
           <NavigationProperty Name="FORMULARIO_RESPOSTA_COMENTARIO" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_COMENTARIO_FORMULARIO_RESPOSTA" FromRole="FORMULARIO_RESPOSTA" ToRole="FORMULARIO_RESPOSTA_COMENTARIO" />
           <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_USUARIO" FromRole="FORMULARIO_RESPOSTA" ToRole="USUARIO" />
           <Property Name="FORE_NM_PROCESSO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CROR_CD_ID" Type="Int32" />
+          <NavigationProperty Name="CRM_ORIGEM" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_CRM_ORIGEM" FromRole="FORMULARIO_RESPOSTA" ToRole="CRM_ORIGEM" />
+          <Property Name="FORE_DS_DESCRICAO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="FORNECEDOR">
           <Key>
@@ -16334,6 +16356,10 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="FORMULARIO_RESPOSTA_COMENTARIO" EntitySet="FORMULARIO_RESPOSTA_COMENTARIO" />
           </AssociationSet>
+          <AssociationSet Name="FK_FORMULARIO_RESPOSTA_CRM_ORIGEM" Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_CRM_ORIGEM">
+            <End Role="CRM_ORIGEM" EntitySet="CRM_ORIGEM" />
+            <End Role="FORMULARIO_RESPOSTA" EntitySet="FORMULARIO_RESPOSTA" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ATENDIMENTO_CRM">
           <Key>
@@ -16898,6 +16924,18 @@
             </Principal>
             <Dependent Role="FORMULARIO_RESPOSTA_COMENTARIO">
               <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FORMULARIO_RESPOSTA_CRM_ORIGEM">
+          <End Type="ERP_CRMModel.CRM_ORIGEM" Role="CRM_ORIGEM" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.FORMULARIO_RESPOSTA" Role="FORMULARIO_RESPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_ORIGEM">
+              <PropertyRef Name="CROR_CD_ID" />
+            </Principal>
+            <Dependent Role="FORMULARIO_RESPOSTA">
+              <PropertyRef Name="CROR_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -18001,6 +18039,8 @@
           <EntitySetMapping Name="FORMULARIO_RESPOSTA">
             <EntityTypeMapping TypeName="ERP_CRMModel.FORMULARIO_RESPOSTA">
               <MappingFragment StoreEntitySet="FORMULARIO_RESPOSTA">
+                <ScalarProperty Name="FORE_DS_DESCRICAO" ColumnName="FORE_DS_DESCRICAO" />
+                <ScalarProperty Name="CROR_CD_ID" ColumnName="CROR_CD_ID" />
                 <ScalarProperty Name="FORE_NM_PROCESSO" ColumnName="FORE_NM_PROCESSO" />
                 <ScalarProperty Name="FORE_IN_ESTRELA" ColumnName="FORE_IN_ESTRELA" />
                 <ScalarProperty Name="FORE_DS_MOTIVO_ENCERRAMENTO" ColumnName="FORE_DS_MOTIVO_ENCERRAMENTO" />

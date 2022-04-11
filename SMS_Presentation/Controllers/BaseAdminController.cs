@@ -131,6 +131,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
+                    // Completa campos
+                    vm.FORE_NM_PROCESSO = "Processo " + vm.FORE_NM_NOME;
+                    vm.FORE_DS_DESCRICAO = "Processo aberto via formulário on-line";                   
+
                     // Executa a operação
                     FORMULARIO_RESPOSTA item = Mapper.Map<FormularioRespostaViewModel, FORMULARIO_RESPOSTA>(vm);
                     Int32 volta = frApp.ValidateCreate(item, 1);
@@ -375,6 +379,7 @@ namespace ERP_CRM_Solution.Controllers
             fav.Add(new SelectListItem() { Text = "Sim", Value = "1" });
             fav.Add(new SelectListItem() { Text = "Não", Value = "0" });
             ViewBag.Favorito = new SelectList(fav, "Value", "Text");
+            ViewBag.UF = new SelectList(frApp.GetAllUF(), "UF_CD_ID", "UF_SG_SIGLA");
             Session["IncluirCRMFR"] = 0;
             Session["CRMVoltaAtendimento"] = 0;
 
@@ -583,7 +588,7 @@ namespace ERP_CRM_Solution.Controllers
                 // Executa a operação
                 List<FORMULARIO_RESPOSTA> listaObj = new List<FORMULARIO_RESPOSTA>();
                 Session["FiltroCRMFR"] = item;
-                Int32 volta = frApp.ExecuteFilter(item.FORE_NM_NOME, item.FORE_NM_EMAIL, item.FORE_NR_CELULAR, item.FORE_NM_CIDADE, item.UF_CD_ID, out listaObj);
+                Int32 volta = frApp.ExecuteFilter(item.FORE_IN_STATUS, item.FORE_NM_NOME, item.FORE_NM_EMAIL, item.FORE_NR_CELULAR, item.FORE_NM_CIDADE, item.UF_CD_ID, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)
@@ -824,6 +829,7 @@ namespace ERP_CRM_Solution.Controllers
             // Prepara listas
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
             ViewBag.Origem = new SelectList(origApp.GetAllItens(idAss).OrderBy(p => p.CROR_NM_NOME), "CROR_CD_ID", "CROR_NM_NOME");
+            ViewBag.UF = new SelectList(frApp.GetAllUF(), "UF_CD_ID", "UF_SG_SIGLA");
             List<SelectListItem> status = new List<SelectListItem>();
             status.Add(new SelectListItem() { Text = "Prospecção", Value = "1" });
             status.Add(new SelectListItem() { Text = "Contato Realizado", Value = "2" });
@@ -1640,7 +1646,7 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
-        public ActionResult EnviarSMSCliente(MensagemViewModel vm)
+        public ActionResult EnviarSMSClienteFR(MensagemViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {

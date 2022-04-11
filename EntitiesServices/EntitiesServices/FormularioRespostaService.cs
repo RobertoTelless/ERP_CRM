@@ -58,9 +58,9 @@ namespace ModelServices.EntitiesServices
             return _baseRepository.GetAllItens();
         }
 
-        public List<FORMULARIO_RESPOSTA> ExecuteFilter(String nome, String email, String cidade, String celular, Int32? uf)
+        public List<FORMULARIO_RESPOSTA> ExecuteFilter(Int32? status, String nome, String email, String cidade, String celular, Int32? uf)
         {
-            return _baseRepository.ExecuteFilter(nome, email, celular, cidade, uf);
+            return _baseRepository.ExecuteFilter(status, nome, email, celular, cidade, uf);
         }
 
         public Int32 Create(FORMULARIO_RESPOSTA item, LOG log)

@@ -48,7 +48,7 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public Int32 ExecuteFilter(String nome, String email, String celular, String cidade, Int32? uf, out List<FORMULARIO_RESPOSTA> objeto)
+        public Int32 ExecuteFilter(Int32? status, String nome, String email, String celular, String cidade, Int32? uf, out List<FORMULARIO_RESPOSTA> objeto)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(nome, email, celular, cidade, uf);
+                objeto = _baseService.ExecuteFilter(status, nome, email, celular, cidade, uf);
                 if (objeto.Count == 0)
                 {
                     volta = 1;

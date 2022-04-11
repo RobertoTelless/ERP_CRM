@@ -19,6 +19,7 @@ namespace EntitiesServices.Model
         {
             this.CRM = new HashSet<CRM>();
             this.CRM_COMERCIAL = new HashSet<CRM_COMERCIAL>();
+            this.FORMULARIO_RESPOSTA = new HashSet<FORMULARIO_RESPOSTA>();
         }
     
         public int CROR_CD_ID { get; set; }
@@ -31,5 +32,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<CRM> CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_COMERCIAL> CRM_COMERCIAL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FORMULARIO_RESPOSTA> FORMULARIO_RESPOSTA { get; set; }
     }
 }

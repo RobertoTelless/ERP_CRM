@@ -503,6 +503,7 @@
         <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_ACAO_USUARIO" />
         <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_ACAO_USUARIO1" />
         <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_COMENTARIO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_CRM_ORIGEM" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

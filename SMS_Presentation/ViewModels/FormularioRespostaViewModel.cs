@@ -48,6 +48,8 @@ namespace ERP_CRM_Solution.ViewModels
         public string FORE_DS_MOTIVO_ENCERRAMENTO { get; set; }
         public Nullable<int> FORE_IN_ESTRELA { get; set; }
         public string FORE_NM_PROCESSO { get; set; }
+        public Nullable<int> CROR_CD_ID { get; set; }
+        public string FORE_DS_DESCRICAO { get; set; }
 
         public bool Mensageria
         {
@@ -178,6 +180,7 @@ namespace ERP_CRM_Solution.ViewModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FORMULARIO_RESPOSTA_COMENTARIO> FORMULARIO_RESPOSTA_COMENTARIO { get; set; }
         public virtual USUARIO USUARIO { get; set; }
+        public virtual CRM_ORIGEM CRM_ORIGEM { get; set; }
 
     }
 }
