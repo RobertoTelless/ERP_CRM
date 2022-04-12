@@ -161,6 +161,10 @@
                     {
                         @Html.ButtonLinkIndex(text: "Administração", action: "MontarTelaDashboardAdministracao", controller: "Usuario", buttonClass: "success")                
                     }
+                    @if ((Int32)Session["PerfilSistema"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Assinaturas", action: "MontarTelaCRMFR", controller: "BaseAdmin", buttonClass: "success")                
+                    }
                 </div>
             </div>
 

@@ -149,6 +149,7 @@ namespace ERP_CRM_Solution.Controllers
                 Session["Foto"] = usuario.USUA_AQ_FOTO;
                 Session["Perfil"] = usuario.PERFIL;
                 Session["PerfilSigla"] = usuario.PERFIL.PERF_SG_SIGLA;
+                Session["PerfilSistema"] = usuario.USUA_IN_SISTEMA;
                 Session["FlagInicial"] = 0;
                 Session["FiltroData"] = 1;
                 Session["FiltroStatus"] = 1;
