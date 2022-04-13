@@ -46,7 +46,7 @@
                                 @*Dados do Cancelamento*@
                                 <div id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
-                                        @if ((Int32)Session["TemAcao"] == 1)
+                                        @if ((Int32)Session["TemAcaoFR"] == 1)
                                         {
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-12 col-md-12 col-xs-12" style="background-color: burlywood; color: green; font-weight: bold">
@@ -89,6 +89,7 @@
                                                     @Html.HiddenFor(m => m.FORE_TX_MENSAGEM)
                                                     @Html.HiddenFor(m => m.UF_CD_ID)
                                                     @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    @Html.HiddenFor(m => m.CROR_CD_ID)
                                                     Título do Processo
                                                     @Html.TextBoxFor(m => m.FORE_NM_PROCESSO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
@@ -110,7 +111,7 @@
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    Descrição do Cancelamento*
+                                                    Justificativa do Cancelamento*
                                                     @Html.TextAreaFor(m => m.FORE_DS_JUSTIFICATIVA_CANCELAMENTO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.FORE_DS_JUSTIFICATIVA_CANCELAMENTO, "", new { @style = "color:red" })
                                                 </div>

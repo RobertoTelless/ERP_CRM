@@ -21,7 +21,7 @@ namespace ERP_CRM_Solution.ViewModels
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Deve ser um e-mail válido")]
         public string FORE_NM_EMAIL { get; set; }
         [Required(ErrorMessage = "Campo CELULAR obrigatorio")]
-        [StringLength(12, MinimumLength = 1, ErrorMessage = "O CELULAR deve conter no minimo 1 e no máximo 12 caracteres.")]
+        [StringLength(20, MinimumLength = 1, ErrorMessage = "O CELULAR deve conter no minimo 1 e no máximo 20 caracteres.")]
         public string FORE_NR_CELULAR { get; set; }
         public Nullable<int> FORE_IN_MENSAGERIA { get; set; }
         public Nullable<int> FORE_IN_CRM { get; set; }

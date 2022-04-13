@@ -20,6 +20,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<FORMULARIO_RESPOSTA> GetAllItens();
         List<UF> GetAllUF();
         UF GetUFbySigla(String sigla);
+        List<FORMULARIO_RESPOSTA> GetAllItensTodos();
 
         List<FORMULARIO_RESPOSTA> ExecuteFilter(Int32? status, String nome, String email, String celular, String cidade, Int32? uf);
 

@@ -1206,7 +1206,7 @@ namespace ERP_CRM_Solution.Controllers
             }
         }
 
-        public ActionResult DuplicarCP()
+        public ActionResult DuplicarCP(Int32 id)
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -1215,7 +1215,7 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Monta novo lançamento
-            CONTA_PAGAR item = cpApp.GetItemById((Int32)Session["IdVolta"]);
+            CONTA_PAGAR item = cpApp.GetItemById(id);
             CONTA_PAGAR novo = new CONTA_PAGAR();
             novo.CAPA_DS_DESCRICAO = "Lançamento Duplicado - " + item.CAPA_DS_DESCRICAO;
             novo.CAPA_DT_COMPETENCIA = item.CAPA_DT_COMPETENCIA;

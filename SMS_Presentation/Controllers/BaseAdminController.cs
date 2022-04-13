@@ -123,7 +123,6 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult IncluirContato(FormularioRespostaViewModel vm)
         {
             ViewBag.UF = new SelectList(frApp.GetAllUF(), "UF_CD_ID", "UF_SG_SIGLA");
@@ -350,7 +349,7 @@ namespace ERP_CRM_Solution.Controllers
 
 
             // Carrega listas
-            if ((List<CRM>)Session["ListaCRMFR"] == null)
+            if ((List<FORMULARIO_RESPOSTA>)Session["ListaCRMFR"] == null)
             {
                 listaMasterFR = frApp.GetAllItens();
                 Session["ListaCRMFR"] = listaMasterFR;
@@ -477,7 +476,7 @@ namespace ERP_CRM_Solution.Controllers
 
 
             // Carrega listas
-            if ((List<CRM>)Session["ListaCRMFR"] == null)
+            if ((List<FORMULARIO_RESPOSTA>)Session["ListaCRMFR"] == null)
             {
                 listaMasterFR = frApp.GetAllItens();
                 Session["ListaCRMFR"] = listaMasterFR;
@@ -508,6 +507,7 @@ namespace ERP_CRM_Solution.Controllers
             fav.Add(new SelectListItem() { Text = "Sim", Value = "1" });
             fav.Add(new SelectListItem() { Text = "Não", Value = "0" });
             ViewBag.Favorito = new SelectList(fav, "Value", "Text");
+            ViewBag.UF = new SelectList(frApp.GetAllUF(), "UF_CD_ID", "UF_SG_SIGLA");
             Session["IncluirCRMFR"] = 0;
 
             // Indicadores
@@ -573,6 +573,20 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             Session["ListaCRMFR"] = null;
+            Session["FiltroCRMFR"] = null;
+            return RedirectToAction("MontarTelaCRMFR");
+        }
+
+        public ActionResult MostrarTodosCRMFR()
+        {
+
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            listaMasterFR = frApp.GetAllItensTodos();
+            Session["ListaCRMFR"] = listaMasterFR;
             Session["FiltroCRMFR"] = null;
             return RedirectToAction("MontarTelaCRMFR");
         }
@@ -868,6 +882,7 @@ namespace ERP_CRM_Solution.Controllers
 
             ViewBag.Usuarios = new SelectList(usuApp.GetAllSistema().OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
             ViewBag.Origem = new SelectList(origApp.GetAllItens(idAss).OrderBy(p => p.CROR_NM_NOME), "CROR_CD_ID", "CROR_NM_NOME");
+            ViewBag.UF = new SelectList(frApp.GetAllUF(), "UF_CD_ID", "UF_SG_SIGLA");
             List<SelectListItem> status = new List<SelectListItem>();
             status.Add(new SelectListItem() { Text = "Prospecção", Value = "1" });
             status.Add(new SelectListItem() { Text = "Contato Realizado", Value = "2" });
@@ -976,7 +991,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            Int32 idNot = (Int32)Session["IdCRM"];
+            Int32 idNot = (Int32)Session["IdCRMFR"];
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             if (file == null)
@@ -1039,7 +1054,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            Int32 idNot = (Int32)Session["IdCRM"];
+            Int32 idNot = (Int32)Session["IdCRMFR"];
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             if (file == null)
@@ -1101,7 +1116,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            if ((Int32)Session["VoltaCRM"] == 10)
+            if ((Int32)Session["VoltaCRM"] == 10 || (Int32)Session["VoltaCRM"] == 11)
             {
                 return RedirectToAction("VoltarAcompanhamentoCRMFR");
             }
@@ -1691,7 +1706,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            Int32 id = (Int32)Session["IdCRM"];
+            Int32 id = (Int32)Session["IdCRMFR"];
             FORMULARIO_RESPOSTA item = frApp.GetItemById(id);
             USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
             FORMULARIO_RESPOSTA_COMENTARIO coment = new FORMULARIO_RESPOSTA_COMENTARIO();
@@ -2023,6 +2038,7 @@ namespace ERP_CRM_Solution.Controllers
             vm.FRAC_IN_ATIVO = 1;
             vm.FRAC_DT_CRIACAO = DateTime.Now;
             vm.FRAC_IN_STATUS = 1;
+            vm.FRAC_DT_PREVISTA = DateTime.Now.AddDays(5);
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             return View(vm);
         }
@@ -2303,16 +2319,16 @@ namespace ERP_CRM_Solution.Controllers
                 hash.Add("FORE_IN_STATUS", item.FORE_IN_STATUS);
                 hash.Add("FORE_CD_ID", item.FORE_CD_ID);
                 hash.Add("FORE_NM_PROCESSO", item.FORE_NM_PROCESSO);
-                hash.Add("CRM1_DT_CRIACAO", item.FORE_DT_CADASTRO.Value.ToString("dd/MM/yyyy"));
+                hash.Add("FORE_DT_CRIACAO", item.FORE_DT_CADASTRO.Value.ToString("dd/MM/yyyy"));
                 if (item.FORE_DT_ENCERRAMENTO != null)
                 {
-                    hash.Add("CRM1_DT_ENCERRAMENTO", item.FORE_DT_ENCERRAMENTO.Value.ToString("dd/MM/yyyy"));
+                    hash.Add("FORE_DT_ENCERRAMENTO", item.FORE_DT_ENCERRAMENTO.Value.ToString("dd/MM/yyyy"));
                 }
                 else
                 {
-                    hash.Add("CRM1_DT_ENCERRAMENTO", "-");
+                    hash.Add("FORE_DT_ENCERRAMENTO", "-");
                 }
-                hash.Add("CRM1_NM_CLIENTE", item.FORE_NM_NOME);
+                hash.Add("FORE_NM_NOME", item.FORE_NM_NOME);
                 listaHash.Add(hash);
             }
             return Json(listaHash);

@@ -28,6 +28,13 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
+        public List<FORMULARIO_RESPOSTA> GetAllItensTodos()
+        {
+            IQueryable<FORMULARIO_RESPOSTA> query = Db.FORMULARIO_RESPOSTA;
+            query = query.OrderBy(a => a.FORE_DT_CADASTRO);
+            return query.ToList();
+        }
+
         public List<FORMULARIO_RESPOSTA> ExecuteFilter(Int32? status, String nome, String email, String celular, String cidade, Int32? uf)
         {
             List<FORMULARIO_RESPOSTA> lista = new List<FORMULARIO_RESPOSTA>();

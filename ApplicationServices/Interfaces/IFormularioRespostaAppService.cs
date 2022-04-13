@@ -16,6 +16,7 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateReativar(FORMULARIO_RESPOSTA perfil, USUARIO usuario);
 
         List<FORMULARIO_RESPOSTA> GetAllItens();
+        List<FORMULARIO_RESPOSTA> GetAllItensTodos();
         FORMULARIO_RESPOSTA GetItemById(Int32 id);
         Int32 ExecuteFilter(Int32? status, String nome, String email, String celular, String cidade, Int32? uf, out List<FORMULARIO_RESPOSTA> objeto);
 

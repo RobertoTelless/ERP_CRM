@@ -88,31 +88,28 @@
 
 
 @section Styles {
-    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />
-    @*<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />*@
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
     @Styles.Render("~/plugins/toastrStyles")
     @Styles.Render("~/Content/plugins/summernote/summernote.css")
-    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+    @Styles.Render("~/plugins/touchSpinStyles")
     <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
 }
 @section Scripts {
-    @*<script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>*@
-    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/jquery.datetimepicker"></script>
-    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
-    @Scripts.Render("~/plugins/toastr")
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
-    @Scripts.Render("~/plugins/sparkline")
-    @Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")
+    @Scripts.Render("~/plugins/summernote")
+    @Scripts.Render("~/plugins/touchSpin")
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
     <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
     <script src="~/Scripts/uploadAnexo.js"></script>
 
 

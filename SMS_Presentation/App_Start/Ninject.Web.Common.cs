@@ -353,6 +353,9 @@ namespace Presentation.Start
             kernel.Bind<ICRMComercialItemRepository>().To<CRMComercialItemRepository>();
             kernel.Bind<ICRMComercialRepository>().To<CRMComercialRepository>();
             kernel.Bind<IFormularioRespostaRepository>().To<FormularioRespostaRepository>();
+            kernel.Bind<IFormularioRespostaAcaoRepository>().To<FormularioRespostaAcaoRepository>();
+            kernel.Bind<IFormularioRespostaAnexoRepository>().To<FormularioRespostaAnexoRepository>();
+            kernel.Bind<IFormularioRespostaComentarioRepository>().To<FormularioRespostaComentarioRepository>();
 
         }
     }

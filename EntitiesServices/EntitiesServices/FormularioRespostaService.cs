@@ -58,6 +58,11 @@ namespace ModelServices.EntitiesServices
             return _baseRepository.GetAllItens();
         }
 
+        public List<FORMULARIO_RESPOSTA> GetAllItensTodos()
+        {
+            return _baseRepository.GetAllItensTodos();
+        }
+
         public List<FORMULARIO_RESPOSTA> ExecuteFilter(Int32? status, String nome, String email, String cidade, String celular, Int32? uf)
         {
             return _baseRepository.ExecuteFilter(status, nome, email, celular, cidade, uf);

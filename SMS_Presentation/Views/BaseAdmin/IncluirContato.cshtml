@@ -29,7 +29,8 @@
                             }
 
                             <div class="form-group">
-                                <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Enviar Solicitação de Informações</button>
+                                @Html.ButtonActionSubmit(text: "Confirma Inclusão de Solicitação", htmlAttributes: new { id = "basictoast" })
+                                @*<button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Enviar Solicitação de Informações</button>*@
                                 @Html.ButtonLinkIndex(text: "Voltar", action: "CarregarLandingPage", controller: "BaseAdmin")
                             </div>
                             <div class="row">
@@ -131,7 +132,7 @@
                                 </div>                        
                             </div>                     
                             <div class="form-group">
-                                <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Enviar Solicitação de Informações</button>
+                                @Html.ButtonActionSubmit(text: "Confirma Inclusão de Solicitação", htmlAttributes: new { id = "basictoast" })
                                 @Html.ButtonLinkIndex(text: "Voltar", action: "CarregarLandingPage", controller: "BaseAdmin")
                             </div>
                         </div>

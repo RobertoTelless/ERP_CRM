@@ -124,6 +124,14 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
+        public JsonResult CalculaDataPrevistaBase(Int32? id)
+        {
+            Hashtable result = new Hashtable();
+            result.Add("dtPrevista", DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+            return Json(result);
+        }
+
+        [HttpPost]
         public ActionResult IncluirAgendamento(AGENDA agenda, Int32 ATEN_CD_ID)
         {
             if ((String)Session["Ativa"] == null)

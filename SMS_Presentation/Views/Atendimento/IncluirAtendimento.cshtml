@@ -123,12 +123,13 @@
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Data/Hora Início*
-                                                    @Html.TextBoxFor(m => m.ATEN_DT_INICIO, new { @class = "form-control", autofocus = true, @readonly = "readonly", @style = "color:green; font-weight:bold" })
+                                                    @Html.TextBoxFor(m => m.ATEN_DT_INICIO, new { @class = "form-control datetime-picker", autofocus = true, @id = "datatime", @style = "font-weight:bold" })
+                                                    @*@Html.TextBoxFor(m => m.ATEN_DT_INICIO, new { @class = "form-control", autofocus = true, @readonly = "readonly", @style = "color:green; font-weight:bold" })*@
                                                     @Html.ValidationMessageFor(m => m.ATEN_DT_INICIO, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Data Prevista*
-                                                    @Html.TextBoxFor(m => m.ATEN_DT_PREVISTA, new { @class = "form-control", autofocus = true, @id = "dtPrevista", @readonly = "readonly", @style = "font-weight:bold" })
+                                                    @Html.TextBoxFor(m => m.ATEN_DT_PREVISTA, new { @class = "form-control  datetime-picker", autofocus = true, @id = "dtPrevista", @style = "font-weight:bold" })
                                                     @Html.ValidationMessageFor(m => m.ATEN_DT_PREVISTA, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
@@ -272,7 +273,20 @@
             });
         }
     </script>
-
+    <script>
+        function CalculaDtPrevistaBase(cat) {
+            $.ajax({
+                url: '../Atendimento/CalculaDataPrevistaBase'
+                , type: 'POST'
+                , data: {
+                    id: cat
+                }
+                , success: function (r) {
+                    $('#dtPrevista').val(r.dtPrevista);
+                }
+            });
+        }
+    </script>
     <script type="text/javascript">
         $(function () {
             $("#cpf").mask("999.999.999-99");
@@ -281,6 +295,8 @@
             $("#data").mask("99/99/9999");
             $("#hora").mask("99:99");
             $("#datatime").mask("99/99/9999 99:99:99");
+            $("#dtPrevista").mask("99/99/9999 99:99:99");
+            $("#dn").mask("99/99/9999 99:99");
         });
     </script>
     @Scripts.Render("~/plugins/iCheck")
@@ -332,7 +348,7 @@
                     prevText: 'Anterior',
                     controlType: 'select',
                     showSecond: "false",
-                    timeFormat: 'HH:mm',
+                    timeFormat: 'HH:mm:ss',
                     locale: 'pt-br',
                     hourText: 'Hora',
                     minuteText: 'Minuto',

@@ -32,6 +32,12 @@ namespace ApplicationServices.Services
             return lista;
         }
 
+        public List<FORMULARIO_RESPOSTA> GetAllItensTodos()
+        {
+            List<FORMULARIO_RESPOSTA> lista = _baseService.GetAllItensTodos();
+            return lista;
+        }
+
         public List<UF> GetAllUF()
         {
             List<UF> lista = _baseService.GetAllUF();
@@ -75,7 +81,6 @@ namespace ApplicationServices.Services
             {
                 // Completa objeto
                 item.FORE_IN_ATIVO = 1;
-                item.FORE_IN_STATUS = 1;
  
                 // Persiste
                 Int32 volta = _baseService.Create(item);
@@ -91,7 +96,7 @@ namespace ApplicationServices.Services
                     String footer = _tempService.GetByCode("RESPFORM").TEMP_TX_DADOS;
 
                     // Prepara campos
-                    header = header.Replace("{nome}", item.FORE_NM_NOME);
+                    header = header.Replace("{Nome}", item.FORE_NM_NOME);
                     body = body.Replace("{data}", DateTime.Today.ToLongDateString());
                     String emailBody = header + "<br /><br />" + body + "<br /><br />" + footer;
 
@@ -134,6 +139,7 @@ namespace ApplicationServices.Services
         {
             try
             {
+                item.CRM_ORIGEM = null;
                 return _baseService.Edit(item);
             }
             catch (Exception ex)
@@ -147,6 +153,7 @@ namespace ApplicationServices.Services
             try
             {
                 // Persiste
+                item.CRM_ORIGEM = null;
                 return _baseService.Edit(item);
             }
             catch (Exception ex)
@@ -160,7 +167,6 @@ namespace ApplicationServices.Services
             try
             {
                 // Acerta campos
-                item.FORE_IN_ATIVO = 0;
 
                 // Persiste
                 return _baseService.Edit(item);
