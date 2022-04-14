@@ -1726,7 +1726,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            Int32 idNot = (Int32)Session["IdCRM"];
+            Int32 idNot = (Int32)Session["IdCRMFR"];
             if (ModelState.IsValid)
             {
                 try

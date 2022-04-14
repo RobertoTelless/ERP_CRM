@@ -96,7 +96,7 @@
                                                     Nome do Cliente*
                                                     <div class="input-group">
                                                         <select name="CLIE_CD_ID" id="lstCliente" class="form-control" data-val="true" style="display: none;">
-                                                            @*<option>Selecionar</option>*@
+                                                            <option>Selecionar</option>
                                                         </select>
                                                         @Html.ValidationMessageFor(m => m.CLIE_CD_ID, "", new { @style = "color:red" })
                                                         <span class="input-group-btn">
@@ -214,29 +214,30 @@
 </div>
 
 @section Styles {
-    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
     @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
     @Styles.Render("~/plugins/toastrStyles")
-    @Styles.Render("~/Content/plugins/summernote/summernote.css")
     @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
     <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
-    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
-}
+    <link href="~/Content/MonthPicker.css" rel="stylesheet" />
+
+    }
 @section Scripts {
-    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
-    @Scripts.Render("~/plugins/summernote")
     @Scripts.Render("~/plugins/touchSpin")
-    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
-    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+    @Scripts.Render("~/plugins/iCheck")
+<script src="~/Scripts/MonthPicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
     <script src="~/Scripts/uploadAnexo.js"></script>
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
 
     <script>
         function DesativaServico(val) {
@@ -514,28 +515,26 @@
     </script>
 
     <script>
-        $(function () {
-            $("#lstcliente").select2({
-                //data: filterSelect,
-                ajax: {
-                    url: '../Cliente/BuscaNomeRazao',
-                    type: 'POST',
-                    data: function (params) {
-                        var query = {
-                            nome: params.term
-                        }
-                        return query
-                    },
-                    processResults: function (data) {
-                        console.log(data);
-                        return {
-                            results: data
-                        }
+        $("#lstCliente").select2({
+            //data: filterSelect,
+            ajax: {
+                url: '../Cliente/BuscaNomeRazao',
+                type: 'POST',
+                data: function (params) {
+                    var query = {
+                        nome: params.term
                     }
+                    return query
                 },
-                placeholder: 'Busque por nome ou Razão Social',
-                minimumInputLength: 1
-            });
+                processResults: function (data) {
+                    console.log(data);
+                    return {
+                        results: data
+                    }
+                }
+            },
+            placeholder: 'Busque por NOME ou RAZÃO SOCIAL',
+            minimumInputLength: 1
         });
     </script>
 
