@@ -497,4 +497,7 @@
   <data name="M0123" xml:space="preserve">
     <value>Impossivel excluir esta Ordem de Serviço pois existem registros vinculados a ela</value>
   </data>
+  <data name="M0124" xml:space="preserve">
+    <value>Data Prevista menor que a Data de Início do Atendimento</value>
+  </data>
 </root>

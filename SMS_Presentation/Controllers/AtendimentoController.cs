@@ -841,7 +841,10 @@ namespace ERP_CRM_Solution.Controllers
                     // Executa a operação
                     ATENDIMENTO item = Mapper.Map<AtendimentoViewModel, ATENDIMENTO>(vm);
                     CATEGORIA_ATENDIMENTO ca = caApp.GetItemById(item.CAAT_CD_ID);
-                    item.ATEN_DT_PREVISTA = DateTime.Now.AddDays((Int32)ca.CAAT_IN_SLA);
+                    if (item.ATEN_DT_PREVISTA < item.ATEN_DT_INICIO)
+                    {
+                        item.ATEN_DT_PREVISTA = DateTime.Now.AddDays((Int32)ca.CAAT_IN_SLA);
+                    }
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     Int32 volta = baseApp.ValidateCreate(item, usuarioLogado);
 
@@ -854,6 +857,11 @@ namespace ERP_CRM_Solution.Controllers
                     if (volta == 2)
                     {
                         ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0114", CultureInfo.CurrentCulture));
+                        return View(vm);
+                    }
+                    if (volta == 3)
+                    {
+                        ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0124", CultureInfo.CurrentCulture));
                         return View(vm);
                     }
 

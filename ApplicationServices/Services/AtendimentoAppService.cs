@@ -108,7 +108,11 @@ namespace ApplicationServices.Services
                 if (item.USUA_CD_ID == null & item.DEPT_CD_ID == null)
                 {
                     return 2;
-                }            
+                }
+                if (item.ATEN_DT_PREVISTA < item.ATEN_DT_INICIO)
+                {
+                    return 3;
+                }
                 
                 // Completa objeto
                 item.ATEN_IN_ATIVO = 1;
