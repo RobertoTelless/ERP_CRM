@@ -15,7 +15,7 @@
           <Property Name="CAAG_CD_ID" Type="int" />
           <Property Name="AGEN_DT_DATA" Type="date" Nullable="false" />
           <Property Name="AGEN_HR_HORA" Type="time" Precision="7" Nullable="false" />
-          <Property Name="AGEN_NM_TITULO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AGEN_NM_TITULO" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="AGEN_DS_DESCRICAO" Type="varchar" MaxLength="5000" />
           <Property Name="AGEN_IN_ATIVO" Type="int" Nullable="false" />
           <Property Name="AGEN_CD_USUARIO" Type="int" />
@@ -8148,7 +8148,7 @@
           <Property Name="CAAG_CD_ID" Type="Int32" />
           <Property Name="AGEN_DT_DATA" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="AGEN_HR_HORA" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="AGEN_NM_TITULO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AGEN_NM_TITULO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AGEN_DS_DESCRICAO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
           <Property Name="AGEN_IN_ATIVO" Type="Int32" Nullable="false" />
           <Property Name="AGEN_CD_USUARIO" Type="Int32" />

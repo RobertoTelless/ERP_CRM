@@ -25,7 +25,7 @@ namespace ERP_CRM_Solution.ViewModels
         [CheckTimeAttributeMain(ErrorMessage = "Hora:Minuto inválido")]
         public System.TimeSpan AGEN_HR_HORA { get; set; }
         [Required(ErrorMessage = "Campo TÍTULO obrigatorio")]
-        [StringLength(50, ErrorMessage = "O TÍTULO deve conter no máximo 50.")]
+        [StringLength(250, ErrorMessage = "O TÍTULO deve conter no máximo 250.")]
         public string AGEN_NM_TITULO { get; set; }
         [StringLength(5000, ErrorMessage = "A DESCRIÇÂO deve conter no máximo 5000.")]
         public string AGEN_DS_DESCRICAO { get; set; }
