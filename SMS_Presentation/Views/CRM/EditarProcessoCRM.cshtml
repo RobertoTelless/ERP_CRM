@@ -174,7 +174,6 @@
                                                             <h5>Não informado</h5>
                                                         }
                                                         <p><i class="fa fa-map-marker"></i> @Model.CLIENTE.CLIE_NM_EMAIL</p>
-                                                        @*<div class="clearfix"></div>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -223,6 +222,11 @@
                                                                 Origem
                                                                 @Html.TextBoxFor(m => m.CRM_ORIGEM.CROR_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                             </div>
+                                                            @*<div class="col-lg-3 col-md-3 col-xs-12">
+                                                                Temperatura*
+                                                                @Html.DropDownListFor(m => m.CRM1_NR_TEMPERATURA, (SelectList)ViewBag.Temp, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRM1_NR_TEMPERATURA, "", new { @style = "color:red" })
+                                                            </div>*@
                                                         </div>
                                                     </div>
                                                 </div>

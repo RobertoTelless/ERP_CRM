@@ -115,7 +115,6 @@
                                 @Html.ButtonLinkIndex(text: "Visualização Kanban", controller: "CRM", action: "MontarTelaKanbanCRM")
                                 @Html.ButtonLinkIndex(text: "Ações do Usuário", controller: "CRM", action: "VerAcoesUsuarioCRM")
                                 @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM")                
-                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "CRM", action: "Voltar")
                             </div>
                         </div>
                     </div>
@@ -152,6 +151,7 @@
                                         <th style="width: auto">Data Prevista</th>
                                         <th style="width: auto">Origem</th>
                                         <th style="width: auto">Situação</th>
+                                        <th style="width: auto">Temperatura</th>
                                         <th class="td-one-action">Ações</th>
                                     </tr>
                                 </thead>
@@ -250,6 +250,22 @@
                                             else if (cond.CRM1_IN_ATIVO == 5)
                                             {
                                                 <td><span class="badge badge-success">Sucesso</span></td>
+                                            }
+                                            @if (cond.CRM1_NR_TEMPERATURA == 1)
+	                                        {
+                                                <td><span class="badge badge-success">Fria</span></td>
+                                            }
+                                            else if (cond.CRM1_NR_TEMPERATURA == 2)
+                                            {
+                                                <td><span class="badge badge-primary">Morna</span></td>
+                                            }
+                                            else if (cond.CRM1_NR_TEMPERATURA == 3)
+                                            {
+                                                <td><span class="badge badge-warning">Quente</span></td>
+                                            }
+                                            else if (cond.CRM1_NR_TEMPERATURA == 4)
+                                            {
+                                                <td><span class="badge badge-danger">Muito Quente</span></td>
                                             }
                                             <td class="td-one-action">
                                                 @if (cond.CRM1_IN_ATIVO == 3 || cond.CRM1_IN_ATIVO == 4 || cond.CRM1_IN_ATIVO == 5)

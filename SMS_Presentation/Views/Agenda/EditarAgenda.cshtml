@@ -65,6 +65,7 @@
                                                 @Html.HiddenFor(m => m.USUA_CD_ID)
                                                 @Html.HiddenFor(m => m.AGEN_CD_ID)
                                                 @Html.HiddenFor(m => m.AGEN_IN_CORPORATIVA)
+                                                @Html.HiddenFor(m => m.CRM1_CD_ID)
                                                 Categoria*
                                                 @Html.DropDownListFor(m => m.CAAG_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })
                                                 @Html.ValidationMessageFor(m => m.CAAG_CD_ID, "", new { @style = "color:red" })

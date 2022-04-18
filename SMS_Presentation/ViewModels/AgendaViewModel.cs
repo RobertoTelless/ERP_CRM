@@ -34,6 +34,7 @@ namespace ERP_CRM_Solution.ViewModels
         public string AGEN_TX_OBSERVACOES { get; set; }
         public Nullable<int> AGEN_IN_STATUS { get; set; }
         public Nullable<int> AGEN_IN_CORPORATIVA { get; set; }
+        public Nullable<int> CRM1_CD_ID { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA_ANEXO> AGENDA_ANEXO { get; set; }
@@ -47,5 +48,6 @@ namespace ERP_CRM_Solution.ViewModels
         public virtual ICollection<ATENDIMENTO_AGENDA> ATENDIMENTO_AGENDA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDEM_SERVICO_AGENDA> ORDEM_SERVICO_AGENDA { get; set; }
+        public virtual CRM CRM { get; set; }
     }
 }

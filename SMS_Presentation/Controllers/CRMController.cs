@@ -139,6 +139,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Favorito = new SelectList(fav, "Value", "Text");
             Session["IncluirCRM"] = 0;
             Session["CRMVoltaAtendimento"] = 0;
+            Session["VoltaAgenda"] = 11;
 
             // Indicadores
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
@@ -193,6 +194,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Abre view
+            Session["IdCRM"] = null;
             Session["MensCRM"] = 0;
             Session["VoltaCRM"] = 1;
             Session["IncluirCliente"] = 0;
@@ -309,6 +311,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Abre view
+            Session["IdCRM"] = null;
             Session["VoltaCRM"] = 1;
             Session["IncluirCliente"] = 0;
             objeto = new CRM();
@@ -1131,6 +1134,12 @@ namespace ERP_CRM_Solution.Controllers
             fav.Add(new SelectListItem() { Text = "Sim", Value = "1" });
             fav.Add(new SelectListItem() { Text = "Não", Value = "0" });
             ViewBag.Favorito = new SelectList(fav, "Value", "Text");
+            List<SelectListItem> temp = new List<SelectListItem>();
+            temp.Add(new SelectListItem() { Text = "Fria", Value = "1" });
+            temp.Add(new SelectListItem() { Text = "Morna", Value = "2" });
+            temp.Add(new SelectListItem() { Text = "Quente", Value = "3" });
+            temp.Add(new SelectListItem() { Text = "Muito Quente", Value = "4" });
+            ViewBag.Temp = new SelectList(temp, "Value", "Text");
             Session["IncluirCRM"] = 0;
             Session["CRM"] = null;
 
@@ -1177,6 +1186,12 @@ namespace ERP_CRM_Solution.Controllers
             fav.Add(new SelectListItem() { Text = "Sim", Value = "1" });
             fav.Add(new SelectListItem() { Text = "Não", Value = "0" });
             ViewBag.Favorito = new SelectList(fav, "Value", "Text");
+            List<SelectListItem> temp = new List<SelectListItem>();
+            temp.Add(new SelectListItem() { Text = "Fria", Value = "1" });
+            temp.Add(new SelectListItem() { Text = "Morna", Value = "2" });
+            temp.Add(new SelectListItem() { Text = "Quente", Value = "3" });
+            temp.Add(new SelectListItem() { Text = "Muito Quente", Value = "4" });
+            ViewBag.Temp = new SelectList(temp, "Value", "Text");
 
             if (ModelState.IsValid)
             {
@@ -1304,7 +1319,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
                 Session["MensCRM"] = 10;
-                return RedirectToAction("VoltarAnexoCRM");
+                return RedirectToAction("VoltarAcompanhamentoCRM");
             }
 
             CRM item = baseApp.GetItemById(idNot);
@@ -1314,7 +1329,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
                 Session["MensCRM"] = 11;
-                return RedirectToAction("VoltarAnexoCRM");
+                return RedirectToAction("VoltarAcompanhamentoCRM");
             }
             String caminho = "/Imagens/" + idAss.ToString() + "/CRM/" + item.CRM1_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
@@ -1350,7 +1365,7 @@ namespace ERP_CRM_Solution.Controllers
             item.CRM_ANEXO.Add(foto);
             objetoAntes = item;
             Int32 volta = baseApp.ValidateEdit(item, item);
-            return RedirectToAction("VoltarAnexoCRM");
+            return RedirectToAction("VoltarAcompanhamentoCRM");
         }
 
         [HttpPost]
@@ -1367,7 +1382,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
                 Session["MensCRM"] = 10;
-                return RedirectToAction("VoltarAnexoCRM");
+                return RedirectToAction("VoltarAcompanhamentoCRM");
             }
 
             CRM item = baseApp.GetItemById(idNot);
@@ -1377,7 +1392,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
                 Session["MensCRM"] = 11;
-                return RedirectToAction("VoltarAnexoCRM");
+                return RedirectToAction("VoltarAcompanhamentoCRM");
             }
             String caminho = "/Imagens/" + idAss.ToString() + "/CRM/" + item.CRM1_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
@@ -1413,7 +1428,7 @@ namespace ERP_CRM_Solution.Controllers
             item.CRM_ANEXO.Add(foto);
             objetoAntes = item;
             Int32 volta = baseApp.ValidateEdit(item, item);
-            return RedirectToAction("VoltarAnexoCRM");
+            return RedirectToAction("VoltarAcompanhamentoCRM");
         }
 
         public ActionResult VoltarAnexoCRM()
@@ -1484,7 +1499,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
                 Session["MensCRM"] = 10;
-                return RedirectToAction("VoltarAnexoCRM");
+                return RedirectToAction("VoltarAcompanhamentoCRM");
             }
 
             CRM item = baseApp.GetItemById(idUsu);
@@ -1494,7 +1509,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
                 Session["MensCRM"] = 11;
-                return RedirectToAction("VoltarAnexoCRM");
+                return RedirectToAction("VoltarAcompanhamentoCRM");
             }
             String caminho = "/Imagens/" + idAss.ToString() + "/CRM/" + item.CRM1_CD_ID.ToString() + "/Fotos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
@@ -1515,7 +1530,7 @@ namespace ERP_CRM_Solution.Controllers
                 objeto = item;
                 Int32 volta = baseApp.ValidateEdit(item, objeto);
             }
-            return RedirectToAction("VoltarAnexoCRM");
+            return RedirectToAction("VoltarAcompanhamentoCRM");
         }
 
         [HttpPost]
@@ -1532,7 +1547,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
                 Session["MensCRM"] = 10;
-                return RedirectToAction("VoltarAnexoCRM");
+                return RedirectToAction("VoltarAcompanhamentoCRM");
             }
 
             CRM item = baseApp.GetItemById(idNot);
@@ -1542,7 +1557,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
                 Session["MensCRM"] = 11;
-                return RedirectToAction("VoltarAnexoCRM");
+                return RedirectToAction("VoltarAcompanhamentoCRM");
             }
             String caminho = "/Imagens/" + idAss.ToString() + "/CRM/" + item.CRM1_CD_ID.ToString() + "/Fotos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
@@ -1563,7 +1578,7 @@ namespace ERP_CRM_Solution.Controllers
                 objeto = item;
                 Int32 volta = baseApp.ValidateEdit(item, objeto);
             }
-            return RedirectToAction("VoltarAnexoCRM");
+            return RedirectToAction("VoltarAcompanhamentoCRM");
         }
 
         public FileResult DownloadCRM(Int32 id)
@@ -1839,6 +1854,12 @@ namespace ERP_CRM_Solution.Controllers
             fav.Add(new SelectListItem() { Text = "Sim", Value = "1" });
             fav.Add(new SelectListItem() { Text = "Não", Value = "0" });
             ViewBag.Favorito = new SelectList(fav, "Value", "Text");
+            List<SelectListItem> temp = new List<SelectListItem>();
+            temp.Add(new SelectListItem() { Text = "Fria", Value = "1" });
+            temp.Add(new SelectListItem() { Text = "Morna", Value = "2" });
+            temp.Add(new SelectListItem() { Text = "Quente", Value = "3" });
+            temp.Add(new SelectListItem() { Text = "Muito Quente", Value = "4" });
+            ViewBag.Temp = new SelectList(temp, "Value", "Text");
 
             // Recupera
             CRM item = baseApp.GetItemById(id);
@@ -1894,6 +1915,12 @@ namespace ERP_CRM_Solution.Controllers
             fav.Add(new SelectListItem() { Text = "Sim", Value = "1" });
             fav.Add(new SelectListItem() { Text = "Não", Value = "0" });
             ViewBag.Favorito = new SelectList(fav, "Value", "Text");
+            List<SelectListItem> temp = new List<SelectListItem>();
+            temp.Add(new SelectListItem() { Text = "Fria", Value = "1" });
+            temp.Add(new SelectListItem() { Text = "Morna", Value = "2" });
+            temp.Add(new SelectListItem() { Text = "Quente", Value = "3" });
+            temp.Add(new SelectListItem() { Text = "Muito Quente", Value = "4" });
+            ViewBag.Temp = new SelectList(temp, "Value", "Text");
 
             // Indicadores
             ViewBag.Incluir = (Int32)Session["IncluirCRM"];
@@ -2000,7 +2027,7 @@ namespace ERP_CRM_Solution.Controllers
                 if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
                 {
                     Session["MensCRM"] = 2;
-                    return RedirectToAction("VoltarAnexoCRM");
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
                 }
             }
             else
@@ -2045,7 +2072,7 @@ namespace ERP_CRM_Solution.Controllers
                         if (((CRM)Session["CRM"]).CRM_CONTATO.Where(p => p.CRCO_IN_PRINCIPAL == 1).ToList().Count > 0 & vm.CRCO_IN_PRINCIPAL == 1)
                         {
                             Session["MensCRM"] = 50;
-                            return RedirectToAction("VoltarAnexoCRM");
+                            return RedirectToAction("VoltarAcompanhamentoCRM");
                         }
                     }
 
@@ -2055,7 +2082,7 @@ namespace ERP_CRM_Solution.Controllers
                     Int32 volta = baseApp.ValidateEditContato(item);
 
                     // Verifica retorno
-                    return RedirectToAction("VoltarAnexoCRM");
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
                 }
                 catch (Exception ex)
                 {
@@ -2086,7 +2113,7 @@ namespace ERP_CRM_Solution.Controllers
                 if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
                 {
                     Session["MensCRM"] = 2;
-                    return RedirectToAction("VoltarAnexoCRM");
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
                 }
             }
             else
@@ -2099,7 +2126,7 @@ namespace ERP_CRM_Solution.Controllers
             objetoAntes = (CRM)Session["CRM"];
             item.CRCO_IN_ATIVO = 0;
             Int32 volta = baseApp.ValidateEditContato(item);
-            return RedirectToAction("VoltarAnexoCRM");
+            return RedirectToAction("VoltarAcompanhamentoCRM");
         }
 
         [HttpGet]
@@ -2119,7 +2146,7 @@ namespace ERP_CRM_Solution.Controllers
                 if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
                 {
                     Session["MensCRM"] = 2;
-                    return RedirectToAction("VoltarAnexoCRM");
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
                 }
             }
             else
@@ -2132,7 +2159,7 @@ namespace ERP_CRM_Solution.Controllers
             objetoAntes = (CRM)Session["CRM"];
             item.CRCO_IN_ATIVO = 1;
             Int32 volta = baseApp.ValidateEditContato(item);
-            return RedirectToAction("VoltarAnexoCRM");
+            return RedirectToAction("VoltarAcompanhamentoCRM");
         }
 
         [HttpGet]
@@ -2152,7 +2179,7 @@ namespace ERP_CRM_Solution.Controllers
                 if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
                 {
                     Session["MensCRM"] = 2;
-                    return RedirectToAction("VoltarAnexoCRM");
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
                 }
             }
             else
@@ -2197,7 +2224,7 @@ namespace ERP_CRM_Solution.Controllers
                         if (((CRM)Session["CRM"]).CRM_CONTATO.Where(p => p.CRCO_IN_PRINCIPAL == 1).ToList().Count > 0 & vm.CRCO_IN_PRINCIPAL == 1)
                         {
                             Session["MensCRM"] = 50;
-                            return RedirectToAction("VoltarAnexoCRM");
+                            return RedirectToAction("VoltarAcompanhamentoCRM");
                         }
                     }
 
@@ -2206,7 +2233,7 @@ namespace ERP_CRM_Solution.Controllers
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     Int32 volta = baseApp.ValidateCreateContato(item);
                     // Verifica retorno
-                    return RedirectToAction("VoltarAnexoCRM");
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
                 }
                 catch (Exception ex)
                 {
@@ -2264,6 +2291,13 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Processa...
+            List<SelectListItem> temp = new List<SelectListItem>();
+            temp.Add(new SelectListItem() { Text = "Fria", Value = "1" });
+            temp.Add(new SelectListItem() { Text = "Morna", Value = "2" });
+            temp.Add(new SelectListItem() { Text = "Quente", Value = "3" });
+            temp.Add(new SelectListItem() { Text = "Muito Quente", Value = "4" });
+            ViewBag.Temp = new SelectList(temp, "Value", "Text");
+
             Session["IdCRM"] = id;
             CRM item = baseApp.GetItemById(id);
             CRMViewModel vm = Mapper.Map<CRM, CRMViewModel>(item);
@@ -2275,6 +2309,88 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Acoes = acoes;
             ViewBag.Acao = acao;
             return View(vm);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult AcompanhamentoProcessoCRM(CRMViewModel vm)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            ViewBag.Origem = new SelectList(baseApp.GetAllOrigens(idAss).OrderBy(p => p.CROR_NM_NOME), "CROR_CD_ID", "CROR_NM_NOME");
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem() { Text = "Prospecção", Value = "1" });
+            status.Add(new SelectListItem() { Text = "Contato Realizado", Value = "2" });
+            status.Add(new SelectListItem() { Text = "Proposta Apresentada", Value = "3" });
+            status.Add(new SelectListItem() { Text = "Negociação", Value = "4" });
+            status.Add(new SelectListItem() { Text = "Encerrado", Value = "5" });
+            ViewBag.Status = new SelectList(status, "Value", "Text");
+            List<SelectListItem> adic = new List<SelectListItem>();
+            adic.Add(new SelectListItem() { Text = "Ativos", Value = "1" });
+            adic.Add(new SelectListItem() { Text = "Arquivados", Value = "2" });
+            adic.Add(new SelectListItem() { Text = "Cancelados", Value = "3" });
+            adic.Add(new SelectListItem() { Text = "Falhados", Value = "4" });
+            adic.Add(new SelectListItem() { Text = "Sucesso", Value = "5" });
+            ViewBag.Adic = new SelectList(adic, "Value", "Text");
+            List<SelectListItem> fav = new List<SelectListItem>();
+            fav.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            fav.Add(new SelectListItem() { Text = "Não", Value = "0" });
+            ViewBag.Favorito = new SelectList(fav, "Value", "Text");
+            List<SelectListItem> temp = new List<SelectListItem>();
+            temp.Add(new SelectListItem() { Text = "Fria", Value = "1" });
+            temp.Add(new SelectListItem() { Text = "Morna", Value = "2" });
+            temp.Add(new SelectListItem() { Text = "Quente", Value = "3" });
+            temp.Add(new SelectListItem() { Text = "Muito Quente", Value = "4" });
+            ViewBag.Temp = new SelectList(temp, "Value", "Text");
+
+            // Indicadores
+            ViewBag.Incluir = (Int32)Session["IncluirCRM"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    CRM item = Mapper.Map<CRMViewModel, CRM>(vm);
+                    Int32 volta = baseApp.ValidateEdit(item, (CRM)Session["CRM"], usuario);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensCRM"] = 60;
+                        return RedirectToAction("AcompanhamentoProcessoCRM");
+                    }
+                    if (volta == 2)
+                    {
+                        Session["MensCRM"] = 61;
+                        return RedirectToAction("AcompanhamentoProcessoCRM");
+                    }
+                    if (volta == 3)
+                    {
+                        Session["MensCRM"] = 62;
+                        return RedirectToAction("AcompanhamentoProcessoCRM");
+                    }
+                    if (volta == 4)
+                    {
+                        Session["MensCRM"] = 63;
+                        return RedirectToAction("AcompanhamentoProcessoCRM");
+                    }
+
+                    // Sucesso
+                    listaMaster = new List<CRM>();
+                    Session["ListaCRM"] = null;
+                    Session["IncluirCRM"] = 0;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
+                }
+            }
+            else
+            {
+                return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
+            }
         }
 
         public ActionResult GerarRelatorioDetalheCRM()
@@ -2703,6 +2819,14 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VoltarAnexoCliente", "Cliente");
         }
 
+        [HttpGet]
+        public ActionResult EditarAgenda(Int32 id)
+        {
+            Session["VoltaAgenda"] = 22;
+            Session["IdVolta"] = id;
+            return RedirectToAction("VoltarAnexoAgenda", "Agenda");
+        }
+
         public ActionResult VerAcao(Int32 id)
         {
             // Verifica se tem usuario logado
@@ -2809,6 +2933,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Prepara view
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipoAcao(idAss).OrderBy(p => p.TIAC_NM_NOME), "TIAC_CD_ID", "TIAC_NM_NOME");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
             List<SelectListItem> agenda = new List<SelectListItem>();
@@ -2824,6 +2949,7 @@ namespace ERP_CRM_Solution.Controllers
             vm.CRAC_DT_CRIACAO = DateTime.Now;
             vm.CRAC_IN_STATUS = 1;
             vm.USUA_CD_ID1 = usuario.USUA_CD_ID;
+            vm.CRAC_DT_PREVISTA = DateTime.Now.AddDays(Convert.ToDouble(conf.CONF_NR_DIAS_ACAO));
             vm.CRIA_AGENDA = 2;
             return View(vm);
         }
@@ -2862,6 +2988,7 @@ namespace ERP_CRM_Solution.Controllers
                         ag.CAAG_CD_ID = 1;
                         ag.AGEN_CD_USUARIO = vm.USUA_CD_ID2;
                         ag.USUA_CD_ID = usuarioLogado.USUA_CD_ID;
+                        ag.CRM1_CD_ID = item.CRM1_CD_ID;
                         Int32 voltaAg = ageApp.ValidateCreate(ag, usuarioLogado);
                     }
 
@@ -2973,9 +3100,17 @@ namespace ERP_CRM_Solution.Controllers
             // Prepara texto
             String texto = vm.MENS_TX_SMS;
 
+            // Prepara cabeçalho
+            String cab = "Prezado Sr(a). <b>" + cont.CLIE_NM_NOME + "</b>";
+
+            // Prepara rodape
+            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            String rod = "<b>" + assi.ASSI_NM_NOME + "</b>";
+
             // Prepara corpo do SMS e trata link
+            String corpo = vm.MENS_TX_SMS + "<br /><br />";
             StringBuilder str = new StringBuilder();
-            str.AppendLine(vm.MENS_TX_SMS);
+            str.AppendLine(corpo);
             if (!String.IsNullOrEmpty(vm.LINK))
             {
                 if (!vm.LINK.Contains("www."))
@@ -2990,7 +3125,7 @@ namespace ERP_CRM_Solution.Controllers
                 texto += "  " + vm.LINK;
             }
             String body = str.ToString();
-            String smsBody = body;
+            String smsBody = cab + "<br /><br />" + body + "<br /><br />" + rod;
             String erro = null;
 
             // inicia processo
@@ -3010,7 +3145,7 @@ namespace ERP_CRM_Solution.Controllers
 
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
+                    json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", smsBody, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
                     streamWriter.Write(json);
                 }
 
@@ -3039,14 +3174,14 @@ namespace ERP_CRM_Solution.Controllers
             CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
 
             // Prepara cabeçalho
-            String cab = "Prezado Sr(a)." + cont.CRCO_NM_NOME;
+            String cab = "Prezado Sr(a). <b>" + cont.CRCO_NM_NOME + "</b>";
 
             // Prepara rodape
             ASSINANTE assi = (ASSINANTE)Session["Assinante"];
-            String rod = assi.ASSI_NM_NOME;
+            String rod = "<b>" + assi.ASSI_NM_NOME + "</b>";
 
             // Prepara corpo do e-mail e trata link
-            String corpo = vm.MENS_TX_TEXTO;
+            String corpo = vm.MENS_TX_TEXTO + "<br /><br />";
             StringBuilder str = new StringBuilder();
             str.AppendLine(corpo);
             if (!String.IsNullOrEmpty(vm.MENS_NM_LINK))
@@ -3104,14 +3239,14 @@ namespace ERP_CRM_Solution.Controllers
             CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
 
             // Prepara cabeçalho
-            String cab = "Prezado Sr(a)." + cont.CLIE_NM_NOME;
+            String cab = "Prezado Sr(a). <b>" + cont.CLIE_NM_NOME + "</b>";
 
             // Prepara rodape
             ASSINANTE assi = (ASSINANTE)Session["Assinante"];
-            String rod = assi.ASSI_NM_NOME;
+            String rod = "<b>" + assi.ASSI_NM_NOME + "</b>";
 
             // Prepara corpo do e-mail e trata link
-            String corpo = vm.MENS_TX_TEXTO;
+            String corpo = vm.MENS_TX_TEXTO + "<br /><br />";
             StringBuilder str = new StringBuilder();
             str.AppendLine(corpo);
             if (!String.IsNullOrEmpty(vm.MENS_NM_LINK))
@@ -4144,6 +4279,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["CRMProp"] =  lt.Where(p => p.CRM1_IN_STATUS == 3).ToList().Count;
             Session["CRMNego"] =  lt.Where(p => p.CRM1_IN_STATUS == 4).ToList().Count;
             Session["CRMEnc"] =  lt.Where(p => p.CRM1_IN_STATUS == 5).ToList().Count;
+            Session["IdCRM"] = null;
 
             // Resumo Mes CRM
             List<DateTime> datas = lm.Select(p => p.CRM1_DT_CRIACAO.Value.Date).Distinct().ToList();

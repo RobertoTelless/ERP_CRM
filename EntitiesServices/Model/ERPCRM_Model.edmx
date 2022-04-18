@@ -13,6 +13,7 @@
           <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
           <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="CAAG_CD_ID" Type="int" />
+          <Property Name="CRM1_CD_ID" Type="int" />
           <Property Name="AGEN_DT_DATA" Type="date" Nullable="false" />
           <Property Name="AGEN_HR_HORA" Type="time" Precision="7" Nullable="false" />
           <Property Name="AGEN_NM_TITULO" Type="varchar" MaxLength="250" Nullable="false" />
@@ -546,6 +547,7 @@
           <Property Name="CONF_NM_SENDGRID_APIKEY" Type="varchar" MaxLength="100" />
           <Property Name="CONF_IN_RESIDUAL" Type="int" />
           <Property Name="CONF_NR_DIAS_ATENDIMENTO" Type="int" />
+          <Property Name="CONF_NR_DIAS_ACAO" Type="int" />
         </EntityType>
         <EntityType Name="CONTA_BANCO">
           <Key>
@@ -795,24 +797,25 @@
           <Property Name="TICR_CD_ID" Type="int" />
           <Property Name="USUA_CD_ID" Type="int" />
           <Property Name="MENS_CD_ID" Type="int" />
+          <Property Name="ORIG_CD_ID" Type="int" />
+          <Property Name="MOCA_CD_ID" Type="int" />
+          <Property Name="MOEN_CD_ID" Type="int" />
           <Property Name="CRM1_IN_ATIVO" Type="int" />
           <Property Name="CRM1_DT_CRIACAO" Type="date" />
           <Property Name="CRM1_NM_NOME" Type="varchar" MaxLength="150" />
           <Property Name="CRM1_DS_DESCRICAO" Type="varchar" MaxLength="500" />
           <Property Name="CRM1_TX_INFORMACOES_GERAIS" Type="text" />
           <Property Name="CRM1_IN_STATUS" Type="int" Nullable="false" />
-          <Property Name="ORIG_CD_ID" Type="int" />
           <Property Name="CRM1_DT_CANCELAMENTO" Type="date" />
-          <Property Name="MOCA_CD_ID" Type="int" />
           <Property Name="CRM1_DS_MOTIVO_CANCELAMENTO" Type="varchar" MaxLength="500" />
           <Property Name="CRM1_DT_ENCERRAMENTO" Type="date" />
-          <Property Name="MOEN_CD_ID" Type="int" />
           <Property Name="CRM1_DS_INFORMACOES_ENCERRAMENTO" Type="text" />
           <Property Name="CRM1_IN_ESTRELA" Type="int" />
           <Property Name="PEVE_CD_ID1" Type="int" />
           <Property Name="PEVE_CD_ID2" Type="int" />
           <Property Name="CRM1_IN_DUMMY" Type="int" />
           <Property Name="CRM1_AQ_IMAGEM" Type="varchar" MaxLength="150" />
+          <Property Name="CRM1_NR_TEMPERATURA" Type="int" />
         </EntityType>
         <EntityType Name="CRM_ACAO">
           <Key>
@@ -2626,6 +2629,18 @@
             </Principal>
             <Dependent Role="AGENDA">
               <PropertyRef Name="CAAG_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AGENDA_CRM">
+          <End Role="CRM" Type="Self.CRM" Multiplicity="0..1" />
+          <End Role="AGENDA" Type="Self.AGENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Principal>
+            <Dependent Role="AGENDA">
+              <PropertyRef Name="CRM1_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6801,6 +6816,10 @@
             <End Role="CATEGORIA_AGENDA" EntitySet="CATEGORIA_AGENDA" />
             <End Role="AGENDA" EntitySet="AGENDA" />
           </AssociationSet>
+          <AssociationSet Name="FK_AGENDA_CRM" Association="Self.FK_AGENDA_CRM">
+            <End Role="CRM" EntitySet="CRM" />
+            <End Role="AGENDA" EntitySet="AGENDA" />
+          </AssociationSet>
           <AssociationSet Name="FK_AGENDA_USUARIO" Association="Self.FK_AGENDA_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="AGENDA" EntitySet="AGENDA" />
@@ -8163,6 +8182,8 @@
           <NavigationProperty Name="AGENDA_VINCULO" Relationship="Self.FK_AGENDA_VINCULO_AGENDA" FromRole="AGENDA" ToRole="AGENDA_VINCULO" />
           <NavigationProperty Name="ATENDIMENTO_AGENDA" Relationship="Self.FK_ATENDIMENTO_AGENDA_AGENDA" FromRole="AGENDA" ToRole="ATENDIMENTO_AGENDA" />
           <NavigationProperty Name="ORDEM_SERVICO_AGENDA" Relationship="Self.FK_ORDEM_SERVICO_AGENDA_AGENDA" FromRole="AGENDA" ToRole="ORDEM_SERVICO_AGENDA" />
+          <Property Name="CRM1_CD_ID" Type="Int32" />
+          <NavigationProperty Name="CRM" Relationship="ERP_CRMModel.FK_AGENDA_CRM" FromRole="AGENDA" ToRole="CRM" />
         </EntityType>
         <EntityType Name="AGENDA_ANEXO">
           <Key>
@@ -8845,6 +8866,7 @@
           <Property Name="CONF_IN_RESIDUAL" Type="Int32" />
           <Property Name="CONF_NR_DIAS_ATENDIMENTO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CONFIGURACAO_ASSINANTE" FromRole="CONFIGURACAO" ToRole="ASSINANTE" />
+          <Property Name="CONF_NR_DIAS_ACAO" Type="Int32" />
         </EntityType>
         <EntityType Name="CONTA_BANCO">
           <Key>
@@ -9168,6 +9190,8 @@
           <NavigationProperty Name="TIPO_CRM" Relationship="Self.FK_CRM_TIPO_CRM" FromRole="CRM" ToRole="TIPO_CRM" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_CRM_USUARIO" FromRole="CRM" ToRole="USUARIO" />
           <NavigationProperty Name="ATENDIMENTO_CRM" Relationship="ERP_CRMModel.FK_ATENDIMENTO_CRM_CRM" FromRole="CRM" ToRole="ATENDIMENTO_CRM" />
+          <Property Name="CRM1_NR_TEMPERATURA" Type="Int32" />
+          <NavigationProperty Name="AGENDA" Relationship="ERP_CRMModel.FK_AGENDA_CRM" FromRole="CRM" ToRole="AGENDA" />
         </EntityType>
         <EntityType Name="CRM_ACAO">
           <Key>
@@ -16360,6 +16384,10 @@
             <End Role="CRM_ORIGEM" EntitySet="CRM_ORIGEM" />
             <End Role="FORMULARIO_RESPOSTA" EntitySet="FORMULARIO_RESPOSTA" />
           </AssociationSet>
+          <AssociationSet Name="FK_AGENDA_CRM" Association="ERP_CRMModel.FK_AGENDA_CRM">
+            <End Role="CRM" EntitySet="CRM" />
+            <End Role="AGENDA" EntitySet="AGENDA" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ATENDIMENTO_CRM">
           <Key>
@@ -16939,6 +16967,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AGENDA_CRM">
+          <End Type="ERP_CRMModel.CRM" Role="CRM" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.AGENDA" Role="AGENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Principal>
+            <Dependent Role="AGENDA">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16948,6 +16988,7 @@
           <EntitySetMapping Name="AGENDA">
             <EntityTypeMapping TypeName="ERP_CRMModel.AGENDA">
               <MappingFragment StoreEntitySet="AGENDA">
+                <ScalarProperty Name="CRM1_CD_ID" ColumnName="CRM1_CD_ID" />
                 <ScalarProperty Name="AGEN_CD_ID" ColumnName="AGEN_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -17493,6 +17534,7 @@
           <EntitySetMapping Name="CONFIGURACAO">
             <EntityTypeMapping TypeName="ERP_CRMModel.CONFIGURACAO">
               <MappingFragment StoreEntitySet="CONFIGURACAO">
+                <ScalarProperty Name="CONF_NR_DIAS_ACAO" ColumnName="CONF_NR_DIAS_ACAO" />
                 <ScalarProperty Name="CONF_CD_ID" ColumnName="CONF_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CONF_NR_FALHAS_DIA" ColumnName="CONF_NR_FALHAS_DIA" />
@@ -17765,6 +17807,7 @@
           <EntitySetMapping Name="CRM">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM">
               <MappingFragment StoreEntitySet="CRM">
+                <ScalarProperty Name="CRM1_NR_TEMPERATURA" ColumnName="CRM1_NR_TEMPERATURA" />
                 <ScalarProperty Name="CRM1_CD_ID" ColumnName="CRM1_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CLIE_CD_ID" ColumnName="CLIE_CD_ID" />

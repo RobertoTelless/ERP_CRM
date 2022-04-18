@@ -97,10 +97,10 @@ namespace ERP_CRM_Solution.Controllers
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             vm.AGEN_IN_STATUS = 1;
 
-            if (Session["FiltroAgendaCalendario"] == null)
+            if (Session["ListaAgenda"] == null)
             {
-                listaMasterCalendario = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).Where(p => p.AGEN_IN_CORPORATIVA == 0).ToList();
-                Session["FiltroAgendaCalendario"] = listaMaster;
+                listaMasterCalendario = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).ToList();
+                Session["ListaAgenda"] = listaMasterCalendario;
             }
 
             ViewBag.Title = "Agenda";
@@ -185,17 +185,9 @@ namespace ERP_CRM_Solution.Controllers
             if (Session["ListaAgenda"] == null)
             {
                 listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).ToList();
-                //if ((Int32)Session["AgendaCorp"] == 0)
-                //{
-                //    listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).Where(p => p.AGEN_IN_CORPORATIVA == 0).ToList();
-                //}
-                //else
-                //{
-                //    listaMaster = baseApp.GetAllItens(idAss).Where(p => p.AGEN_IN_CORPORATIVA == 1).ToList();
-                //}
                 Session["ListaAgenda"] = listaMaster;
             }
-            ViewBag.Listas = ((List<AGENDA>)Session["ListaAgenda"]).OrderBy(x => x.AGEN_DT_DATA.Date).ThenBy(x => x.AGEN_HR_HORA).ToList<AGENDA>();
+            ViewBag.Listas = ((List<AGENDA>)Session["ListaAgenda"]).OrderByDescending(x => x.AGEN_DT_DATA).ThenBy(x => x.AGEN_HR_HORA).ToList<AGENDA>();
             ViewBag.Itens = ((List<AGENDA>)Session["ListaAgenda"]).Count;
             ViewBag.Title = "Agenda";
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "CAAG_CD_ID", "CAAG_NM_NOME");
@@ -316,6 +308,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("MontarTelaAgendaCalendario");
             }
+            else if ((Int32)Session["VoltaAgenda"] == 11)
+            {
+                return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
+            }
             else
             {
                 return RedirectToAction("MontarTelaAgenda");
@@ -368,6 +364,10 @@ namespace ERP_CRM_Solution.Controllers
                     // Executa a operação
                     AGENDA item = Mapper.Map<AgendaViewModel, AGENDA>(vm);
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    if (Session["IdCRM"] != null)
+                    {
+                        item.CRM1_CD_ID = (Int32)Session["IdCRM"];
+                    }
                     Int32 volta = baseApp.ValidateCreate(item, usuarioLogado);
 
                     // Verifica retorno
@@ -396,6 +396,10 @@ namespace ERP_CRM_Solution.Controllers
                     if ((Int32)Session["VoltaAgenda"] == 3)
                     {
                         return RedirectToAction("MontarTelaAgendaCalendario");
+                    }
+                    if ((Int32)Session["VoltaAgenda"] == 11)
+                    {
+                        return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
                     }
 
                     return RedirectToAction("MontarTelaAgenda");
@@ -524,6 +528,10 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         return RedirectToAction("MontarTelaAgendaCalendario");
                     }
+                    if ((Int32)Session["VoltaAgenda"] == 11)
+                    {
+                        return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
+                    }
 
                     return RedirectToAction("MontarTelaAgenda");
                 }
@@ -558,6 +566,11 @@ namespace ERP_CRM_Solution.Controllers
             Int32 volta = baseApp.ValidateDelete(item, usu);
             listaMaster = new List<AGENDA>();
             Session["ListaAgenda"] = null;
+            if ((Int32)Session["VoltaAgenda"] == 11)
+            {
+                return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
+            }
+
             return RedirectToAction("MontarTelaAgenda");
         }
 
@@ -580,6 +593,11 @@ namespace ERP_CRM_Solution.Controllers
             Int32 volta = baseApp.ValidateReativar(item, usu);
             listaMaster = new List<AGENDA>();
             Session["ListaAgenda"] = null;
+            if ((Int32)Session["VoltaAgenda"] == 11)
+            {
+                return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
+            }
+
             return RedirectToAction("MontarTelaAgenda");
         }
 
