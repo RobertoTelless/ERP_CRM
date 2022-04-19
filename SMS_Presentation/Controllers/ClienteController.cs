@@ -588,7 +588,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             if ((Int32)Session["VoltaCRM"] == 11)
             {
-                return RedirectToAction("VoltarBaseCRM", "CRM");
+                return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
             }
             if ((Int32)Session["VoltaMensagem"] == 30)
             {
@@ -930,7 +930,7 @@ namespace ERP_CRM_Solution.Controllers
                     }
                     if ((Int32)Session["VoltaCRM"] == 11)
                     {
-                        return RedirectToAction("VoltarBaseCRM", "CRM");
+                        return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
                     }
                     return RedirectToAction("MontarTelaCliente");
                 }

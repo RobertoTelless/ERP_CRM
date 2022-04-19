@@ -134,7 +134,7 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca,  Int32? estrela, Int32 idAss, out List<CRM> objeto)
+        public Int32 ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca,  Int32? estrela, Int32? temperatura, Int32 idAss, out List<CRM> objeto)
         {
             try
             {
@@ -142,7 +142,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(status, inicio, final, origem, adic, nome, busca, estrela, idAss);
+                objeto = _baseService.ExecuteFilter(status, inicio, final, origem, adic, nome, busca, estrela, temperatura, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -360,7 +360,7 @@ namespace ApplicationServices.Services
                 item.CRM1_IN_ATIVO = 2;
 
                 // Verifica integridade
-                List<CRM_ACAO> acao = item.CRM_ACAO.Where(p => p.CRAC_DT_PREVISTA.Value > DateTime.Today.Date).ToList();
+                List<CRM_ACAO> acao = item.CRM_ACAO.Where(p => p.CRAC_IN_STATUS == 1).ToList();
                 if (acao.Count > 0)
                 {
                     return 1;

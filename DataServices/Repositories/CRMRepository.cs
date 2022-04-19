@@ -59,7 +59,7 @@ namespace DataServices.Repositories
 
         public List<CRM> GetAllItens(Int32 idUsu)
         {
-            IQueryable<CRM> query = Db.CRM.Where(p => p.CRM1_IN_ATIVO == 1 || p.CRM1_IN_ATIVO == 5);
+            IQueryable<CRM> query = Db.CRM.Where(p => p.CRM1_IN_ATIVO == 1 || p.CRM1_IN_ATIVO == 5 || p.CRM1_IN_ATIVO == 3 || p.CRM1_IN_ATIVO == 2 || p.CRM1_IN_ATIVO == 4);
             query = query.Where(p => p.ASSI_CD_ID == idUsu);
             return query.ToList();
         }
@@ -71,7 +71,7 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<CRM> ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca, Int32? estrela, Int32 idAss)
+        public List<CRM> ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca, Int32? estrela, Int32? temperatura, Int32 idAss)
         {
             List<CRM> lista = new List<CRM>();
             IQueryable<CRM> query = Db.CRM;
@@ -86,6 +86,10 @@ namespace DataServices.Repositories
             if (estrela != null)
             {
                 query = query.Where(p => p.CRM1_IN_ESTRELA == estrela);
+            }
+            if (temperatura != null)
+            {
+                query = query.Where(p => p.CRM1_NR_TEMPERATURA == temperatura);
             }
             if (adic != null)
             {

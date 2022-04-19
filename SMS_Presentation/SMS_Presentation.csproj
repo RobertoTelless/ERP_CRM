@@ -784,7 +784,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagens\2\Agenda\41\Anexos\Tela_SD.jpg" />
     <Content Include="Imagens\2\Clientes\7\Fotos\PadIpanema.jpg" />
+    <Content Include="Imagens\2\CRM\13\Anexos\Imagem_Teste.jpg" />
+    <Content Include="Imagens\2\CRM\13\Fotos\image_2021-04-08_13-28-54.png" />
     <Content Include="Imagens\2\CRM\1\Fotos\icon_ponto_1.png" />
     <Content Include="Imagens\2\CRM\2\Anexos\ERPWeb_MindMap_Versão_1_0 %281%29.jpg" />
     <Content Include="Imagens\2\CRM\2\Fotos\cantinela.png" />
@@ -804,6 +807,9 @@
     <Content Include="Imagens\2\FichaTecnica\4\Apresentacao\KS4GAQG0YPlimonada_jarra.jpg" />
     <Content Include="Imagens\2\Filial\1\Foto\FotoBase.jpg" />
     <Content Include="Imagens\2\Filial\1\Foto\Logo_RTI.png" />
+    <Content Include="Imagens\2\FormResposta\1\Anexos\teste_1.jpg" />
+    <Content Include="Imagens\2\FormResposta\4\Anexos\Imagem_Teste.jpg" />
+    <Content Include="Imagens\2\FormResposta\4\Anexos\Tela_Kanban.jpg" />
     <Content Include="Imagens\2\Fornecedores\2\Fotos\ambev-logo.png" />
     <Content Include="Imagens\2\Fornecedores\3\Fotos\lidador.jpg" />
     <Content Include="Imagens\2\Mensagem\15\Anexos\RS_MindMap_Versao_1.jpg" />
@@ -2282,6 +2288,8 @@
     <Content Include="Imagens\2\Equipamento\4\Anexos\FornecedorLista_07012022.pdf" />
     <Content Include="Imagens\2\Equipamento\5\Anexos\FornecedorLista_07012022.pdf" />
     <Content Include="Imagens\2\Servicos\3\Anexos\ServicoLista_23022022.pdf" />
+    <Content Include="Imagens\2\CRM\13\Anexos\AtendimentoResumo_14032022.pdf" />
+    <Content Include="Imagens\2\CRM\13\Anexos\Targo_01.pdf" />
     <None Include="Properties\PublishProfiles\ERPCondominio - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ERPMKT - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ERPSysNet - Web Deploy.pubxml" />
@@ -3677,6 +3685,7 @@
     <Folder Include="Filters\" />
     <Folder Include="Imagens\2\Agenda\2\Anexos\" />
     <Folder Include="Imagens\2\Agenda\3\Anexos\" />
+    <Folder Include="Imagens\2\Agenda\40\Anexos\" />
     <Folder Include="Imagens\2\Agenda\4\Anexos\" />
     <Folder Include="Imagens\2\Agenda\5\Anexos\" />
     <Folder Include="Imagens\2\Agenda\6\Anexos\" />
@@ -3735,6 +3744,8 @@
     <Folder Include="Imagens\2\ContaReceber\2\Anexos\" />
     <Folder Include="Imagens\2\ContaReceber\6\Anexos\" />
     <Folder Include="Imagens\2\ContaReceber\7\Anexos\" />
+    <Folder Include="Imagens\2\CRM\12\Anexos\" />
+    <Folder Include="Imagens\2\CRM\12\Fotos\" />
     <Folder Include="Imagens\2\CRM\8\Anexos\" />
     <Folder Include="Imagens\2\CRM\8\Fotos\" />
     <Folder Include="Imagens\2\Equipamento\1\Anexos\" />
@@ -3744,6 +3755,10 @@
     <Folder Include="Imagens\2\FichaTecnica\5\Apresentacao\" />
     <Folder Include="Imagens\2\Filial\1\Anexos\" />
     <Folder Include="Imagens\2\Filial\2\Logo\" />
+    <Folder Include="Imagens\2\FormResposta\2\Anexos\" />
+    <Folder Include="Imagens\2\FormResposta\3\Anexos\" />
+    <Folder Include="Imagens\2\FormResposta\5\Anexos\" />
+    <Folder Include="Imagens\2\FormResposta\6\Anexos\" />
     <Folder Include="Imagens\2\Fornecedores\1\Anexos\" />
     <Folder Include="Imagens\2\Fornecedores\1\Fotos\" />
     <Folder Include="Imagens\2\Fornecedores\4\Anexos\" />
@@ -3898,6 +3913,8 @@
     <Folder Include="Imagens\4\Produtos\" />
     <Folder Include="Imagens\4\Servicos\" />
     <Folder Include="Imagens\4\Usuario\14\Anexos\" />
+    <Folder Include="Imagens\Agenda\2\21\Anexos\" />
+    <Folder Include="Imagens\Agenda\2\22\Anexos\" />
     <Folder Include="Imagens\Assinantes\2\Anexos\" />
     <Folder Include="Models\" />
   </ItemGroup>

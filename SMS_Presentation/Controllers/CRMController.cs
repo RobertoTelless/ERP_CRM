@@ -112,7 +112,9 @@ namespace ERP_CRM_Solution.Controllers
                 Session["ListaCRM"] = listaMaster;
             }
             Session["CRM"] = null;
-            ViewBag.Listas = (List<CRM>)Session["ListaCRM"];
+            List<CRM> list = (List<CRM>)Session["ListaCRM"];
+            list = list.OrderByDescending(p => p.CRM1_DT_CRIACAO).ToList();
+            ViewBag.Listas = list;
             ViewBag.Title = "CRM";
             ViewBag.Origem = new SelectList(baseApp.GetAllOrigens(idAss).OrderBy(p => p.CROR_NM_NOME), "CROR_CD_ID", "CROR_NM_NOME");
             List<SelectListItem> visao = new List<SelectListItem>();
@@ -137,6 +139,12 @@ namespace ERP_CRM_Solution.Controllers
             fav.Add(new SelectListItem() { Text = "Sim", Value = "1" });
             fav.Add(new SelectListItem() { Text = "Não", Value = "0" });
             ViewBag.Favorito = new SelectList(fav, "Value", "Text");
+            List<SelectListItem> temp = new List<SelectListItem>();
+            temp.Add(new SelectListItem() { Text = "Fria", Value = "1" });
+            temp.Add(new SelectListItem() { Text = "Morna", Value = "2" });
+            temp.Add(new SelectListItem() { Text = "Quente", Value = "3" });
+            temp.Add(new SelectListItem() { Text = "Muito Quente", Value = "4" });
+            ViewBag.Temp = new SelectList(temp, "Value", "Text");
             Session["IncluirCRM"] = 0;
             Session["CRMVoltaAtendimento"] = 0;
             Session["VoltaAgenda"] = 11;
@@ -265,6 +273,12 @@ namespace ERP_CRM_Solution.Controllers
             fav.Add(new SelectListItem() { Text = "Sim", Value = "1" });
             fav.Add(new SelectListItem() { Text = "Não", Value = "0" });
             ViewBag.Favorito = new SelectList(fav, "Value", "Text");
+            List<SelectListItem> temp = new List<SelectListItem>();
+            temp.Add(new SelectListItem() { Text = "Fria", Value = "1" });
+            temp.Add(new SelectListItem() { Text = "Morna", Value = "2" });
+            temp.Add(new SelectListItem() { Text = "Quente", Value = "3" });
+            temp.Add(new SelectListItem() { Text = "Muito Quente", Value = "4" });
+            ViewBag.Temp = new SelectList(temp, "Value", "Text");
             Session["IncluirCRM"] = 0;
 
             // Indicadores
@@ -348,7 +362,7 @@ namespace ERP_CRM_Solution.Controllers
                 // Executa a operação
                 List<CRM> listaObj = new List<CRM>();
                 Session["FiltroCRM"] = item;
-                Int32 volta = baseApp.ExecuteFilter(item.CRM1_IN_STATUS, item.CRM1_DT_CRIACAO, item.CRM1_DT_CANCELAMENTO, item.ORIG_CD_ID, item.CRM1_IN_ATIVO, item.CRM1_NM_NOME, item.CRM1_DS_DESCRICAO, item.CRM1_IN_ESTRELA, idAss, out listaObj);
+                Int32 volta = baseApp.ExecuteFilter(item.CRM1_IN_STATUS, item.CRM1_DT_CRIACAO, item.CRM1_DT_CANCELAMENTO, item.ORIG_CD_ID, item.CRM1_IN_ATIVO, item.CRM1_NM_NOME, item.CRM1_DS_DESCRICAO, item.CRM1_IN_ESTRELA, item.CRM1_NR_TEMPERATURA, idAss, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)
@@ -1640,7 +1654,7 @@ namespace ERP_CRM_Solution.Controllers
 
             // Checa ações
             Session["TemAcao"] = 0;
-            if (item.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).ToList().Count > 0)
+            if (item.CRM_ACAO.Where(p => p.CRAC_IN_STATUS == 1).ToList().Count > 0)
             {
                 Session["TemAcao"] = 1;
             }
@@ -1742,15 +1756,18 @@ namespace ERP_CRM_Solution.Controllers
 
             // Checa ações
             Session["TemAcao"] = 0;
-            if (item.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).ToList().Count > 0)
+            if (item.CRM_ACAO.Where(p => p.CRAC_IN_STATUS == 1).ToList().Count > 0)
             {
                 Session["TemAcao"] = 1;
             }
 
             // Prepara view
+            List<SelectListItem> adic = new List<SelectListItem>();
+            adic.Add(new SelectListItem() { Text = "Falhado", Value = "4" });
+            adic.Add(new SelectListItem() { Text = "Sucesso", Value = "5" });
+            ViewBag.Adic = new SelectList(adic, "Value", "Text");
             CRMViewModel vm = Mapper.Map<CRM, CRMViewModel>(item);
             vm.CRM1_DT_ENCERRAMENTO = DateTime.Today.Date;
-            vm.CRM1_IN_ATIVO = 5;
             vm.CRM1_IN_STATUS = 5;
             return View(vm);
         }
@@ -1765,6 +1782,10 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Motivos = new SelectList(baseApp.GetAllMotivoEncerramento(idAss).OrderBy(p => p.MOEN_NM_NOME), "MOEN_CD_ID", "MOEN_NM_NOME");
+            List<SelectListItem> adic = new List<SelectListItem>();
+            adic.Add(new SelectListItem() { Text = "Falhado", Value = "4" });
+            adic.Add(new SelectListItem() { Text = "Sucesso", Value = "5" });
+            ViewBag.Adic = new SelectList(adic, "Value", "Text");
 
             if (ModelState.IsValid)
             {
@@ -2711,6 +2732,7 @@ namespace ERP_CRM_Solution.Controllers
                     Int32 volta = baseApp.ValidateEditAcao(item);
 
                     // Verifica retorno
+                    Session["ListaCRM"] = null;
                     return RedirectToAction("VoltarAcompanhamentoCRM");
                 }
                 catch (Exception ex)
@@ -3101,14 +3123,14 @@ namespace ERP_CRM_Solution.Controllers
             String texto = vm.MENS_TX_SMS;
 
             // Prepara cabeçalho
-            String cab = "Prezado Sr(a). <b>" + cont.CLIE_NM_NOME + "</b>";
+            String cab = "Prezado Sr(a). " + cont.CLIE_NM_NOME;
 
             // Prepara rodape
             ASSINANTE assi = (ASSINANTE)Session["Assinante"];
-            String rod = "<b>" + assi.ASSI_NM_NOME + "</b>";
+            String rod = assi.ASSI_NM_NOME;
 
             // Prepara corpo do SMS e trata link
-            String corpo = vm.MENS_TX_SMS + "<br /><br />";
+            String corpo = vm.MENS_TX_SMS;
             StringBuilder str = new StringBuilder();
             str.AppendLine(corpo);
             if (!String.IsNullOrEmpty(vm.LINK))
@@ -3125,7 +3147,7 @@ namespace ERP_CRM_Solution.Controllers
                 texto += "  " + vm.LINK;
             }
             String body = str.ToString();
-            String smsBody = cab + "<br /><br />" + body + "<br /><br />" + rod;
+            String smsBody = cab + body + rod;
             String erro = null;
 
             // inicia processo
@@ -4102,9 +4124,7 @@ namespace ERP_CRM_Solution.Controllers
         {
             // Prepara view
             List<CRMDTOViewModel> lista = (List<CRMDTOViewModel>)Session["ListaProcessosStatus"];
-            //List<CRMDTOViewModel> listaSit = (List<CRMDTOViewModel>)Session["ListaProcessosSituacao"];
             ViewBag.Lista = lista;
-            //ViewBag.ListaSit = listaSit;
             return View();
         }
 

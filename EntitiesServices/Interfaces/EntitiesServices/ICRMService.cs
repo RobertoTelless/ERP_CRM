@@ -23,7 +23,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         CRM GetItemById(Int32 id);
         List<CRM> GetAllItens(Int32 idAss);
         List<CRM> GetAllItensAdm(Int32 idAss);
-        List<CRM> ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca, Int32? estrela, Int32 idAss);
+        List<CRM> ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca, Int32? estrela, Int32? temperatura, Int32 idAss);
 
 
         List<USUARIO> GetAllUsers(Int32 idAss);

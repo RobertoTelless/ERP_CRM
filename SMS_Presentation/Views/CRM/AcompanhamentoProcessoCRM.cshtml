@@ -154,7 +154,7 @@
                                                         <span style="float: right"><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CLIE_CD_ID})" />Enviar E-Mail</span>
                                                     </div>
                                                     <div class="ibox-content" style="color: black">
-                                                        <h3 style="color: green"><strong><a href="@Url.Action("EditarCliente", "Cliente", new { id = Model.CLIE_CD_ID })"></a>@Model.CLIENTE.CLIE_NM_NOME</strong></h3>
+                                                        <h3 style="color: green"><strong><a href="@Url.Action("EditarCliente", "Cliente", new { id = Model.CLIE_CD_ID })">@Model.CLIENTE.CLIE_NM_NOME</a></strong></h3>
                                                         @if (Model.CLIENTE.CLIE_NM_ENDERECO != null)
                                                         {
                                                             <address>
@@ -165,15 +165,14 @@
                                                                     <abbr title="Fone">P:</abbr> @Model.CLIENTE.CLIE_NR_TELEFONE
                                                                     <br />
 	                                                            }
-                                                                <abbr title="Cel">C:</abbr> <a href="@Url.Action("EnviarSMSCliente", "CRM", new { id = Model.CLIENTE.CLIE_CD_ID })" />@Model.CLIENTE.CLIE_NR_CELULAR
+                                                                <abbr title="Cel">C:</abbr> <a href="@Url.Action("EnviarSMSCliente", "CRM", new { id = Model.CLIENTE.CLIE_CD_ID })">@Model.CLIENTE.CLIE_NR_CELULAR</a>
                                                             </address>
                                                         }
                                                         else
                                                         {
                                                             <h5>Não informado</h5>
                                                         }
-                                                        <p><i class="fa fa-map-marker"></i> @Model.CLIENTE.CLIE_NM_EMAIL</p>
-                                                        @*<div class="clearfix"></div>*@
+                                                        <p><i class="fa fa-envelope"></i><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CLIE_CD_ID})" /> @Model.CLIENTE.CLIE_NM_EMAIL</p>
                                                     </div>
                                                 </div>
                                             </div>

@@ -97,6 +97,10 @@
                             </div>
                         </div>
                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                Temperatura
+                                @Html.DropDownListFor(m => m.CRM1_NR_TEMPERATURA, (SelectList)ViewBag.Temp, "Selecionar", new { @class = "form-control", autofocus = true })
+                            </div>
                             <div class="col-lg-3 col-md-3 col-xs-12">
                                 Nome do Processo
                                 @Html.TextBoxFor(m => m.CRM1_NM_NOME, new { @class = "form-control", autofocus = true })
@@ -206,16 +210,16 @@
                                             {
                                                 <td><span class="badge badge-success">Encerrado</span></td>
                                             }
-                                            @if (cond.CRM_ACAO.Count > 0)
+                                            @if (cond.CRM_ACAO.Where(p => p.CRAC_IN_STATUS == 1).ToList().Count > 0)
                                             {
-                                                <td style="width: auto">@cond.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DS_DESCRICAO</td>
-                                                if (cond.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DT_PREVISTA.Value.Date >= DateTime.Today.Date)
+                                                <td style="width: auto">@cond.CRM_ACAO.Where(p => p.CRAC_IN_STATUS == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DS_DESCRICAO</td>
+                                                if (cond.CRM_ACAO.Where(p => p.CRAC_IN_STATUS == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DT_PREVISTA.Value.Date >= DateTime.Today.Date)
                                                 {
-                                                    <td style="width: auto; color: green; font-weight:bold">@cond.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DT_PREVISTA.Value.ToShortDateString()</td>
+                                                    <td style="width: auto; color: green; font-weight:bold">@cond.CRM_ACAO.Where(p => p.CRAC_IN_STATUS == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DT_PREVISTA.Value.ToShortDateString()</td>
                                                 }
                                                 else
                                                 {
-                                                    <td style="width: auto; color: red; font-weight:bold">@cond.CRM_ACAO.Where(p => p.CRAC_IN_ATIVO == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DT_PREVISTA.Value.ToShortDateString()</td>
+                                                    <td style="width: auto; color: red; font-weight:bold">@cond.CRM_ACAO.Where(p => p.CRAC_IN_STATUS == 1).OrderByDescending(m => m.CRAC_DT_PREVISTA).FirstOrDefault().CRAC_DT_PREVISTA.Value.ToShortDateString()</td>
                                                 }
                                             }
                                             else
@@ -242,7 +246,7 @@
                                             else if (cond.CRM1_IN_ATIVO == 3)
                                             {
                                                 <td><span class="badge badge-warning">Cancelado</span></td>
-                                            }
+                                            }   
                                             else if (cond.CRM1_IN_ATIVO == 4)
                                             {
                                                 <td><span class="badge badge-danger">Falhado</span></td>
@@ -266,6 +270,10 @@
                                             else if (cond.CRM1_NR_TEMPERATURA == 4)
                                             {
                                                 <td><span class="badge badge-danger">Muito Quente</span></td>
+                                            }
+                                            else
+                                            {
+                                                <td><span class="badge badge-info">Não Definida</span></td>
                                             }
                                             <td class="td-one-action">
                                                 @if (cond.CRM1_IN_ATIVO == 3 || cond.CRM1_IN_ATIVO == 4 || cond.CRM1_IN_ATIVO == 5)
