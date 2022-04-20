@@ -33,6 +33,9 @@ namespace EntitiesServices.Model
         public Nullable<System.DateTime> DOCU_DT_VALIDADE { get; set; }
         public string DOCU_AQ_ARQUIVO { get; set; }
         public int DOCU_IN_ATIVO { get; set; }
+        public int ASSI_CD_ID { get; set; }
+        public string DOCU_NR_NUMERO { get; set; }
+        public Nullable<System.DateTime> DOCU_DT_DATA { get; set; }
     
         public virtual CLASSE CLASSE { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }
@@ -42,5 +45,6 @@ namespace EntitiesServices.Model
         public virtual ICollection<DOCUMENTO_HISTORICO> DOCUMENTO_HISTORICO { get; set; }
         public virtual TIPO_DOCUMENTO TIPO_DOCUMENTO { get; set; }
         public virtual USUARIO USUARIO { get; set; }
+        public virtual ASSINANTE ASSINANTE { get; set; }
     }
 }

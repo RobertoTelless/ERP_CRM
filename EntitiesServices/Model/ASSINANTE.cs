@@ -87,6 +87,14 @@ namespace EntitiesServices.Model
             this.USUARIO = new HashSet<USUARIO>();
             this.CRM_COMERCIAL_ACAO = new HashSet<CRM_COMERCIAL_ACAO>();
             this.CRM_COMERCIAL = new HashSet<CRM_COMERCIAL>();
+            this.CLASSE = new HashSet<CLASSE>();
+            this.DOCUMENTO = new HashSet<DOCUMENTO>();
+            this.DOCUMENTO_HISTORICO = new HashSet<DOCUMENTO_HISTORICO>();
+            this.GRUPO_DOCUMENTO = new HashSet<GRUPO_DOCUMENTO>();
+            this.METADADO = new HashSet<METADADO>();
+            this.NIVEL_SEGURANCA = new HashSet<NIVEL_SEGURANCA>();
+            this.TIPO_DOCUMENTO = new HashSet<TIPO_DOCUMENTO>();
+            this.TIPO_METADADO = new HashSet<TIPO_METADADO>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -254,5 +262,21 @@ namespace EntitiesServices.Model
         public virtual ICollection<CRM_COMERCIAL_ACAO> CRM_COMERCIAL_ACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_COMERCIAL> CRM_COMERCIAL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CLASSE> CLASSE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DOCUMENTO> DOCUMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DOCUMENTO_HISTORICO> DOCUMENTO_HISTORICO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GRUPO_DOCUMENTO> GRUPO_DOCUMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<METADADO> METADADO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NIVEL_SEGURANCA> NIVEL_SEGURANCA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TIPO_DOCUMENTO> TIPO_DOCUMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TIPO_METADADO> TIPO_METADADO { get; set; }
     }
 }

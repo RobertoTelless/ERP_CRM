@@ -26,8 +26,10 @@ namespace EntitiesServices.Model
         public int META_IN_OBRIGATORIO { get; set; }
         public int META_IN_INDEXADO { get; set; }
         public int META_IN_ATIVO { get; set; }
+        public int ASSI_CD_ID { get; set; }
     
         public virtual CLASSE CLASSE { get; set; }
         public virtual TIPO_METADADO TIPO_METADADO { get; set; }
+        public virtual ASSINANTE ASSINANTE { get; set; }
     }
 }

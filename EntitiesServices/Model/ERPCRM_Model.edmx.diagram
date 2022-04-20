@@ -525,6 +525,14 @@
         <AssociationConnector Association="ERP_CRMModel.FK_DOCUMENTO_USUARIO" />
         <AssociationConnector Association="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_USUARIO" />
         <AssociationConnector Association="ERP_CRMModel.FK_METADADO_TIPO_METADADO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLASSE_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_DOCUMENTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_GRUPO_DOCUMENTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_METADADO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_NIVEL_SEGURANCA_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TIPO_DOCUMENTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TIPO_METADADO_ASSINANTE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

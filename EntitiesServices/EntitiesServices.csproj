@@ -267,6 +267,9 @@
     <Compile Include="Interfaces\EntitiesServices\ICategoriaProdutoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICategoriaServicoService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ICentroCustoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IDocumentoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IMetadadoService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\IClassesService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IFormularioRespostaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaBancariaService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IContaPagarParcelaService.cs" />
@@ -347,6 +350,9 @@
     <Compile Include="Interfaces\Repositories\ICategoriaAtendimentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaOrdemServicoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaServicoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IDocumentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMetadadoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IClasseRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContapagarAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaPagarParcelaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaPagarRateioRepository.cs" />
@@ -393,6 +399,7 @@
     <Compile Include="Interfaces\Repositories\IFornecedorContatoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoContatoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\INivelSegurancaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMComercialItemRepository.cs" />
     <Compile Include="Interfaces\Repositories\IItemPedidoCompraRepository.cs" />
@@ -465,6 +472,10 @@
     <Compile Include="Interfaces\Repositories\ITemplateSMSRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITemplateRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoAcaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IGrupoDocumentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IDocumentoHistoricoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoDocumentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoMetadadoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoContaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoCRMRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoPessoaRepository.cs" />
@@ -558,6 +569,9 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CENTRO_CUSTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CLASSE.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CLIENTE.cs">
@@ -656,6 +670,12 @@
     <Compile Include="Model\DEPARTAMENTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DOCUMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DOCUMENTO_HISTORICO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\EMAIL_AGENDAMENTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
@@ -740,6 +760,9 @@
     <Compile Include="Model\GRUPO_CLIENTE.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GRUPO_DOCUMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\ITEM_PEDIDO_COMPRA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
@@ -764,6 +787,9 @@
     <Compile Include="Model\MENSAGENS_DESTINOS.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\METADADO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\MOTIVO_CANCELAMENTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
@@ -771,6 +797,9 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MOVIMENTO_ESTOQUE_PRODUTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NIVEL_SEGURANCA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NOMENCLATURA_BRAS_SERVICOS.cs">
@@ -944,7 +973,13 @@
     <Compile Include="Model\TIPO_CRM.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\TIPO_DOCUMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\TIPO_GRUPO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TIPO_METADADO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_PESSOA.cs">

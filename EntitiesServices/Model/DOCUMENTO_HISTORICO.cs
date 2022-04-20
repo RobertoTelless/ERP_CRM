@@ -18,8 +18,10 @@ namespace EntitiesServices.Model
         public int DOCU_CD_ID { get; set; }
         public int USUA_CD_ID { get; set; }
         public System.DateTime DOHI_DT_ACESSO { get; set; }
+        public int ASSI_CD_ID { get; set; }
     
         public virtual DOCUMENTO DOCUMENTO { get; set; }
         public virtual USUARIO USUARIO { get; set; }
+        public virtual ASSINANTE ASSINANTE { get; set; }
     }
 }

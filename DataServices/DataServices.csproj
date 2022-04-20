@@ -183,6 +183,9 @@
     <Compile Include="Repositories\CategoriaOrdemServicoRepository.cs" />
     <Compile Include="Repositories\CategoriaProdutoRepository.cs" />
     <Compile Include="Repositories\CategoriaServicoRepository.cs" />
+    <Compile Include="Repositories\DocumentoRepository.cs" />
+    <Compile Include="Repositories\MetadadoRepository.cs" />
+    <Compile Include="Repositories\ClasseRepository.cs" />
     <Compile Include="Repositories\FormularioRespostaComentarioRepository.cs" />
     <Compile Include="Repositories\FormularioRespostaAnexoRepository.cs" />
     <Compile Include="Repositories\FormularioRespostaAcaoRepository.cs" />
@@ -236,6 +239,9 @@
     <Compile Include="Repositories\MotivoCancelamentoRepository.cs" />
     <Compile Include="Repositories\MotivoEncerramentoRepository.cs" />
     <Compile Include="Repositories\MovimentoEstoqueProdutoRepository.cs" />
+    <Compile Include="Repositories\DocumentoHistoricoRepository.cs" />
+    <Compile Include="Repositories\TipoDocumentoRepository.cs" />
+    <Compile Include="Repositories\TipoMetadadoRepository.cs" />
     <Compile Include="Repositories\NomencBrasServicosRepository.cs" />
     <Compile Include="Repositories\OrdemServicoAcompanhamentoRepository.cs" />
     <Compile Include="Repositories\OrdemServicoAgendaRepository.cs" />
@@ -297,10 +303,12 @@
     <Compile Include="Repositories\TemplateSMSRepository.cs" />
     <Compile Include="Repositories\TemplateRepository.cs" />
     <Compile Include="Repositories\TipoAcaoRepository.cs" />
+    <Compile Include="Repositories\GrupoDocumentoRepository.cs" />
     <Compile Include="Repositories\TipoContaRepository.cs" />
     <Compile Include="Repositories\TipoCRMRepository.cs" />
     <Compile Include="Repositories\TipoPessoaRepository.cs" />
     <Compile Include="Repositories\TipoContribuinteRepository.cs" />
+    <Compile Include="Repositories\NivelSegurancaRepository.cs" />
     <Compile Include="Repositories\TipoTarefaRepository.cs" />
     <Compile Include="Repositories\UFRepository.cs" />
     <Compile Include="Repositories\UnidadeRepository.cs" />

@@ -355,6 +355,7 @@
             <PropertyRef Name="CLAS_CD_ID" />
           </Key>
           <Property Name="CLAS_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="GRDC_CD_ID" Type="int" />
           <Property Name="NISE_CD_ID" Type="int" Nullable="false" />
           <Property Name="CLAS_NM_NOME" Type="varchar" MaxLength="200" Nullable="false" />
@@ -1019,6 +1020,7 @@
             <PropertyRef Name="DOCU_CD_ID" />
           </Key>
           <Property Name="DOCU_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="GRDC_CD_ID" Type="int" />
           <Property Name="CLAS_CD_ID" Type="int" />
           <Property Name="TIDO_CD_ID" Type="int" Nullable="false" />
@@ -1029,6 +1031,8 @@
           <Property Name="DOCU_DS_DESCRICAO" Type="varchar" MaxLength="500" />
           <Property Name="DOCU_DT_CADASTRO" Type="date" Nullable="false" />
           <Property Name="DOCU_DT_VALIDADE" Type="date" />
+          <Property Name="DOCU_NR_NUMERO" Type="varchar" MaxLength="50" />
+          <Property Name="DOCU_DT_DATA" Type="date" />
           <Property Name="DOCU_AQ_ARQUIVO" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="DOCU_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
@@ -1037,6 +1041,7 @@
             <PropertyRef Name="DOHI_CD_ID" />
           </Key>
           <Property Name="DOHI_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="DOCU_CD_ID" Type="int" Nullable="false" />
           <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
           <Property Name="DOHI_DT_ACESSO" Type="datetime" Nullable="false" />
@@ -1399,6 +1404,7 @@
             <PropertyRef Name="GRDC_CD_ID" />
           </Key>
           <Property Name="GRDC_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="GRDC_NM_NOME" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="GRDC_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
@@ -1541,6 +1547,7 @@
             <PropertyRef Name="META_CD_ID" />
           </Key>
           <Property Name="META_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="CLAS_CD_ID" Type="int" Nullable="false" />
           <Property Name="TIME_CD_ID" Type="int" Nullable="false" />
           <Property Name="META_NM_NOME" Type="varchar" MaxLength="250" Nullable="false" />
@@ -1597,6 +1604,7 @@
             <PropertyRef Name="NISE_CD_ID" />
           </Key>
           <Property Name="NISE_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="NISE_NM_NOME" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="NISE_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
@@ -2466,6 +2474,7 @@
             <PropertyRef Name="TIDO_CD_ID" />
           </Key>
           <Property Name="TIDO_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="TIDO_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TIDO_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
@@ -2483,6 +2492,7 @@
             <PropertyRef Name="TIME_CD_ID" />
           </Key>
           <Property Name="TIME_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="TIME_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TIME_IN_DECIMAL" Type="int" Nullable="false" />
           <Property Name="TIME_MS_MASCARA" Type="varchar" MaxLength="50" />
@@ -3247,6 +3257,18 @@
             </Principal>
             <Dependent Role="CENTRO_CUSTO">
               <PropertyRef Name="SUBG_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLASSE_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="CLASSE" Type="Self.CLASSE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CLASSE">
+              <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4318,6 +4340,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DOCUMENTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="DOCUMENTO" Type="Self.DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DOCUMENTO_CLASSE">
           <End Role="CLASSE" Type="Self.CLASSE" Multiplicity="0..1" />
           <End Role="DOCUMENTO" Type="Self.DOCUMENTO" Multiplicity="*" />
@@ -4363,6 +4397,18 @@
             </Principal>
             <Dependent Role="DOCUMENTO">
               <PropertyRef Name="GRDC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_HISTORICO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="DOCUMENTO_HISTORICO" Type="Self.DOCUMENTO_HISTORICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO_HISTORICO">
+              <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4966,6 +5012,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GRUPO_DOCUMENTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="GRUPO_DOCUMENTO" Type="Self.GRUPO_DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="GRUPO_DOCUMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_GRUPO_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
           <End Role="GRUPO" Type="Self.GRUPO" Multiplicity="*" />
@@ -5278,6 +5336,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_METADADO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="METADADO" Type="Self.METADADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="METADADO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_METADADO_CLASSE">
           <End Role="CLASSE" Type="Self.CLASSE" Multiplicity="1" />
           <End Role="METADADO" Type="Self.METADADO" Multiplicity="*" />
@@ -5359,6 +5429,18 @@
             </Principal>
             <Dependent Role="MOVIMENTO_ESTOQUE_PRODUTO">
               <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NIVEL_SEGURANCA_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="NIVEL_SEGURANCA" Type="Self.NIVEL_SEGURANCA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="NIVEL_SEGURANCA">
+              <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6694,6 +6776,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TIPO_DOCUMENTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="TIPO_DOCUMENTO" Type="Self.TIPO_DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TIPO_DOCUMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TIPO_GRUPO_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="TIPO_GRUPO" Type="Self.TIPO_GRUPO" Multiplicity="*" />
@@ -6702,6 +6796,18 @@
               <PropertyRef Name="ASSI_CD_ID" />
             </Principal>
             <Dependent Role="TIPO_GRUPO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIPO_METADADO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="TIPO_METADADO" Type="Self.TIPO_METADADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TIPO_METADADO">
               <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -7234,6 +7340,10 @@
             <End Role="SUBGRUPO" EntitySet="SUBGRUPO" />
             <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CLASSE_ASSINANTE" Association="Self.FK_CLASSE_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CLASSE" EntitySet="CLASSE" />
+          </AssociationSet>
           <AssociationSet Name="FK_CLASSE_GRUPO_DOCUMENTO" Association="Self.FK_CLASSE_GRUPO_DOCUMENTO">
             <End Role="GRUPO_DOCUMENTO" EntitySet="GRUPO_DOCUMENTO" />
             <End Role="CLASSE" EntitySet="CLASSE" />
@@ -7590,6 +7700,10 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_ASSINANTE" Association="Self.FK_DOCUMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_DOCUMENTO_CLASSE" Association="Self.FK_DOCUMENTO_CLASSE">
             <End Role="CLASSE" EntitySet="CLASSE" />
             <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
@@ -7605,6 +7719,10 @@
           <AssociationSet Name="FK_DOCUMENTO_GRUPO_DOCUMENTO" Association="Self.FK_DOCUMENTO_GRUPO_DOCUMENTO">
             <End Role="GRUPO_DOCUMENTO" EntitySet="GRUPO_DOCUMENTO" />
             <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_HISTORICO_ASSINANTE" Association="Self.FK_DOCUMENTO_HISTORICO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="DOCUMENTO_HISTORICO" EntitySet="DOCUMENTO_HISTORICO" />
           </AssociationSet>
           <AssociationSet Name="FK_DOCUMENTO_HISTORICO_DOCUMENTO" Association="Self.FK_DOCUMENTO_HISTORICO_DOCUMENTO">
             <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
@@ -7806,6 +7924,10 @@
             <End Role="GRUPO" EntitySet="GRUPO" />
             <End Role="GRUPO_CLIENTE" EntitySet="GRUPO_CLIENTE" />
           </AssociationSet>
+          <AssociationSet Name="FK_GRUPO_DOCUMENTO_ASSINANTE" Association="Self.FK_GRUPO_DOCUMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="GRUPO_DOCUMENTO" EntitySet="GRUPO_DOCUMENTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_GRUPO_USUARIO" Association="Self.FK_GRUPO_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="GRUPO" EntitySet="GRUPO" />
@@ -7910,6 +8032,10 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="MENSAGENS" EntitySet="MENSAGENS" />
           </AssociationSet>
+          <AssociationSet Name="FK_METADADO_ASSINANTE" Association="Self.FK_METADADO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="METADADO" EntitySet="METADADO" />
+          </AssociationSet>
           <AssociationSet Name="FK_METADADO_CLASSE" Association="Self.FK_METADADO_CLASSE">
             <End Role="CLASSE" EntitySet="CLASSE" />
             <End Role="METADADO" EntitySet="METADADO" />
@@ -7937,6 +8063,10 @@
           <AssociationSet Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" Association="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO">
             <End Role="PRODUTO" EntitySet="PRODUTO" />
             <End Role="MOVIMENTO_ESTOQUE_PRODUTO" EntitySet="MOVIMENTO_ESTOQUE_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NIVEL_SEGURANCA_ASSINANTE" Association="Self.FK_NIVEL_SEGURANCA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="NIVEL_SEGURANCA" EntitySet="NIVEL_SEGURANCA" />
           </AssociationSet>
           <AssociationSet Name="FK_NOTICIA_ASSINANTE" Association="Self.FK_NOTICIA_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -8382,9 +8512,17 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="TIPO_CRM" EntitySet="TIPO_CRM" />
           </AssociationSet>
+          <AssociationSet Name="FK_TIPO_DOCUMENTO_ASSINANTE" Association="Self.FK_TIPO_DOCUMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TIPO_DOCUMENTO" EntitySet="TIPO_DOCUMENTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_TIPO_GRUPO_ASSINANTE" Association="Self.FK_TIPO_GRUPO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="TIPO_GRUPO" EntitySet="TIPO_GRUPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIPO_METADADO_ASSINANTE" Association="Self.FK_TIPO_METADADO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TIPO_METADADO" EntitySet="TIPO_METADADO" />
           </AssociationSet>
           <AssociationSet Name="FK_TIPO_TAREFA_ASSINANTE" Association="Self.FK_TIPO_TAREFA_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -8597,6 +8735,14 @@
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_ASSINANTE" FromRole="ASSINANTE" ToRole="USUARIO" />
           <NavigationProperty Name="CRM_COMERCIAL_ACAO" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ACAO_ASSINANTE" FromRole="ASSINANTE" ToRole="CRM_COMERCIAL_ACAO" />
           <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_ASSINANTE" FromRole="ASSINANTE" ToRole="CRM_COMERCIAL" />
+          <NavigationProperty Name="CLASSE" Relationship="ERP_CRMModel.FK_CLASSE_ASSINANTE" FromRole="ASSINANTE" ToRole="CLASSE" />
+          <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="DOCUMENTO" />
+          <NavigationProperty Name="DOCUMENTO_HISTORICO" Relationship="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_ASSINANTE" FromRole="ASSINANTE" ToRole="DOCUMENTO_HISTORICO" />
+          <NavigationProperty Name="GRUPO_DOCUMENTO" Relationship="ERP_CRMModel.FK_GRUPO_DOCUMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="GRUPO_DOCUMENTO" />
+          <NavigationProperty Name="METADADO" Relationship="ERP_CRMModel.FK_METADADO_ASSINANTE" FromRole="ASSINANTE" ToRole="METADADO" />
+          <NavigationProperty Name="NIVEL_SEGURANCA" Relationship="ERP_CRMModel.FK_NIVEL_SEGURANCA_ASSINANTE" FromRole="ASSINANTE" ToRole="NIVEL_SEGURANCA" />
+          <NavigationProperty Name="TIPO_DOCUMENTO" Relationship="ERP_CRMModel.FK_TIPO_DOCUMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="TIPO_DOCUMENTO" />
+          <NavigationProperty Name="TIPO_METADADO" Relationship="ERP_CRMModel.FK_TIPO_METADADO_ASSINANTE" FromRole="ASSINANTE" ToRole="TIPO_METADADO" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -16738,6 +16884,38 @@
             <End Role="TIPO_METADADO" EntitySet="TIPO_METADADO" />
             <End Role="METADADO" EntitySet="METADADO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CLASSE_ASSINANTE" Association="ERP_CRMModel.FK_CLASSE_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CLASSE" EntitySet="CLASSE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_ASSINANTE" Association="ERP_CRMModel.FK_DOCUMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_HISTORICO_ASSINANTE" Association="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="DOCUMENTO_HISTORICO" EntitySet="DOCUMENTO_HISTORICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GRUPO_DOCUMENTO_ASSINANTE" Association="ERP_CRMModel.FK_GRUPO_DOCUMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="GRUPO_DOCUMENTO" EntitySet="GRUPO_DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_METADADO_ASSINANTE" Association="ERP_CRMModel.FK_METADADO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="METADADO" EntitySet="METADADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NIVEL_SEGURANCA_ASSINANTE" Association="ERP_CRMModel.FK_NIVEL_SEGURANCA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="NIVEL_SEGURANCA" EntitySet="NIVEL_SEGURANCA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIPO_DOCUMENTO_ASSINANTE" Association="ERP_CRMModel.FK_TIPO_DOCUMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TIPO_DOCUMENTO" EntitySet="TIPO_DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIPO_METADADO_ASSINANTE" Association="ERP_CRMModel.FK_TIPO_METADADO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TIPO_METADADO" EntitySet="TIPO_METADADO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ATENDIMENTO_CRM">
           <Key>
@@ -17344,6 +17522,8 @@
           <NavigationProperty Name="NIVEL_SEGURANCA" Relationship="ERP_CRMModel.FK_CLASSE_NIVEL_SEGURANCA" FromRole="CLASSE" ToRole="NIVEL_SEGURANCA" />
           <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_CLASSE" FromRole="CLASSE" ToRole="DOCUMENTO" />
           <NavigationProperty Name="METADADO" Relationship="ERP_CRMModel.FK_METADADO_CLASSE" FromRole="CLASSE" ToRole="METADADO" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_CLASSE_ASSINANTE" FromRole="CLASSE" ToRole="ASSINANTE" />
         </EntityType>
         <EntityType Name="DOCUMENTO">
           <Key>
@@ -17369,6 +17549,10 @@
           <NavigationProperty Name="DOCUMENTO_HISTORICO" Relationship="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_DOCUMENTO" FromRole="DOCUMENTO" ToRole="DOCUMENTO_HISTORICO" />
           <NavigationProperty Name="TIPO_DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_TIPO_DOCUMENTO" FromRole="DOCUMENTO" ToRole="TIPO_DOCUMENTO" />
           <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_DOCUMENTO_USUARIO" FromRole="DOCUMENTO" ToRole="USUARIO" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_DOCUMENTO_ASSINANTE" FromRole="DOCUMENTO" ToRole="ASSINANTE" />
+          <Property Name="DOCU_NR_NUMERO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DOCU_DT_DATA" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="DOCUMENTO_HISTORICO">
           <Key>
@@ -17380,6 +17564,8 @@
           <Property Name="DOHI_DT_ACESSO" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_DOCUMENTO" FromRole="DOCUMENTO_HISTORICO" ToRole="DOCUMENTO" />
           <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_USUARIO" FromRole="DOCUMENTO_HISTORICO" ToRole="USUARIO" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_ASSINANTE" FromRole="DOCUMENTO_HISTORICO" ToRole="ASSINANTE" />
         </EntityType>
         <EntityType Name="GRUPO_DOCUMENTO">
           <Key>
@@ -17390,6 +17576,8 @@
           <Property Name="GRDC_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CLASSE" Relationship="ERP_CRMModel.FK_CLASSE_GRUPO_DOCUMENTO" FromRole="GRUPO_DOCUMENTO" ToRole="CLASSE" />
           <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_GRUPO_DOCUMENTO" FromRole="GRUPO_DOCUMENTO" ToRole="DOCUMENTO" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_GRUPO_DOCUMENTO_ASSINANTE" FromRole="GRUPO_DOCUMENTO" ToRole="ASSINANTE" />
         </EntityType>
         <EntityType Name="METADADO">
           <Key>
@@ -17409,6 +17597,8 @@
           <Property Name="META_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CLASSE" Relationship="ERP_CRMModel.FK_METADADO_CLASSE" FromRole="METADADO" ToRole="CLASSE" />
           <NavigationProperty Name="TIPO_METADADO" Relationship="ERP_CRMModel.FK_METADADO_TIPO_METADADO" FromRole="METADADO" ToRole="TIPO_METADADO" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_METADADO_ASSINANTE" FromRole="METADADO" ToRole="ASSINANTE" />
         </EntityType>
         <EntityType Name="NIVEL_SEGURANCA">
           <Key>
@@ -17418,6 +17608,8 @@
           <Property Name="NISE_NM_NOME" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="NISE_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CLASSE" Relationship="ERP_CRMModel.FK_CLASSE_NIVEL_SEGURANCA" FromRole="NIVEL_SEGURANCA" ToRole="CLASSE" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_NIVEL_SEGURANCA_ASSINANTE" FromRole="NIVEL_SEGURANCA" ToRole="ASSINANTE" />
         </EntityType>
         <EntityType Name="TIPO_DOCUMENTO">
           <Key>
@@ -17427,6 +17619,8 @@
           <Property Name="TIDO_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TIDO_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_TIPO_DOCUMENTO" FromRole="TIPO_DOCUMENTO" ToRole="DOCUMENTO" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_TIPO_DOCUMENTO_ASSINANTE" FromRole="TIPO_DOCUMENTO" ToRole="ASSINANTE" />
         </EntityType>
         <EntityType Name="TIPO_METADADO">
           <Key>
@@ -17438,6 +17632,8 @@
           <Property Name="TIME_MS_MASCARA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TIME_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="METADADO" Relationship="ERP_CRMModel.FK_METADADO_TIPO_METADADO" FromRole="TIPO_METADADO" ToRole="METADADO" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_TIPO_METADADO_ASSINANTE" FromRole="TIPO_METADADO" ToRole="ASSINANTE" />
         </EntityType>
         <Association Name="FK_CLASSE_GRUPO_DOCUMENTO">
           <End Type="ERP_CRMModel.GRUPO_DOCUMENTO" Role="GRUPO_DOCUMENTO" Multiplicity="0..1" />
@@ -17580,6 +17776,102 @@
             </Principal>
             <Dependent Role="METADADO">
               <PropertyRef Name="TIME_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLASSE_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CLASSE" Role="CLASSE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CLASSE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.DOCUMENTO" Role="DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_HISTORICO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.DOCUMENTO_HISTORICO" Role="DOCUMENTO_HISTORICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO_HISTORICO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GRUPO_DOCUMENTO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.GRUPO_DOCUMENTO" Role="GRUPO_DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="GRUPO_DOCUMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_METADADO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.METADADO" Role="METADADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="METADADO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NIVEL_SEGURANCA_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.NIVEL_SEGURANCA" Role="NIVEL_SEGURANCA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="NIVEL_SEGURANCA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIPO_DOCUMENTO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.TIPO_DOCUMENTO" Role="TIPO_DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TIPO_DOCUMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIPO_METADADO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.TIPO_METADADO" Role="TIPO_METADADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TIPO_METADADO">
+              <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -20346,6 +20638,7 @@
           <EntitySetMapping Name="CLASSE">
             <EntityTypeMapping TypeName="ERP_CRMModel.CLASSE">
               <MappingFragment StoreEntitySet="CLASSE">
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CLAS_IN_ATIVO" ColumnName="CLAS_IN_ATIVO" />
                 <ScalarProperty Name="CLAS_DS_DESCRICAO" ColumnName="CLAS_DS_DESCRICAO" />
                 <ScalarProperty Name="CLAS_SG_SIGLA" ColumnName="CLAS_SG_SIGLA" />
@@ -20359,6 +20652,9 @@
           <EntitySetMapping Name="DOCUMENTO">
             <EntityTypeMapping TypeName="ERP_CRMModel.DOCUMENTO">
               <MappingFragment StoreEntitySet="DOCUMENTO">
+                <ScalarProperty Name="DOCU_DT_DATA" ColumnName="DOCU_DT_DATA" />
+                <ScalarProperty Name="DOCU_NR_NUMERO" ColumnName="DOCU_NR_NUMERO" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="DOCU_IN_ATIVO" ColumnName="DOCU_IN_ATIVO" />
                 <ScalarProperty Name="DOCU_AQ_ARQUIVO" ColumnName="DOCU_AQ_ARQUIVO" />
                 <ScalarProperty Name="DOCU_DT_VALIDADE" ColumnName="DOCU_DT_VALIDADE" />
@@ -20378,6 +20674,7 @@
           <EntitySetMapping Name="DOCUMENTO_HISTORICO">
             <EntityTypeMapping TypeName="ERP_CRMModel.DOCUMENTO_HISTORICO">
               <MappingFragment StoreEntitySet="DOCUMENTO_HISTORICO">
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="DOHI_DT_ACESSO" ColumnName="DOHI_DT_ACESSO" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="DOCU_CD_ID" ColumnName="DOCU_CD_ID" />
@@ -20388,6 +20685,7 @@
           <EntitySetMapping Name="GRUPO_DOCUMENTO">
             <EntityTypeMapping TypeName="ERP_CRMModel.GRUPO_DOCUMENTO">
               <MappingFragment StoreEntitySet="GRUPO_DOCUMENTO">
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="GRDC_IN_ATIVO" ColumnName="GRDC_IN_ATIVO" />
                 <ScalarProperty Name="GRDC_NM_NOME" ColumnName="GRDC_NM_NOME" />
                 <ScalarProperty Name="GRDC_CD_ID" ColumnName="GRDC_CD_ID" />
@@ -20397,6 +20695,7 @@
           <EntitySetMapping Name="METADADO">
             <EntityTypeMapping TypeName="ERP_CRMModel.METADADO">
               <MappingFragment StoreEntitySet="METADADO">
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="META_IN_ATIVO" ColumnName="META_IN_ATIVO" />
                 <ScalarProperty Name="META_IN_INDEXADO" ColumnName="META_IN_INDEXADO" />
                 <ScalarProperty Name="META_IN_OBRIGATORIO" ColumnName="META_IN_OBRIGATORIO" />
@@ -20415,6 +20714,7 @@
           <EntitySetMapping Name="NIVEL_SEGURANCA">
             <EntityTypeMapping TypeName="ERP_CRMModel.NIVEL_SEGURANCA">
               <MappingFragment StoreEntitySet="NIVEL_SEGURANCA">
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="NISE_IN_ATIVO" ColumnName="NISE_IN_ATIVO" />
                 <ScalarProperty Name="NISE_NM_NOME" ColumnName="NISE_NM_NOME" />
                 <ScalarProperty Name="NISE_CD_ID" ColumnName="NISE_CD_ID" />
@@ -20424,6 +20724,7 @@
           <EntitySetMapping Name="TIPO_DOCUMENTO">
             <EntityTypeMapping TypeName="ERP_CRMModel.TIPO_DOCUMENTO">
               <MappingFragment StoreEntitySet="TIPO_DOCUMENTO">
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="TIDO_IN_ATIVO" ColumnName="TIDO_IN_ATIVO" />
                 <ScalarProperty Name="TIDO_NM_NOME" ColumnName="TIDO_NM_NOME" />
                 <ScalarProperty Name="TIDO_CD_ID" ColumnName="TIDO_CD_ID" />
@@ -20433,6 +20734,7 @@
           <EntitySetMapping Name="TIPO_METADADO">
             <EntityTypeMapping TypeName="ERP_CRMModel.TIPO_METADADO">
               <MappingFragment StoreEntitySet="TIPO_METADADO">
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="TIME_IN_ATIVO" ColumnName="TIME_IN_ATIVO" />
                 <ScalarProperty Name="TIME_MS_MASCARA" ColumnName="TIME_MS_MASCARA" />
                 <ScalarProperty Name="TIME_IN_DECIMAL" ColumnName="TIME_IN_DECIMAL" />

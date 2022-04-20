@@ -28,6 +28,7 @@ namespace EntitiesServices.Model
         public string CLAS_SG_SIGLA { get; set; }
         public string CLAS_DS_DESCRICAO { get; set; }
         public int CLAS_IN_ATIVO { get; set; }
+        public int ASSI_CD_ID { get; set; }
     
         public virtual GRUPO_DOCUMENTO GRUPO_DOCUMENTO { get; set; }
         public virtual NIVEL_SEGURANCA NIVEL_SEGURANCA { get; set; }
@@ -35,5 +36,6 @@ namespace EntitiesServices.Model
         public virtual ICollection<DOCUMENTO> DOCUMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<METADADO> METADADO { get; set; }
+        public virtual ASSINANTE ASSINANTE { get; set; }
     }
 }

@@ -5,6 +5,72 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="containerModalDesc">
+        <div class="modal fade" id="modalDesc" tabindex="-1" role="dialog" aria-labelledby="modalDesc" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalDesc">Mensagem Enviada</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modalDescBody" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @using (Html.BeginForm("EnviarSmsContato", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+    { 
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Enviar SMS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      @Html.Hidden("id", null, new { id = "idClie" })
+                      Mensagem
+                      @Html.TextBox("mensagem", null, new { @style = "height: 200px;", @class = "form-control" })
+                  </div>
+                  <div class="modal-footer">
+                      @Html.ButtonActionSubmit("Enviar")
+                    <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Cancelar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+    }
+
     <div class="page-title">
         <h3 class="title">Processos - CRM</h3>
         <br />
@@ -16,7 +82,7 @@
                 <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos - CRM</a>
             </li>
             <li class="active">
-                <strong>Processos - CRM - Visualização</strong>
+                <strong>Processos - CRM - Consulta</strong>
             </li>
         </ol>
         <br />
@@ -25,7 +91,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Processos - CRM - Visualização</h5>
+                    <h5>Processos - CRM - Consulta</h5>
                 </div>
                 <div class="ibox-content">
                     @Html.AntiForgeryToken()
@@ -37,14 +103,17 @@
                         </div>
                     }
                     <div class="form-group">
-                        @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "CRM")
+                        @*@Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalheCRM", controller: "CRM")*@
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCRM", controller: "CRM")
                         @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
-                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "CRM", action: "Voltar")
                     </div>
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Dados do Processo</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-5">Ações</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-7">Timeline das Ações</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-8">Agendamentos</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-4">Comentários - Follow-Up</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2">Imagem & Anexos</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-3">Contatos</a></li>
                         </ul>
@@ -52,36 +121,41 @@
                             @*Dados Gerais*@
                             <div id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
-                                    @using (Html.BeginForm("VisualizarProcessoCRM", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    @using (Html.BeginForm("VisualizarCRM", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
-                                        <div class="form-group">
-                                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCRM", controller: "CRM")
-                                            @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "CRM")
-                                        </div>
-
                                         <div class="row">
                                             <div class="col-lg-4">
-                                                <div class="ibox float-e-margins">
-                                                    <div class="ibox-title">
+                                                <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 250px" >
+                                                    <div class="ibox-title"  style="color: black">
                                                         <h5>Dados do Cliente</h5>
                                                     </div>
-                                                    <div class="ibox-content">
-                                                        <h3><strong>@Model.CLIENTE.CLIE_NM_NOME</strong></h3>
-                                                        <address>
-                                                            @Model.CLIENTE.CLIE_NM_ENDERECO @Model.CLIENTE.CLIE_NR_NUMERO @Model.CLIENTE.CLIE_NM_COMPLEMENTO<br>
-                                                            @Model.CLIENTE.CLIE_NM_BAIRRO  - @Model.CLIENTE.CLIE_NM_CIDADE - @Model.CLIENTE.UF.UF_SG_SIGLA - @Model.CLIENTE.CLIE_NR_CEP<br>
-                                                            <abbr title="Fone">P:</abbr> @Model.CLIENTE.CLIE_NR_TELEFONE
-                                                            <abbr title="Cel">P:</abbr> @Model.CLIENTE.CLIE_NR_CELULAR
-                                                        </address>
-                                                        <p><i class="fa fa-map-marker"></i> @Model.CLIENTE.CLIE_NM_EMAIL</p>
-                                                        <div class="clearfix"></div>
+                                                    <div class="ibox-content" style="color: black">
+                                                        <h3 style="color: green"><strong>@Model.CLIENTE.CLIE_NM_NOME</strong></h3>
+                                                        @if (Model.CLIENTE.CLIE_NM_ENDERECO != null)
+                                                        {
+                                                            <address>
+                                                                @Model.CLIENTE.CLIE_NM_ENDERECO @Model.CLIENTE.CLIE_NR_NUMERO @Model.CLIENTE.CLIE_NM_COMPLEMENTO<br>
+                                                                @Model.CLIENTE.CLIE_NM_BAIRRO  - @Model.CLIENTE.CLIE_NM_CIDADE - @Model.CLIENTE.UF.UF_SG_SIGLA - @Model.CLIENTE.CLIE_NR_CEP<br>
+                                                                @if (Model.CLIENTE.CLIE_NR_TELEFONE != null)
+	                                                            {
+                                                                    <abbr title="Fone">P:</abbr> @Model.CLIENTE.CLIE_NR_TELEFONE
+                                                                    <br />
+	                                                            }
+                                                                <abbr title="Cel">C:</abbr>@Model.CLIENTE.CLIE_NR_CELULAR
+                                                            </address>
+                                                        }
+                                                        else
+                                                        {
+                                                            <h5>Não informado</h5>
+                                                        }
+                                                        <p><i class="fa fa-envelope"></i>@Model.CLIENTE.CLIE_NM_EMAIL</p>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <div class="ibox float-e-margins">
-                                                    <div class="ibox-title">
-                                                        <h5>Dados Fixos do Processo</h5>
+                                                <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 250px" >
+                                                    <div class="ibox-title" style="color: black">
+                                                        <h5 style="color: black">_CD_ID })">Dados Fixos do Processo</h5>
                                                         @if (Model.CRM1_IN_STATUS == 1)
                                                         {
                                                             <span class="badge badge-warning" style="float:right">Prospecção</span> 
@@ -103,33 +177,9 @@
                                                             <span class="badge badge-success" style="float:right">Encerrado</span>                                                        
                                                         }
                                                     </div>
-                                                    <div class="ibox-content"  style="height: 500px">
+                                                    <div class="ibox-content"  style="color: black">
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                                                @Html.HiddenFor(m => m.CRM1_AQ_IMAGEM)
-                                                                @Html.HiddenFor(m => m.CRM1_CD_ID)
-                                                                @Html.HiddenFor(m => m.CRM1_DS_INFORMACOES_ENCERRAMENTO)
-                                                                @Html.HiddenFor(m => m.CRM1_DS_MOTIVO_CANCELAMENTO)
-                                                                @Html.HiddenFor(m => m.CRM1_DT_CANCELAMENTO)
-                                                                @Html.HiddenFor(m => m.CRM1_DT_CRIACAO)
-                                                                @Html.HiddenFor(m => m.CRM1_DT_ENCERRAMENTO)
-                                                                @Html.HiddenFor(m => m.CRM1_IN_ATIVO)
-                                                                @Html.HiddenFor(m => m.CRM1_IN_DUMMY)
-                                                                @Html.HiddenFor(m => m.CRM1_IN_ESTRELA)
-                                                                @Html.HiddenFor(m => m.CRM1_IN_STATUS)
-                                                                @Html.HiddenFor(m => m.CRM1_NM_NOME)
-                                                                @Html.HiddenFor(m => m.MENS_CD_ID)
-                                                                @Html.HiddenFor(m => m.MOCA_CD_ID)
-                                                                @Html.HiddenFor(m => m.MOEN_CD_ID)
-                                                                @Html.HiddenFor(m => m.ORIG_CD_ID)
-                                                                @Html.HiddenFor(m => m.PEVE_CD_ID1)
-                                                                @Html.HiddenFor(m => m.PEVE_CD_ID2)
-                                                                @Html.HiddenFor(m => m.TICR_CD_ID)
-                                                                @Html.HiddenFor(m => m.USUA_CD_ID)
-                                                                @Html.HiddenFor(m => m.CLIE_CD_ID)
-                                                                @Html.HiddenFor(m => m.CRM1_DS_DESCRICAO)
-                                                                @Html.HiddenFor(m => m.CRM1_TX_INFORMACOES_GERAIS)
                                                                 Título do Processo
                                                                 @Html.TextBoxFor(m => m.CRM1_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                             </div>
@@ -140,12 +190,16 @@
                                                                 @Html.TextBoxFor(m => m.CRM1_DT_CRIACAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @id="data1", @readonly="readonly" })
                                                             </div>
                                                             <div class="col-lg-3 col-md-3 col-xs-12">
-                                                                Criado Por
+                                                                Responsável
                                                                 @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                             </div>
                                                             <div class="col-lg-3 col-md-3 col-xs-12">
                                                                 Origem
                                                                 @Html.TextBoxFor(m => m.CRM_ORIGEM.CROR_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                                                Temperatura
+                                                                @Html.DropDownListFor(m => m.CRM1_NR_TEMPERATURA, (SelectList)ViewBag.Temp, "Selecionar", new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -155,9 +209,9 @@
 
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <div class="ibox float-e-margins">
+                                                <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 520px" >
                                                     <div class="ibox-title">
-                                                        <h5>Informações do Processo</h5>
+                                                        <h5 style="color: black">Informações do Processo</h5>
                                                         @if (Model.CRM1_IN_ATIVO == 1)
                                                         {
                                                             <span class="badge badge-primary" style="float:right">Ativo</span> 
@@ -179,10 +233,10 @@
                                                             <span class="badge badge-success" style="float:right">Sucesso</span>                                                        
                                                         }
                                                     </div>
-                                                    <div class="ibox-content"  style="height: 500px">
+                                                    <div class="ibox-content"  style="color: black">
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                Descrição*
+                                                                Descrição
                                                                 @Html.TextAreaFor(m => m.CRM1_DS_DESCRICAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
                                                             </div>
                                                         </div>
@@ -196,11 +250,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="form-group">
-                                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCRM", controller: "CRM")
-                                            @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "CRM")
-                                        </div>
                                     }
                                 </div>
                             </div>
@@ -208,80 +257,95 @@
                             @*Imagens - Foto e Anexos*@
                             <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-lg-10 col-md-10 col-xs-12">
-                                            <div class="form-group">
-                                                <h4>Imagem</h4>
-                                            </div>
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 230px" >
+                                        <div class="ibox-title"  style="color: black">
+                                            <h5>Imagem</h5>
                                         </div>
-                                        <div class="col-lg-2 col-md-2 col-xs-12">
-                                            <div class="form-group">
-                                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                                    <br />
-                                                    @if (!String.IsNullOrEmpty(Model.CRM1_AQ_IMAGEM))
-                                                    {
-                                                        <img src="@Url.Content(Model.CRM1_AQ_IMAGEM)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
-                                                    }
-                                                    else
-                                                    {
-                                                        <img src="~/Images/gallery/icone_imagem.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
-                                                    }
+                                        <div class="ibox-content" style="color: black">
+                                            <div class="row">
+                                                <div class="col-lg-10 col-md-10 col-xs-12">
+                                                    <div class="form-group">
+                                                        @using (Html.BeginForm("UploadFotoCRM", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container3" }))
+                                                        {
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <br />
+                                                            @if (!String.IsNullOrEmpty(Model.CRM1_AQ_IMAGEM))
+                                                            {
+                                                                <img src="@Url.Content(Model.CRM1_AQ_IMAGEM)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                            }
+                                                            else
+                                                            {
+                                                                <img src="~/Images/gallery/icone_imagem.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                            }
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <hr />
-                                        <div class="col-lg-12 col-md-12 col-xs-12">
-                                            <h4>Anexos</h4>
-                                            <br />
-                                            <div class="form-group">
-                                                @using (Html.BeginForm("UploadFileCRM", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container2" }))
-                                                {
-                                                    <div class="ibox-content">
-                                                        @if (Model.CRM_ANEXO.Count > 0)
+
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 400px" >
+                                        <div class="ibox-title"  style="color: black">
+                                            <h5>Anexos</h5>
+                                        </div>
+                                        <div class="ibox-content" style="color: black">
+                                            <div class="row">
+                                                <hr />
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        @using (Html.BeginForm("UploadFileCRM", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container2" }))
                                                         {
-                                                            <table class="table table-striped table-bordered table-hover dataTables-example">
-                                                                <thead style="background-color:lightsteelblue">
-                                                                    <tr>
-                                                                        <th>Título</th>
-                                                                        <th>Data</th>
-                                                                        <th>Tipo</th>
-                                                                        <th class="td-one-action">Ações</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach (var cond in (Model.CRM_ANEXO))
-                                                                    {
-                                                                        <tr>
-                                                                            <td>@cond.CRAN_NM_TITULO</td>
-                                                                            <td>@cond.CRAN_DT_ANEXO.Value.ToShortDateString()</td>
-                                                                            @if (cond.CRAN_IN_TIPO == 1)
+                                                            <div class="ibox-content">
+                                                                @if (Model.CRM_ANEXO.Count > 0)
+                                                                {
+                                                                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                        <thead style="background-color:lightsteelblue">
+                                                                            <tr>
+                                                                                <th>Título</th>
+                                                                                <th>Data</th>
+                                                                                <th>Tipo</th>
+                                                                                <th class="td-one-action">Ações</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach (var cond in (Model.CRM_ANEXO))
                                                                             {
-                                                                                <td>Imagem</td>
+                                                                                <tr>
+                                                                                    <td>@cond.CRAN_NM_TITULO</td>
+                                                                                    <td>@cond.CRAN_DT_ANEXO.Value.ToShortDateString()</td>
+                                                                                    @if (cond.CRAN_IN_TIPO == 1)
+                                                                                    {
+                                                                                        <td>Imagem</td>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <td>Arquivo</td>
+                                                                                    }
+                                                                                    <td class="td-one-action">
+                                                                                        @if (cond.CRAN_IN_TIPO == 1 || cond.CRAN_IN_TIPO == 2)
+                                                                                        {
+                                                                                            @Html.TableLinkDetails(cond.CRAN_CD_ID, "VerAnexoCRM", "fa-camera", "Visualizar")
+                                                                                        }
+                                                                                        @if (cond.CRAN_IN_TIPO == 3)
+                                                                                        {
+                                                                                            <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.CRAN_AQ_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank"></a>
+                                                                                        }
+                                                                                        @Html.TableLinkDetails(cond.CRAN_CD_ID, "DownloadCRM", "fa-download", "Download")
+                                                                                    </td>
+                                                                                </tr>
                                                                             }
-                                                                            else
-                                                                            {
-                                                                                <td>Arquivo</td>
-                                                                            }
-                                                                            <td class="td-one-action">
-                                                                                @if (cond.CRAN_IN_TIPO == 1 || cond.CRAN_IN_TIPO == 2)
-                                                                                {
-                                                                                    @Html.TableLinkDetails(cond.CRAN_CD_ID, "VerAnexoCRM", "fa-camera", "Visualizar")
-                                                                                }
-                                                                                @if (cond.CRAN_IN_TIPO == 3)
-                                                                                {
-                                                                                    <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.CRAN_AQ_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank"></a>
-                                                                                }
-                                                                                @Html.TableLinkDetails(cond.CRAN_CD_ID, "DownloadCRM", "fa-download", "Download")
-                                                                            </td>
-                                                                        </tr>
-                                                                    }
-                                                                </tbody>
-                                                            </table>
+                                                                        </tbody>
+                                                                    </table>
+                                                                }
+                                                            </div>
                                                         }
                                                     </div>
-                                                }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -291,58 +355,443 @@
                             @*Contatos*@
                             <div id="tab-3" class="tab-pane">
                                 <div class="panel-body">
-                                    <div class="row">
-                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                                <h4>Contatos</h4>
-                                                <br />
-                                                @if (Model.CRM_CONTATO.Count > 0)
-                                                {
-                                                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                                                        <thead style="background-color:lightsteelblue">
-                                                            <tr>
-                                                                <th>Nome</th>
-                                                                <th>Cargo</th>
-                                                                <th>E-Mail</th>
-                                                                <th>Telefone</th>
-                                                                <th>Celular</th>
-                                                                <th>Principal</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var cond in (Model.CRM_CONTATO))
-                                                            {
-                                                                <tr>
-                                                                    <td>@cond.CRCO_NM_NOME</td>
-                                                                    <td>@cond.CRCO_NM_CARGO</td>
-                                                                    <td>@cond.CRCO_NM_EMAIL</td>
-                                                                    <td>@cond.CRCO_NR_TELEFONE</td>
-                                                                    <td>@cond.CRCO_NR_CELULAR</td>
-                                                                    @if (cond.CRCO_IN_PRINCIPAL == 1)
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
+                                        <div class="ibox-title"  style="color: black">
+                                            <h5>Contatos</h5>
+                                        </div>
+                                        @*<div class="ibox-content" style="color: black; overflow: auto">*@
+                                        <div class="ibox-content" style="color: black">
+                                            <div class="row">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <br />
+                                                        @if (Model.CRM_CONTATO.Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example1">
+                                                                <thead style="background-color:lightsteelblue">
+                                                                    <tr>
+                                                                        <th>Nome</th>
+                                                                        <th>Cargo</th>
+                                                                        <th>E-Mail</th>
+                                                                        <th>Telefone</th>
+                                                                        <th>Celular</th>
+                                                                        <th>Principal</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.CRM_CONTATO))
                                                                     {
-                                                                        <td><span class="badge badge-primary">Sim</span></td>
+                                                                        <tr>
+                                                                            <td>@cond.CRCO_NM_NOME</td>
+                                                                            <td>@cond.CRCO_NM_CARGO</td>
+                                                                            <td><a href="@Url.Action("EnviarEMailContato", "CRM", new { id = cond.CRCO_CD_ID })" />@cond.CRCO_NM_EMAIL</td>
+                                                                            <td>@cond.CRCO_NR_TELEFONE</td>
+                                                                            <td><a href="@Url.Action("EnviarSMSContato", "CRM", new { id = cond.CRCO_CD_ID })" />@cond.CRCO_NR_CELULAR</td>
+                                                                            @if (cond.CRCO_IN_PRINCIPAL == 1)
+                                                                            {
+                                                                                <td><span class="badge badge-primary">Sim</span></td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td><span class="badge badge-warning">Não</span></td>
+                                                                            }
+                                                                        </tr>
                                                                     }
-                                                                    else
-                                                                    {
-                                                                        <td><span class="badge badge-warning">Não</span></td>
-                                                                    }
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="row">
+                                                                <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                                </div>
+                                                                <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
+                                                                    <h2 style="font-weight: bold">Nenhum contato cadastrado nesse processo</h2>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            @*Agendamentos*@
+                            <div id="tab-8" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
+                                        <div class="ibox-title"  style="color: black">
+                                            <h5>Agendamentos</h5>
+                                        </div>
+                                        @*<div class="ibox-content" style="color: black; overflow: auto">*@
+                                        <div class="ibox-content" style="color: black">
+                                            <div class="row">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <br />
+                                                        @if (Model.AGENDA.Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead style="background-color:lightsteelblue">
+                                                                    <tr>
+                                                                        <th>Data</th>
+                                                                        <th>Hora</th>
+                                                                        <th>Categoria</th>
+                                                                        <th>Título</th>
+                                                                        <th>Contato</th>
+                                                                        <th>Status</th>
+                                                                        <th>Anexos</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in Model.AGENDA.OrderByDescending(p => p.AGEN_DT_DATA).ThenByDescending(p => p.AGEN_HR_HORA))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.AGEN_DT_DATA.ToShortDateString()</td>
+                                                                            <td>@cond.AGEN_HR_HORA.ToString()</td>
+                                                                            <td>@cond.CATEGORIA_AGENDA.CAAG_NM_NOME</td>
+                                                                            <td>@cond.AGEN_NM_TITULO</td>
+                                                                            @if (cond.USUARIO1 != null)
+                                                                            {
+                                                                                <td>@cond.USUARIO1.USUA_NM_NOME</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>-</td>
+                                                                            }
+                                                                            @if (cond.AGEN_IN_STATUS == 1)
+                                                                            {
+                                                                                <td><span class="badge badge-primary">Ativo</span></td>
+                                                                            }
+                                                                            else if (cond.AGEN_IN_STATUS == 2)
+                                                                            {
+                                                                                <td><span class="badge badge-warning">Suspenso</span></td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td><span class="badge badge-sucess">Encerrado</span></td>
+                                                                            }
+                                                                            @if (cond.AGENDA_ANEXO.Count > 0)
+                                                                            {
+                                                                                <td>@cond.AGENDA_ANEXO.Count</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>0</td>
+                                                                            }
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="row">
+                                                                <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                                </div>
+                                                                <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
+                                                                    <h2 style="font-weight: bold">Nenhum agendamento cadastrado nesse processo</h2>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.ButtonLinkIndex(text: "Ver Calendário", action: "MontarTelaAgendaCalendario", controller: "Agenda")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            @*Comentários*@
+                            <div id="tab-4" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
+                                        <div class="ibox-title"  style="color: black">
+                                            <h5>Comentários - Follow-Up</h5>
+                                        </div>
+                                        <div class="ibox-content" style="color: black; overflow: auto">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    @if (Model.CRM_COMENTARIO.Count > 0)
+                                                    {
+                                                        foreach (var item in (Model.CRM_COMENTARIO))
+                                                        {
+                                                            <div class="social-feed-box">
+                                                                <div class="social-avatar">
+                                                                    <a href="" class="pull-left">
+                                                                        <img src="@Url.Content(item.USUARIO.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                                    </a>
+                                                                    <div class="media-body">
+                                                                        <a href="#">
+                                                                            @item.USUARIO.USUA_NM_NOME
+                                                                        </a>
+                                                                        <small class="text-muted">@item.CRCM_DT_COMENTARIO.Value.ToString("dd/MM/yyyy HH:mm")</small>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="social-body">
+                                                                    <p>
+                                                                        @item.CRCM_DS_COMENTARIO
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                            </div>
+                                                            <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
+                                                                <h2 style="font-weight: bold">Nenhum comentário cadastrado nesse processo</h2>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Ações*@
+                            <div id="tab-5" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
+                                        <div class="ibox-title"  style="color: black">
+                                            <h5>Ações do Processo</h5>
+                                        </div>
+                                        @*<div class="ibox-content" style="color: black; overflow: auto">*@
+                                        <div class="ibox-content" style="color: black">
+                                            <div class="row">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        @if ((ViewBag.Acoes as List<EntitiesServices.Model.CRM_ACAO>).Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example1">
+                                                                <thead style="background-color:lightsteelblue">
+                                                                    <tr>
+                                                                        <th>Data Criação</th>
+                                                                        <th>Tipo</th>
+                                                                        <th>Título</th>
+                                                                        <th>Data Prevista</th>
+                                                                        <th>Dias para Encerrar</th>
+                                                                        <th>Status</th>
+                                                                        <th>Atribuição</th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in ((ViewBag.Acoes as List<EntitiesServices.Model.CRM_ACAO>)))
+                                                                    {
+                                                                        if (cond.CRAC_IN_STATUS == 1)
+                                                                        {
+                                                                            <tr style="background-color:lightyellow; color: green">
+                                                                                <td>@cond.CRAC_DT_CRIACAO.Value.ToShortDateString()</td>
+                                                                                <td>@cond.TIPO_ACAO.TIAC_NM_NOME</td>
+                                                                                <td>@cond.CRAC_NM_TITULO</td>
+                                                                                @if (cond.CRAC_DT_PREVISTA.Value.Date > DateTime.Today.Date)
+                                                                                {
+                                                                                    <td style="color: green;">@cond.CRAC_DT_PREVISTA.Value.ToShortDateString() @cond.CRAC_DT_PREVISTA.Value.ToShortTimeString()</td>
+                                                                                }
+                                                                                else if (cond.CRAC_DT_PREVISTA.Value.Date == DateTime.Today.Date)
+                                                                                {
+                                                                                    <td style="color: orange;">@cond.CRAC_DT_PREVISTA.Value.ToShortDateString() @cond.CRAC_DT_PREVISTA.Value.ToShortTimeString()</td>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <td style="color: red; font-weight:bold">@cond.CRAC_DT_PREVISTA.Value.ToShortDateString() @cond.CRAC_DT_PREVISTA.Value.ToShortTimeString()</td>
+                                                                                }
+                                                                                @if ((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days > 0)
+                                                                                {
+                                                                                    <td style="color: green;">@((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days)</td>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <td style="color: red; font-weight:bold">@((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days)</td>
+                                                                                }
+                                                                                @if (cond.CRAC_IN_STATUS == 1)
+	                                                                            {
+                                                                                    <td><span class="badge badge-primary">Ativa</span></td>
+                                                                                }
+                                                                                else if (cond.CRAC_IN_STATUS == 2)
+                                                                                {
+                                                                                    <td><span class="badge badge-danger">Pendente</span></td>
+                                                                                }
+                                                                                else if (cond.CRAC_IN_STATUS == 3)
+                                                                                {
+                                                                                    <td><span class="badge badge-success">Encerrada</span></td>
+                                                                                }
+                                                                                else if (cond.CRAC_IN_STATUS == 4)
+                                                                                {
+                                                                                    <td><span class="badge badge-warning">Excluída</span></td>
+                                                                                }
+                                                                                <td>@cond.USUARIO.USUA_NM_NOME</td>
+                                                                                <td class="td-one-action">
+                                                                                    @Html.TableLinkDetails(cond.CRAC_CD_ID, "VerAcao", "fa-search", "Consultar")
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <tr>
+                                                                                <td>@cond.CRAC_DT_CRIACAO.Value.ToShortDateString()</td>
+                                                                                <td>@cond.TIPO_ACAO.TIAC_NM_NOME</td>
+                                                                                <td>@cond.CRAC_NM_TITULO</td>
+                                                                                @if (cond.CRAC_DT_PREVISTA.Value.Date > DateTime.Today.Date)
+                                                                                {
+                                                                                    <td>@cond.CRAC_DT_PREVISTA.Value.ToShortDateString() @cond.CRAC_DT_PREVISTA.Value.ToShortTimeString()</td>
+                                                                                }
+                                                                                else if (cond.CRAC_DT_PREVISTA.Value.Date == DateTime.Today.Date)
+                                                                                {
+                                                                                    <td>@cond.CRAC_DT_PREVISTA.Value.ToShortDateString() @cond.CRAC_DT_PREVISTA.Value.ToShortTimeString()</td>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <td>@cond.CRAC_DT_PREVISTA.Value.ToShortDateString() @cond.CRAC_DT_PREVISTA.Value.ToShortTimeString()</td>
+                                                                                }
+                                                                                @if ((cond.CRAC_DT_PREVISTA.Value - DateTime.Today.Date).Days > 0)
+                                                                                {
+                                                                                    <td>@((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days)</td>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <td>@((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days)</td>
+                                                                                }
+                                                                                @if (cond.CRAC_IN_STATUS == 1)
+	                                                                            {
+                                                                                    <td><span class="badge badge-primary">Ativa</span></td>
+                                                                                }
+                                                                                else if (cond.CRAC_IN_STATUS == 2)
+                                                                                {
+                                                                                    <td><span class="badge badge-danger">Pendente</span></td>
+                                                                                }
+                                                                                else if (cond.CRAC_IN_STATUS == 3)
+                                                                                {
+                                                                                    <td><span class="badge badge-success">Encerrada</span></td>
+                                                                                }
+                                                                                else if (cond.CRAC_IN_STATUS == 4)
+                                                                                {
+                                                                                    <td><span class="badge badge-warning">Excluída</span></td>
+                                                                                }
+                                                                                <td>@cond.USUARIO.USUA_NM_NOME</td>
+                                                                                <td class="td-one-action">
+                                                                                    @Html.TableLinkDetails(cond.CRAC_CD_ID, "VerAcao", "fa-search", "Consultar")
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="row">
+                                                                <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                                </div>
+                                                                <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
+                                                                    <h2 style="font-weight: bold">Nenhuma ação cadastrada nesse processo</h2>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            @*Timeline das Ações*@
+                            <div id="tab-7" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
+                                        <div class="ibox-title"  style="color: black">
+                                            <h5>Ações do Processo - Timeline</h5>
+                                        </div>
+                                        <div class="ibox-content" style="color: black;">
+                                            <div class="row">
+                                                @*<div id="vertical-timeline" class="vertical-container light-timeline">*@
+                                                        @if ((ViewBag.Acoes as List<EntitiesServices.Model.CRM_ACAO>).Count > 0)
+                                                        {
+                                                            <div id="vertical-timeline" class="vertical-container light-timeline">
+                                                                @foreach (var item in (ViewBag.Acoes as List<EntitiesServices.Model.CRM_ACAO>).OrderByDescending(p => p.CRAC_DT_PREVISTA))
+                                                                {
+                                                                    <div class="vertical-timeline-block">
+                                                                        <div class="vertical-timeline-icon navy-bg">
+                                                                            @if (item.CRAC_IN_STATUS == 1)
+                                                                            {
+                                                                                <i class="fa fa-briefcase"></i>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <i class="fa fa-check"></i>
+                                                                            }
+                                                                        </div>
+
+                                                                        <div class="vertical-timeline-content">
+                                                                            <h2 style="cursor: pointer; color: green; font-weight:bold">@item.CRAC_NM_TITULO</h2>
+                                                                            <p>
+                                                                                <br />
+                                                                                @item.CRAC_DS_DESCRICAO                                                        
+                                                                            </p>
+                                                                            <span class="vertical-date">
+                                                                                <small>@item.CRAC_DT_PREVISTA.Value.ToShortDateString()  @item.CRAC_DT_PREVISTA.Value.ToShortTimeString()</small>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="row">
+                                                                <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                                </div>
+                                                                <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
+                                                                    <h2 style="font-weight: bold">Nenhuma ação cadastrada nesse processo</h2>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                @*</div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <br />
                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCRM", controller: "CRM")
-                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "CRM", action: "Voltar")
                 </div>
             </div>
         </div>
@@ -377,15 +826,21 @@
 
         function ShowModalExcluir(url) {
             $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
-            $('#modal').find('.modal-body').html('Confirma exclusão do Contato?');
+            $('#modal').find('.modal-body').html('Confirma exclusão da Ação?');
             $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
             $('#modal').modal('show');
         }
 
         function ShowModalReativar(url) {
             $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
-            $('#modal').find('.modal-body').html('Confirma reativação do Contato?');
+            $('#modal').find('.modal-body').html('Confirma reativação da Ação?');
             $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+        function ShowModalEncerrar(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Encerrar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma Encerramento da Ação?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Encerramento</h5>');
             $('#modal').modal('show');
         }
     </script>
@@ -404,7 +859,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $('.dataTables-example').DataTable({
+            $('.dataTables-example1').DataTable({
                 pageLength: 25,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
