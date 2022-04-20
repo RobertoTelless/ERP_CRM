@@ -505,6 +505,26 @@
         <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_COMENTARIO_USUARIO" />
         <AssociationConnector Association="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_CRM_ORIGEM" />
         <AssociationConnector Association="ERP_CRMModel.FK_AGENDA_CRM" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLASSE" Width="1.5" PointX="35.5" PointY="190.5" />
+        <EntityTypeShape EntityType="ERP_CRMModel.DOCUMENTO" Width="1.5" PointX="37.75" PointY="214.875" />
+        <EntityTypeShape EntityType="ERP_CRMModel.DOCUMENTO_HISTORICO" Width="1.5" PointX="43" PointY="210.875" />
+        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO_DOCUMENTO" Width="1.5" PointX="33.25" PointY="189.75" />
+        <EntityTypeShape EntityType="ERP_CRMModel.METADADO" Width="1.5" PointX="37.75" PointY="190.25" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NIVEL_SEGURANCA" Width="1.5" PointX="33.25" PointY="192.5" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_DOCUMENTO" Width="1.5" PointX="35.5" PointY="236.125" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_METADADO" Width="1.5" PointX="35.5" PointY="187" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLASSE_GRUPO_DOCUMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CLASSE_NIVEL_SEGURANCA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_DOCUMENTO_CLASSE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_METADADO_CLASSE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_DOCUMENTO_CLIENTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_DOCUMENTO_FORNECEDOR" />
+        <AssociationConnector Association="ERP_CRMModel.FK_DOCUMENTO_GRUPO_DOCUMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_DOCUMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_DOCUMENTO_TIPO_DOCUMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_DOCUMENTO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_METADADO_TIPO_METADADO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

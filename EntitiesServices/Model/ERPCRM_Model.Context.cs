@@ -188,5 +188,13 @@ namespace EntitiesServices.Model
         public virtual DbSet<FORMULARIO_RESPOSTA_ACAO> FORMULARIO_RESPOSTA_ACAO { get; set; }
         public virtual DbSet<FORMULARIO_RESPOSTA_ANEXO> FORMULARIO_RESPOSTA_ANEXO { get; set; }
         public virtual DbSet<FORMULARIO_RESPOSTA_COMENTARIO> FORMULARIO_RESPOSTA_COMENTARIO { get; set; }
+        public virtual DbSet<CLASSE> CLASSE { get; set; }
+        public virtual DbSet<DOCUMENTO> DOCUMENTO { get; set; }
+        public virtual DbSet<DOCUMENTO_HISTORICO> DOCUMENTO_HISTORICO { get; set; }
+        public virtual DbSet<GRUPO_DOCUMENTO> GRUPO_DOCUMENTO { get; set; }
+        public virtual DbSet<METADADO> METADADO { get; set; }
+        public virtual DbSet<NIVEL_SEGURANCA> NIVEL_SEGURANCA { get; set; }
+        public virtual DbSet<TIPO_DOCUMENTO> TIPO_DOCUMENTO { get; set; }
+        public virtual DbSet<TIPO_METADADO> TIPO_METADADO { get; set; }
     }
 }

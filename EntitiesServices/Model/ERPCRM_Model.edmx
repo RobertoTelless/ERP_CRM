@@ -350,6 +350,18 @@
           <Property Name="CECU_IN_MOVTO" Type="int" />
           <Property Name="CECU_NM_EXIBE" Type="varchar" MaxLength="63" StoreGeneratedPattern="Computed" />
         </EntityType>
+        <EntityType Name="CLASSE">
+          <Key>
+            <PropertyRef Name="CLAS_CD_ID" />
+          </Key>
+          <Property Name="CLAS_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GRDC_CD_ID" Type="int" />
+          <Property Name="NISE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CLAS_NM_NOME" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="CLAS_SG_SIGLA" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CLAS_DS_DESCRICAO" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="CLAS_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="CLIENTE">
           <Key>
             <PropertyRef Name="CLIE_CD_ID" />
@@ -1002,6 +1014,33 @@
           <Property Name="DEPT_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DEPT_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="DOCUMENTO">
+          <Key>
+            <PropertyRef Name="DOCU_CD_ID" />
+          </Key>
+          <Property Name="DOCU_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GRDC_CD_ID" Type="int" />
+          <Property Name="CLAS_CD_ID" Type="int" />
+          <Property Name="TIDO_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CLIE_CD_ID" Type="int" />
+          <Property Name="FORN_CD_ID" Type="int" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="DOCU_NM_NOME" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DOCU_DS_DESCRICAO" Type="varchar" MaxLength="500" />
+          <Property Name="DOCU_DT_CADASTRO" Type="date" Nullable="false" />
+          <Property Name="DOCU_DT_VALIDADE" Type="date" />
+          <Property Name="DOCU_AQ_ARQUIVO" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="DOCU_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DOCUMENTO_HISTORICO">
+          <Key>
+            <PropertyRef Name="DOHI_CD_ID" />
+          </Key>
+          <Property Name="DOHI_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DOCU_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="DOHI_DT_ACESSO" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="EMAIL_AGENDAMENTO">
           <Key>
             <PropertyRef Name="EMAG_CD_ID" />
@@ -1355,6 +1394,14 @@
           <Property Name="CLIE_CD_ID" Type="int" Nullable="false" />
           <Property Name="GRCL_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="GRUPO_DOCUMENTO">
+          <Key>
+            <PropertyRef Name="GRDC_CD_ID" />
+          </Key>
+          <Property Name="GRDC_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GRDC_NM_NOME" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="GRDC_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="ITEM_PEDIDO_COMPRA">
           <Key>
             <PropertyRef Name="ITPC_CD_ID" />
@@ -1489,6 +1536,23 @@
           <Property Name="MEDE_TX_OBSERVACOES" Type="text" />
           <Property Name="MEDE_DS_ERRO_ENVIO" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="METADADO">
+          <Key>
+            <PropertyRef Name="META_CD_ID" />
+          </Key>
+          <Property Name="META_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CLAS_CD_ID" Type="int" Nullable="false" />
+          <Property Name="TIME_CD_ID" Type="int" Nullable="false" />
+          <Property Name="META_NM_NOME" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="META_SG_SIGLA" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="META_DS_DESCRICAO" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="META_IN_MULTIVALOR" Type="int" Nullable="false" />
+          <Property Name="META_NR_TAMANHO" Type="int" Nullable="false" />
+          <Property Name="META_NR_DECIMAIS" Type="int" />
+          <Property Name="META_IN_OBRIGATORIO" Type="int" Nullable="false" />
+          <Property Name="META_IN_INDEXADO" Type="int" Nullable="false" />
+          <Property Name="META_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="MOTIVO_CANCELAMENTO">
           <Key>
             <PropertyRef Name="MOCA_CD_ID" />
@@ -1527,6 +1591,14 @@
           <Property Name="MOEP_QN_DEPOIS" Type="int" />
           <Property Name="MOEP_QN_ALTERADA" Type="int" />
           <Property Name="MOEP_IN_OPERACAO" Type="int" />
+        </EntityType>
+        <EntityType Name="NIVEL_SEGURANCA">
+          <Key>
+            <PropertyRef Name="NISE_CD_ID" />
+          </Key>
+          <Property Name="NISE_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NISE_NM_NOME" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="NISE_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="NOMENCLATURA_BRAS_SERVICOS">
           <Key>
@@ -2389,6 +2461,14 @@
           <Property Name="TICR_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="TICR_IN_ATIVO" Type="int" />
         </EntityType>
+        <EntityType Name="TIPO_DOCUMENTO">
+          <Key>
+            <PropertyRef Name="TIDO_CD_ID" />
+          </Key>
+          <Property Name="TIDO_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TIDO_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TIDO_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TIPO_GRUPO">
           <Key>
             <PropertyRef Name="TIGR_CD_ID" />
@@ -2397,6 +2477,16 @@
           <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
           <Property Name="TIGR_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="TIGR_IN_ATIVO" Type="int" />
+        </EntityType>
+        <EntityType Name="TIPO_METADADO">
+          <Key>
+            <PropertyRef Name="TIME_CD_ID" />
+          </Key>
+          <Property Name="TIME_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TIME_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TIME_IN_DECIMAL" Type="int" Nullable="false" />
+          <Property Name="TIME_MS_MASCARA" Type="varchar" MaxLength="50" />
+          <Property Name="TIME_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TIPO_PESSOA">
           <Key>
@@ -3157,6 +3247,30 @@
             </Principal>
             <Dependent Role="CENTRO_CUSTO">
               <PropertyRef Name="SUBG_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLASSE_GRUPO_DOCUMENTO">
+          <End Role="GRUPO_DOCUMENTO" Type="Self.GRUPO_DOCUMENTO" Multiplicity="0..1" />
+          <End Role="CLASSE" Type="Self.CLASSE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO_DOCUMENTO">
+              <PropertyRef Name="GRDC_CD_ID" />
+            </Principal>
+            <Dependent Role="CLASSE">
+              <PropertyRef Name="GRDC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLASSE_NIVEL_SEGURANCA">
+          <End Role="NIVEL_SEGURANCA" Type="Self.NIVEL_SEGURANCA" Multiplicity="1" />
+          <End Role="CLASSE" Type="Self.CLASSE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NIVEL_SEGURANCA">
+              <PropertyRef Name="NISE_CD_ID" />
+            </Principal>
+            <Dependent Role="CLASSE">
+              <PropertyRef Name="NISE_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4204,6 +4318,102 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DOCUMENTO_CLASSE">
+          <End Role="CLASSE" Type="Self.CLASSE" Multiplicity="0..1" />
+          <End Role="DOCUMENTO" Type="Self.DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLASSE">
+              <PropertyRef Name="CLAS_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="CLAS_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
+          <End Role="DOCUMENTO" Type="Self.DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_FORNECEDOR">
+          <End Role="FORNECEDOR" Type="Self.FORNECEDOR" Multiplicity="0..1" />
+          <End Role="DOCUMENTO" Type="Self.DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORNECEDOR">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_GRUPO_DOCUMENTO">
+          <End Role="GRUPO_DOCUMENTO" Type="Self.GRUPO_DOCUMENTO" Multiplicity="0..1" />
+          <End Role="DOCUMENTO" Type="Self.DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO_DOCUMENTO">
+              <PropertyRef Name="GRDC_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="GRDC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_HISTORICO_DOCUMENTO">
+          <End Role="DOCUMENTO" Type="Self.DOCUMENTO" Multiplicity="1" />
+          <End Role="DOCUMENTO_HISTORICO" Type="Self.DOCUMENTO_HISTORICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DOCUMENTO">
+              <PropertyRef Name="DOCU_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO_HISTORICO">
+              <PropertyRef Name="DOCU_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_HISTORICO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="DOCUMENTO_HISTORICO" Type="Self.DOCUMENTO_HISTORICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO_HISTORICO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_TIPO_DOCUMENTO">
+          <End Role="TIPO_DOCUMENTO" Type="Self.TIPO_DOCUMENTO" Multiplicity="1" />
+          <End Role="DOCUMENTO" Type="Self.DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_DOCUMENTO">
+              <PropertyRef Name="TIDO_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="TIDO_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="DOCUMENTO" Type="Self.DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EMAIL_AGENDAMENTO_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="EMAIL_AGENDAMENTO" Type="Self.EMAIL_AGENDAMENTO" Multiplicity="*" />
@@ -5065,6 +5275,30 @@
             </Principal>
             <Dependent Role="MENSAGENS">
               <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_METADADO_CLASSE">
+          <End Role="CLASSE" Type="Self.CLASSE" Multiplicity="1" />
+          <End Role="METADADO" Type="Self.METADADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLASSE">
+              <PropertyRef Name="CLAS_CD_ID" />
+            </Principal>
+            <Dependent Role="METADADO">
+              <PropertyRef Name="CLAS_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_METADADO_TIPO_METADADO">
+          <End Role="TIPO_METADADO" Type="Self.TIPO_METADADO" Multiplicity="1" />
+          <End Role="METADADO" Type="Self.METADADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_METADADO">
+              <PropertyRef Name="TIME_CD_ID" />
+            </Principal>
+            <Dependent Role="METADADO">
+              <PropertyRef Name="TIME_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6669,6 +6903,7 @@
           <EntitySet Name="CATEGORIA_TELEFONE" EntityType="Self.CATEGORIA_TELEFONE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_USUARIO" EntityType="Self.CATEGORIA_USUARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CENTRO_CUSTO" EntityType="Self.CENTRO_CUSTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLASSE" EntityType="Self.CLASSE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CLIENTE_ANEXO" EntityType="Self.CLIENTE_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CLIENTE_CONTATO" EntityType="Self.CLIENTE_CONTATO" Schema="dbo" store:Type="Tables" />
@@ -6701,6 +6936,8 @@
           <EntitySet Name="CRM_CONTATO" EntityType="Self.CRM_CONTATO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRM_ORIGEM" EntityType="Self.CRM_ORIGEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DEPARTAMENTO" EntityType="Self.DEPARTAMENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DOCUMENTO" EntityType="Self.DOCUMENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DOCUMENTO_HISTORICO" EntityType="Self.DOCUMENTO_HISTORICO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMAIL_AGENDAMENTO" EntityType="Self.EMAIL_AGENDAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EQUIPAMENTO" EntityType="Self.EQUIPAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EQUIPAMENTO_ANEXO" EntityType="Self.EQUIPAMENTO_ANEXO" Schema="dbo" store:Type="Tables" />
@@ -6724,6 +6961,7 @@
           <EntitySet Name="GRUPO" EntityType="Self.GRUPO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GRUPO_CC" EntityType="Self.GRUPO_CC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GRUPO_CLIENTE" EntityType="Self.GRUPO_CLIENTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GRUPO_DOCUMENTO" EntityType="Self.GRUPO_DOCUMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ITEM_PEDIDO_COMPRA" EntityType="Self.ITEM_PEDIDO_COMPRA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ITEM_PEDIDO_VENDA" EntityType="Self.ITEM_PEDIDO_VENDA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOG" EntityType="Self.LOG" Schema="dbo" store:Type="Tables" />
@@ -6732,9 +6970,11 @@
           <EntitySet Name="MENSAGEM_AUTOMACAO_DATAS" EntityType="Self.MENSAGEM_AUTOMACAO_DATAS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MENSAGENS" EntityType="Self.MENSAGENS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MENSAGENS_DESTINOS" EntityType="Self.MENSAGENS_DESTINOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="METADADO" EntityType="Self.METADADO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MOTIVO_CANCELAMENTO" EntityType="Self.MOTIVO_CANCELAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MOTIVO_ENCERRAMENTO" EntityType="Self.MOTIVO_ENCERRAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MOVIMENTO_ESTOQUE_PRODUTO" EntityType="Self.MOVIMENTO_ESTOQUE_PRODUTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NIVEL_SEGURANCA" EntityType="Self.NIVEL_SEGURANCA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOMENCLATURA_BRAS_SERVICOS" EntityType="Self.NOMENCLATURA_BRAS_SERVICOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOTICIA" EntityType="Self.NOTICIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOTICIA_COMENTARIO" EntityType="Self.NOTICIA_COMENTARIO" Schema="dbo" store:Type="Tables" />
@@ -6792,7 +7032,9 @@
           <EntitySet Name="TIPO_CONTA" EntityType="Self.TIPO_CONTA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_CONTRIBUINTE" EntityType="Self.TIPO_CONTRIBUINTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_CRM" EntityType="Self.TIPO_CRM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPO_DOCUMENTO" EntityType="Self.TIPO_DOCUMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_GRUPO" EntityType="Self.TIPO_GRUPO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPO_METADADO" EntityType="Self.TIPO_METADADO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_PESSOA" EntityType="Self.TIPO_PESSOA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_TAREFA" EntityType="Self.TIPO_TAREFA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_TRANSPORTE" EntityType="Self.TIPO_TRANSPORTE" Schema="dbo" store:Type="Tables" />
@@ -6991,6 +7233,14 @@
           <AssociationSet Name="FK_CENTRO_CUSTO_SUBGRUPO" Association="Self.FK_CENTRO_CUSTO_SUBGRUPO">
             <End Role="SUBGRUPO" EntitySet="SUBGRUPO" />
             <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLASSE_GRUPO_DOCUMENTO" Association="Self.FK_CLASSE_GRUPO_DOCUMENTO">
+            <End Role="GRUPO_DOCUMENTO" EntitySet="GRUPO_DOCUMENTO" />
+            <End Role="CLASSE" EntitySet="CLASSE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLASSE_NIVEL_SEGURANCA" Association="Self.FK_CLASSE_NIVEL_SEGURANCA">
+            <End Role="NIVEL_SEGURANCA" EntitySet="NIVEL_SEGURANCA" />
+            <End Role="CLASSE" EntitySet="CLASSE" />
           </AssociationSet>
           <AssociationSet Name="FK_CLIENTE_ANEXO_CLIENTE" Association="Self.FK_CLIENTE_ANEXO_CLIENTE">
             <End Role="CLIENTE" EntitySet="CLIENTE" />
@@ -7340,6 +7590,38 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="DEPARTAMENTO" EntitySet="DEPARTAMENTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_CLASSE" Association="Self.FK_DOCUMENTO_CLASSE">
+            <End Role="CLASSE" EntitySet="CLASSE" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_CLIENTE" Association="Self.FK_DOCUMENTO_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_FORNECEDOR" Association="Self.FK_DOCUMENTO_FORNECEDOR">
+            <End Role="FORNECEDOR" EntitySet="FORNECEDOR" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_GRUPO_DOCUMENTO" Association="Self.FK_DOCUMENTO_GRUPO_DOCUMENTO">
+            <End Role="GRUPO_DOCUMENTO" EntitySet="GRUPO_DOCUMENTO" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_HISTORICO_DOCUMENTO" Association="Self.FK_DOCUMENTO_HISTORICO_DOCUMENTO">
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+            <End Role="DOCUMENTO_HISTORICO" EntitySet="DOCUMENTO_HISTORICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_HISTORICO_USUARIO" Association="Self.FK_DOCUMENTO_HISTORICO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="DOCUMENTO_HISTORICO" EntitySet="DOCUMENTO_HISTORICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_TIPO_DOCUMENTO" Association="Self.FK_DOCUMENTO_TIPO_DOCUMENTO">
+            <End Role="TIPO_DOCUMENTO" EntitySet="TIPO_DOCUMENTO" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_USUARIO" Association="Self.FK_DOCUMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_EMAIL_AGENDAMENTO_ASSINANTE" Association="Self.FK_EMAIL_AGENDAMENTO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="EMAIL_AGENDAMENTO" EntitySet="EMAIL_AGENDAMENTO" />
@@ -7627,6 +7909,14 @@
           <AssociationSet Name="FK_MENSAGENS_USUARIO" Association="Self.FK_MENSAGENS_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="MENSAGENS" EntitySet="MENSAGENS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_METADADO_CLASSE" Association="Self.FK_METADADO_CLASSE">
+            <End Role="CLASSE" EntitySet="CLASSE" />
+            <End Role="METADADO" EntitySet="METADADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_METADADO_TIPO_METADADO" Association="Self.FK_METADADO_TIPO_METADADO">
+            <End Role="TIPO_METADADO" EntitySet="TIPO_METADADO" />
+            <End Role="METADADO" EntitySet="METADADO" />
           </AssociationSet>
           <AssociationSet Name="FK_MOTIVO_CANCELAMENTO_ASSINANTE" Association="Self.FK_MOTIVO_CANCELAMENTO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -8721,6 +9011,7 @@
           <NavigationProperty Name="ORDEM_SERVICO" Relationship="Self.FK_ORDEM_SERVICO_CLIENTE" FromRole="CLIENTE" ToRole="ORDEM_SERVICO" />
           <NavigationProperty Name="PEDIDO_VENDA" Relationship="Self.FK_PEDIDO_VENDA_CLIENTE" FromRole="CLIENTE" ToRole="PEDIDO_VENDA" />
           <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_CLIENTE" FromRole="CLIENTE" ToRole="CRM_COMERCIAL" />
+          <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_CLIENTE" FromRole="CLIENTE" ToRole="DOCUMENTO" />
         </EntityType>
         <EntityType Name="CLIENTE_ANEXO">
           <Key>
@@ -9575,6 +9866,7 @@
           <NavigationProperty Name="ITEM_PEDIDO_COMPRA" Relationship="Self.FK_ITEM_PEDIDO_COMPRA_FORNECEDOR" FromRole="FORNECEDOR" ToRole="ITEM_PEDIDO_COMPRA" />
           <NavigationProperty Name="PEDIDO_COMPRA" Relationship="Self.FK_PEDIDO_COMPRA_FORNECEDOR" FromRole="FORNECEDOR" ToRole="PEDIDO_COMPRA" />
           <NavigationProperty Name="PRODUTO_FORNECEDOR" Relationship="Self.FK_PRODUTO_FORNECEDOR_FORNECEDOR" FromRole="FORNECEDOR" ToRole="PRODUTO_FORNECEDOR" />
+          <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_FORNECEDOR" FromRole="FORNECEDOR" ToRole="DOCUMENTO" />
         </EntityType>
         <EntityType Name="FORNECEDOR_ANEXO">
           <Key>
@@ -11172,6 +11464,8 @@
           <NavigationProperty Name="FORMULARIO_RESPOSTA_ACAO" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_ACAO_USUARIO" FromRole="USUARIO" ToRole="FORMULARIO_RESPOSTA_ACAO" />
           <NavigationProperty Name="FORMULARIO_RESPOSTA_ACAO1" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_ACAO_USUARIO1" FromRole="USUARIO" ToRole="FORMULARIO_RESPOSTA_ACAO" />
           <NavigationProperty Name="FORMULARIO_RESPOSTA_COMENTARIO" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="FORMULARIO_RESPOSTA_COMENTARIO" />
+          <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_USUARIO" FromRole="USUARIO" ToRole="DOCUMENTO" />
+          <NavigationProperty Name="DOCUMENTO_HISTORICO" Relationship="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_USUARIO" FromRole="USUARIO" ToRole="DOCUMENTO_HISTORICO" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -16388,6 +16682,62 @@
             <End Role="CRM" EntitySet="CRM" />
             <End Role="AGENDA" EntitySet="AGENDA" />
           </AssociationSet>
+          <EntitySet Name="CLASSE" EntityType="ERP_CRMModel.CLASSE" />
+          <EntitySet Name="DOCUMENTO" EntityType="ERP_CRMModel.DOCUMENTO" />
+          <EntitySet Name="DOCUMENTO_HISTORICO" EntityType="ERP_CRMModel.DOCUMENTO_HISTORICO" />
+          <EntitySet Name="GRUPO_DOCUMENTO" EntityType="ERP_CRMModel.GRUPO_DOCUMENTO" />
+          <EntitySet Name="METADADO" EntityType="ERP_CRMModel.METADADO" />
+          <EntitySet Name="NIVEL_SEGURANCA" EntityType="ERP_CRMModel.NIVEL_SEGURANCA" />
+          <EntitySet Name="TIPO_DOCUMENTO" EntityType="ERP_CRMModel.TIPO_DOCUMENTO" />
+          <EntitySet Name="TIPO_METADADO" EntityType="ERP_CRMModel.TIPO_METADADO" />
+          <AssociationSet Name="FK_CLASSE_GRUPO_DOCUMENTO" Association="ERP_CRMModel.FK_CLASSE_GRUPO_DOCUMENTO">
+            <End Role="GRUPO_DOCUMENTO" EntitySet="GRUPO_DOCUMENTO" />
+            <End Role="CLASSE" EntitySet="CLASSE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLASSE_NIVEL_SEGURANCA" Association="ERP_CRMModel.FK_CLASSE_NIVEL_SEGURANCA">
+            <End Role="NIVEL_SEGURANCA" EntitySet="NIVEL_SEGURANCA" />
+            <End Role="CLASSE" EntitySet="CLASSE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_CLASSE" Association="ERP_CRMModel.FK_DOCUMENTO_CLASSE">
+            <End Role="CLASSE" EntitySet="CLASSE" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_METADADO_CLASSE" Association="ERP_CRMModel.FK_METADADO_CLASSE">
+            <End Role="CLASSE" EntitySet="CLASSE" />
+            <End Role="METADADO" EntitySet="METADADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_CLIENTE" Association="ERP_CRMModel.FK_DOCUMENTO_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_FORNECEDOR" Association="ERP_CRMModel.FK_DOCUMENTO_FORNECEDOR">
+            <End Role="FORNECEDOR" EntitySet="FORNECEDOR" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_GRUPO_DOCUMENTO" Association="ERP_CRMModel.FK_DOCUMENTO_GRUPO_DOCUMENTO">
+            <End Role="GRUPO_DOCUMENTO" EntitySet="GRUPO_DOCUMENTO" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_HISTORICO_DOCUMENTO" Association="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_DOCUMENTO">
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+            <End Role="DOCUMENTO_HISTORICO" EntitySet="DOCUMENTO_HISTORICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_TIPO_DOCUMENTO" Association="ERP_CRMModel.FK_DOCUMENTO_TIPO_DOCUMENTO">
+            <End Role="TIPO_DOCUMENTO" EntitySet="TIPO_DOCUMENTO" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_USUARIO" Association="ERP_CRMModel.FK_DOCUMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="DOCUMENTO" EntitySet="DOCUMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOCUMENTO_HISTORICO_USUARIO" Association="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="DOCUMENTO_HISTORICO" EntitySet="DOCUMENTO_HISTORICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_METADADO_TIPO_METADADO" Association="ERP_CRMModel.FK_METADADO_TIPO_METADADO">
+            <End Role="TIPO_METADADO" EntitySet="TIPO_METADADO" />
+            <End Role="METADADO" EntitySet="METADADO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ATENDIMENTO_CRM">
           <Key>
@@ -16976,6 +17326,260 @@
             </Principal>
             <Dependent Role="AGENDA">
               <PropertyRef Name="CRM1_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CLASSE">
+          <Key>
+            <PropertyRef Name="CLAS_CD_ID" />
+          </Key>
+          <Property Name="CLAS_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GRDC_CD_ID" Type="Int32" />
+          <Property Name="NISE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CLAS_NM_NOME" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CLAS_SG_SIGLA" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CLAS_DS_DESCRICAO" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CLAS_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="GRUPO_DOCUMENTO" Relationship="ERP_CRMModel.FK_CLASSE_GRUPO_DOCUMENTO" FromRole="CLASSE" ToRole="GRUPO_DOCUMENTO" />
+          <NavigationProperty Name="NIVEL_SEGURANCA" Relationship="ERP_CRMModel.FK_CLASSE_NIVEL_SEGURANCA" FromRole="CLASSE" ToRole="NIVEL_SEGURANCA" />
+          <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_CLASSE" FromRole="CLASSE" ToRole="DOCUMENTO" />
+          <NavigationProperty Name="METADADO" Relationship="ERP_CRMModel.FK_METADADO_CLASSE" FromRole="CLASSE" ToRole="METADADO" />
+        </EntityType>
+        <EntityType Name="DOCUMENTO">
+          <Key>
+            <PropertyRef Name="DOCU_CD_ID" />
+          </Key>
+          <Property Name="DOCU_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GRDC_CD_ID" Type="Int32" />
+          <Property Name="CLAS_CD_ID" Type="Int32" />
+          <Property Name="TIDO_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CLIE_CD_ID" Type="Int32" />
+          <Property Name="FORN_CD_ID" Type="Int32" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="DOCU_NM_NOME" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DOCU_DS_DESCRICAO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DOCU_DT_CADASTRO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DOCU_DT_VALIDADE" Type="DateTime" Precision="0" />
+          <Property Name="DOCU_AQ_ARQUIVO" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DOCU_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CLASSE" Relationship="ERP_CRMModel.FK_DOCUMENTO_CLASSE" FromRole="DOCUMENTO" ToRole="CLASSE" />
+          <NavigationProperty Name="CLIENTE" Relationship="ERP_CRMModel.FK_DOCUMENTO_CLIENTE" FromRole="DOCUMENTO" ToRole="CLIENTE" />
+          <NavigationProperty Name="FORNECEDOR" Relationship="ERP_CRMModel.FK_DOCUMENTO_FORNECEDOR" FromRole="DOCUMENTO" ToRole="FORNECEDOR" />
+          <NavigationProperty Name="GRUPO_DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_GRUPO_DOCUMENTO" FromRole="DOCUMENTO" ToRole="GRUPO_DOCUMENTO" />
+          <NavigationProperty Name="DOCUMENTO_HISTORICO" Relationship="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_DOCUMENTO" FromRole="DOCUMENTO" ToRole="DOCUMENTO_HISTORICO" />
+          <NavigationProperty Name="TIPO_DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_TIPO_DOCUMENTO" FromRole="DOCUMENTO" ToRole="TIPO_DOCUMENTO" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_DOCUMENTO_USUARIO" FromRole="DOCUMENTO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="DOCUMENTO_HISTORICO">
+          <Key>
+            <PropertyRef Name="DOHI_CD_ID" />
+          </Key>
+          <Property Name="DOHI_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DOCU_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="DOHI_DT_ACESSO" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_DOCUMENTO" FromRole="DOCUMENTO_HISTORICO" ToRole="DOCUMENTO" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_USUARIO" FromRole="DOCUMENTO_HISTORICO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="GRUPO_DOCUMENTO">
+          <Key>
+            <PropertyRef Name="GRDC_CD_ID" />
+          </Key>
+          <Property Name="GRDC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GRDC_NM_NOME" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GRDC_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CLASSE" Relationship="ERP_CRMModel.FK_CLASSE_GRUPO_DOCUMENTO" FromRole="GRUPO_DOCUMENTO" ToRole="CLASSE" />
+          <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_GRUPO_DOCUMENTO" FromRole="GRUPO_DOCUMENTO" ToRole="DOCUMENTO" />
+        </EntityType>
+        <EntityType Name="METADADO">
+          <Key>
+            <PropertyRef Name="META_CD_ID" />
+          </Key>
+          <Property Name="META_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CLAS_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="TIME_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="META_NM_NOME" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="META_SG_SIGLA" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="META_DS_DESCRICAO" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="META_IN_MULTIVALOR" Type="Int32" Nullable="false" />
+          <Property Name="META_NR_TAMANHO" Type="Int32" Nullable="false" />
+          <Property Name="META_NR_DECIMAIS" Type="Int32" />
+          <Property Name="META_IN_OBRIGATORIO" Type="Int32" Nullable="false" />
+          <Property Name="META_IN_INDEXADO" Type="Int32" Nullable="false" />
+          <Property Name="META_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CLASSE" Relationship="ERP_CRMModel.FK_METADADO_CLASSE" FromRole="METADADO" ToRole="CLASSE" />
+          <NavigationProperty Name="TIPO_METADADO" Relationship="ERP_CRMModel.FK_METADADO_TIPO_METADADO" FromRole="METADADO" ToRole="TIPO_METADADO" />
+        </EntityType>
+        <EntityType Name="NIVEL_SEGURANCA">
+          <Key>
+            <PropertyRef Name="NISE_CD_ID" />
+          </Key>
+          <Property Name="NISE_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NISE_NM_NOME" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NISE_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CLASSE" Relationship="ERP_CRMModel.FK_CLASSE_NIVEL_SEGURANCA" FromRole="NIVEL_SEGURANCA" ToRole="CLASSE" />
+        </EntityType>
+        <EntityType Name="TIPO_DOCUMENTO">
+          <Key>
+            <PropertyRef Name="TIDO_CD_ID" />
+          </Key>
+          <Property Name="TIDO_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TIDO_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TIDO_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_TIPO_DOCUMENTO" FromRole="TIPO_DOCUMENTO" ToRole="DOCUMENTO" />
+        </EntityType>
+        <EntityType Name="TIPO_METADADO">
+          <Key>
+            <PropertyRef Name="TIME_CD_ID" />
+          </Key>
+          <Property Name="TIME_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TIME_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TIME_IN_DECIMAL" Type="Int32" Nullable="false" />
+          <Property Name="TIME_MS_MASCARA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TIME_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="METADADO" Relationship="ERP_CRMModel.FK_METADADO_TIPO_METADADO" FromRole="TIPO_METADADO" ToRole="METADADO" />
+        </EntityType>
+        <Association Name="FK_CLASSE_GRUPO_DOCUMENTO">
+          <End Type="ERP_CRMModel.GRUPO_DOCUMENTO" Role="GRUPO_DOCUMENTO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CLASSE" Role="CLASSE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO_DOCUMENTO">
+              <PropertyRef Name="GRDC_CD_ID" />
+            </Principal>
+            <Dependent Role="CLASSE">
+              <PropertyRef Name="GRDC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLASSE_NIVEL_SEGURANCA">
+          <End Type="ERP_CRMModel.NIVEL_SEGURANCA" Role="NIVEL_SEGURANCA" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CLASSE" Role="CLASSE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NIVEL_SEGURANCA">
+              <PropertyRef Name="NISE_CD_ID" />
+            </Principal>
+            <Dependent Role="CLASSE">
+              <PropertyRef Name="NISE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_CLASSE">
+          <End Type="ERP_CRMModel.CLASSE" Role="CLASSE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.DOCUMENTO" Role="DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLASSE">
+              <PropertyRef Name="CLAS_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="CLAS_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_METADADO_CLASSE">
+          <End Type="ERP_CRMModel.CLASSE" Role="CLASSE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.METADADO" Role="METADADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLASSE">
+              <PropertyRef Name="CLAS_CD_ID" />
+            </Principal>
+            <Dependent Role="METADADO">
+              <PropertyRef Name="CLAS_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_CLIENTE">
+          <End Type="ERP_CRMModel.CLIENTE" Role="CLIENTE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.DOCUMENTO" Role="DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="CLIE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_FORNECEDOR">
+          <End Type="ERP_CRMModel.FORNECEDOR" Role="FORNECEDOR" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.DOCUMENTO" Role="DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORNECEDOR">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_GRUPO_DOCUMENTO">
+          <End Type="ERP_CRMModel.GRUPO_DOCUMENTO" Role="GRUPO_DOCUMENTO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.DOCUMENTO" Role="DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO_DOCUMENTO">
+              <PropertyRef Name="GRDC_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="GRDC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_HISTORICO_DOCUMENTO">
+          <End Type="ERP_CRMModel.DOCUMENTO" Role="DOCUMENTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.DOCUMENTO_HISTORICO" Role="DOCUMENTO_HISTORICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DOCUMENTO">
+              <PropertyRef Name="DOCU_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO_HISTORICO">
+              <PropertyRef Name="DOCU_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_TIPO_DOCUMENTO">
+          <End Type="ERP_CRMModel.TIPO_DOCUMENTO" Role="TIPO_DOCUMENTO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.DOCUMENTO" Role="DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_DOCUMENTO">
+              <PropertyRef Name="TIDO_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="TIDO_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.DOCUMENTO" Role="DOCUMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOCUMENTO_HISTORICO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.DOCUMENTO_HISTORICO" Role="DOCUMENTO_HISTORICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="DOCUMENTO_HISTORICO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_METADADO_TIPO_METADADO">
+          <End Type="ERP_CRMModel.TIPO_METADADO" Role="TIPO_METADADO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.METADADO" Role="METADADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_METADADO">
+              <PropertyRef Name="TIME_CD_ID" />
+            </Principal>
+            <Dependent Role="METADADO">
+              <PropertyRef Name="TIME_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -19736,6 +20340,104 @@
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="FORE_CD_ID" ColumnName="FORE_CD_ID" />
                 <ScalarProperty Name="FRCO_CD_ID" ColumnName="FRCO_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLASSE">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CLASSE">
+              <MappingFragment StoreEntitySet="CLASSE">
+                <ScalarProperty Name="CLAS_IN_ATIVO" ColumnName="CLAS_IN_ATIVO" />
+                <ScalarProperty Name="CLAS_DS_DESCRICAO" ColumnName="CLAS_DS_DESCRICAO" />
+                <ScalarProperty Name="CLAS_SG_SIGLA" ColumnName="CLAS_SG_SIGLA" />
+                <ScalarProperty Name="CLAS_NM_NOME" ColumnName="CLAS_NM_NOME" />
+                <ScalarProperty Name="NISE_CD_ID" ColumnName="NISE_CD_ID" />
+                <ScalarProperty Name="GRDC_CD_ID" ColumnName="GRDC_CD_ID" />
+                <ScalarProperty Name="CLAS_CD_ID" ColumnName="CLAS_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DOCUMENTO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.DOCUMENTO">
+              <MappingFragment StoreEntitySet="DOCUMENTO">
+                <ScalarProperty Name="DOCU_IN_ATIVO" ColumnName="DOCU_IN_ATIVO" />
+                <ScalarProperty Name="DOCU_AQ_ARQUIVO" ColumnName="DOCU_AQ_ARQUIVO" />
+                <ScalarProperty Name="DOCU_DT_VALIDADE" ColumnName="DOCU_DT_VALIDADE" />
+                <ScalarProperty Name="DOCU_DT_CADASTRO" ColumnName="DOCU_DT_CADASTRO" />
+                <ScalarProperty Name="DOCU_DS_DESCRICAO" ColumnName="DOCU_DS_DESCRICAO" />
+                <ScalarProperty Name="DOCU_NM_NOME" ColumnName="DOCU_NM_NOME" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
+                <ScalarProperty Name="CLIE_CD_ID" ColumnName="CLIE_CD_ID" />
+                <ScalarProperty Name="TIDO_CD_ID" ColumnName="TIDO_CD_ID" />
+                <ScalarProperty Name="CLAS_CD_ID" ColumnName="CLAS_CD_ID" />
+                <ScalarProperty Name="GRDC_CD_ID" ColumnName="GRDC_CD_ID" />
+                <ScalarProperty Name="DOCU_CD_ID" ColumnName="DOCU_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DOCUMENTO_HISTORICO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.DOCUMENTO_HISTORICO">
+              <MappingFragment StoreEntitySet="DOCUMENTO_HISTORICO">
+                <ScalarProperty Name="DOHI_DT_ACESSO" ColumnName="DOHI_DT_ACESSO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="DOCU_CD_ID" ColumnName="DOCU_CD_ID" />
+                <ScalarProperty Name="DOHI_CD_ID" ColumnName="DOHI_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GRUPO_DOCUMENTO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.GRUPO_DOCUMENTO">
+              <MappingFragment StoreEntitySet="GRUPO_DOCUMENTO">
+                <ScalarProperty Name="GRDC_IN_ATIVO" ColumnName="GRDC_IN_ATIVO" />
+                <ScalarProperty Name="GRDC_NM_NOME" ColumnName="GRDC_NM_NOME" />
+                <ScalarProperty Name="GRDC_CD_ID" ColumnName="GRDC_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="METADADO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.METADADO">
+              <MappingFragment StoreEntitySet="METADADO">
+                <ScalarProperty Name="META_IN_ATIVO" ColumnName="META_IN_ATIVO" />
+                <ScalarProperty Name="META_IN_INDEXADO" ColumnName="META_IN_INDEXADO" />
+                <ScalarProperty Name="META_IN_OBRIGATORIO" ColumnName="META_IN_OBRIGATORIO" />
+                <ScalarProperty Name="META_NR_DECIMAIS" ColumnName="META_NR_DECIMAIS" />
+                <ScalarProperty Name="META_NR_TAMANHO" ColumnName="META_NR_TAMANHO" />
+                <ScalarProperty Name="META_IN_MULTIVALOR" ColumnName="META_IN_MULTIVALOR" />
+                <ScalarProperty Name="META_DS_DESCRICAO" ColumnName="META_DS_DESCRICAO" />
+                <ScalarProperty Name="META_SG_SIGLA" ColumnName="META_SG_SIGLA" />
+                <ScalarProperty Name="META_NM_NOME" ColumnName="META_NM_NOME" />
+                <ScalarProperty Name="TIME_CD_ID" ColumnName="TIME_CD_ID" />
+                <ScalarProperty Name="CLAS_CD_ID" ColumnName="CLAS_CD_ID" />
+                <ScalarProperty Name="META_CD_ID" ColumnName="META_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NIVEL_SEGURANCA">
+            <EntityTypeMapping TypeName="ERP_CRMModel.NIVEL_SEGURANCA">
+              <MappingFragment StoreEntitySet="NIVEL_SEGURANCA">
+                <ScalarProperty Name="NISE_IN_ATIVO" ColumnName="NISE_IN_ATIVO" />
+                <ScalarProperty Name="NISE_NM_NOME" ColumnName="NISE_NM_NOME" />
+                <ScalarProperty Name="NISE_CD_ID" ColumnName="NISE_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO_DOCUMENTO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.TIPO_DOCUMENTO">
+              <MappingFragment StoreEntitySet="TIPO_DOCUMENTO">
+                <ScalarProperty Name="TIDO_IN_ATIVO" ColumnName="TIDO_IN_ATIVO" />
+                <ScalarProperty Name="TIDO_NM_NOME" ColumnName="TIDO_NM_NOME" />
+                <ScalarProperty Name="TIDO_CD_ID" ColumnName="TIDO_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO_METADADO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.TIPO_METADADO">
+              <MappingFragment StoreEntitySet="TIPO_METADADO">
+                <ScalarProperty Name="TIME_IN_ATIVO" ColumnName="TIME_IN_ATIVO" />
+                <ScalarProperty Name="TIME_MS_MASCARA" ColumnName="TIME_MS_MASCARA" />
+                <ScalarProperty Name="TIME_IN_DECIMAL" ColumnName="TIME_IN_DECIMAL" />
+                <ScalarProperty Name="TIME_NM_NOME" ColumnName="TIME_NM_NOME" />
+                <ScalarProperty Name="TIME_CD_ID" ColumnName="TIME_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
