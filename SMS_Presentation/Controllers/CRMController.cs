@@ -2324,11 +2324,18 @@ namespace ERP_CRM_Solution.Controllers
             CRMViewModel vm = Mapper.Map<CRM, CRMViewModel>(item);
             List<CRM_ACAO> acoes = item.CRM_ACAO.ToList().OrderByDescending(p => p.CRAC_DT_CRIACAO).ToList();
             CRM_ACAO acao = acoes.Where(p => p.CRAC_IN_STATUS == 1).FirstOrDefault();
+
+            List<CRM_PROPOSTA> props = item.CRM_PROPOSTA.ToList().OrderByDescending(p => p.CRPR_DT_PROPOSTA).ToList();
+            CRM_PROPOSTA prop = props.Where(p => p.CRPR_IN_STATUS == 2 || p.CRPR_IN_STATUS == 1).FirstOrDefault();
+
             Session["Acoes"] = acoes;
+            Session["Propostas"] = props;
             Session["CRM"] = item;
             Session["VoltaCRM"] = 11;
             ViewBag.Acoes = acoes;
             ViewBag.Acao = acao;
+            ViewBag.Props = props;
+            ViewBag.Prop = prop;
             return View(vm);
         }
 

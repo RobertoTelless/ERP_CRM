@@ -69,5 +69,7 @@ namespace ERP_CRM_Solution.ViewModels
         public virtual ICollection<ATENDIMENTO_CRM> ATENDIMENTO_CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA> AGENDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
     }
 }

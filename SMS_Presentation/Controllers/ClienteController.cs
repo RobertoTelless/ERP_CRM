@@ -1845,6 +1845,17 @@ namespace ERP_CRM_Solution.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult VerGrupo(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaGrupo"] = 10;
+            return RedirectToAction("EditarGrupo", "Grupo");
+        }
+
         public ActionResult RetirarFiltroInativos()
         {
             if ((String)Session["Ativa"] == null)

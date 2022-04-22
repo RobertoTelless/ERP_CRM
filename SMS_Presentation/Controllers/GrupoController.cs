@@ -407,6 +407,10 @@ namespace ERP_CRM_Solution.Controllers
                     // Sucesso
                     listaMaster = new List<GRUPO>();
                     Session["ListaGrupo"] = null;
+                    if ((Int32)Session["VoltaGrupo"] == 10)
+                    {
+                        return RedirectToAction("VoltarAnexoCliente", "Cliente");
+                    }
                     return RedirectToAction("MontarTelaGrupo");
                 }
                 catch (Exception ex)

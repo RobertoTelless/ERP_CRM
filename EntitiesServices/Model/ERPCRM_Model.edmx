@@ -1006,6 +1006,41 @@
           <Property Name="CROR_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="CROR_IN_ATIVO" Type="int" />
         </EntityType>
+        <EntityType Name="CRM_PROPOSTA">
+          <Key>
+            <PropertyRef Name="CRPR_CD_ID" />
+          </Key>
+          <Property Name="CRPR_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CRM1_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CRPR_DT_PROPOSTA" Type="date" Nullable="false" />
+          <Property Name="CRPR_DT_VALIDADE" Type="date" Nullable="false" />
+          <Property Name="CRPR_DT_ENVIO" Type="date" />
+          <Property Name="CRPR_DS_INFORMACOES" Type="varchar" MaxLength="5000" />
+          <Property Name="CRPR_IN_STATUS" Type="int" Nullable="false" />
+          <Property Name="CRPR_TX_TEXTO" Type="text" />
+          <Property Name="CRPR_AQ_ARQUIVO" Type="varchar" MaxLength="250" />
+          <Property Name="TEPR_CD_ID" Type="int" />
+          <Property Name="CRPR_DT_CANCELAMENTO" Type="date" />
+          <Property Name="CRPR_DS_CANCELAMENTO" Type="varchar" MaxLength="5000" />
+          <Property Name="CRPR_DT_REPROVACAO" Type="date" />
+          <Property Name="CRPR_DS_REPROVACAO" Type="varchar" MaxLength="5000" />
+          <Property Name="CRPR_DT_APROVACAO" Type="date" />
+          <Property Name="CRPR_DS_APROVACAO" Type="varchar" MaxLength="5000" />
+          <Property Name="CRPR_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
+          <Key>
+            <PropertyRef Name="PRAC_CD_ID" />
+          </Key>
+          <Property Name="PRAC_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CRPR_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PRAC_DT_ACOMPANHAMENTO" Type="datetime" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PRAC_TX_ACOMPANHAMENTO" Type="text" Nullable="false" />
+          <Property Name="PRAC_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="DEPARTAMENTO">
           <Key>
             <PropertyRef Name="DEPT_CD_ID" />
@@ -2422,6 +2457,19 @@
           <Property Name="TEEM_AQ_ARQUIVO" Type="varchar" MaxLength="300" />
           <Property Name="TEEM_TX_COMPLETO" Type="text" />
           <Property Name="TEEM_IN_HTML" Type="int" />
+        </EntityType>
+        <EntityType Name="TEMPLATE_PROPOSTA">
+          <Key>
+            <PropertyRef Name="TEPR_CD_ID" />
+          </Key>
+          <Property Name="TEPR_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" />
+          <Property Name="TEPR_SG_SIGLA" Type="varchar" MaxLength="10" />
+          <Property Name="TEPR_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TEPR_TX_TEXTO" Type="text" Nullable="false" />
+          <Property Name="TEPR_TX_CABECALHO" Type="text" />
+          <Property Name="TEPR_TX_RODAPE" Type="text" />
+          <Property Name="TEPR_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TEMPLATE_SMS">
           <Key>
@@ -4301,6 +4349,78 @@
             </Principal>
             <Dependent Role="CRM_ORIGEM">
               <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_ACOMPANHAMENTO_CRM_PROPOSTA">
+          <End Role="CRM_PROPOSTA" Type="Self.CRM_PROPOSTA" Multiplicity="1" />
+          <End Role="CRM_PROPOSTA_ACOMPANHAMENTO" Type="Self.CRM_PROPOSTA_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_PROPOSTA">
+              <PropertyRef Name="CRPR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA_ACOMPANHAMENTO">
+              <PropertyRef Name="CRPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_ACOMPANHAMENTO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="CRM_PROPOSTA_ACOMPANHAMENTO" Type="Self.CRM_PROPOSTA_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA_ACOMPANHAMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
+          <End Role="CRM_PROPOSTA" Type="Self.CRM_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_CRM">
+          <End Role="CRM" Type="Self.CRM" Multiplicity="1" />
+          <End Role="CRM_PROPOSTA" Type="Self.CRM_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_TEMPLATE_PROPOSTA">
+          <End Role="TEMPLATE_PROPOSTA" Type="Self.TEMPLATE_PROPOSTA" Multiplicity="0..1" />
+          <End Role="CRM_PROPOSTA" Type="Self.CRM_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE_PROPOSTA">
+              <PropertyRef Name="TEPR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA">
+              <PropertyRef Name="TEPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="CRM_PROPOSTA" Type="Self.CRM_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA">
+              <PropertyRef Name="USUA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6740,6 +6860,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TEMPLATE_PROPOSTA_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
+          <End Role="TEMPLATE_PROPOSTA" Type="Self.TEMPLATE_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TEMPLATE_PROPOSTA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TEMPLATE_SMS_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="TEMPLATE_SMS" Type="Self.TEMPLATE_SMS" Multiplicity="*" />
@@ -7041,6 +7173,8 @@
           <EntitySet Name="CRM_COMERCIAL_ITEM" EntityType="Self.CRM_COMERCIAL_ITEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRM_CONTATO" EntityType="Self.CRM_CONTATO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRM_ORIGEM" EntityType="Self.CRM_ORIGEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CRM_PROPOSTA" EntityType="Self.CRM_PROPOSTA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CRM_PROPOSTA_ACOMPANHAMENTO" EntityType="Self.CRM_PROPOSTA_ACOMPANHAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DEPARTAMENTO" EntityType="Self.DEPARTAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DOCUMENTO" EntityType="Self.DOCUMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DOCUMENTO_HISTORICO" EntityType="Self.DOCUMENTO_HISTORICO" Schema="dbo" store:Type="Tables" />
@@ -7133,6 +7267,7 @@
           <EntitySet Name="TELEFONE" EntityType="Self.TELEFONE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TEMPLATE" EntityType="Self.TEMPLATE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TEMPLATE_EMAIL" EntityType="Self.TEMPLATE_EMAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TEMPLATE_PROPOSTA" EntityType="Self.TEMPLATE_PROPOSTA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TEMPLATE_SMS" EntityType="Self.TEMPLATE_SMS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_ACAO" EntityType="Self.TIPO_ACAO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_CONTA" EntityType="Self.TIPO_CONTA" Schema="dbo" store:Type="Tables" />
@@ -7687,6 +7822,30 @@
           <AssociationSet Name="FK_CRM_ORIGEM_ASSINANTE" Association="Self.FK_CRM_ORIGEM_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CRM_ORIGEM" EntitySet="CRM_ORIGEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_ACOMPANHAMENTO_CRM_PROPOSTA" Association="Self.FK_CRM_PROPOSTA_ACOMPANHAMENTO_CRM_PROPOSTA">
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+            <End Role="CRM_PROPOSTA_ACOMPANHAMENTO" EntitySet="CRM_PROPOSTA_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_ACOMPANHAMENTO_USUARIO" Association="Self.FK_CRM_PROPOSTA_ACOMPANHAMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CRM_PROPOSTA_ACOMPANHAMENTO" EntitySet="CRM_PROPOSTA_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_ASSINANTE" Association="Self.FK_CRM_PROPOSTA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_CRM" Association="Self.FK_CRM_PROPOSTA_CRM">
+            <End Role="CRM" EntitySet="CRM" />
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_TEMPLATE_PROPOSTA" Association="Self.FK_CRM_PROPOSTA_TEMPLATE_PROPOSTA">
+            <End Role="TEMPLATE_PROPOSTA" EntitySet="TEMPLATE_PROPOSTA" />
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_USUARIO" Association="Self.FK_CRM_PROPOSTA_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
           </AssociationSet>
           <AssociationSet Name="FK_CRM_TIPO_CRM" Association="Self.FK_CRM_TIPO_CRM">
             <End Role="TIPO_CRM" EntitySet="TIPO_CRM" />
@@ -8500,6 +8659,10 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="TEMPLATE_EMAIL" EntitySet="TEMPLATE_EMAIL" />
           </AssociationSet>
+          <AssociationSet Name="FK_TEMPLATE_PROPOSTA_ASSINANTE" Association="Self.FK_TEMPLATE_PROPOSTA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TEMPLATE_PROPOSTA" EntitySet="TEMPLATE_PROPOSTA" />
+          </AssociationSet>
           <AssociationSet Name="FK_TEMPLATE_SMS_ASSINANTE" Association="Self.FK_TEMPLATE_SMS_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="TEMPLATE_SMS" EntitySet="TEMPLATE_SMS" />
@@ -8743,6 +8906,8 @@
           <NavigationProperty Name="NIVEL_SEGURANCA" Relationship="ERP_CRMModel.FK_NIVEL_SEGURANCA_ASSINANTE" FromRole="ASSINANTE" ToRole="NIVEL_SEGURANCA" />
           <NavigationProperty Name="TIPO_DOCUMENTO" Relationship="ERP_CRMModel.FK_TIPO_DOCUMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="TIPO_DOCUMENTO" />
           <NavigationProperty Name="TIPO_METADADO" Relationship="ERP_CRMModel.FK_TIPO_METADADO_ASSINANTE" FromRole="ASSINANTE" ToRole="TIPO_METADADO" />
+          <NavigationProperty Name="TEMPLATE_PROPOSTA" Relationship="ERP_CRMModel.FK_TEMPLATE_PROPOSTA_ASSINANTE" FromRole="ASSINANTE" ToRole="TEMPLATE_PROPOSTA" />
+          <NavigationProperty Name="CRM_PROPOSTA" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_ASSINANTE" FromRole="ASSINANTE" ToRole="CRM_PROPOSTA" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -9629,6 +9794,7 @@
           <NavigationProperty Name="ATENDIMENTO_CRM" Relationship="ERP_CRMModel.FK_ATENDIMENTO_CRM_CRM" FromRole="CRM" ToRole="ATENDIMENTO_CRM" />
           <Property Name="CRM1_NR_TEMPERATURA" Type="Int32" />
           <NavigationProperty Name="AGENDA" Relationship="ERP_CRMModel.FK_AGENDA_CRM" FromRole="CRM" ToRole="AGENDA" />
+          <NavigationProperty Name="CRM_PROPOSTA" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_CRM" FromRole="CRM" ToRole="CRM_PROPOSTA" />
         </EntityType>
         <EntityType Name="CRM_ACAO">
           <Key>
@@ -11612,6 +11778,8 @@
           <NavigationProperty Name="FORMULARIO_RESPOSTA_COMENTARIO" Relationship="ERP_CRMModel.FK_FORMULARIO_RESPOSTA_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="FORMULARIO_RESPOSTA_COMENTARIO" />
           <NavigationProperty Name="DOCUMENTO" Relationship="ERP_CRMModel.FK_DOCUMENTO_USUARIO" FromRole="USUARIO" ToRole="DOCUMENTO" />
           <NavigationProperty Name="DOCUMENTO_HISTORICO" Relationship="ERP_CRMModel.FK_DOCUMENTO_HISTORICO_USUARIO" FromRole="USUARIO" ToRole="DOCUMENTO_HISTORICO" />
+          <NavigationProperty Name="CRM_PROPOSTA" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_USUARIO" FromRole="USUARIO" ToRole="CRM_PROPOSTA" />
+          <NavigationProperty Name="CRM_PROPOSTA_ACOMPANHAMENTO" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_ACOMPANHAMENTO_USUARIO" FromRole="USUARIO" ToRole="CRM_PROPOSTA_ACOMPANHAMENTO" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -16916,6 +17084,37 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="TIPO_METADADO" EntitySet="TIPO_METADADO" />
           </AssociationSet>
+          <EntitySet Name="CRM_PROPOSTA" EntityType="ERP_CRMModel.CRM_PROPOSTA" />
+          <EntitySet Name="CRM_PROPOSTA_ACOMPANHAMENTO" EntityType="ERP_CRMModel.CRM_PROPOSTA_ACOMPANHAMENTO" />
+          <EntitySet Name="TEMPLATE_PROPOSTA" EntityType="ERP_CRMModel.TEMPLATE_PROPOSTA" />
+          <AssociationSet Name="FK_CRM_PROPOSTA_CRM" Association="ERP_CRMModel.FK_CRM_PROPOSTA_CRM">
+            <End Role="CRM" EntitySet="CRM" />
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_ACOMPANHAMENTO_CRM_PROPOSTA" Association="ERP_CRMModel.FK_CRM_PROPOSTA_ACOMPANHAMENTO_CRM_PROPOSTA">
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+            <End Role="CRM_PROPOSTA_ACOMPANHAMENTO" EntitySet="CRM_PROPOSTA_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_TEMPLATE_PROPOSTA" Association="ERP_CRMModel.FK_CRM_PROPOSTA_TEMPLATE_PROPOSTA">
+            <End Role="TEMPLATE_PROPOSTA" EntitySet="TEMPLATE_PROPOSTA" />
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_USUARIO" Association="ERP_CRMModel.FK_CRM_PROPOSTA_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_ACOMPANHAMENTO_USUARIO" Association="ERP_CRMModel.FK_CRM_PROPOSTA_ACOMPANHAMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CRM_PROPOSTA_ACOMPANHAMENTO" EntitySet="CRM_PROPOSTA_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TEMPLATE_PROPOSTA_ASSINANTE" Association="ERP_CRMModel.FK_TEMPLATE_PROPOSTA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="TEMPLATE_PROPOSTA" EntitySet="TEMPLATE_PROPOSTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_ASSINANTE" Association="ERP_CRMModel.FK_CRM_PROPOSTA_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ATENDIMENTO_CRM">
           <Key>
@@ -17871,6 +18070,147 @@
               <PropertyRef Name="ASSI_CD_ID" />
             </Principal>
             <Dependent Role="TIPO_METADADO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CRM_PROPOSTA">
+          <Key>
+            <PropertyRef Name="CRPR_CD_ID" />
+          </Key>
+          <Property Name="CRPR_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CRM1_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CRPR_DT_PROPOSTA" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CRPR_DT_VALIDADE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CRPR_DS_INFORMACOES" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="CRPR_IN_STATUS" Type="Int32" Nullable="false" />
+          <Property Name="CRPR_TX_TEXTO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRPR_AQ_ARQUIVO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="TEPR_CD_ID" Type="Int32" />
+          <Property Name="CRPR_DT_CANCELAMENTO" Type="DateTime" Precision="0" />
+          <Property Name="CRPR_DS_CANCELAMENTO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="CRPR_DT_REPROVACAO" Type="DateTime" Precision="0" />
+          <Property Name="CRPR_DS_REPROVACAO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="CRPR_DT_APROVACAO" Type="DateTime" Precision="0" />
+          <Property Name="CRPR_DS_APROVACAO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="CRPR_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CRM" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_CRM" FromRole="CRM_PROPOSTA" ToRole="CRM" />
+          <NavigationProperty Name="CRM_PROPOSTA_ACOMPANHAMENTO" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_ACOMPANHAMENTO_CRM_PROPOSTA" FromRole="CRM_PROPOSTA" ToRole="CRM_PROPOSTA_ACOMPANHAMENTO" />
+          <NavigationProperty Name="TEMPLATE_PROPOSTA" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_TEMPLATE_PROPOSTA" FromRole="CRM_PROPOSTA" ToRole="TEMPLATE_PROPOSTA" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_USUARIO" FromRole="CRM_PROPOSTA" ToRole="USUARIO" />
+          <Property Name="ASSI_CD_ID" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_ASSINANTE" FromRole="CRM_PROPOSTA" ToRole="ASSINANTE" />
+          <Property Name="CRPR_DT_ENVIO" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
+          <Key>
+            <PropertyRef Name="PRAC_CD_ID" />
+          </Key>
+          <Property Name="PRAC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CRPR_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PRAC_DT_ACOMPANHAMENTO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PRAC_TX_ACOMPANHAMENTO" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PRAC_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CRM_PROPOSTA" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_ACOMPANHAMENTO_CRM_PROPOSTA" FromRole="CRM_PROPOSTA_ACOMPANHAMENTO" ToRole="CRM_PROPOSTA" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_ACOMPANHAMENTO_USUARIO" FromRole="CRM_PROPOSTA_ACOMPANHAMENTO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="TEMPLATE_PROPOSTA">
+          <Key>
+            <PropertyRef Name="TEPR_CD_ID" />
+          </Key>
+          <Property Name="TEPR_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TEPR_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TEPR_TX_TEXTO" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TEPR_TX_CABECALHO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TEPR_TX_RODAPE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TEPR_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CRM_PROPOSTA" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_TEMPLATE_PROPOSTA" FromRole="TEMPLATE_PROPOSTA" ToRole="CRM_PROPOSTA" />
+          <Property Name="TEPR_SG_SIGLA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ASSI_CD_ID" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_TEMPLATE_PROPOSTA_ASSINANTE" FromRole="TEMPLATE_PROPOSTA" ToRole="ASSINANTE" />
+        </EntityType>
+        <Association Name="FK_CRM_PROPOSTA_CRM">
+          <End Type="ERP_CRMModel.CRM" Role="CRM" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_PROPOSTA" Role="CRM_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_ACOMPANHAMENTO_CRM_PROPOSTA">
+          <End Type="ERP_CRMModel.CRM_PROPOSTA" Role="CRM_PROPOSTA" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_PROPOSTA_ACOMPANHAMENTO" Role="CRM_PROPOSTA_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_PROPOSTA">
+              <PropertyRef Name="CRPR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA_ACOMPANHAMENTO">
+              <PropertyRef Name="CRPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_TEMPLATE_PROPOSTA">
+          <End Type="ERP_CRMModel.TEMPLATE_PROPOSTA" Role="TEMPLATE_PROPOSTA" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_PROPOSTA" Role="CRM_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE_PROPOSTA">
+              <PropertyRef Name="TEPR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA">
+              <PropertyRef Name="TEPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_PROPOSTA" Role="CRM_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_ACOMPANHAMENTO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.CRM_PROPOSTA_ACOMPANHAMENTO" Role="CRM_PROPOSTA_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA_ACOMPANHAMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TEMPLATE_PROPOSTA_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.TEMPLATE_PROPOSTA" Role="TEMPLATE_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="TEMPLATE_PROPOSTA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_PROPOSTA" Role="CRM_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA">
               <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -20740,6 +21080,57 @@
                 <ScalarProperty Name="TIME_IN_DECIMAL" ColumnName="TIME_IN_DECIMAL" />
                 <ScalarProperty Name="TIME_NM_NOME" ColumnName="TIME_NM_NOME" />
                 <ScalarProperty Name="TIME_CD_ID" ColumnName="TIME_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CRM_PROPOSTA">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CRM_PROPOSTA">
+              <MappingFragment StoreEntitySet="CRM_PROPOSTA">
+                <ScalarProperty Name="CRPR_DT_ENVIO" ColumnName="CRPR_DT_ENVIO" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="CRPR_IN_ATIVO" ColumnName="CRPR_IN_ATIVO" />
+                <ScalarProperty Name="CRPR_DS_APROVACAO" ColumnName="CRPR_DS_APROVACAO" />
+                <ScalarProperty Name="CRPR_DT_APROVACAO" ColumnName="CRPR_DT_APROVACAO" />
+                <ScalarProperty Name="CRPR_DS_REPROVACAO" ColumnName="CRPR_DS_REPROVACAO" />
+                <ScalarProperty Name="CRPR_DT_REPROVACAO" ColumnName="CRPR_DT_REPROVACAO" />
+                <ScalarProperty Name="CRPR_DS_CANCELAMENTO" ColumnName="CRPR_DS_CANCELAMENTO" />
+                <ScalarProperty Name="CRPR_DT_CANCELAMENTO" ColumnName="CRPR_DT_CANCELAMENTO" />
+                <ScalarProperty Name="TEPR_CD_ID" ColumnName="TEPR_CD_ID" />
+                <ScalarProperty Name="CRPR_AQ_ARQUIVO" ColumnName="CRPR_AQ_ARQUIVO" />
+                <ScalarProperty Name="CRPR_TX_TEXTO" ColumnName="CRPR_TX_TEXTO" />
+                <ScalarProperty Name="CRPR_IN_STATUS" ColumnName="CRPR_IN_STATUS" />
+                <ScalarProperty Name="CRPR_DS_INFORMACOES" ColumnName="CRPR_DS_INFORMACOES" />
+                <ScalarProperty Name="CRPR_DT_VALIDADE" ColumnName="CRPR_DT_VALIDADE" />
+                <ScalarProperty Name="CRPR_DT_PROPOSTA" ColumnName="CRPR_DT_PROPOSTA" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="CRM1_CD_ID" ColumnName="CRM1_CD_ID" />
+                <ScalarProperty Name="CRPR_CD_ID" ColumnName="CRPR_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CRM_PROPOSTA_ACOMPANHAMENTO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.CRM_PROPOSTA_ACOMPANHAMENTO">
+              <MappingFragment StoreEntitySet="CRM_PROPOSTA_ACOMPANHAMENTO">
+                <ScalarProperty Name="PRAC_IN_ATIVO" ColumnName="PRAC_IN_ATIVO" />
+                <ScalarProperty Name="PRAC_TX_ACOMPANHAMENTO" ColumnName="PRAC_TX_ACOMPANHAMENTO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="PRAC_DT_ACOMPANHAMENTO" ColumnName="PRAC_DT_ACOMPANHAMENTO" />
+                <ScalarProperty Name="CRPR_CD_ID" ColumnName="CRPR_CD_ID" />
+                <ScalarProperty Name="PRAC_CD_ID" ColumnName="PRAC_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TEMPLATE_PROPOSTA">
+            <EntityTypeMapping TypeName="ERP_CRMModel.TEMPLATE_PROPOSTA">
+              <MappingFragment StoreEntitySet="TEMPLATE_PROPOSTA">
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="TEPR_SG_SIGLA" ColumnName="TEPR_SG_SIGLA" />
+                <ScalarProperty Name="TEPR_IN_ATIVO" ColumnName="TEPR_IN_ATIVO" />
+                <ScalarProperty Name="TEPR_TX_RODAPE" ColumnName="TEPR_TX_RODAPE" />
+                <ScalarProperty Name="TEPR_TX_CABECALHO" ColumnName="TEPR_TX_CABECALHO" />
+                <ScalarProperty Name="TEPR_TX_TEXTO" ColumnName="TEPR_TX_TEXTO" />
+                <ScalarProperty Name="TEPR_NM_NOME" ColumnName="TEPR_NM_NOME" />
+                <ScalarProperty Name="TEPR_CD_ID" ColumnName="TEPR_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

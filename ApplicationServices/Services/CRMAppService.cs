@@ -80,6 +80,12 @@ namespace ApplicationServices.Services
             return lista;
         }
 
+        public CRM_PROPOSTA GetPropostaById(Int32 id)
+        {
+            CRM_PROPOSTA lista = _baseService.GetPropostaById(id);
+            return lista;
+        }
+
         public CRM CheckExist(CRM tarefa, Int32 idUsu, Int32 idAss)
         {
             CRM item = _baseService.CheckExist(tarefa, idUsu, idAss);
@@ -92,9 +98,21 @@ namespace ApplicationServices.Services
             return lista;
         }
 
+        public List<TEMPLATE_PROPOSTA> GetAllTemplateProposta(Int32 id)
+        {
+            List<TEMPLATE_PROPOSTA> lista = _baseService.GetAllTemplateProposta(id);
+            return lista;
+        }
+
         public List<CRM_ACAO> GetAllAcoes(Int32 idAss)
         {
             List<CRM_ACAO> lista = _baseService.GetAllAcoes(idAss);
+            return lista;
+        }
+
+        public List<CRM_PROPOSTA> GetAllPropostas(Int32 idAss)
+        {
+            List<CRM_PROPOSTA> lista = _baseService.GetAllPropostas(idAss);
             return lista;
         }
 
@@ -131,6 +149,12 @@ namespace ApplicationServices.Services
         public CRM_COMENTARIO GetComentarioById(Int32 id)
         {
             CRM_COMENTARIO lista = _baseService.GetComentarioById(id);
+            return lista;
+        }
+
+        public CRM_PROPOSTA_ACOMPANHAMENTO GetPropostaComentarioById(Int32 id)
+        {
+            CRM_PROPOSTA_ACOMPANHAMENTO lista = _baseService.GetPropostaComentarioById(id);
             return lista;
         }
 
@@ -493,6 +517,39 @@ namespace ApplicationServices.Services
                 noti.NOTI_IN_STATUS = 1;
                 noti.NOTI_IN_NIVEL = 1;
                 Int32 volta1 = _notiService.Create(noti);
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ValidateEditProposta(CRM_PROPOSTA item)
+        {
+            try
+            {
+                // Persiste
+                return _baseService.EditProposta(item);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ValidateCreateProposta(CRM_PROPOSTA item)
+        {
+            try
+            {
+                item.CRPR_IN_ATIVO = 1;
+                item.CRPR_IN_STATUS = 1;
+
+                // Recupera CRM
+                CRM crm = _baseService.GetItemById(item.CRM1_CD_ID);
+
+                // Persiste
+                Int32 volta = _baseService.CreateProposta(item);
                 return volta;
             }
             catch (Exception ex)

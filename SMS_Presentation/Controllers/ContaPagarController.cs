@@ -119,6 +119,7 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Session["VoltaCP"] = 1;
+            Session["VoltaFornecedor"] = 10;
             return RedirectToAction("IncluirFornecedor", "Fornecedor");
 
         }

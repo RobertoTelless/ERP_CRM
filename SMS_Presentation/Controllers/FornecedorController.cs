@@ -665,6 +665,10 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         return RedirectToAction("IncluirFornecedor");
                     }
+                    if ((Int32)Session["VoltaFornecedor"] == 10)
+                    {
+                        return RedirectToAction("IncluirCP", "ContaPagar");
+                    }
                     return RedirectToAction("MontarTelaFornecedor");
                 }
                 catch (Exception ex)

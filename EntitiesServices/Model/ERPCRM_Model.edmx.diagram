@@ -533,6 +533,16 @@
         <AssociationConnector Association="ERP_CRMModel.FK_NIVEL_SEGURANCA_ASSINANTE" />
         <AssociationConnector Association="ERP_CRMModel.FK_TIPO_DOCUMENTO_ASSINANTE" />
         <AssociationConnector Association="ERP_CRMModel.FK_TIPO_METADADO_ASSINANTE" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PROPOSTA" Width="1.5" PointX="38.75" PointY="231.5" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PROPOSTA_ACOMPANHAMENTO" Width="1.5" PointX="41" PointY="218" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE_PROPOSTA" Width="1.5" PointX="36.5" PointY="239.75" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_CRM" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_ACOMPANHAMENTO_CRM_PROPOSTA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_TEMPLATE_PROPOSTA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_ACOMPANHAMENTO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_TEMPLATE_PROPOSTA_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_ASSINANTE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

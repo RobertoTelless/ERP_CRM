@@ -95,6 +95,8 @@ namespace EntitiesServices.Model
             this.NIVEL_SEGURANCA = new HashSet<NIVEL_SEGURANCA>();
             this.TIPO_DOCUMENTO = new HashSet<TIPO_DOCUMENTO>();
             this.TIPO_METADADO = new HashSet<TIPO_METADADO>();
+            this.TEMPLATE_PROPOSTA = new HashSet<TEMPLATE_PROPOSTA>();
+            this.CRM_PROPOSTA = new HashSet<CRM_PROPOSTA>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -278,5 +280,9 @@ namespace EntitiesServices.Model
         public virtual ICollection<TIPO_DOCUMENTO> TIPO_DOCUMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TIPO_METADADO> TIPO_METADADO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TEMPLATE_PROPOSTA> TEMPLATE_PROPOSTA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
     }
 }

@@ -43,5 +43,12 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 CreateContato(CRM_CONTATO item);
         Int32 EditAcao(CRM_ACAO item);
         Int32 CreateAcao(CRM_ACAO item);
+
+        CRM_PROPOSTA_ACOMPANHAMENTO GetPropostaComentarioById(Int32 id);
+        List<CRM_PROPOSTA> GetAllPropostas(Int32 idAss);
+        CRM_PROPOSTA GetPropostaById(Int32 id);
+        Int32 EditProposta(CRM_PROPOSTA item);
+        Int32 CreateProposta(CRM_PROPOSTA item);
+        List<TEMPLATE_PROPOSTA> GetAllTemplateProposta(Int32 idAss);
     }
 }

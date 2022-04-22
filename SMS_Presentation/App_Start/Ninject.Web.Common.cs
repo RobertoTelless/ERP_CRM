@@ -356,6 +356,9 @@ namespace Presentation.Start
             kernel.Bind<IFormularioRespostaAcaoRepository>().To<FormularioRespostaAcaoRepository>();
             kernel.Bind<IFormularioRespostaAnexoRepository>().To<FormularioRespostaAnexoRepository>();
             kernel.Bind<IFormularioRespostaComentarioRepository>().To<FormularioRespostaComentarioRepository>();
+            kernel.Bind<ITemplatePropostaRepository>().To<TemplatePropostaRepository>();
+            kernel.Bind<ICRMPropostaRepository>().To<CRMPropostaRepository>();
+            kernel.Bind<ICRMPropostaComentarioRepository>().To<CRMPropostaComentarioRepository>();
 
         }
     }

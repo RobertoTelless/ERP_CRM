@@ -362,6 +362,8 @@
     <Compile Include="ViewModels\CategoriaFornecedorViewModel.cs" />
     <Compile Include="ViewModels\CategoriaEquipamentoViewModel.cs" />
     <Compile Include="ViewModels\CategoriaOrdemServicoViewModel.cs" />
+    <Compile Include="ViewModels\CRMPropostaViewModel.cs" />
+    <Compile Include="ViewModels\CRMPropostaComentarioViewModel.cs" />
     <Compile Include="ViewModels\FormularioRespostaAcaoViewModel.cs" />
     <Compile Include="ViewModels\FormularioRespostaComentarioViewModel.cs" />
     <Compile Include="ViewModels\CRMComercialComentarioViewModel.cs" />

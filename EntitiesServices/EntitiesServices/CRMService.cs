@@ -30,10 +30,13 @@ namespace ModelServices.EntitiesServices
         private readonly ICRMAcaoRepository _acaRepository;
         private readonly ICRMContatoRepository _conRepository;
         private readonly ICRMComentarioRepository _comRepository;
+        private readonly ITemplatePropostaRepository _tpRepository;
+        private readonly ICRMPropostaRepository _proRepository;
+        private readonly ICRMPropostaComentarioRepository _pcRepository;
 
         protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
-        public CRMService(ICRMRepository baseRepository, ILogRepository logRepository, ITipoCRMRepository tipoRepository, ICRMAnexoRepository anexoRepository, IUsuarioRepository usuRepository, ICRMOrigemRepository oriRepository, IMotivoCancelamentoRepository mcRepository, IMotivoEncerramentoRepository meRepository, ITipoAcaoRepository taRepository, ICRMAcaoRepository acaRepository, ICRMContatoRepository conRepository, ICRMComentarioRepository comRepository) : base(baseRepository)
+        public CRMService(ICRMRepository baseRepository, ILogRepository logRepository, ITipoCRMRepository tipoRepository, ICRMAnexoRepository anexoRepository, IUsuarioRepository usuRepository, ICRMOrigemRepository oriRepository, IMotivoCancelamentoRepository mcRepository, IMotivoEncerramentoRepository meRepository, ITipoAcaoRepository taRepository, ICRMAcaoRepository acaRepository, ICRMContatoRepository conRepository, ICRMComentarioRepository comRepository, ITemplatePropostaRepository tpRepository, ICRMPropostaRepository proRepository, ICRMPropostaComentarioRepository pcRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
@@ -47,6 +50,9 @@ namespace ModelServices.EntitiesServices
             _acaRepository = acaRepository;
             _conRepository = conRepository;
             _comRepository = comRepository;
+            _tpRepository = tpRepository;
+            _proRepository = proRepository;
+            _pcRepository = pcRepository;
         }
 
         public CRM CheckExist(CRM tarefa, Int32 idUsu,  Int32 idAss)
@@ -82,6 +88,11 @@ namespace ModelServices.EntitiesServices
             return _acaRepository.GetAllItens(idAss);
         }
 
+        public List<CRM_PROPOSTA> GetAllPropostas(Int32 idAss)
+        {
+            return _proRepository.GetAllItens(idAss);
+        }
+
         public List<CRM> GetTarefaStatus(Int32 tipo, Int32 idAss)
         {
             return _baseRepository.GetTarefaStatus(tipo, idAss);
@@ -97,6 +108,11 @@ namespace ModelServices.EntitiesServices
             return _acaRepository.GetItemById(id);
         }
 
+        public CRM_PROPOSTA GetPropostaById(Int32 id)
+        {
+            return _proRepository.GetItemById(id);
+        }
+
         public List<CRM> GetAllItens(Int32 idAss)
         {
             return _baseRepository.GetAllItens(idAss);
@@ -110,6 +126,11 @@ namespace ModelServices.EntitiesServices
         public List<TIPO_CRM> GetAllTipos()
         {
             return _tipoRepository.GetAllItens();
+        }
+
+        public List<TEMPLATE_PROPOSTA> GetAllTemplateProposta(Int32 id)
+        {
+            return _tpRepository.GetAllItens(id);
         }
 
         public List<TIPO_ACAO> GetAllTipoAcao(Int32 idAss)
@@ -144,6 +165,11 @@ namespace ModelServices.EntitiesServices
         public CRM_COMENTARIO GetComentarioById(Int32 id)
         {
             return _comRepository.GetItemById(id);
+        }
+
+        public CRM_PROPOSTA_ACOMPANHAMENTO GetPropostaComentarioById(Int32 id)
+        {
+            return _pcRepository.GetItemById(id);
         }
 
         public List<CRM> ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca, Int32? estrela, Int32? temperatura, Int32 idAss)
@@ -316,6 +342,44 @@ namespace ModelServices.EntitiesServices
                 try
                 {
                     _acaRepository.Add(item);
+                    transaction.Commit();
+                    return 0;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        public Int32 EditProposta(CRM_PROPOSTA item)
+        {
+            using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))
+            {
+                try
+                {
+                    CRM_PROPOSTA obj = _proRepository.GetById(item.CRPR_CD_ID);
+                    _proRepository.Detach(obj);
+                    _proRepository.Update(item);
+                    transaction.Commit();
+                    return 0;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        public Int32 CreateProposta(CRM_PROPOSTA item)
+        {
+            using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))
+            {
+                try
+                {
+                    _proRepository.Add(item);
                     transaction.Commit();
                     return 0;
                 }

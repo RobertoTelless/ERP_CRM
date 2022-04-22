@@ -101,6 +101,8 @@ namespace MvcMapping.Mappers
             CreateMap<FormularioRespostaViewModel, FORMULARIO_RESPOSTA>();
             CreateMap<FormularioRespostaComentarioViewModel, FORMULARIO_RESPOSTA_COMENTARIO>();
             CreateMap<FormularioRespostaAcaoViewModel, FORMULARIO_RESPOSTA_ACAO>();
+            CreateMap<CRMPropostaViewModel, CRM_PROPOSTA>();
+            CreateMap<CRMPropostaComentarioViewModel, CRM_PROPOSTA_ACOMPANHAMENTO>();
 
         }
     }

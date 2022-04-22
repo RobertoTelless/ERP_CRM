@@ -196,5 +196,8 @@ namespace EntitiesServices.Model
         public virtual DbSet<NIVEL_SEGURANCA> NIVEL_SEGURANCA { get; set; }
         public virtual DbSet<TIPO_DOCUMENTO> TIPO_DOCUMENTO { get; set; }
         public virtual DbSet<TIPO_METADADO> TIPO_METADADO { get; set; }
+        public virtual DbSet<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
+        public virtual DbSet<CRM_PROPOSTA_ACOMPANHAMENTO> CRM_PROPOSTA_ACOMPANHAMENTO { get; set; }
+        public virtual DbSet<TEMPLATE_PROPOSTA> TEMPLATE_PROPOSTA { get; set; }
     }
 }
