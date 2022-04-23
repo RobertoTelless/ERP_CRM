@@ -51,6 +51,8 @@ namespace EntitiesServices.Model
         public Nullable<int> CRM1_IN_DUMMY { get; set; }
         public string CRM1_AQ_IMAGEM { get; set; }
         public Nullable<int> CRM1_NR_TEMPERATURA { get; set; }
+        public Nullable<decimal> CRM1_VL_VALOR_INICIAL { get; set; }
+        public Nullable<decimal> CRM1_VL_VALOR_FINAL { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }

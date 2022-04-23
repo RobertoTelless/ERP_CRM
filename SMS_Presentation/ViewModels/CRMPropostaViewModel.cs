@@ -43,6 +43,8 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> ASSI_CD_ID { get; set; }
         [DataType(DataType.Date, ErrorMessage = "A DATA DE ENVIO deve ser uma data válida")]
         public Nullable<System.DateTime> CRPR_DT_ENVIO { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<decimal> CRPR_VL_VALOR { get; set; }
 
         public virtual CRM CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

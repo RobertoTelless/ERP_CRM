@@ -561,6 +561,7 @@
           <Property Name="CONF_IN_RESIDUAL" Type="int" />
           <Property Name="CONF_NR_DIAS_ATENDIMENTO" Type="int" />
           <Property Name="CONF_NR_DIAS_ACAO" Type="int" />
+          <Property Name="CONF_NR_DIAS_PROPOSTA" Type="int" />
         </EntityType>
         <EntityType Name="CONTA_BANCO">
           <Key>
@@ -816,7 +817,7 @@
           <Property Name="CRM1_IN_ATIVO" Type="int" />
           <Property Name="CRM1_DT_CRIACAO" Type="date" />
           <Property Name="CRM1_NM_NOME" Type="varchar" MaxLength="150" />
-          <Property Name="CRM1_DS_DESCRICAO" Type="varchar" MaxLength="500" />
+          <Property Name="CRM1_DS_DESCRICAO" Type="varchar" MaxLength="8000" />
           <Property Name="CRM1_TX_INFORMACOES_GERAIS" Type="text" />
           <Property Name="CRM1_IN_STATUS" Type="int" Nullable="false" />
           <Property Name="CRM1_DT_CANCELAMENTO" Type="date" />
@@ -829,6 +830,8 @@
           <Property Name="CRM1_IN_DUMMY" Type="int" />
           <Property Name="CRM1_AQ_IMAGEM" Type="varchar" MaxLength="150" />
           <Property Name="CRM1_NR_TEMPERATURA" Type="int" />
+          <Property Name="CRM1_VL_VALOR_INICIAL" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CRM1_VL_VALOR_FINAL" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="CRM_ACAO">
           <Key>
@@ -1013,14 +1016,16 @@
           <Property Name="CRPR_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CRM1_CD_ID" Type="int" Nullable="false" />
           <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" />
+          <Property Name="TEPR_CD_ID" Type="int" />
           <Property Name="CRPR_DT_PROPOSTA" Type="date" Nullable="false" />
           <Property Name="CRPR_DT_VALIDADE" Type="date" Nullable="false" />
           <Property Name="CRPR_DT_ENVIO" Type="date" />
           <Property Name="CRPR_DS_INFORMACOES" Type="varchar" MaxLength="5000" />
           <Property Name="CRPR_IN_STATUS" Type="int" Nullable="false" />
+          <Property Name="CRPR_VL_VALOR" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_TX_TEXTO" Type="text" />
           <Property Name="CRPR_AQ_ARQUIVO" Type="varchar" MaxLength="250" />
-          <Property Name="TEPR_CD_ID" Type="int" />
           <Property Name="CRPR_DT_CANCELAMENTO" Type="date" />
           <Property Name="CRPR_DS_CANCELAMENTO" Type="varchar" MaxLength="5000" />
           <Property Name="CRPR_DT_REPROVACAO" Type="date" />
@@ -1028,7 +1033,6 @@
           <Property Name="CRPR_DT_APROVACAO" Type="date" />
           <Property Name="CRPR_DS_APROVACAO" Type="varchar" MaxLength="5000" />
           <Property Name="CRPR_IN_ATIVO" Type="int" Nullable="false" />
-          <Property Name="ASSI_CD_ID" Type="int" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
           <Key>
@@ -9469,6 +9473,7 @@
           <Property Name="CONF_NR_DIAS_ATENDIMENTO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CONFIGURACAO_ASSINANTE" FromRole="CONFIGURACAO" ToRole="ASSINANTE" />
           <Property Name="CONF_NR_DIAS_ACAO" Type="Int32" />
+          <Property Name="CONF_NR_DIAS_PROPOSTA" Type="Int32" />
         </EntityType>
         <EntityType Name="CONTA_BANCO">
           <Key>
@@ -9764,7 +9769,7 @@
           <Property Name="CRM1_IN_ATIVO" Type="Int32" />
           <Property Name="CRM1_DT_CRIACAO" Type="DateTime" Precision="0" />
           <Property Name="CRM1_NM_NOME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="CRM1_DS_DESCRICAO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CRM1_DS_DESCRICAO" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
           <Property Name="CRM1_TX_INFORMACOES_GERAIS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CRM1_IN_STATUS" Type="Int32" Nullable="false" />
           <Property Name="ORIG_CD_ID" Type="Int32" />
@@ -9795,6 +9800,8 @@
           <Property Name="CRM1_NR_TEMPERATURA" Type="Int32" />
           <NavigationProperty Name="AGENDA" Relationship="ERP_CRMModel.FK_AGENDA_CRM" FromRole="CRM" ToRole="AGENDA" />
           <NavigationProperty Name="CRM_PROPOSTA" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_CRM" FromRole="CRM" ToRole="CRM_PROPOSTA" />
+          <Property Name="CRM1_VL_VALOR_INICIAL" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CRM1_VL_VALOR_FINAL" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="CRM_ACAO">
           <Key>
@@ -18102,6 +18109,7 @@
           <Property Name="ASSI_CD_ID" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_ASSINANTE" FromRole="CRM_PROPOSTA" ToRole="ASSINANTE" />
           <Property Name="CRPR_DT_ENVIO" Type="DateTime" Precision="0" />
+          <Property Name="CRPR_VL_VALOR" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
           <Key>
@@ -18770,6 +18778,7 @@
           <EntitySetMapping Name="CONFIGURACAO">
             <EntityTypeMapping TypeName="ERP_CRMModel.CONFIGURACAO">
               <MappingFragment StoreEntitySet="CONFIGURACAO">
+                <ScalarProperty Name="CONF_NR_DIAS_PROPOSTA" ColumnName="CONF_NR_DIAS_PROPOSTA" />
                 <ScalarProperty Name="CONF_NR_DIAS_ACAO" ColumnName="CONF_NR_DIAS_ACAO" />
                 <ScalarProperty Name="CONF_CD_ID" ColumnName="CONF_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -19043,6 +19052,8 @@
           <EntitySetMapping Name="CRM">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM">
               <MappingFragment StoreEntitySet="CRM">
+                <ScalarProperty Name="CRM1_VL_VALOR_FINAL" ColumnName="CRM1_VL_VALOR_FINAL" />
+                <ScalarProperty Name="CRM1_VL_VALOR_INICIAL" ColumnName="CRM1_VL_VALOR_INICIAL" />
                 <ScalarProperty Name="CRM1_NR_TEMPERATURA" ColumnName="CRM1_NR_TEMPERATURA" />
                 <ScalarProperty Name="CRM1_CD_ID" ColumnName="CRM1_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -21086,6 +21097,7 @@
           <EntitySetMapping Name="CRM_PROPOSTA">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_PROPOSTA">
               <MappingFragment StoreEntitySet="CRM_PROPOSTA">
+                <ScalarProperty Name="CRPR_VL_VALOR" ColumnName="CRPR_VL_VALOR" />
                 <ScalarProperty Name="CRPR_DT_ENVIO" ColumnName="CRPR_DT_ENVIO" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CRPR_IN_ATIVO" ColumnName="CRPR_IN_ATIVO" />

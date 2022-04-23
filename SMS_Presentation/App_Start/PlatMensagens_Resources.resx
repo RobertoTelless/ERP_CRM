@@ -214,10 +214,10 @@
     <value>Impossível incluir nova ação. Já existe uma ação ativa neste momento.</value>
   </data>
   <data name="M0041" xml:space="preserve">
-    <value>Impossível editar eta ação. Ela está encerrada ou excluída.</value>
+    <value>Impossível editar esta ação. Ela está encerrada ou excluída.</value>
   </data>
   <data name="M0042" xml:space="preserve">
-    <value>Impossível reativar esta ação. Já existe uma ação ativa neste momento.</value>
+    <value>Impossível criar/reativar esta ação. Já existe uma ação ativa neste momento.</value>
   </data>
   <data name="M0043" xml:space="preserve">
     <value>A data de encerramento não pode ser inferior a data de criação</value>
@@ -416,5 +416,11 @@
   </data>
   <data name="M0121" xml:space="preserve">
     <value>Impossível excluir este departamento. Ele está vinculada a outras informações</value>
+  </data>
+  <data name="M0122" xml:space="preserve">
+    <value>Impossível criar/reativar esta proposta. Já existe uma proposta sendo processada neste momento.</value>
+  </data>
+  <data name="M0123" xml:space="preserve">
+    <value>Impossível editar esta proposta. Ela está encerrada, cancelada ou reprovada</value>
   </data>
 </root>

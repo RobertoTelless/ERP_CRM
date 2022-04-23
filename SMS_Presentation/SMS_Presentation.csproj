@@ -3374,7 +3374,6 @@
     <Content Include="Views\CRM\VisualizarProcessoCRM.cshtml" />
     <Content Include="Views\CRM\EditarContato.cshtml" />
     <Content Include="Views\CRM\IncluirContato.cshtml" />
-    <Content Include="Views\CRM\AcompanhamentoProcessoCRM.cshtml" />
     <Content Include="Views\CRM\EnviarEMailContato.cshtml" />
     <Content Include="Views\CRM\EnviarSMSContato.cshtml" />
     <Content Include="Views\CRM\IncluirComentarioCRM.cshtml" />
@@ -3681,6 +3680,10 @@
     <Content Include="Views\BaseAdmin\VerAcoesUsuarioCRMFR.cshtml" />
     <Content Include="Views\BaseAdmin\IncluirAcaoFR.cshtml" />
     <Content Include="Views\BaseAdmin\EnviarEMailClienteFR.cshtml" />
+    <Content Include="Views\CRM\AcompanhamentoProcessoCRM.cshtml" />
+    <Content Include="Views\CRM\VerPropostasUsuarioCRM.cshtml" />
+    <Content Include="Views\CRM\IncluirProposta.cshtml" />
+    <Content Include="Views\CRM\EditarProposta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

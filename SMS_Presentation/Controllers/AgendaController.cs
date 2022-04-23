@@ -296,6 +296,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            if ((Int32)Session["VoltaAgendaCRM"] == 11)
+            {
+                return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
+            }
             if ((Int32)Session["VoltaAgenda"] == 2)
             {
                 return RedirectToAction("VerTimelineAgenda");

@@ -39,6 +39,7 @@ namespace EntitiesServices.Model
         public int CRPR_IN_ATIVO { get; set; }
         public Nullable<int> ASSI_CD_ID { get; set; }
         public Nullable<System.DateTime> CRPR_DT_ENVIO { get; set; }
+        public Nullable<decimal> CRPR_VL_VALOR { get; set; }
     
         public virtual CRM CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

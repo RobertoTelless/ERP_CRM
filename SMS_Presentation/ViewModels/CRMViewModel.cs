@@ -48,6 +48,10 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> CRM1_IN_DUMMY { get; set; }
         public string CRM1_AQ_IMAGEM { get; set; }
         public Nullable<int> CRM1_NR_TEMPERATURA { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<decimal> CRM1_VL_VALOR_INICIAL { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<decimal> CRM1_VL_VALOR_FINAL { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }
