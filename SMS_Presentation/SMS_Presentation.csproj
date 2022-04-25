@@ -3684,6 +3684,11 @@
     <Content Include="Views\CRM\VerPropostasUsuarioCRM.cshtml" />
     <Content Include="Views\CRM\IncluirProposta.cshtml" />
     <Content Include="Views\CRM\EditarProposta.cshtml" />
+    <Content Include="Views\CRM\CancelarProposta.cshtml" />
+    <Content Include="Views\CRM\ReprovarProposta.cshtml" />
+    <Content Include="Views\CRM\AprovarProposta.cshtml" />
+    <Content Include="Views\CRM\VerProposta.cshtml" />
+    <Content Include="Views\CRM\EnviarProposta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

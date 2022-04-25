@@ -676,6 +676,9 @@
     <Compile Include="Model\CRM_PROPOSTA_ACOMPANHAMENTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\CRM_PROPOSTA_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DEPARTAMENTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
@@ -1028,6 +1031,7 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkClasses\AttachmentCRM.cs" />
     <Compile Include="WorkClasses\AttachmentForn.cs" />
     <Compile Include="WorkClasses\CNPJ.cs" />
     <Compile Include="WorkClasses\MontagemGrupo.cs" />

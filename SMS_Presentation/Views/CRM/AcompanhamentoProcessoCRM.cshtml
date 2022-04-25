@@ -1132,7 +1132,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @if (ViewBag.Prop == null)
+                                            @if (ViewBag.Prop == null & Model.CRM1_IN_STATUS != 5)
                                             {
                                                 <div class="form-group">
                                                     @Html.ButtonLinkIndex(text: "Incluir Nova Proposta", action: "IncluirProposta", controller: "CRM")

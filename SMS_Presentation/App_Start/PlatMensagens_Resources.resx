@@ -423,4 +423,46 @@
   <data name="M0123" xml:space="preserve">
     <value>Impossível editar esta proposta. Ela está encerrada, cancelada ou reprovada</value>
   </data>
+  <data name="M0124" xml:space="preserve">
+    <value>A justificativa do cancelamento é obrigatória</value>
+  </data>
+  <data name="M0125" xml:space="preserve">
+    <value>Data de cancelamento não informada</value>
+  </data>
+  <data name="M0126" xml:space="preserve">
+    <value>A data de reprovação não pode ser inferior a data de criação do processo</value>
+  </data>
+  <data name="M0127" xml:space="preserve">
+    <value>A data de reprovação não pode ser superior a data corrente</value>
+  </data>
+  <data name="M0128" xml:space="preserve">
+    <value>A justificativa da reprovação é obrigatória</value>
+  </data>
+  <data name="M0129" xml:space="preserve">
+    <value>Data de reprovação não informada</value>
+  </data>
+  <data name="M0130" xml:space="preserve">
+    <value>A data de aprovação não pode ser inferior a data de criação do processo</value>
+  </data>
+  <data name="M0131" xml:space="preserve">
+    <value>A data de aprovação não pode ser superior a data corrente</value>
+  </data>
+  <data name="M0132" xml:space="preserve">
+    <value>A justificativa da aprovação é obrigatória</value>
+  </data>
+  <data name="M0133" xml:space="preserve">
+    <value>Data de aprovação não informada</value>
+  </data>
+  <data name="M0134" xml:space="preserve">
+    <value>Data de envio não informada</value>
+  </data>
+  <data name="M0135" xml:space="preserve">
+    <value>A data de envio não pode ser inferior a data de criação do processo</value>
+  </data>
+  <data name="M0136" xml:space="preserve">
+    <value>A data de envio não pode ser superior a data corrente</value>
+  </data>
+  <data name="M0137" xml:space="preserve">
+    <value>Ocorreu erro no envio da proposta por e-mail</value>
+  </data>
 </root>

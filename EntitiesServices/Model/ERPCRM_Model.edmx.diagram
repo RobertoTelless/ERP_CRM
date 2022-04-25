@@ -543,6 +543,10 @@
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_ACOMPANHAMENTO_USUARIO" />
         <AssociationConnector Association="ERP_CRMModel.FK_TEMPLATE_PROPOSTA_ASSINANTE" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_MOTIVO_CANCELAMENTO" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PROPOSTA_ANEXO" Width="1.5" PointX="41" PointY="233.375" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_ANEXO_CRM_PROPOSTA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_TEMPLATE_EMAIL" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -199,5 +199,6 @@ namespace EntitiesServices.Model
         public virtual DbSet<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
         public virtual DbSet<CRM_PROPOSTA_ACOMPANHAMENTO> CRM_PROPOSTA_ACOMPANHAMENTO { get; set; }
         public virtual DbSet<TEMPLATE_PROPOSTA> TEMPLATE_PROPOSTA { get; set; }
+        public virtual DbSet<CRM_PROPOSTA_ANEXO> CRM_PROPOSTA_ANEXO { get; set; }
     }
 }

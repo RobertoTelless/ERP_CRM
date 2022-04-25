@@ -42,6 +42,7 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IAgendaAppService ageApp;
         private readonly IClienteAppService cliApp;
         private readonly IAtendimentoAppService ateApp;
+        private readonly ITemplateEMailAppService temaApp;
 
         private String msg;
         private Exception exception;
@@ -50,7 +51,7 @@ namespace ERP_CRM_Solution.Controllers
         List<CRM> listaMaster = new List<CRM>();
         String extensao;
 
-        public CRMController(ICRMAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps)
+        public CRMController(ICRMAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps, ITemplateEMailAppService temaApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -60,6 +61,7 @@ namespace ERP_CRM_Solution.Controllers
             ageApp = ageApps;
             cliApp = cliApps;
             ateApp = ateApps;
+            temaApp = temaApps;
         }
 
         [HttpGet]
@@ -1445,6 +1447,143 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VoltarAcompanhamentoCRM");
         }
 
+        public ActionResult VoltarAnexoCRMProposta()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaCRM"] == 10)
+            {
+                return RedirectToAction("VoltarAcompanhamentoCRM");
+            }
+            return RedirectToAction("EditarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+        }
+
+        [HttpPost]
+        public ActionResult UploadFileQueueCRMProposta(FileQueue file)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdCRMProposta"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (file == null)
+            {
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                Session["MensCRM"] = 10;
+                return RedirectToAction("VoltarAcompanhamentoCRM");
+            }
+
+            CRM_PROPOSTA item = baseApp.GetPropostaById(idNot);
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
+            var fileName = file.Name;
+            if (fileName.Length > 250)
+            {
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                Session["MensCRM"] = 11;
+                return RedirectToAction("VoltarAcompanhamentoCRM");
+            }
+            String caminho = "/Imagens/" + idAss.ToString() + "/Proposta/" + item.CRPR_CD_ID.ToString() + "/Arquivo/";
+            String path = Path.Combine(Server.MapPath(caminho), fileName);
+            System.IO.Directory.CreateDirectory(Server.MapPath(caminho));
+            System.IO.File.WriteAllBytes(path, file.Contents);
+
+            //Recupera tipo de arquivo
+            extensao = Path.GetExtension(fileName);
+            String a = extensao;
+
+            // Gravar registro
+            CRM_PROPOSTA_ANEXO foto = new CRM_PROPOSTA_ANEXO();
+            foto.CRPA_AQ_ARQUIVO = "~" + caminho + fileName;
+            foto.CRPA_DT_ANEXO = DateTime.Today;
+            foto.CRPA_IN_ATIVO = 1;
+            Int32 tipo = 3;
+            if (extensao.ToUpper() == ".JPG" || extensao.ToUpper() == ".GIF" || extensao.ToUpper() == ".PNG" || extensao.ToUpper() == ".JPEG")
+            {
+                tipo = 1;
+            }
+            if (extensao.ToUpper() == ".MP4" || extensao.ToUpper() == ".AVI" || extensao.ToUpper() == ".MPEG")
+            {
+                tipo = 2;
+            }
+            if (extensao.ToUpper() == ".PDF")
+            {
+                tipo = 3;
+            }
+            foto.CRPA_IN_TIPO = tipo;
+            foto.CPRA_NM_TITULO = fileName;
+            foto.CRPR_CD_ID = item.CRPR_CD_ID;
+
+            item.CRM_PROPOSTA_ANEXO.Add(foto);
+            Int32 volta = baseApp.ValidateEditProposta(item);
+            return RedirectToAction("VoltarAcompanhamentoCRM");
+        }
+
+        [HttpPost]
+        public ActionResult UploadFileCRMProposta(HttpPostedFileBase file)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdCRMProposta"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (file == null)
+            {
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                Session["MensCRM"] = 10;
+                return RedirectToAction("VoltarAcompanhamentoCRM");
+            }
+
+            CRM_PROPOSTA item = baseApp.GetPropostaById(idNot);
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
+            var fileName = Path.GetFileName(file.FileName);
+            if (fileName.Length > 250)
+            {
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                Session["MensCRM"] = 11;
+                return RedirectToAction("VoltarAcompanhamentoCRM");
+            }
+            String caminho = "/Imagens/" + idAss.ToString() + "/Proposta/" + item.CRPR_CD_ID.ToString() + "/Arquivo/";
+            String path = Path.Combine(Server.MapPath(caminho), fileName);
+            System.IO.Directory.CreateDirectory(Server.MapPath(caminho));
+            file.SaveAs(path);
+
+            //Recupera tipo de arquivo
+            extensao = Path.GetExtension(fileName);
+            String a = extensao;
+
+            // Gravar registro
+            CRM_PROPOSTA_ANEXO foto = new CRM_PROPOSTA_ANEXO();
+            foto.CRPA_AQ_ARQUIVO = "~" + caminho + fileName;
+            foto.CRPA_DT_ANEXO = DateTime.Today;
+            foto.CRPA_IN_ATIVO = 1;
+            Int32 tipo = 3;
+            if (extensao.ToUpper() == ".JPG" || extensao.ToUpper() == ".GIF" || extensao.ToUpper() == ".PNG" || extensao.ToUpper() == ".JPEG")
+            {
+                tipo = 1;
+            }
+            if (extensao.ToUpper() == ".MP4" || extensao.ToUpper() == ".AVI" || extensao.ToUpper() == ".MPEG")
+            {
+                tipo = 2;
+            }
+            if (extensao.ToUpper() == ".PDF")
+            {
+                tipo = 3;
+            }
+            foto.CRPA_IN_TIPO = tipo;
+            foto.CPRA_NM_TITULO = fileName;
+            foto.CRPR_CD_ID = item.CRPR_CD_ID;
+
+            item.CRM_PROPOSTA_ANEXO.Add(foto);
+            Int32 volta = baseApp.ValidateEditProposta(item);
+            return RedirectToAction("VoltarAcompanhamentoCRM");
+        }
+
         public ActionResult VoltarAnexoCRM()
         {
             if ((String)Session["Ativa"] == null)
@@ -2317,6 +2456,11 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0123", CultureInfo.CurrentCulture));
                 }
+                if ((Int32)Session["MensCRM"] == 12)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0040", CultureInfo.CurrentCulture));
+                }
+
             }
 
             // Processa...
@@ -4173,7 +4317,7 @@ namespace ERP_CRM_Solution.Controllers
             String body = String.Empty;
             String footer = "<b>" + assi.ASSI_NM_NOME + "</b>";
 
-            // Mota vm
+            // Monta vm
             MensagemViewModel vm = new MensagemViewModel();
             vm.ASSI_CD_ID = idAss;
             vm.MENS_DT_CRIACAO = DateTime.Now;
@@ -4575,6 +4719,20 @@ namespace ERP_CRM_Solution.Controllers
                     String caminho = "/Imagens/" + idAss.ToString() + "/Proposta/" + item.CRPR_CD_ID.ToString() + "/Arquivo/";
                     Directory.CreateDirectory(Server.MapPath(caminho));
 
+                    // Carrega arquivo
+                    Session["IdCRMProposta"] = item.CRPR_CD_ID;
+                    if (Session["FileQueueCRM"] != null)
+                    {
+                        List<FileQueue> fq = (List<FileQueue>)Session["FileQueueCRM"];
+
+                        foreach (var file in fq)
+                        {
+                            UploadFileQueueCRMProposta(file);
+                        }
+
+                        Session["FileQueueCRM"] = null;
+                    }
+
                     // Verifica retorno
                     return RedirectToAction("VoltarAcompanhamentoCRM");
                 }
@@ -4625,6 +4783,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Prepara view
+            Session["IdCRMProposta"] = item.CRPR_CD_ID;
             ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
 
@@ -4746,9 +4905,725 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VoltarAcompanhamentoCRM");
         }
 
+        [HttpGet]
+        public ActionResult CancelarProposta(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
 
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
 
+            // Prepara listas
+            ViewBag.Motivos = new SelectList(baseApp.GetAllMotivoCancelamento(idAss).OrderBy(p => p.MOCA_NM_NOME), "MOCA_CD_ID", "MOCA_NM_NOME");
+            Session["IncluirCRM"] = 0;
+            Session["CRM"] = null;
 
+            // Recupera
+            Session["CRMNovo"] = 0;
+            CRM_PROPOSTA item = baseApp.GetPropostaById(id);
+            List<CRM_PROPOSTA> lp = baseApp.GetAllPropostas(id);
+            Session["IdCRMProposta"] = item.CRPR_CD_ID;
 
+            // Checa propostas
+            Session["TemProp"] = 0;
+            if (lp.Where(p => p.CRPR_IN_STATUS == 1 || p.CRPR_IN_STATUS == 2).ToList().Count > 0)
+            {
+                Session["TemProp"] = 1;
+            }
+
+            // Mensagens
+            if (Session["MensCRM"] != null)
+            {
+                if ((Int32)Session["MensCRM"] == 30)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0124", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 31)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0125", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 32)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0037", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 33)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0038", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // Prepara view
+            CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
+            vm.CRPR_DT_CANCELAMENTO = DateTime.Today.Date;
+            vm.CRPR_IN_STATUS = 3;
+            return View(vm);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult CancelarProposta(CRMPropostaViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            ViewBag.Motivos = new SelectList(baseApp.GetAllMotivoCancelamento(idAss).OrderBy(p => p.MOCA_NM_NOME), "MOCA_CD_ID", "MOCA_NM_NOME");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = baseApp.ValidateEditProposta(item);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensCRM"] = 30;
+                        return View(vm);
+                    }
+                    if (volta == 2)
+                    {
+                        Session["MensCRM"] = 31;
+                        return View(vm);
+                    }
+                    if (volta == 3)
+                    {
+                        Session["MensCRM"] = 32;
+                        return View(vm);
+                    }
+                    if (volta == 4)
+                    {
+                        Session["MensCRM"] = 33;
+                        return View(vm);
+                    }
+
+                    // Listas
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ReprovarProposta(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara listas
+            Session["IncluirCRM"] = 0;
+            Session["CRM"] = null;
+
+            // Recupera
+            Session["CRMNovo"] = 0;
+            CRM_PROPOSTA item = baseApp.GetPropostaById(id);
+            List<CRM_PROPOSTA> lp = baseApp.GetAllPropostas(id);
+            Session["IdCRMProposta"] = item.CRPR_CD_ID;
+
+            // Checa propostas
+            Session["TemProp"] = 0;
+            if (lp.Where(p => p.CRPR_IN_STATUS == 1 || p.CRPR_IN_STATUS == 2).ToList().Count > 0)
+            {
+                Session["TemProp"] = 1;
+            }
+
+            // Mensagens
+            if (Session["MensCRM"] != null)
+            {
+                if ((Int32)Session["MensCRM"] == 50)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0128", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 51)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0129", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 52)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0126", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 53)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0127", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // Prepara view
+            CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
+            vm.CRPR_DT_REPROVACAO = DateTime.Today.Date;
+            vm.CRPR_IN_STATUS = 4;
+            return View(vm);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult ReprovarProposta(CRMPropostaViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = baseApp.ValidateEditProposta(item);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensCRM"] = 50;
+                        return View(vm);
+                    }
+                    if (volta == 2)
+                    {
+                        Session["MensCRM"] = 51;
+                        return View(vm);
+                    }
+                    if (volta == 3)
+                    {
+                        Session["MensCRM"] = 52;
+                        return View(vm);
+                    }
+                    if (volta == 4)
+                    {
+                        Session["MensCRM"] = 53;
+                        return View(vm);
+                    }
+
+                    // Listas
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult AprovarProposta(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara listas
+            Session["IncluirCRM"] = 0;
+            Session["CRM"] = null;
+
+            // Recupera
+            Session["CRMNovo"] = 0;
+            CRM_PROPOSTA item = baseApp.GetPropostaById(id);
+            List<CRM_PROPOSTA> lp = baseApp.GetAllPropostas(id);
+            Session["IdCRMProposta"] = item.CRPR_CD_ID;
+
+            // Checa propostas
+            Session["TemProp"] = 0;
+            if (lp.Where(p => p.CRPR_IN_STATUS == 1 || p.CRPR_IN_STATUS == 2).ToList().Count > 0)
+            {
+                Session["TemProp"] = 1;
+            }
+
+            // Mensagens
+            if (Session["MensCRM"] != null)
+            {
+                if ((Int32)Session["MensCRM"] == 60)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0132", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 61)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0133", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 62)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0130", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 63)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0131", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // Prepara view
+            CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
+            vm.CRPR_DT_APROVACAO = DateTime.Today.Date;
+            vm.CRPR_IN_STATUS = 5;
+            return View(vm);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult AprovarProposta(CRMPropostaViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = baseApp.ValidateEditProposta(item);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensCRM"] = 60;
+                        return View(vm);
+                    }
+                    if (volta == 2)
+                    {
+                        Session["MensCRM"] = 61;
+                        return View(vm);
+                    }
+                    if (volta == 3)
+                    {
+                        Session["MensCRM"] = 62;
+                        return View(vm);
+                    }
+                    if (volta == 4)
+                    {
+                        Session["MensCRM"] = 63;
+                        return View(vm);
+                    }
+
+                    // Atualiza status do processo
+                    CRM crm = item.CRM;
+                    crm.CRM1_IN_STATUS = 4;
+                    Int32 volta1 = baseApp.ValidateEdit(crm, crm);
+
+                    // Listas
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        public ActionResult ElaborarProposta(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara listas
+            Session["IncluirCRM"] = 0;
+            Session["CRM"] = null;
+
+            // Recupera
+            Session["CRMNovo"] = 0;
+            CRM_PROPOSTA item = baseApp.GetPropostaById(id);
+            Session["IdCRMProposta"] = item.CRPR_CD_ID;
+
+            // Processa
+            item.CRPR_IN_STATUS = 1;
+            item.CRPR_DT_ENVIO = null;
+            item.CRPR_DT_APROVACAO = null;
+            item.CRPR_DT_CANCELAMENTO = null;
+            item.CRPR_DT_REPROVACAO = null;
+            item.CRPR_DS_APROVACAO = null;
+            item.CRPR_DS_CANCELAMENTO = null;
+            item.CRPR_DS_REPROVACAO = null;
+            Int32 volta = baseApp.ValidateEditProposta(item);
+            return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+        }
+
+        public ActionResult VerProposta(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara listas
+            Session["IncluirCRM"] = 0;
+            Session["CRM"] = null;
+
+            // Recupera
+            Session["CRMNovo"] = 0;
+            CRM_PROPOSTA item = baseApp.GetPropostaById(id);
+            Session["IdCRMProposta"] = item.CRPR_CD_ID;
+            CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpGet]
+        public ActionResult EnviarProposta(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara listas
+            Session["IncluirCRM"] = 0;
+            Session["CRM"] = null;
+
+            // Recupera
+            Session["CRMNovo"] = 0;
+            CRM_PROPOSTA item = baseApp.GetPropostaById(id);
+            List<CRM_PROPOSTA> lp = baseApp.GetAllPropostas(id);
+            Session["IdCRMProposta"] = item.CRPR_CD_ID;
+
+            // Checa propostas
+            Session["TemProp"] = 0;
+            if (lp.Where(p => p.CRPR_IN_STATUS == 1 || p.CRPR_IN_STATUS == 2).ToList().Count > 0)
+            {
+                Session["TemProp"] = 1;
+            }
+
+            // Mensagens
+            if (Session["MensCRM"] != null)
+            {
+                if ((Int32)Session["MensCRM"] == 70)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0134", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 71)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0135", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 72)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0136", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 75)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0137", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // Prepara view
+            CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
+            vm.CRPR_DT_ENVIO = DateTime.Today.Date;
+            vm.CRPR_IN_STATUS = 2;
+            return View(vm);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult EnviarProposta(CRMPropostaViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = baseApp.ValidateEditProposta(item);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensCRM"] = 70;
+                        return View(vm);
+                    }
+                    if (volta == 2)
+                    {
+                        Session["MensCRM"] = 71;
+                        return View(vm);
+                    }
+                    if (volta == 3)
+                    {
+                        Session["MensCRM"] = 72;
+                        return View(vm);
+                    }
+                    // Atualiza status do processo
+                    CRM crm = item.CRM;
+                    crm.CRM1_IN_STATUS = 3;
+                    Int32 volta1 = baseApp.ValidateEdit(crm, crm);
+
+                    // Envia proposta
+                    MensagemViewModel mens = new MensagemViewModel();
+                    mens.ASSI_CD_ID = idAss;
+                    mens.MENS_DT_CRIACAO = DateTime.Now;
+                    mens.MENS_IN_ATIVO = 1;
+                    mens.MENS_IN_TIPO = 1;
+                    mens.ID = item.CRM.CLIE_CD_ID;
+                    mens.TEEM_CD_ID = vm.TEEM_CD_ID;
+                    mens.MENS_NM_LINK = vm.MENS_NM_LINK;
+                    Int32 retGrava = ProcessarEnvioMensagemEMail(mens, item, usuario);
+
+                    // Verifica
+                    if (retGrava == 1)
+                    {
+                        Session["MensCRM"] = 75;
+                        return View(vm);
+                    }
+
+                    // Retorno
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [ValidateInput(false)]
+        public Int32 ProcessarEnvioMensagemEMail(MensagemViewModel vm, CRM_PROPOSTA item, USUARIO usuario)
+        {
+            // Recupera contatos
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            CLIENTE cliente = null;
+            String erro = null;
+            Int32 volta = 0;
+            ERP_CRMEntities Db = new ERP_CRMEntities();
+
+            // Nome
+            cliente = cliApp.GetItemById(vm.ID.Value);
+
+            // Processa e-mail
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+            TEMPLATE_EMAIL temp = temaApp.GetItemById(vm.TEEM_CD_ID.Value);
+            
+            // Prepara inicial
+            String body = String.Empty;
+            String header = String.Empty;
+            String footer = String.Empty;
+            String link = String.Empty;
+            body = temp.TEEM_TX_CORPO;
+            header = temp.TEEM_TX_CABECALHO;
+            footer = temp.TEEM_TX_DADOS;
+            link = temp.TEEM_LK_LINK;                    
+
+            // Prepara cabeçalho
+            header = header.Replace("{Nome}", cliente.CLIE_NM_NOME);
+
+            // Prepara rodape
+            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            footer = footer.Replace("{Assinatura}", assi.ASSI_NM_NOME);
+                    
+            // Trata corpo
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(body);
+
+            // Trata link
+            if (!String.IsNullOrEmpty(link))
+            {
+                if (!link.Contains("www."))
+                {
+                    link = "www." + link;
+                }
+                if (!link.Contains("http://"))
+                {
+                    link = "http://" + link;
+                }
+                str.AppendLine("<a href='" + link + "'>Clique aqui para maiores informações</a>");
+            }
+            body = str.ToString();                  
+            String emailBody = header + body + footer;
+
+            // Checa e monta anexos
+            List<System.Net.Mail.Attachment> listaAnexo = new List<System.Net.Mail.Attachment>();
+            if (item.CRM_PROPOSTA_ANEXO.Count > 0)
+            {
+                CRM_PROPOSTA_ANEXO ane = item.CRM_PROPOSTA_ANEXO.OrderByDescending(p => p.CRPA_DT_ANEXO).FirstOrDefault();
+                String fn = Server.MapPath(ane.CRPA_AQ_ARQUIVO);
+                System.Net.Mail.Attachment anexo = new System.Net.Mail.Attachment(fn);
+                listaAnexo.Add(anexo);
+            }
+
+            // Monta e-mail
+            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+            Email mensagem = new Email();
+            mensagem.ASSUNTO = "Proposta - " + cliente.CLIE_NM_NOME;
+            mensagem.CORPO = emailBody;
+            mensagem.DEFAULT_CREDENTIALS = false;
+            mensagem.EMAIL_DESTINO = cliente.CLIE_NM_EMAIL;
+            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+            mensagem.ENABLE_SSL = true;
+            mensagem.NOME_EMISSOR = cliente.ASSINANTE.ASSI_NM_NOME;
+            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+            mensagem.IS_HTML = true;
+            mensagem.NETWORK_CREDENTIAL = net;
+            mensagem.ATTACHMENT = listaAnexo;
+
+            // Envia mensagem
+            try
+            {
+                Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+            }
+            catch (Exception ex)
+            {
+                erro = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    erro += ex.InnerException.Message;
+                }
+                if (ex.GetType() == typeof(SmtpFailedRecipientException))
+                {
+                    var se = (SmtpFailedRecipientException)ex;
+                    erro += se.FailedRecipient;
+                }
+                return 1;
+            }
+            erro = null;
+            return 0;
+        }
     }
 }

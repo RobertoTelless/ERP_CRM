@@ -19,6 +19,7 @@ namespace EntitiesServices.Model
         {
             this.MENSAGEM_AUTOMACAO = new HashSet<MENSAGEM_AUTOMACAO>();
             this.MENSAGENS = new HashSet<MENSAGENS>();
+            this.CRM_PROPOSTA = new HashSet<CRM_PROPOSTA>();
         }
     
         public int TEEM_CD_ID { get; set; }
@@ -39,5 +40,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<MENSAGEM_AUTOMACAO> MENSAGEM_AUTOMACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MENSAGENS> MENSAGENS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
     }
 }

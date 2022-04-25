@@ -18,6 +18,7 @@ namespace EntitiesServices.Model
         public CRM_PROPOSTA()
         {
             this.CRM_PROPOSTA_ACOMPANHAMENTO = new HashSet<CRM_PROPOSTA_ACOMPANHAMENTO>();
+            this.CRM_PROPOSTA_ANEXO = new HashSet<CRM_PROPOSTA_ANEXO>();
         }
     
         public int CRPR_CD_ID { get; set; }
@@ -40,6 +41,8 @@ namespace EntitiesServices.Model
         public Nullable<int> ASSI_CD_ID { get; set; }
         public Nullable<System.DateTime> CRPR_DT_ENVIO { get; set; }
         public Nullable<decimal> CRPR_VL_VALOR { get; set; }
+        public Nullable<int> MOCA_CD_ID { get; set; }
+        public Nullable<int> TEEM_CD_ID { get; set; }
     
         public virtual CRM CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -47,5 +50,9 @@ namespace EntitiesServices.Model
         public virtual TEMPLATE_PROPOSTA TEMPLATE_PROPOSTA { get; set; }
         public virtual USUARIO USUARIO { get; set; }
         public virtual ASSINANTE ASSINANTE { get; set; }
+        public virtual MOTIVO_CANCELAMENTO MOTIVO_CANCELAMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PROPOSTA_ANEXO> CRM_PROPOSTA_ANEXO { get; set; }
+        public virtual TEMPLATE_EMAIL TEMPLATE_EMAIL { get; set; }
     }
 }

@@ -47,5 +47,9 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEditProposta(CRM_PROPOSTA item);
         Int32 ValidateCreateProposta(CRM_PROPOSTA item);
         List<TEMPLATE_PROPOSTA> GetAllTemplateProposta(Int32 idAss);
+        Int32 ValidateCancelarProposta(CRM_PROPOSTA item);
+        Int32 ValidateReprovarProposta(CRM_PROPOSTA item);
+        Int32 ValidateAprovarProposta(CRM_PROPOSTA item);
+        Int32 ValidateEnviarProposta(CRM_PROPOSTA item);
     }
 }
