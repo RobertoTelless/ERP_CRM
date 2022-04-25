@@ -146,6 +146,12 @@ namespace ApplicationServices.Services
             return lista;
         }
 
+        public CRM_PROPOSTA_ANEXO GetAnexoPropostaById(Int32 id)
+        {
+            CRM_PROPOSTA_ANEXO lista = _baseService.GetAnexoPropostaById(id);
+            return lista;
+        }
+
         public CRM_COMENTARIO GetComentarioById(Int32 id)
         {
             CRM_COMENTARIO lista = _baseService.GetComentarioById(id);

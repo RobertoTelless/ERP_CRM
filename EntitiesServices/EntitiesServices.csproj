@@ -350,6 +350,7 @@
     <Compile Include="Interfaces\Repositories\ICategoriaAtendimentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaOrdemServicoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaServicoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMPropostaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPropostaComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPropostaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IDocumentoRepository.cs" />

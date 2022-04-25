@@ -1606,6 +1606,19 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
         }
 
+        public ActionResult VoltarEditarPropostaCRM()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaComentProposta"] == 1)
+            {
+                return RedirectToAction("EditarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+            }
+            return RedirectToAction("EditarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+        }
+
         [HttpGet]
         public ActionResult VerAnexoCRM(Int32 id)
         {
@@ -1635,6 +1648,38 @@ namespace ERP_CRM_Solution.Controllers
 
             // Prepara view
             CRM_ANEXO item = baseApp.GetAnexoById(id);
+            return View(item);
+        }
+
+        [HttpGet]
+        public ActionResult VerAnexoCRMProposta(Int32 id)
+        {
+
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("MontarTelaCRM", "CRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara view
+            CRM_PROPOSTA_ANEXO item = baseApp.GetAnexoPropostaById(id);
             return View(item);
         }
 
@@ -1738,6 +1783,28 @@ namespace ERP_CRM_Solution.Controllers
         {
             CRM_ANEXO item = baseApp.GetAnexoById(id);
             String arquivo = item.CRAN_AQ_ARQUIVO;
+            Int32 pos = arquivo.LastIndexOf("/") + 1;
+            String nomeDownload = arquivo.Substring(pos);
+            String contentType = string.Empty;
+            if (arquivo.Contains(".pdf"))
+            {
+                contentType = "application/pdf";
+            }
+            else if (arquivo.Contains(".jpg"))
+            {
+                contentType = "image/jpg";
+            }
+            else if (arquivo.Contains(".png"))
+            {
+                contentType = "image/png";
+            }
+            return File(arquivo, contentType, nomeDownload);
+        }
+
+        public FileResult DownloadCRMProposta(Int32 id)
+        {
+            CRM_PROPOSTA_ANEXO item = baseApp.GetAnexoPropostaById(id);
+            String arquivo = item.CRPA_AQ_ARQUIVO;
             Int32 pos = arquivo.LastIndexOf("/") + 1;
             String nomeDownload = arquivo.Substring(pos);
             String contentType = string.Empty;
@@ -2480,11 +2547,13 @@ namespace ERP_CRM_Solution.Controllers
             List<CRM_PROPOSTA> props = item.CRM_PROPOSTA.ToList().OrderByDescending(p => p.CRPR_DT_PROPOSTA).ToList();
             CRM_PROPOSTA prop = props.Where(p => p.CRPR_IN_STATUS == 2 || p.CRPR_IN_STATUS == 1).FirstOrDefault();
 
+
             Session["Acoes"] = acoes;
-            Session["Propostas"] = props;
+            Session["Props"] = props;
             Session["CRM"] = item;
             Session["VoltaCRM"] = 11;
             Session["VoltaAgendaCRM"] = 11;
+            Session["ClienteCRM"] = item.CLIENTE;
             ViewBag.Acoes = acoes;
             ViewBag.Acao = acao;
             ViewBag.Props = props;
@@ -4670,7 +4739,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
-            // Verifica se pode inlcuir ação
+            // Verifica se pode incluir proposta
             List<CRM_PROPOSTA> props = (List<CRM_PROPOSTA>)Session["Props"];
             if (props.Where(p => p.CRPR_IN_STATUS == 1 || p.CRPR_IN_STATUS == 2).ToList().Count > 0)
             {
@@ -4682,7 +4751,7 @@ namespace ERP_CRM_Solution.Controllers
             CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
             ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
-
+            CRM crm = (CRM)Session["CRM"];
             CRM_PROPOSTA item = new CRM_PROPOSTA();
             CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
             vm.CRM1_CD_ID = (Int32)Session["IdCRM"];
@@ -4692,11 +4761,11 @@ namespace ERP_CRM_Solution.Controllers
             vm.CRPR_IN_STATUS = 1;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             vm.CRPR_DT_VALIDADE = DateTime.Now.AddDays(Convert.ToDouble(conf.CONF_NR_DIAS_PROPOSTA));
+            vm.CLIENTE = (CLIENTE)Session["ClienteCRM"];
             return View(vm);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult IncluirProposta(CRMPropostaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -4783,6 +4852,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Prepara view
+            Session["VoltaComentProposta"] = 1;
             Session["IdCRMProposta"] = item.CRPR_CD_ID;
             ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
@@ -4794,7 +4864,6 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult EditarProposta(CRMPropostaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -5419,6 +5488,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 Session["TemProp"] = 1;
             }
+            ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
 
             // Mensagens
             if (Session["MensCRM"] != null)
@@ -5438,6 +5508,14 @@ namespace ERP_CRM_Solution.Controllers
                 if ((Int32)Session["MensCRM"] == 75)
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0137", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 76)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0138", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 77)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0139", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -5462,6 +5540,20 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
+                    // Checa anexo
+                    if (vm.CRM_PROPOSTA_ANEXO.Count == 0)
+                    {
+                        Session["MensCRM"] = 76;
+                        return View(vm);
+                    }
+
+                    // Checa template
+                    if (vm.TEPR_CD_ID == null)
+                    {
+                        Session["MensCRM"] = 77;
+                        return View(vm);
+                    }
+
                     // Executa a operação
                     CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
@@ -5496,7 +5588,7 @@ namespace ERP_CRM_Solution.Controllers
                     mens.MENS_IN_TIPO = 1;
                     mens.ID = item.CRM.CLIE_CD_ID;
                     mens.TEEM_CD_ID = vm.TEEM_CD_ID;
-                    mens.MENS_NM_LINK = vm.MENS_NM_LINK;
+                    mens.MENS_NM_LINK = vm.CRPR_LK_LINK;
                     Int32 retGrava = ProcessarEnvioMensagemEMail(mens, item, usuario);
 
                     // Verifica
@@ -5536,17 +5628,17 @@ namespace ERP_CRM_Solution.Controllers
 
             // Processa e-mail
             CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
-            TEMPLATE_EMAIL temp = temaApp.GetItemById(vm.TEEM_CD_ID.Value);
+            TEMPLATE_PROPOSTA temp = item.TEMPLATE_PROPOSTA;
             
             // Prepara inicial
             String body = String.Empty;
             String header = String.Empty;
             String footer = String.Empty;
             String link = String.Empty;
-            body = temp.TEEM_TX_CORPO;
-            header = temp.TEEM_TX_CABECALHO;
-            footer = temp.TEEM_TX_DADOS;
-            link = temp.TEEM_LK_LINK;                    
+            body = temp.TEPR_TX_TEXTO;
+            header = temp.TEPR_TX_CABECALHO;
+            footer = temp.TEPR_TX_RODAPE;
+            link = vm.MENS_NM_LINK;                    
 
             // Prepara cabeçalho
             header = header.Replace("{Nome}", cliente.CLIE_NM_NOME);
@@ -5625,5 +5717,64 @@ namespace ERP_CRM_Solution.Controllers
             erro = null;
             return 0;
         }
+
+        [HttpGet]
+        public ActionResult IncluirComentarioPropostaCRM()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 id = (Int32)Session["IdCRMProposta"];
+            CRM_PROPOSTA item = baseApp.GetPropostaById(id);
+            USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+            CRM_PROPOSTA_ACOMPANHAMENTO coment = new CRM_PROPOSTA_ACOMPANHAMENTO();
+            CRMPropostaComentarioViewModel vm = Mapper.Map<CRM_PROPOSTA_ACOMPANHAMENTO, CRMPropostaComentarioViewModel>(coment);
+            vm.PRAC_DT_ACOMPANHAMENTO = DateTime.Now;
+            vm.PRAC_IN_ATIVO = 1;
+            vm.CRPR_CD_ID = item.CRPR_CD_ID;
+            vm.USUARIO = usuarioLogado;
+            vm.USUA_CD_ID = usuarioLogado.USUA_CD_ID;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult IncluirComentarioPropostaCRM(CRMPropostaComentarioViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdCRMProposta"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM_PROPOSTA_ACOMPANHAMENTO item = Mapper.Map<CRMPropostaComentarioViewModel, CRM_PROPOSTA_ACOMPANHAMENTO>(vm);
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    CRM_PROPOSTA not = baseApp.GetPropostaById(idNot);
+
+                    item.USUARIO = null;
+                    not.CRM_PROPOSTA_ACOMPANHAMENTO.Add(item);
+                    Int32 volta = baseApp.ValidateEditProposta(not);
+
+                    // Verifica retorno
+
+                    // Sucesso
+                    return RedirectToAction("VoltarEditarPropostaCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
     }
 }

@@ -465,4 +465,10 @@
   <data name="M0137" xml:space="preserve">
     <value>Ocorreu erro no envio da proposta por e-mail</value>
   </data>
+  <data name="M0138" xml:space="preserve">
+    <value>Impossível enviar. Nenhum arquivo anexado a essa proposta</value>
+  </data>
+  <data name="M0139" xml:space="preserve">
+    <value>Nenhum template de mensagem selecionado</value>
+  </data>
 </root>

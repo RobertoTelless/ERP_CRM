@@ -922,7 +922,6 @@
                                         <div class="ibox-title"  style="color: black">
                                             <h5>Propostas</h5>
                                         </div>
-                                        <div class="ibox-content" style="color: black; overflow: auto">
                                         <div class="ibox-content" style="color: black">
                                             <div class="row">
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
@@ -937,7 +936,7 @@
                                                                         <th>Envio</th>
                                                                         <th>Status</th>
                                                                         <th>Valor</th>
-                                                                        <th>Arquivo</th>
+                                                                        <th>Anexos</th>
                                                                         <th>Template</th>
                                                                         <th class="td-one-action">Ações</th>
                                                                     </tr>
@@ -986,7 +985,7 @@
                                                                                 {
                                                                                     <td>-</td>
                                                                                 }
-                                                                                <td>@cond.CRPR_AQ_ARQUIVO</td>
+                                                                                <td>@cond.CRM_PROPOSTA_ANEXO.Count</td>
                                                                                 @if (cond.TEMPLATE_PROPOSTA != null)
                                                                                 {
                                                                                     <td>@cond.TEMPLATE_PROPOSTA.TEPR_NM_NOME</td>
@@ -1016,6 +1015,7 @@
                                                                                         @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
                                                                                         @Html.TableLinkDetails(cond.CRPR_CD_ID, "AprovarProposta", "fa-check", "Aprovar")   
                                                                                         @Html.TableLinkDetails(cond.CRPR_CD_ID, "ReprovarProposta", "fa-minus-square-o", "Reprovar")   
+                                                                                        @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
                                                                                     }
                                                                                     @if (cond.CRPR_IN_STATUS == 3 || cond.CRPR_IN_STATUS == 4)
                                                                                     {
@@ -1069,7 +1069,7 @@
                                                                                 {
                                                                                     <td>-</td>
                                                                                 }
-                                                                                <td>@cond.CRPR_AQ_ARQUIVO</td>
+                                                                                <td>@cond.CRM_PROPOSTA_ANEXO.Count</td>
                                                                                 @if (cond.TEMPLATE_PROPOSTA != null)
                                                                                 {
                                                                                     <td>@cond.TEMPLATE_PROPOSTA.TEPR_NM_NOME</td>
@@ -1099,6 +1099,7 @@
                                                                                         @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
                                                                                         @Html.TableLinkDetails(cond.CRPR_CD_ID, "AprovarProposta", "fa-check", "Aprovar")   
                                                                                         @Html.TableLinkDetails(cond.CRPR_CD_ID, "ReprovarProposta", "fa-minus-square-o", "Reprovar")   
+                                                                                        @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
                                                                                     }
                                                                                     @if (cond.CRPR_IN_STATUS == 3 || cond.CRPR_IN_STATUS == 4)
                                                                                     {

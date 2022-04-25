@@ -46,9 +46,12 @@ namespace ERP_CRM_Solution.ViewModels
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<decimal> CRPR_VL_VALOR { get; set; }
         public Nullable<int> MOCA_CD_ID { get; set; }
-        [Required(ErrorMessage = "Campo TEMPLATE obrigatorio")]
         public Nullable<int> TEEM_CD_ID { get; set; }
-        public string MENS_NM_LINK { get; set; }
+        public string CRPR_LK_LINK { get; set; }
+        public string CRPR_DS_ENVIO { get; set; }
+        public string CLIE_NM_NOME { get; set; }
+        public CLIENTE CLIENTE { get; set; }
+
 
         public virtual CRM CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -57,6 +60,8 @@ namespace ERP_CRM_Solution.ViewModels
         public virtual USUARIO USUARIO { get; set; }
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual MOTIVO_CANCELAMENTO MOTIVO_CANCELAMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PROPOSTA_ANEXO> CRM_PROPOSTA_ANEXO { get; set; }
         public virtual TEMPLATE_EMAIL TEMPLATE_EMAIL { get; set; }
 
     }

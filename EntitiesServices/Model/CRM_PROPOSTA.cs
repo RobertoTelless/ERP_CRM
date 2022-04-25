@@ -43,6 +43,8 @@ namespace EntitiesServices.Model
         public Nullable<decimal> CRPR_VL_VALOR { get; set; }
         public Nullable<int> MOCA_CD_ID { get; set; }
         public Nullable<int> TEEM_CD_ID { get; set; }
+        public string CRPR_LK_LINK { get; set; }
+        public string CRPR_DS_ENVIO { get; set; }
     
         public virtual CRM CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

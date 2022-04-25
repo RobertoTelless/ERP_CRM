@@ -50,5 +50,6 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 EditProposta(CRM_PROPOSTA item);
         Int32 CreateProposta(CRM_PROPOSTA item);
         List<TEMPLATE_PROPOSTA> GetAllTemplateProposta(Int32 idAss);
+        CRM_PROPOSTA_ANEXO GetAnexoPropostaById(Int32 id);
     }
 }

@@ -33,10 +33,11 @@ namespace ModelServices.EntitiesServices
         private readonly ITemplatePropostaRepository _tpRepository;
         private readonly ICRMPropostaRepository _proRepository;
         private readonly ICRMPropostaComentarioRepository _pcRepository;
+        private readonly ICRMPropostaAnexoRepository _aneprRepository;
 
         protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
-        public CRMService(ICRMRepository baseRepository, ILogRepository logRepository, ITipoCRMRepository tipoRepository, ICRMAnexoRepository anexoRepository, IUsuarioRepository usuRepository, ICRMOrigemRepository oriRepository, IMotivoCancelamentoRepository mcRepository, IMotivoEncerramentoRepository meRepository, ITipoAcaoRepository taRepository, ICRMAcaoRepository acaRepository, ICRMContatoRepository conRepository, ICRMComentarioRepository comRepository, ITemplatePropostaRepository tpRepository, ICRMPropostaRepository proRepository, ICRMPropostaComentarioRepository pcRepository) : base(baseRepository)
+        public CRMService(ICRMRepository baseRepository, ILogRepository logRepository, ITipoCRMRepository tipoRepository, ICRMAnexoRepository anexoRepository, IUsuarioRepository usuRepository, ICRMOrigemRepository oriRepository, IMotivoCancelamentoRepository mcRepository, IMotivoEncerramentoRepository meRepository, ITipoAcaoRepository taRepository, ICRMAcaoRepository acaRepository, ICRMContatoRepository conRepository, ICRMComentarioRepository comRepository, ITemplatePropostaRepository tpRepository, ICRMPropostaRepository proRepository, ICRMPropostaComentarioRepository pcRepository, ICRMPropostaAnexoRepository aneprRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
@@ -53,6 +54,7 @@ namespace ModelServices.EntitiesServices
             _tpRepository = tpRepository;
             _proRepository = proRepository;
             _pcRepository = pcRepository;
+            _aneprRepository = aneprRepository;
         }
 
         public CRM CheckExist(CRM tarefa, Int32 idUsu,  Int32 idAss)
@@ -160,6 +162,11 @@ namespace ModelServices.EntitiesServices
         public CRM_ANEXO GetAnexoById(Int32 id)
         {
             return _anexoRepository.GetItemById(id);
+        }
+
+        public CRM_PROPOSTA_ANEXO GetAnexoPropostaById(Int32 id)
+        {
+            return _aneprRepository.GetItemById(id);
         }
 
         public CRM_COMENTARIO GetComentarioById(Int32 id)

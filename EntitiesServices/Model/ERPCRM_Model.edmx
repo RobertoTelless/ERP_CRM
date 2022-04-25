@@ -1019,9 +1019,12 @@
           <Property Name="ASSI_CD_ID" Type="int" />
           <Property Name="TEPR_CD_ID" Type="int" />
           <Property Name="TEEM_CD_ID" Type="int" />
+          <Property Name="MOCA_CD_ID" Type="int" />
           <Property Name="CRPR_DT_PROPOSTA" Type="date" Nullable="false" />
           <Property Name="CRPR_DT_VALIDADE" Type="date" Nullable="false" />
           <Property Name="CRPR_DT_ENVIO" Type="date" />
+          <Property Name="CRPR_DS_ENVIO" Type="varchar" MaxLength="5000" />
+          <Property Name="CRPR_LK_LINK" Type="varchar" MaxLength="150" />
           <Property Name="CRPR_DS_INFORMACOES" Type="varchar" MaxLength="5000" />
           <Property Name="CRPR_IN_STATUS" Type="int" Nullable="false" />
           <Property Name="CRPR_VL_VALOR" Type="decimal" Precision="18" Scale="2" />
@@ -1034,7 +1037,6 @@
           <Property Name="CRPR_DT_APROVACAO" Type="date" />
           <Property Name="CRPR_DS_APROVACAO" Type="varchar" MaxLength="5000" />
           <Property Name="CRPR_IN_ATIVO" Type="int" Nullable="false" />
-          <Property Name="MOCA_CD_ID" Type="int" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
           <Key>
@@ -18193,6 +18195,8 @@
           <NavigationProperty Name="CRM_PROPOSTA_ANEXO" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_ANEXO_CRM_PROPOSTA" FromRole="CRM_PROPOSTA" ToRole="CRM_PROPOSTA_ANEXO" />
           <Property Name="TEEM_CD_ID" Type="Int32" />
           <NavigationProperty Name="TEMPLATE_EMAIL" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_TEMPLATE_EMAIL" FromRole="CRM_PROPOSTA" ToRole="TEMPLATE_EMAIL" />
+          <Property Name="CRPR_LK_LINK" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CRPR_DS_ENVIO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
           <Key>
@@ -21229,6 +21233,8 @@
           <EntitySetMapping Name="CRM_PROPOSTA">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_PROPOSTA">
               <MappingFragment StoreEntitySet="CRM_PROPOSTA">
+                <ScalarProperty Name="CRPR_DS_ENVIO" ColumnName="CRPR_DS_ENVIO" />
+                <ScalarProperty Name="CRPR_LK_LINK" ColumnName="CRPR_LK_LINK" />
                 <ScalarProperty Name="TEEM_CD_ID" ColumnName="TEEM_CD_ID" />
                 <ScalarProperty Name="MOCA_CD_ID" ColumnName="MOCA_CD_ID" />
                 <ScalarProperty Name="CRPR_VL_VALOR" ColumnName="CRPR_VL_VALOR" />

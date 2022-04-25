@@ -183,6 +183,7 @@
     <Compile Include="Repositories\CategoriaOrdemServicoRepository.cs" />
     <Compile Include="Repositories\CategoriaProdutoRepository.cs" />
     <Compile Include="Repositories\CategoriaServicoRepository.cs" />
+    <Compile Include="Repositories\CRMPropostaAnexoRepository.cs" />
     <Compile Include="Repositories\CRMPropostaComentarioRepository.cs" />
     <Compile Include="Repositories\CRMPropostaRepository.cs" />
     <Compile Include="Repositories\DocumentoRepository.cs" />

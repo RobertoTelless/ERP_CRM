@@ -359,6 +359,7 @@ namespace Presentation.Start
             kernel.Bind<ITemplatePropostaRepository>().To<TemplatePropostaRepository>();
             kernel.Bind<ICRMPropostaRepository>().To<CRMPropostaRepository>();
             kernel.Bind<ICRMPropostaComentarioRepository>().To<CRMPropostaComentarioRepository>();
+            kernel.Bind<ICRMPropostaAnexoRepository>().To<CRMPropostaAnexoRepository>();
 
         }
     }
