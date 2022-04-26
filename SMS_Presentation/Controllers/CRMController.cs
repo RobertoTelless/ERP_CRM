@@ -30,6 +30,7 @@ using CrossCutting;
 using System.Net.Mail;
 using System.Net.Http;
 
+
 namespace ERP_CRM_Solution.Controllers
 {
     public class CRMController : Controller
@@ -1474,7 +1475,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
                 Session["MensCRM"] = 10;
-                return RedirectToAction("VoltarAcompanhamentoCRM");
+                return RedirectToAction("VoltarEditarPropostaCRM");
             }
 
             CRM_PROPOSTA item = baseApp.GetPropostaById(idNot);
@@ -1484,7 +1485,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
                 Session["MensCRM"] = 11;
-                return RedirectToAction("VoltarAcompanhamentoCRM");
+                return RedirectToAction("VoltarEditarPropostaCRM");
             }
             String caminho = "/Imagens/" + idAss.ToString() + "/Proposta/" + item.CRPR_CD_ID.ToString() + "/Arquivo/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
@@ -1519,7 +1520,7 @@ namespace ERP_CRM_Solution.Controllers
 
             item.CRM_PROPOSTA_ANEXO.Add(foto);
             Int32 volta = baseApp.ValidateEditProposta(item);
-            return RedirectToAction("VoltarAcompanhamentoCRM");
+            return RedirectToAction("VoltarEditarPropostaCRM");
         }
 
         [HttpPost]
@@ -1536,7 +1537,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
                 Session["MensCRM"] = 10;
-                return RedirectToAction("VoltarAcompanhamentoCRM");
+                return RedirectToAction("VoltarEditarPropostaCRM");
             }
 
             CRM_PROPOSTA item = baseApp.GetPropostaById(idNot);
@@ -1546,7 +1547,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
                 Session["MensCRM"] = 11;
-                return RedirectToAction("VoltarAcompanhamentoCRM");
+                return RedirectToAction("VoltarEditarPropostaCRM");
             }
             String caminho = "/Imagens/" + idAss.ToString() + "/Proposta/" + item.CRPR_CD_ID.ToString() + "/Arquivo/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
@@ -1581,7 +1582,7 @@ namespace ERP_CRM_Solution.Controllers
 
             item.CRM_PROPOSTA_ANEXO.Add(foto);
             Int32 volta = baseApp.ValidateEditProposta(item);
-            return RedirectToAction("VoltarAcompanhamentoCRM");
+            return RedirectToAction("VoltarEditarPropostaCRM");
         }
 
         public ActionResult VoltarAnexoCRM()
@@ -1616,8 +1617,25 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("EditarProposta", new { id = (Int32)Session["IdCRMProposta"] });
             }
+            if ((Int32)Session["VoltaComentProposta"] == 2)
+            {
+                return RedirectToAction("CancelarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+            }
+            if ((Int32)Session["VoltaComentProposta"] == 3)
+            {
+                return RedirectToAction("ReprovarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+            }
+            if ((Int32)Session["VoltaComentProposta"] == 4)
+            {
+                return RedirectToAction("AprovarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+            }
+            if ((Int32)Session["VoltaComentProposta"] == 5)
+            {
+                return RedirectToAction("EnviarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+            }
             return RedirectToAction("EditarProposta", new { id = (Int32)Session["IdCRMProposta"] });
         }
+
 
         [HttpGet]
         public ActionResult VerAnexoCRM(Int32 id)
@@ -4492,6 +4510,7 @@ namespace ERP_CRM_Solution.Controllers
             List<CRM_ACAO> acoes = baseApp.GetAllAcoes(idAss);
             List<CRM_ACAO> acoesPend = acoes.Where(p => p.CRAC_IN_STATUS == 1).ToList();
             List<CLIENTE> cli = cliApp.GetAllItens(idAss);
+            List<CRM_PROPOSTA> props = baseApp.GetAllPropostas(idAss);
 
             // Estatisticas 
             ViewBag.Total = lt.Count;
@@ -4529,6 +4548,18 @@ namespace ERP_CRM_Solution.Controllers
             Session["CRMNego"] =  lt.Where(p => p.CRM1_IN_STATUS == 4).ToList().Count;
             Session["CRMEnc"] =  lt.Where(p => p.CRM1_IN_STATUS == 5).ToList().Count;
             Session["IdCRM"] = null;
+
+            Session["AcaoAtiva"] = acoes.Where(p => p.CRAC_IN_STATUS == 1).ToList().Count;
+            Session["AcaoPendente"] = acoes.Where(p => p.CRAC_IN_STATUS == 2).ToList().Count;
+            Session["AcaoEncerrada"] = acoes.Where(p => p.CRAC_IN_STATUS == 3).ToList().Count;
+            Int32 x = acoes.Where(p => p.CRAC_IN_STATUS == 3).ToList().Count;
+            Int32 y = acoes.Where(p => p.CRAC_IN_STATUS == 1).ToList().Count;
+
+            Session["PropElaboracao"] = props.Where(p => p.CRPR_IN_STATUS == 1).ToList().Count;
+            Session["PropEnviada"] = props.Where(p => p.CRPR_IN_STATUS == 2).ToList().Count;
+            Session["PropCancelada"] = props.Where(p => p.CRPR_IN_STATUS == 3).ToList().Count;
+            Session["PropReprovada"] = props.Where(p => p.CRPR_IN_STATUS == 4).ToList().Count;
+            Session["PropAprovada"] = props.Where(p => p.CRPR_IN_STATUS == 5).ToList().Count;
 
             // Resumo Mes CRM
             List<DateTime> datas = lm.Select(p => p.CRM1_DT_CRIACAO.Value.Date).Distinct().ToList();
@@ -4571,6 +4602,32 @@ namespace ERP_CRM_Solution.Controllers
             }
             ViewBag.ListaCRMStatus = lista2;
             Session["ListaCRMStatus"] = lista2;
+
+            // Resumo ações
+            List<ModeloViewModel> lista3 = new List<ModeloViewModel>();
+            for (int i = 1; i < 4; i++)
+            {
+                Int32 conta = acoes.Where(p => p.CRAC_IN_STATUS == i).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.Data = i == 1 ? "Ativa" : (i == 2 ? "Pendente" : "Encerrada");
+                mod.Valor = conta;
+                lista3.Add(mod);
+            }
+            ViewBag.ListaCRMAcao = lista3;
+            Session["ListaCRMAcao"] = lista3;
+
+            // Resumo Propostas
+            List<ModeloViewModel> lista4 = new List<ModeloViewModel>();
+            for (int i = 1; i < 6; i++)
+            {
+                Int32 conta = props.Where(p => p.CRPR_IN_STATUS == i).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.Data = i == 1 ? "Em Elaboração" : (i == 2 ? "Enviada" : (i == 3 ? "Cancelada" : (i == 4 ? "Reprovada" : "Aprovada")));
+                mod.Valor = conta;
+                lista3.Add(mod);
+            }
+            ViewBag.ListaCRMProp = lista4;
+            Session["ListaCRMProp"] = lista4;
             return View(vm);
         }
 
@@ -4634,6 +4691,68 @@ namespace ERP_CRM_Solution.Controllers
             quant.Add(q4);
             cor.Add("#D63131");
             desc.Add("Encerrado");
+            quant.Add(q5);
+            cor.Add("#27A1C6");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoAcaoStatus()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["AcaoAtiva"];
+            Int32 q2 = (Int32)Session["AcaoPendente"];
+            Int32 q3 = (Int32)Session["AcaoEncerrada"];
+
+            desc.Add("Ativas");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Pendentes");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+            desc.Add("Encerradas");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoPropostaStatus()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["PropElaboracao"];
+            Int32 q2 = (Int32)Session["PropEnviada"];
+            Int32 q3 = (Int32)Session["PropCancelada"];
+            Int32 q4 = (Int32)Session["PropReprovada"];
+            Int32 q5 = (Int32)Session["PropAprovada"];
+
+            desc.Add("Em Elaboração");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Enviadas");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+            desc.Add("Canceladas");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+            desc.Add("Reprovadas");
+            quant.Add(q4);
+            cor.Add("#D63131");
+            desc.Add("Aprovadas");
             quant.Add(q5);
             cor.Add("#27A1C6");
 
@@ -4924,6 +5043,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
+
             // Processa
             CRM_PROPOSTA item = baseApp.GetPropostaById(id);
             objetoAntes = (CRM)Session["CRM"];
@@ -4957,14 +5077,6 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-
-            // Verifica se pode reativar ação
-            List<CRM_PROPOSTA> props = (List<CRM_PROPOSTA>)Session["Props"];
-            if (props.Where(p => p.CRPR_IN_STATUS == 1 || p.CRPR_IN_STATUS == 2).ToList().Count > 0)
-            {
-                Session["MensCRM"] = 52;
-                return RedirectToAction("VoltarAcompanhamentoCRM");
-            }
 
             // Processa
             CRM_PROPOSTA item = baseApp.GetPropostaById(id);
@@ -5040,6 +5152,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Prepara view
+            Session["VoltaComentProposta"] = 2;
             CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
             vm.CRPR_DT_CANCELAMENTO = DateTime.Today.Date;
             vm.CRPR_IN_STATUS = 3;
@@ -5147,6 +5260,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Mensagens
+            Session["VoltaComentProposta"] = 3;
             if (Session["MensCRM"] != null)
             {
                 if ((Int32)Session["MensCRM"] == 50)
@@ -5274,6 +5388,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Mensagens
+            Session["VoltaComentProposta"] = 4;
             if (Session["MensCRM"] != null)
             {
                 if ((Int32)Session["MensCRM"] == 60)
@@ -5343,7 +5458,7 @@ namespace ERP_CRM_Solution.Controllers
                     }
 
                     // Atualiza status do processo
-                    CRM crm = item.CRM;
+                    CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
                     crm.CRM1_IN_STATUS = 4;
                     Int32 volta1 = baseApp.ValidateEdit(crm, crm);
 
@@ -5491,6 +5606,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
 
             // Mensagens
+            Session["VoltaComentProposta"] = 5;
             if (Session["MensCRM"] != null)
             {
                 if ((Int32)Session["MensCRM"] == 70)
@@ -5540,13 +5656,6 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
-                    // Checa anexo
-                    if (vm.CRM_PROPOSTA_ANEXO.Count == 0)
-                    {
-                        Session["MensCRM"] = 76;
-                        return View(vm);
-                    }
-
                     // Checa template
                     if (vm.TEPR_CD_ID == null)
                     {
@@ -5557,6 +5666,14 @@ namespace ERP_CRM_Solution.Controllers
                     // Executa a operação
                     CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+                    // Checa anexo
+                    CRM_PROPOSTA pro = baseApp.GetPropostaById(item.CRPR_CD_ID);
+                    if (pro.CRM_PROPOSTA_ANEXO.Count == 0)
+                    {
+                        Session["MensCRM"] = 76;
+                        return View(vm);
+                    }
                     Int32 volta = baseApp.ValidateEditProposta(item);
 
                     // Verifica retorno
@@ -5576,7 +5693,7 @@ namespace ERP_CRM_Solution.Controllers
                         return View(vm);
                     }
                     // Atualiza status do processo
-                    CRM crm = item.CRM;
+                    CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
                     crm.CRM1_IN_STATUS = 3;
                     Int32 volta1 = baseApp.ValidateEdit(crm, crm);
 
@@ -5586,9 +5703,9 @@ namespace ERP_CRM_Solution.Controllers
                     mens.MENS_DT_CRIACAO = DateTime.Now;
                     mens.MENS_IN_ATIVO = 1;
                     mens.MENS_IN_TIPO = 1;
-                    mens.ID = item.CRM.CLIE_CD_ID;
-                    mens.TEEM_CD_ID = vm.TEEM_CD_ID;
-                    mens.MENS_NM_LINK = vm.CRPR_LK_LINK;
+                    mens.ID = crm.CLIE_CD_ID;
+                    mens.TEPR_CD_ID = item.TEPR_CD_ID;
+                    mens.MENS_NM_LINK = item.CRPR_LK_LINK;
                     Int32 retGrava = ProcessarEnvioMensagemEMail(mens, item, usuario);
 
                     // Verifica
@@ -5628,7 +5745,7 @@ namespace ERP_CRM_Solution.Controllers
 
             // Processa e-mail
             CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
-            TEMPLATE_PROPOSTA temp = item.TEMPLATE_PROPOSTA;
+            TEMPLATE_PROPOSTA temp = baseApp.GetTemplateById(item.TEPR_CD_ID.Value);
             
             // Prepara inicial
             String body = String.Empty;

@@ -138,91 +138,25 @@
 
                         <div class="ibox-content" style="height: 1800px">
                             <div class="row">
-                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
                                             <h4>Processos CRM/Dia</h4>
-                                            <h4 style="color: brown">(Exibindo apenas o mês corrente)</h4>
                                         </div>
                                         <div class="ibox-content">
-                                            <div class="row">
-                                                @if ((ViewBag.ListaCRMMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
-                                                {
-                                                    <table class="table table-striped table-bordered table-hover">
-                                                        <thead style="background-color:lightsteelblue">
-                                                            <tr>
-                                                                <th>Data de Criação</th>
-                                                                <th>Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var cond in (ViewBag.ListaCRMMes as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
-                                                            {
-                                                                <tr>
-                                                                    <td>@cond.DataEmissao.ToShortDateString()</td>
-                                                                    <td>@cond.Valor</td>
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                }
-                                                <div class="form-group">
-                                                    @Html.ButtonLinkIndex(text: "Ver Todos os Meses", action: "VerCRMExpansaoTodos", controller: "CRM")
-                                                </div>
+                                            <div class="form-group">
+                                                @Html.ButtonLinkIndex(text: "Ver Todos os Meses", action: "VerCRMExpansaoTodos", controller: "CRM")
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-8 col-md-8 col-xs-12">
-                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
-                                        <div class="ibox-title">
-                                            <h4>Gráfico de Processos CRM/Dia</h4>
-                                        </div>
-                                        <div class="ibox-content">
                                             <div class="row">
                                                 <canvas id="barChartCRM" height="150"></canvas>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
                                             <h4>Processos CRM por Situação</h4>
-                                        </div>
-                                        <div class="ibox-content">
-                                            <div class="row">
-                                                @if ((ViewBag.ListaCRMSituacao as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
-                                                {
-                                                    <table class="table table-striped table-bordered table-hover">
-                                                        <thead style="background-color:lightsteelblue">
-                                                            <tr>
-                                                                <th>Situação</th>
-                                                                <th>Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var cond in (ViewBag.ListaCRMSituacao as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
-                                                            {
-                                                                <tr>
-                                                                    <td>@cond.Data</td>
-                                                                    <td>@cond.Valor</td>
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-8 col-md-8 col-xs-12">
-                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
-                                        <div class="ibox-title">
-                                            <h4>Gráfico de Processos CRM por Situação</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
@@ -234,45 +168,41 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
                                             <h4>Processos CRM por Status</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
-                                                @if ((ViewBag.ListaCRMStatus as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).Count > 0)
-                                                {
-                                                    <table class="table table-striped table-bordered table-hover">
-                                                        <thead style="background-color:lightsteelblue">
-                                                            <tr>
-                                                                <th>Status</th>
-                                                                <th>Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var cond in (ViewBag.ListaCRMStatus as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>))
-                                                            {
-                                                                <tr>
-                                                                    <td>@cond.Data</td>
-                                                                    <td>@cond.Valor</td>
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                }
+                                                <canvas id="doughnutChart1" height="150"></canvas>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-8 col-md-8 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
-                                            <h4>Gráfico de Processos CRM por Status</h4>
+                                            <h4>Ações por Status</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
-                                                <canvas id="doughnutChart1" height="150"></canvas>
+                                                <canvas id="doughnutChartAcao" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                        <div class="ibox-title">
+                                            <h4>Propostas por Status</h4>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <canvas id="doughnutChartProp" height="150"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -454,6 +384,52 @@
         });
     </script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '../CRM/GetDadosGraficoAcaoStatus'
+                , type: 'POST'
+                , success: function (result) {
+                var doughnutData = {
+                   labels: result.labels,
+                   datasets: [{
+                     data: result.valores,
+                     backgroundColor: result.cores
+                   }]
+                };
+                var doughnutOptions = {
+                   responsive: true
+                };
+                var ctx4 = document.getElementById("doughnutChartAcao").getContext("2d");
+                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+              }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '../CRM/GetDadosGraficoPropostaStatus'
+                , type: 'POST'
+                , success: function (result) {
+                var doughnutData = {
+                   labels: result.labels,
+                   datasets: [{
+                     data: result.valores,
+                     backgroundColor: result.cores
+                   }]
+                };
+                var doughnutOptions = {
+                   responsive: true
+                };
+                var ctx4 = document.getElementById("doughnutChartProp").getContext("2d");
+                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+              }
+            });
+        });
+    </script>
 
     @if (ViewBag.Message != null)
     {

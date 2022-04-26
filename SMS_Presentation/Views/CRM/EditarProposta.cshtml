@@ -112,6 +112,7 @@
                                             @Html.HiddenFor(m => m.CRPR_IN_STATUS)
                                             @Html.HiddenFor(m => m.MOCA_CD_ID)
                                             @Html.HiddenFor(m => m.TEEM_CD_ID)
+                                            @Html.HiddenFor(m => m.CRM1_CD_ID)
                                             @Html.ButtonActionSubmit(text: "Confirma Edição da Proposta", htmlAttributes: new { id = "basictoast" })
                                         </div>
 
@@ -141,7 +142,7 @@
                                                         {
                                                             <h5>Não informado</h5>
                                                         }
-                                                        <p><i class="fa fa-envelope"></i><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CRM.CLIE_CD_ID})" /> @Model.CRM.CLIENTE.CLIE_NM_EMAIL</p>
+                                                        <p><i class="fa fa-envelope"></i><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CRM.CLIE_CD_ID})"> @Model.CRM.CLIENTE.CLIE_NM_EMAIL</a></p>
                                                     </div>
                                                 </div>
                                             </div>

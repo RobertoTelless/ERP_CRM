@@ -87,9 +87,9 @@
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-3">Comentários</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-4">Histórico</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2">Anexos</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-3">Comentários</a></li>
                         </ul>
                         <div class="tab-content">
                             @*Dados Gerais*@
@@ -105,7 +105,7 @@
                                                         <span style="float: right"><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CRM.CLIE_CD_ID})" />Enviar E-Mail</span>
                                                     </div>
                                                     <div class="ibox-content" style="color: black">
-                                                        <h3 style="color: green"><strong>@Model.CRM.CLIENTE.CLIE_NM_NOME</strong></h3>
+                                                        <h3 style="color: green"><strong><a href="@Url.Action("EditarCliente", "Cliente", new { id = Model.CRM.CLIE_CD_ID })">@Model.CRM.CLIENTE.CLIE_NM_NOME</a></strong></h3>
                                                         @if (Model.CRM.CLIENTE.CLIE_NM_ENDERECO != null)
                                                         {
                                                             <address>
@@ -123,7 +123,7 @@
                                                         {
                                                             <h5>Não informado</h5>
                                                         }
-                                                        <p><i class="fa fa-envelope"></i><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CRM.CLIE_CD_ID})" /> @Model.CRM.CLIENTE.CLIE_NM_EMAIL</p>
+                                                        <p><i class="fa fa-envelope"></i><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CRM.CLIE_CD_ID})"> @Model.CRM.CLIENTE.CLIE_NM_EMAIL</a></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -170,8 +170,7 @@
                                                             </div>
                                                             <div class="col-lg-3 col-md-3 col-xs-12">
                                                                 Responsável
-                                                                @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                                @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
+                                                                @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOVA_SENHA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                             </div>
                                                             <div class="col-lg-2 col-md-2 col-xs-12">
                                                                 Valor
@@ -204,11 +203,128 @@
                                 </div>
                             </div>
 
-                            @*Imagens - Foto e Anexos*@
+                            @*Comentários*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
+                                        <div class="ibox-title"  style="color: black">
+                                            <h5>Comentários - Follow-Up</h5>
+                                        </div>
+                                        <div class="ibox-content" style="color: black; overflow: auto">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    @if (Model.CRM_PROPOSTA_ACOMPANHAMENTO.Count > 0)
+                                                    {
+                                                        foreach (var item in (Model.CRM_PROPOSTA_ACOMPANHAMENTO))
+                                                        {
+                                                            <div class="social-feed-box">
+                                                                <div class="social-avatar">
+                                                                    <a href="" class="pull-left">
+                                                                        <img src="@Url.Content(item.USUARIO.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                                    </a>
+                                                                    <div class="media-body">
+                                                                        <a href="#">
+                                                                            @item.USUARIO.USUA_NM_NOME
+                                                                        </a>
+                                                                        <small class="text-muted">@item.PRAC_DT_ACOMPANHAMENTO.ToString("dd/MM/yyyy HH:mm")</small>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="social-body">
+                                                                    <p>
+                                                                        @item.PRAC_TX_ACOMPANHAMENTO
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                            </div>
+                                                            <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
+                                                                <h2 style="font-weight: bold">Nenhum comentário cadastrado nesse proposta</h2>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Histórico*@
+                            <div id="tab-4" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
+                                        <div class="ibox-title"  style="color: black">
+                                            <h5>Histórico</h5>
+                                        </div>
+                                        <div class="ibox-content" style="color: black">
+                                            <div class="row">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <h5 style="font-weight: bold; color: green; margin-left: 15px">Envio</h5>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data de Envio
+                                                        @Html.TextBoxFor(m => m.CRPR_DT_ENVIO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-10 col-md-10 col-xs-12">
+                                                        Informações ddo Envio
+                                                        @Html.TextAreaFor(m => m.CRPR_DS_ENVIO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <h5 style="font-weight: bold; color: green; margin-left: 15px">Aprovação</h5>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data de Aprovação
+                                                        @Html.TextBoxFor(m => m.CRPR_DT_APROVACAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-10 col-md-10 col-xs-12">
+                                                        Informações da Aprovação
+                                                        @Html.TextAreaFor(m => m.CRPR_DS_APROVACAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <h5 style="font-weight: bold; color: green; margin-left: 15px">Reprovação</h5>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data de Reprovação
+                                                        @Html.TextBoxFor(m => m.CRPR_DT_REPROVACAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-10 col-md-10 col-xs-12">
+                                                        Informações da Reprovação
+                                                        @Html.TextAreaFor(m => m.CRPR_DS_REPROVACAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <h5 style="font-weight: bold; color: green; margin-left: 15px">Cancelamento</h5>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data de Cancelamento
+                                                        @Html.TextBoxFor(m => m.CRPR_DT_CANCELAMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Motivo do Cancelamento
+                                                        @Html.TextBoxFor(m => m.MOTIVO_CANCELAMENTO.MOCA_NM_NOME, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7 col-xs-12">
+                                                        Informações do Cancelamento
+                                                        @Html.TextAreaFor(m => m.CRPR_DS_CANCELAMENTO, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                   
+                            
+    @*Imagens - Foto e Anexos*@
                             <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
                                     <div class="row">
-                                        <hr />
                                         <div class="col-lg-12 col-md-12 col-xs-12">
                                             <h4>Anexos</h4>
                                             <br />
@@ -265,127 +381,6 @@
                                 </div>
                             </div>
 
-                            @*Comentários*@
-                            <div id="tab-3" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
-                                        <div class="ibox-title"  style="color: black">
-                                            <h5>Comentários - Follow-Up</h5>
-                                        </div>
-                                        <div class="ibox-content" style="color: black; overflow: auto">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    @if (Model.CRM_PROPOSTA_ACOMPANHAMENTO.Count > 0)
-                                                    {
-                                                        foreach (var item in (Model.CRM_PROPOSTA_ACOMPANHAMENTO))
-                                                        {
-                                                            <div class="social-feed-box">
-                                                                <div class="social-avatar">
-                                                                    <a href="" class="pull-left">
-                                                                        <img src="@Url.Content(item.USUARIO.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
-                                                                    </a>
-                                                                    <div class="media-body">
-                                                                        <a href="#">
-                                                                            @item.USUARIO.USUA_NM_NOME
-                                                                        </a>
-                                                                        <small class="text-muted">@item.PRAC_DT_ACOMPANHAMENTO.ToString("dd/MM/yyyy HH:mm")</small>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="social-body">
-                                                                    <p>
-                                                                        @item.PRAC_TX_ACOMPANHAMENTO
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="row">
-                                                            <div class="col-lg-4 col-md-4 col-xs-2">
-
-                                                            </div>
-                                                            <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
-                                                                <h2 style="font-weight: bold">Nenhum comentário cadastrado nesse proposta</h2>
-                                                            </div>
-                                                            <div class="col-lg-4 col-md-4 col-xs-2">
-
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="form-group">
-                                                @Html.ButtonLinkIndex(text: "Incluir Novo Comentário", action: "IncluirComentarioPropostaCRM", controller: "CRM")
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                       
-                            @*Histórico*@
-                            <div id="tab-4" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
-                                        <div class="ibox-title"  style="color: black">
-                                            <h5>Histórico</h5>
-                                        </div>
-                                        <div class="ibox-content" style="color: black; overflow: auto">
-                                            <div class="row">
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <h5>Envio</h5>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Data de Envio
-                                                        @Html.TextBoxFor(m => m.CRPR_DT_ENVIO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                    </div>
-                                                    <div class="col-lg-10 col-md-10 col-xs-12">
-                                                        Informações ddo Envio
-                                                        @Html.TextAreaFor(m => m.CRPR_DS_ENVIO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <h5>Aprovação</h5>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Data de Aprovação
-                                                        @Html.TextBoxFor(m => m.CRPR_DT_APROVACAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                    </div>
-                                                    <div class="col-lg-10 col-md-10 col-xs-12">
-                                                        Informações da Aprovação
-                                                        @Html.TextAreaFor(m => m.CRPR_DS_APROVACAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <h5>Reprovação</h5>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Data de Reprovação
-                                                        @Html.TextBoxFor(m => m.CRPR_DT_REPROVACAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                    </div>
-                                                    <div class="col-lg-10 col-md-10 col-xs-12">
-                                                        Informações da Reprovação
-                                                        @Html.TextAreaFor(m => m.CRPR_DS_REPROVACAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <h5>Cancelamento</h5>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Data de Cancelamento
-                                                        @Html.TextBoxFor(m => m.CRPR_DT_REPROVACAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-3 col-xs-12" style="color: green">
-                                                        Motivo do Cancelamento
-                                                        @Html.TextBoxFor(m => m.MOTIVO_CANCELAMENTO.MOCA_NM_NOME, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                    </div>
-                                                    <div class="col-lg-5 col-md-5 col-xs-12">
-                                                        Informações do Cancelamento
-                                                        @Html.TextAreaFor(m => m.CRPR_DS_REPROVACAO, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>                   
                         </div>
                     </div>
                 </div>

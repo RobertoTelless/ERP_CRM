@@ -3236,6 +3236,7 @@
     <Content Include="TemplatesHTML\CRPARREC\CRPARREC.html" />
     <Content Include="TemplatesHTML\FINPATR1\FINPATR1.html" />
     <Content Include="Views\BaseAdmin\IncluirContato.cshtml" />
+    <Content Include="Views\CRM\EnviarProposta_OLD.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -3684,13 +3685,13 @@
     <Content Include="Views\CRM\VerPropostasUsuarioCRM.cshtml" />
     <Content Include="Views\CRM\IncluirProposta.cshtml" />
     <Content Include="Views\CRM\EditarProposta.cshtml" />
-    <Content Include="Views\CRM\CancelarProposta.cshtml" />
-    <Content Include="Views\CRM\ReprovarProposta.cshtml" />
-    <Content Include="Views\CRM\AprovarProposta.cshtml" />
-    <Content Include="Views\CRM\VerProposta.cshtml" />
-    <Content Include="Views\CRM\EnviarProposta.cshtml" />
     <Content Include="Views\CRM\VerAnexoCRMProposta.cshtml" />
     <Content Include="Views\CRM\IncluirComentarioPropostaCRM.cshtml" />
+    <Content Include="Views\CRM\CancelarProposta.cshtml" />
+    <Content Include="Views\CRM\VerProposta.cshtml" />
+    <Content Include="Views\CRM\ReprovarProposta.cshtml" />
+    <Content Include="Views\CRM\AprovarProposta.cshtml" />
+    <Content Include="Views\CRM\EnviarProposta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

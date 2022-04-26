@@ -104,6 +104,12 @@ namespace ApplicationServices.Services
             return lista;
         }
 
+        public TEMPLATE_PROPOSTA GetTemplateById(Int32 id)
+        {
+            TEMPLATE_PROPOSTA lista = _baseService.GetTemplateById(id);
+            return lista;
+        }
+
         public List<CRM_ACAO> GetAllAcoes(Int32 idAss)
         {
             List<CRM_ACAO> lista = _baseService.GetAllAcoes(idAss);

@@ -135,6 +135,11 @@ namespace ModelServices.EntitiesServices
             return _tpRepository.GetAllItens(id);
         }
 
+        public TEMPLATE_PROPOSTA GetTemplateById(Int32 id)
+        {
+            return _tpRepository.GetItemById(id);
+        }
+
         public List<TIPO_ACAO> GetAllTipoAcao(Int32 idAss)
         {
             return _taRepository.GetAllItens(idAss);
