@@ -951,6 +951,7 @@
                                                             <table class="table table-striped table-bordered table-hover dataTables-example1">
                                                                 <thead style="background-color:lightsteelblue">
                                                                     <tr>
+                                                                        <th>Número</th>
                                                                         <th>Criação</th>
                                                                         <th>Validade</th>
                                                                         <th>Envio</th>
@@ -967,6 +968,7 @@
                                                                         if (cond.CRPR_IN_STATUS == 2 || cond.CRPR_IN_STATUS == 1)
                                                                         {
                                                                             <tr style="background-color:lightyellow; color: green">
+                                                                                <td>@cond.CRPR_NR_NUMERO</td>
                                                                                 <td>@cond.CRPR_DT_PROPOSTA.ToShortDateString()</td>
                                                                                 <td>@cond.CRPR_DT_VALIDADE.ToShortDateString()</td>
                                                                                 @if (cond.CRPR_DT_ENVIO != null)
@@ -1051,6 +1053,7 @@
                                                                         else
                                                                         {
                                                                             <tr>
+                                                                                <td>@cond.CRPR_NR_NUMERO</td>
                                                                                 <td>@cond.CRPR_DT_PROPOSTA.ToShortDateString()</td>
                                                                                 <td>@cond.CRPR_DT_VALIDADE.ToShortDateString()</td>
                                                                                 @if (cond.CRPR_DT_ENVIO != null)

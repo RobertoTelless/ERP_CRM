@@ -360,6 +360,10 @@ namespace Presentation.Start
             kernel.Bind<ICRMPropostaRepository>().To<CRMPropostaRepository>();
             kernel.Bind<ICRMPropostaComentarioRepository>().To<CRMPropostaComentarioRepository>();
             kernel.Bind<ICRMPropostaAnexoRepository>().To<CRMPropostaAnexoRepository>();
+            kernel.Bind<ICRMPedidoRepository>().To<CRMPedidoRepository>();
+            kernel.Bind<ICRMPedidoAnexoRepository>().To<CRMPedidoAnexoRepository>();
+            kernel.Bind<ICRMPedidoComentarioRepository>().To<CRMPedidoComentarioRepository>();
+            kernel.Bind<ICRMItemPedidoRepository>().To<CRMItemPedidoRepository>();
 
         }
     }

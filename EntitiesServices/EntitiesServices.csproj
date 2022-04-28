@@ -350,10 +350,14 @@
     <Compile Include="Interfaces\Repositories\ICategoriaAtendimentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaOrdemServicoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaServicoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMPedidoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPropostaAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMPedidoComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPropostaComentarioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMPedidoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPropostaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IDocumentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICRMItemPedidoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMetadadoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IClasseRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContapagarAnexoRepository.cs" />
@@ -669,6 +673,18 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CRM_ORIGEM.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_PEDIDO_VENDA.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_PEDIDO_VENDA_ACOMPANHAMENTO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_PEDIDO_VENDA_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CRM_PEDIDO_VENDA_ITEM.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CRM_PROPOSTA.cs">

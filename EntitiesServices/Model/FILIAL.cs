@@ -34,6 +34,7 @@ namespace EntitiesServices.Model
             this.TRANSPORTADORA = new HashSet<TRANSPORTADORA>();
             this.USUARIO = new HashSet<USUARIO>();
             this.CRM_COMERCIAL = new HashSet<CRM_COMERCIAL>();
+            this.CRM_PEDIDO_VENDA = new HashSet<CRM_PEDIDO_VENDA>();
         }
     
         public int FILI_CD_ID { get; set; }
@@ -97,5 +98,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<USUARIO> USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_COMERCIAL> CRM_COMERCIAL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
     }
 }

@@ -34,10 +34,17 @@ namespace ModelServices.EntitiesServices
         private readonly ICRMPropostaRepository _proRepository;
         private readonly ICRMPropostaComentarioRepository _pcRepository;
         private readonly ICRMPropostaAnexoRepository _aneprRepository;
+        private readonly ICRMPedidoAnexoRepository _anepeRepository;
+        private readonly ICRMPedidoComentarioRepository _compeRepository;
+        private readonly ICRMPedidoRepository _pedRepository;
+        private readonly ICRMItemPedidoRepository _itepeRepository;
+        private readonly IFormaEnvioRepository _fenvRepository;
+        private readonly IFormaFreteRepository _fretRepository;
+        private readonly IFilialRepository _filRepository;
 
         protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
-        public CRMService(ICRMRepository baseRepository, ILogRepository logRepository, ITipoCRMRepository tipoRepository, ICRMAnexoRepository anexoRepository, IUsuarioRepository usuRepository, ICRMOrigemRepository oriRepository, IMotivoCancelamentoRepository mcRepository, IMotivoEncerramentoRepository meRepository, ITipoAcaoRepository taRepository, ICRMAcaoRepository acaRepository, ICRMContatoRepository conRepository, ICRMComentarioRepository comRepository, ITemplatePropostaRepository tpRepository, ICRMPropostaRepository proRepository, ICRMPropostaComentarioRepository pcRepository, ICRMPropostaAnexoRepository aneprRepository) : base(baseRepository)
+        public CRMService(ICRMRepository baseRepository, ILogRepository logRepository, ITipoCRMRepository tipoRepository, ICRMAnexoRepository anexoRepository, IUsuarioRepository usuRepository, ICRMOrigemRepository oriRepository, IMotivoCancelamentoRepository mcRepository, IMotivoEncerramentoRepository meRepository, ITipoAcaoRepository taRepository, ICRMAcaoRepository acaRepository, ICRMContatoRepository conRepository, ICRMComentarioRepository comRepository, ITemplatePropostaRepository tpRepository, ICRMPropostaRepository proRepository, ICRMPropostaComentarioRepository pcRepository, ICRMPropostaAnexoRepository aneprRepository, ICRMPedidoAnexoRepository anepeRepository, ICRMPedidoComentarioRepository compeRepository, ICRMPedidoRepository pedRepository, ICRMItemPedidoRepository itepeRepository, IFormaEnvioRepository fenvRepository, IFormaFreteRepository fretRepository, IFilialRepository filRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
@@ -55,6 +62,13 @@ namespace ModelServices.EntitiesServices
             _proRepository = proRepository;
             _pcRepository = pcRepository;
             _aneprRepository = aneprRepository;
+            _anepeRepository = anepeRepository;
+            _compeRepository = compeRepository;
+            _pedRepository = pedRepository; 
+            _itepeRepository = itepeRepository;
+            _fenvRepository = fenvRepository;
+            _fretRepository = fretRepository;
+            _filRepository = filRepository;
         }
 
         public CRM CheckExist(CRM tarefa, Int32 idUsu,  Int32 idAss)
@@ -95,6 +109,11 @@ namespace ModelServices.EntitiesServices
             return _proRepository.GetAllItens(idAss);
         }
 
+        public List<CRM_PEDIDO_VENDA> GetAllPedidos(Int32 idAss)
+        {
+            return _pedRepository.GetAllItens(idAss);
+        }
+
         public List<CRM> GetTarefaStatus(Int32 tipo, Int32 idAss)
         {
             return _baseRepository.GetTarefaStatus(tipo, idAss);
@@ -115,6 +134,16 @@ namespace ModelServices.EntitiesServices
             return _proRepository.GetItemById(id);
         }
 
+        public CRM_PEDIDO_VENDA GetPedidoById(Int32 id)
+        {
+            return _pedRepository.GetItemById(id);
+        }
+
+        public CRM_PEDIDO_VENDA GetPedidoByNumero(String num, Int32 idAss)
+        {
+            return _pedRepository.GetItemByNumero(num, idAss);
+        }
+
         public List<CRM> GetAllItens(Int32 idAss)
         {
             return _baseRepository.GetAllItens(idAss);
@@ -128,6 +157,16 @@ namespace ModelServices.EntitiesServices
         public List<TIPO_CRM> GetAllTipos()
         {
             return _tipoRepository.GetAllItens();
+        }
+
+        public List<FORMA_ENVIO> GetAllFormasEnvio(Int32 idAss)
+        {
+            return _fenvRepository.GetAllItens(idAss);
+        }
+
+        public List<FORMA_FRETE> GetAllFormasFrete(Int32 idAss)
+        {
+            return _fretRepository.GetAllItens(idAss);
         }
 
         public List<TEMPLATE_PROPOSTA> GetAllTemplateProposta(Int32 id)
@@ -147,6 +186,11 @@ namespace ModelServices.EntitiesServices
         public List<CRM_ORIGEM> GetAllOrigens(Int32 idAss)
         {
             return _oriRepository.GetAllItens(idAss);
+        }
+
+        public List<FILIAL> GetAllFilial(Int32 idAss)
+        {
+            return _filRepository.GetAllItens(idAss);
         }
 
         public List<MOTIVO_CANCELAMENTO> GetAllMotivoCancelamento(Int32 idAss)
@@ -174,6 +218,11 @@ namespace ModelServices.EntitiesServices
             return _aneprRepository.GetItemById(id);
         }
 
+        public CRM_PEDIDO_VENDA_ANEXO GetAnexoPedidoById(Int32 id)
+        {
+            return _anepeRepository.GetItemById(id);
+        }
+
         public CRM_COMENTARIO GetComentarioById(Int32 id)
         {
             return _comRepository.GetItemById(id);
@@ -182,6 +231,11 @@ namespace ModelServices.EntitiesServices
         public CRM_PROPOSTA_ACOMPANHAMENTO GetPropostaComentarioById(Int32 id)
         {
             return _pcRepository.GetItemById(id);
+        }
+
+        public CRM_PEDIDO_VENDA_ACOMPANHAMENTO GetPedidoComentarioById(Int32 id)
+        {
+            return _compeRepository.GetItemById(id);
         }
 
         public List<CRM> ExecuteFilter(Int32? status, DateTime? inicio, DateTime? final, Int32? origem, Int32? adic, String nome, String busca, Int32? estrela, Int32? temperatura, Int32 idAss)
@@ -402,6 +456,91 @@ namespace ModelServices.EntitiesServices
                 }
             }
         }
+
+        public Int32 EditPedido(CRM_PEDIDO_VENDA item)
+        {
+            using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))
+            {
+                try
+                {
+                    CRM_PEDIDO_VENDA obj = _pedRepository.GetById(item.CRPV_CD_ID);
+                    _pedRepository.Detach(obj);
+                    _pedRepository.Update(item);
+                    transaction.Commit();
+                    return 0;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        public Int32 CreatePedido(CRM_PEDIDO_VENDA item)
+        {
+            using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))
+            {
+                try
+                {
+                    _pedRepository.Add(item);
+                    transaction.Commit();
+                    return 0;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        public CRM_PEDIDO_VENDA_ITEM GetItemPedidoById(Int32 id)
+        {
+            CRM_PEDIDO_VENDA_ITEM item = _itepeRepository.GetItemById(id);
+            return item;
+        }
+
+        public Int32 EditItemPedido(CRM_PEDIDO_VENDA_ITEM item)
+        {
+            using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))
+            {
+                try
+                {
+                    CRM_PEDIDO_VENDA_ITEM obj = _itepeRepository.GetItemById(item.CRPI_CD_ID);
+                    _itepeRepository.Detach(obj);
+                    _itepeRepository.Update(item);
+                    transaction.Commit();
+                    return 0;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+        public Int32 CreateItemPedido(CRM_PEDIDO_VENDA_ITEM item)
+        {
+            using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))
+            {
+                try
+                {
+                    _itepeRepository.Add(item);
+                    transaction.Commit();
+                    return 0;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+
+
 
     }
 }

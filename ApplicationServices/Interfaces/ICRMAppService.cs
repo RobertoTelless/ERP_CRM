@@ -53,5 +53,21 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEnviarProposta(CRM_PROPOSTA item);
         CRM_PROPOSTA_ANEXO GetAnexoPropostaById(Int32 id);
         TEMPLATE_PROPOSTA GetTemplateById(Int32 id);
+
+        CRM_PEDIDO_VENDA_ACOMPANHAMENTO GetPedidoComentarioById(Int32 id);
+        List<CRM_PEDIDO_VENDA> GetAllPedidos(Int32 idAss);
+        CRM_PEDIDO_VENDA GetPedidoById(Int32 id);
+        Int32 ValidateEditPedido(CRM_PEDIDO_VENDA item);
+        Int32 ValidateCreatePedido(CRM_PEDIDO_VENDA item);
+        CRM_PEDIDO_VENDA_ANEXO GetAnexoPedidoById(Int32 id);
+        List<FILIAL> GetAllFilial(Int32 idAss);
+        CRM_PEDIDO_VENDA GetPedidoByNumero(String num, Int32 idAss);
+        List<FORMA_ENVIO> GetAllFormasEnvio(Int32 idAss);
+        List<FORMA_FRETE> GetAllFormasFrete(Int32 idAss);
+
+        CRM_PEDIDO_VENDA_ITEM GetItemPedidoById(Int32 id);
+        Int32 ValidateEditItemPedido(CRM_PEDIDO_VENDA_ITEM item);
+        Int32 ValidateCreateItemPedido(CRM_PEDIDO_VENDA_ITEM item);
+
     }
 }

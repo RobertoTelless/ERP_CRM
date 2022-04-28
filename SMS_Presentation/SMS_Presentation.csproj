@@ -362,6 +362,8 @@
     <Compile Include="ViewModels\CategoriaFornecedorViewModel.cs" />
     <Compile Include="ViewModels\CategoriaEquipamentoViewModel.cs" />
     <Compile Include="ViewModels\CategoriaOrdemServicoViewModel.cs" />
+    <Compile Include="ViewModels\CRMPedidoComentarioViewModel.cs" />
+    <Compile Include="ViewModels\CRMPedidoViewModel.cs" />
     <Compile Include="ViewModels\CRMPropostaViewModel.cs" />
     <Compile Include="ViewModels\CRMPropostaComentarioViewModel.cs" />
     <Compile Include="ViewModels\FormularioRespostaAcaoViewModel.cs" />
@@ -391,6 +393,7 @@
     <Compile Include="ViewModels\FichaTecnicaViewModel.cs" />
     <Compile Include="ViewModels\FormaPagamentoViewModel.cs" />
     <Compile Include="ViewModels\InventarioViewModel.cs" />
+    <Compile Include="ViewModels\CRMItemPedidoViewModel.cs" />
     <Compile Include="ViewModels\ItemProcessoCRMViewModel.cs" />
     <Compile Include="ViewModels\ItemPedidoCompraViewModel.cs" />
     <Compile Include="ViewModels\MensagemAutomaçãoViewModel.cs" />

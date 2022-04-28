@@ -66,6 +66,8 @@ namespace EntitiesServices.Model
             this.DOCUMENTO_HISTORICO = new HashSet<DOCUMENTO_HISTORICO>();
             this.CRM_PROPOSTA = new HashSet<CRM_PROPOSTA>();
             this.CRM_PROPOSTA_ACOMPANHAMENTO = new HashSet<CRM_PROPOSTA_ACOMPANHAMENTO>();
+            this.CRM_PEDIDO_VENDA = new HashSet<CRM_PEDIDO_VENDA>();
+            this.CRM_PEDIDO_VENDA_ACOMPANHAMENTO = new HashSet<CRM_PEDIDO_VENDA_ACOMPANHAMENTO>();
         }
     
         public int USUA_CD_ID { get; set; }
@@ -216,5 +218,9 @@ namespace EntitiesServices.Model
         public virtual ICollection<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_PROPOSTA_ACOMPANHAMENTO> CRM_PROPOSTA_ACOMPANHAMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PEDIDO_VENDA_ACOMPANHAMENTO> CRM_PEDIDO_VENDA_ACOMPANHAMENTO { get; set; }
     }
 }

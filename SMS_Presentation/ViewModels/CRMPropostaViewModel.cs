@@ -51,6 +51,7 @@ namespace ERP_CRM_Solution.ViewModels
         public string CRPR_DS_ENVIO { get; set; }
         public string CLIE_NM_NOME { get; set; }
         public CLIENTE CLIENTE { get; set; }
+        public string CRPR_NR_NUMERO { get; set; }
 
 
         public virtual CRM CRM { get; set; }

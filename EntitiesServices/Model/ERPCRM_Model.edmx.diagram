@@ -547,6 +547,21 @@
         <EntityTypeShape EntityType="ERP_CRMModel.CRM_PROPOSTA_ANEXO" Width="1.5" PointX="41" PointY="233.375" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_ANEXO_CRM_PROPOSTA" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_TEMPLATE_EMAIL" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PEDIDO_VENDA" Width="1.5" PointX="40.25" PointY="221.75" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PEDIDO_VENDA_ACOMPANHAMENTO" Width="1.5" PointX="42.5" PointY="214.625" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PEDIDO_VENDA_ANEXO" Width="1.5" PointX="42.5" PointY="229.75" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PEDIDO_VENDA_ITEM" Width="1.5" PointX="45.5" PointY="213.875" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_CRM" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_ACOMPANHAMENTO_CRM_PEDIDO_VENDA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_ANEXO_CRM_PEDIDO_VENDA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_FILIAL" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_FORMA_ENVIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_FORMA_FRETE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_ITEM_CRM_PEDIDO_VENDA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_ACOMPANHAMENTO_USUARIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_ITEM_PRODUTO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -106,6 +106,11 @@
                                                         </div>
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                             <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Número*
+                                                                @Html.TextBoxFor(m => m.CRPR_NR_NUMERO, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPR_NR_NUMERO, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
                                                                 Data Proposta*
                                                                 @Html.TextBoxFor(m => m.CRPR_DT_PROPOSTA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="data1" })
                                                                 @Html.ValidationMessageFor(m => m.CRPR_DT_PROPOSTA, "", new { @style = "color:red" })

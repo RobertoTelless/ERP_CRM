@@ -200,5 +200,9 @@ namespace EntitiesServices.Model
         public virtual DbSet<CRM_PROPOSTA_ACOMPANHAMENTO> CRM_PROPOSTA_ACOMPANHAMENTO { get; set; }
         public virtual DbSet<TEMPLATE_PROPOSTA> TEMPLATE_PROPOSTA { get; set; }
         public virtual DbSet<CRM_PROPOSTA_ANEXO> CRM_PROPOSTA_ANEXO { get; set; }
+        public virtual DbSet<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
+        public virtual DbSet<CRM_PEDIDO_VENDA_ACOMPANHAMENTO> CRM_PEDIDO_VENDA_ACOMPANHAMENTO { get; set; }
+        public virtual DbSet<CRM_PEDIDO_VENDA_ANEXO> CRM_PEDIDO_VENDA_ANEXO { get; set; }
+        public virtual DbSet<CRM_PEDIDO_VENDA_ITEM> CRM_PEDIDO_VENDA_ITEM { get; set; }
     }
 }

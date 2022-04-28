@@ -86,6 +86,18 @@ namespace ApplicationServices.Services
             return lista;
         }
 
+        public CRM_PEDIDO_VENDA GetPedidoById(Int32 id)
+        {
+            CRM_PEDIDO_VENDA lista = _baseService.GetPedidoById(id);
+            return lista;
+        }
+
+        public CRM_PEDIDO_VENDA GetPedidoByNumero(String num, Int32 idAss)
+        {
+            CRM_PEDIDO_VENDA lista = _baseService.GetPedidoByNumero(num, idAss);
+            return lista;
+        }
+
         public CRM CheckExist(CRM tarefa, Int32 idUsu, Int32 idAss)
         {
             CRM item = _baseService.CheckExist(tarefa, idUsu, idAss);
@@ -122,6 +134,12 @@ namespace ApplicationServices.Services
             return lista;
         }
 
+        public List<CRM_PEDIDO_VENDA> GetAllPedidos(Int32 idAss)
+        {
+            List<CRM_PEDIDO_VENDA> lista = _baseService.GetAllPedidos(idAss);
+            return lista;
+        }
+
         public List<TIPO_ACAO> GetAllTipoAcao(Int32 idAss)
         {
             List<TIPO_ACAO> lista = _baseService.GetAllTipoAcao(idAss);
@@ -146,6 +164,24 @@ namespace ApplicationServices.Services
             return lista;
         }
 
+        public List<FILIAL> GetAllFilial(Int32 idAss)
+        {
+            List<FILIAL> lista = _baseService.GetAllFilial(idAss);
+            return lista;
+        }
+
+        public List<FORMA_ENVIO> GetAllFormasEnvio(Int32 idAss)
+        {
+            List<FORMA_ENVIO> lista = _baseService.GetAllFormasEnvio(idAss);
+            return lista;
+        }
+
+        public List<FORMA_FRETE> GetAllFormasFrete(Int32 idAss)
+        {
+            List<FORMA_FRETE> lista = _baseService.GetAllFormasFrete(idAss);
+            return lista;
+        }
+
         public CRM_ANEXO GetAnexoById(Int32 id)
         {
             CRM_ANEXO lista = _baseService.GetAnexoById(id);
@@ -158,6 +194,12 @@ namespace ApplicationServices.Services
             return lista;
         }
 
+        public CRM_PEDIDO_VENDA_ANEXO GetAnexoPedidoById(Int32 id)
+        {
+            CRM_PEDIDO_VENDA_ANEXO lista = _baseService.GetAnexoPedidoById(id);
+            return lista;
+        }
+
         public CRM_COMENTARIO GetComentarioById(Int32 id)
         {
             CRM_COMENTARIO lista = _baseService.GetComentarioById(id);
@@ -167,6 +209,12 @@ namespace ApplicationServices.Services
         public CRM_PROPOSTA_ACOMPANHAMENTO GetPropostaComentarioById(Int32 id)
         {
             CRM_PROPOSTA_ACOMPANHAMENTO lista = _baseService.GetPropostaComentarioById(id);
+            return lista;
+        }
+
+        public CRM_PEDIDO_VENDA_ACOMPANHAMENTO GetPedidoComentarioById(Int32 id)
+        {
+            CRM_PEDIDO_VENDA_ACOMPANHAMENTO lista = _baseService.GetPedidoComentarioById(id);
             return lista;
         }
 
@@ -554,6 +602,23 @@ namespace ApplicationServices.Services
             }
         }
 
+        public Int32 ValidateEditPedido(CRM_PEDIDO_VENDA item)
+        {
+            try
+            {
+                // Verificação
+
+                // Persiste
+                Int32 volta = _baseService.EditPedido(item);
+
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public Int32 ValidateCancelarProposta(CRM_PROPOSTA item)
         {
             try
@@ -762,6 +827,65 @@ namespace ApplicationServices.Services
                 crm.CRM1_IN_STATUS = 3;
                 Int32 volta1 = _baseService.Edit(crm);
                 return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ValidateCreatePedido(CRM_PEDIDO_VENDA item)
+        {
+            try
+            {
+                item.CRPV_IN_ATIVO = 1;
+                item.CRPV_IN_STATUS = 1;
+
+                // Recupera CRM
+                CRM crm = _baseService.GetItemById(item.CRM1_CD_ID);
+
+                // Persiste
+                Int32 volta = _baseService.CreatePedido(item);
+
+                // Acerta processo
+                crm.CRM1_IN_STATUS = 3;
+                Int32 volta1 = _baseService.Edit(crm);
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public CRM_PEDIDO_VENDA_ITEM GetItemPedidoById(Int32 id)
+        {
+            CRM_PEDIDO_VENDA_ITEM lista = _baseService.GetItemPedidoById(id);
+            return lista;
+        }
+
+        public Int32 ValidateCreateItemPedido(CRM_PEDIDO_VENDA_ITEM item)
+        {
+            item.CRPI_IN_ATIVO = 1;
+
+            try
+            {
+                // Persiste
+                Int32 volta = _baseService.CreateItemPedido(item);
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ValidateEditItemPedido(CRM_PEDIDO_VENDA_ITEM item)
+        {
+            try
+            {
+                // Persiste
+                return _baseService.EditItemPedido(item);
             }
             catch (Exception ex)
             {
