@@ -562,6 +562,7 @@
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_USUARIO" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_ACOMPANHAMENTO_USUARIO" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_ITEM_PRODUTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_ITEM_UNIDADE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

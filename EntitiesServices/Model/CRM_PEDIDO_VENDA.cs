@@ -49,6 +49,16 @@ namespace EntitiesServices.Model
         public Nullable<int> CRPV_IN_PRAZO_ENTREGA { get; set; }
         public string CRPV_TX_OBSERVACAO { get; set; }
         public int CRPV_IN_ATIVO { get; set; }
+        public Nullable<System.DateTime> CRPV_DT_ENVIO { get; set; }
+        public string CRPV_DS_ENVIO { get; set; }
+        public string CRPV_LK_LINK { get; set; }
+        public Nullable<System.DateTime> CRPV_DT_CANCELAMENTO { get; set; }
+        public string CRPV_DS_CANCELAMENTO { get; set; }
+        public Nullable<System.DateTime> CRPV_DT_REPROVACAO { get; set; }
+        public string CRPV_DS_REPROVACAO { get; set; }
+        public Nullable<System.DateTime> CRPV_DT_APROVACAO { get; set; }
+        public string CRPV_DS_APROVACAO { get; set; }
+        public Nullable<decimal> CRPV_VL_TOTAL { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CRM CRM { get; set; }

@@ -3695,6 +3695,11 @@
     <Content Include="Views\CRM\ReprovarProposta.cshtml" />
     <Content Include="Views\CRM\AprovarProposta.cshtml" />
     <Content Include="Views\CRM\EnviarProposta.cshtml" />
+    <Content Include="Views\CRM\VerPedidosUsuarioCRM.cshtml" />
+    <Content Include="Views\CRM\IncluirPedido.cshtml" />
+    <Content Include="Views\CRM\CancelarPedido.cshtml" />
+    <Content Include="Views\CRM\ReprovarPedido.cshtml" />
+    <Content Include="Views\CRM\AprovarPedido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

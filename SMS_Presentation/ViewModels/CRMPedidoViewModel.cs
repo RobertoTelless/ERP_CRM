@@ -26,7 +26,6 @@ namespace ERP_CRM_Solution.ViewModels
         public System.DateTime CRPV_DT_PEDIDO { get; set; }
         [StringLength(1000, ErrorMessage = "A INTRODUÇÃO deve conter no máximo 1000 caracteres.")]
         public string CRPV_TX_INTRODUCAO { get; set; }
-        [Required(ErrorMessage = "Campo NÚMERO obrigatorio")]
         [StringLength(20, ErrorMessage = "O NÚMERO deve conter no máximo 20 caracteres.")]
         public string CRPV_NR_NUMERO { get; set; }
         [Required(ErrorMessage = "Campo STATUS obrigatorio")]
@@ -60,6 +59,24 @@ namespace ERP_CRM_Solution.ViewModels
         [StringLength(5000, ErrorMessage = "AS OBSERVAÇÕES deve conter no máximo 5000 caracteres.")]
         public string CRPV_TX_OBSERVACAO { get; set; }
         public int CRPV_IN_ATIVO { get; set; }
+        [DataType(DataType.Date, ErrorMessage = "A DATA DE ENVIO deve ser uma data válida")]
+        public Nullable<System.DateTime> CRPV_DT_ENVIO { get; set; }
+        [StringLength(1000, ErrorMessage = "AS INFORMAÇÕES DE ENVIO deve conter no máximo 1000 caracteres.")]
+        public string CRPV_DS_ENVIO { get; set; }
+        public string CRPV_LK_LINK { get; set; }
+        [DataType(DataType.Date, ErrorMessage = "A DATA DE CANCELAMENTO deve ser uma data válida")]
+        public Nullable<System.DateTime> CRPV_DT_CANCELAMENTO { get; set; }
+        [StringLength(1000, ErrorMessage = "AS INFORMAÇÕES DE CANCELAMENTO deve conter no máximo 1000 caracteres.")]
+        public string CRPV_DS_CANCELAMENTO { get; set; }
+        [DataType(DataType.Date, ErrorMessage = "A DATA DE REPROVAÇÃO deve ser uma data válida")]
+        public Nullable<System.DateTime> CRPV_DT_REPROVACAO { get; set; }
+        [StringLength(1000, ErrorMessage = "AS INFORMAÇÕES DE REPROVAÇÃO deve conter no máximo 1000 caracteres.")]
+        public string CRPV_DS_REPROVACAO { get; set; }
+        [DataType(DataType.Date, ErrorMessage = "A DATA DE APROVAÇÃO deve ser uma data válida")]
+        public Nullable<System.DateTime> CRPV_DT_APROVACAO { get; set; }
+        [StringLength(1000, ErrorMessage = "AS INFORMAÇÕES DE APROVAÇÃO deve conter no máximo 1000 caracteres.")]
+        public string CRPV_DS_APROVACAO { get; set; }
+        public CLIENTE CLIENTE { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CRM CRM { get; set; }

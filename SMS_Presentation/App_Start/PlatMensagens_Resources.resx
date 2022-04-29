@@ -471,4 +471,7 @@
   <data name="M0139" xml:space="preserve">
     <value>Nenhum template de mensagem selecionado</value>
   </data>
+  <data name="M0140" xml:space="preserve">
+    <value>Impossível criar/reativar este pedido. Já existe um pedido sendo processado neste momento.</value>
+  </data>
 </root>
