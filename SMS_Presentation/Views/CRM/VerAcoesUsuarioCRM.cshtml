@@ -22,6 +22,136 @@
         </ol>
         <br />
     </div>
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="ibox-content text-center">
+                <h3 style="color: green">@ViewBag.Nome</h3>
+                <div class="m-b-sm">
+                    <img alt="image" class="img-circle" src="@Url.Content(ViewBag.Foto)" style="width: auto; height: auto; max-height: 90px; max-width: 90px;">
+                </div>
+                <p class="font-bold">@ViewBag.Cargo</p>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title"  style="background-color:cornflowerblue; color:darkblue">
+                    <span class="label label-success pull-right">Hoje</span>
+                    <h5>Total</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">@ViewBag.TotalAcoes</h1>
+                    <small>Ações Cadastradas</small>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+        @if ((Int32)Session["AcoesUsuario"] == 1)
+        {
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title"  style="background-color:goldenrod; color:darkblue">
+                        <span class="label label-warning pull-right">Hoje</span>
+                        <h5>Pendentes</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalPendentes</h1>
+                        <small>Ações Pendentes</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerAcoesUsuarioCRMPendentePrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title"  style="background-color:darkseagreen; color:green">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Encerradas</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalEncerradas</h1>
+                        <small>Ações Encerradas</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerAcoesUsuarioCRMEncerradaPrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title" style="background-color:firebrick; color:yellow">
+                        <span class="label label-danger pull-right">Hoje</span>
+                        <h5>Atrasadas</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalAtrasadas</h1>
+                        <small>Ações Atrasadas</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerAcoesUsuarioCRMAtrasadaPrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+        }
+        @if ((Int32)Session["AcoesUsuario"] == 2)
+        {
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-warning pull-right">Hoje</span>
+                        <h5>Pendentes</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalPendentes</h1>
+                        <small>Ações Pendentes</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerAcoesUsuarioCRMPendentePrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+        }
+        @if ((Int32)Session["AcoesUsuario"] == 3)
+        {
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-success pull-right">Hoje</span>
+                        <h5>Encerradas</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalEncerradas</h1>
+                        <small>Ações Encerradas</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerAcoesUsuarioCRMEncerradaPrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+        }
+        @if ((Int32)Session["AcoesUsuario"] == 4)
+        {
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title"  style="background-color:firebrick; color:yellow">
+                        <span class="label label-danger pull-right">Hoje</span>
+                        <h5>Atrasadas</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalAtrasadas</h1>
+                        <small>Ações Atrasadas</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerAcoesUsuarioCRMAtrasadaPrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+        }
+
+   </div>
 
     <div class="row">
         <div class="col-lg-12 col-md-12 col-xs-12"  id="Lista">
@@ -31,7 +161,10 @@
                 </div>
                 <div class="ibox-content">
                     <div class="form-group">
-                        @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaCRM", controller: "CRM")
+                        @if ((Int32)Session["AcoesUsuario"] > 1)
+                        {
+                            @Html.ButtonLinkIndex(text: "Voltar", controller: "CRM", action: "VerAcoesUsuarioCRMPrevia")
+                        }
                         @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                     </div>
                     <div class="row">
@@ -71,13 +204,20 @@
                                                 {
                                                     <td style="color: red; font-weight:bold">@cond.CRAC_DT_PREVISTA.Value.ToShortDateString() @cond.CRAC_DT_PREVISTA.Value.ToShortTimeString()</td>
                                                 }
-                                                @if ((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days > 0)
+                                                @if (cond.CRAC_IN_STATUS == 3)
                                                 {
-                                                    <td style="color: green;">@((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days)</td>
+                                                    <td>Encerrada</td>
                                                 }
                                                 else
                                                 {
-                                                    <td style="color: red; font-weight:bold">@((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days)</td>
+                                                    if ((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days > 0)
+                                                    {
+                                                        <td style="color: green;">@((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days)</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="color: red; font-weight:bold">@((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days)</td>
+                                                    }
                                                 }
                                                 @if (cond.CRAC_IN_STATUS == 1)
 	                                            {
@@ -130,13 +270,20 @@
                                                 {
                                                     <td>@cond.CRAC_DT_PREVISTA.Value.ToShortDateString() @cond.CRAC_DT_PREVISTA.Value.ToShortTimeString()</td>
                                                 }
-                                                @if ((cond.CRAC_DT_PREVISTA.Value - DateTime.Today.Date).Days > 0)
+                                                @if (cond.CRAC_IN_STATUS == 3)
                                                 {
-                                                    <td>@((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days)</td>
+                                                    <td>Encerrada</td>
                                                 }
                                                 else
                                                 {
-                                                    <td>@((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days)</td>
+                                                    if ((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days > 0)
+                                                    {
+                                                        <td style="color: green;">@((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days)</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="color: red; font-weight:bold">@((cond.CRAC_DT_PREVISTA.Value.Date - DateTime.Today.Date).Days)</td>
+                                                    }
                                                 }
                                                 @if (cond.CRAC_IN_STATUS == 1)
 	                                            {
@@ -183,7 +330,7 @@
                                 </div>
                                 <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
                                     <h2 style="font-weight: bold">Nenhuma ação registrada para esse usuário</h2>
-                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "CRM", action: "MontarTelaCRM")
+                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "CRM", action: "VerAcoesUsuarioCRMPrevia")
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-2">
 

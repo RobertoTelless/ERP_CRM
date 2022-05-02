@@ -262,6 +262,7 @@ namespace ERP_CRM_Solution.Controllers
                     Session["PermVenda"] = 0;
                     Session["PermServDesk"] = 0;
                 }
+                Session["ListaMensagem"] = null;
 
                 // Route
                 if (usuario.USUA_IN_PROVISORIO == 1)

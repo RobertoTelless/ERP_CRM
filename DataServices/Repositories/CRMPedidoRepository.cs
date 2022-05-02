@@ -29,7 +29,7 @@ namespace DataServices.Repositories
         public CRM_PEDIDO_VENDA GetItemByNumero(String num, Int32 idAss)
         {
             IQueryable<CRM_PEDIDO_VENDA> query = Db.CRM_PEDIDO_VENDA.Where(p => p.CRPV_NR_NUMERO == num);
-            query = query.Where(p => p.ASSI_CD_ID == idUsu);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.FirstOrDefault();
         }
     }

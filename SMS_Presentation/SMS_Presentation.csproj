@@ -398,6 +398,7 @@
     <Compile Include="ViewModels\ItemPedidoCompraViewModel.cs" />
     <Compile Include="ViewModels\MensagemAutomaçãoViewModel.cs" />
     <Compile Include="ViewModels\MensagemAuotomacaoDatasViewModel.cs" />
+    <Compile Include="ViewModels\MensagemWidgetViewModel.cs" />
     <Compile Include="ViewModels\MovimentacaoAvulsaGridViewModel.cs" />
     <Compile Include="ViewModels\MovimentacaoAvulsaViewModel.cs" />
     <Compile Include="ViewModels\MovimentoEntradaViewModel.cs" />
@@ -3700,6 +3701,7 @@
     <Content Include="Views\CRM\CancelarPedido.cshtml" />
     <Content Include="Views\CRM\ReprovarPedido.cshtml" />
     <Content Include="Views\CRM\AprovarPedido.cshtml" />
+    <Content Include="Views\BaseAdmin\MontarCentralMensagens.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

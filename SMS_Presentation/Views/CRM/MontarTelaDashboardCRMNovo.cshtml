@@ -17,10 +17,10 @@
                         @Html.ButtonLinkIndex(text: "Clientes - Inclusão", action: "IncluirClienteRapido", controller: "CRM", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Central de CRM", action: "MontarTelaCRM", controller: "CRM", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "CRM - Kanban", action: "MontarTelaKanbanCRM", controller: "CRM", buttonClass: "primary")
-                        @Html.ButtonLinkIndex(text: "Ações", action: "VerAcoesUsuarioCRM", controller: "CRM", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Ações", action: "VerAcoesUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
                         @if ((Int32)Session["PermCRM"] == 1)
                         {
-                            @Html.ButtonLinkIndex(text: "Propostas", action: "VerPropostasUsuarioCRM", controller: "CRM", buttonClass: "primary")
+                            @Html.ButtonLinkIndex(text: "Propostas", action: "VerPropostasUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
                         }
                         @if ((Int32)Session["PermVenda"] == 1)
                         {

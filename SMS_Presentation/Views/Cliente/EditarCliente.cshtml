@@ -205,12 +205,12 @@
                                                         {
                                                             <div class="col-lg-3 col-md-3 col-xs-12">
                                                                 CNPJ
-                                                                @Html.TextBoxFor(m => m.CLIE_NR_CNPJ, new { @class = "form-control", @id = "cnpj", autofocus = true, @readonly = "readonly" })
+                                                                @Html.TextBoxFor(m => m.CLIE_NR_CNPJ, new { @class = "form-control", @id = "cnpj", autofocus = true })
                                                                 @Html.ValidationMessageFor(m => m.CLIE_NR_CNPJ, "", new { @style = "color:red" })
                                                             </div>
                                                             <div class="col-lg-5 col-md-5 col-xs-12" id="RS">
                                                                 Razão Social
-                                                                @Html.TextBoxFor(m => m.CLIE_NM_RAZAO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                                @Html.TextBoxFor(m => m.CLIE_NM_RAZAO, new { @class = "form-control", autofocus = true })
                                                                 @Html.ValidationMessageFor(m => m.CLIE_NM_RAZAO, "", new { @style = "color:red" })
                                                             </div>
                                                         }
@@ -218,7 +218,7 @@
                                                         {
                                                             <div class="col-lg-2 col-md-2 col-xs-12">
                                                                 CPF
-                                                                @Html.TextBoxFor(m => m.CLIE_NR_CPF, new { @class = "form-control", @id = "cpf", autofocus = true, @readonly = "readonly" })
+                                                                @Html.TextBoxFor(m => m.CLIE_NR_CPF, new { @class = "form-control", @id = "cpf", autofocus = true })
                                                                 @Html.ValidationMessageFor(m => m.CLIE_NR_CPF, "", new { @style = "color:red" })
                                                             </div>
                                                             <div class="col-lg-2 col-md-2 col-xs-12">

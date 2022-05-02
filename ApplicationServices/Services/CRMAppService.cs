@@ -654,7 +654,7 @@ namespace ApplicationServices.Services
                 noti.NOTI_IN_VISTA = 0;
                 noti.NOTI_NM_TITULO = "Cancelamento de Proposta";
                 noti.NOTI_IN_ATIVO = 1;
-                noti.NOTI_TX_TEXTO = "ATENÇÃO: A Proposta " + item.CRPR_TX_TEXTO + " do processo CRM " + item.CRM.CRM1_NM_NOME + " foi cancelada em " + item.CRPR_DT_CANCELAMENTO.Value.ToLongDateString() + ".";
+                noti.NOTI_TX_TEXTO = "ATENÇÃO: A Proposta " + item.CRPR_NR_NUMERO + " do processo CRM " + item.CRM.CRM1_NM_NOME + " foi cancelada em " + item.CRPR_DT_CANCELAMENTO.Value.ToLongDateString() + ".";
                 noti.USUA_CD_ID = item.USUA_CD_ID;
                 noti.NOTI_IN_STATUS = 1;
                 noti.NOTI_IN_NIVEL = 1;
@@ -703,7 +703,7 @@ namespace ApplicationServices.Services
                 noti.NOTI_IN_VISTA = 0;
                 noti.NOTI_NM_TITULO = "Reprovação de Proposta";
                 noti.NOTI_IN_ATIVO = 1;
-                noti.NOTI_TX_TEXTO = "ATENÇÃO: A Proposta " + item.CRPR_TX_TEXTO + " do processo CRM " + item.CRM.CRM1_NM_NOME + " foi reprovada pelo cliente em " + item.CRPR_DT_REPROVACAO.Value.ToLongDateString() + ".";
+                noti.NOTI_TX_TEXTO = "ATENÇÃO: A Proposta " + item.CRPR_NR_NUMERO + " do processo CRM " + item.CRM.CRM1_NM_NOME + " foi reprovada pelo cliente em " + item.CRPR_DT_REPROVACAO.Value.ToLongDateString() + ".";
                 noti.USUA_CD_ID = item.USUA_CD_ID;
                 noti.NOTI_IN_STATUS = 1;
                 noti.NOTI_IN_NIVEL = 1;
@@ -752,7 +752,7 @@ namespace ApplicationServices.Services
                 noti.NOTI_IN_VISTA = 0;
                 noti.NOTI_NM_TITULO = "Aprovação de Proposta";
                 noti.NOTI_IN_ATIVO = 1;
-                noti.NOTI_TX_TEXTO = "ATENÇÃO: A Proposta " + item.CRPR_TX_TEXTO + " do processo CRM " + item.CRM.CRM1_NM_NOME + " foi aprovada pelo cliente em " + item.CRPR_DT_APROVACAO.Value.ToLongDateString() + ".";
+                noti.NOTI_TX_TEXTO = "ATENÇÃO: A Proposta " + item.CRPR_NR_NUMERO + " do processo CRM " + item.CRM.CRM1_NM_NOME + " foi aprovada pelo cliente em " + item.CRPR_DT_APROVACAO.Value.ToLongDateString() + ".";
                 noti.USUA_CD_ID = item.USUA_CD_ID;
                 noti.NOTI_IN_STATUS = 1;
                 noti.NOTI_IN_NIVEL = 1;
@@ -797,7 +797,7 @@ namespace ApplicationServices.Services
                 noti.NOTI_IN_VISTA = 0;
                 noti.NOTI_NM_TITULO = "Aprovação de Proposta";
                 noti.NOTI_IN_ATIVO = 1;
-                noti.NOTI_TX_TEXTO = "ATENÇÃO: A Proposta " + item.CRPR_TX_TEXTO + " do processo CRM " + item.CRM.CRM1_NR_TEMPERATURA + " foi enviada para o cliente em " + item.CRPR_DT_ENVIO.Value.ToLongDateString() + ".";
+                noti.NOTI_TX_TEXTO = "ATENÇÃO: A Proposta " + item.CRPR_NR_NUMERO + " do processo CRM " + item.CRM.CRM1_NM_NOME + " foi enviada para o cliente em " + item.CRPR_DT_ENVIO.Value.ToLongDateString() + ".";
                 noti.USUA_CD_ID = item.USUA_CD_ID;
                 noti.NOTI_IN_STATUS = 1;
                 noti.NOTI_IN_NIVEL = 1;

@@ -364,7 +364,8 @@ namespace Presentation.Start
             kernel.Bind<ICRMPedidoAnexoRepository>().To<CRMPedidoAnexoRepository>();
             kernel.Bind<ICRMPedidoComentarioRepository>().To<CRMPedidoComentarioRepository>();
             kernel.Bind<ICRMItemPedidoRepository>().To<CRMItemPedidoRepository>();
-
+            kernel.Bind<IFormaEnvioRepository>().To<FormaEnvioRepository>();
+            kernel.Bind<IFormaFreteRepository>().To<FormaFreteRepository>();
         }
     }
 }

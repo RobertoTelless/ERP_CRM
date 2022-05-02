@@ -1733,6 +1733,40 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
         }
 
+        public ActionResult VoltarAcaoCRM()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PontoAcao"] == 1)
+            {
+                return RedirectToAction("VerAcoesUsuarioCRMPrevia");
+            }
+            if ((Int32)Session["PontoAcao"] == 2)
+            {
+                return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
+            }
+            return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
+        }
+
+        public ActionResult VoltarPropostaCRM()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PontoProposta"] == 1)
+            {
+                return RedirectToAction("VerPropostasUsuarioCRMPrevia");
+            }
+            if ((Int32)Session["PontoProposta"] == 2)
+            {
+                return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
+            }
+            return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
+        }
+
         public ActionResult VoltarEditarPropostaCRM()
         {
             if ((String)Session["Ativa"] == null)
@@ -2710,6 +2744,8 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Prop = prop;
             ViewBag.Peds = peds;
             ViewBag.Ped = ped;
+            Session["PontoAcao"] = 2;
+            Session["PontoProposta"] = 2;
             return View(vm);
         }
 
@@ -3114,7 +3150,7 @@ namespace ERP_CRM_Solution.Controllers
 
                     // Verifica retorno
                     Session["ListaCRM"] = null;
-                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                    return RedirectToAction("VoltarAcaoCRM");
                 }
                 catch (Exception ex)
                 {
@@ -3289,8 +3325,106 @@ namespace ERP_CRM_Solution.Controllers
 
             // Processa
             List<CRM_ACAO> lista = baseApp.GetAllAcoes(idAss).Where(p => p.USUA_CD_ID2 == usuario.USUA_CD_ID).OrderByDescending(m => m.CRAC_DT_PREVISTA).ToList();
-            ViewBag.Lista = lista;
+            List<CRM_ACAO> totalPendente = lista.Where(p => p.CRAC_IN_STATUS == 2).OrderByDescending(m => m.CRAC_DT_PREVISTA).ToList();
+            List<CRM_ACAO> totalEncerrada = lista.Where(p => p.CRAC_IN_STATUS == 3).OrderByDescending(m => m.CRAC_DT_PREVISTA).ToList();
+            List<CRM_ACAO> totalAtrasada= lista.Where(p => p.CRAC_IN_STATUS != 3 & p.CRAC_DT_PREVISTA < DateTime.Today.Date).OrderByDescending(m => m.CRAC_DT_PREVISTA).ToList();
+
+            if ((Int32)Session["AcoesUsuario"] == 1)
+            {
+                ViewBag.Lista = lista;
+                ViewBag.TotalAcoes = lista.Count;
+            }
+            if ((Int32)Session["AcoesUsuario"] == 2)
+            {
+                ViewBag.Lista = totalPendente;
+                ViewBag.TotalAcoes = totalPendente.Count;
+            }
+            if ((Int32)Session["AcoesUsuario"] == 3)
+            {
+                ViewBag.Lista = totalEncerrada;
+                ViewBag.TotalAcoes = totalEncerrada.Count;
+            }
+            if ((Int32)Session["AcoesUsuario"] == 4)
+            {
+                ViewBag.Lista = totalAtrasada;
+                ViewBag.TotalAcoes = totalAtrasada.Count;
+            }
+
+            ViewBag.TotalPendentes = totalPendente.Count;
+            ViewBag.TotalEncerradas = totalEncerrada.Count;
+            ViewBag.TotalAtrasadas = totalAtrasada.Count;
+
+            ViewBag.Nome = usuario.USUA_NM_NOME.Substring(0, usuario.USUA_NM_NOME.IndexOf(" "));
+            ViewBag.Foto = usuario.USUA_AQ_FOTO;
+            ViewBag.Cargo = usuario.CARGO.CARG_NM_NOME;
+            Session["PontoAcao"] = 1;
             return View();
+        }
+
+        public ActionResult VerAcoesUsuarioCRMPrevia()
+        {
+            Session["AcoesUsuario"] = 1;
+            return RedirectToAction("VerAcoesUsuarioCRM");
+        }
+
+        public ActionResult VerAcoesUsuarioCRMPendentePrevia()
+        {
+            Session["AcoesUsuario"] = 2;
+            return RedirectToAction("VerAcoesUsuarioCRM");
+        }
+
+        public ActionResult VerAcoesUsuarioCRMEncerradaPrevia()
+        {
+            Session["AcoesUsuario"] = 3;
+            return RedirectToAction("VerAcoesUsuarioCRM");
+        }
+
+        public ActionResult VerAcoesUsuarioCRMAtrasadaPrevia()
+        {
+            Session["AcoesUsuario"] = 4;
+            return RedirectToAction("VerAcoesUsuarioCRM");
+        }
+
+        public ActionResult VerPropostasUsuarioCRMPrevia()
+        {
+            Session["PropostasUsuario"] = 1;
+            return RedirectToAction("VerPropostasUsuarioCRM");
+        }
+
+        public ActionResult VerPropostasUsuarioCRMElaboracaoPrevia()
+        {
+            Session["PropostasUsuario"] = 2;
+            return RedirectToAction("VerPropostasUsuarioCRM");
+        }
+
+        public ActionResult VerPropostasUsuarioCRMEnviadaPrevia()
+        {
+            Session["PropostasUsuario"] = 3;
+            return RedirectToAction("VerPropostasUsuarioCRM");
+        }
+
+        public ActionResult VerPropostasUsuarioCRMAprovadaPrevia()
+        {
+            Session["PropostasUsuario"] = 6;
+            return RedirectToAction("VerPropostasUsuarioCRM");
+        }
+
+        public ActionResult VerPropostasUsuarioCRMReprovadaPrevia()
+        {
+            Session["PropostasUsuario"] = 5;
+            return RedirectToAction("VerPropostasUsuarioCRM");
+        }
+
+        public ActionResult VerPropostasUsuarioCRMCanceladaPrevia()
+        {
+            Session["PropostasUsuario"] = 4;
+            return RedirectToAction("VerPropostasUsuarioCRM");
+        }
+
+        public ActionResult VerPropostasUsuarioCRMencerradaPrevia()
+        {
+            Session["PropostasUsuario"] = 7;
+            return RedirectToAction("VerPropostasUsuarioCRM");
         }
 
         [HttpGet]
@@ -4962,7 +5096,61 @@ namespace ERP_CRM_Solution.Controllers
 
             // Processa
             List<CRM_PROPOSTA> lista = baseApp.GetAllPropostas(idAss).Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
-            ViewBag.Lista = lista;
+            List<CRM_PROPOSTA> totalElaboracao = lista.Where(p => p.CRPR_IN_STATUS == 1).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
+            List<CRM_PROPOSTA> totalEnviado = lista.Where(p => p.CRPR_IN_STATUS == 2).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
+            List<CRM_PROPOSTA> totalCancelado = lista.Where(p => p.CRPR_IN_STATUS == 3).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
+            List<CRM_PROPOSTA> totalAprovado = lista.Where(p => p.CRPR_IN_STATUS == 5).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
+            List<CRM_PROPOSTA> totalReprovado= lista.Where(p => p.CRPR_IN_STATUS == 4).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
+            List<CRM_PROPOSTA> totalEncerrado= lista.Where(p => p.CRPR_IN_STATUS == 6).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
+            List<CRM_PROPOSTA> totalValidade = lista.Where(p => p.CRPR_IN_STATUS < 3 & p.CRPR_DT_VALIDADE < DateTime.Today.Date).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
+
+            if ((Int32)Session["PropostasUsuario"] == 1)
+            {
+                ViewBag.Lista = lista;
+                ViewBag.TotalPropostas = lista.Count;
+            }
+            if ((Int32)Session["PropostasUsuario"] == 2)
+            {
+                ViewBag.Lista = totalElaboracao;
+                ViewBag.TotalPropostas = totalElaboracao.Count;
+            }
+            if ((Int32)Session["PropostasUsuario"] == 3)
+            {
+                ViewBag.Lista = totalEnviado;
+                ViewBag.TotalPropostas = totalEnviado.Count;
+            }
+            if ((Int32)Session["PropostasUsuario"] == 4)
+            {
+                ViewBag.Lista = totalCancelado;
+                ViewBag.TotalPropostas = totalCancelado.Count;
+            }
+            if ((Int32)Session["PropostasUsuario"] == 5)
+            {
+                ViewBag.Lista = totalReprovado;
+                ViewBag.TotalPropostas = totalReprovado.Count;
+            }
+            if ((Int32)Session["PropostasUsuario"] == 6)
+            {
+                ViewBag.Lista = totalAprovado;
+                ViewBag.TotalPropostas = totalAprovado.Count;
+            }
+            if ((Int32)Session["PropostasUsuario"] == 7)
+            {
+                ViewBag.Lista = totalEncerrado;
+                ViewBag.TotalPropostas = totalEncerrado.Count;
+            }
+
+            ViewBag.TotalElaboracao = totalElaboracao.Count;
+            ViewBag.TotalEnviado= totalEnviado.Count;
+            ViewBag.TotalAprovado = totalAprovado.Count;
+            ViewBag.TotalReprovado = totalReprovado.Count;
+            ViewBag.TotalEncerrado= totalEncerrado.Count;
+            ViewBag.TotalCancelado= totalCancelado.Count;
+
+            ViewBag.Nome = usuario.USUA_NM_NOME.Substring(0, usuario.USUA_NM_NOME.IndexOf(" "));
+            ViewBag.Foto = usuario.USUA_AQ_FOTO;
+            ViewBag.Cargo = usuario.CARGO.CARG_NM_NOME;
+            Session["PontoProposta"] = 1;
             return View();
         }
 
@@ -6533,7 +6721,7 @@ namespace ERP_CRM_Solution.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult AprovarProposta(CRMPropostaViewModel vm)
+        public ActionResult AprovarPedido(CRMPropostaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {

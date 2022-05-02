@@ -22,7 +22,168 @@
         </ol>
         <br />
     </div>
-
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="ibox-content text-center">
+                <h3 style="color: green">@ViewBag.Nome</h3>
+                <div class="m-b-sm">
+                    <img alt="image" class="img-circle" src="@Url.Content(ViewBag.Foto)" style="width: auto; height: auto; max-height: 90px; max-width: 90px;">
+                </div>
+                <p class="font-bold">@ViewBag.Cargo</p>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title"  style="background-color:cornflowerblue; color:darkblue">
+                    <span class="label label-success pull-right">Hoje</span>
+                    <h5>Total</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">@ViewBag.TotalPropostas</h1>
+                    <small>Propostas Cadastradas</small>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+        @if ((Int32)Session["PropostasUsuario"] == 1)
+        {
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title"  style="background-color:cornflowerblue; color:darkblue">
+                        <span class="label label-warning pull-right">Hoje</span>
+                        <h5>Elaboração</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalElaboracao</h1>
+                        <small>Em Elaboração</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerPropostasUsuarioCRMElaboracaoPrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title"  style="background-color:rosybrown; color:brown">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Enviadas</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalEnviado</h1>
+                        <small>Enviadas ao Cliente</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerPropostasUsuarioCRMEnviadaPrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title" style="background-color:goldenrod; color:darkblue">
+                        <span class="label label-danger pull-right">Hoje</span>
+                        <h5>Aprovadas</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalAprovado</h1>
+                        <small>Aprovadas pelo Cliente</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerPropostasUsuarioCRMAprovadaPrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title"  style="background-color:darkseagreen; color:green">
+                        <span class="label label-danger pull-right">Hoje</span>
+                        <h5>Encerradas</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalEncerrado</h1>
+                        <small>Encerradas</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerPropostasUsuarioCRMEncerradaPrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+        }
+        @if ((Int32)Session["PropostasUsuario"] == 2)
+        {
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title"  style="background-color:cornflowerblue; color:darkblue">
+                        <span class="label label-warning pull-right">Hoje</span>
+                        <h5>Elaboração</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalElaboracao</h1>
+                        <small>Em Elaboração</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerPropostasUsuarioCRMElaboracaoPrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+        }
+        @if ((Int32)Session["PropostasUsuario"] == 3)
+        {
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title"  style="background-color:rosybrown; color:brown">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Enviadas</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalEnviado</h1>
+                        <small>Enviadas ao Cliente</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerPropostasUsuarioCRMEnviadaPrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+        }
+        @if ((Int32)Session["PropostasUsuario"] == 4)
+        {
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title" style="background-color:goldenrod; color:darkblue">
+                        <span class="label label-danger pull-right">Hoje</span>
+                        <h5>Aprovadas</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalAprovado</h1>
+                        <small>Aprovadas pelo Cliente</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerPropostasUsuarioCRMAprovadaPrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+        }
+        @if ((Int32)Session["PropostasUsuario"] == 6)
+        {
+            <div class="col-lg-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title"  style="background-color:darkseagreen; color:green">
+                        <span class="label label-danger pull-right">Hoje</span>
+                        <h5>Encerradas</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.TotalEncerrado</h1>
+                        <small>Encerradas</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "CRM", action: "VerPropostasUsuarioCRMEncerradaPrevia", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+        }
+   </div>
     <div class="row">
         <div class="col-lg-12 col-md-12 col-xs-12"  id="Lista">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
@@ -31,7 +192,7 @@
                 </div>
                 <div class="ibox-content">
                     <div class="form-group">
-                        @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaCRM", controller: "CRM")
+                        @Html.ButtonLinkIndex(text: "Voltar", action: "VerPropostasUsuarioCRMPrevia", controller: "CRM")
                         @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                     </div>
                     <div class="row">
@@ -40,6 +201,7 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example1">
                                 <thead style="background-color:lightsteelblue">
                                     <tr>
+                                        <th>Número</th>
                                         <th>Criação</th>
                                         <th>Validade</th>
                                         <th>Envio</th>
@@ -56,6 +218,7 @@
                                         if (cond.CRPR_IN_STATUS == 2 || cond.CRPR_IN_STATUS == 1)
                                         {
                                             <tr style="background-color:lightyellow; color: green">
+                                                <td>@cond.CRPR_NR_NUMERO</td>
                                                 <td>@cond.CRPR_DT_PROPOSTA.ToShortDateString()</td>
                                                 <td>@cond.CRPR_DT_VALIDADE.ToShortDateString()</td>
                                                 @if (cond.CRPR_DT_ENVIO != null)
@@ -72,19 +235,23 @@
                                                 }
                                                 else if (cond.CRPR_IN_STATUS == 2)
                                                 {
-                                                    <td><span class="badge badge-danger">Enviada</span></td>
+                                                    <td><span class="badge badge-warning">Enviada</span></td>
                                                 }
                                                 else if (cond.CRPR_IN_STATUS == 3)
                                                 {
-                                                    <td><span class="badge badge-success">Cancelada</span></td>
+                                                    <td><span class="badge badge-danger">Cancelada</span></td>
                                                 }
                                                 else if (cond.CRPR_IN_STATUS == 4)
                                                 {
-                                                    <td><span class="badge badge-warning">Reprovada</span></td>
+                                                    <td><span class="badge badge-danger">Reprovada</span></td>
                                                 }
-                                                else if (cond.CRPR_IN_STATUS == 4)
+                                                else if (cond.CRPR_IN_STATUS == 5)
                                                 {
-                                                    <td><span class="badge badge-warning">Aprovada</span></td>
+                                                    <td><span class="badge badge-primary">Aprovada</span></td>
+                                                }
+                                                else if (cond.CRPR_IN_STATUS == 6)
+                                                {
+                                                    <td><span class="badge badge-success">Encerrada</span></td>
                                                 }
                                                 @if (cond.CRPR_VL_VALOR != null)
                                                 {
@@ -126,6 +293,7 @@
                                         else
                                         {
                                             <tr>
+                                                <td>@cond.CRPR_NR_NUMERO</td>
                                                 <td>@cond.CRPR_DT_PROPOSTA.ToShortDateString()</td>
                                                 <td>@cond.CRPR_DT_VALIDADE.ToShortDateString()</td>
                                                 @if (cond.CRPR_DT_ENVIO != null)
@@ -142,21 +310,25 @@
                                                 }
                                                 else if (cond.CRPR_IN_STATUS == 2)
                                                 {
-                                                    <td><span class="badge badge-danger">Enviada</span></td>
+                                                    <td><span class="badge badge-warning">Enviada</span></td>
                                                 }
                                                 else if (cond.CRPR_IN_STATUS == 3)
                                                 {
-                                                    <td><span class="badge badge-success">Cancelada</span></td>
+                                                    <td><span class="badge badge-danger">Cancelada</span></td>
                                                 }
                                                 else if (cond.CRPR_IN_STATUS == 4)
                                                 {
-                                                    <td><span class="badge badge-warning">Reprovada</span></td>
+                                                    <td><span class="badge badge-danger">Reprovada</span></td>
                                                 }
-                                                else if (cond.CRPR_IN_STATUS == 4)
+                                                else if (cond.CRPR_IN_STATUS == 5)
                                                 {
-                                                    <td><span class="badge badge-warning">Aprovada</span></td>
+                                                    <td><span class="badge badge-primary">Aprovada</span></td>
                                                 }
-                                                @if (cond.CRPR_VL_VALOR != null)
+                                                else if (cond.CRPR_IN_STATUS == 6)
+                                                {
+                                                    <td><span class="badge badge-success">Encerrada</span></td>
+                                                }
+                                                    @if (cond.CRPR_VL_VALOR != null)
                                                 {
                                                     <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPR_VL_VALOR.Value)</td>
                                                 }
@@ -205,7 +377,7 @@
                                 </div>
                                 <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
                                     <h2 style="font-weight: bold">Nenhuma proposta registrada para esse usuário</h2>
-                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "CRM", action: "MontarTelaCRM")
+                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "CRM", action: "VerPropostasUsuarioCRMPrevia")
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-2">
 

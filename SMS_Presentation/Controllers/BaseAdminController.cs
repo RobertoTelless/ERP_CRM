@@ -2368,8 +2368,105 @@ namespace ERP_CRM_Solution.Controllers
             }
         }
 
+        public ActionResult MontarCentralMensagens()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Cria Base de mensagens
+            List<MensagemWidgetViewModel> listaMensagens = new List<MensagemWidgetViewModel>();
+            if (Session["ListaMensagem"] == null)
+            {
+                // Carrega notificações
+                List<NOTIFICACAO> notificacoes = (List<NOTIFICACAO>)Session["Notificacoes"];
+                List<NOTIFICACAO> naoLidas = notificacoes.Where(p => p.NOTI_IN_VISTA == 0).ToList();
+                foreach (NOTIFICACAO item in naoLidas)
+                {
+                    MensagemWidgetViewModel mens = new MensagemWidgetViewModel();
+                    mens.DataMensagem = item.NOTI_DT_EMISSAO.Value;
+                    mens.Descrição = item.NOTI_NM_TITULO;
+                    mens.FlagUrgencia = 1;
+                    mens.IdMensagem = item.NOTI_CD_ID;
+                    mens.NomeUsuario = usuario.USUA_NM_NOME;
+                    mens.TipoMensagem = 1;
+                    mens.Categoria = item.CATEGORIA_NOTIFICACAO.CANO_NM_NOME;
+                    listaMensagens.Add(mens);
+                }
+
+                // Carrega Agenda
+                List<AGENDA> agendas = (List<AGENDA>)Session["Agendas"];
+                List<AGENDA> hoje = agendas.Where(p => p.AGEN_DT_DATA == DateTime.Today.Date).ToList();
+                foreach (AGENDA item in hoje)
+                {
+                    MensagemWidgetViewModel mens = new MensagemWidgetViewModel();
+                    mens.DataMensagem = item.AGEN_DT_DATA;
+                    mens.Descrição = item.AGEN_NM_TITULO;
+                    mens.FlagUrgencia = 1;
+                    mens.IdMensagem = item.AGEN_CD_ID;
+                    mens.NomeUsuario = usuario.USUA_NM_NOME;
+                    mens.TipoMensagem = 2;
+                    mens.Categoria = item.CATEGORIA_AGENDA.CAAG_NM_NOME;
+                    listaMensagens.Add(mens);
+                }
+
+                // Carrega Tarefas
+                List<TAREFA> tarefas = (List<TAREFA>)Session["ListaPendentes"];
+                foreach (TAREFA item in tarefas)
+                {
+                    MensagemWidgetViewModel mens = new MensagemWidgetViewModel();
+                    mens.DataMensagem = item.TARE_DT_ESTIMADA.Value;
+                    mens.Descrição = item.TARE_NM_TITULO;
+                    mens.FlagUrgencia = 1;
+                    mens.IdMensagem = item.TARE_CD_ID;
+                    mens.NomeUsuario = usuario.USUA_NM_NOME;
+                    mens.TipoMensagem = 3;
+                    mens.Categoria = item.TIPO_TAREFA.TITR_NM_NOME;
+                    listaMensagens.Add(mens);
+                }
 
 
 
+                Session["ListaMensagem"] = listaMensagens;
+            }
+            else
+            {
+                listaMensagens = (List<MensagemWidgetViewModel>)Session["ListaMensagem"];
+            }
+
+            // Prepara listas dos filtros
+            List<SelectListItem> tipos = new List<SelectListItem>();
+            tipos.Add(new SelectListItem() { Text = "Notificações", Value = "1" });
+            tipos.Add(new SelectListItem() { Text = "Agenda", Value = "2" });
+            tipos.Add(new SelectListItem() { Text = "Tarefas", Value = "3" });
+            ViewBag.Tipos = new SelectList(tipos, "Value", "Text");
+            List<SelectListItem> urg = new List<SelectListItem>();
+            urg.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            urg.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Urgencia = new SelectList(urg, "Value", "Text");
+
+            // Exibe
+            ViewBag.ListaMensagem = listaMensagens;
+            return View();
+        }
     }
 }
