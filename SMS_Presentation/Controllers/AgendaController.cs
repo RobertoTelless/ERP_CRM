@@ -83,6 +83,7 @@ namespace ERP_CRM_Solution.Controllers
             }
             Session["VoltaAgenda"] = 3;
             Session["FiltroAgendaCalendario"] = 2;
+            Session["VoltaAgendaCRM"] = 0;
             var usuario = (USUARIO)Session["UserCredentials"];
             Int32 idAss = (Int32)Session["IdAssinante"];
 
@@ -196,6 +197,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Mensagem
+            Session["VoltaAgendaCRM"] = 0;
 
             // Abre view
             Session["MensAgenda"] = 0;
@@ -300,6 +302,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
             }
+            if ((Int32)Session["VoltaAgenda"] == 10)
+            {
+                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
+            }
             if ((Int32)Session["VoltaAgenda"] == 2)
             {
                 return RedirectToAction("VerTimelineAgenda");
@@ -316,10 +322,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
             }
-            else
-            {
-                return RedirectToAction("MontarTelaAgenda");
-            }
+            return RedirectToAction("MontarTelaAgenda");
         }
 
         [HttpGet]

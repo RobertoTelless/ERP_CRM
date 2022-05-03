@@ -456,6 +456,7 @@ namespace ERP_CRM_Solution.Controllers
             }
         }
 
+
         public ActionResult VoltarBaseNotificacao()
         {
             if ((String)Session["Ativa"] == null)
@@ -470,6 +471,10 @@ namespace ERP_CRM_Solution.Controllers
             if ((Int32)Session["VoltaNotificacao"] == 3)
             {
                 return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaNotificacao"] == 10)
+            {
+                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
             }
             return RedirectToAction("MontarTelaNotificacaoGeral");
         }

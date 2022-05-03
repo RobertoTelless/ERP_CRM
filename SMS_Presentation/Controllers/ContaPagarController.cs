@@ -238,6 +238,7 @@ namespace ERP_CRM_Solution.Controllers
                 ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0017", CultureInfo.CurrentCulture));
             }
             Session["ErroSoma"] = 0;
+            Session["VoltaCP"] = 0;
 
             // Indicadores
             List<CONTA_PAGAR> pag = listaCPMaster;
@@ -373,6 +374,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            if ((Int32)Session["VoltaCP"] == 10)
+            {
+                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
+            }
             if ((Int32)Session["VoltaPop"] == 1)
             {
                 return RedirectToAction("MontarTelaPedidoCompra", "Compra");
@@ -433,6 +438,8 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Prepara view
             CONTA_PAGAR item = cpApp.GetItemById(id);

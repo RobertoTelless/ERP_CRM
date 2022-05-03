@@ -832,6 +832,7 @@
           <Property Name="CRM1_NR_TEMPERATURA" Type="int" />
           <Property Name="CRM1_VL_VALOR_INICIAL" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRM1_VL_VALOR_FINAL" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CRM1_NR_ATRASO" Type="int" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CRM_ACAO">
           <Key>
@@ -1949,6 +1950,7 @@
           <Property Name="PECO_TX_OBSERVACAO" Type="text" />
           <Property Name="PECO_DS_DESCRICAO" Type="varchar" MaxLength="250" />
           <Property Name="PECO_IN_TIPO" Type="int" />
+          <Property Name="PECO_NR_ATRASO" Type="int" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="PEDIDO_COMPRA_ACOMPANHAMENTO">
           <Key>
@@ -10148,6 +10150,7 @@
           <Property Name="CRM1_VL_VALOR_INICIAL" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CRM1_VL_VALOR_FINAL" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="CRM_PEDIDO_VENDA" Relationship="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_CRM" FromRole="CRM" ToRole="CRM_PEDIDO_VENDA" />
+          <Property Name="CRM1_NR_ATRASO" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CRM_ACAO">
           <Key>
@@ -11112,6 +11115,7 @@
           <NavigationProperty Name="PEDIDO_COMPRA_ANEXO" Relationship="Self.FK_PEDIDO_COMPRA_ANEXO_PEDIDO_COMPRA" FromRole="PEDIDO_COMPRA" ToRole="PEDIDO_COMPRA_ANEXO" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_PEDIDO_COMPRA_USUARIO" FromRole="PEDIDO_COMPRA" ToRole="USUARIO" />
           <Property Name="PECO_IN_TIPO" Type="Int32" />
+          <Property Name="PECO_NR_ATRASO" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="PEDIDO_COMPRA_ACOMPANHAMENTO">
           <Key>
@@ -19770,6 +19774,7 @@
           <EntitySetMapping Name="CRM">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM">
               <MappingFragment StoreEntitySet="CRM">
+                <ScalarProperty Name="CRM1_NR_ATRASO" ColumnName="CRM1_NR_ATRASO" />
                 <ScalarProperty Name="CRM1_VL_VALOR_FINAL" ColumnName="CRM1_VL_VALOR_FINAL" />
                 <ScalarProperty Name="CRM1_VL_VALOR_INICIAL" ColumnName="CRM1_VL_VALOR_INICIAL" />
                 <ScalarProperty Name="CRM1_NR_TEMPERATURA" ColumnName="CRM1_NR_TEMPERATURA" />
@@ -20588,6 +20593,7 @@
           <EntitySetMapping Name="PEDIDO_COMPRA">
             <EntityTypeMapping TypeName="ERP_CRMModel.PEDIDO_COMPRA">
               <MappingFragment StoreEntitySet="PEDIDO_COMPRA">
+                <ScalarProperty Name="PECO_NR_ATRASO" ColumnName="PECO_NR_ATRASO" />
                 <ScalarProperty Name="PECO_IN_TIPO" ColumnName="PECO_IN_TIPO" />
                 <ScalarProperty Name="PECO_CD_ID" ColumnName="PECO_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />

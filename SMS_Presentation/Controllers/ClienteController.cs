@@ -846,12 +846,9 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Indicadores
-            //ViewBag.Vendas = item.PEDIDO_VENDA.Count;
-            //ViewBag.Servicos = 0;
-            //ViewBag.Atendimentos = item.ATENDIMENTO.Count;
-            ViewBag.Vendas = 12;
-            ViewBag.Servicos = 0;
-            ViewBag.Atendimentos = 8;
+            ViewBag.Vendas = item.PEDIDO_VENDA.Count;
+            ViewBag.Servicos = item.ORDEM_SERVICO.Count;
+            ViewBag.Atendimentos = item.ATENDIMENTO.Count;
             ViewBag.Incluir = (Int32)Session["IncluirCliente"];
 
             Session["VoltaCliente"] = 1;

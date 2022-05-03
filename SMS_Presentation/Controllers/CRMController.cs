@@ -153,6 +153,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["IncluirCRM"] = 0;
             Session["CRMVoltaAtendimento"] = 0;
             Session["VoltaAgenda"] = 11;
+            Session["VoltaCRMBase"] = 0;
 
             // Indicadores
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
@@ -394,6 +395,10 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            if ((Int32)Session["VoltaCRMBase"] == 90)
+            {
+                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
+            }
             if ((Int32)Session["VoltaCRM"] == 10)
             {
                 return RedirectToAction("VoltarAcompanhamentoCRM");

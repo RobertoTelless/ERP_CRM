@@ -37,6 +37,10 @@ namespace ERP_CRM_Solution.Controllers
         private readonly ITelefoneAppService telApp;
         private readonly IFormularioRespostaAppService frApp;
         private readonly ICRMOrigemAppService origApp;
+        private readonly IContaPagarAppService cpApp;
+        private readonly IContaReceberAppService crApp;
+        private readonly IPedidoCompraAppService pcApp;
+        private readonly ICRMAppService crmApp;
 
         private String msg;
         private Exception exception;
@@ -48,7 +52,7 @@ namespace ERP_CRM_Solution.Controllers
         List<FORMULARIO_RESPOSTA> listaMasterFR = new List<FORMULARIO_RESPOSTA>();
         String extensao;
 
-        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, ITelefoneAppService telApps, IFormularioRespostaAppService frApps, ICRMOrigemAppService origApps)
+        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, ITelefoneAppService telApps, IFormularioRespostaAppService frApps, ICRMOrigemAppService origApps, IContaPagarAppService cpApps, IContaReceberAppService crApps, IPedidoCompraAppService pcApps, ICRMAppService crmApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -63,6 +67,10 @@ namespace ERP_CRM_Solution.Controllers
             //cliApp = cliApps;
             frApp = frApps;
             origApp = origApps;
+            cpApp = cpApps;    
+            crApp = crApps; 
+            pcApp = pcApps; 
+            crmApp = crmApps;
         }
 
         public ActionResult CarregarAdmin()
@@ -2410,6 +2418,7 @@ namespace ERP_CRM_Solution.Controllers
                     mens.NomeUsuario = usuario.USUA_NM_NOME;
                     mens.TipoMensagem = 1;
                     mens.Categoria = item.CATEGORIA_NOTIFICACAO.CANO_NM_NOME;
+                    mens.NomeCliente = item.NOTI_IN_VISTA == 1 ? "Lida" : "Não Lida";
                     listaMensagens.Add(mens);
                 }
 
@@ -2426,6 +2435,7 @@ namespace ERP_CRM_Solution.Controllers
                     mens.NomeUsuario = usuario.USUA_NM_NOME;
                     mens.TipoMensagem = 2;
                     mens.Categoria = item.CATEGORIA_AGENDA.CAAG_NM_NOME;
+                    mens.NomeCliente = item.AGEN_IN_STATUS == 1 ? "Ativa" : (item.AGEN_IN_STATUS == 2 ? "Suspensa" : "Encerrada");
                     listaMensagens.Add(mens);
                 }
 
@@ -2441,9 +2451,99 @@ namespace ERP_CRM_Solution.Controllers
                     mens.NomeUsuario = usuario.USUA_NM_NOME;
                     mens.TipoMensagem = 3;
                     mens.Categoria = item.TIPO_TAREFA.TITR_NM_NOME;
+                    if (item.TARE_IN_STATUS == 1)
+                    {
+                        mens.NomeCliente = "Ativa";
+
+                    }
+                    else if (item.TARE_IN_STATUS == 2)
+                    {
+                        mens.NomeCliente = "Em Andamento";
+
+                    }
+                    else if (item.TARE_IN_STATUS == 3)
+                    {
+                        mens.NomeCliente = "Suspensa";
+
+                    }
+                    else if (item.TARE_IN_STATUS == 4)
+                    {
+                        mens.NomeCliente = "Cancelada";
+
+                    }
+                    else if (item.TARE_IN_STATUS == 5)
+                    {
+                        mens.NomeCliente = "Encerrada";
+
+                    }
                     listaMensagens.Add(mens);
                 }
 
+                // Carrega CP
+                List<CONTA_PAGAR> cps = cpApp.GetItensAtraso(idAss);
+                foreach (CONTA_PAGAR item in cps)
+                {
+                    MensagemWidgetViewModel mens = new MensagemWidgetViewModel();
+                    mens.DataMensagem = item.CAPA_DT_VENCIMENTO.Value;
+                    mens.Descrição = item.CAPA_NR_DOCUMENTO;
+                    mens.FlagUrgencia = item.CAPA_NR_ATRASO > 5 ? 1 : 0;
+                    mens.IdMensagem = item.CAPA_CD_ID;
+                    mens.NomeUsuario = usuario.USUA_NM_NOME;
+                    mens.TipoMensagem = 4;
+                    mens.Categoria = item.CAPA_NR_ATRASO.ToString();
+                    mens.NomeCliente = item.FORNECEDOR.FORN_NM_NOME;
+                    listaMensagens.Add(mens);
+                }
+
+                // Carrega CR
+                List<CONTA_RECEBER> crs = crApp.GetItensAtrasoCliente(idAss);
+                foreach (CONTA_RECEBER item in crs)
+                {
+                    MensagemWidgetViewModel mens = new MensagemWidgetViewModel();
+                    mens.DataMensagem = item.CARE_DT_VENCIMENTO.Value;
+                    mens.Descrição = item.CARE_NR_DOCUMENTO;
+                    mens.FlagUrgencia = item.CARE_NR_ATRASO > 5 ? 1 : 0;
+                    mens.IdMensagem = item.CARE_CD_ID;
+                    mens.NomeUsuario = usuario.USUA_NM_NOME;
+                    mens.TipoMensagem = 5;
+                    mens.Categoria = item.CARE_NR_ATRASO.ToString();
+                    mens.NomeCliente = item.CLIENTE.CLIE_NM_NOME;
+                    listaMensagens.Add(mens);
+                }
+
+                // Carrega Compras
+                List<PEDIDO_COMPRA> pcs = pcApp.GetAllItens(idAss);
+                pcs = pcs.Where(p => p.PECO_DT_PREVISTA < DateTime.Today.Date & p.PECO_IN_STATUS < 4).ToList();
+                foreach (PEDIDO_COMPRA item in pcs)
+                {
+                    MensagemWidgetViewModel mens = new MensagemWidgetViewModel();
+                    mens.DataMensagem = item.PECO_DT_PREVISTA.Value;
+                    mens.Descrição = item.PECO_NM_NOME;
+                    mens.FlagUrgencia = item.PECO_NR_ATRASO > 5 ? 1 : 0;
+                    mens.IdMensagem = item.PECO_CD_ID;
+                    mens.NomeUsuario = usuario.USUA_NM_NOME;
+                    mens.TipoMensagem = 6;
+                    mens.Categoria = item.PECO_NR_ATRASO.ToString();
+                    mens.NomeCliente = item.ITEM_PEDIDO_COMPRA.Count.ToString();
+                    listaMensagens.Add(mens);
+                }
+
+                // Carrega CRM
+                List<CRM> crms = crmApp.GetAllItens(idAss);
+                crms = crms.Where(p => p.CRM1_NR_ATRASO > 10 & p.CRM1_IN_STATUS < 5).ToList();
+                foreach (CRM item in crms)
+                {
+                    MensagemWidgetViewModel mens = new MensagemWidgetViewModel();
+                    mens.DataMensagem = item.CRM1_DT_CRIACAO.Value;
+                    mens.Descrição = item.CRM1_NM_NOME;
+                    mens.FlagUrgencia = item.CRM1_NR_ATRASO > 10 ? 1 : 0;
+                    mens.IdMensagem = item.CRM1_CD_ID;
+                    mens.NomeUsuario = usuario.USUA_NM_NOME;
+                    mens.TipoMensagem = 7;
+                    mens.Categoria = item.CRM1_NR_ATRASO.ToString();
+                    mens.NomeCliente = item.CLIENTE.CLIE_NM_NOME;
+                    listaMensagens.Add(mens);
+                }
 
 
                 Session["ListaMensagem"] = listaMensagens;
@@ -2458,6 +2558,10 @@ namespace ERP_CRM_Solution.Controllers
             tipos.Add(new SelectListItem() { Text = "Notificações", Value = "1" });
             tipos.Add(new SelectListItem() { Text = "Agenda", Value = "2" });
             tipos.Add(new SelectListItem() { Text = "Tarefas", Value = "3" });
+            tipos.Add(new SelectListItem() { Text = "Contas a Pagar", Value = "4" });
+            tipos.Add(new SelectListItem() { Text = "Contas a Receber", Value = "5" });
+            tipos.Add(new SelectListItem() { Text = "Compras", Value = "6" });
+            tipos.Add(new SelectListItem() { Text = "Prcessos CRM", Value = "7" });
             ViewBag.Tipos = new SelectList(tipos, "Value", "Text");
             List<SelectListItem> urg = new List<SelectListItem>();
             urg.Add(new SelectListItem() { Text = "Sim", Value = "1" });
@@ -2466,7 +2570,138 @@ namespace ERP_CRM_Solution.Controllers
 
             // Exibe
             ViewBag.ListaMensagem = listaMensagens;
-            return View();
+            MensagemWidgetViewModel mod = new MensagemWidgetViewModel();
+            return View(mod);
         }
+
+
+        public ActionResult VerNotificacaoBase(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaNotificacao"] = 10;
+            return RedirectToAction("VerNotificacao", "Notificacao", new { id = id });
+        }
+
+        public ActionResult VerAgendaBase(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaAgenda"] = 10;
+            Session["VoltaAgendaCRM"] = 0;
+            return RedirectToAction("EditarAgenda", "Agenda", new { id = id });
+        }
+
+        public ActionResult VerCompraBase(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaCompraBase"] = 90;
+            return RedirectToAction("VerPedidoCompra", "Compra", new { id = id });
+        }
+
+        public ActionResult VerCRMBase(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaCRMBase"] = 90;
+            return RedirectToAction("AcompanhamentoProcessoCRM", "CRM", new { id = id });
+        }
+
+        public ActionResult VerTarefaBase(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaTarefa"] = 10;
+            Session["VoltaAgendaCRM"] = 0;
+            return RedirectToAction("EditarTarefa", "Tarefa", new { id = id });
+        }
+
+        public ActionResult VerCPBase(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaCP"] = 10;
+            return RedirectToAction("VerCP", "ContaPagar", new { id = id });
+        }
+
+        public ActionResult VerCRBase(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaCR"] = 10;
+            return RedirectToAction("VerCR", "ContaReceber", new { id = id });
+        }
+
+        public ActionResult RetirarFiltroCentralMensagens()
+        {
+
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Session["ListaMensagem"] = null;
+            return RedirectToAction("MontarCentralMensagens");
+        }
+
+        [HttpPost]
+        public ActionResult FiltrarCentralMensagens(MensagemWidgetViewModel item)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            try
+            {
+                // Executa a operação
+                List<MensagemWidgetViewModel> listaObj = (List<MensagemWidgetViewModel>)Session["ListaMensagem"];
+                if (item.TipoMensagem != null)
+                {
+                    listaObj = listaObj.Where(p => p.TipoMensagem == item.TipoMensagem).ToList();
+                }
+                if (item.Descrição != null)
+                {
+                    listaObj = listaObj.Where(p => p.Descrição.Contains(item.Descrição)).ToList();
+                }
+                if (item.DataMensagem != null)
+                {
+                    listaObj = listaObj.Where(p => p.DataMensagem == item.DataMensagem).ToList();
+                }
+                if (item.FlagUrgencia != null)
+                {
+                    listaObj = listaObj.Where(p => p.FlagUrgencia == item.FlagUrgencia).ToList();
+                }
+                Session["ListaMensagem"] = listaObj;
+
+                // Sucesso
+                return RedirectToAction("MontarCentralMensagens");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return RedirectToAction("MontarCentralMensagens");
+            }
+        }
+
+
+
+
+
     }
 }

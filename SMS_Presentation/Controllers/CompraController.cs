@@ -234,6 +234,8 @@ namespace ERP_CRM_Solution.Controllers
 
             // Abre view
             Session["MensCompra"] = 0;
+            Session["VoltaCompra"] = 0;
+            Session["VoltaCompraBase"] = 0;
             objeto = Session["FiltroCompra"] == null ? new PEDIDO_COMPRA() : (PEDIDO_COMPRA)Session["FiltroCompra"];
             objeto.PECO_DT_DATA = null;
             return View(objeto);
@@ -303,6 +305,11 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            if ((Int32)Session["VoltaCompraBase"] == 90)
+            {
+                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
+            }
+
             return RedirectToAction("MontarTelaPedidoCompra");
         }
 

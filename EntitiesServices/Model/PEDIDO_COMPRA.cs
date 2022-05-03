@@ -45,6 +45,7 @@ namespace EntitiesServices.Model
         public string PECO_TX_OBSERVACAO { get; set; }
         public string PECO_DS_DESCRICAO { get; set; }
         public Nullable<int> PECO_IN_TIPO { get; set; }
+        public Nullable<int> PECO_NR_ATRASO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CENTRO_CUSTO CENTRO_CUSTO { get; set; }

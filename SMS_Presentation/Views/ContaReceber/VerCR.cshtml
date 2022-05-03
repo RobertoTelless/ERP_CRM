@@ -99,6 +99,10 @@
                     <div class="form-group">
                         <br />
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCR", controller: "ContaReceber")
+                        @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
+                        {
+                            @Html.ButtonLinkIndex(text: "Editar", action: "VoltarAnexoCR", controller: "ContaReceber")
+                        }
                         @Html.ButtonLinkIndex(text: "Dashboard", controller: "ContaPagar", action: "MontarTelaDashboardFinanceiro")                            
                     </div>
                     <div class="tabs-container">

@@ -263,6 +263,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Filtro = new SelectList(tipoFiltro, "Value", "Text");
             ViewBag.Contas = new SelectList(cbApp.GetAllItens(idAss).OrderBy(p => p.COBA_NM_NOME_EXIBE_OLD), "COBA_CD_ID", "COBA_NM_NOME_EXIBE_OLD");
             Session["ContasBancarias"] = cbApp.GetAllItens(idAss);
+            Session["VoltaCR"] = 0;
 
             if ((Int32)Session["ErroSoma"] == 2)
             {
@@ -397,6 +398,11 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            if ((Int32)Session["VoltaCR"] == 10)
+            {
+                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
+            }
+
             listaCRMaster = new List<CONTA_RECEBER>();
             Session["ListaCR"] = null;
             if (Session["FiltroCR"] != null)
@@ -1697,6 +1703,8 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Prepara view
             CONTA_RECEBER item = crApp.GetItemById(id);
