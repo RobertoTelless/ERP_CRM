@@ -26,6 +26,7 @@ namespace EntitiesServices.Model
         public Nullable<int> TIAC_CD_ID { get; set; }
         public Nullable<int> CRAC_IN_STATUS { get; set; }
         public Nullable<int> CRAC_IN_ATIVO { get; set; }
+        public Nullable<int> CRAC_NR_ATRASO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CRM CRM { get; set; }

@@ -269,10 +269,57 @@
                                             <div class="ibox-content">
                                                 <h4 class="no-margins" style="color:green; font-weight: bold">@cond.DataMensagem.Value.ToShortDateString()</h4>
                                                 <small style="color:brown; font-weight: bold">Cliente: @cond.NomeCliente</small><br/>
+                                                <small>Status: @cond.Status</small><br/>
                                                 <small>Duração: @cond.Categoria dias</small><br/>
                                                 <small>Nome: @cond.Descrição</small>
                                                 <br />
                                                 @Html.ButtonLinkIndex(text: "Ver", action: "VerCRMBase", controller: "BaseAdmin", buttonClass: "white", routeValues: new { id = cond.IdMensagem })
+                                            </div>
+                                        }
+                                        @if (cond.TipoMensagem == 8)
+                                        {
+                                            <div class="ibox-title"  style="background-color:darkkhaki; color:brown">
+                                                @if (cond.FlagUrgencia == 1)
+                                                {
+                                                    <span class="label label-danger pull-right">Urgente</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-primary pull-right">Normal</span>
+                                                }
+                                                <h5>Ações CRM</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <h4 class="no-margins" style="color:green; font-weight: bold">@cond.DataMensagem.Value.ToShortDateString()</h4>
+                                                <small style="color:brown; font-weight: bold">Processo: @cond.NomeCliente</small><br/>
+                                                <small>Status: @cond.Status</small><br/>
+                                                <small>Atraso: @cond.Categoria dias</small><br/>
+                                                <small>Nome: @cond.Descrição</small>
+                                                <br />
+                                                @Html.ButtonLinkIndex(text: "Ver", action: "VerAcaoBase", controller: "BaseAdmin", buttonClass: "white", routeValues: new { id = cond.IdMensagem })
+                                            </div>
+                                        }
+                                        @if (cond.TipoMensagem == 9)
+                                        {
+                                            <div class="ibox-title"  style="background-color:lightsalmon; color:indianred">
+                                                @if (cond.FlagUrgencia == 1)
+                                                {
+                                                    <span class="label label-danger pull-right">Urgente</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-primary pull-right">Normal</span>
+                                                }
+                                                <h5>Propostas CRM</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <h4 class="no-margins" style="color:green; font-weight: bold">@cond.DataMensagem.Value.ToShortDateString()</h4>
+                                                <small style="color:brown; font-weight: bold">Processo: @cond.NomeCliente</small><br/>
+                                                <small>Status: @cond.Status</small><br/>
+                                                <small>Duração: @cond.Categoria dias</small><br/>
+                                                <small>Número: @cond.Descrição</small>
+                                                <br />
+                                                @Html.ButtonLinkIndex(text: "Ver", action: "VerPropostaBase", controller: "BaseAdmin", buttonClass: "white", routeValues: new { id = cond.IdMensagem })
                                             </div>
                                         }
                                     </div>

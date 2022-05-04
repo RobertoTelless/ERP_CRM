@@ -562,6 +562,7 @@
           <Property Name="CONF_NR_DIAS_ATENDIMENTO" Type="int" />
           <Property Name="CONF_NR_DIAS_ACAO" Type="int" />
           <Property Name="CONF_NR_DIAS_PROPOSTA" Type="int" />
+          <Property Name="CONF_NR_MARGEM_ATRASO" Type="int" />
         </EntityType>
         <EntityType Name="CONTA_BANCO">
           <Key>
@@ -850,6 +851,7 @@
           <Property Name="TIAC_CD_ID" Type="int" />
           <Property Name="CRAC_IN_STATUS" Type="int" />
           <Property Name="CRAC_IN_ATIVO" Type="int" />
+          <Property Name="CRAC_NR_ATRASO" Type="int" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CRM_ANEXO">
           <Key>
@@ -1121,6 +1123,7 @@
           <Property Name="CRPR_DS_APROVACAO" Type="varchar" MaxLength="5000" />
           <Property Name="CRPR_IN_ATIVO" Type="int" Nullable="false" />
           <Property Name="CRPR_NR_NUMERO" Type="varchar" MaxLength="20" />
+          <Property Name="CRPR_NR_ATRASO" Type="int" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
           <Key>
@@ -9821,6 +9824,7 @@
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CONFIGURACAO_ASSINANTE" FromRole="CONFIGURACAO" ToRole="ASSINANTE" />
           <Property Name="CONF_NR_DIAS_ACAO" Type="Int32" />
           <Property Name="CONF_NR_DIAS_PROPOSTA" Type="Int32" />
+          <Property Name="CONF_NR_MARGEM_ATRASO" Type="Int32" />
         </EntityType>
         <EntityType Name="CONTA_BANCO">
           <Key>
@@ -10173,6 +10177,7 @@
           <NavigationProperty Name="TIPO_ACAO" Relationship="Self.FK_CRM_ACAO_TIPO_ACAO" FromRole="CRM_ACAO" ToRole="TIPO_ACAO" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_CRM_ACAO_USUARIO" FromRole="CRM_ACAO" ToRole="USUARIO" />
           <NavigationProperty Name="USUARIO1" Relationship="Self.FK_CRM_ACAO_USUARIO1" FromRole="CRM_ACAO" ToRole="USUARIO" />
+          <Property Name="CRAC_NR_ATRASO" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CRM_ANEXO">
           <Key>
@@ -18542,6 +18547,7 @@
           <Property Name="CRPR_LK_LINK" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="CRPR_DS_ENVIO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
           <Property Name="CRPR_NR_NUMERO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CRPR_NR_ATRASO" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
           <Key>
@@ -19500,6 +19506,7 @@
           <EntitySetMapping Name="CONFIGURACAO">
             <EntityTypeMapping TypeName="ERP_CRMModel.CONFIGURACAO">
               <MappingFragment StoreEntitySet="CONFIGURACAO">
+                <ScalarProperty Name="CONF_NR_MARGEM_ATRASO" ColumnName="CONF_NR_MARGEM_ATRASO" />
                 <ScalarProperty Name="CONF_NR_DIAS_PROPOSTA" ColumnName="CONF_NR_DIAS_PROPOSTA" />
                 <ScalarProperty Name="CONF_NR_DIAS_ACAO" ColumnName="CONF_NR_DIAS_ACAO" />
                 <ScalarProperty Name="CONF_CD_ID" ColumnName="CONF_CD_ID" />
@@ -19808,6 +19815,7 @@
           <EntitySetMapping Name="CRM_ACAO">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_ACAO">
               <MappingFragment StoreEntitySet="CRM_ACAO">
+                <ScalarProperty Name="CRAC_NR_ATRASO" ColumnName="CRAC_NR_ATRASO" />
                 <ScalarProperty Name="CRAC_CD_ID" ColumnName="CRAC_CD_ID" />
                 <ScalarProperty Name="CRM1_CD_ID" ColumnName="CRM1_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -21821,6 +21829,7 @@
           <EntitySetMapping Name="CRM_PROPOSTA">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_PROPOSTA">
               <MappingFragment StoreEntitySet="CRM_PROPOSTA">
+                <ScalarProperty Name="CRPR_NR_ATRASO" ColumnName="CRPR_NR_ATRASO" />
                 <ScalarProperty Name="CRPR_NR_NUMERO" ColumnName="CRPR_NR_NUMERO" />
                 <ScalarProperty Name="CRPR_DS_ENVIO" ColumnName="CRPR_DS_ENVIO" />
                 <ScalarProperty Name="CRPR_LK_LINK" ColumnName="CRPR_LK_LINK" />

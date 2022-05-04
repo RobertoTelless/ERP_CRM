@@ -46,6 +46,7 @@ namespace EntitiesServices.Model
         public string CRPR_LK_LINK { get; set; }
         public string CRPR_DS_ENVIO { get; set; }
         public string CRPR_NR_NUMERO { get; set; }
+        public Nullable<int> CRPR_NR_ATRASO { get; set; }
     
         public virtual CRM CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -17,5 +17,6 @@ namespace ERP_CRM_Solution.ViewModels
         public Int32? FlagUrgencia { get; set; }
         public String Categoria { get; set; }
         public String NomeCliente { get; set; }
+        public String Status { get; set; }
     }
 }

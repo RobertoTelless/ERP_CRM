@@ -1735,6 +1735,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            if ((Int32)Session["PontoProposta"] == 92)
+            {
+                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
+            }
             return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
         }
 
@@ -1743,6 +1747,10 @@ namespace ERP_CRM_Solution.Controllers
             if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PontoAcao"] == 91)
+            {
+                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
             }
             if ((Int32)Session["PontoAcao"] == 1)
             {
@@ -1760,6 +1768,10 @@ namespace ERP_CRM_Solution.Controllers
             if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["PontoProposta"] == 3)
+            {
+                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
             }
             if ((Int32)Session["PontoProposta"] == 1)
             {

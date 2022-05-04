@@ -33,6 +33,7 @@ namespace EntitiesServices.Model
         public Nullable<int> CONF_NR_DIAS_ATENDIMENTO { get; set; }
         public Nullable<int> CONF_NR_DIAS_ACAO { get; set; }
         public Nullable<int> CONF_NR_DIAS_PROPOSTA { get; set; }
+        public Nullable<int> CONF_NR_MARGEM_ATRASO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
     }
