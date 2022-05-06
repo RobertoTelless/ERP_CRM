@@ -29,8 +29,11 @@ namespace ERP_CRM_Solution.ViewModels
         [StringLength(1000, ErrorMessage = "A JUSTIFICATIVA deve conter no máximo 1000 caracteres.")]
         public string CRPI_DS_JUSTIFICATIVA { get; set; }
         public int CRPI_IN_ATIVO { get; set; }
+        public Nullable<int> CRPI_IN_QUANTIDADE_REVISADA { get; set; }
+        public Nullable<int> UNID_CD_ID { get; set; }
 
         public virtual CRM_PEDIDO_VENDA CRM_PEDIDO_VENDA { get; set; }
         public virtual PRODUTO PRODUTO { get; set; }
+        public virtual UNIDADE UNIDADE { get; set; }
     }
 }

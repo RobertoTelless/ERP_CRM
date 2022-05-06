@@ -59,6 +59,10 @@ namespace EntitiesServices.Model
         public Nullable<System.DateTime> CRPV_DT_APROVACAO { get; set; }
         public string CRPV_DS_APROVACAO { get; set; }
         public Nullable<decimal> CRPV_VL_TOTAL { get; set; }
+        public string CRPV_NM_NOME { get; set; }
+        public Nullable<int> TRAN_CD_ID { get; set; }
+        public Nullable<int> TEPR_CD_ID { get; set; }
+        public Nullable<int> MOCA_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CRM CRM { get; set; }
@@ -72,5 +76,8 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_PEDIDO_VENDA_ITEM> CRM_PEDIDO_VENDA_ITEM { get; set; }
         public virtual USUARIO USUARIO { get; set; }
+        public virtual TRANSPORTADORA TRANSPORTADORA { get; set; }
+        public virtual TEMPLATE_PROPOSTA TEMPLATE_PROPOSTA { get; set; }
+        public virtual MOTIVO_CANCELAMENTO MOTIVO_CANCELAMENTO { get; set; }
     }
 }

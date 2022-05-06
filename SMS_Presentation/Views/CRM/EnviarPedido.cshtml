@@ -19,7 +19,7 @@
                 <a href="@Url.Action("AcompanhamentoProcessoCRM", "CRM")">Acompanhamento - Processos - CRM</a>
             </li>
             <li class="active">
-                <strong>Pedidos - Reprovação</strong>
+                <strong>Pedidos - Envio</strong>
             </li>
         </ol>
         <br />
@@ -28,7 +28,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Pedidos - Reprovação</h5>
+                    <h5>Pedidos - Envio</h5>
                 </div>
                 <div class="ibox-content">
                     @Html.AntiForgeryToken()
@@ -45,7 +45,7 @@
                     </div>
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab-1">Reprovação</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Envio</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-3">Comentários</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2">Anexos</a></li>
                         </ul>
@@ -53,7 +53,7 @@
                             @*Dados Gerais*@
                             <div id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
-                                    @using (Html.BeginForm("ReprovarPedido", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    @using (Html.BeginForm("EnviarProposta", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
                                         <div class="form-group">
                                             @Html.HiddenFor(m => m.ASSI_CD_ID)
@@ -92,7 +92,7 @@
                                             @Html.HiddenFor(m => m.FOFR_CD_ID)
                                             @Html.HiddenFor(m => m.USUA_CD_ID)
                                             @Html.HiddenFor(m => m.CRPV_CD_ID)
-                                            @Html.ButtonActionSubmit(text: "Confirma Reprovação do Pedido", htmlAttributes: new { id = "basictoast" })
+                                            @Html.ButtonActionSubmit(text: "Confirma Envio do Pedido", htmlAttributes: new { id = "basictoast" })
                                         </div>
 
                                         <div class="row">
@@ -164,6 +164,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 320px" >
@@ -481,7 +482,7 @@
 
             $('#basictoast').click(function () {
                 // Display a success toast, with a title
-                toastr.success('Aprovação am andamento!')
+                toastr.success('Envio am andamento!')
             });
             $('#showtoast').click(function () {
                 var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
@@ -627,5 +628,4 @@
         </script>
     }
 }
-
 

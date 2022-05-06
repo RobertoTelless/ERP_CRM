@@ -478,6 +478,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            if ((Int32)Session["VoltaProduto"] == 10)
+            {
+                return RedirectToAction("IncluirPedido", "CRM");
+            }
             if ((Int32)Session["VoltaProduto"] == 4)
             {
                 return RedirectToAction("IncluirPedidoCompra", "Compra");

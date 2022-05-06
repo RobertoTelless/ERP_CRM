@@ -1053,6 +1053,10 @@
           <Property Name="CRPV_DT_APROVACAO" Type="date" />
           <Property Name="CRPV_DS_APROVACAO" Type="varchar" MaxLength="5000" />
           <Property Name="CRPV_VL_TOTAL" Type="decimal" Precision="23" Scale="2" StoreGeneratedPattern="Computed" />
+          <Property Name="CRPV_NM_NOME" Type="varchar" MaxLength="100" />
+          <Property Name="TRAN_CD_ID" Type="int" />
+          <Property Name="TEPR_CD_ID" Type="int" />
+          <Property Name="MOCA_CD_ID" Type="int" />
         </EntityType>
         <EntityType Name="CRM_PEDIDO_VENDA_ACOMPANHAMENTO">
           <Key>
@@ -4589,6 +4593,42 @@
             </Principal>
             <Dependent Role="CRM_PEDIDO_VENDA_ITEM">
               <PropertyRef Name="UNID_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PEDIDO_VENDA_MOTIVO_CANCELAMENTO">
+          <End Role="MOTIVO_CANCELAMENTO" Type="Self.MOTIVO_CANCELAMENTO" Multiplicity="0..1" />
+          <End Role="CRM_PEDIDO_VENDA" Type="Self.CRM_PEDIDO_VENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MOTIVO_CANCELAMENTO">
+              <PropertyRef Name="MOCA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PEDIDO_VENDA">
+              <PropertyRef Name="MOCA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PEDIDO_VENDA_TEMPLATE_PROPOSTA">
+          <End Role="TEMPLATE_PROPOSTA" Type="Self.TEMPLATE_PROPOSTA" Multiplicity="0..1" />
+          <End Role="CRM_PEDIDO_VENDA" Type="Self.CRM_PEDIDO_VENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE_PROPOSTA">
+              <PropertyRef Name="TEPR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PEDIDO_VENDA">
+              <PropertyRef Name="TEPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PEDIDO_VENDA_TRANSPORTADORA">
+          <End Role="TRANSPORTADORA" Type="Self.TRANSPORTADORA" Multiplicity="0..1" />
+          <End Role="CRM_PEDIDO_VENDA" Type="Self.CRM_PEDIDO_VENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSPORTADORA">
+              <PropertyRef Name="TRAN_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PEDIDO_VENDA">
+              <PropertyRef Name="TRAN_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8160,6 +8200,18 @@
             <End Role="UNIDADE" EntitySet="UNIDADE" />
             <End Role="CRM_PEDIDO_VENDA_ITEM" EntitySet="CRM_PEDIDO_VENDA_ITEM" />
           </AssociationSet>
+          <AssociationSet Name="FK_CRM_PEDIDO_VENDA_MOTIVO_CANCELAMENTO" Association="Self.FK_CRM_PEDIDO_VENDA_MOTIVO_CANCELAMENTO">
+            <End Role="MOTIVO_CANCELAMENTO" EntitySet="MOTIVO_CANCELAMENTO" />
+            <End Role="CRM_PEDIDO_VENDA" EntitySet="CRM_PEDIDO_VENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PEDIDO_VENDA_TEMPLATE_PROPOSTA" Association="Self.FK_CRM_PEDIDO_VENDA_TEMPLATE_PROPOSTA">
+            <End Role="TEMPLATE_PROPOSTA" EntitySet="TEMPLATE_PROPOSTA" />
+            <End Role="CRM_PEDIDO_VENDA" EntitySet="CRM_PEDIDO_VENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PEDIDO_VENDA_TRANSPORTADORA" Association="Self.FK_CRM_PEDIDO_VENDA_TRANSPORTADORA">
+            <End Role="TRANSPORTADORA" EntitySet="TRANSPORTADORA" />
+            <End Role="CRM_PEDIDO_VENDA" EntitySet="CRM_PEDIDO_VENDA" />
+          </AssociationSet>
           <AssociationSet Name="FK_CRM_PEDIDO_VENDA_USUARIO" Association="Self.FK_CRM_PEDIDO_VENDA_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="CRM_PEDIDO_VENDA" EntitySet="CRM_PEDIDO_VENDA" />
@@ -10831,6 +10883,7 @@
           <NavigationProperty Name="CRM" Relationship="Self.FK_CRM_MOTIVO_CANCELAMENTO" FromRole="MOTIVO_CANCELAMENTO" ToRole="CRM" />
           <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_MOTIVO_CANCELAMENTO" FromRole="MOTIVO_CANCELAMENTO" ToRole="CRM_COMERCIAL" />
           <NavigationProperty Name="CRM_PROPOSTA" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_MOTIVO_CANCELAMENTO" FromRole="MOTIVO_CANCELAMENTO" ToRole="CRM_PROPOSTA" />
+          <NavigationProperty Name="CRM_PEDIDO_VENDA" Relationship="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_MOTIVO_CANCELAMENTO" FromRole="MOTIVO_CANCELAMENTO" ToRole="CRM_PEDIDO_VENDA" />
         </EntityType>
         <EntityType Name="MOTIVO_ENCERRAMENTO">
           <Key>
@@ -12001,6 +12054,7 @@
           <NavigationProperty Name="TIPO_TRANSPORTE" Relationship="Self.FK_TRANSPORTADORA_TIPO_TRANSPORTE" FromRole="TRANSPORTADORA" ToRole="TIPO_TRANSPORTE" />
           <NavigationProperty Name="TIPO_VEICULO" Relationship="Self.FK_TRANSPORTADORA_TIPO_VEICULO" FromRole="TRANSPORTADORA" ToRole="TIPO_VEICULO" />
           <NavigationProperty Name="TRANSPORTADORA_ANEXO" Relationship="Self.FK_TRANSPORTADORA_ANEXO_TRANSPORTADORA" FromRole="TRANSPORTADORA" ToRole="TRANSPORTADORA_ANEXO" />
+          <NavigationProperty Name="CRM_PEDIDO_VENDA" Relationship="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_TRANSPORTADORA" FromRole="TRANSPORTADORA" ToRole="CRM_PEDIDO_VENDA" />
         </EntityType>
         <EntityType Name="TRANSPORTADORA_ANEXO">
           <Key>
@@ -17551,6 +17605,18 @@
             <End Role="UNIDADE" EntitySet="UNIDADE" />
             <End Role="CRM_PEDIDO_VENDA_ITEM" EntitySet="CRM_PEDIDO_VENDA_ITEM" />
           </AssociationSet>
+          <AssociationSet Name="FK_CRM_PEDIDO_VENDA_TRANSPORTADORA" Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_TRANSPORTADORA">
+            <End Role="TRANSPORTADORA" EntitySet="TRANSPORTADORA" />
+            <End Role="CRM_PEDIDO_VENDA" EntitySet="CRM_PEDIDO_VENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PEDIDO_VENDA_TEMPLATE_PROPOSTA" Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_TEMPLATE_PROPOSTA">
+            <End Role="TEMPLATE_PROPOSTA" EntitySet="TEMPLATE_PROPOSTA" />
+            <End Role="CRM_PEDIDO_VENDA" EntitySet="CRM_PEDIDO_VENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PEDIDO_VENDA_MOTIVO_CANCELAMENTO" Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_MOTIVO_CANCELAMENTO">
+            <End Role="MOTIVO_CANCELAMENTO" EntitySet="MOTIVO_CANCELAMENTO" />
+            <End Role="CRM_PEDIDO_VENDA" EntitySet="CRM_PEDIDO_VENDA" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ATENDIMENTO_CRM">
           <Key>
@@ -18576,6 +18642,7 @@
           <Property Name="TEPR_SG_SIGLA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="ASSI_CD_ID" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_TEMPLATE_PROPOSTA_ASSINANTE" FromRole="TEMPLATE_PROPOSTA" ToRole="ASSINANTE" />
+          <NavigationProperty Name="CRM_PEDIDO_VENDA" Relationship="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_TEMPLATE_PROPOSTA" FromRole="TEMPLATE_PROPOSTA" ToRole="CRM_PEDIDO_VENDA" />
         </EntityType>
         <Association Name="FK_CRM_PROPOSTA_CRM">
           <End Type="ERP_CRMModel.CRM" Role="CRM" Multiplicity="1" />
@@ -18760,6 +18827,13 @@
           <Property Name="CRPV_DT_APROVACAO" Type="DateTime" Precision="0" />
           <Property Name="CRPV_DS_APROVACAO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
           <Property Name="CRPV_VL_TOTAL" Type="Decimal" Precision="23" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CRPV_NM_NOME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TRAN_CD_ID" Type="Int32" />
+          <NavigationProperty Name="TRANSPORTADORA" Relationship="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_TRANSPORTADORA" FromRole="CRM_PEDIDO_VENDA" ToRole="TRANSPORTADORA" />
+          <Property Name="TEPR_CD_ID" Type="Int32" />
+          <NavigationProperty Name="TEMPLATE_PROPOSTA" Relationship="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_TEMPLATE_PROPOSTA" FromRole="CRM_PEDIDO_VENDA" ToRole="TEMPLATE_PROPOSTA" />
+          <Property Name="MOCA_CD_ID" Type="Int32" />
+          <NavigationProperty Name="MOTIVO_CANCELAMENTO" Relationship="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_MOTIVO_CANCELAMENTO" FromRole="CRM_PEDIDO_VENDA" ToRole="MOTIVO_CANCELAMENTO" />
         </EntityType>
         <EntityType Name="CRM_PEDIDO_VENDA_ACOMPANHAMENTO">
           <Key>
@@ -18948,6 +19022,42 @@
             </Principal>
             <Dependent Role="CRM_PEDIDO_VENDA_ITEM">
               <PropertyRef Name="UNID_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PEDIDO_VENDA_TRANSPORTADORA">
+          <End Type="ERP_CRMModel.TRANSPORTADORA" Role="TRANSPORTADORA" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_PEDIDO_VENDA" Role="CRM_PEDIDO_VENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSPORTADORA">
+              <PropertyRef Name="TRAN_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PEDIDO_VENDA">
+              <PropertyRef Name="TRAN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PEDIDO_VENDA_TEMPLATE_PROPOSTA">
+          <End Type="ERP_CRMModel.TEMPLATE_PROPOSTA" Role="TEMPLATE_PROPOSTA" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_PEDIDO_VENDA" Role="CRM_PEDIDO_VENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEMPLATE_PROPOSTA">
+              <PropertyRef Name="TEPR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PEDIDO_VENDA">
+              <PropertyRef Name="TEPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PEDIDO_VENDA_MOTIVO_CANCELAMENTO">
+          <End Type="ERP_CRMModel.MOTIVO_CANCELAMENTO" Role="MOTIVO_CANCELAMENTO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_PEDIDO_VENDA" Role="CRM_PEDIDO_VENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MOTIVO_CANCELAMENTO">
+              <PropertyRef Name="MOCA_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PEDIDO_VENDA">
+              <PropertyRef Name="MOCA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -21900,6 +22010,10 @@
           <EntitySetMapping Name="CRM_PEDIDO_VENDA">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_PEDIDO_VENDA">
               <MappingFragment StoreEntitySet="CRM_PEDIDO_VENDA">
+                <ScalarProperty Name="MOCA_CD_ID" ColumnName="MOCA_CD_ID" />
+                <ScalarProperty Name="TEPR_CD_ID" ColumnName="TEPR_CD_ID" />
+                <ScalarProperty Name="TRAN_CD_ID" ColumnName="TRAN_CD_ID" />
+                <ScalarProperty Name="CRPV_NM_NOME" ColumnName="CRPV_NM_NOME" />
                 <ScalarProperty Name="CRPV_VL_TOTAL" ColumnName="CRPV_VL_TOTAL" />
                 <ScalarProperty Name="CRPV_DS_APROVACAO" ColumnName="CRPV_DS_APROVACAO" />
                 <ScalarProperty Name="CRPV_DT_APROVACAO" ColumnName="CRPV_DT_APROVACAO" />

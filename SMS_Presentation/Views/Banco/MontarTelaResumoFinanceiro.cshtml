@@ -1,0 +1,432 @@
+﻿@using Presentation.Extensions
+@using CrossCutting
+@model ERP_CRM_Solution.ViewModels.UsuarioViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div id="content" class="wraper container-fluid">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            @*Atalhos*@
+            <div class="row">
+                <h3 style="color:olivedrab; font-weight:bold">Dashboard - Financeiro</h3>
+                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                    <br />
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        @Html.ButtonLinkIndex(text: "Clientes", action: "MontarTelaCliente", controller: "Cliente", buttonClass: "success")
+                        @Html.ButtonLinkIndex(text: "Fornecedores", action: "MontarTelaFornecedor", controller: "Fornecedor", buttonClass: "success")
+                        
+                        @Html.ButtonLinkIndex(text: "Banco & Contas", action: "MontarTelaBanco", controller: "Banco", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Plano de Contas", action: "MontarTelaCC", controller: "CentroCusto", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Formas Pagamento", action: "MontarTelaFormaPagamento", controller: "FormaPagamento", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Contas a Pagar", action: "MontarTelaCP", controller: "ContaPagar", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Contas a Receber", action: "MontarTelaCR", controller: "ContaReceber", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "ContaPagar", action: "Voltar")
+                    </div>
+                    <br /><br />
+                </div>
+            </div>
+
+            @*Estatísticas*@
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="ibox-content text-center">
+                        <h1>@Model.USUA_NM_NOME.Substring(0, Model.USUA_NM_NOME.IndexOf(" "))</h1>
+                        <div class="m-b-sm">
+                            <img alt="image" class="img-circle" src="@Url.Content(Model.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 90px; max-width: 90px;">
+                        </div>
+                        <p class="font-bold">@((String)Session["NomeGreeting"])</p>
+
+                        <div class="text-center">
+                            @Html.ButtonLinkIndex(text: "Perfil", action: "MontarTelaPerfilUsuario", controller: "Usuario", buttonClass: "btn btn-xs btn-white")
+                            @if (Model.PERFIL.PERF_SG_SIGLA == "ADM")
+                            {
+                                @Html.ButtonLinkIndex(text: "Dashboard Pessoal", action: "CarregarDashPessoal", controller: "BaseAdmin", buttonClass: "btn btn-xs btn-primary")
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-warning pull-right">Hoje</span>
+                            <h5>Resumo Financeiro</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stats-label">A Pagar (Mês)</small>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.APagar)</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Em Atraso</small>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.Atraso)</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Pago (Mês)</small>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.Pago)</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Recebido (Mês)</small>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.Recebido)</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">A Receber</small>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.AReceber)</h4>
+                                </div>
+                                <div class="col-xs-4">
+                                    <small class="stats-label">Em Atraso</small>
+                                    <h4>@CrossCutting.Formatters.DecimalFormatter(ViewBag.AtrasoCR)</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*Widgets*@
+            <br />
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title"  style="background-color:cornflowerblue; color:darkblue">
+                            <span class="label label-success pull-right">Hoje</span>
+                            <h5>A Pagar (Mês)</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@CrossCutting.Formatters.DecimalFormatter(ViewBag.APagar)</h1>
+                            <small>Contas a Pagar</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "ContaPagar", action: "VerAPagarMes", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title"  style="background-color:cornflowerblue; color:darkblue">
+                            <span class="label label-success pull-right">Hoje</span>
+                            <h5>Pagas (Mês)</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@CrossCutting.Formatters.DecimalFormatter(ViewBag.Pago)</h1>
+                            <small>Contas a Pagar</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "ContaPagar", action: "VerPagamentosMes", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title"  style="background-color:cornflowerblue; color:darkblue">
+                            <span class="label label-success pull-right">Hoje</span>
+                            <h5>Atrasadas (Mês)</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@CrossCutting.Formatters.DecimalFormatter(ViewBag.Atraso)</h1>
+                            <small>Contas a Pagar</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "ContaPagar", action: "VerLancamentosAtrasoCP", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title"  style="background-color:goldenrod; color:brown">
+                            <span class="label label-success pull-right">Hoje</span>
+                            <h5>Recebidas (Mês)</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@CrossCutting.Formatters.DecimalFormatter(ViewBag.Recebido)</h1>
+                            <small>Contas a Receber</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "ContaReceber", action: "VerRecebimentosMes", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title"  style="background-color:goldenrod; color:brown">
+                            <span class="label label-success pull-right">Hoje</span>
+                            <h5>A Receber (Mês)</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@CrossCutting.Formatters.DecimalFormatter(ViewBag.AReceber)</h1>
+                            <small>Contas a Receber</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "ContaReceber", action: "VerAReceberMes", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title"  style="background-color:goldenrod; color:brown">
+                            <span class="label label-success pull-right">Hoje</span>
+                            <h5>Atrasadas (Mês)</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@CrossCutting.Formatters.DecimalFormatter(ViewBag.AtrasoCR)</h1>
+                            <small>Contas a Receber</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "ContaReceber", action: "VerLancamentosAtraso", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title"  style="background-color:darkseagreen; color:green">
+                            <span class="label label-success pull-right">Hoje</span>
+                            <h5>Saldo Total</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@CrossCutting.Formatters.DecimalFormatter(ViewBag.SaldoTotal)</h1>
+                            <small>Contas Bancárias</small>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title"  style="background-color:darkseagreen; color:green">
+                            <span class="label label-success pull-right">Hoje</span>
+                            <h5>Saldo nas Contas</h5>
+                        </div>  
+                        <div class="ibox-content">
+                            @foreach (var cond in ((ViewBag.ListaContas as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>)))
+                            {
+                                <h4 class="no-margins">@cond.Data - R$@CrossCutting.Formatters.DecimalFormatter(cond.ValorDec)</h4><br />                          
+                            }
+                            <small>Contas Bancárias</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "ContaReceber", action: "VerLancamentosAtraso", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title"  style="background-color:brown color:gold">
+                            <span class="label label-success pull-right">Hoje</span>
+                            <h5>Saldo Caixa</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@CrossCutting.Formatters.DecimalFormatter(ViewBag.Caixa)</h1>
+                            <small>Caixa</small>
+                            <small>Saldo Bancário + A Receber - A Pagar</small>
+                            <br />
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                        <div class="ibox-title">
+                            <h4>Gráfico de Pagamentos por Situação</h4>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <canvas id="doughnutChartCP" height="150"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                        <div class="ibox-title">
+                            <h4>Gráfico de Pagamentos/Dia</h4>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <canvas id="barChartCP" height="150"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                        <div class="ibox-title">
+                            <h4>Gráfico de Recebimentos por Situação</h4>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <canvas id="doughnutChartCR" height="150"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                        <div class="ibox-title">
+                            <h4>Gráfico de Recebimentos/Dia</h4>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <canvas id="barChartCR" height="150"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/chartjs")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '../ContaPagar/GetDadosGraficoCPSituacao'
+                , type: 'POST'
+                , success: function (result) {
+                var doughnutData = {
+                   labels: result.labels,
+                   datasets: [{
+                     data: result.valores,
+                     backgroundColor: result.cores
+                   }]
+                };
+                var doughnutOptions = {
+                   responsive: true
+                };
+                var ctx4 = document.getElementById("doughnutChartCP").getContext("2d");
+                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+              }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '../ContaPagar/GetDadosGraficoCP'
+                , type: 'POST'
+                , success: function (result) {
+                var barData = {
+                    labels: result.dias,
+                    datasets: [
+                        {
+                            label: "Pagamentos por Dia",
+                            backgroundColor: 'rgba(26,179,148,0.5)',
+                            pointBorderColor: "#fff",
+                            data: result.valores
+                        }
+                    ]
+                };
+
+                var barOptions = {
+                    responsive: true
+                };
+
+                var ctx2 = document.getElementById("barChartCP").getContext("2d");
+                new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
+              }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '../ContaPagar/GetDadosGraficoCRSituacao'
+                , type: 'POST'
+                , success: function (result) {
+                var doughnutData = {
+                   labels: result.labels,
+                   datasets: [{
+                     data: result.valores,
+                     backgroundColor: result.cores
+                   }]
+                };
+                var doughnutOptions = {
+                   responsive: true
+                };
+                var ctx4 = document.getElementById("doughnutChartCR").getContext("2d");
+                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+              }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '../ContaPagar/GetDadosGraficoCR'
+                , type: 'POST'
+                , success: function (result) {
+                var barData = {
+                    labels: result.dias,
+                    datasets: [
+                        {
+                            label: "Recebimentos por Dia",
+                            backgroundColor: 'rgba(26,179,148,0.5)',
+                            pointBorderColor: "#fff",
+                            data: result.valores
+                        }
+                    ]
+                };
+
+                var barOptions = {
+                    responsive: true
+                };
+
+                var ctx2 = document.getElementById("barChartCR").getContext("2d");
+                new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
+              }
+            });
+        });
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}
+

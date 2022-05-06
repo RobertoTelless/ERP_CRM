@@ -3240,7 +3240,6 @@
     <Content Include="TemplatesHTML\CRPARREC\CRPARREC.html" />
     <Content Include="TemplatesHTML\FINPATR1\FINPATR1.html" />
     <Content Include="Views\BaseAdmin\IncluirContato.cshtml" />
-    <Content Include="Views\CRM\EnviarProposta_OLD.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -3702,6 +3701,13 @@
     <Content Include="Views\CRM\ReprovarPedido.cshtml" />
     <Content Include="Views\CRM\AprovarPedido.cshtml" />
     <Content Include="Views\BaseAdmin\MontarCentralMensagens.cshtml" />
+    <Content Include="Views\CRM\IncluirComentarioPedidoCRM.cshtml" />
+    <Content Include="Views\CRM\EnviarPedido.cshtml" />
+    <Content Include="Views\CRM\EditarPedido.cshtml" />
+    <Content Include="Views\CRM\VerPedido.cshtml" />
+    <Content Include="Views\CRM\EditarItemPedido.cshtml" />
+    <Content Include="Views\CRM\IncluirItemPedido.cshtml" />
+    <Content Include="Views\Banco\MontarTelaResumoFinanceiro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

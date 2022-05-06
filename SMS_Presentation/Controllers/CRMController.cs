@@ -45,6 +45,7 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IAtendimentoAppService ateApp;
         private readonly ITemplateEMailAppService temaApp;
         private readonly IProdutoAppService proApp;
+        private readonly IProdutotabelaPrecoAppService ptpApp;
 
         private String msg;
         private Exception exception;
@@ -53,7 +54,7 @@ namespace ERP_CRM_Solution.Controllers
         List<CRM> listaMaster = new List<CRM>();
         String extensao;
 
-        public CRMController(ICRMAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps, ITemplateEMailAppService temaApps, IProdutoAppService proApps)
+        public CRMController(ICRMAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps, ITemplateEMailAppService temaApps, IProdutoAppService proApps, IProdutotabelaPrecoAppService ptpApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -64,7 +65,8 @@ namespace ERP_CRM_Solution.Controllers
             cliApp = cliApps;
             ateApp = ateApps;
             temaApp = temaApps;
-            proApp = proApps;   
+            proApp = proApps;
+            ptpApp = ptpApps;   
         }
 
         [HttpGet]
@@ -1813,6 +1815,35 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("EditarProposta", new { id = (Int32)Session["IdCRMProposta"] });
         }
 
+        public ActionResult VoltarEditarPedidoCRM()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaComentPedido"] == 1)
+            {
+                return RedirectToAction("EditarPedido", new { id = (Int32)Session["IdCRMPedido"] });
+            }
+            if ((Int32)Session["VoltaComentPedido"] == 2)
+            {
+                return RedirectToAction("CancelarPedido", new { id = (Int32)Session["IdCRMPedido"] });
+            }
+            if ((Int32)Session["VoltaComentPedido"] == 3)
+            {
+                return RedirectToAction("ReprovarPedido", new { id = (Int32)Session["IdCRMPedido"] });
+            }
+            if ((Int32)Session["VoltaComentPedido"] == 4)
+            {
+                return RedirectToAction("AprovarPedido", new { id = (Int32)Session["IdCRMPedido"] });
+            }
+            if ((Int32)Session["VoltaComentPedido"] == 5)
+            {
+                return RedirectToAction("EnviarPedido", new { id = (Int32)Session["IdCRMPedido"] });
+            }
+            return RedirectToAction("EditarPedido", new { id = (Int32)Session["IdCRMPedido"] });
+        }
+
 
         [HttpGet]
         public ActionResult VerAnexoCRM(Int32 id)
@@ -1999,6 +2030,28 @@ namespace ERP_CRM_Solution.Controllers
         public FileResult DownloadCRMProposta(Int32 id)
         {
             CRM_PROPOSTA_ANEXO item = baseApp.GetAnexoPropostaById(id);
+            String arquivo = item.CRPA_AQ_ARQUIVO;
+            Int32 pos = arquivo.LastIndexOf("/") + 1;
+            String nomeDownload = arquivo.Substring(pos);
+            String contentType = string.Empty;
+            if (arquivo.Contains(".pdf"))
+            {
+                contentType = "application/pdf";
+            }
+            else if (arquivo.Contains(".jpg"))
+            {
+                contentType = "image/jpg";
+            }
+            else if (arquivo.Contains(".png"))
+            {
+                contentType = "image/png";
+            }
+            return File(arquivo, contentType, nomeDownload);
+        }
+
+        public FileResult DownloadCRMPedido(Int32 id)
+        {
+            CRM_PEDIDO_VENDA_ANEXO item = baseApp.GetAnexoPedidoById(id);
             String arquivo = item.CRPA_AQ_ARQUIVO;
             Int32 pos = arquivo.LastIndexOf("/") + 1;
             String nomeDownload = arquivo.Substring(pos);
@@ -6205,6 +6258,111 @@ namespace ERP_CRM_Solution.Controllers
             return 0;
         }
 
+        [ValidateInput(false)]
+        public Int32 ProcessarEnvioPedidoEMail(MensagemViewModel vm, CRM_PEDIDO_VENDA item, USUARIO usuario)
+        {
+            // Recupera contatos
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            CLIENTE cliente = null;
+            String erro = null;
+            Int32 volta = 0;
+            ERP_CRMEntities Db = new ERP_CRMEntities();
+
+            // Nome
+            cliente = cliApp.GetItemById(vm.ID.Value);
+
+            // Processa e-mail
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+            TEMPLATE_PROPOSTA temp = baseApp.GetTemplateById(item.TEPR_CD_ID.Value);
+
+            // Prepara inicial
+            String body = String.Empty;
+            String header = String.Empty;
+            String footer = String.Empty;
+            String link = String.Empty;
+            body = temp.TEPR_TX_TEXTO;
+            header = temp.TEPR_TX_CABECALHO;
+            footer = temp.TEPR_TX_RODAPE;
+            link = vm.MENS_NM_LINK;
+
+            // Prepara cabeçalho
+            header = header.Replace("{Nome}", cliente.CLIE_NM_NOME);
+
+            // Prepara rodape
+            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            footer = footer.Replace("{Assinatura}", assi.ASSI_NM_NOME);
+
+            // Trata corpo
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(body);
+
+            // Trata link
+            if (!String.IsNullOrEmpty(link))
+            {
+                if (!link.Contains("www."))
+                {
+                    link = "www." + link;
+                }
+                if (!link.Contains("http://"))
+                {
+                    link = "http://" + link;
+                }
+                str.AppendLine("<a href='" + link + "'>Clique aqui para maiores informações</a>");
+            }
+            body = str.ToString();
+            String emailBody = header + body + footer;
+
+            // Checa e monta anexos
+            List<System.Net.Mail.Attachment> listaAnexo = new List<System.Net.Mail.Attachment>();
+            if (item.CRM_PEDIDO_VENDA_ANEXO.Count > 0)
+            {
+                CRM_PEDIDO_VENDA_ANEXO ane = item.CRM_PEDIDO_VENDA_ANEXO.OrderByDescending(p => p.CRPA_DT_ANEXO).FirstOrDefault();
+                String fn = Server.MapPath(ane.CRPA_AQ_ARQUIVO);
+                System.Net.Mail.Attachment anexo = new System.Net.Mail.Attachment(fn);
+                listaAnexo.Add(anexo);
+            }
+
+            // Monta e-mail
+            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+            Email mensagem = new Email();
+            mensagem.ASSUNTO = "Pedido - " + cliente.CLIE_NM_NOME;
+            mensagem.CORPO = emailBody;
+            mensagem.DEFAULT_CREDENTIALS = false;
+            mensagem.EMAIL_DESTINO = cliente.CLIE_NM_EMAIL;
+            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+            mensagem.ENABLE_SSL = true;
+            mensagem.NOME_EMISSOR = cliente.ASSINANTE.ASSI_NM_NOME;
+            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+            mensagem.IS_HTML = true;
+            mensagem.NETWORK_CREDENTIAL = net;
+            mensagem.ATTACHMENT = listaAnexo;
+
+            // Envia mensagem
+            try
+            {
+                Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+            }
+            catch (Exception ex)
+            {
+                erro = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    erro += ex.InnerException.Message;
+                }
+                if (ex.GetType() == typeof(SmtpFailedRecipientException))
+                {
+                    var se = (SmtpFailedRecipientException)ex;
+                    erro += se.FailedRecipient;
+                }
+                return 1;
+            }
+            erro = null;
+            return 0;
+        }
+
         [HttpGet]
         public ActionResult IncluirComentarioPropostaCRM()
         {
@@ -6250,6 +6408,64 @@ namespace ERP_CRM_Solution.Controllers
 
                     // Sucesso
                     return RedirectToAction("VoltarEditarPropostaCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult IncluirComentarioPedidoCRM()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 id = (Int32)Session["IdCRMProposta"];
+            CRM_PEDIDO_VENDA item = baseApp.GetPedidoById(id);
+            USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+            CRM_PEDIDO_VENDA_ACOMPANHAMENTO coment = new CRM_PEDIDO_VENDA_ACOMPANHAMENTO();
+            CRMPedidoComentarioViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA_ACOMPANHAMENTO, CRMPedidoComentarioViewModel>(coment);
+            vm.CRPC_DT_ACOMPANHAMENTO = DateTime.Now;
+            vm.CRPC_IN_ATIVO = 1;
+            vm.CRPV_CD_ID = item.CRPV_CD_ID;
+            vm.USUARIO = usuarioLogado;
+            vm.USUA_CD_ID = usuarioLogado.USUA_CD_ID;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult IncluirComentarioPedidoCRM(CRMPedidoComentarioViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdCRMProposta"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM_PEDIDO_VENDA_ACOMPANHAMENTO item = Mapper.Map<CRMPedidoComentarioViewModel, CRM_PEDIDO_VENDA_ACOMPANHAMENTO>(vm);
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    CRM_PEDIDO_VENDA not = baseApp.GetPedidoById(idNot);
+
+                    item.USUARIO = null;
+                    not.CRM_PEDIDO_VENDA_ACOMPANHAMENTO.Add(item);
+                    Int32 volta = baseApp.ValidateEditPedido(not);
+
+                    // Verifica retorno
+
+                    // Sucesso
+                    return RedirectToAction("VoltarEditarPedidoCRM");
                 }
                 catch (Exception ex)
                 {
@@ -6348,6 +6564,12 @@ namespace ERP_CRM_Solution.Controllers
                         return View(vm);
                     }
 
+                    // Criticas finanis
+                    if (vm.CRPV_NM_NOME == null)
+                    {
+                        vm.CRPV_NM_NOME = "Pedido - " + vm.CLIENTE.CLIE_NM_NOME;
+                    }
+
                     // Executa a operação
                     CRM_PEDIDO_VENDA item = Mapper.Map<CRMPedidoViewModel, CRM_PEDIDO_VENDA>(vm);
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
@@ -6441,7 +6663,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["CRMNovo"] = 0;
             CRM_PEDIDO_VENDA item = baseApp.GetPedidoById(id);
             List<CRM_PEDIDO_VENDA> lp = baseApp.GetAllPedidos(id);
-            Session["IdCRMCRM_PEDIDO_VENDA"] = item.CRPV_CD_ID;
+            Session["IdCRMPedido"] = item.CRPV_CD_ID;
 
             // Checa pedidos
             Session["TemPed"] = 0;
@@ -6696,19 +6918,19 @@ namespace ERP_CRM_Solution.Controllers
 
             // Recupera
             Session["CRMNovo"] = 0;
-            CRM_PROPOSTA item = baseApp.GetPropostaById(id);
-            List<CRM_PROPOSTA> lp = baseApp.GetAllPropostas(id);
-            Session["IdCRMProposta"] = item.CRPR_CD_ID;
+            CRM_PEDIDO_VENDA item = baseApp.GetPedidoById(id);
+            List<CRM_PEDIDO_VENDA> lp = baseApp.GetAllPedidos(id);
+            Session["IdCRMPedido"] = item.CRPV_CD_ID;
 
-            // Checa propostas
-            Session["TemProp"] = 0;
-            if (lp.Where(p => p.CRPR_IN_STATUS == 1 || p.CRPR_IN_STATUS == 2).ToList().Count > 0)
+            // Checa pedidos
+            Session["TemPed"] = 0;
+            if (lp.Where(p => p.CRPV_IN_STATUS == 1 || p.CRPV_IN_STATUS == 2).ToList().Count > 0)
             {
-                Session["TemProp"] = 1;
+                Session["TemPed"] = 1;
             }
 
             // Mensagens
-            Session["VoltaComentProposta"] = 4;
+            Session["VoltaComentPedido"] = 4;
             if (Session["MensCRM"] != null)
             {
                 if ((Int32)Session["MensCRM"] == 60)
@@ -6730,15 +6952,15 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Prepara view
-            CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
-            vm.CRPR_DT_APROVACAO = DateTime.Today.Date;
-            vm.CRPR_IN_STATUS = 5;
+            CRMPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA, CRMPedidoViewModel>(item);
+            vm.CRPV_DT_APROVACAO = DateTime.Today.Date;
+            vm.CRPV_IN_STATUS = 5;
             return View(vm);
         }
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult AprovarPedido(CRMPropostaViewModel vm)
+        public ActionResult AprovarPedido(CRMPedidoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -6751,9 +6973,9 @@ namespace ERP_CRM_Solution.Controllers
                 try
                 {
                     // Executa a operação
-                    CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
+                    CRM_PEDIDO_VENDA item = Mapper.Map<CRMPedidoViewModel, CRM_PEDIDO_VENDA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
-                    Int32 volta = baseApp.ValidateEditProposta(item);
+                    Int32 volta = baseApp.ValidateEditPedido(item);
 
                     // Verifica retorno
                     if (volta == 1)
@@ -6797,10 +7019,602 @@ namespace ERP_CRM_Solution.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult GetCustoProduto(Int32 id, Int32? fili)
+        {
+            var result = new Hashtable();
+            if (fili != null)
+            {
+                var prod = proApp.GetById(id).PRODUTO_TABELA_PRECO.First(x => x.FILI_CD_ID == fili);
+                result.Add("custo", prod.PRTP_VL_CUSTO == null ? 0 : prod.PRTP_VL_CUSTO);
+                result.Add("markup", prod.PRTP_NR_MARKUP == null ? 0 : prod.PRTP_NR_MARKUP);
+                result.Add("unidade", prod.PRODUTO.UNIDADE.UNID_NM_NOME);
+            }
+            else
+            {
+                var prod = proApp.GetById(id);
+                result.Add("custo", prod.PROD_VL_CUSTO == null ? 0 : prod.PROD_VL_CUSTO);
+                result.Add("markup", prod.PROD_VL_MARKUP_PADRAO == null ? 0 : prod.PROD_VL_MARKUP_PADRAO);
+                result.Add("unidade", prod.UNIDADE == null ? "" : prod.UNIDADE.UNID_NM_NOME);
+            }
+            return Json(result);
+        }
+
+        [HttpPost]
+        public void MontaListaItemPedido(CRM_PEDIDO_VENDA_ITEM item)
+        {
+            if (Session["ListaITPC"] == null)
+            {
+                Session["ListaITPC"] = new List<CRM_PEDIDO_VENDA_ITEM>();
+            }
+            List<CRM_PEDIDO_VENDA_ITEM> lit = (List<CRM_PEDIDO_VENDA_ITEM>)Session["ListaITPC"];
+            lit.Add(item);
+            Session["ListaITPC"] = lit;
+        }
+
+        [HttpPost]
+        public void RemoveItpcTabela(CRM_PEDIDO_VENDA_ITEM item)
+        {
+            if (Session["ListaITPC"] != null)
+            {
+                List<CRM_PEDIDO_VENDA_ITEM> lit = (List<CRM_PEDIDO_VENDA_ITEM>)Session["ListaITPC"];
+                lit.RemoveAll(x => x.PROD_CD_ID == item.PROD_CD_ID);
+                Session["ListaITPC"] = lit;
+            }
+        }
+
+        [HttpGet]
+        public ActionResult IncluirProduto()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+
+            // Prepara view
+            Session["VoltaProduto"] = 10;
+            return RedirectToAction("IncluirProduto", "Produto");
+        }
+
+        [HttpGet]
+        public ActionResult EnviarPedido(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara listas
+            Session["IncluirCRM"] = 0;
+            Session["CRM"] = null;
+
+            // Recupera
+            Session["CRMNovo"] = 0;
+            CRM_PEDIDO_VENDA item = baseApp.GetPedidoById(id);
+            List<CRM_PEDIDO_VENDA> lp = baseApp.GetAllPedidos(id);
+            Session["IdCRMPedido"] = item.CRPV_CD_ID;
+
+            // Checa propostas
+            Session["TemPed"] = 0;
+            if (lp.Where(p => p.CRPV_IN_STATUS == 1 || p.CRPV_IN_STATUS == 2).ToList().Count > 0)
+            {
+                Session["TemPed"] = 1;
+            }
+            ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
+
+            // Mensagens
+            Session["VoltaComentPedido"] = 5;
+            if (Session["MensCRM"] != null)
+            {
+                if ((Int32)Session["MensCRM"] == 70)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0134", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 71)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0135", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 72)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0136", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 75)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0137", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 76)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0138", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 77)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0139", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // Prepara view
+            CRMPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA, CRMPedidoViewModel>(item);
+            vm.CRPV_DT_ENVIO = DateTime.Today.Date;
+            vm.CRPV_IN_STATUS = 2;
+            return View(vm);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult EnviarPedido(CRMPedidoViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Checa template
+                    if (vm.TEPR_CD_ID == null)
+                    {
+                        Session["MensCRM"] = 77;
+                        return View(vm);
+                    }
+
+                    // Executa a operação
+                    CRM_PEDIDO_VENDA item = Mapper.Map<CRMPedidoViewModel, CRM_PEDIDO_VENDA>(vm);
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+                    // Checa anexo
+                    CRM_PEDIDO_VENDA pro = baseApp.GetPedidoById(item.CRPV_CD_ID);
+                    if (pro.CRM_PEDIDO_VENDA_ANEXO.Count == 0)
+                    {
+                        Session["MensCRM"] = 76;
+                        return View(vm);
+                    }
+                    Int32 volta = baseApp.ValidateEditPedido(item);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensCRM"] = 70;
+                        return View(vm);
+                    }
+                    if (volta == 2)
+                    {
+                        Session["MensCRM"] = 71;
+                        return View(vm);
+                    }
+                    if (volta == 3)
+                    {
+                        Session["MensCRM"] = 72;
+                        return View(vm);
+                    }
+                    // Atualiza status do processo
+                    CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
+                    crm.CRM1_IN_STATUS = 3;
+                    Int32 volta1 = baseApp.ValidateEdit(crm, crm);
+
+                    // Envia pedido
+                    MensagemViewModel mens = new MensagemViewModel();
+                    mens.ASSI_CD_ID = idAss;
+                    mens.MENS_DT_CRIACAO = DateTime.Now;
+                    mens.MENS_IN_ATIVO = 1;
+                    mens.MENS_IN_TIPO = 1;
+                    mens.ID = crm.CLIE_CD_ID;
+                    mens.TEPR_CD_ID = item.TEPR_CD_ID;
+                    mens.MENS_NM_LINK = item.CRPV_LK_LINK;
+                    Int32 retGrava = ProcessarEnvioPedidoEMail(mens, item, usuario);
+
+                    // Verifica
+                    if (retGrava == 1)
+                    {
+                        Session["MensCRM"] = 75;
+                        return View(vm);
+                    }
+
+                    // Retorno
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditarPedido(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica se pode editar ação
+            CRM_PEDIDO_VENDA item = baseApp.GetPedidoById(id);
+            if (item.CRPV_IN_STATUS > 2)
+            {
+                Session["MensCRM"] = 53;
+                return RedirectToAction("VoltarAcompanhamentoCRM");
+            }
+
+            // Prepara view
+            Session["VoltaComentPedido"] = 1;
+            Session["IdCRMPedido"] = item.CRPV_CD_ID;
+            ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
+            ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+
+            // Processa
+            objetoAntes = (CRM)Session["CRM"];
+            CRMPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA, CRMPedidoViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult EditarPedido(CRMPedidoViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
+            ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM_PEDIDO_VENDA item = Mapper.Map<CRMPedidoViewModel, CRM_PEDIDO_VENDA>(vm);
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = baseApp.ValidateEditPedido(item);
+
+                    // Verifica retorno
+                    Session["ListaCRM"] = null;
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ExcluirPedido(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
 
 
+            // Processa
+            CRM_PEDIDO_VENDA item = baseApp.GetPedidoById(id);
+            objetoAntes = (CRM)Session["CRM"];
+            item.CRPV_IN_ATIVO = 0;
+            Int32 volta = baseApp.ValidateEditPedido(item);
+            return RedirectToAction("VoltarAcompanhamentoCRM");
+        }
 
+        [HttpGet]
+        public ActionResult ReativarPedido(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
 
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Processa
+            CRM_PEDIDO_VENDA item = baseApp.GetPedidoById(id);
+            objetoAntes = (CRM)Session["CRM"];
+            item.CRPV_IN_ATIVO = 1;
+            Int32 volta = baseApp.ValidateEditPedido(item);
+            return RedirectToAction("VoltarAcompanhamentoCRM");
+        }
+
+        public ActionResult ElaborarPedido(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara listas
+            Session["IncluirCRM"] = 0;
+            Session["CRM"] = null;
+
+            // Recupera
+            Session["CRMNovo"] = 0;
+            CRM_PEDIDO_VENDA item = baseApp.GetPedidoById(id);
+            Session["IdCRMPedido"] = item.CRPV_CD_ID;
+
+            // Processa
+            item.CRPV_IN_STATUS = 1;
+            item.CRPV_DT_ENVIO = null;
+            item.CRPV_DT_APROVACAO = null;
+            item.CRPV_DT_CANCELAMENTO = null;
+            item.CRPV_DT_REPROVACAO = null;
+            item.CRPV_DS_APROVACAO = null;
+            item.CRPV_DS_CANCELAMENTO = null;
+            item.CRPV_DS_REPROVACAO = null;
+            Int32 volta = baseApp.ValidateEditPedido(item);
+            return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+        }
+
+        public ActionResult VerPedido(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara listas
+            Session["IncluirCRM"] = 0;
+            Session["CRM"] = null;
+
+            // Recupera
+            Session["CRMNovo"] = 0;
+            CRM_PEDIDO_VENDA item = baseApp.GetPedidoById(id);
+            Session["IdCRMPedido"] = item.CRPV_CD_ID;
+            CRMPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA, CRMPedidoViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpGet]
+        public ActionResult EditarItemPedido(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Prepara view
+            ViewBag.Produtos = new SelectList(proApp.GetAllItens(idAss).OrderBy(p => p.PROD_NM_NOME), "PROD_CD_ID", "PROD_NM_NOME");
+            CRM_PEDIDO_VENDA_ITEM item = baseApp.GetItemPedidoById(id);
+            CRMItemPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA_ITEM, CRMItemPedidoViewModel>(item);
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditarItemPedido(CRMItemPedidoViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            ViewBag.Produtos = new SelectList(proApp.GetAllItens(idAss).OrderBy(p => p.PROD_NM_NOME), "PROD_CD_ID", "PROD_NM_NOME");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM_PEDIDO_VENDA_ITEM item = Mapper.Map<CRMItemPedidoViewModel, CRM_PEDIDO_VENDA_ITEM>(vm);
+                    Int32 volta = baseApp.ValidateEditItemPedido(item);
+
+                    // Verifica retorno
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpPost]
+        public void EditarItemPedidoInline(Int32? id, Int32? qtde, decimal? preco)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            if (id != null)
+            {
+                CRM_PEDIDO_VENDA_ITEM item = baseApp.GetItemPedidoById((Int32)id);
+                item.CRPI_IN_QUANTIDADE_REVISADA = qtde;
+                item.CRPI_VL_PRECO_AJUSTADO = preco;
+                Int32 volta = baseApp.ValidateEditItemPedido(item);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult IncluirItemPedido()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Prepara view
+            List<PRODUTO> lista = proApp.GetAllItens(idAss).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
+            ViewBag.Produtos = new SelectList(proApp.GetAllItens(idAss).OrderBy(p => p.PROD_NM_NOME), "PROD_CD_ID", "PROD_NM_NOME");
+
+            CRM_PEDIDO_VENDA_ITEM item = new CRM_PEDIDO_VENDA_ITEM();
+            CRMItemPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA_ITEM, CRMItemPedidoViewModel>(item);
+            vm.CRPV_CD_ID = (Int32)Session["IdCRMPedido"];
+            vm.CRPI_IN_ATIVO = 1;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult IncluirItemPedido(CRMItemPedidoViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            List<PRODUTO> lista = proApp.GetAllItens(idAss).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
+            ViewBag.Produtos = new SelectList(proApp.GetAllItens(idAss).OrderBy(p => p.PROD_NM_NOME), "PROD_CD_ID", "PROD_NM_NOME");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    vm.CRPI_IN_QUANTIDADE_REVISADA = vm.CRPI_IN_QUANTIDADE;
+                    Int32 a = baseApp.GetPedidoById(vm.CRPV_CD_ID).FILI_CD_ID == null ? (Int32)Session["IdFilial"] : (Int32)baseApp.GetPedidoById(vm.CRPV_CD_ID).FILI_CD_ID;
+                    PRODUTO_TABELA_PRECO b = ptpApp.GetByProdFilial((Int32)vm.PROD_CD_ID, a);
+                    vm.CRPI_VL_PRECO_AJUSTADO = b == null || b.PRTP_VL_PRECO == null ? 0 : b.PRTP_VL_PRECO;
+                    var prod = proApp.GetItemById((Int32)vm.PROD_CD_ID);
+                    vm.UNID_CD_ID = prod.UNID_CD_ID;
+                    
+                    // Executa a operação
+                    CRM_PEDIDO_VENDA_ITEM item = Mapper.Map<CRMItemPedidoViewModel, CRM_PEDIDO_VENDA_ITEM>(vm);
+                    Int32 volta = baseApp.ValidateCreateItemPedido(item);
+
+                    if ((Int32)Session["IdVolta"] == 0)
+                    {
+                        return RedirectToAction("IncluirItemPedido");
+                    }
+
+                    // Verifica retorno
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    ModelState.AddModelError("", ex.Message);
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("VoltarAcompanhamentoCRM");
+            }
+        }
 
     }
 }

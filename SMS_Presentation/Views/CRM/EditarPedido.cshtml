@@ -5,6 +5,47 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="containerModalDesc">
+        <div class="modal fade" id="modalDesc" tabindex="-1" role="dialog" aria-labelledby="modalDesc" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalDesc">Mensagem Enviada</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modalDescBody" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="page-title">
         <h3 class="title">Processos - CRM</h3>
         <br />
@@ -19,7 +60,7 @@
                 <a href="@Url.Action("AcompanhamentoProcessoCRM", "CRM")">Acompanhamento - Processos - CRM</a>
             </li>
             <li class="active">
-                <strong>Pedidos - Reprovação</strong>
+                <strong>Pedidos - Edição</strong>
             </li>
         </ol>
         <br />
@@ -28,7 +69,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Pedidos - Reprovação</h5>
+                    <h5>Pedidos - Edição</h5>
                 </div>
                 <div class="ibox-content">
                     @Html.AntiForgeryToken()
@@ -45,15 +86,17 @@
                     </div>
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab-1">Reprovação</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-4">Itens do Pedido</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-3">Comentários</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-5">Histórico</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2">Anexos</a></li>
                         </ul>
                         <div class="tab-content">
                             @*Dados Gerais*@
                             <div id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
-                                    @using (Html.BeginForm("ReprovarPedido", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    @using (Html.BeginForm("EditarPedido", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
                                         <div class="form-group">
                                             @Html.HiddenFor(m => m.ASSI_CD_ID)
@@ -65,34 +108,16 @@
                                             @Html.HiddenFor(m => m.CRPV_DT_ENVIO)
                                             @Html.HiddenFor(m => m.CRPV_DT_PEDIDO)
                                             @Html.HiddenFor(m => m.CRPV_DT_REPROVACAO)
-                                            @Html.HiddenFor(m => m.CRPV_DT_VALIDADE)
                                             @Html.HiddenFor(m => m.CRPV_IN_ATIVO)
-                                            @Html.HiddenFor(m => m.CRPV_IN_PRAZO_ENTREGA)
                                             @Html.HiddenFor(m => m.CRPV_IN_STATUS)
                                             @Html.HiddenFor(m => m.CRPV_LK_LINK)
                                             @Html.HiddenFor(m => m.CRPV_NM_NOME)
                                             @Html.HiddenFor(m => m.CRPV_NR_NUMERO)
-                                            @Html.HiddenFor(m => m.CRPV_TOTAL_PEDIDO)
-                                            @Html.HiddenFor(m => m.CRPV_TX_CONDICOES_COMERCIAIS)
-                                            @Html.HiddenFor(m => m.CRPV_TX_INFORMACOES_GERAIS)
-                                            @Html.HiddenFor(m => m.CRPV_TX_INTRODUCAO)
                                             @Html.HiddenFor(m => m.CRM1_CD_ID)
-                                            @Html.HiddenFor(m => m.CRPV_TX_OBSERVACAO)
-                                            @Html.HiddenFor(m => m.CRPV_TX_OUTROS_ITENS)
-                                            @Html.HiddenFor(m => m.CRPV_VL_DESCONTO)
-                                            @Html.HiddenFor(m => m.CRPV_VL_FRETE)
-                                            @Html.HiddenFor(m => m.CRPV_VL_ICMS)
-                                            @Html.HiddenFor(m => m.CRPV_VL_IPI)
-                                            @Html.HiddenFor(m => m.CRPV_VL_PESO_BRUTO)
-                                            @Html.HiddenFor(m => m.CRPV_VL_PESO_LIQUIDO)
-                                            @Html.HiddenFor(m => m.CRPV_VL_TOTAL_ITENS)
-                                            @Html.HiddenFor(m => m.CRPV_VL_TOTAL_OUTROS)
                                             @Html.HiddenFor(m => m.FILI_CD_ID)
-                                            @Html.HiddenFor(m => m.FOEN_CD_ID)
-                                            @Html.HiddenFor(m => m.FOFR_CD_ID)
                                             @Html.HiddenFor(m => m.USUA_CD_ID)
                                             @Html.HiddenFor(m => m.CRPV_CD_ID)
-                                            @Html.ButtonActionSubmit(text: "Confirma Reprovação do Pedido", htmlAttributes: new { id = "basictoast" })
+                                            @Html.ButtonActionSubmit(text: "Confirma Edição do Pedido", htmlAttributes: new { id = "basictoast" })
                                         </div>
 
                                         <div class="row">
@@ -100,28 +125,28 @@
                                                 <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 250px" >
                                                     <div class="ibox-title"  style="color: black">
                                                         <h5>Dados do Cliente</h5>
-                                                        <span style="float: right"><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CRM.CLIE_CD_ID})" />Enviar E-Mail</span>
+                                                        <span style="float: right"><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CLIENTE.CLIE_CD_ID})" />Enviar E-Mail</span>
                                                     </div>
                                                     <div class="ibox-content" style="color: black">
-                                                        <h3 style="color: green"><strong><a href="@Url.Action("EditarCliente", "Cliente", new { id = Model.CRM.CLIE_CD_ID })">@Model.CRM.CLIENTE.CLIE_NM_NOME</a></strong></h3>
-                                                        @if (Model.CRM.CLIENTE.CLIE_NM_ENDERECO != null)
+                                                        <h3 style="color: green"><strong><a href="@Url.Action("EditarCliente", "Cliente", new { id = Model.CLIENTE.CLIE_CD_ID })">@Model.CLIENTE.CLIE_NM_NOME</a></strong></h3>
+                                                        @if (Model.CLIENTE.CLIE_NM_ENDERECO != null)
                                                         {
                                                             <address>
-                                                                @Model.CRM.CLIENTE.CLIE_NM_ENDERECO @Model.CRM.CLIENTE.CLIE_NR_NUMERO @Model.CRM.CLIENTE.CLIE_NM_COMPLEMENTO<br>
-                                                                @Model.CRM.CLIENTE.CLIE_NM_BAIRRO  - @Model.CRM.CLIENTE.CLIE_NM_CIDADE - @Model.CRM.CLIENTE.UF.UF_SG_SIGLA - @Model.CRM.CLIENTE.CLIE_NR_CEP<br>
-                                                                @if (Model.CRM.CLIENTE.CLIE_NR_TELEFONE != null)
+                                                                @Model.CLIENTE.CLIE_NM_ENDERECO @Model.CLIENTE.CLIE_NR_NUMERO @Model.CLIENTE.CLIE_NM_COMPLEMENTO<br>
+                                                                @Model.CLIENTE.CLIE_NM_BAIRRO  - @Model.CLIENTE.CLIE_NM_CIDADE - @Model.CLIENTE.UF.UF_SG_SIGLA - @Model.CLIENTE.CLIE_NR_CEP<br>
+                                                                @if (Model.CLIENTE.CLIE_NR_TELEFONE != null)
 	                                                            {
-                                                                    <abbr title="Fone">P:</abbr> @Model.CRM.CLIENTE.CLIE_NR_TELEFONE
+                                                                    <abbr title="Fone">P:</abbr> @Model.CLIENTE.CLIE_NR_TELEFONE
                                                                     <br />
 	                                                            }
-                                                                <abbr title="Cel">C:</abbr> <a href="@Url.Action("EnviarSMSCliente", "CRM", new { id = Model.CRM.CLIENTE.CLIE_CD_ID })">@Model.CRM.CLIENTE.CLIE_NR_CELULAR</a>
+                                                                <abbr title="Cel">C:</abbr>@Model.CLIENTE.CLIE_NR_CELULAR
                                                             </address>
                                                         }
                                                         else
                                                         {
                                                             <h5>Não informado</h5>
                                                         }
-                                                        <p><i class="fa fa-envelope"></i><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CRM.CLIE_CD_ID})"> @Model.CRM.CLIENTE.CLIE_NM_EMAIL</a></p>
+                                                        <p><i class="fa fa-envelope"></i><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CLIENTE.CLIE_CD_ID})">@Model.CLIENTE.CLIE_NM_EMAIL</a></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,12 +162,13 @@
                                                                 @Html.TextBoxFor(m => m.FILIAL.FILI_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                             </div>
                                                             <div class="col-lg-3 col-md-3 col-xs-12">
-                                                                Responsável
-                                                                @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                Responsável*
+                                                                @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-xs-12">
                                                                 Nome do Pedido
-                                                                @Html.TextBoxFor(m => m.CRPV_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                @Html.TextBoxFor(m => m.CRPV_NM_NOME, new { @class = "form-control", autofocus = true })
                                                                 @Html.ValidationMessageFor(m => m.CRPV_NM_NOME, "",new { @style="color:red" })
                                                             </div>
                                                         </div>
@@ -156,14 +182,16 @@
                                                                 @Html.TextBoxFor(m => m.CRPV_DT_PEDIDO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @id="data1", @readonly="readonly" })
                                                             </div>
                                                             <div class="col-lg-2 col-md-2  col-xs-12">
-                                                                Data Validade
-                                                                @Html.TextBoxFor(m => m.CRPV_DT_VALIDADE, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @id="data2", @readonly="readonly" })
+                                                                Data Validade*
+                                                                @Html.TextBoxFor(m => m.CRPV_DT_VALIDADE, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="data2" })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_DT_VALIDADE, "", new { @style = "color:red" })
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 320px" >
@@ -174,43 +202,88 @@
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                             Introdução
                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                @Html.TextAreaFor(m => m.CRPV_TX_INTRODUCAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
+                                                                @Html.TextAreaFor(m => m.CRPV_TX_INTRODUCAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_TX_INTRODUCAO, "", new { @style = "color:red" })
                                                             </div>
                                                         </div>
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                             Outros Itens ou Serviços
                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                @Html.TextAreaFor(m => m.CRPV_TX_OUTROS_ITENS, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
+                                                                @Html.TextAreaFor(m => m.CRPV_TX_OUTROS_ITENS, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_TX_OUTROS_ITENS, "", new { @style = "color:red" })
                                                             </div>
                                                         </div>
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                             <div class="col-lg-3 col-md-3 col-xs-12">
                                                                 Forma de Envio
-                                                                @Html.TextBoxFor(m => m.FORMA_ENVIO.FOEN_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                @Html.DropDownListFor(m => m.FOEN_CD_ID, (SelectList)ViewBag.FormaEnvio, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.FOEN_CD_ID, "", new { @style = "color:red" })
                                                             </div>
                                                             <div class="col-lg-3 col-md-3 col-xs-12">
                                                                 Forma de Frete
-                                                                @Html.TextBoxFor(m => m.FORMA_FRETE.FOFR_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                @Html.DropDownListFor(m => m.FOFR_CD_ID, (SelectList)ViewBag.FormaFrete, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.FOFR_CD_ID, "", new { @style = "color:red" })
                                                             </div>
                                                         </div>
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                             <div class="col-lg-2 col-md-2 col-xs-12">
                                                                 Total Outros (R$)
-                                                                @Html.TextBoxFor(m => m.CRPV_VL_TOTAL_OUTROS, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                @Html.TextBoxFor(m => m.CRPV_VL_TOTAL_OUTROS, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_VL_TOTAL_OUTROS, "",new { @style="color:red" })
                                                             </div>
                                                             <div class="col-lg-2 col-md-2 col-xs-12">
                                                                 Desconto (R$)
-                                                                @Html.TextBoxFor(m => m.CRPV_VL_DESCONTO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                @Html.TextBoxFor(m => m.CRPV_VL_DESCONTO, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_VL_DESCONTO, "", new { @style = "color:red" })
                                                             </div>
                                                             <div class="col-lg-2 col-md-2  col-xs-12">
                                                                 Frete (R$)
-                                                                @Html.TextBoxFor(m => m.CRPV_VL_FRETE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                @Html.TextBoxFor(m => m.CRPV_VL_FRETE, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_VL_FRETE, "", new { @style = "color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2  col-xs-12">
+                                                                ICMS (R$)
+                                                                @Html.TextBoxFor(m => m.CRPV_VL_ICMS, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_VL_ICMS, "", new { @style = "color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2  col-xs-12">
+                                                                IPI (R$)
+                                                                @Html.TextBoxFor(m => m.CRPV_VL_IPI, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_VL_IPI, "", new { @style = "color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2  col-xs-12">
+                                                                Prazo de Entrega (Dias)
+                                                                @Html.TextBoxFor(m => m.CRPV_IN_PRAZO_ENTREGA, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_IN_PRAZO_ENTREGA, "", new { @style = "color:red" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Total itens (R$)
+                                                                @Html.TextBoxFor(m => m.CRPV_VL_TOTAL_OUTROS, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_VL_TOTAL_OUTROS, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Peso Bruto (Kg)
+                                                                @Html.TextBoxFor(m => m.CRPV_VL_DESCONTO, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_VL_DESCONTO, "", new { @style = "color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2  col-xs-12">
+                                                                Peso Líquido (Kg)
+                                                                @Html.TextBoxFor(m => m.CRPV_VL_FRETE, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_VL_FRETE, "", new { @style = "color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2  col-xs-12">
+                                                                Total Pedido (R$)
+                                                                @Html.TextBoxFor(m => m.CRPV_VL_FRETE, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_VL_FRETE, "", new { @style = "color:red" })
                                                             </div>
                                                         </div>
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                             Condições Comerciais
                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                @Html.TextAreaFor(m => m.CRPV_TX_CONDICOES_COMERCIAIS, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
+                                                                @Html.TextAreaFor(m => m.CRPV_TX_CONDICOES_COMERCIAIS, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_TX_CONDICOES_COMERCIAIS, "", new { @style = "color:red" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -340,6 +413,192 @@
                                     </div>
                                 </div>
                             </div>
+
+                            @*Itens do pedido*@
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("IncluirItemPedido", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div id="prodContainer" class="col-lg-6 col-md-6 col-xs-12">
+                                                    @Html.HiddenFor(m => m.CRM1_CD_ID)
+                                                    Produto*
+                                                    @Html.DropDownList("PROD_CD_ID", (SelectList)ViewBag.Produtos, "Selecionar", new { @class = "form-control", @id = "prod", onchange = "DesativaInsumo()" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Quantidade*
+                                                    @Html.TextBox("ITPC_QN_QUANTIDADE", null, new { @class = "form-control", autofocus = true })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma Inclusão de Item de Pedido", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                    <div class="row">                                          
+                                        <hr />
+                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <h4>Itens do Pedido</h4>
+                                                <br />
+                                                @if (Model.CRM_PEDIDO_VENDA_ITEM != null)
+                                                {
+                                                    if (Model.CRM_PEDIDO_VENDA_ITEM.Count > 0)
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead style ="background-color:lightsteelblue">
+                                                                <tr>
+                                                                    <th>Produto</th>
+                                                                    <th>Modelo</th>
+                                                                    <th>Marca</th>
+                                                                    <th>Fabricante</th>
+                                                                    <th>Unidade</th>
+                                                                    <th>Quantidade</th>
+                                                                    <th>Quant.Revisada</th>
+                                                                    <th>Preço Unitário (R$)</th>
+                                                                    <th class="td-one-action">Ações</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.CRM_PEDIDO_VENDA_ITEM))
+                                                                {
+                                                                    <tr>
+                                                                        @if (cond.PRODUTO != null)
+                                                                        {
+                                                                            if (cond.PRODUTO == null)
+                                                                            {
+                                                                                <td>-</td>
+                                                                                <td>-</td>
+                                                                                <td>-</td>
+                                                                                <td>-</td>
+                                                                                <td>-</td>
+                                                                            }
+                                                                        else
+                                                                        {
+                                                                            <td style="display: none;"><input type="text" name="codProd" value="@cond.PROD_CD_ID" /></td>
+                                                                            <td>@cond.PRODUTO.PROD_NM_NOME</td>
+                                                                            <td>@cond.PRODUTO.PROD_NM_MODELO</td>
+                                                                            <td>@cond.PRODUTO.PROD_NM_MARCA</td>
+                                                                            <td>@cond.PRODUTO.PROD_NM_FABRICANTE</td>
+                                                                        }
+                                                                        if (cond.UNIDADE != null)
+                                                                        {
+                                                                            <td>@cond.UNIDADE.UNID_NM_NOME</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>-</td>
+                                                                        }
+                                                                        <td>@cond.CRPI_IN_QUANTIDADE</td>
+                                                                        if (cond.CRPI_IN_QUANTIDADE_REVISADA != null)
+	                                                                    {
+                                                                            <td>@cond.CRPI_IN_QUANTIDADE_REVISADA</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>-</td>
+                                                                        }
+                                                                        if (cond.CRPI_VL_PRECO_AJUSTADO != null)
+	                                                                    {
+                                                                            <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPI_VL_PRECO_AJUSTADO.Value)</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>-</td>
+                                                                        }
+                                                                        <td class="td-one-action">
+                                                                            @Html.TableLinkDetails(cond.CRPI_CD_ID, "EditarItemPedido","fa-edit", "Editar/Consultar")
+                                                                            @if (cond.CRPI_IN_ATIVO == 1)
+	                                                                        {
+                                                                                @Html.TableLinkDetails(cond.CRPI_CD_ID, "ExcluirItemPedido","fa-trash-o", "Desativar")
+                                                                            }
+                                                                            else
+                                                                            {   
+                                                                                @Html.TableLinkDetails(cond.CRPI_CD_ID, "ReativarItemPedido","fa-refresh", "Reativar")
+                                                                            }
+                                                                        </td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.ButtonLinkIndex(text: "Incluir Novo Item", action: "IncluirItemPedido", controller: "CRM")
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Histórico*@
+                            <div id="tab-5" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
+                                        <div class="ibox-title"  style="color: black">
+                                            <h5>Histórico</h5>
+                                        </div>
+                                        <div class="ibox-content" style="color: black">
+                                            <div class="row">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <h5 style="font-weight: bold; color: green; margin-left: 15px">Envio</h5>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data de Envio
+                                                        @Html.TextBoxFor(m => m.CRPV_DT_ENVIO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-10 col-md-10 col-xs-12">
+                                                        Informações do Envio
+                                                        @Html.TextAreaFor(m => m.CRPV_DS_ENVIO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <h5 style="font-weight: bold; color: green; margin-left: 15px">Aprovação</h5>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data de Aprovação
+                                                        @Html.TextBoxFor(m => m.CRPV_DT_APROVACAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-10 col-md-10 col-xs-12">
+                                                        Informações da Aprovação
+                                                        @Html.TextAreaFor(m => m.CRPV_DS_APROVACAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <h5 style="font-weight: bold; color: green; margin-left: 15px">Reprovação</h5>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data de Reprovação
+                                                        @Html.TextBoxFor(m => m.CRPV_DT_REPROVACAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-10 col-md-10 col-xs-12">
+                                                        Informações da Reprovação
+                                                        @Html.TextAreaFor(m => m.CRPV_DS_REPROVACAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <h5 style="font-weight: bold; color: green; margin-left: 15px">Cancelamento</h5>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data de Cancelamento
+                                                        @Html.TextBoxFor(m => m.CRPV_DT_CANCELAMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Motivo do Cancelamento
+                                                        @Html.TextBoxFor(m => m.MOTIVO_CANCELAMENTO.MOCA_NM_NOME, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-7 col-md-7 col-xs-12">
+                                                        Informações do Cancelamento
+                                                        @Html.TextAreaFor(m => m.CRPV_DS_CANCELAMENTO, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                   
 
                         </div>
                     </div>
@@ -481,7 +740,7 @@
 
             $('#basictoast').click(function () {
                 // Display a success toast, with a title
-                toastr.success('Aprovação am andamento!')
+                toastr.success('Edição am andamento!')
             });
             $('#showtoast').click(function () {
                 var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
@@ -627,5 +886,4 @@
         </script>
     }
 }
-
 

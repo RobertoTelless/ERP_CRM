@@ -1531,29 +1531,6 @@ namespace ERP_CRM_Solution.Controllers
             Session["Atraso"] = atrasos;
             Session["PagoMes"] = pagos;
 
-
-            //List<CONTA_PAGAR> listaTotal = cpApp.GetAllItens(idAss);
-            //Decimal pago = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 1 & p.CAPA_DT_LIQUIDACAO.Value.Month == DateTime.Today.Date.Month & p.CAPA_DT_LIQUIDACAO.Value.Year == DateTime.Today.Date.Year).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
-            //Decimal pago = cpApp.GetPagamentosMes(DateTime.Today.Date, idAss).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
-            //Decimal aPagar = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0 & p.CAPA_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month & p.CAPA_DT_VENCIMENTO.Value.Year == DateTime.Today.Date.Year).Sum(p => p.CAPA_VL_VALOR).Value;
-            //Decimal atrasos = listaTotal.Where(p => p.CAPA_NR_ATRASO > 0 && p.CAPA_DT_VENCIMENTO < DateTime.Today.Date).Sum(p => p.CAPA_VL_VALOR).Value;
-            //Decimal pago = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 1 && p.CAPA_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CAPA_VL_VALOR_PAGO).Value;
-            //Decimal aPagar = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0 && p.CAPA_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month).Sum(p => p.CAPA_VL_VALOR).Value;
-            //Decimal atrasos = listaTotal.Where(p => p.CAPA_NR_ATRASO > 0 && p.CAPA_DT_VENCIMENTO < DateTime.Today.Date).Sum(p => p.CAPA_VL_VALOR).Value;
-
-            //Int32 liquidadas = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 1).Count();
-            //Int32 atraso = listaTotal.Where(p => p.CAPA_NR_ATRASO > 0 && p.CAPA_DT_VENCIMENTO < DateTime.Today.Date).Count();
-            //Int32 pendentes = listaTotal.Where(p => p.CAPA_IN_LIQUIDADA == 0 && p.CAPA_DT_VENCIMENTO.Value.Month == DateTime.Today.Date.Month).Count();
-
-            //ViewBag.Pago = pago;
-            //ViewBag.APagar = aPagar;
-            //ViewBag.Atrasos = atrasos;
-
-            //Session["TotalCP"] = listaTotal.Count;
-            //Session["APagarMes"] = pendentes;
-            //Session["Atraso"] = atrasos;
-            //Session["PagoMes"] = liquidadas;
-
             // Resumo Mes Pagamentos
             List<DateTime> datasCP = pag.Where(m => m.CAPA_IN_ATIVO == 1 & m.CAPA_IN_LIQUIDADA == 1 & (m.CONTA_PAGAR_PARCELA == null || m.CONTA_PAGAR_PARCELA.Count == 0)).Select(p => p.CAPA_DT_LIQUIDACAO.Value.Date).Distinct().ToList();
             List<DateTime> datasParc = pag.Where(m => m.CAPA_IN_ATIVO == 1 & m.CONTA_PAGAR_PARCELA != null).SelectMany(p => p.CONTA_PAGAR_PARCELA).Where(x => x.CPPA_IN_QUITADA == 1).Select(p => p.CPPA_DT_QUITACAO.Value.Date).Distinct().ToList();
