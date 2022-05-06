@@ -157,10 +157,6 @@
                     {
                         @Html.ButtonLinkIndex(text: "Service Desk", action: "MontarTelaDashboardServiceDesk", controller: "Servico", buttonClass: "primary")                
                     }
-                    @if ((Int32)Session["PermVenda"] == 1)
-                    {
-                        @Html.ButtonLinkIndex(text: "CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
-                    }
                     @if ((String)Session["PerfilSigla"] == "ADM" || (String)Session["PerfilSigla"] == "GER")
                     {
                         @Html.ButtonLinkIndex(text: "Administração", action: "MontarTelaDashboardAdministracao", controller: "Usuario", buttonClass: "success")                
