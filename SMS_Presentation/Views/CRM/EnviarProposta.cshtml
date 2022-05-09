@@ -57,24 +57,29 @@
                                     {
                                         <div class="form-group">
                                             @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                            @Html.HiddenFor(m => m.USUA_CD_ID)
+                                            @Html.HiddenFor(m => m.CRM1_CD_ID)
                                             @Html.HiddenFor(m => m.CRPR_AQ_ARQUIVO)
                                             @Html.HiddenFor(m => m.CRPR_CD_ID)
-                                            @Html.HiddenFor(m => m.CRPR_DS_APROVACAO)
                                             @Html.HiddenFor(m => m.CRPR_DS_CANCELAMENTO)
+                                            @Html.HiddenFor(m => m.CRPR_DS_APROVACAO)
                                             @Html.HiddenFor(m => m.CRPR_DS_INFORMACOES)
                                             @Html.HiddenFor(m => m.CRPR_DS_REPROVACAO)
-                                            @Html.HiddenFor(m => m.CRPR_DT_APROVACAO)
+                                            @Html.HiddenFor(m => m.CRPR_DT_CANCELAMENTO)
                                             @Html.HiddenFor(m => m.CRPR_DT_APROVACAO)
                                             @Html.HiddenFor(m => m.CRPR_DT_PROPOSTA)
                                             @Html.HiddenFor(m => m.CRPR_DT_REPROVACAO)
                                             @Html.HiddenFor(m => m.CRPR_DT_VALIDADE)
                                             @Html.HiddenFor(m => m.CRPR_IN_ATIVO)
                                             @Html.HiddenFor(m => m.CRPR_IN_STATUS)
+                                            @Html.HiddenFor(m => m.CRPR_LK_LINK)
+                                            @Html.HiddenFor(m => m.CRPR_NR_NUMERO)
                                             @Html.HiddenFor(m => m.CRPR_TX_TEXTO)
                                             @Html.HiddenFor(m => m.CRPR_VL_VALOR)
                                             @Html.HiddenFor(m => m.TEEM_CD_ID)
-                                            @Html.HiddenFor(m => m.USUA_CD_ID)
-                                            @Html.HiddenFor(m => m.CRM1_CD_ID)
+                                            @Html.HiddenFor(m => m.TEPR_CD_ID)
+                                            @Html.HiddenFor(m => m.CLIE_NM_NOME)
+                                            @Html.HiddenFor(m => m.MOCA_CD_ID)
                                             @Html.ButtonActionSubmit(text: "Confirma Envio da Proposta", htmlAttributes: new { id = "basictoast" })
                                         </div>
 
@@ -144,7 +149,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 490px" >

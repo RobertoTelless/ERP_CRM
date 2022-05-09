@@ -2296,6 +2296,7 @@
     <Content Include="Imagens\2\Servicos\3\Anexos\ServicoLista_23022022.pdf" />
     <Content Include="Imagens\2\CRM\13\Anexos\AtendimentoResumo_14032022.pdf" />
     <Content Include="Imagens\2\CRM\13\Anexos\Targo_01.pdf" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\ERPCondominio - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ERPMKT - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ERPSysNet - Web Deploy.pubxml" />

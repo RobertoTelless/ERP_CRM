@@ -1594,7 +1594,58 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VoltarEditarPropostaCRM");
         }
 
-                [HttpPost]
+        [HttpPost]
+        public Int32 UploadFileCRMPropostaArquivo(String file)
+        {
+            Int32 idNot = (Int32)Session["IdCRMProposta"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            CRM_PROPOSTA item = baseApp.GetPropostaById(idNot);
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
+            
+            // Origem
+            var fileName = file;
+            String sourcePath = "c:\\Downloads";
+            String origem = Path.Combine(Server.MapPath(sourcePath), fileName);
+
+            // Destino
+            String caminho = "/Imagens/" + idAss.ToString() + "/Proposta/" + item.CRPR_CD_ID.ToString() + "/Arquivo/";
+            String path = Path.Combine(Server.MapPath(caminho), fileName);
+            System.IO.Directory.CreateDirectory(Server.MapPath(caminho));
+            System.IO.File.Copy(origem, path, true);         
+            
+            //Recupera tipo de arquivo
+            extensao = Path.GetExtension(fileName);
+            String a = extensao;
+
+            // Gravar registro
+            CRM_PROPOSTA_ANEXO foto = new CRM_PROPOSTA_ANEXO();
+            foto.CRPA_AQ_ARQUIVO = "~" + caminho + fileName;
+            foto.CRPA_DT_ANEXO = DateTime.Today;
+            foto.CRPA_IN_ATIVO = 1;
+            Int32 tipo = 3;
+            if (extensao.ToUpper() == ".JPG" || extensao.ToUpper() == ".GIF" || extensao.ToUpper() == ".PNG" || extensao.ToUpper() == ".JPEG")
+            {
+                tipo = 1;
+            }
+            if (extensao.ToUpper() == ".MP4" || extensao.ToUpper() == ".AVI" || extensao.ToUpper() == ".MPEG")
+            {
+                tipo = 2;
+            }
+            if (extensao.ToUpper() == ".PDF")
+            {
+                tipo = 3;
+            }
+            foto.CRPA_IN_TIPO = tipo;
+            foto.CPRA_NM_TITULO = fileName;
+            foto.CRPR_CD_ID = item.CRPR_CD_ID;
+
+            item.CRM_PROPOSTA_ANEXO.Add(foto);
+            Int32 volta = baseApp.ValidateEditProposta(item);
+            return volta;
+        }
+
+        [HttpPost]
         public ActionResult UploadFileQueueCRMPedido(FileQueue file)
         {
             if ((String)Session["Ativa"] == null)
@@ -4508,6 +4559,231 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VoltarAnexoCRM");
         }
 
+        public String GerarRelatorioProposta()
+        {
+            // Prepara geração
+            CRM_PROPOSTA aten = baseApp.GetPropostaById((Int32)Session["IdProposta"]);
+            String data = DateTime.Today.Date.ToShortDateString();
+            data = data.Substring(0, 2) + data.Substring(3, 2) + data.Substring(6, 4);
+            String nomeRel = "CRM_Proposta_" + aten.CRPR_NR_NUMERO + "_" + data + ".pdf";
+            CLIENTE cliente = (CLIENTE)Session["Cliente"];
+            
+            // Define fontes
+            Font meuFont = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            Font meuFont1 = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            Font meuFont2 = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            Font meuFontBold = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+            Font meuFontVerde = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.BOLD, BaseColor.GREEN);
+            Font meuFontAzul= FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.BOLD, BaseColor.BLUE);
+            Font meuFontVermelho = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.BOLD, BaseColor.RED);
+
+            // Cria documento
+            Document pdfDoc = new Document(PageSize.A4, 10, 10, 10, 10);
+            PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+            pdfDoc.Open();
+
+            // Linha horizontal
+            Paragraph line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+
+            // Cabeçalho
+            PdfPTable table = new PdfPTable(5);
+            table.WidthPercentage = 100;
+            table.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+            table.SpacingBefore = 1f;
+            table.SpacingAfter = 1f;
+
+            PdfPCell cell = new PdfPCell();
+            cell.Border = 0;
+            Image image = Image.GetInstance(Server.MapPath("~/Imagens/base/favicon_SystemBR.jpg"));
+            image.ScaleAbsolute(50, 50);
+            cell.AddElement(image);
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Proposta - Detalhes", meuFont2))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_CENTER
+            };
+            cell.Border = 0;
+            cell.Colspan = 4;
+            table.AddCell(cell);
+
+            pdfDoc.Add(table);
+
+            // Linha Horizontal
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+            line1 = new Paragraph("  ");
+            pdfDoc.Add(line1);
+
+            // Dados do Cliente
+            table = new PdfPTable(new float[] { 120f, 120f, 120f, 120f });
+            table.WidthPercentage = 100;
+            table.HorizontalAlignment = 0;
+            table.SpacingBefore = 1f;
+            table.SpacingAfter = 1f;
+
+            cell = new PdfPCell(new Paragraph("Dados do Cliente", meuFontBold));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Nome: " + cliente.CLIE_NM_NOME, meuFontVerde));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            if (cliente.CLIE_NM_ENDERECO != null)
+            {
+                cell = new PdfPCell(new Paragraph("Endereço: " + cliente.CLIE_NM_ENDERECO + " " + cliente.CLIE_NR_NUMERO + " " + cliente.CLIE_NM_COMPLEMENTO, meuFont));
+                cell.Border = 0;
+                cell.Colspan = 4;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                table.AddCell(cell);
+
+                if (cliente.UF != null)
+                {
+                    cell = new PdfPCell(new Paragraph("          " + cliente.CLIE_NM_BAIRRO + " - " + cliente.CLIE_NM_CIDADE + " - " + cliente.UF.UF_SG_SIGLA + " - " + cliente.CLIE_NR_CEP, meuFont));
+                    cell.Border = 0;
+                    cell.Colspan = 4;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    table.AddCell(cell);
+                }
+                else
+                {
+                    cell = new PdfPCell(new Paragraph("          " + cliente.CLIE_NM_BAIRRO + " - " + cliente.CLIE_NM_CIDADE + " - " + cliente.CLIE_NR_CEP, meuFont));
+                    cell.Border = 0;
+                    cell.Colspan = 4;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    table.AddCell(cell);
+                }
+            }
+            else
+            {
+                cell = new PdfPCell(new Paragraph("Endereço: -", meuFont));
+                cell.Border = 0;
+                cell.Colspan = 4;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                table.AddCell(cell);
+            }
+
+            cell = new PdfPCell(new Paragraph("Telefone: " + cliente.CLIE_NR_TELEFONE, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Celular: " + cliente.CLIE_NR_CELULAR, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("E-Mail: " + cliente.CLIE_NM_EMAIL, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 2;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            pdfDoc.Add(table);
+
+            // Linha Horizontal
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+
+            // Dados do Processo
+            table = new PdfPTable(new float[] { 120f, 120f, 120f, 120f });
+            table.WidthPercentage = 100;
+            table.HorizontalAlignment = 0;
+            table.SpacingBefore = 1f;
+            table.SpacingAfter = 1f;
+
+            cell = new PdfPCell(new Paragraph("Dados da Proposta", meuFontBold));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Número: " + aten.CRPR_NR_NUMERO, meuFontVerde));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Data: " + aten.CRPR_DT_PROPOSTA.ToShortDateString(), meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Validade: " + aten.CRPR_DT_VALIDADE.ToShortDateString(), meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Responsável: " + aten.USUARIO.USUA_NM_NOME, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Envio: " + aten.CRPR_DT_ENVIO.Value.ToShortDateString(), meuFont));
+            cell.Border = 0;
+            cell.Colspan = 2;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Valor (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_VALOR.Value), meuFont));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Descrição: " + aten.CRPR_TX_TEXTO, meuFontVerde));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Conteúdo: " + aten.CRPR_DS_INFORMACOES, meuFontVerde));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            pdfDoc.Add(table);
+
+            // Linha Horizontal
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+
+            // Finaliza
+            pdfWriter.CloseStream = false;
+            pdfDoc.Close();
+            Response.Buffer = true;
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("content-disposition", "attachment;filename=" + nomeRel);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Write(pdfDoc);
+            Response.End();
+            return nomeRel;
+        }
+
         public ActionResult VerCRMExpansao()
         {
             // Verifica se tem usuario logado
@@ -5600,7 +5876,7 @@ namespace ERP_CRM_Solution.Controllers
                     // Executa a operação
                     CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
-                    Int32 volta = baseApp.ValidateEditProposta(item);
+                    Int32 volta = baseApp.ValidateCancelarProposta(item);
 
                     // Verifica retorno
                     if (volta == 1)
@@ -5728,7 +6004,7 @@ namespace ERP_CRM_Solution.Controllers
                     // Executa a operação
                     CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
-                    Int32 volta = baseApp.ValidateEditProposta(item);
+                    Int32 volta = baseApp.ValidateReprovarProposta(item);
 
                     // Verifica retorno
                     if (volta == 1)
@@ -5856,7 +6132,7 @@ namespace ERP_CRM_Solution.Controllers
                     // Executa a operação
                     CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
-                    Int32 volta = baseApp.ValidateEditProposta(item);
+                    Int32 volta = baseApp.ValidateAprovarProposta(item);
 
                     // Verifica retorno
                     if (volta == 1)
@@ -6097,7 +6373,7 @@ namespace ERP_CRM_Solution.Controllers
                         Session["MensCRM"] = 76;
                         return View(vm);
                     }
-                    Int32 volta = baseApp.ValidateEditProposta(item);
+                    Int32 volta = baseApp.ValidateEnviarProposta(item);
 
                     // Verifica retorno
                     if (volta == 1)
@@ -6119,6 +6395,12 @@ namespace ERP_CRM_Solution.Controllers
                     CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
                     crm.CRM1_IN_STATUS = 3;
                     Int32 volta1 = baseApp.ValidateEdit(crm, crm);
+                    Session["Cliente"] = crm.CLIENTE;
+
+                    // Gera PDF da proposta e anexa
+                    Session["IdProposta"] = item.CRPR_CD_ID;
+                    String arquivo = GerarRelatorioProposta();
+                    Int32 volta3 = UploadFileCRMPropostaArquivo(arquivo);
 
                     // Envia proposta
                     MensagemViewModel mens = new MensagemViewModel();
@@ -6220,7 +6502,7 @@ namespace ERP_CRM_Solution.Controllers
             // Monta e-mail
             NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
             Email mensagem = new Email();
-            mensagem.ASSUNTO = "Proposta - " + cliente.CLIE_NM_NOME;
+            mensagem.ASSUNTO = "Proposta - " + item.CRPR_NR_NUMERO + " - " + cliente.CLIE_NM_NOME;
             mensagem.CORPO = emailBody;
             mensagem.DEFAULT_CREDENTIALS = false;
             mensagem.EMAIL_DESTINO = cliente.CLIE_NM_EMAIL;
