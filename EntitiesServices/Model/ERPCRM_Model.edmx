@@ -1109,6 +1109,8 @@
           <Property Name="TEPR_CD_ID" Type="int" />
           <Property Name="TEEM_CD_ID" Type="int" />
           <Property Name="MOCA_CD_ID" Type="int" />
+          <Property Name="FOEN_CD_ID" Type="int" />
+          <Property Name="FOFR_CD_D" Type="int" />
           <Property Name="CRPR_DT_PROPOSTA" Type="date" Nullable="false" />
           <Property Name="CRPR_DT_VALIDADE" Type="date" Nullable="false" />
           <Property Name="CRPR_DT_ENVIO" Type="date" />
@@ -1128,6 +1130,14 @@
           <Property Name="CRPR_IN_ATIVO" Type="int" Nullable="false" />
           <Property Name="CRPR_NR_NUMERO" Type="varchar" MaxLength="20" />
           <Property Name="CRPR_NR_ATRASO" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="CRPR_TX_INTRODUCAO" Type="text" />
+          <Property Name="CRPR_TX_CONDICOES_COMERCIAIS" Type="text" />
+          <Property Name="CRPR_IN_PRAZO_ENTREGA" Type="int" />
+          <Property Name="CRPR_VL_DESCONTO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CRPR_VL_FRETE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CRPR_VL_ICMS" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CRPR_VL_IPI" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CRPR_VL_TOTAL" Type="decimal" Precision="22" Scale="2" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
           <Key>
@@ -4704,6 +4714,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CRM_PROPOSTA_FORMA_ENVIO">
+          <End Role="FORMA_ENVIO" Type="Self.FORMA_ENVIO" Multiplicity="0..1" />
+          <End Role="CRM_PROPOSTA" Type="Self.CRM_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORMA_ENVIO">
+              <PropertyRef Name="FOEN_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA">
+              <PropertyRef Name="FOEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_FORMA_FRETE">
+          <End Role="FORMA_FRETE" Type="Self.FORMA_FRETE" Multiplicity="0..1" />
+          <End Role="CRM_PROPOSTA" Type="Self.CRM_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORMA_FRETE">
+              <PropertyRef Name="FOFR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA">
+              <PropertyRef Name="FOFR_CD_D" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CRM_PROPOSTA_MOTIVO_CANCELAMENTO">
           <End Role="MOTIVO_CANCELAMENTO" Type="Self.MOTIVO_CANCELAMENTO" Multiplicity="0..1" />
           <End Role="CRM_PROPOSTA" Type="Self.CRM_PROPOSTA" Multiplicity="*" />
@@ -8236,6 +8270,14 @@
             <End Role="CRM" EntitySet="CRM" />
             <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
           </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_FORMA_ENVIO" Association="Self.FK_CRM_PROPOSTA_FORMA_ENVIO">
+            <End Role="FORMA_ENVIO" EntitySet="FORMA_ENVIO" />
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_FORMA_FRETE" Association="Self.FK_CRM_PROPOSTA_FORMA_FRETE">
+            <End Role="FORMA_FRETE" EntitySet="FORMA_FRETE" />
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+          </AssociationSet>
           <AssociationSet Name="FK_CRM_PROPOSTA_MOTIVO_CANCELAMENTO" Association="Self.FK_CRM_PROPOSTA_MOTIVO_CANCELAMENTO">
             <End Role="MOTIVO_CANCELAMENTO" EntitySet="MOTIVO_CANCELAMENTO" />
             <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
@@ -10468,6 +10510,7 @@
           <NavigationProperty Name="PEDIDO_VENDA" Relationship="Self.FK_PEDIDO_VENDA_Forma_ENVIO" FromRole="FORMA_ENVIO" ToRole="PEDIDO_VENDA" />
           <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_FORMA_ENVIO" FromRole="FORMA_ENVIO" ToRole="CRM_COMERCIAL" />
           <NavigationProperty Name="CRM_PEDIDO_VENDA" Relationship="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_FORMA_ENVIO" FromRole="FORMA_ENVIO" ToRole="CRM_PEDIDO_VENDA" />
+          <NavigationProperty Name="CRM_PROPOSTA" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_FORMA_ENVIO" FromRole="FORMA_ENVIO" ToRole="CRM_PROPOSTA" />
         </EntityType>
         <EntityType Name="FORMA_FRETE">
           <Key>
@@ -10481,6 +10524,7 @@
           <NavigationProperty Name="PEDIDO_VENDA" Relationship="Self.FK_PEDIDO_VENDA_Forma_FRETE" FromRole="FORMA_FRETE" ToRole="PEDIDO_VENDA" />
           <NavigationProperty Name="CRM_COMERCIAL" Relationship="ERP_CRMModel.FK_CRM_COMERCIAL_FORMA_FRETE" FromRole="FORMA_FRETE" ToRole="CRM_COMERCIAL" />
           <NavigationProperty Name="CRM_PEDIDO_VENDA" Relationship="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_FORMA_FRETE" FromRole="FORMA_FRETE" ToRole="CRM_PEDIDO_VENDA" />
+          <NavigationProperty Name="CRM_PROPOSTA" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_FORMA_FRETE" FromRole="FORMA_FRETE" ToRole="CRM_PROPOSTA" />
         </EntityType>
         <EntityType Name="FORMA_PAGAMENTO">
           <Key>
@@ -17617,6 +17661,14 @@
             <End Role="MOTIVO_CANCELAMENTO" EntitySet="MOTIVO_CANCELAMENTO" />
             <End Role="CRM_PEDIDO_VENDA" EntitySet="CRM_PEDIDO_VENDA" />
           </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_FORMA_ENVIO" Association="ERP_CRMModel.FK_CRM_PROPOSTA_FORMA_ENVIO">
+            <End Role="FORMA_ENVIO" EntitySet="FORMA_ENVIO" />
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRM_PROPOSTA_FORMA_FRETE" Association="ERP_CRMModel.FK_CRM_PROPOSTA_FORMA_FRETE">
+            <End Role="FORMA_FRETE" EntitySet="FORMA_FRETE" />
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ATENDIMENTO_CRM">
           <Key>
@@ -18614,6 +18666,18 @@
           <Property Name="CRPR_DS_ENVIO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
           <Property Name="CRPR_NR_NUMERO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CRPR_NR_ATRASO" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="FOEN_CD_ID" Type="Int32" />
+          <Property Name="FOFR_CD_D" Type="Int32" />
+          <Property Name="CRPR_TX_INTRODUCAO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRPR_TX_CONDICOES_COMERCIAIS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CRPR_IN_PRAZO_ENTREGA" Type="Int32" />
+          <Property Name="CRPR_VL_DESCONTO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CRPR_VL_FRETE" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="FORMA_ENVIO" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_FORMA_ENVIO" FromRole="CRM_PROPOSTA" ToRole="FORMA_ENVIO" />
+          <NavigationProperty Name="FORMA_FRETE" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_FORMA_FRETE" FromRole="CRM_PROPOSTA" ToRole="FORMA_FRETE" />
+          <Property Name="CRPR_VL_ICMS" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CRPR_VL_IPI" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CRPR_VL_TOTAL" Type="Decimal" Precision="22" Scale="2" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
           <Key>
@@ -19058,6 +19122,30 @@
             </Principal>
             <Dependent Role="CRM_PEDIDO_VENDA">
               <PropertyRef Name="MOCA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_FORMA_ENVIO">
+          <End Type="ERP_CRMModel.FORMA_ENVIO" Role="FORMA_ENVIO" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_PROPOSTA" Role="CRM_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORMA_ENVIO">
+              <PropertyRef Name="FOEN_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA">
+              <PropertyRef Name="FOEN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_PROPOSTA_FORMA_FRETE">
+          <End Type="ERP_CRMModel.FORMA_FRETE" Role="FORMA_FRETE" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM_PROPOSTA" Role="CRM_PROPOSTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORMA_FRETE">
+              <PropertyRef Name="FOFR_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM_PROPOSTA">
+              <PropertyRef Name="FOFR_CD_D" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -21939,6 +22027,16 @@
           <EntitySetMapping Name="CRM_PROPOSTA">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_PROPOSTA">
               <MappingFragment StoreEntitySet="CRM_PROPOSTA">
+                <ScalarProperty Name="CRPR_VL_TOTAL" ColumnName="CRPR_VL_TOTAL" />
+                <ScalarProperty Name="CRPR_VL_IPI" ColumnName="CRPR_VL_IPI" />
+                <ScalarProperty Name="CRPR_VL_ICMS" ColumnName="CRPR_VL_ICMS" />
+                <ScalarProperty Name="CRPR_VL_FRETE" ColumnName="CRPR_VL_FRETE" />
+                <ScalarProperty Name="CRPR_VL_DESCONTO" ColumnName="CRPR_VL_DESCONTO" />
+                <ScalarProperty Name="CRPR_IN_PRAZO_ENTREGA" ColumnName="CRPR_IN_PRAZO_ENTREGA" />
+                <ScalarProperty Name="CRPR_TX_CONDICOES_COMERCIAIS" ColumnName="CRPR_TX_CONDICOES_COMERCIAIS" />
+                <ScalarProperty Name="CRPR_TX_INTRODUCAO" ColumnName="CRPR_TX_INTRODUCAO" />
+                <ScalarProperty Name="FOFR_CD_D" ColumnName="FOFR_CD_D" />
+                <ScalarProperty Name="FOEN_CD_ID" ColumnName="FOEN_CD_ID" />
                 <ScalarProperty Name="CRPR_NR_ATRASO" ColumnName="CRPR_NR_ATRASO" />
                 <ScalarProperty Name="CRPR_NR_NUMERO" ColumnName="CRPR_NR_NUMERO" />
                 <ScalarProperty Name="CRPR_DS_ENVIO" ColumnName="CRPR_DS_ENVIO" />

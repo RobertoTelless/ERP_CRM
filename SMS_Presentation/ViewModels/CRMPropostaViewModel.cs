@@ -52,7 +52,20 @@ namespace ERP_CRM_Solution.ViewModels
         public string CLIE_NM_NOME { get; set; }
         public CLIENTE CLIENTE { get; set; }
         public string CRPR_NR_NUMERO { get; set; }
-
+        public Nullable<int> FOEN_CD_ID { get; set; }
+        public Nullable<int> FOFR_CD_D { get; set; }
+        [StringLength(5000, ErrorMessage = "A INTRODUÇÃO deve conter no máximo 5000 caracteres.")]
+        public string CRPR_TX_INTRODUCAO { get; set; }
+        public string CRPR_TX_CONDICOES_COMERCIAIS { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<int> CRPR_IN_PRAZO_ENTREGA { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<decimal> CRPR_VL_DESCONTO { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<decimal> CRPR_VL_FRETE { get; set; }
+        public Nullable<decimal> CRPR_VL_ICMS { get; set; }
+        public Nullable<decimal> CRPR_VL_IPI { get; set; }
+        public Nullable<decimal> CRPR_VL_TOTAL { get; set; }
 
         public virtual CRM CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -64,6 +77,8 @@ namespace ERP_CRM_Solution.ViewModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_PROPOSTA_ANEXO> CRM_PROPOSTA_ANEXO { get; set; }
         public virtual TEMPLATE_EMAIL TEMPLATE_EMAIL { get; set; }
+        public virtual FORMA_ENVIO FORMA_ENVIO { get; set; }
+        public virtual FORMA_FRETE FORMA_FRETE { get; set; }
 
     }
 }

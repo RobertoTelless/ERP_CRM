@@ -566,6 +566,8 @@
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_TRANSPORTADORA" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_TEMPLATE_PROPOSTA" />
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_MOTIVO_CANCELAMENTO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_FORMA_ENVIO" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_FORMA_FRETE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

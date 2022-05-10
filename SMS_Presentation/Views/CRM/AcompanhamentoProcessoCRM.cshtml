@@ -964,9 +964,9 @@
                                                                             <th>Validade</th>
                                                                             <th>Envio</th>
                                                                             <th>Status</th>
-                                                                            <th>Valor</th>
-                                                                            <th>Anexos</th>
-                                                                            <th>Template</th>
+                                                                            <th>Valor (R$)</th>
+                                                                            <th>Valor Total (R$)</th>
+                                                                            <th>Prazo</th>
                                                                             <th class="td-one-action">Ações</th>
                                                                         </tr>
                                                                     </thead>
@@ -1015,10 +1015,17 @@
                                                                                     {
                                                                                         <td>-</td>
                                                                                     }
-                                                                                    <td>@cond.CRM_PROPOSTA_ANEXO.Count</td>
-                                                                                    @if (cond.TEMPLATE_PROPOSTA != null)
+                                                                                    @if (cond.CRPR_VL_TOTAL != null)
                                                                                     {
-                                                                                        <td>@cond.TEMPLATE_PROPOSTA.TEPR_NM_NOME</td>
+                                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPR_VL_TOTAL.Value)</td>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <td>-</td>
+                                                                                    }
+                                                                                    @if (cond.CRPR_IN_PRAZO_ENTREGA != null)
+                                                                                    {
+                                                                                        <td>@cond.CRPR_IN_PRAZO_ENTREGA</td>
                                                                                     }
                                                                                     else
                                                                                     {
@@ -1100,10 +1107,17 @@
                                                                                     {
                                                                                         <td>-</td>
                                                                                     }
-                                                                                    <td>@cond.CRM_PROPOSTA_ANEXO.Count</td>
-                                                                                    @if (cond.TEMPLATE_PROPOSTA != null)
+                                                                                    @if (cond.CRPR_VL_TOTAL != null)
                                                                                     {
-                                                                                        <td>@cond.TEMPLATE_PROPOSTA.TEPR_NM_NOME</td>
+                                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPR_VL_TOTAL.Value)</td>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <td>-</td>
+                                                                                    }
+                                                                                    @if (cond.CRPR_IN_PRAZO_ENTREGA != null)
+                                                                                    {
+                                                                                        <td>@cond.CRPR_IN_PRAZO_ENTREGA</td>
                                                                                     }
                                                                                     else
                                                                                     {

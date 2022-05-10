@@ -590,6 +590,7 @@ namespace ApplicationServices.Services
             try
             {
                 // Verificação
+                item.CRPR_IN_STATUS = 1;
 
                 // Persiste
                 Int32 volta = _baseService.EditProposta(item);

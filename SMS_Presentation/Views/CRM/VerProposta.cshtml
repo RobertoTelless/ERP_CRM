@@ -173,8 +173,8 @@
                                                                 @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOVA_SENHA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                             </div>
                                                             <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Valor
-                                                                @Html.TextBoxFor(m => m.CRPR_VL_VALOR, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                Prazo Entrega (Dias)
+                                                                @Html.TextBoxFor(m => m.CRPR_IN_PRAZO_ENTREGA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -183,15 +183,101 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 490px" >
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 230px" >
                                                     <div class="ibox-title">
-                                                        <h5 style="color: black">Informações Gerais</h5>
+                                                        <h5 style="color: black">Valores</h5>
+                                                    </div>
+                                                    <div class="ibox-content"  style="color: black">
+                                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Valor Base (R$)
+                                                                @Html.TextBoxFor(m => m.CRPR_VL_VALOR, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                @Html.ValidationMessageFor(m => m.CRPR_VL_VALOR, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Desconto (R$)
+                                                                @Html.TextBoxFor(m => m.CRPR_VL_DESCONTO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                @Html.ValidationMessageFor(m => m.CRPR_VL_DESCONTO, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Frete (R$)
+                                                                @Html.TextBoxFor(m => m.CRPR_VL_FRETE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                @Html.ValidationMessageFor(m => m.CRPR_VL_FRETE, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                ICMS (R$)
+                                                                @Html.TextBoxFor(m => m.CRPR_VL_ICMS, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                @Html.ValidationMessageFor(m => m.CRPR_VL_ICMS, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                IPI (R$)
+                                                                @Html.TextBoxFor(m => m.CRPR_VL_IPI, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                @Html.ValidationMessageFor(m => m.CRPR_VL_IPI, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Total (R$)
+                                                                @Html.TextBoxFor(m => m.CRPR_VL_TOTAL, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                @Html.ValidationMessageFor(m => m.CRPR_VL_TOTAL, "",new { @style="color:red" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                                                Forma de Envio
+                                                                @Html.TextBoxFor(m => m.FORMA_ENVIO.FOEN_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                                                Forma de Frete
+                                                                @Html.TextBoxFor(m => m.FORMA_FRETE.FOFR_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 230px" >
+                                                    <div class="ibox-title">
+                                                        <h5 style="color: black">Introdução</h5>
                                                     </div>
                                                     <div class="ibox-content"  style="color: black">
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                @Html.TextAreaFor(m => m.CRPR_DS_INFORMACOES, new { @class = "form-control", style = "width: 100%; height: 300px;", autofocus = true, @readonly="readonly" })
+                                                                @Html.TextAreaFor(m => m.CRPR_TX_INTRODUCAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
+                                                                @Html.ValidationMessageFor(m => m.CRPR_TX_INTRODUCAO, "", new { @style = "color:red" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 320px" >
+                                                    <div class="ibox-title">
+                                                        <h5 style="color: black">Corpo da Proposta</h5>
+                                                    </div>
+                                                    <div class="ibox-content"  style="color: black">
+                                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                @Html.TextAreaFor(m => m.CRPR_DS_INFORMACOES, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 320px" >
+                                                    <div class="ibox-title">
+                                                        <h5 style="color: black">Condições Comerciais</h5>
+                                                    </div>
+                                                    <div class="ibox-content"  style="color: black">
+                                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                @Html.TextAreaFor(m => m.CRPR_TX_CONDICOES_COMERCIAIS, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -321,7 +407,7 @@
                                 </div>
                             </div>                   
                             
-    @*Imagens - Foto e Anexos*@
+                            @*Imagens - Foto e Anexos*@
                             <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
                                     <div class="row">

@@ -4700,14 +4700,47 @@ namespace ERP_CRM_Solution.Controllers
             line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
             pdfDoc.Add(line1);
 
-            // Dados do Processo
+            // Texto da Proposta
             table = new PdfPTable(new float[] { 120f, 120f, 120f, 120f });
             table.WidthPercentage = 100;
             table.HorizontalAlignment = 0;
             table.SpacingBefore = 1f;
             table.SpacingAfter = 1f;
 
+            cell = new PdfPCell(new Paragraph(aten.CRPR_TX_INTRODUCAO, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph(aten.CRPR_DS_INFORMACOES, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph(aten.CRPR_TX_CONDICOES_COMERCIAIS, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            pdfDoc.Add(line1);
+
+            // Linha Horizontal
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+
             cell = new PdfPCell(new Paragraph("Dados da Proposta", meuFontBold));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Nome: " + aten.CRPR_TX_TEXTO, meuFontVerde));
             cell.Border = 0;
             cell.Colspan = 4;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
@@ -4748,21 +4781,44 @@ namespace ERP_CRM_Solution.Controllers
 
             cell = new PdfPCell(new Paragraph("Valor (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_VALOR.Value), meuFont));
             cell.Border = 0;
-            cell.Colspan = 4;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Desconto (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_DESCONTO.Value), meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Frete (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_FRETE.Value), meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Valor Total (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_TOTAL.Value), meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
 
-            cell = new PdfPCell(new Paragraph("Descrição: " + aten.CRPR_TX_TEXTO, meuFontVerde));
+            cell = new PdfPCell(new Paragraph("Prazo (Dias): " + aten.CRPR_IN_PRAZO_ENTREGA.Value, meuFont));
             cell.Border = 0;
-            cell.Colspan = 4;
+            cell.Colspan = 1;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
-
-            cell = new PdfPCell(new Paragraph("Conteúdo: " + aten.CRPR_DS_INFORMACOES, meuFontVerde));
+            cell = new PdfPCell(new Paragraph("Forma de Envio: " + aten.FORMA_ENVIO.FOEN_NM_NOME, meuFont));
             cell.Border = 0;
-            cell.Colspan = 4;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Forma de Frete: " + aten.FORMA_FRETE.FOFR_NM_NOME, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 2;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
@@ -5569,6 +5625,8 @@ namespace ERP_CRM_Solution.Controllers
             CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
             ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.FormaEnvio = new SelectList(baseApp.GetAllFormasEnvio(idAss).OrderBy(p => p.FOEN_NM_NOME), "FOEN_CD_ID", "FOEN_NM_NOME");
+            ViewBag.FormaFrete = new SelectList(baseApp.GetAllFormasFrete(idAss).OrderBy(p => p.FOFR_NM_NOME), "FOFR_CD_ID", "FOFR_NM_NOME");
             CRM crm = (CRM)Session["CRM"];
             CRM_PROPOSTA item = new CRM_PROPOSTA();
             CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
@@ -5578,6 +5636,12 @@ namespace ERP_CRM_Solution.Controllers
             vm.CRPR_DT_PROPOSTA = DateTime.Now;
             vm.CRPR_IN_STATUS = 1;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
+            vm.CRPR_VL_VALOR = 0;
+            vm.CRPR_VL_DESCONTO = 0;
+            vm.CRPR_VL_FRETE = 0;
+            vm.CRPR_VL_ICMS = 0;
+            vm.CRPR_VL_IPI = 0;
+            vm.CRPR_IN_PRAZO_ENTREGA = 0;
             vm.CRPR_DT_VALIDADE = DateTime.Now.AddDays(Convert.ToDouble(conf.CONF_NR_DIAS_PROPOSTA));
             vm.CLIENTE = (CLIENTE)Session["ClienteCRM"];
             return View(vm);
@@ -5674,6 +5738,8 @@ namespace ERP_CRM_Solution.Controllers
             Session["IdCRMProposta"] = item.CRPR_CD_ID;
             ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.FormaEnvio = new SelectList(baseApp.GetAllFormasEnvio(idAss).OrderBy(p => p.FOEN_NM_NOME), "FOEN_CD_ID", "FOEN_NM_NOME");
+            ViewBag.FormaFrete = new SelectList(baseApp.GetAllFormasFrete(idAss).OrderBy(p => p.FOFR_NM_NOME), "FOFR_CD_ID", "FOFR_NM_NOME");
 
             // Processa
             objetoAntes = (CRM)Session["CRM"];
@@ -6391,6 +6457,7 @@ namespace ERP_CRM_Solution.Controllers
                         Session["MensCRM"] = 72;
                         return View(vm);
                     }
+
                     // Atualiza status do processo
                     CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
                     crm.CRM1_IN_STATUS = 3;
