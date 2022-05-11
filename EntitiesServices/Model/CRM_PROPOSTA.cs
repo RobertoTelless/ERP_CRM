@@ -57,6 +57,8 @@ namespace EntitiesServices.Model
         public Nullable<decimal> CRPR_VL_ICMS { get; set; }
         public Nullable<decimal> CRPR_VL_IPI { get; set; }
         public Nullable<decimal> CRPR_VL_TOTAL { get; set; }
+        public Nullable<decimal> CRPR_VL_PESO_BRUTO { get; set; }
+        public Nullable<decimal> CRPR_VL_PESO_LIQUIDO { get; set; }
     
         public virtual CRM CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

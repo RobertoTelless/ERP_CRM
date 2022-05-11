@@ -1605,8 +1605,8 @@ namespace ERP_CRM_Solution.Controllers
             
             // Origem
             var fileName = file;
-            String sourcePath = "c:\\Downloads";
-            String origem = Path.Combine(Server.MapPath(sourcePath), fileName);
+            String sourcePath = "C:\\Downloads";
+            String origem = Path.Combine(sourcePath, fileName);
 
             // Destino
             String caminho = "/Imagens/" + idAss.ToString() + "/Proposta/" + item.CRPR_CD_ID.ToString() + "/Arquivo/";
@@ -4595,7 +4595,7 @@ namespace ERP_CRM_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Imagens/base/favicon_SystemBR.jpg"));
+            Image image = Image.GetInstance(Server.MapPath("~/Imagens/Base/Logo_SystemBR.jpg"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);
@@ -5642,6 +5642,8 @@ namespace ERP_CRM_Solution.Controllers
             vm.CRPR_VL_ICMS = 0;
             vm.CRPR_VL_IPI = 0;
             vm.CRPR_IN_PRAZO_ENTREGA = 0;
+            vm.CRPR_VL_PESO_BRUTO = 0;
+            vm.CRPR_VL_PESO_LIQUIDO = 0;
             vm.CRPR_DT_VALIDADE = DateTime.Now.AddDays(Convert.ToDouble(conf.CONF_NR_DIAS_PROPOSTA));
             vm.CLIENTE = (CLIENTE)Session["ClienteCRM"];
             return View(vm);
@@ -6434,11 +6436,11 @@ namespace ERP_CRM_Solution.Controllers
 
                     // Checa anexo
                     CRM_PROPOSTA pro = baseApp.GetPropostaById(item.CRPR_CD_ID);
-                    if (pro.CRM_PROPOSTA_ANEXO.Count == 0)
-                    {
-                        Session["MensCRM"] = 76;
-                        return View(vm);
-                    }
+                    //if (pro.CRM_PROPOSTA_ANEXO.Count == 0)
+                    //{
+                    //    Session["MensCRM"] = 76;
+                    //    return View(vm);
+                    //}
                     Int32 volta = baseApp.ValidateEnviarProposta(item);
 
                     // Verifica retorno
@@ -6464,10 +6466,10 @@ namespace ERP_CRM_Solution.Controllers
                     Int32 volta1 = baseApp.ValidateEdit(crm, crm);
                     Session["Cliente"] = crm.CLIENTE;
 
-                    // Gera PDF da proposta e anexa
-                    Session["IdProposta"] = item.CRPR_CD_ID;
-                    String arquivo = GerarRelatorioProposta();
-                    Int32 volta3 = UploadFileCRMPropostaArquivo(arquivo);
+                    //// Gera PDF da proposta e anexa
+                    //Session["IdProposta"] = item.CRPR_CD_ID;
+                    //String arquivo = GerarRelatorioProposta();
+                    ////Int32 volta3 = UploadFileCRMPropostaArquivo(arquivo);
 
                     // Envia proposta
                     MensagemViewModel mens = new MensagemViewModel();
@@ -6531,11 +6533,33 @@ namespace ERP_CRM_Solution.Controllers
 
             // Prepara cabeçalho
             header = header.Replace("{Nome}", cliente.CLIE_NM_NOME);
+            header = header.Replace("{Telefone}", cliente.CLIE_NR_TELEFONE);
+            header = header.Replace("{Celular}", cliente.CLIE_NR_CELULAR);
+            header = header.Replace("{Introducao}", item.CRPR_TX_INTRODUCAO);
 
             // Prepara rodape
             ASSINANTE assi = (ASSINANTE)Session["Assinante"];
             footer = footer.Replace("{Assinatura}", assi.ASSI_NM_NOME);
-                    
+
+            // Monta corpo
+            body = body.Replace("{Descricao}", item.CRPR_TX_TEXTO);
+            body = body.Replace("{Numero}", item.CRPR_NR_NUMERO);
+            body = body.Replace("{Emissao}", item.CRPR_DT_PROPOSTA.ToShortDateString());
+            body = body.Replace("{Validade}", item.CRPR_DT_VALIDADE.ToShortDateString());
+            body = body.Replace("{Conteudo}", item.CRPR_DS_INFORMACOES);
+            body = body.Replace("{Comerciais}", item.CRPR_TX_CONDICOES_COMERCIAIS);
+            body = body.Replace("{Prazo}", item.CRPR_IN_PRAZO_ENTREGA.ToString());
+            body = body.Replace("{ValorBase}", CrossCutting.Formatters.DecimalFormatter(item.CRPR_VL_VALOR.Value));
+            body = body.Replace("{Desconto}", CrossCutting.Formatters.DecimalFormatter(item.CRPR_VL_DESCONTO.Value));
+            body = body.Replace("{Frete}", CrossCutting.Formatters.DecimalFormatter(item.CRPR_VL_FRETE.Value));
+            body = body.Replace("{ICMS}", CrossCutting.Formatters.DecimalFormatter(item.CRPR_VL_ICMS.Value));
+            body = body.Replace("{IPI}", CrossCutting.Formatters.DecimalFormatter(item.CRPR_VL_IPI.Value));
+            body = body.Replace("{ValorTotal}", CrossCutting.Formatters.DecimalFormatter(item.CRPR_VL_TOTAL.Value));
+            body = body.Replace("{FormaEnvio}", item.FORMA_ENVIO.FOEN_NM_NOME);
+            body = body.Replace("{FormaFrete}", item.FORMA_FRETE.FOFR_NM_NOME);
+            body = body.Replace("{Bruto}", item.CRPR_VL_PESO_BRUTO.ToString());
+            body = body.Replace("{Liquido}", item.CRPR_VL_PESO_LIQUIDO.ToString());
+
             // Trata corpo
             StringBuilder str = new StringBuilder();
             str.AppendLine(body);

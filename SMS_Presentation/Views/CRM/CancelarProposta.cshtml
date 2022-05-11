@@ -88,6 +88,8 @@
                                             @Html.HiddenFor(m => m.FOFR_CD_D)
                                             @Html.HiddenFor(m => m.TEEM_CD_ID)
                                             @Html.HiddenFor(m => m.TEPR_CD_ID)
+                                            @Html.HiddenFor(m => m.CRPR_VL_PESO_BRUTO)
+                                            @Html.HiddenFor(m => m.CRPR_VL_PESO_LIQUIDO)
                                             @Html.HiddenFor(m => m.CLIE_NM_NOME)
                                             @Html.ButtonActionSubmit(text: "Confirma Cancelamento da Proposta", htmlAttributes: new { id = "basictoast" })
                                         </div>
@@ -300,9 +302,8 @@
                 </div>
                 <div class="form-group">
                     <br />
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCRM", controller: "CRM")
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAcompanhamentoCRM", controller: "CRM")
                     @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
-                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "CRM", action: "Voltar")
                 </div>
             </div>
         </div>

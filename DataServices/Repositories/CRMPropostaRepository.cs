@@ -23,6 +23,11 @@ namespace DataServices.Repositories
         public CRM_PROPOSTA GetItemById(Int32 id)
         {
             IQueryable<CRM_PROPOSTA> query = Db.CRM_PROPOSTA.Where(p => p.CRPR_CD_ID == id);
+            query = query.Include(p => p.USUARIO);
+            query = query.Include(p => p.FORMA_ENVIO);
+            query = query.Include(p => p.FORMA_FRETE);
+            query = query.Include(p => p.MOTIVO_CANCELAMENTO);
+            query = query.Include(p => p.TEMPLATE_PROPOSTA);
             return query.FirstOrDefault();
         }
     }

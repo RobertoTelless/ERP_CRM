@@ -775,7 +775,7 @@ namespace ApplicationServices.Services
             try
             {
                 // Verificação
-                item.CRPR_IN_STATUS = 3;
+                item.CRPR_IN_STATUS = 2;
                 if (item.CRPR_DT_ENVIO == null)
                 {
                     return 1;
@@ -800,7 +800,7 @@ namespace ApplicationServices.Services
                 noti.NOTI_DT_EMISSAO = DateTime.Today;
                 noti.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
                 noti.NOTI_IN_VISTA = 0;
-                noti.NOTI_NM_TITULO = "Aprovação de Proposta";
+                noti.NOTI_NM_TITULO = "Envio de Proposta";
                 noti.NOTI_IN_ATIVO = 1;
                 noti.NOTI_TX_TEXTO = "ATENÇÃO: A Proposta " + item.CRPR_NR_NUMERO + " do processo CRM " + crm.CRM1_NM_NOME + " foi enviada para o cliente em " + item.CRPR_DT_ENVIO.Value.ToLongDateString() + ".";
                 noti.USUA_CD_ID = item.USUA_CD_ID;
