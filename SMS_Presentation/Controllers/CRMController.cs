@@ -46,6 +46,8 @@ namespace ERP_CRM_Solution.Controllers
         private readonly ITemplateEMailAppService temaApp;
         private readonly IProdutoAppService proApp;
         private readonly IProdutotabelaPrecoAppService ptpApp;
+        private readonly IContaBancariaAppService cbApp;
+        private readonly IContaReceberAppService crApp;
 
         private String msg;
         private Exception exception;
@@ -54,7 +56,7 @@ namespace ERP_CRM_Solution.Controllers
         List<CRM> listaMaster = new List<CRM>();
         String extensao;
 
-        public CRMController(ICRMAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps, ITemplateEMailAppService temaApps, IProdutoAppService proApps, IProdutotabelaPrecoAppService ptpApps)
+        public CRMController(ICRMAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps, ITemplateEMailAppService temaApps, IProdutoAppService proApps, IProdutotabelaPrecoAppService ptpApps, IContaBancariaAppService cbApps, IContaReceberAppService crApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -66,7 +68,9 @@ namespace ERP_CRM_Solution.Controllers
             ateApp = ateApps;
             temaApp = temaApps;
             proApp = proApps;
-            ptpApp = ptpApps;   
+            ptpApp = ptpApps;
+            cbApp = cbApps;
+            crApp = crApps;
         }
 
         [HttpGet]
@@ -2311,6 +2315,52 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         Session["MensCRM"] = 61;
                         return RedirectToAction("MontarTelaCRM");
+                    }
+
+                    // Verifica se tem proposta aprovada
+                    CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
+                    CRM_PROPOSTA propAprov = crm.CRM_PROPOSTA.Where(p => p.CRPR_IN_STATUS == 5).FirstOrDefault();
+                    
+                    // Verifica se gera CR                    
+                    if (propAprov != null)
+                    {
+                        if((Int32)Session["PermFinanceiro"] == 1)
+                        {
+                            if (propAprov.CRPR_IN_GERAR_CR == 1)
+                            {
+                                // Monta CR
+                                CONTA_RECEBER cr = new CONTA_RECEBER();
+                                cr.ASSI_CD_ID = crm.ASSI_CD_ID;
+                                cr.CARE_DS_DESCRICAO = "Lançamento gerado pelo processo " + crm.CRM1_NM_NOME;
+                                cr.CARE_DT_COMPETENCIA = DateTime.Today.Date;
+                                cr.CARE_DT_LANCAMENTO = DateTime.Today.Date;
+                                cr.CARE_DT_VENCIMENTO = DateTime.Today.Date.AddDays(30);
+                                cr.CARE_IN_ABERTOS = 0;
+                                cr.CARE_IN_ATIVO = 1;
+                                cr.CARE_IN_LIQUIDADA = 0;
+                                cr.CARE_IN_LIQUIDA_NORMAL = 0;
+                                cr.CARE_IN_PAGA_PARCIAL = 0;
+                                cr.CARE_IN_PARCELADA = 0;
+                                cr.CARE_IN_PARCELAS = 0;
+                                cr.CARE_IN_PARCIAL = 0;
+                                cr.CARE_IN_TIPO_LANCAMENTO = 1;
+                                cr.CARE_VL_DESCONTO = propAprov.CRPR_VL_DESCONTO;
+                                cr.CARE_VL_JUROS = 0;
+                                cr.CARE_VL_PARCELADO = 0;
+                                cr.CARE_VL_PARCIAL = 0;
+                                cr.CARE_VL_SALDO = propAprov.CRPR_VL_VALOR;
+                                cr.CARE_VL_TAXAS = propAprov.CRPR_VL_ICMS + propAprov.CRPR_VL_IPI;
+                                cr.CARE_VL_VALOR = propAprov.CRPR_VL_VALOR.Value;
+                                cr.CARE_VL_VALOR_LIQUIDADO = 0;
+                                cr.CARE_VL_VALOR_RECEBIDO = 0;
+                                cr.CLIE_CD_ID = crm.CLIE_CD_ID;
+                                cr.COBA_CD_ID = cbApp.GetContaPadrao(idAss).COBA_CD_ID;
+                                cr.USUA_CD_ID = crm.USUA_CD_ID;
+
+                                // Grava CR
+                                Int32 voltaCR = crApp.ValidateCreate(cr, 0, null, usuario);
+                            }
+                        }
                     }
 
                     // Listas
@@ -5644,12 +5694,14 @@ namespace ERP_CRM_Solution.Controllers
             vm.CRPR_IN_PRAZO_ENTREGA = 0;
             vm.CRPR_VL_PESO_BRUTO = 0;
             vm.CRPR_VL_PESO_LIQUIDO = 0;
+            vm.CRPR_IN_GERAR_CR = 0;
             vm.CRPR_DT_VALIDADE = DateTime.Now.AddDays(Convert.ToDouble(conf.CONF_NR_DIAS_PROPOSTA));
             vm.CLIENTE = (CLIENTE)Session["ClienteCRM"];
             return View(vm);
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult IncluirProposta(CRMPropostaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -5750,6 +5802,7 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult EditarProposta(CRMPropostaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -5853,6 +5906,11 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VoltarAcompanhamentoCRM");
         }
 
+        public ActionResult CancelarPropostaEdicao()
+        {
+            return RedirectToAction("CancelarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+        }
+
         [HttpGet]
         public ActionResult CancelarProposta(Int32 id)
         {
@@ -5928,6 +5986,7 @@ namespace ERP_CRM_Solution.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult CancelarProposta(CRMPropostaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -5981,6 +6040,11 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return View(vm);
             }
+        }
+
+        public ActionResult ReprovarPropostaEdicao()
+        {
+            return RedirectToAction("ReprovarProposta", new { id = (Int32)Session["IdCRMProposta"] });
         }
 
         [HttpGet]
@@ -6057,6 +6121,7 @@ namespace ERP_CRM_Solution.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult ReprovarProposta(CRMPropostaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -6109,6 +6174,11 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return View(vm);
             }
+        }
+
+        public ActionResult AprovarPropostaEdicao()
+        {
+            return RedirectToAction("AprovarProposta", new { id = (Int32)Session["IdCRMProposta"] });
         }
 
         [HttpGet]
@@ -6185,6 +6255,7 @@ namespace ERP_CRM_Solution.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult AprovarProposta(CRMPropostaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -6244,6 +6315,11 @@ namespace ERP_CRM_Solution.Controllers
             }
         }
 
+        public ActionResult ElaborarPropostaEdicao()
+        {
+            return RedirectToAction("ElaborarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+        }
+
         public ActionResult ElaborarProposta(Int32 id)
         {
             // Verifica se tem usuario logado
@@ -6288,9 +6364,10 @@ namespace ERP_CRM_Solution.Controllers
             item.CRPR_DS_CANCELAMENTO = null;
             item.CRPR_DS_REPROVACAO = null;
             Int32 volta = baseApp.ValidateEditProposta(item);
-            return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+            return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
         }
 
+        [ValidateInput(false)]
         public ActionResult VerProposta(Int32 id)
         {
             // Verifica se tem usuario logado
@@ -6326,6 +6403,11 @@ namespace ERP_CRM_Solution.Controllers
             Session["IdCRMProposta"] = item.CRPR_CD_ID;
             CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
             return View(vm);
+        }
+
+        public ActionResult EnviarPropostaEdicao()
+        {
+            return RedirectToAction("EnviarProposta", new { id = (Int32)Session["IdCRMProposta"] });
         }
 
         [HttpGet]
@@ -6411,6 +6493,7 @@ namespace ERP_CRM_Solution.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult EnviarProposta(CRMPropostaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)

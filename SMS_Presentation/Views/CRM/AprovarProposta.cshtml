@@ -146,6 +146,12 @@
                                                                 @Html.TextBoxFor(m => m.CRPR_DT_APROVACAO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="data2" })
                                                                 @Html.ValidationMessageFor(m => m.CRPR_DT_APROVACAO, "", new { @style = "color:red" })
                                                             </div>
+                                                            <div class="col-lg-3 col-md-3 col-xs-12" id="rec">
+                                                                Registra Conta a Receber?
+                                                                <br />
+                                                                @Html.CheckBoxFor(m => m.GeraCR, new { @class = "checkbox i-checks", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.GeraCR, "", new { @style = "color:red" })
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -311,6 +317,8 @@
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
     @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
 }
 @section Scripts {
     @Scripts.Render("~/plugins/toastr")
@@ -319,6 +327,8 @@
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
     @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/iCheck")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
 
     <script>
@@ -386,7 +396,16 @@
 
         });
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
 
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+        });
+    </script>
     <script type="text/javascript" language="javascript">
         $(function () {
             $('.date-picker').datepicker(

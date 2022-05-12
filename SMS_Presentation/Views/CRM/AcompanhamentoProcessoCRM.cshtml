@@ -1048,7 +1048,7 @@
                                                                                         }
                                                                                         @if (cond.CRPR_IN_STATUS == 2)
                                                                                         {
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "ElaborarProposta", "fa-mail-reply", "Elaboração")
+                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "ElaborarProposta", "fa-mail-reply", "Elaboração") 
                                                                                             @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
                                                                                             @Html.TableLinkDetails(cond.CRPR_CD_ID, "AprovarProposta", "fa-check", "Aprovar")   
                                                                                             @Html.TableLinkDetails(cond.CRPR_CD_ID, "ReprovarProposta", "fa-minus-square-o", "Reprovar")   
@@ -1060,6 +1060,7 @@
                                                                                         }
                                                                                         @if (cond.CRPR_IN_STATUS == 5)
                                                                                         {
+                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
                                                                                             @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
                                                                                         }
                                                                                     </td>

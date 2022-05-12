@@ -54,6 +54,10 @@ namespace DataServices.Repositories
             query = query.Include(p => p.USUARIO);
             query = query.Include(p => p.CLIENTE);
             query = query.Include(p => p.CLIENTE.UF);
+            query = query.Include(p => p.CRM_PROPOSTA);
+            query = query.Include(p => p.CRM_PEDIDO_VENDA);
+            query = query.Include(p => p.CRM_ACAO);
+            query = query.Include(p => p.CRM_ANEXO);
             return query.FirstOrDefault();
         }
 

@@ -81,6 +81,22 @@
                         </div>
                     }
                     <div class="form-group">
+                        @if (Model.CRPR_IN_STATUS == 2)
+                        {
+                            @Html.ButtonLinkIndex(text: "Retornar Elaboração", action: "ElaborarPropostaEdicao", controller: "CRM")
+                        }
+                        @if (Model.CRPR_IN_STATUS == 2)
+                        {
+                            @Html.ButtonLinkIndex(text: "Cancelar Proposta", action: "CancelarPropostaEdicao", controller: "CRM")
+                        }
+                        @if (Model.CRPR_IN_STATUS == 2)
+                        {
+                            @Html.ButtonLinkIndex(text: "Aprovar Proposta", action: "AprovarPropostaEdicao", controller: "CRM")
+                        }
+                        @if (Model.CRPR_IN_STATUS == 2)
+                        {
+                            @Html.ButtonLinkIndex(text: "Reprovar Proposta", action: "ReprovarPropostaEdicao", controller: "CRM")
+                        }
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAcompanhamentoCRM", controller: "CRM")
                         @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                     </div>
@@ -238,6 +254,12 @@
                                                                 Peso Líquido (Kg)
                                                                 @Html.TextBoxFor(m => m.CRPR_VL_PESO_LIQUIDO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                             </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12" id="rec">
+                                                                Lança a Receber?
+                                                                <br />
+                                                                @Html.CheckBoxFor(m => m.GeraCR, new { @class = "checkbox i-checks", autofocus = true, @readonly="readonly" })
+                                                                @Html.ValidationMessageFor(m => m.GeraCR, "", new { @style = "color:red" })
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -252,7 +274,7 @@
                                                     <div class="ibox-content"  style="color: black">
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                @Html.TextAreaFor(m => m.CRPR_TX_INTRODUCAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
+                                                                @Html.TextAreaFor(m => m.CRPR_TX_INTRODUCAO, new { @class = "form-control  summernote", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
                                                                 @Html.ValidationMessageFor(m => m.CRPR_TX_INTRODUCAO, "", new { @style = "color:red" })
                                                             </div>
                                                         </div>
@@ -269,7 +291,7 @@
                                                     <div class="ibox-content"  style="color: black">
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                @Html.TextAreaFor(m => m.CRPR_DS_INFORMACOES, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
+                                                                @Html.TextAreaFor(m => m.CRPR_DS_INFORMACOES, new { @class = "form-control  summernote", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -285,7 +307,7 @@
                                                     <div class="ibox-content"  style="color: black">
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                @Html.TextAreaFor(m => m.CRPR_TX_CONDICOES_COMERCIAIS, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
+                                                                @Html.TextAreaFor(m => m.CRPR_TX_CONDICOES_COMERCIAIS, new { @class = "form-control  summernote", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -494,6 +516,8 @@
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
     @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/summernoteStyles")
+    @Styles.Render("~/Content/plugins/summernote/summernote.css")
 }
 @section Scripts {
     @Scripts.Render("~/plugins/toastr")
@@ -503,6 +527,8 @@
     @Scripts.Render("~/plugins/jasnyBootstrap")
     @Scripts.Render("~/plugins/sparkline")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    @Scripts.Render("~/plugins/summernote")
+    @Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")
 
     <script>
         $(function () {
@@ -528,7 +554,22 @@
             $('#modal').modal('show');
         }
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
 
+            $('.summernote').summernote();
+
+        });
+
+        var edit = function () {
+            $('.click2edit').summernote({ focus: true });
+        };
+
+        var save = function () {
+            var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
+            $('.click2edit').destroy();
+        };
+    </script>
     <script>
         function mostrarDesc(desc) {
             $('#modalDescBody').html(desc);

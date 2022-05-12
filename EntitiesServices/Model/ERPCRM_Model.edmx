@@ -1140,6 +1140,7 @@
           <Property Name="CRPR_VL_TOTAL" Type="decimal" Precision="22" Scale="2" StoreGeneratedPattern="Computed" />
           <Property Name="CRPR_VL_PESO_BRUTO" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_VL_PESO_LIQUIDO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CRPR_IN_GERAR_CR" Type="int" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
           <Key>
@@ -18682,6 +18683,7 @@
           <Property Name="CRPR_VL_TOTAL" Type="Decimal" Precision="22" Scale="2" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="CRPR_VL_PESO_BRUTO" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_VL_PESO_LIQUIDO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CRPR_IN_GERAR_CR" Type="Int32" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
           <Key>
@@ -22031,6 +22033,7 @@
           <EntitySetMapping Name="CRM_PROPOSTA">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_PROPOSTA">
               <MappingFragment StoreEntitySet="CRM_PROPOSTA">
+                <ScalarProperty Name="CRPR_IN_GERAR_CR" ColumnName="CRPR_IN_GERAR_CR" />
                 <ScalarProperty Name="CRPR_VL_PESO_LIQUIDO" ColumnName="CRPR_VL_PESO_LIQUIDO" />
                 <ScalarProperty Name="CRPR_VL_PESO_BRUTO" ColumnName="CRPR_VL_PESO_BRUTO" />
                 <ScalarProperty Name="CRPR_VL_TOTAL" ColumnName="CRPR_VL_TOTAL" />

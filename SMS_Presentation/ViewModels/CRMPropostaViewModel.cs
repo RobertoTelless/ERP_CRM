@@ -72,6 +72,23 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<decimal> CRPR_VL_PESO_BRUTO { get; set; }
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<decimal> CRPR_VL_PESO_LIQUIDO { get; set; }
+        public Nullable<int> CRPR_IN_GERAR_CR { get; set; }
+
+        public bool GeraCR
+        {
+            get
+            {
+                if (CRPR_IN_GERAR_CR == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                CRPR_IN_GERAR_CR = (value == true) ? 1 : 0;
+            }
+        }
 
         public virtual CRM CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
