@@ -759,6 +759,8 @@
           <Property Name="CARE_IN_LIQUIDA_NORMAL" Type="int" />
           <Property Name="CARE_IN_PARCIAL" Type="int" />
           <Property Name="CRMC_CD_ID" Type="int" />
+          <Property Name="CRM1_CD_ID" Type="int" />
+          <Property Name="CRPR_CD_ID" Type="int" />
         </EntityType>
         <EntityType Name="CONTA_RECEBER_ANEXO">
           <Key>
@@ -1141,6 +1143,8 @@
           <Property Name="CRPR_VL_PESO_BRUTO" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_VL_PESO_LIQUIDO" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_IN_GERAR_CR" Type="int" />
+          <Property Name="CRPR_IN_GEROU_NF" Type="int" />
+          <Property Name="CRPR_NR_NOTA_FISCAL" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
           <Key>
@@ -3946,6 +3950,30 @@
             </Principal>
             <Dependent Role="CONTA_RECEBER">
               <PropertyRef Name="COBA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTA_RECEBER_CRM">
+          <End Role="CRM" Type="Self.CRM" Multiplicity="0..1" />
+          <End Role="CONTA_RECEBER" Type="Self.CONTA_RECEBER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTA_RECEBER">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTA_RECEBER_CRM_PROPOSTA">
+          <End Role="CRM_PROPOSTA" Type="Self.CRM_PROPOSTA" Multiplicity="0..1" />
+          <End Role="CONTA_RECEBER" Type="Self.CONTA_RECEBER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_PROPOSTA">
+              <PropertyRef Name="CRPR_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTA_RECEBER">
+              <PropertyRef Name="CRPR_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8017,6 +8045,14 @@
             <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
             <End Role="CONTA_RECEBER" EntitySet="CONTA_RECEBER" />
           </AssociationSet>
+          <AssociationSet Name="FK_CONTA_RECEBER_CRM" Association="Self.FK_CONTA_RECEBER_CRM">
+            <End Role="CRM" EntitySet="CRM" />
+            <End Role="CONTA_RECEBER" EntitySet="CONTA_RECEBER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTA_RECEBER_CRM_PROPOSTA" Association="Self.FK_CONTA_RECEBER_CRM_PROPOSTA">
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+            <End Role="CONTA_RECEBER" EntitySet="CONTA_RECEBER" />
+          </AssociationSet>
           <AssociationSet Name="FK_CONTA_RECEBER_FILIAL" Association="Self.FK_CONTA_RECEBER_FILIAL">
             <End Role="FILIAL" EntitySet="FILIAL" />
             <End Role="CONTA_RECEBER" EntitySet="CONTA_RECEBER" />
@@ -10157,6 +10193,10 @@
           <Property Name="CARE_IN_LIQUIDA_NORMAL" Type="Int32" />
           <Property Name="CARE_IN_PARCIAL" Type="Int32" />
           <Property Name="CRMC_CD_ID" Type="Int32" />
+          <Property Name="CRM1_CD_ID" Type="Int32" />
+          <NavigationProperty Name="CRM" Relationship="ERP_CRMModel.FK_CONTA_RECEBER_CRM" FromRole="CONTA_RECEBER" ToRole="CRM" />
+          <Property Name="CRPR_CD_ID" Type="Int32" />
+          <NavigationProperty Name="CRM_PROPOSTA" Relationship="ERP_CRMModel.FK_CONTA_RECEBER_CRM_PROPOSTA" FromRole="CONTA_RECEBER" ToRole="CRM_PROPOSTA" />
         </EntityType>
         <EntityType Name="CONTA_RECEBER_ANEXO">
           <Key>
@@ -10252,6 +10292,7 @@
           <Property Name="CRM1_VL_VALOR_FINAL" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="CRM_PEDIDO_VENDA" Relationship="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_CRM" FromRole="CRM" ToRole="CRM_PEDIDO_VENDA" />
           <Property Name="CRM1_NR_ATRASO" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="CONTA_RECEBER" Relationship="ERP_CRMModel.FK_CONTA_RECEBER_CRM" FromRole="CRM" ToRole="CONTA_RECEBER" />
         </EntityType>
         <EntityType Name="CRM_ACAO">
           <Key>
@@ -17672,6 +17713,14 @@
             <End Role="FORMA_FRETE" EntitySet="FORMA_FRETE" />
             <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
           </AssociationSet>
+          <AssociationSet Name="FK_CONTA_RECEBER_CRM" Association="ERP_CRMModel.FK_CONTA_RECEBER_CRM">
+            <End Role="CRM" EntitySet="CRM" />
+            <End Role="CONTA_RECEBER" EntitySet="CONTA_RECEBER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTA_RECEBER_CRM_PROPOSTA" Association="ERP_CRMModel.FK_CONTA_RECEBER_CRM_PROPOSTA">
+            <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
+            <End Role="CONTA_RECEBER" EntitySet="CONTA_RECEBER" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ATENDIMENTO_CRM">
           <Key>
@@ -18684,6 +18733,9 @@
           <Property Name="CRPR_VL_PESO_BRUTO" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_VL_PESO_LIQUIDO" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_IN_GERAR_CR" Type="Int32" />
+          <NavigationProperty Name="CONTA_RECEBER" Relationship="ERP_CRMModel.FK_CONTA_RECEBER_CRM_PROPOSTA" FromRole="CRM_PROPOSTA" ToRole="CONTA_RECEBER" />
+          <Property Name="CRPR_IN_GEROU_NF" Type="Int32" />
+          <Property Name="CRPR_NR_NOTA_FISCAL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA_ACOMPANHAMENTO">
           <Key>
@@ -19152,6 +19204,30 @@
             </Principal>
             <Dependent Role="CRM_PROPOSTA">
               <PropertyRef Name="FOFR_CD_D" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTA_RECEBER_CRM">
+          <End Type="ERP_CRMModel.CRM" Role="CRM" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CONTA_RECEBER" Role="CONTA_RECEBER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTA_RECEBER">
+              <PropertyRef Name="CRM1_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTA_RECEBER_CRM_PROPOSTA">
+          <End Type="ERP_CRMModel.CRM_PROPOSTA" Role="CRM_PROPOSTA" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CONTA_RECEBER" Role="CONTA_RECEBER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRM_PROPOSTA">
+              <PropertyRef Name="CRPR_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTA_RECEBER">
+              <PropertyRef Name="CRPR_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -19892,6 +19968,8 @@
           <EntitySetMapping Name="CONTA_RECEBER">
             <EntityTypeMapping TypeName="ERP_CRMModel.CONTA_RECEBER">
               <MappingFragment StoreEntitySet="CONTA_RECEBER">
+                <ScalarProperty Name="CRPR_CD_ID" ColumnName="CRPR_CD_ID" />
+                <ScalarProperty Name="CRM1_CD_ID" ColumnName="CRM1_CD_ID" />
                 <ScalarProperty Name="CRMC_CD_ID" ColumnName="CRMC_CD_ID" />
                 <ScalarProperty Name="CARE_IN_PARCIAL" ColumnName="CARE_IN_PARCIAL" />
                 <ScalarProperty Name="CARE_IN_LIQUIDA_NORMAL" ColumnName="CARE_IN_LIQUIDA_NORMAL" />
@@ -22033,6 +22111,8 @@
           <EntitySetMapping Name="CRM_PROPOSTA">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_PROPOSTA">
               <MappingFragment StoreEntitySet="CRM_PROPOSTA">
+                <ScalarProperty Name="CRPR_NR_NOTA_FISCAL" ColumnName="CRPR_NR_NOTA_FISCAL" />
+                <ScalarProperty Name="CRPR_IN_GEROU_NF" ColumnName="CRPR_IN_GEROU_NF" />
                 <ScalarProperty Name="CRPR_IN_GERAR_CR" ColumnName="CRPR_IN_GERAR_CR" />
                 <ScalarProperty Name="CRPR_VL_PESO_LIQUIDO" ColumnName="CRPR_VL_PESO_LIQUIDO" />
                 <ScalarProperty Name="CRPR_VL_PESO_BRUTO" ColumnName="CRPR_VL_PESO_BRUTO" />

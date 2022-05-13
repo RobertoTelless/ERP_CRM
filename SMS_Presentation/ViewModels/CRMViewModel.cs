@@ -53,6 +53,12 @@ namespace ERP_CRM_Solution.ViewModels
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<decimal> CRM1_VL_VALOR_FINAL { get; set; }
 
+        public string NumeroProposta { get; set; }
+        public string NomeProposta { get; set; }
+        public Nullable<System.DateTime> DataProposta { get; set; }
+        public Nullable<System.DateTime> DataAprovacao { get; set; }
+        public Nullable<decimal> ValorTotal { get; set; }
+
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

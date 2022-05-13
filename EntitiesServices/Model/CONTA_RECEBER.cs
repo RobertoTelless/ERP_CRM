@@ -64,6 +64,8 @@ namespace EntitiesServices.Model
         public Nullable<int> CARE_IN_LIQUIDA_NORMAL { get; set; }
         public Nullable<int> CARE_IN_PARCIAL { get; set; }
         public Nullable<int> CRMC_CD_ID { get; set; }
+        public Nullable<int> CRM1_CD_ID { get; set; }
+        public Nullable<int> CRPR_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CENTRO_CUSTO CENTRO_CUSTO { get; set; }
@@ -79,5 +81,7 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_RECEBER_RATEIO> CONTA_RECEBER_RATEIO { get; set; }
         public virtual USUARIO USUARIO { get; set; }
+        public virtual CRM CRM { get; set; }
+        public virtual CRM_PROPOSTA CRM_PROPOSTA { get; set; }
     }
 }

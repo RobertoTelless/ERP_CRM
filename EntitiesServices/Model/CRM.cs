@@ -25,6 +25,7 @@ namespace EntitiesServices.Model
             this.AGENDA = new HashSet<AGENDA>();
             this.CRM_PROPOSTA = new HashSet<CRM_PROPOSTA>();
             this.CRM_PEDIDO_VENDA = new HashSet<CRM_PEDIDO_VENDA>();
+            this.CONTA_RECEBER = new HashSet<CONTA_RECEBER>();
         }
     
         public int CRM1_CD_ID { get; set; }
@@ -80,5 +81,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
     }
 }

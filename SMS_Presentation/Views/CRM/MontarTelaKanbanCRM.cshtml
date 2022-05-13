@@ -117,9 +117,16 @@
                                 @Html.ButtonLinkIndex(text: "Novo Processo", controller: "CRM", action: "IncluirProcessoCRM")
                                 @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "CRM", action: "GerarRelatorioListaCRM")
                                 @Html.ButtonLinkIndex(text: "Visualização Lista", controller: "CRM", action: "MontarTelaCRM")
-                                @Html.ButtonLinkIndex(text: "Ações do Usuário", controller: "CRM", action: "VerAcoesUsuarioCRM")
+                                @Html.ButtonLinkIndex(text: "Ações do Usuário", controller: "CRM", action: "VerAcoesUsuarioCRMPrevia")
+                                @if ((Int32)Session["PermCRM"] == 1)
+                                {
+                                    @Html.ButtonLinkIndex(text: "Propostas", action: "VerPropostasUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
+                                }
+                                @if ((Int32)Session["PermVenda"] == 1)
+                                {
+                                    @Html.ButtonLinkIndex(text: "Pedidos", action: "VerPedidosUsuarioCRM", controller: "CRM", buttonClass: "primary")
+                                }
                                 @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
-                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "CRM", action: "Voltar")
                             </div>
                         </div>
                     </div>
@@ -387,7 +394,7 @@
                     if (e.CRM1_IN_STATUS == 5) { // encerrado
                         var element1 = $('<li class="ui-sortable-handle" data-id="' + e.CRM1_CD_ID + '">'
                             + '<h5 style="color: green">' + e.CRM1_NM_CLIENTE + '</h5>'
-                            + '<h5 style="text-decoration: underline" onclick="redirectEditar(' + e.CRM1_CD_ID + ')">' + e.CRM1_NM_NOME + '</h5>'
+                            + '<h5 style="text-decoration: underline" onclick="redirectEditarTravado(' + e.CRM1_CD_ID + ')">' + e.CRM1_NM_NOME + '</h5>'
                             + '<div class="agile-detail">'
                             + '<i class="fa fa-clock-o"></i>'
                             + ' Início: ' + e.CRM1_DT_CRIACAO
@@ -437,6 +444,9 @@
 
         function redirectEditar(id) {
             window.open("/CRM/AcompanhamentoProcessoCRM/" + id, '_self');
+        }
+        function redirectEditarTravado(id) {
+            window.open("/CRM/VisualizarProcessoCRM/" + id, '_self');
         }
 
         function EditarStatus(id, status) {

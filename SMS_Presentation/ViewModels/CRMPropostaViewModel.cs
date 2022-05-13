@@ -74,6 +74,11 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<decimal> CRPR_VL_PESO_LIQUIDO { get; set; }
         public Nullable<int> CRPR_IN_GERAR_CR { get; set; }
 
+        public string NumeroProposta { get; set; }
+        public string NomeProposta { get; set; }
+        public Nullable<System.DateTime> DataProposta { get; set; }
+        public Nullable<System.DateTime> DataAprovacao { get; set; }
+
         public bool GeraCR
         {
             get

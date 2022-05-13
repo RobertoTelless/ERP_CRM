@@ -117,7 +117,15 @@
                                 @Html.ButtonLinkIndex(text: "Novo Processo", controller: "CRM", action: "IncluirProcessoCRM")
                                 @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "CRM", action: "GerarRelatorioListaCRM")
                                 @Html.ButtonLinkIndex(text: "Visualização Kanban", controller: "CRM", action: "MontarTelaKanbanCRM")
-                                @Html.ButtonLinkIndex(text: "Ações do Usuário", controller: "CRM", action: "VerAcoesUsuarioCRM")
+                                @Html.ButtonLinkIndex(text: "Ações do Usuário", controller: "CRM", action: "VerAcoesUsuarioCRMPrevia")
+                                @if ((Int32)Session["PermCRM"] == 1)
+                                {
+                                    @Html.ButtonLinkIndex(text: "Propostas", action: "VerPropostasUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
+                                }
+                                @if ((Int32)Session["PermVenda"] == 1)
+                                {
+                                    @Html.ButtonLinkIndex(text: "Pedidos", action: "VerPedidosUsuarioCRM", controller: "CRM", buttonClass: "primary")
+                                }
                                 @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM")                
                             </div>
                         </div>
@@ -278,11 +286,11 @@
                                             <td class="td-one-action">
                                                 @if (cond.CRM1_IN_ATIVO == 3 || cond.CRM1_IN_ATIVO == 4 || cond.CRM1_IN_ATIVO == 5)
                                                 {
-                                                    @Html.TableLinkDetails(cond.CLIE_CD_ID, "VisualizarProcessoCRM", "fa-search", "Consultar")
+                                                    @Html.TableLinkDetails(cond.CRM1_CD_ID, "VisualizarProcessoCRM", "fa-search", "Consultar")
                                                 }
                                                 else if (cond.CRM1_IN_ATIVO == 2)
                                                 {
-                                                    @Html.TableLinkDetails(cond.CLIE_CD_ID, "VisualizarProcessoCRM", "fa-search", "Consultar")
+                                                    @Html.TableLinkDetails(cond.CRM1_CD_ID, "VisualizarProcessoCRM", "fa-search", "Consultar")
                                                     <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/CRM/ReativarProcesso/@cond.CRM1_CD_ID')" title="Reativar"></span>
                                                 }
                                                 else
@@ -298,13 +306,13 @@
                                                         }
                                                         else
                                                         {
-                                                            @Html.TableLinkDetails(cond.CLIE_CD_ID, "VisualizarProcessoCRM", "fa-search", "Consultar")
+                                                            @Html.TableLinkDetails(cond.CRM1_CD_ID, "VisualizarProcessoCRM", "fa-search", "Consultar")
                                                         }
 
                                                     }
                                                     else
                                                     {
-                                                        @Html.TableLinkDetails(cond.CLIE_CD_ID, "VisualizarProcessoCRM", "fa-search", "Consultar")
+                                                        @Html.TableLinkDetails(cond.CRM1_CD_ID, "VisualizarProcessoCRM", "fa-search", "Consultar")
                                                     }
                                                 }
                                             </td>

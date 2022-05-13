@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -145,6 +145,9 @@ namespace ERP_CRM_Solution.Controllers
             adic.Add(new SelectListItem() { Text = "Cancelados", Value = "3" });
             adic.Add(new SelectListItem() { Text = "Falhados", Value = "4" });
             adic.Add(new SelectListItem() { Text = "Sucesso", Value = "5" });
+            adic.Add(new SelectListItem() { Text = "Faturamento", Value = "6" });
+            adic.Add(new SelectListItem() { Text = "Expedição", Value = "7" });
+            adic.Add(new SelectListItem() { Text = "Entregue", Value = "8" });
             ViewBag.Adic = new SelectList(adic, "Value", "Text");
             List<SelectListItem> fav = new List<SelectListItem>();
             fav.Add(new SelectListItem() { Text = "Sim", Value = "1" });
@@ -280,6 +283,9 @@ namespace ERP_CRM_Solution.Controllers
             adic.Add(new SelectListItem() { Text = "Cancelados", Value = "3" });
             adic.Add(new SelectListItem() { Text = "Falhados", Value = "4" });
             adic.Add(new SelectListItem() { Text = "Sucesso", Value = "5" });
+            adic.Add(new SelectListItem() { Text = "Faturamento", Value = "6" });
+            adic.Add(new SelectListItem() { Text = "Expedição", Value = "7" });
+            adic.Add(new SelectListItem() { Text = "Entregue", Value = "8" });
             ViewBag.Adic = new SelectList(adic, "Value", "Text");
             List<SelectListItem> fav = new List<SelectListItem>();
             fav.Add(new SelectListItem() { Text = "Sim", Value = "1" });
@@ -338,7 +344,7 @@ namespace ERP_CRM_Solution.Controllers
 
             // Abre view
             Session["IdCRM"] = null;
-            Session["VoltaCRM"] = 1;
+            Session["VoltaCRM"] = 2;
             Session["IncluirCliente"] = 0;
             objeto = new CRM();
             if (Session["FiltroCRM"] != null)
@@ -401,6 +407,10 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            if ((Int32)Session["VoltaCRM"] == 2)
+            {
+                return RedirectToAction("MontarTelaKanbanCRM", "CRM");
+            }
             if ((Int32)Session["VoltaCRMBase"] == 90)
             {
                 return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
@@ -424,6 +434,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["VoltaCRM"] = 0;
             return RedirectToAction("MontarTelaCRM");
         }
+
 
         [HttpGet]
         public ActionResult ExcluirProcesso(Int32 id)
@@ -2229,6 +2240,13 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpGet]
+        public ActionResult EncerrarProcessoChamada(Int32 id)
+        {
+            return RedirectToAction("EncerrarProcessoCRM", new { id = (Int32)Session["IdCRM"] });
+
+        }
+
+        [HttpGet]
         public ActionResult EncerrarProcessoCRM(Int32 id)
         {
             // Verifica se tem usuario logado
@@ -2320,46 +2338,47 @@ namespace ERP_CRM_Solution.Controllers
                     // Verifica se tem proposta aprovada
                     CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
                     CRM_PROPOSTA propAprov = crm.CRM_PROPOSTA.Where(p => p.CRPR_IN_STATUS == 5).FirstOrDefault();
-                    
+
+                    // Atualiza processo
+                    crm.CRM1_IN_ATIVO = 6;
+                    Int32 volta1 = baseApp.ValidateEdit(item, item, usuario);
+
                     // Verifica se gera CR                    
                     if (propAprov != null)
                     {
-                        if((Int32)Session["PermFinanceiro"] == 1)
+                        if (propAprov.CRPR_IN_GERAR_CR == 1)
                         {
-                            if (propAprov.CRPR_IN_GERAR_CR == 1)
-                            {
-                                // Monta CR
-                                CONTA_RECEBER cr = new CONTA_RECEBER();
-                                cr.ASSI_CD_ID = crm.ASSI_CD_ID;
-                                cr.CARE_DS_DESCRICAO = "Lançamento gerado pelo processo " + crm.CRM1_NM_NOME;
-                                cr.CARE_DT_COMPETENCIA = DateTime.Today.Date;
-                                cr.CARE_DT_LANCAMENTO = DateTime.Today.Date;
-                                cr.CARE_DT_VENCIMENTO = DateTime.Today.Date.AddDays(30);
-                                cr.CARE_IN_ABERTOS = 0;
-                                cr.CARE_IN_ATIVO = 1;
-                                cr.CARE_IN_LIQUIDADA = 0;
-                                cr.CARE_IN_LIQUIDA_NORMAL = 0;
-                                cr.CARE_IN_PAGA_PARCIAL = 0;
-                                cr.CARE_IN_PARCELADA = 0;
-                                cr.CARE_IN_PARCELAS = 0;
-                                cr.CARE_IN_PARCIAL = 0;
-                                cr.CARE_IN_TIPO_LANCAMENTO = 1;
-                                cr.CARE_VL_DESCONTO = propAprov.CRPR_VL_DESCONTO;
-                                cr.CARE_VL_JUROS = 0;
-                                cr.CARE_VL_PARCELADO = 0;
-                                cr.CARE_VL_PARCIAL = 0;
-                                cr.CARE_VL_SALDO = propAprov.CRPR_VL_VALOR;
-                                cr.CARE_VL_TAXAS = propAprov.CRPR_VL_ICMS + propAprov.CRPR_VL_IPI;
-                                cr.CARE_VL_VALOR = propAprov.CRPR_VL_VALOR.Value;
-                                cr.CARE_VL_VALOR_LIQUIDADO = 0;
-                                cr.CARE_VL_VALOR_RECEBIDO = 0;
-                                cr.CLIE_CD_ID = crm.CLIE_CD_ID;
-                                cr.COBA_CD_ID = cbApp.GetContaPadrao(idAss).COBA_CD_ID;
-                                cr.USUA_CD_ID = crm.USUA_CD_ID;
+                            // Monta CR
+                            CONTA_RECEBER cr = new CONTA_RECEBER();
+                            cr.ASSI_CD_ID = crm.ASSI_CD_ID;
+                            cr.CARE_DS_DESCRICAO = "Lançamento gerado pelo processo " + crm.CRM1_NM_NOME;
+                            cr.CARE_DT_COMPETENCIA = DateTime.Today.Date;
+                            cr.CARE_DT_LANCAMENTO = DateTime.Today.Date;
+                            cr.CARE_DT_VENCIMENTO = DateTime.Today.Date.AddDays(30);
+                            cr.CARE_IN_ABERTOS = 0;
+                            cr.CARE_IN_ATIVO = 1;
+                            cr.CARE_IN_LIQUIDADA = 0;
+                            cr.CARE_IN_LIQUIDA_NORMAL = 0;
+                            cr.CARE_IN_PAGA_PARCIAL = 0;
+                            cr.CARE_IN_PARCELADA = 0;
+                            cr.CARE_IN_PARCELAS = 0;
+                            cr.CARE_IN_PARCIAL = 0;
+                            cr.CARE_IN_TIPO_LANCAMENTO = 1;
+                            cr.CARE_VL_DESCONTO = propAprov.CRPR_VL_DESCONTO;
+                            cr.CARE_VL_JUROS = 0;
+                            cr.CARE_VL_PARCELADO = 0;
+                            cr.CARE_VL_PARCIAL = 0;
+                            cr.CARE_VL_SALDO = propAprov.CRPR_VL_VALOR;
+                            cr.CARE_VL_TAXAS = propAprov.CRPR_VL_ICMS + propAprov.CRPR_VL_IPI;
+                            cr.CARE_VL_VALOR = propAprov.CRPR_VL_VALOR.Value;
+                            cr.CARE_VL_VALOR_LIQUIDADO = 0;
+                            cr.CARE_VL_VALOR_RECEBIDO = 0;
+                            cr.CLIE_CD_ID = crm.CLIE_CD_ID;
+                            cr.COBA_CD_ID = cbApp.GetContaPadrao(idAss).COBA_CD_ID;
+                            cr.USUA_CD_ID = crm.USUA_CD_ID;
 
-                                // Grava CR
-                                Int32 voltaCR = crApp.ValidateCreate(cr, 0, null, usuario);
-                            }
+                            // Grava CR
+                            Int32 voltaCR = crApp.ValidateCreate(cr, 0, null, usuario);
                         }
                     }
 
@@ -2381,6 +2400,51 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return View(vm);
             }
+        }
+
+        public ActionResult GerarLancamentoReceber()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            CRM crm = baseApp.GetItemById((Int32)Session["IdCRM"]);
+            CRM_PROPOSTA propAprov = (CRM_PROPOSTA)Session["PropAprov"];
+
+            // Monta CR
+            CONTA_RECEBER cr = new CONTA_RECEBER();
+            cr.ASSI_CD_ID = crm.ASSI_CD_ID;
+            cr.CARE_DS_DESCRICAO = "Lançamento gerado pelo processo " + crm.CRM1_NM_NOME;
+            cr.CARE_DT_COMPETENCIA = DateTime.Today.Date;
+            cr.CARE_DT_LANCAMENTO = DateTime.Today.Date;
+            cr.CARE_DT_VENCIMENTO = DateTime.Today.Date.AddDays(30);
+            cr.CARE_IN_ABERTOS = 0;
+            cr.CARE_IN_ATIVO = 1;
+            cr.CARE_IN_LIQUIDADA = 0;
+            cr.CARE_IN_LIQUIDA_NORMAL = 0;
+            cr.CARE_IN_PAGA_PARCIAL = 0;
+            cr.CARE_IN_PARCELADA = 0;
+            cr.CARE_IN_PARCELAS = 0;
+            cr.CARE_IN_PARCIAL = 0;
+            cr.CARE_IN_TIPO_LANCAMENTO = 1;
+            cr.CARE_VL_DESCONTO = propAprov.CRPR_VL_DESCONTO;
+            cr.CARE_VL_JUROS = 0;
+            cr.CARE_VL_PARCELADO = 0;
+            cr.CARE_VL_PARCIAL = 0;
+            cr.CARE_VL_SALDO = propAprov.CRPR_VL_VALOR;
+            cr.CARE_VL_TAXAS = propAprov.CRPR_VL_ICMS + propAprov.CRPR_VL_IPI;
+            cr.CARE_VL_VALOR = propAprov.CRPR_VL_VALOR.Value;
+            cr.CARE_VL_VALOR_LIQUIDADO = 0;
+            cr.CARE_VL_VALOR_RECEBIDO = 0;
+            cr.CLIE_CD_ID = crm.CLIE_CD_ID;
+            cr.COBA_CD_ID = cbApp.GetContaPadrao(idAss).COBA_CD_ID;
+            cr.USUA_CD_ID = crm.USUA_CD_ID;
+
+            // Grava CR
+            Int32 voltaCR = crApp.ValidateCreate(cr, 0, null, usuario);
+            return RedirectToAction("VoltaAcompanhamentoCRM");
         }
 
         [HttpGet]
@@ -2425,6 +2489,8 @@ namespace ERP_CRM_Solution.Controllers
             adic.Add(new SelectListItem() { Text = "Cancelados", Value = "3" });
             adic.Add(new SelectListItem() { Text = "Falhados", Value = "4" });
             adic.Add(new SelectListItem() { Text = "Sucesso", Value = "5" });
+            adic.Add(new SelectListItem() { Text = "Faturamento", Value = "6" });
+            adic.Add(new SelectListItem() { Text = "Expedição", Value = "7" });
             ViewBag.Adic = new SelectList(adic, "Value", "Text");
             List<SelectListItem> fav = new List<SelectListItem>();
             fav.Add(new SelectListItem() { Text = "Sim", Value = "1" });
@@ -2580,6 +2646,12 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
+            List<SelectListItem> temp = new List<SelectListItem>();
+            temp.Add(new SelectListItem() { Text = "Fria", Value = "1" });
+            temp.Add(new SelectListItem() { Text = "Morna", Value = "2" });
+            temp.Add(new SelectListItem() { Text = "Quente", Value = "3" });
+            temp.Add(new SelectListItem() { Text = "Muito Quente", Value = "4" });
+            ViewBag.Temp = new SelectList(temp, "Value", "Text");
             Session["IdCRM"] = id;
             CRM item = baseApp.GetItemById(id);
             CRMViewModel vm = Mapper.Map<CRM, CRMViewModel>(item);
@@ -2902,6 +2974,35 @@ namespace ERP_CRM_Solution.Controllers
             List<CRM_PEDIDO_VENDA> peds = item.CRM_PEDIDO_VENDA.ToList().OrderByDescending(p => p.CRPV_DT_PEDIDO).ToList();
             CRM_PEDIDO_VENDA ped = peds.Where(p => p.CRPV_IN_STATUS == 2 || p.CRPV_IN_STATUS == 1).FirstOrDefault();
 
+            CRM_PROPOSTA propAprov = item.CRM_PROPOSTA.Where(p => p.CRPR_IN_STATUS == 5 & p.CRPR_IN_ATIVO == 1).FirstOrDefault();
+            Session["PropAprov"] = propAprov;
+            ViewBag.PropAprov = propAprov;
+
+            List<CONTA_RECEBER> cr = new List<CONTA_RECEBER>();
+            if (propAprov != null)
+            {
+                cr = crApp.GetAllItens(idAss).Where(p => p.CRPR_CD_ID == propAprov.CRPR_CD_ID & p.CARE_IN_ATIVO == 1).ToList();
+                ViewBag.CR = cr;
+                ViewBag.TemCR = cr.Count > 0 ? 1 : 0;
+                ViewBag.TemNF = 0;
+                vm.NumeroProposta = propAprov.CRPR_NR_NUMERO;
+                vm.DataProposta = propAprov.CRPR_DT_PROPOSTA;
+                vm.DataAprovacao = propAprov.CRPR_DT_APROVACAO;
+                vm.NomeProposta = propAprov.CRPR_TX_TEXTO;
+                vm.ValorTotal = propAprov.CRPR_VL_TOTAL;
+            }
+            else
+            {
+                ViewBag.CR = cr;
+                ViewBag.TemCR = 0;
+                ViewBag.TemNF =0;
+                vm.NumeroProposta = "-";
+                vm.DataProposta = null;
+                vm.DataAprovacao = null;
+                vm.NomeProposta = "-";
+                vm.ValorTotal = 0;
+            }
+
             Session["Acoes"] = acoes;
             Session["Props"] = props;
             Session["Peds"] = peds;
@@ -2917,6 +3018,7 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Ped = ped;
             Session["PontoAcao"] = 2;
             Session["PontoProposta"] = 2;
+
             return View(vm);
         }
 
@@ -5231,6 +5333,7 @@ namespace ERP_CRM_Solution.Controllers
             List<CRM_ACAO> acoesPend = acoes.Where(p => p.CRAC_IN_STATUS == 1).ToList();
             List<CLIENTE> cli = cliApp.GetAllItens(idAss);
             List<CRM_PROPOSTA> props = baseApp.GetAllPropostas(idAss);
+            List<CRM_PROPOSTA> lmp = props.Where(p => p.CRPR_DT_PROPOSTA.Month == DateTime.Today.Date.Month & p.CRPR_DT_PROPOSTA.Year == DateTime.Today.Date.Year).ToList();
 
             // Estatisticas 
             ViewBag.Total = lt.Count;
@@ -5255,6 +5358,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["ListaCRMCanc"] = lc;
             Session["ListaCRMAcoes"] = acoes;
             Session["ListaCRMAcoesPend"] = acoesPend;
+            Session["ListaPropostaMes"] = lmp;
 
             Session["CRMAtivos"] = la.Count;
             Session["CRMArquivados"] = lq.Count;
@@ -5296,6 +5400,22 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.ContaCRMMes = lm.Count;
             Session["ListaDatasCRM"] = datas;
             Session["ListaCRMMesResumo"] = lista;
+
+            // Resumo Mes Prposta
+            List<DateTime> datasProp = lmp.Select(p => p.CRPR_DT_PROPOSTA.Date).Distinct().ToList();
+            List<ModeloViewModel> listaProp = new List<ModeloViewModel>();
+            foreach (DateTime item in datasProp)
+            {
+                Int32 conta = lmp.Where(p => p.CRPR_DT_PROPOSTA.Date == item).Count();
+                ModeloViewModel mod = new ModeloViewModel();
+                mod.DataEmissao = item;
+                mod.Valor = conta;
+                lista.Add(mod);
+            }
+            ViewBag.ListaPropostaMes = lista;
+            ViewBag.ContaPropostaMes = lmp.Count;
+            Session["ListaDatasProp"] = datasProp;
+            Session["ListaPropostaMesResumo"] = lista;
 
             // Resumo Situacao CRM 
             List<ModeloViewModel> lista1 = new List<ModeloViewModel>();
@@ -5497,6 +5617,30 @@ namespace ERP_CRM_Solution.Controllers
             {
                 listaDia = listaCP1.Where(p => p.CRM1_DT_CRIACAO.Value.Date == item).ToList();
                 Int32 contaDia = listaDia.Count();
+                dias.Add(item.ToShortDateString());
+                valor.Add(contaDia);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoProposta()
+        {
+            List<CRM_PROPOSTA> listaCP1 = (List<CRM_PROPOSTA>)Session["ListaPropostaMes"];
+            List<DateTime> datas = (List<DateTime>)Session["ListaDatasProp"];
+            List<CRM_PROPOSTA> listaDia = new List<CRM_PROPOSTA>();
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (DateTime item in datas)
+            {
+                listaDia = listaCP1.Where(p => p.CRPR_DT_PROPOSTA.Date == item).ToList();
+                Int32 contaDia = listaDia.Count;
                 dias.Add(item.ToShortDateString());
                 valor.Add(contaDia);
             }
@@ -5906,11 +6050,6 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VoltarAcompanhamentoCRM");
         }
 
-        public ActionResult CancelarPropostaEdicao()
-        {
-            return RedirectToAction("CancelarProposta", new { id = (Int32)Session["IdCRMProposta"] });
-        }
-
         [HttpGet]
         public ActionResult CancelarProposta(Int32 id)
         {
@@ -6223,6 +6362,11 @@ namespace ERP_CRM_Solution.Controllers
             {
                 Session["TemProp"] = 1;
             }
+            Session["TemPropAprov"] = 0;
+            if (lp.Where(p => p.CRPR_IN_STATUS == 5).ToList().Count > 0)
+            {
+                Session["TemPropAprov"] = 1;
+            }
 
             // Mensagens
             Session["VoltaComentProposta"] = 4;
@@ -6366,7 +6510,7 @@ namespace ERP_CRM_Solution.Controllers
             Int32 volta = baseApp.ValidateEditProposta(item);
             return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
         }
-
+      
         [ValidateInput(false)]
         public ActionResult VerProposta(Int32 id)
         {
@@ -6408,6 +6552,12 @@ namespace ERP_CRM_Solution.Controllers
         public ActionResult EnviarPropostaEdicao()
         {
             return RedirectToAction("EnviarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+        }
+
+        public ActionResult VerPropostaEdita()
+        {
+            Session["PontoProposta"] = 77;
+            return RedirectToAction("VerProposta", new { id = (Int32)Session["IdCRMProposta"] });
         }
 
         [HttpGet]
@@ -6506,13 +6656,6 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
-                    // Checa template
-                    if (vm.TEPR_CD_ID == null)
-                    {
-                        Session["MensCRM"] = 77;
-                        return View(vm);
-                    }
-
                     // Executa a operação
                     CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
@@ -6540,6 +6683,11 @@ namespace ERP_CRM_Solution.Controllers
                     if (volta == 3)
                     {
                         Session["MensCRM"] = 72;
+                        return View(vm);
+                    }
+                    if (volta == 7)
+                    {
+                        Session["MensCRM"] = 77;
                         return View(vm);
                     }
 

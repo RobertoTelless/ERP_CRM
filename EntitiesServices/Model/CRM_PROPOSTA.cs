@@ -19,6 +19,7 @@ namespace EntitiesServices.Model
         {
             this.CRM_PROPOSTA_ACOMPANHAMENTO = new HashSet<CRM_PROPOSTA_ACOMPANHAMENTO>();
             this.CRM_PROPOSTA_ANEXO = new HashSet<CRM_PROPOSTA_ANEXO>();
+            this.CONTA_RECEBER = new HashSet<CONTA_RECEBER>();
         }
     
         public int CRPR_CD_ID { get; set; }
@@ -60,6 +61,8 @@ namespace EntitiesServices.Model
         public Nullable<decimal> CRPR_VL_PESO_BRUTO { get; set; }
         public Nullable<decimal> CRPR_VL_PESO_LIQUIDO { get; set; }
         public Nullable<int> CRPR_IN_GERAR_CR { get; set; }
+        public Nullable<int> CRPR_IN_GEROU_NF { get; set; }
+        public string CRPR_NR_NOTA_FISCAL { get; set; }
     
         public virtual CRM CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -73,5 +76,7 @@ namespace EntitiesServices.Model
         public virtual TEMPLATE_EMAIL TEMPLATE_EMAIL { get; set; }
         public virtual FORMA_ENVIO FORMA_ENVIO { get; set; }
         public virtual FORMA_FRETE FORMA_FRETE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
     }
 }
