@@ -384,10 +384,84 @@ namespace ApplicationServices.Services
                 noti.NOTI_NM_TITULO = "Alteração de Processo CRM";
                 noti.NOTI_IN_ATIVO = 1;
                 noti.NOTI_TX_TEXTO = "ATENÇÃO: O Processo CRM " + item.CRM1_NM_NOME + " do cliente " + cli.CLIE_NM_NOME + " sob sua responsabilidade, foi alterado em " + DateTime.Today.Date.ToLongDateString() + ".";
-                noti.USUA_CD_ID = item.USUA_CD_ID.Value;
+                noti.USUA_CD_ID = usuario.USUA_CD_ID;
                 noti.NOTI_IN_STATUS = 1;
                 noti.NOTI_IN_NIVEL = 1;
                 Int32 volta1 = _notiService.Create(noti);
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ValidateEditSimples(CRM item, CRM itemAntes, USUARIO usuario)
+        {
+            try
+            {
+                // Verificação
+                if (item.CRM1_DT_ENCERRAMENTO != null)
+                {
+                    if (item.CRM1_DT_ENCERRAMENTO < item.CRM1_DT_CRIACAO)
+                    {
+                        return 1;
+                    }
+                    if (item.CRM1_DT_ENCERRAMENTO > DateTime.Today.Date)
+                    {
+                        return 2;
+                    }
+                }
+                if (item.CRM1_DT_CANCELAMENTO != null)
+                {
+                    if (item.CRM1_DT_CANCELAMENTO < item.CRM1_DT_CRIACAO)
+                    {
+                        return 3;
+                    }
+                    if (item.CRM1_DT_CANCELAMENTO > DateTime.Today.Date)
+                    {
+                        return 4;
+                    }
+                }
+
+                // Serializa registro
+                CLIENTE cli = _cliService.GetItemById(item.CLIE_CD_ID);
+                String serial = item.ASSI_CD_ID.ToString() + "|" + cli.CLIE_NM_NOME + "|" + item.CRM1_CD_ID.ToString() + "|" + item.CRM1_DS_DESCRICAO + "|" + item.CRM1_DT_CRIACAO.Value.ToShortDateString() + "|" + item.CRM1_IN_ATIVO.ToString() + "|" + item.CRM1_IN_STATUS.ToString() + "|" + item.CRM1_NM_NOME;
+                String antes = itemAntes.ASSI_CD_ID.ToString() + "|" + cli.CLIE_NM_NOME + "|" + itemAntes.CRM1_CD_ID.ToString() + "|" + itemAntes.CRM1_DS_DESCRICAO + "|" + itemAntes.CRM1_DT_CRIACAO.Value.ToShortDateString() + "|" + itemAntes.CRM1_IN_ATIVO.ToString() + "|" + itemAntes.CRM1_IN_STATUS.ToString() + "|" + itemAntes.CRM1_NM_NOME;
+
+                // Monta Log
+                LOG log = new LOG();
+                if (item.CRM1_DT_CANCELAMENTO != null)
+                {
+                    log = new LOG
+                    {
+                        LOG_DT_DATA = DateTime.Now,
+                        USUA_CD_ID = usuario.USUA_CD_ID,
+                        ASSI_CD_ID = usuario.ASSI_CD_ID,
+                        LOG_NM_OPERACAO = "CancCRM",
+                        LOG_IN_ATIVO = 1,
+                        LOG_TX_REGISTRO = serial,
+                        LOG_TX_REGISTRO_ANTES = antes
+                    };
+                }
+                else
+                {
+                    log = new LOG
+                    {
+                        LOG_DT_DATA = DateTime.Now,
+                        USUA_CD_ID = usuario.USUA_CD_ID,
+                        ASSI_CD_ID = usuario.ASSI_CD_ID,
+                        LOG_NM_OPERACAO = "EditCRM",
+                        LOG_IN_ATIVO = 1,
+                        LOG_TX_REGISTRO = serial,
+                        LOG_TX_REGISTRO_ANTES = antes
+                    };
+                }
+
+                // Persiste
+                item.CLIENTE = null;
+                item.CRM_ORIGEM = null;
+                Int32 volta = _baseService.Edit(item, log);
                 return volta;
             }
             catch (Exception ex)

@@ -540,7 +540,7 @@ namespace ERP_CRM_Solution.Controllers
                         return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
                     }
 
-                    return RedirectToAction("MontarTelaAgenda");
+                    return RedirectToAction("VoltarBaseAgenda");
                 }
                 catch (Exception ex)
                 {

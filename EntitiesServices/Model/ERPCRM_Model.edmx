@@ -761,6 +761,7 @@
           <Property Name="CRMC_CD_ID" Type="int" />
           <Property Name="CRM1_CD_ID" Type="int" />
           <Property Name="CRPR_CD_ID" Type="int" />
+          <Property Name="CARE_VL_TOTAL" Type="decimal" Precision="21" Scale="2" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CONTA_RECEBER_ANEXO">
           <Key>
@@ -10197,6 +10198,7 @@
           <NavigationProperty Name="CRM" Relationship="ERP_CRMModel.FK_CONTA_RECEBER_CRM" FromRole="CONTA_RECEBER" ToRole="CRM" />
           <Property Name="CRPR_CD_ID" Type="Int32" />
           <NavigationProperty Name="CRM_PROPOSTA" Relationship="ERP_CRMModel.FK_CONTA_RECEBER_CRM_PROPOSTA" FromRole="CONTA_RECEBER" ToRole="CRM_PROPOSTA" />
+          <Property Name="CARE_VL_TOTAL" Type="Decimal" Precision="21" Scale="2" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CONTA_RECEBER_ANEXO">
           <Key>
@@ -19968,6 +19970,7 @@
           <EntitySetMapping Name="CONTA_RECEBER">
             <EntityTypeMapping TypeName="ERP_CRMModel.CONTA_RECEBER">
               <MappingFragment StoreEntitySet="CONTA_RECEBER">
+                <ScalarProperty Name="CARE_VL_TOTAL" ColumnName="CARE_VL_TOTAL" />
                 <ScalarProperty Name="CRPR_CD_ID" ColumnName="CRPR_CD_ID" />
                 <ScalarProperty Name="CRM1_CD_ID" ColumnName="CRM1_CD_ID" />
                 <ScalarProperty Name="CRMC_CD_ID" ColumnName="CRMC_CD_ID" />

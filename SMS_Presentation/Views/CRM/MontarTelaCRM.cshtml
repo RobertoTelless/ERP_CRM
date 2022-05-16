@@ -263,6 +263,18 @@
                                             {
                                                 <td><span class="badge badge-success">Sucesso</span></td>
                                             }
+                                            else if (cond.CRM1_IN_ATIVO == 6)
+                                            {
+                                                <td><span class="badge badge-success">Faturamento</span></td>
+                                            }
+                                            else if (cond.CRM1_IN_ATIVO == 7)
+                                            {
+                                                <td><span class="badge badge-success">Expedição</span></td>
+                                            }
+                                            else if (cond.CRM1_IN_ATIVO == 8)
+                                            {
+                                                <td><span class="badge badge-primary">Entregue</span></td>
+                                            }
                                             @if (cond.CRM1_NR_TEMPERATURA == 1)
 	                                        {
                                                 <td><span class="badge badge-success">Fria</span></td>
@@ -284,7 +296,7 @@
                                                 <td><span class="badge badge-info">Não Definida</span></td>
                                             }
                                             <td class="td-one-action">
-                                                @if (cond.CRM1_IN_ATIVO == 3 || cond.CRM1_IN_ATIVO == 4 || cond.CRM1_IN_ATIVO == 5)
+                                                @if (cond.CRM1_IN_ATIVO == 3 || cond.CRM1_IN_ATIVO == 4 || cond.CRM1_IN_ATIVO == 8)
                                                 {
                                                     @Html.TableLinkDetails(cond.CRM1_CD_ID, "VisualizarProcessoCRM", "fa-search", "Consultar")
                                                 }
@@ -292,7 +304,7 @@
                                                 {
                                                     @Html.TableLinkDetails(cond.CRM1_CD_ID, "VisualizarProcessoCRM", "fa-search", "Consultar")
                                                     <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/CRM/ReativarProcesso/@cond.CRM1_CD_ID')" title="Reativar"></span>
-                                                }
+                                                }                                             
                                                 else
                                                 {
                                                     if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER"  || ViewBag.Perfil == "OPR" )
@@ -306,7 +318,7 @@
                                                         }
                                                         else
                                                         {
-                                                            @Html.TableLinkDetails(cond.CRM1_CD_ID, "VisualizarProcessoCRM", "fa-search", "Consultar")
+                                                            @Html.TableLinkDetails(cond.CRM1_CD_ID, "AcompanhamentoProcessoCRM", "fa-cubes", "Acompanhar")
                                                         }
 
                                                     }

@@ -137,7 +137,7 @@ namespace ERP_CRM_Solution.Controllers
             status.Add(new SelectListItem() { Text = "Contato Realizado", Value = "2" });
             status.Add(new SelectListItem() { Text = "Proposta Apresentada", Value = "3" });
             status.Add(new SelectListItem() { Text = "Negociação", Value = "4" });
-            status.Add(new SelectListItem() { Text = "Encerrado", Value = "5" });
+            status.Add(new SelectListItem() { Text = "Concluído", Value = "5" });
             ViewBag.Status = new SelectList(status, "Value", "Text");
             List<SelectListItem> adic = new List<SelectListItem>();
             adic.Add(new SelectListItem() { Text = "Ativos", Value = "1" });
@@ -2308,6 +2308,7 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            
             ViewBag.Motivos = new SelectList(baseApp.GetAllMotivoEncerramento(idAss).OrderBy(p => p.MOEN_NM_NOME), "MOEN_CD_ID", "MOEN_NM_NOME");
             List<SelectListItem> adic = new List<SelectListItem>();
             adic.Add(new SelectListItem() { Text = "Falhado", Value = "4" });
@@ -2335,50 +2336,61 @@ namespace ERP_CRM_Solution.Controllers
                         return RedirectToAction("MontarTelaCRM");
                     }
 
-                    // Verifica se tem proposta aprovada
-                    CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
-                    CRM_PROPOSTA propAprov = crm.CRM_PROPOSTA.Where(p => p.CRPR_IN_STATUS == 5).FirstOrDefault();
-
                     // Atualiza processo
-                    crm.CRM1_IN_ATIVO = 6;
-                    Int32 volta1 = baseApp.ValidateEdit(item, item, usuario);
+                    item.CRM1_IN_STATUS = 5;
+                    Int32 volta1 = baseApp.ValidateEditSimples(item, item, usuario);
 
-                    // Verifica se gera CR                    
-                    if (propAprov != null)
+                    // Verifica se tem proposta aprovada
+                    if (item.CRM1_IN_ATIVO == 5)
                     {
-                        if (propAprov.CRPR_IN_GERAR_CR == 1)
-                        {
-                            // Monta CR
-                            CONTA_RECEBER cr = new CONTA_RECEBER();
-                            cr.ASSI_CD_ID = crm.ASSI_CD_ID;
-                            cr.CARE_DS_DESCRICAO = "Lançamento gerado pelo processo " + crm.CRM1_NM_NOME;
-                            cr.CARE_DT_COMPETENCIA = DateTime.Today.Date;
-                            cr.CARE_DT_LANCAMENTO = DateTime.Today.Date;
-                            cr.CARE_DT_VENCIMENTO = DateTime.Today.Date.AddDays(30);
-                            cr.CARE_IN_ABERTOS = 0;
-                            cr.CARE_IN_ATIVO = 1;
-                            cr.CARE_IN_LIQUIDADA = 0;
-                            cr.CARE_IN_LIQUIDA_NORMAL = 0;
-                            cr.CARE_IN_PAGA_PARCIAL = 0;
-                            cr.CARE_IN_PARCELADA = 0;
-                            cr.CARE_IN_PARCELAS = 0;
-                            cr.CARE_IN_PARCIAL = 0;
-                            cr.CARE_IN_TIPO_LANCAMENTO = 1;
-                            cr.CARE_VL_DESCONTO = propAprov.CRPR_VL_DESCONTO;
-                            cr.CARE_VL_JUROS = 0;
-                            cr.CARE_VL_PARCELADO = 0;
-                            cr.CARE_VL_PARCIAL = 0;
-                            cr.CARE_VL_SALDO = propAprov.CRPR_VL_VALOR;
-                            cr.CARE_VL_TAXAS = propAprov.CRPR_VL_ICMS + propAprov.CRPR_VL_IPI;
-                            cr.CARE_VL_VALOR = propAprov.CRPR_VL_VALOR.Value;
-                            cr.CARE_VL_VALOR_LIQUIDADO = 0;
-                            cr.CARE_VL_VALOR_RECEBIDO = 0;
-                            cr.CLIE_CD_ID = crm.CLIE_CD_ID;
-                            cr.COBA_CD_ID = cbApp.GetContaPadrao(idAss).COBA_CD_ID;
-                            cr.USUA_CD_ID = crm.USUA_CD_ID;
+                        CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
+                        CRM_PROPOSTA propAprov = crm.CRM_PROPOSTA.Where(p => p.CRPR_IN_STATUS == 5).FirstOrDefault();
+                        Int32 idCRM = crm.CRM1_CD_ID;
 
-                            // Grava CR
-                            Int32 voltaCR = crApp.ValidateCreate(cr, 0, null, usuario);
+                        // Verifica se gera CR                    
+                        if (propAprov != null)
+                        {
+                            if (propAprov.CRPR_IN_GERAR_CR == 1)
+                            {
+                                // Monta CR
+                                CONTA_RECEBER cr = new CONTA_RECEBER();
+                                cr.ASSI_CD_ID = crm.ASSI_CD_ID;
+                                cr.CARE_DS_DESCRICAO = "Lançamento gerado pelo processo " + crm.CRM1_NM_NOME;
+                                cr.CARE_DT_COMPETENCIA = DateTime.Today.Date;
+                                cr.CARE_DT_LANCAMENTO = DateTime.Today.Date;
+                                cr.CARE_DT_VENCIMENTO = DateTime.Today.Date.AddDays(30);
+                                cr.CARE_IN_ABERTOS = 0;
+                                cr.CARE_IN_ATIVO = 1;
+                                cr.CARE_IN_LIQUIDADA = 0;
+                                cr.CARE_IN_LIQUIDA_NORMAL = 0;
+                                cr.CARE_IN_PAGA_PARCIAL = 0;
+                                cr.CARE_IN_PARCELADA = 0;
+                                cr.CARE_IN_PARCELAS = 0;
+                                cr.CARE_IN_PARCIAL = 0;
+                                cr.CARE_IN_TIPO_LANCAMENTO = 1;
+                                cr.CARE_VL_DESCONTO = propAprov.CRPR_VL_DESCONTO;
+                                cr.CARE_VL_JUROS = 0;
+                                cr.CARE_VL_PARCELADO = 0;
+                                cr.CARE_VL_PARCIAL = 0;
+                                cr.CARE_VL_SALDO = (propAprov.CRPR_VL_VALOR.Value + propAprov.CRPR_VL_FRETE.Value) - propAprov.CRPR_VL_DESCONTO + propAprov.CRPR_VL_ICMS + propAprov.CRPR_VL_IPI ;
+                                cr.CARE_VL_TAXAS = propAprov.CRPR_VL_ICMS + propAprov.CRPR_VL_IPI;
+                                cr.CARE_VL_VALOR = propAprov.CRPR_VL_VALOR.Value + propAprov.CRPR_VL_FRETE.Value;
+                                cr.CARE_VL_VALOR_LIQUIDADO = 0;
+                                cr.CARE_VL_VALOR_RECEBIDO = 0;
+                                cr.CLIE_CD_ID = crm.CLIE_CD_ID;
+                                cr.COBA_CD_ID = cbApp.GetContaPadrao(idAss).COBA_CD_ID;
+                                cr.USUA_CD_ID = crm.USUA_CD_ID;
+                                cr.CARE_NR_DOCUMENTO = propAprov.CRPR_NR_NUMERO;
+                                cr.CRM1_CD_ID = idCRM;
+                                cr.CRPR_CD_ID = propAprov.CRPR_CD_ID;
+
+                                // Grava CR
+                                Int32 voltaCR = crApp.ValidateCreate(cr, 0, null, usuario);
+
+                                // Atualiza processo    
+                                crm.CRM1_IN_ATIVO = 6;
+                                Int32 volta2 = baseApp.ValidateEditSimples(crm, crm, usuario);
+                            }
                         }
                     }
 
@@ -2968,19 +2980,19 @@ namespace ERP_CRM_Solution.Controllers
             List<CRM_ACAO> acoes = item.CRM_ACAO.ToList().OrderByDescending(p => p.CRAC_DT_CRIACAO).ToList();
             CRM_ACAO acao = acoes.Where(p => p.CRAC_IN_STATUS == 1).FirstOrDefault();
 
-            List<CRM_PROPOSTA> props = item.CRM_PROPOSTA.ToList().OrderByDescending(p => p.CRPR_DT_PROPOSTA).ToList();
-            CRM_PROPOSTA prop = props.Where(p => p.CRPR_IN_STATUS == 2 || p.CRPR_IN_STATUS == 1).FirstOrDefault();
-
             List<CRM_PEDIDO_VENDA> peds = item.CRM_PEDIDO_VENDA.ToList().OrderByDescending(p => p.CRPV_DT_PEDIDO).ToList();
             CRM_PEDIDO_VENDA ped = peds.Where(p => p.CRPV_IN_STATUS == 2 || p.CRPV_IN_STATUS == 1).FirstOrDefault();
 
-            CRM_PROPOSTA propAprov = item.CRM_PROPOSTA.Where(p => p.CRPR_IN_STATUS == 5 & p.CRPR_IN_ATIVO == 1).FirstOrDefault();
+            List<CRM_PROPOSTA> props = baseApp.GetAllPropostas(idAss).Where(p => p.CRM1_CD_ID == item.CRM1_CD_ID).ToList();
+            CRM_PROPOSTA prop = props.Where(p => p.CRPR_IN_STATUS == 2 || p.CRPR_IN_STATUS == 1).FirstOrDefault();
+            CRM_PROPOSTA propAprov = props.Where(p => p.CRPR_IN_STATUS == 5).FirstOrDefault();
             Session["PropAprov"] = propAprov;
             ViewBag.PropAprov = propAprov;
 
             List<CONTA_RECEBER> cr = new List<CONTA_RECEBER>();
             if (propAprov != null)
             {
+                Session["IdCRMProposta"] = propAprov.CRPR_CD_ID;
                 cr = crApp.GetAllItens(idAss).Where(p => p.CRPR_CD_ID == propAprov.CRPR_CD_ID & p.CARE_IN_ATIVO == 1).ToList();
                 ViewBag.CR = cr;
                 ViewBag.TemCR = cr.Count > 0 ? 1 : 0;
@@ -5329,6 +5341,9 @@ namespace ERP_CRM_Solution.Controllers
             List<CRM> ls = lt.Where(p => p.CRM1_IN_ATIVO == 5).ToList();
             List<CRM> lc = lt.Where(p => p.CRM1_IN_ATIVO == 3).ToList();
             List<CRM> lf = lt.Where(p => p.CRM1_IN_ATIVO == 4).ToList();
+            List<CRM> lx = lt.Where(p => p.CRM1_IN_ATIVO == 6).ToList();
+            List<CRM> ly = lt.Where(p => p.CRM1_IN_ATIVO == 7).ToList();
+            List<CRM> lz = lt.Where(p => p.CRM1_IN_ATIVO == 8).ToList();
             List<CRM_ACAO> acoes = baseApp.GetAllAcoes(idAss);
             List<CRM_ACAO> acoesPend = acoes.Where(p => p.CRAC_IN_STATUS == 1).ToList();
             List<CLIENTE> cli = cliApp.GetAllItens(idAss);
@@ -5365,6 +5380,9 @@ namespace ERP_CRM_Solution.Controllers
             Session["CRMCancelados"] = lc.Count;
             Session["CRMFalhados"] = lf.Count;
             Session["CRMSucessos"] = la.Count;
+            Session["CRMFatura"] = lx.Count;
+            Session["CRMExpedicao"] = ly.Count;
+            Session["CRMEntregue"] = lz.Count;
 
             Session["CRMProsp"] = lt.Where(p => p.CRM1_IN_STATUS == 1).ToList().Count;
             Session["CRMCont"] =  lt.Where(p => p.CRM1_IN_STATUS == 2).ToList().Count;
@@ -5423,7 +5441,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 Int32 conta = lt.Where(p => p.CRM1_IN_ATIVO == i).Count();
                 ModeloViewModel mod = new ModeloViewModel();
-                mod.Data = i == 1? "Ativo" : (i == 2 ? "Arquivados" : (i == 3 ? "Cancelados" : (i == 4 ? "Falhados" : "Sucesso")));
+                mod.Data = i == 1? "Ativo" : (i == 2 ? "Arquivados" : (i == 3 ? "Cancelados" : (i == 4 ? "Falhados" : (i == 5 ? "Sucesso" : (i == 6 ? "Faturamento" : (i == 7 ? "Expedição" : "Entregue"))))));
                 mod.Valor = conta;
                 lista1.Add(mod);
             }
@@ -5482,6 +5500,9 @@ namespace ERP_CRM_Solution.Controllers
             Int32 q3 = (Int32)Session["CRMCancelados"];
             Int32 q4 = (Int32)Session["CRMFalhados"];
             Int32 q5 = (Int32)Session["CRMSucessos"];
+            Int32 q6 = (Int32)Session["CRMFatura"];
+            Int32 q7 = (Int32)Session["CRMExpedicao"];
+            Int32 q8 = (Int32)Session["CRMEntregue"];
 
             desc.Add("Ativos");
             quant.Add(q1);
@@ -5498,6 +5519,15 @@ namespace ERP_CRM_Solution.Controllers
             desc.Add("Sucesso");
             quant.Add(q5);
             cor.Add("#27A1C6");
+            desc.Add("Faturamento");
+            quant.Add(q6);
+            cor.Add("#359E18");
+            desc.Add("Expedição");
+            quant.Add(q7);
+            cor.Add("#FFAE00");
+            desc.Add("Entregues");
+            quant.Add(q8);
+            cor.Add("#FF7F00");
 
             Hashtable result = new Hashtable();
             result.Add("labels", desc);

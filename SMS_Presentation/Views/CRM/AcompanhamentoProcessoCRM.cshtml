@@ -128,6 +128,10 @@
                         {
                             @Html.ButtonLinkIndex(text: "Encerrar Processo", action: "EncerrarProcessoChamada", controller: "CRM")
                         }
+                        @if (Model.CRM1_IN_ATIVO == 6)
+                        {
+                            @Html.ButtonLinkIndex(text: "Expedição", action: "EnviarExpedicaoCRM    ", controller: "CRM")
+                        }
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCRM", controller: "CRM")
                         @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                     </div>
@@ -335,9 +339,12 @@
                                                                 @Html.ValidationMessageFor(m => m.CRM1_TX_INFORMACOES_GERAIS, "", new { @style = "color:red" })
                                                             </div>
                                                         </div>
-                                                        <div class="form-group">
-                                                            @Html.ButtonActionSubmit(text: "Confirma Alterações do Processo", htmlAttributes: new { id = "basictoast" })
-                                                        </div>
+                                                        @if (Model.CRM1_IN_ATIVO == 1)
+                                                        {
+                                                            <div class="form-group">
+                                                                @Html.ButtonActionSubmit(text: "Confirma Alterações do Processo", htmlAttributes: new { id = "basictoast" })
+                                                            </div>
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
@@ -355,19 +362,22 @@
                                         </div>
                                         <div class="ibox-content" style="color: black">
                                             <div class="row">
-                                                <div class="col-lg-10 col-md-10 col-xs-12">
-                                                    <div class="form-group">
-                                                        @using (Html.BeginForm("UploadFotoCRM", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container3" }))
-                                                        {
-                                                            <div class="form-group">
-                                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                    <input style="float: left; margin-right: 5px;" type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="file" class="btn btn-sm btn-warning" />
-                                                                    <input style="float: left;" type="submit" value="Incluir Imagem" class="btn btn-sm btn-success" />
+                                                @if (Model.CRM1_IN_ATIVO == 1)
+                                                {
+                                                    <div class="col-lg-10 col-md-10 col-xs-12">
+                                                        <div class="form-group">
+                                                            @using (Html.BeginForm("UploadFotoCRM", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container3" }))
+                                                            {
+                                                                <div class="form-group">
+                                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                        <input style="float: left; margin-right: 5px;" type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                                        <input style="float: left;" type="submit" value="Incluir Imagem" class="btn btn-sm btn-success" />
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        }
+                                                            }
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                }
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     <div class="form-group">
                                                         <div class="col-lg-12 col-md-12 col-sm-12">
@@ -440,12 +450,15 @@
                                                                         </tbody>
                                                                     </table>
                                                                 }
-                                                                <div class="form-group">
-                                                                    <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                        <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
-                                                                        <input style="float: left; margin-right: 5px;" type="submit" value="Incluir Anexo" class="btn btn-sm btn-success" />
+                                                                @if (Model.CRM1_IN_ATIVO == 1)
+                                                                {
+                                                                    <div class="form-group">
+                                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                            <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                                            <input style="float: left; margin-right: 5px;" type="submit" value="Incluir Anexo" class="btn btn-sm btn-success" />
+                                                                        </div>
                                                                     </div>
-                                                                </div>
+                                                                }
                                                             </div>
                                                         }
                                                     </div>
@@ -1052,35 +1065,42 @@
                                                                                         <td>-</td>
                                                                                     }
                                                                                     <td class="td-one-action">
-                                                                                        @if (cond.CRPR_IN_STATUS == 1)
+                                                                                        @if (Model.CRM1_IN_ATIVO == 1)
                                                                                         {
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "EditarProposta", "fa-edit", "Editar/Consultar")
-                                                                                            if (cond.CRPR_IN_ATIVO == 1)
+                                                                                            if (cond.CRPR_IN_STATUS == 1)
                                                                                             {
-                                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluirProp('/CRM/ExcluirProposta/@cond.CRPR_CD_ID')" title="Excluir"></span>
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "EditarProposta", "fa-edit", "Editar/Consultar")
+                                                                                                if (cond.CRPR_IN_ATIVO == 1)
+                                                                                                {
+                                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluirProp('/CRM/ExcluirProposta/@cond.CRPR_CD_ID')" title="Excluir"></span>
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativarProp('/CRM/ReativarProposta/@cond.CRPR_CD_ID')" title="Reativar"></span>
+                                                                                                }
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "EnviarProposta", "fa-send-o", "Enviar")   
                                                                                             }
-                                                                                            else
+                                                                                            if (cond.CRPR_IN_STATUS == 2)
                                                                                             {
-                                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativarProp('/CRM/ReativarProposta/@cond.CRPR_CD_ID')" title="Reativar"></span>
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "ElaborarProposta", "fa-mail-reply", "Elaboração") 
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "AprovarProposta", "fa-check", "Aprovar")   
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "ReprovarProposta", "fa-minus-square-o", "Reprovar")   
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
                                                                                             }
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "EnviarProposta", "fa-send-o", "Enviar")   
+                                                                                            if (cond.CRPR_IN_STATUS == 3 || cond.CRPR_IN_STATUS == 4)
+                                                                                            {
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
+                                                                                            }
+                                                                                            if (cond.CRPR_IN_STATUS == 5)
+                                                                                            {
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
+                                                                                            }
                                                                                         }
-                                                                                        @if (cond.CRPR_IN_STATUS == 2)
+                                                                                        else
                                                                                         {
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "ElaborarProposta", "fa-mail-reply", "Elaboração") 
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "AprovarProposta", "fa-check", "Aprovar")   
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "ReprovarProposta", "fa-minus-square-o", "Reprovar")   
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
-                                                                                        }
-                                                                                        @if (cond.CRPR_IN_STATUS == 3 || cond.CRPR_IN_STATUS == 4)
-                                                                                        {
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
-                                                                                        }
-                                                                                        @if (cond.CRPR_IN_STATUS == 5)
-                                                                                        {
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
                                                                                             @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
                                                                                         }
                                                                                     </td>
@@ -1145,33 +1165,41 @@
                                                                                         <td>-</td>
                                                                                     }
                                                                                     <td class="td-one-action">
-                                                                                        @if (cond.CRPR_IN_STATUS == 1)
+                                                                                        @if (Model.CRM1_IN_ATIVO == 1)
                                                                                         {
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "EditarProposta", "fa-edit", "Editar/Consultar")
-                                                                                            if (cond.CRPR_IN_ATIVO == 1)
+                                                                                            if (cond.CRPR_IN_STATUS == 1)
                                                                                             {
-                                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluirProp('/CRM/ExcluirProposta/@cond.CRPR_CD_ID')" title="Excluir"></span>
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "EditarProposta", "fa-edit", "Editar/Consultar")
+                                                                                                if (cond.CRPR_IN_ATIVO == 1)
+                                                                                                {
+                                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluirProp('/CRM/ExcluirProposta/@cond.CRPR_CD_ID')" title="Excluir"></span>
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativarProp('/CRM/ReativarProposta/@cond.CRPR_CD_ID')" title="Reativar"></span>
+                                                                                                }
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "EnviarProposta", "fa-send-o", "Enviar")   
                                                                                             }
-                                                                                            else
+                                                                                            if (cond.CRPR_IN_STATUS == 2)
                                                                                             {
-                                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativarProp('/CRM/ReativarProposta/@cond.CRPR_CD_ID')" title="Reativar"></span>
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "ElaborarProposta", "fa-mail-reply", "Elaboração") 
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "AprovarProposta", "fa-check", "Aprovar")   
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "ReprovarProposta", "fa-minus-square-o", "Reprovar")   
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
                                                                                             }
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "EnviarProposta", "fa-send-o", "Enviar")   
+                                                                                            if (cond.CRPR_IN_STATUS == 3 || cond.CRPR_IN_STATUS == 4)
+                                                                                            {
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
+                                                                                            }
+                                                                                            if (cond.CRPR_IN_STATUS == 5)
+                                                                                            {
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
+                                                                                                @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
+                                                                                            }
                                                                                         }
-                                                                                        @if (cond.CRPR_IN_STATUS == 2)
-                                                                                        {
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "ElaborarProposta", "fa-edit", "Elaboração")
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "CancelarProposta", "fa-times", "Cancelar")
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "AprovarProposta", "fa-check", "Aprovar")   
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "ReprovarProposta", "fa-minus-square-o", "Reprovar")   
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
-                                                                                        }
-                                                                                        @if (cond.CRPR_IN_STATUS == 3 || cond.CRPR_IN_STATUS == 4)
-                                                                                        {
-                                                                                            @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
-                                                                                        }
-                                                                                        @if (cond.CRPR_IN_STATUS == 5)
+                                                                                        else
                                                                                         {
                                                                                             @Html.TableLinkDetails(cond.CRPR_CD_ID, "VerProposta", "fa-search", "Ver")
                                                                                         }
@@ -1199,11 +1227,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                @if (ViewBag.Prop == null & Model.CRM1_IN_STATUS != 5)
+                                                @if (Model.CRM1_IN_ATIVO == 1)
                                                 {
-                                                    <div class="form-group">
-                                                        @Html.ButtonLinkIndex(text: "Incluir Nova Proposta", action: "IncluirProposta", controller: "CRM")
-                                                    </div>
+                                                    if (ViewBag.Prop == null & Model.CRM1_IN_STATUS != 5)
+                                                    {
+                                                        <div class="form-group">
+                                                            @Html.ButtonLinkIndex(text: "Incluir Nova Proposta", action: "IncluirProposta", controller: "CRM")
+                                                        </div>
+                                                    }
                                                 }
                                             </div>
                                         </div>
@@ -1444,13 +1475,13 @@
                                             <div class="ibox-content" style="color: black">
                                                 <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 230px" >
+                                                        <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 160px" >
                                                             <div class="ibox-title">
                                                                 <h5 style="color: green">Proposta Aprovada</h5>
                                                             </div>
                                                             <div class="ibox-content"  style="color: black">
                                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    <div class="col-lg-1 col-md-1 col-xs-12">
                                                                         Número
                                                                         @Html.TextBoxFor(m => m.NumeroProposta, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                                     </div>
@@ -1466,18 +1497,17 @@
                                                                         Valor (R$)
                                                                         @Html.TextBoxFor(m => m.ValorTotal, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                                     </div>
-                                                                    <div class="col-lg-4 col-md-4 col-xs-12">
-                                                                        @Html.ButtonLinkIndex(text: "Consultar Proposta", action: "VerPropostaEdita", controller: "CRM")
-                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                                    @Html.ButtonLinkIndex(text: "Consultar Proposta", action: "VerPropostaEdita", controller: "CRM")
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <hr />
                                                 <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 230px" >
+                                                        <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 500px" >
                                                             <div class="ibox-title">
                                                                 <h5 style="color: green">Lançamentos a Receber</h5>
                                                             </div>
@@ -1524,7 +1554,7 @@
                                                                                                     <td>-</td>
                                                                                                 }
                                                                                                 <td>@cond.CARE_DT_LANCAMENTO.Value.ToShortDateString()</td>
-                                                                                                <td>@CrossCutting.Formatters.DecimalFormatter(cond.CARE_VL_VALOR)</td>
+                                                                                                <td>@CrossCutting.Formatters.DecimalFormatter(cond.CARE_VL_TOTAL.Value)</td>
                                                                                                 <td>@cond.CARE_DT_VENCIMENTO.Value.ToShortDateString()</td>
                                                                                                 <td>@CrossCutting.Formatters.DecimalFormatter(cond.CARE_VL_SALDO.Value)</td>
                                                                                                 <td>@CrossCutting.Formatters.DecimalFormatter(cond.CARE_VL_VALOR_RECEBIDO != null ? cond.CARE_VL_VALOR_RECEBIDO.Value : 0)</td>
@@ -1549,10 +1579,17 @@
                                                                                                     <td></td>
                                                                                                 }
                                                                                                 <td class="td-one-action">
-                                                                                                    @Html.TableLinkDetails(cond.CARE_CD_ID, "EditarCR", "fa-edit", "Editar Lançamento")
-                                                                                                    @if (ViewBag.TemNF == 0)
+                                                                                                    @if ((Int32)Session["PermFinanceiro"] == 1)
                                                                                                     {
-                                                                                                        @Html.TableLinkDetails(cond.CARE_CD_ID, "GerarNFCR", "fa-check", "Gerar Nota Fiscal")
+                                                                                                        @Html.TableLinkDetails(cond.CARE_CD_ID, "EditarCR", "fa-edit", "Editar Lançamento")
+                                                                                                        if (ViewBag.TemNF == 0)
+                                                                                                        {
+                                                                                                            @Html.TableLinkDetails(cond.CARE_CD_ID, "GerarNFCR", "fa-money", "Gerar Nota Fiscal")
+                                                                                                        }
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        @Html.TableLinkDetails(cond.CARE_CD_ID, "VerCR", "fa-search", "Ver Lançamento")
                                                                                                     }
                                                                                                 </td>
                                                                                             </tr>
@@ -1577,7 +1614,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                @if (ViewBag.TemCR == 0)
+                                                                @if (ViewBag.TemCR == 0 & (Int32)Session["PermFinanceiro"] == 1)
                                                                 {
                                                                     <div class="form-group">
                                                                         @Html.ButtonLinkIndex(text: "Gerar Lançamento a Receber", action: "GerarLancamentoCR", controller: "CRM")

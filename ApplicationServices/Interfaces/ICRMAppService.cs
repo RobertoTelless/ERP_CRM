@@ -11,6 +11,7 @@ namespace ApplicationServices.Interfaces
     {
         Int32 ValidateCreate(CRM item, USUARIO usuario);
         Int32 ValidateEdit(CRM item, CRM itemAntes, USUARIO usuario);
+        Int32 ValidateEditSimples(CRM item, CRM itemAntes, USUARIO usuario);
         Int32 ValidateEdit(CRM item, CRM itemAntes);
         Int32 ValidateDelete(CRM item, USUARIO usuario);
         Int32 ValidateReativar(CRM item, USUARIO usuario);
