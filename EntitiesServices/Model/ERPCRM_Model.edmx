@@ -1119,7 +1119,7 @@
           <Property Name="CRPR_DT_ENVIO" Type="date" />
           <Property Name="CRPR_DS_ENVIO" Type="varchar" MaxLength="5000" />
           <Property Name="CRPR_LK_LINK" Type="varchar" MaxLength="150" />
-          <Property Name="CRPR_DS_INFORMACOES" Type="varchar" MaxLength="5000" />
+          <Property Name="CRPR_DS_INFORMACOES" Type="text" />
           <Property Name="CRPR_IN_STATUS" Type="int" Nullable="false" />
           <Property Name="CRPR_VL_VALOR" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_TX_TEXTO" Type="text" />
@@ -18691,7 +18691,7 @@
           <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
           <Property Name="CRPR_DT_PROPOSTA" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="CRPR_DT_VALIDADE" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="CRPR_DS_INFORMACOES" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="CRPR_DS_INFORMACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CRPR_IN_STATUS" Type="Int32" Nullable="false" />
           <Property Name="CRPR_TX_TEXTO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CRPR_AQ_ARQUIVO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />

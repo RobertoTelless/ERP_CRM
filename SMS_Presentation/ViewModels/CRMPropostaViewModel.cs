@@ -20,7 +20,6 @@ namespace ERP_CRM_Solution.ViewModels
         [Required(ErrorMessage = "Campo DATA DE VALIDADE obrigatorio")]
         [DataType(DataType.Date, ErrorMessage = "A DATA DE VALIDADE deve ser uma data válida")]
         public System.DateTime CRPR_DT_VALIDADE { get; set; }
-        [StringLength(5000, ErrorMessage = "AS INFORMAÇÕES GERAIS deve conter no máximo 5000 caracteres.")]
         public string CRPR_DS_INFORMACOES { get; set; }
         public int CRPR_IN_STATUS { get; set; }
         public string CRPR_TX_TEXTO { get; set; }
@@ -54,7 +53,6 @@ namespace ERP_CRM_Solution.ViewModels
         public string CRPR_NR_NUMERO { get; set; }
         public Nullable<int> FOEN_CD_ID { get; set; }
         public Nullable<int> FOFR_CD_D { get; set; }
-        [StringLength(5000, ErrorMessage = "A INTRODUÇÃO deve conter no máximo 5000 caracteres.")]
         public string CRPR_TX_INTRODUCAO { get; set; }
         public string CRPR_TX_CONDICOES_COMERCIAIS { get; set; }
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]

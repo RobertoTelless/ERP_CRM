@@ -1184,6 +1184,15 @@ namespace ERP_CRM_Solution.Controllers
             Session["IncluirCRM"] = 0;
             Session["CRM"] = null;
 
+            // Mensagem
+            if (Session["MensCRM"] != null)
+            {
+                if ((Int32)Session["MensCRM"] == 22)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0141", CultureInfo.CurrentCulture));
+                }
+            }
+
             // Prepara view
             Session["CRMNovo"] = 0;
             Session["VoltaCliente"] = 8;
@@ -1238,6 +1247,13 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
+                    // Verifica cliente
+                    if (vm.CLIE_CD_ID == null || vm.CLIE_CD_ID == 0)
+                    {
+                        ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0141", CultureInfo.CurrentCulture));
+                        return View(vm);
+                    }
+
                     // Executa a operação
                     CRM item = Mapper.Map<CRMViewModel, CRM>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
@@ -3020,7 +3036,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["Peds"] = peds;
             Session["CRM"] = item;
             Session["VoltaCRM"] = 11;
-            Session["VoltaAgendaCRM"] = 11;
+            Session["VoltaAgendaCRMCalend"] = 10;
             Session["ClienteCRM"] = item.CLIENTE;
             ViewBag.Acoes = acoes;
             ViewBag.Acao = acao;
