@@ -477,4 +477,10 @@
   <data name="M0141" xml:space="preserve">
     <value>Cliente não especificado</value>
   </data>
+  <data name="M0142" xml:space="preserve">
+    <value>Tipo de ação não especificado</value>
+  </data>
+  <data name="M0143" xml:space="preserve">
+    <value>Responsável pela ação não especificado</value>
+  </data>
 </root>

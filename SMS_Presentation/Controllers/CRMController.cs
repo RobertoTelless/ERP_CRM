@@ -614,7 +614,7 @@ namespace ERP_CRM_Solution.Controllers
             CRM_ACAO item = baseApp.GetAcaoById(id);
             item.CRAC_IN_STATUS = 3;
             Int32 volta = baseApp.ValidateEditAcao(item);
-            return RedirectToAction("AcompanhamentoProcessoCRM");
+            return RedirectToAction("VoltarAcompanhamentoCRM");
         }
 
         public ActionResult GerarRelatorioListaCRM()
@@ -2256,10 +2256,21 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpGet]
-        public ActionResult EncerrarProcessoChamada(Int32 id)
+        public ActionResult EncerrarProcessoChamada()
         {
             return RedirectToAction("EncerrarProcessoCRM", new { id = (Int32)Session["IdCRM"] });
+        }
 
+        public ActionResult EditarCR(Int32 id)
+        {
+            Session["VoltaCRMCR"] = 10;
+            return RedirectToAction("EditarCR", "ContaReceber", new { id = id });
+        }
+
+        public ActionResult VerCR(Int32 id)
+        {
+            Session["VoltaCRMCR"] = 10;
+            return RedirectToAction("VerCR", "ContaReceber", new { id = id });
         }
 
         [HttpGet]
@@ -2388,9 +2399,9 @@ namespace ERP_CRM_Solution.Controllers
                                 cr.CARE_VL_JUROS = 0;
                                 cr.CARE_VL_PARCELADO = 0;
                                 cr.CARE_VL_PARCIAL = 0;
-                                cr.CARE_VL_SALDO = (propAprov.CRPR_VL_VALOR.Value + propAprov.CRPR_VL_FRETE.Value) - propAprov.CRPR_VL_DESCONTO + propAprov.CRPR_VL_ICMS + propAprov.CRPR_VL_IPI ;
+                                cr.CARE_VL_SALDO = (propAprov.CRPR_VL_VALOR.Value + propAprov.CRPR_VL_FRETE.Value) - propAprov.CRPR_VL_DESCONTO.Value;
                                 cr.CARE_VL_TAXAS = propAprov.CRPR_VL_ICMS + propAprov.CRPR_VL_IPI;
-                                cr.CARE_VL_VALOR = propAprov.CRPR_VL_VALOR.Value + propAprov.CRPR_VL_FRETE.Value;
+                                cr.CARE_VL_VALOR = (propAprov.CRPR_VL_VALOR.Value + propAprov.CRPR_VL_FRETE.Value) - propAprov.CRPR_VL_DESCONTO.Value;
                                 cr.CARE_VL_VALOR_LIQUIDADO = 0;
                                 cr.CARE_VL_VALOR_RECEBIDO = 0;
                                 cr.CLIE_CD_ID = crm.CLIE_CD_ID;
@@ -2430,7 +2441,7 @@ namespace ERP_CRM_Solution.Controllers
             }
         }
 
-        public ActionResult GerarLancamentoReceber()
+        public ActionResult GerarLancamentoCR()
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -2461,14 +2472,17 @@ namespace ERP_CRM_Solution.Controllers
             cr.CARE_VL_JUROS = 0;
             cr.CARE_VL_PARCELADO = 0;
             cr.CARE_VL_PARCIAL = 0;
-            cr.CARE_VL_SALDO = propAprov.CRPR_VL_VALOR;
+            cr.CARE_VL_SALDO = (propAprov.CRPR_VL_VALOR.Value + propAprov.CRPR_VL_FRETE.Value) - propAprov.CRPR_VL_DESCONTO.Value;
             cr.CARE_VL_TAXAS = propAprov.CRPR_VL_ICMS + propAprov.CRPR_VL_IPI;
-            cr.CARE_VL_VALOR = propAprov.CRPR_VL_VALOR.Value;
+            cr.CARE_VL_VALOR = (propAprov.CRPR_VL_VALOR.Value + propAprov.CRPR_VL_FRETE.Value) - propAprov.CRPR_VL_DESCONTO.Value;
             cr.CARE_VL_VALOR_LIQUIDADO = 0;
             cr.CARE_VL_VALOR_RECEBIDO = 0;
             cr.CLIE_CD_ID = crm.CLIE_CD_ID;
             cr.COBA_CD_ID = cbApp.GetContaPadrao(idAss).COBA_CD_ID;
             cr.USUA_CD_ID = crm.USUA_CD_ID;
+            cr.CARE_NR_DOCUMENTO = propAprov.CRPR_NR_NUMERO;
+            cr.CRM1_CD_ID = crm.CRM1_CD_ID;
+            cr.CRPR_CD_ID = propAprov.CRPR_CD_ID;
 
             // Grava CR
             Int32 voltaCR = crApp.ValidateCreate(cr, 0, null, usuario);
@@ -3552,6 +3566,43 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpGet]
+        public ActionResult EncerrarAcaoNova(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Processa
+            CRM_ACAO item = baseApp.GetAcaoById(id);
+            objetoAntes = (CRM)Session["CRM"];
+            item.CRAC_IN_ATIVO = 0;
+            item.CRAC_IN_STATUS = 3;
+            Int32 volta = baseApp.ValidateEditAcao(item);
+            return RedirectToAction("VoltarAcompanhamentoCRM");
+        }
+
+
+
+        [HttpGet]
         public ActionResult EditarCliente(Int32 id)
         {
             Session["VoltaCRM"] = 11;
@@ -3803,10 +3854,26 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipoAcao(idAss).OrderBy(p => p.TIAC_NM_NOME), "TIAC_CD_ID", "TIAC_NM_NOME");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            List<SelectListItem> agenda = new List<SelectListItem>();
+            agenda.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            agenda.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Agenda = new SelectList(agenda, "Value", "Text");
             if (ModelState.IsValid)
             {
                 try
                 {
+                    // Verifica tipo de ação
+                    if (vm.TIAC_CD_ID == null || vm.TIAC_CD_ID == 0)
+                    {
+                        ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0142", CultureInfo.CurrentCulture));
+                        return View(vm);
+                    }
+                    if (vm.USUA_CD_ID2 == null || vm.USUA_CD_ID2 == 0)
+                    {
+                        ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0143", CultureInfo.CurrentCulture));
+                        return View(vm);
+                    }
+
                     // Executa a operação
                     CRM_ACAO item = Mapper.Map<CRMAcaoViewModel, CRM_ACAO>(vm);
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
@@ -6708,11 +6775,6 @@ namespace ERP_CRM_Solution.Controllers
 
                     // Checa anexo
                     CRM_PROPOSTA pro = baseApp.GetPropostaById(item.CRPR_CD_ID);
-                    //if (pro.CRM_PROPOSTA_ANEXO.Count == 0)
-                    //{
-                    //    Session["MensCRM"] = 76;
-                    //    return View(vm);
-                    //}
                     Int32 volta = baseApp.ValidateEnviarProposta(item);
 
                     // Verifica retorno
@@ -6742,11 +6804,6 @@ namespace ERP_CRM_Solution.Controllers
                     crm.CRM1_IN_STATUS = 3;
                     Int32 volta1 = baseApp.ValidateEdit(crm, crm);
                     Session["Cliente"] = crm.CLIENTE;
-
-                    //// Gera PDF da proposta e anexa
-                    //Session["IdProposta"] = item.CRPR_CD_ID;
-                    //String arquivo = GerarRelatorioProposta();
-                    ////Int32 volta3 = UploadFileCRMPropostaArquivo(arquivo);
 
                     // Envia proposta
                     MensagemViewModel mens = new MensagemViewModel();
@@ -6784,6 +6841,9 @@ namespace ERP_CRM_Solution.Controllers
         [ValidateInput(false)]
         public Int32 ProcessarEnvioMensagemEMail(MensagemViewModel vm, CRM_PROPOSTA item, USUARIO usuario)
         {
+            // Recarrega proposta
+            item = baseApp.GetPropostaById(item.CRPR_CD_ID);            
+            
             // Recupera contatos
             Int32 idAss = (Int32)Session["IdAssinante"];
             CLIENTE cliente = null;

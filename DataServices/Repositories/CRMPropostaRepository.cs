@@ -28,6 +28,8 @@ namespace DataServices.Repositories
             query = query.Include(p => p.FORMA_FRETE);
             query = query.Include(p => p.MOTIVO_CANCELAMENTO);
             query = query.Include(p => p.TEMPLATE_PROPOSTA);
+            query = query.Include(p => p.CRM_PROPOSTA_ACOMPANHAMENTO);
+            query = query.Include(p => p.CRM_PROPOSTA_ANEXO);
             return query.FirstOrDefault();
         }
     }

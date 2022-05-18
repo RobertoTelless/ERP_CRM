@@ -18,7 +18,6 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<System.DateTime> CRAC_DT_CRIACAO { get; set; }
         [Required(ErrorMessage = "Campo USUÁRIO obrigatorio")]
         public Nullable<int> USUA_CD_ID1 { get; set; }
-        [Required(ErrorMessage = "Campo ATRIBUIÇÂO obrigatorio")]
         public Nullable<int> USUA_CD_ID2 { get; set; }
         [Required(ErrorMessage = "Campo TÍTULO obrigatorio")]
         [StringLength(150, MinimumLength = 1, ErrorMessage = "O TÍTULO deve conter no minimo 1 e no máximo 150 caracteres.")]
@@ -29,7 +28,6 @@ namespace ERP_CRM_Solution.ViewModels
         [Required(ErrorMessage = "Campo DATA PREVISTA obrigatorio")]
         [DataType(DataType.Date, ErrorMessage = "A DATA PREVISTA deve ser uma data válida")]
         public Nullable<System.DateTime> CRAC_DT_PREVISTA { get; set; }
-        [Required(ErrorMessage = "Campo TIPO obrigatorio")]
         public Nullable<int> TIAC_CD_ID { get; set; }
         public Nullable<int> CRAC_IN_STATUS { get; set; }
         public Nullable<int> CRAC_IN_ATIVO { get; set; }

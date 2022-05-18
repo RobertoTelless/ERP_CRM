@@ -301,7 +301,7 @@ namespace ERP_CRM_Solution.Controllers
                     ModelState.AddModelError("", SMS_Mensagens.ResourceManager.GetString("M0081", CultureInfo.CurrentCulture));
                 }
             }
-
+            Session["VoltaCRMCR"] = 0;
             if ((Int32)Session["VoltaCR"] != 0)
             {
                 ViewBag.Volta = Session["VoltaCR"];
@@ -398,9 +398,9 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            if ((Int32)Session["VoltaCR"] == 10)
+            if ((Int32)Session["VoltaCRMCR"] == 10)
             {
-                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
+                return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
             }
 
             listaCRMaster = new List<CONTA_RECEBER>();
