@@ -3709,6 +3709,7 @@
     <Content Include="Views\CRM\EditarItemPedido.cshtml" />
     <Content Include="Views\CRM\IncluirItemPedido.cshtml" />
     <Content Include="Views\Banco\MontarTelaResumoFinanceiro.cshtml" />
+    <Content Include="Views\Grupo\VerGrupo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -70,6 +70,10 @@
                             {
                                 @Html.ButtonLinkIndex(text: "Dashboard", controller: "Grupo", action: "Voltar")
                             }
+                            @if ((Int32)Session["VoltaCliGrupo"] == 10)
+                            {
+                                @Html.ButtonLinkIndex(text: "Voltar", controller: "Grupo", action: "VoltarBaseGrupo")
+                            }
                         </div>
                     </div>
 

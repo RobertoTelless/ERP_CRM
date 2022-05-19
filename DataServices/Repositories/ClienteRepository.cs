@@ -151,7 +151,7 @@ namespace DataServices.Repositories
             }
             if (grupo.CATEGORIA != null)
             {
-                query = query.Where(p => p.CATEGORIA_CLIENTE.CACL_CD_ID == grupo.CATEGORIA);
+                query = query.Where(p => p.CACL_CD_ID == grupo.CATEGORIA);
             }
             if (!String.IsNullOrEmpty(grupo.CIDADE))
             {

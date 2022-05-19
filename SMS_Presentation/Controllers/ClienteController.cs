@@ -239,6 +239,29 @@ namespace ERP_CRM_Solution.Controllers
             Session["VoltaCliente"] = 3;
         }
 
+        [HttpGet]
+        public ActionResult IncluirGrupo()
+        {
+            Session["VoltaCliGrupo"] = 10;
+            Session["VoltaGrupo"] = 11;
+            return RedirectToAction("IncluirGrupo", "Grupo");
+        }
+
+        [HttpGet]
+        public ActionResult VerGrupoTela(Int32 id)
+        {
+            Session["VoltaCliGrupo"] = 10;
+            Session["VoltaGrupo"] = 11;
+            return RedirectToAction("VerGrupo", "Grupo", new { id = id });
+        }
+
+        [HttpGet]
+        public ActionResult VerGrupoTodos()
+        {
+            Session["VoltaCliGrupo"] = 10;
+            return RedirectToAction("MontarTelaGrupo", "Grupo");
+        }
+
         [HttpPost]
         public JsonResult GetValorGrafico(Int32 id, Int32? meses)
         {

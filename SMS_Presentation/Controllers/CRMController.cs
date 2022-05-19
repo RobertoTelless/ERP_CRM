@@ -407,6 +407,7 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            Session["ListaCRM"] = null;
             if ((Int32)Session["VoltaCRM"] == 2)
             {
                 return RedirectToAction("MontarTelaKanbanCRM", "CRM");
@@ -2253,6 +2254,13 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return View(vm);
             }
+        }
+
+        [HttpGet]
+        public ActionResult IncluirGrupo()
+        {
+            Session["VoltaCliGrupo"] = 1;
+            return RedirectToAction("IncluirGrupo", "Grupo");
         }
 
         [HttpGet]
@@ -6226,9 +6234,14 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0038", CultureInfo.CurrentCulture));
                 }
+                if ((Int32)Session["MensCRM"] == 80)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0145", CultureInfo.CurrentCulture));
+                }
             }
 
             // Prepara view
+            Session["MensCRM"] = 0;
             Session["VoltaComentProposta"] = 2;
             CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
             vm.CRPR_DT_CANCELAMENTO = DateTime.Today.Date;
@@ -6252,9 +6265,17 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
+                    // Verifica tipo de ação
+                    if (vm.MOCA_CD_ID == null || vm.MOCA_CD_ID == 0)
+                    {
+                        Session["MensCRM"] = 80;
+                        return RedirectToAction("CancelarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+                    }
+
                     // Executa a operação
                     CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    Int32 statusAnt = item.CRPR_IN_STATUS;
                     Int32 volta = baseApp.ValidateCancelarProposta(item);
 
                     // Verifica retorno
@@ -6278,6 +6299,13 @@ namespace ERP_CRM_Solution.Controllers
                         Session["MensCRM"] = 33;
                         return View(vm);
                     }
+
+                    // Atualiza status do processo
+                    CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
+                    crm.CRM1_IN_STATUS = 2;
+                    Int32 volta1 = baseApp.ValidateEdit(crm, crm);
+                    Session["Cliente"] = crm.CLIENTE;
+
 
                     // Listas
                     return RedirectToAction("VoltarAcompanhamentoCRM");
@@ -6745,9 +6773,14 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0139", CultureInfo.CurrentCulture));
                 }
+                if ((Int32)Session["MensCRM"] == 80)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0144", CultureInfo.CurrentCulture));
+                }
             }
 
             // Prepara view
+            Session["MensCRM"] = 0;
             CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
             vm.CRPR_DT_ENVIO = DateTime.Today.Date;
             vm.CRPR_IN_STATUS = 2;
@@ -6769,6 +6802,13 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
+                    // Verifica tipo de ação
+                    if (vm.TEPR_CD_ID == null || vm.TEPR_CD_ID == 0)
+                    {
+                        Session["MensCRM"] = 80;
+                        return RedirectToAction("EnviarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+                    }
+
                     // Executa a operação
                     CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
@@ -6921,10 +6961,12 @@ namespace ERP_CRM_Solution.Controllers
             List<System.Net.Mail.Attachment> listaAnexo = new List<System.Net.Mail.Attachment>();
             if (item.CRM_PROPOSTA_ANEXO.Count > 0)
             {
-                CRM_PROPOSTA_ANEXO ane = item.CRM_PROPOSTA_ANEXO.OrderByDescending(p => p.CRPA_DT_ANEXO).FirstOrDefault();
-                String fn = Server.MapPath(ane.CRPA_AQ_ARQUIVO);
-                System.Net.Mail.Attachment anexo = new System.Net.Mail.Attachment(fn);
-                listaAnexo.Add(anexo);
+                foreach (CRM_PROPOSTA_ANEXO ane in item.CRM_PROPOSTA_ANEXO)
+                {
+                    String fn = Server.MapPath(ane.CRPA_AQ_ARQUIVO);
+                    System.Net.Mail.Attachment anexo = new System.Net.Mail.Attachment(fn);
+                    listaAnexo.Add(anexo);
+                }
             }
 
             // Monta e-mail

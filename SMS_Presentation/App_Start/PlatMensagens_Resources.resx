@@ -483,4 +483,10 @@
   <data name="M0143" xml:space="preserve">
     <value>Responsável pela ação não especificado</value>
   </data>
+  <data name="M0144" xml:space="preserve">
+    <value>Template de proposta não especificado</value>
+  </data>
+  <data name="M0145" xml:space="preserve">
+    <value>Motivo de cancelamento não especificado</value>
+  </data>
 </root>

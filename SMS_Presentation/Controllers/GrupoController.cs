@@ -169,6 +169,14 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            if ((Int32)Session["VoltaCliGrupo"] == 10)
+            {
+                return RedirectToAction("VoltarAnexoCliente", "Cliente");
+            }
+            if ((Int32)Session["VoltaGrupo"] == 11)
+            {
+                return RedirectToAction("VoltarAnexoCliente", "Cliente");
+            }
             return RedirectToAction("MontarTelaGrupo");
         }
 
@@ -320,15 +328,19 @@ namespace ERP_CRM_Solution.Controllers
                     Session["IncluirGrupo"] = 1;
                     Session["GrupoNovo"] = item.GRUP_CD_ID;
                     Session["IdGrupo"] = item.GRUP_CD_ID;
+                    if ((Int32)Session["VoltaGrupo"] == 11)
+                    {
+                        return RedirectToAction("VoltarAnexoCliente", "Cliente");
+                    }
                     if ((Int32)Session["VoltaGrupo"] == 1)
                     {
-                        return RedirectToAction("VoltarAnexoGrupo");
+                        return RedirectToAction("VoltarBaseGrupo");
                     }
                     if ((Int32)Session["VoltaGrupo"] == 10)
                     {
                         return RedirectToAction("IncluirMensagemAutomacao", "MensagemAutomacao");
                     }
-                    return RedirectToAction("VoltarAnexoGrupo");
+                    return RedirectToAction("VoltarBaseGrupo");
                 }
                 catch (Exception ex)
                 {
@@ -411,6 +423,10 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         return RedirectToAction("VoltarAnexoCliente", "Cliente");
                     }
+                    if ((Int32)Session["VoltaCliGrupo"] == 1)
+                    {
+                        return RedirectToAction("VoltarAnexoCliente", "Cliente");
+                    }
                     return RedirectToAction("MontarTelaGrupo");
                 }
                 catch (Exception ex)
@@ -425,9 +441,45 @@ namespace ERP_CRM_Solution.Controllers
             }
         }
 
-        public ActionResult VoltarAnexoGrupo()
+        [HttpGet]
+        public ActionResult VerGrupo(Int32 id)
         {
 
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensGrupo"] = 2;
+                    return RedirectToAction("MontarTelaGrupo", "Grupo");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            GRUPO item = baseApp.GetItemById(id);
+            Session["Grupo"] = item;
+
+            // Indicadores
+            objetoAntes = item;
+            Session["IdGrupo"] = id;
+            GrupoViewModel vm = Mapper.Map<GRUPO, GrupoViewModel>(item);
+            return View(vm);
+        }
+
+        public ActionResult VoltarAnexoGrupo()
+        {
             return RedirectToAction("EditarGrupo", new { id = (Int32)Session["IdGrupo"] });
         }
 
