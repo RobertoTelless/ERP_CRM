@@ -47,14 +47,14 @@
         </div>
     </div>
     <div class="page-title">
-        <h3 class="title">Processos - CRM</h3>
+        <h3 class="title">Processos</h3>
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
             </li>
             <li class="active">
-                <strong>Processos - CRM</strong>
+                <strong>Processos</strong>
             </li>
         </ol>
         <br />
@@ -122,11 +122,11 @@
                                 {
                                     @Html.ButtonLinkIndex(text: "Propostas", action: "VerPropostasUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
                                 }
-                                @if ((Int32)Session["PermVenda"] == 1)
+                                @*@if ((Int32)Session["PermVenda"] == 1)
                                 {
                                     @Html.ButtonLinkIndex(text: "Pedidos", action: "VerPedidosUsuarioCRM", controller: "CRM", buttonClass: "primary")
-                                }
-                                @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
+                                }*@
+                                @Html.ButtonLinkIndex(text: "Dashboard Processos", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                             </div>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-xs-12"  id="Kanban">
             <div class="ibox-title">
-                <h5>Processos - CRM</h5>
+                <h5>Processos</h5>
             </div>
             <div class="ibox-content">
                 <div id="kanbanContainer" class="row">

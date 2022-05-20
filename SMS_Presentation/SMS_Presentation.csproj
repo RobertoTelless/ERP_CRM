@@ -343,6 +343,7 @@
     <Compile Include="Controllers\TelefoneController.cs" />
     <Compile Include="Controllers\TemplateEmailController.cs" />
     <Compile Include="Controllers\TemplateSMSController.cs" />
+    <Compile Include="Controllers\TransportadoraController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Extensions\HMTLHelperExtensions.cs" />
     <Compile Include="Extensions\MVCButtonExtensions.cs" />
@@ -453,6 +454,7 @@
     <Compile Include="ViewModels\TemplateEmailViewModel.cs" />
     <Compile Include="ViewModels\TemplateSMSViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
+    <Compile Include="ViewModels\TransportadoraViewModel.cs" />
     <Compile Include="ViewModels\UnidadeViewModel.cs" />
     <Compile Include="ViewModels\UsuarioAnexoViewModel.cs" />
     <Compile Include="ViewModels\UsuarioLoginViewModel.cs" />
@@ -3420,7 +3422,6 @@
     <Content Include="Views\TabelasAuxiliares\MontarTelaTipoAcao.cshtml" />
     <Content Include="Views\TabelasAuxiliares\IncluirTipoAcao.cshtml" />
     <Content Include="Views\TabelasAuxiliares\EditarTipoAcao.cshtml" />
-    <Content Include="Views\CRM\MontarTelaDashboardCRM.cshtml" />
     <Content Include="Views\CRM\MontarTelaDashboardCRMNovo.cshtml" />
     <Content Include="Views\Fornecedor\EnviarEMailContato.cshtml" />
     <Content Include="Views\Fornecedor\EnviarSMSContato.cshtml" />
@@ -3710,6 +3711,12 @@
     <Content Include="Views\CRM\IncluirItemPedido.cshtml" />
     <Content Include="Views\Banco\MontarTelaResumoFinanceiro.cshtml" />
     <Content Include="Views\Grupo\VerGrupo.cshtml" />
+    <Content Include="Views\Transportadora\MontarTelaTransportadora.cshtml" />
+    <Content Include="Views\Transportadora\IncluirTransportadora.cshtml" />
+    <Content Include="Views\Transportadora\VerTransportadora.cshtml" />
+    <Content Include="Views\Transportadora\EditarTransportadora.cshtml" />
+    <Content Include="Views\Transportadora\VerCardsTransportadora.cshtml" />
+    <Content Include="Views\Transportadora\VerAnexoTransportadora.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

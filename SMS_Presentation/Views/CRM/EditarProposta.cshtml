@@ -47,17 +47,17 @@
     </div>
     
     <div class="page-title">
-        <h3 class="title">Processos - CRM</h3>
+        <h3 class="title">Processos</h3>
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
             </li>
             <li>
-                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos - CRM</a>
+                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos</a>
             </li>
             <li>
-                <a href="@Url.Action("AcompanhamentoProcessoCRM", "CRM")">Acompanhamento - Processos - CRM</a>
+                <a href="@Url.Action("AcompanhamentoProcessoCRM", "CRM")">Acompanhamento - Processos</a>
             </li>
             <li class="active">
                 <strong>Propostas - Edição</strong>
@@ -84,7 +84,7 @@
                         @Html.ButtonLinkIndex(text: "Cancelar Proposta", action: "CancelarPropostaEdicao", controller: "CRM")
                         @Html.ButtonLinkIndex(text: "Enviar Proposta", action: "EnviarPropostaEdicao", controller: "CRM")
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAcompanhamentoCRM", controller: "CRM")
-                        @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
+                        @Html.ButtonLinkIndex(text: "Dashboard Processos", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                     </div>
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
@@ -475,7 +475,7 @@
                 <div class="form-group">
                     <br />
                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAcompanhamentoCRM", controller: "CRM")
-                    @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
+                    @Html.ButtonLinkIndex(text: "Dashboard Processos", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                 </div>
             </div>
         </div>

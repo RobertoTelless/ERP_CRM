@@ -241,6 +241,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["ListaITPC"] = null;
             Session["VoltaAgendaCRMCalend"] = 0;
             Session["VoltaCliGrupo"] = 0;
+            Session["VoltaTransp"] = 0;
 
             USUARIO usu = new USUARIO();
             UsuarioViewModel vm = new UsuarioViewModel();

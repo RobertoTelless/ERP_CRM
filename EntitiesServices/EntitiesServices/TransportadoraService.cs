@@ -25,7 +25,7 @@ namespace ModelServices.EntitiesServices
         private readonly ITipoVeiculoRepository _veicRepository;
         private readonly ITipoTransporteRepository _transRepository;
         private readonly IUFRepository _ufRepository;
-        protected DUO_DatabaseEntities Db = new DUO_DatabaseEntities();
+        protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
         public TransportadoraService(ITransportadoraRepository baseRepository, ILogRepository logRepository, ITransportadoraAnexoRepository anexoRepository, IFilialRepository filialRepository, ITipoVeiculoRepository veicRepository, ITipoTransporteRepository transRepository, IUFRepository ufRepository) : base(baseRepository)
         {

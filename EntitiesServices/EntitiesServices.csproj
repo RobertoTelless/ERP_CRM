@@ -252,6 +252,7 @@
     <Compile Include="EntitiesServices\TemplateSMSService.cs" />
     <Compile Include="EntitiesServices\TemplateService.cs" />
     <Compile Include="EntitiesServices\TipoPessoaService.cs" />
+    <Compile Include="EntitiesServices\TransportadoraService.cs" />
     <Compile Include="EntitiesServices\UnidadeService.cs" />
     <Compile Include="EntitiesServices\UsuarioService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IAgendaService.cs" />
@@ -334,6 +335,7 @@
     <Compile Include="Interfaces\EntitiesServices\ITemplateSMSService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITemplateService.cs" />
     <Compile Include="Interfaces\EntitiesServices\ITipoPessoaService.cs" />
+    <Compile Include="Interfaces\EntitiesServices\ITransportadoraService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IUnidadeService.cs" />
     <Compile Include="Interfaces\EntitiesServices\IUsuarioService.cs" />
     <Compile Include="Interfaces\Repositories\IAgendaAnexoRepository.cs" />
@@ -491,6 +493,8 @@
     <Compile Include="Interfaces\Repositories\ITipoTarefaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoTransporteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoVeiculoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITransportadoraAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITransportadoraRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUFRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUnidadeRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioAnexoRepository.cs" />

@@ -106,6 +106,7 @@ namespace MvcMapping.Mappers
             CreateMap<CRM_PEDIDO_VENDA, CRMPedidoViewModel>();
             CreateMap<CRM_PEDIDO_VENDA_ACOMPANHAMENTO, CRMPedidoComentarioViewModel>();
             CreateMap<CRM_PEDIDO_VENDA_ITEM, CRMItemPedidoViewModel>();
+            CreateMap<TRANSPORTADORA, TransportadoraViewModel>();
 
         }
     }

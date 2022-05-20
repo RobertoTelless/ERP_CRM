@@ -72,17 +72,17 @@
     }
 
     <div class="page-title">
-        <h3 class="title">Processos - CRM</h3>
+        <h3 class="title">Processos</h3>
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
             </li>
             <li>
-                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos - CRM</a>
+                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos</a>
             </li>
             <li class="active">
-                <strong>Processos - CRM - Consulta</strong>
+                <strong>Processos - Consulta</strong>
             </li>
         </ol>
         <br />
@@ -91,7 +91,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Processos - CRM - Consulta</h5>
+                    <h5>Processos - Consulta</h5>
                 </div>
                 <div class="ibox-content">
                     @Html.AntiForgeryToken()
@@ -105,7 +105,7 @@
                     <div class="form-group">
                         @*@Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalheCRM", controller: "CRM")*@
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCRM", controller: "CRM")
-                        @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
+                        @Html.ButtonLinkIndex(text: "Dashboard Processos", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                     </div>
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
@@ -120,10 +120,10 @@
                             {
                                 <li class=""><a data-toggle="tab" href="#tab-9">Propostas</a></li>
                             }
-                            @if ((Int32)Session["PermVenda"] == 1)
+                            @*@if ((Int32)Session["PermVenda"] == 1)
                             {
                                 <li class=""><a data-toggle="tab" href="#tab-10">Pedidos</a></li>
-                            }
+                            }*@
                         </ul>
                         <div class="tab-content">
                             @*Dados Gerais*@
@@ -1049,7 +1049,7 @@
                             }
 
                             @*Pedidos*@
-                            @if ((Int32)Session["PermVenda"] == 1)
+                            @*@if ((Int32)Session["PermVenda"] == 1)
                             {
                                 <div id="tab-10" class="tab-pane">
                                     <div class="panel-body">
@@ -1261,7 +1261,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            }                      
+                            }*@                      
                         </div>
                     </div>
                 </div>

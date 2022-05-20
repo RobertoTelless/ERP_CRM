@@ -5779,6 +5779,13 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("MontarTelaCliente", "Cliente");
         }
 
+        public ActionResult MostrarTransportadoras()
+        {
+            // Prepara grid
+            Session["VoltaTransp"] = 40;
+            return RedirectToAction("MontarTelaTransportadora", "Transportadora");
+        }
+
         public ActionResult IncluirClienteRapido()
         {
             // Prepara grid

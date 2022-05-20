@@ -141,6 +141,7 @@ namespace Presentation.Start
             kernel.Bind<ICategoriaOrdemServicoAppService>().To<CategoriaOrdemServicoAppService>();
             kernel.Bind<ICRMComercialAppService>().To<CRMComercialAppService>();
             kernel.Bind<IFormularioRespostaAppService>().To<FormularioRespostaAppService>();
+            kernel.Bind<ITransportadoraAppService>().To<TransportadoraAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -218,6 +219,7 @@ namespace Presentation.Start
             kernel.Bind<IOrdemServicoService>().To<OrdemServicoService>();
             kernel.Bind<ICRMComercialService>().To<CRMComercialService>();
             kernel.Bind<IFormularioRespostaService>().To<FormularioRespostaService>();
+            kernel.Bind<ITransportadoraService>().To<TransportadoraService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -366,6 +368,12 @@ namespace Presentation.Start
             kernel.Bind<ICRMItemPedidoRepository>().To<CRMItemPedidoRepository>();
             kernel.Bind<IFormaEnvioRepository>().To<FormaEnvioRepository>();
             kernel.Bind<IFormaFreteRepository>().To<FormaFreteRepository>();
+            kernel.Bind<ITransportadoraRepository>().To<TransportadoraRepository>();
+            kernel.Bind<ITransportadoraAnexoRepository>().To<TransportadoraAnexoRepository>();
+            kernel.Bind<ITipoVeiculoRepository>().To<TipoVeiculoRepository>();
+            kernel.Bind<ITipoTransporteRepository>().To<TipoTransporteRepository>();
+
+
         }
     }
 }

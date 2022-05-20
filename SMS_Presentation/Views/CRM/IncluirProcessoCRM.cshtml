@@ -5,17 +5,17 @@
 }
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="page-title">
-        <h3 class="title">Processos - CRM</h3>
+        <h3 class="title">Processos</h3>
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
             </li>
             <li>
-                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos - CRM</a>
+                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos</a>
             </li>
             <li class="active">
-                <strong>Processos - CRM - Inclusão</strong>
+                <strong>Processos - Inclusão</strong>
             </li>
         </ol>
         <br />
@@ -24,7 +24,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Processos - CRM - Inclusão</h5>
+                    <h5>Processos - Inclusão</h5>
                 </div>
                 <div class="ibox-content">
                     @if (!ViewData.ModelState.IsValid)
@@ -99,7 +99,7 @@
                                                     @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Temperatura*
+                                                    Temperatura
                                                     @Html.DropDownListFor(m => m.CRM1_NR_TEMPERATURA, (SelectList)ViewBag.Temp, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.CRM1_NR_TEMPERATURA, "", new { @style = "color:red" })
                                                 </div>
@@ -167,7 +167,7 @@
                                     <br />
                                     @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
                                     <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirmar Inclusão de Processo</button>
-                                    @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
+                                    @Html.ButtonLinkIndex(text: "Dashboard Processos", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCRM", controller: "CRM")
                                 </div>
                             </div>

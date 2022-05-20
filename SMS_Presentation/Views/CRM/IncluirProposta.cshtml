@@ -5,17 +5,17 @@
 }
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="page-title">
-        <h3 class="title">Processos - CRM</h3>
+        <h3 class="title">Processos</h3>
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
             </li>
             <li>
-                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos - CRM</a>
+                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos</a>
             </li>
             <li>
-                <a href="@Url.Action("AcompanhamentoProcessoCRM", "CRM")">Acompanhamento - Processos - CRM</a>
+                <a href="@Url.Action("AcompanhamentoProcessoCRM", "CRM")">Acompanhamento - Processos</a>
             </li>
             <li class="active">
                 <strong>Propostas - Inclusão</strong>
@@ -54,7 +54,7 @@
                                             @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
                                             <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirmar Inclusão da Proposta</button>
                                             @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAcompanhamentoCRM", controller: "CRM")
-                                            @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
+                                            @Html.ButtonLinkIndex(text: "Dashboard Processos", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                                         </div>
                                         <div class="row">
                                             @Html.HiddenFor(m => m.ASSI_CD_ID)

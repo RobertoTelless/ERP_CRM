@@ -5,20 +5,20 @@
 }
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="page-title">
-        <h3 class="title">Processos - CRM</h3>
+        <h3 class="title">Processos</h3>
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
             </li>
             <li>
-                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos - CRM</a>
+                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos</a>
             </li>
             <li>
-                <a href="@Url.Action("EditarProcessoCRM", "CRM")">Processos - CRM - Edição</a>
+                <a href="@Url.Action("AcompanhamentoProcessoCRM", "CRM")">Processos - Acompanhamento</a>
             </li>
             <li class="active">
-                <strong>Processos - CRM - Contatos</strong>
+                <strong>Processos - Contatos</strong>
             </li>
         </ol>
         <br />
@@ -82,7 +82,7 @@
                         <div class="form-group">
                             @Html.ButtonActionSubmit(text: "Confirma Edição de Contato", htmlAttributes: new { id = "basictoast" })
                             @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAcompanhamentoCRM", controller: "CRM")
-                            @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
+                            @Html.ButtonLinkIndex(text: "Dashboard Processos", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                         </div>
                     </div>
                 }

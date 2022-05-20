@@ -5,17 +5,20 @@
 }
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="page-title">
-        <h3 class="title">Processos - CRM</h3>
+        <h3 class="title">Processos</h3>
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
             </li>
             <li>
-                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos - CRM</a>
+                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos</a>
             </li>
             <li>
-                <a href="@Url.Action("AcompanhamentoProcessoCRM", "CRM")">Acompanhamento - Processos - CRM</a>
+                <a href="@Url.Action("AcompanhamentoProcessoCRM", "CRM")">Acompanhamento - Processos</a>
+            </li>
+            <li>
+                <a href="@Url.Action("EditarProposta", "CRM")">Proposta - Edição</a>
             </li>
             <li class="active">
                 <strong>Propostas - Follow-Up</strong>
@@ -27,7 +30,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Acompanhamento - Follow-Up</h5>
+                    <h5>Propostas - Follow-Up</h5>
                 </div>
                 @using (Html.BeginForm("IncluirComentarioPropostaCRM", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
                 {

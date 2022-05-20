@@ -5,20 +5,20 @@
 }
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="page-title">
-        <h3 class="title">Processos - CRM</h3>
+        <h3 class="title">Processos</h3>
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
             </li>
             <li>
-                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos - CRM</a>
+                <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos</a>
             </li>
             <li>
-                <a href="@Url.Action("EditarProcessoCRM", "CRM")">Processos - CRM - Acompanhamento</a>
+                <a href="@Url.Action("EditarProcessoCRM", "CRM")">Processos - Acompanhamento</a>
             </li>
             <li class="active">
-                <strong>Processos - CRM - Mensagens</strong>
+                <strong>Processos - Mensagens</strong>
             </li>
         </ol>
         <br />
@@ -63,7 +63,6 @@
                             <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Envio do E-Mail</button>*@
                             @Html.ButtonActionSubmit(text: "Confirma Envio de E-Mail", htmlAttributes: new { id = "basictoast" })
                             @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAcompanhamentoCRM", controller: "CRM")
-                            @Html.ButtonLinkIndex(text: "Dashboard", controller: "CRM", action: "Voltar")
                         </div>
                     </div>
                 }

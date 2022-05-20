@@ -320,6 +320,10 @@
     <Compile Include="Repositories\TipoContribuinteRepository.cs" />
     <Compile Include="Repositories\NivelSegurancaRepository.cs" />
     <Compile Include="Repositories\TipoTarefaRepository.cs" />
+    <Compile Include="Repositories\TipoTransporteRepository.cs" />
+    <Compile Include="Repositories\TipoVeiculoRepository.cs" />
+    <Compile Include="Repositories\TransportadoraAnexoRepository.cs" />
+    <Compile Include="Repositories\TransportadoraRepository.cs" />
     <Compile Include="Repositories\UFRepository.cs" />
     <Compile Include="Repositories\UnidadeRepository.cs" />
     <Compile Include="Repositories\UsuarioAnexoRepository.cs" />

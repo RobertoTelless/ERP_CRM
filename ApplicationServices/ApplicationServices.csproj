@@ -237,6 +237,7 @@
     <Compile Include="Interfaces\ITemplateSMSAppService.cs" />
     <Compile Include="Interfaces\ITemplateAppService.cs" />
     <Compile Include="Interfaces\ITipoPessoaAppService.cs" />
+    <Compile Include="Interfaces\ITransportadoraAppService.cs" />
     <Compile Include="Interfaces\IUnidadeAppService.cs" />
     <Compile Include="Interfaces\IUsuarioAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -311,6 +312,7 @@
     <Compile Include="Services\TemplateSMSAppService.cs" />
     <Compile Include="Services\TemplateAppService.cs" />
     <Compile Include="Services\TipoPessoaAppService.cs" />
+    <Compile Include="Services\TransportadoraAppService.cs" />
     <Compile Include="Services\UnidadeAppService.cs" />
     <Compile Include="Services\UsuarioAppService.cs" />
   </ItemGroup>
