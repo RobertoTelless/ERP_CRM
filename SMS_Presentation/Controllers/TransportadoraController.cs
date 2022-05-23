@@ -58,9 +58,9 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            if ((Int32)Session["VoltaTransp"] == 40)
+            if ((Int32)Session["VoltaTransportadora"] == 40)
             {
-                Session["VoltaTransp"] = 0;
+                Session["VoltaTransportadora"] = 1;
                 return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
             }
             return RedirectToAction("CarregarBase", "BaseAdmin");

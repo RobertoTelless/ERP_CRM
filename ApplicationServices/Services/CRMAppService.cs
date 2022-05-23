@@ -355,6 +355,19 @@ namespace ApplicationServices.Services
                         LOG_TX_REGISTRO_ANTES = antes
                     };
                 }
+                else if (item.CRM1_DT_PREVISAO_ENTREGA != null)
+                {
+                    log = new LOG
+                    {
+                        LOG_DT_DATA = DateTime.Now,
+                        USUA_CD_ID = usuario.USUA_CD_ID,
+                        ASSI_CD_ID = usuario.ASSI_CD_ID,
+                        LOG_NM_OPERACAO = "ExpeCRM",
+                        LOG_IN_ATIVO = 1,
+                        LOG_TX_REGISTRO = serial,
+                        LOG_TX_REGISTRO_ANTES = antes
+                    };
+                }
                 else
                 {
                     log = new LOG

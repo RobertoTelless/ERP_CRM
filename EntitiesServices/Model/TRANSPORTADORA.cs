@@ -19,6 +19,7 @@ namespace EntitiesServices.Model
         {
             this.TRANSPORTADORA_ANEXO = new HashSet<TRANSPORTADORA_ANEXO>();
             this.CRM_PEDIDO_VENDA = new HashSet<CRM_PEDIDO_VENDA>();
+            this.CRM = new HashSet<CRM>();
         }
     
         public int TRAN_CD_ID { get; set; }
@@ -57,5 +58,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<TRANSPORTADORA_ANEXO> TRANSPORTADORA_ANEXO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM> CRM { get; set; }
     }
 }

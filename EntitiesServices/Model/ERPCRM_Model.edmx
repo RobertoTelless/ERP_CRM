@@ -837,6 +837,12 @@
           <Property Name="CRM1_VL_VALOR_INICIAL" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRM1_VL_VALOR_FINAL" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRM1_NR_ATRASO" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="TRAN_CD_ID" Type="int" />
+          <Property Name="CRM1_DT_PREVISAO_ENTREGA" Type="date" />
+          <Property Name="CRM1_IN_AVISO_ENTREGA" Type="int" />
+          <Property Name="CRM1_DT_DATA_SAIDA" Type="datetime" />
+          <Property Name="CRM1_IN_ENTREGA_CONFIRMADA" Type="int" />
+          <Property Name="CRM_DS_INFORMACOES_SAIDA" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="CRM_ACAO">
           <Key>
@@ -1140,7 +1146,7 @@
           <Property Name="CRPR_VL_FRETE" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_VL_ICMS" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_VL_IPI" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="CRPR_VL_TOTAL" Type="decimal" Precision="22" Scale="2" StoreGeneratedPattern="Computed" />
+          <Property Name="CRPR_VL_TOTAL" Type="decimal" Precision="20" Scale="2" StoreGeneratedPattern="Computed" />
           <Property Name="CRPR_VL_PESO_BRUTO" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_VL_PESO_LIQUIDO" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_IN_GERAR_CR" Type="int" />
@@ -4830,6 +4836,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CRM_TRANSPORTADORA">
+          <End Role="TRANSPORTADORA" Type="Self.TRANSPORTADORA" Multiplicity="0..1" />
+          <End Role="CRM" Type="Self.CRM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSPORTADORA">
+              <PropertyRef Name="TRAN_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM">
+              <PropertyRef Name="TRAN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CRM_USUARIO">
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
           <End Role="CRM" Type="Self.CRM" Multiplicity="*" />
@@ -8338,6 +8356,10 @@
             <End Role="TIPO_CRM" EntitySet="TIPO_CRM" />
             <End Role="CRM" EntitySet="CRM" />
           </AssociationSet>
+          <AssociationSet Name="FK_CRM_TRANSPORTADORA" Association="Self.FK_CRM_TRANSPORTADORA">
+            <End Role="TRANSPORTADORA" EntitySet="TRANSPORTADORA" />
+            <End Role="CRM" EntitySet="CRM" />
+          </AssociationSet>
           <AssociationSet Name="FK_CRM_USUARIO" Association="Self.FK_CRM_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="CRM" EntitySet="CRM" />
@@ -10295,6 +10317,13 @@
           <NavigationProperty Name="CRM_PEDIDO_VENDA" Relationship="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_CRM" FromRole="CRM" ToRole="CRM_PEDIDO_VENDA" />
           <Property Name="CRM1_NR_ATRASO" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="CONTA_RECEBER" Relationship="ERP_CRMModel.FK_CONTA_RECEBER_CRM" FromRole="CRM" ToRole="CONTA_RECEBER" />
+          <Property Name="TRAN_CD_ID" Type="Int32" />
+          <Property Name="CRM1_DT_PREVISAO_ENTREGA" Type="DateTime" Precision="0" />
+          <Property Name="CRM1_IN_AVISO_ENTREGA" Type="Int32" />
+          <Property Name="CRM1_DT_DATA_SAIDA" Type="DateTime" Precision="3" />
+          <Property Name="CRM1_IN_ENTREGA_CONFIRMADA" Type="Int32" />
+          <NavigationProperty Name="TRANSPORTADORA" Relationship="ERP_CRMModel.FK_CRM_TRANSPORTADORA" FromRole="CRM" ToRole="TRANSPORTADORA" />
+          <Property Name="CRM_DS_INFORMACOES_SAIDA" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CRM_ACAO">
           <Key>
@@ -12145,6 +12174,7 @@
           <NavigationProperty Name="TIPO_VEICULO" Relationship="Self.FK_TRANSPORTADORA_TIPO_VEICULO" FromRole="TRANSPORTADORA" ToRole="TIPO_VEICULO" />
           <NavigationProperty Name="TRANSPORTADORA_ANEXO" Relationship="Self.FK_TRANSPORTADORA_ANEXO_TRANSPORTADORA" FromRole="TRANSPORTADORA" ToRole="TRANSPORTADORA_ANEXO" />
           <NavigationProperty Name="CRM_PEDIDO_VENDA" Relationship="ERP_CRMModel.FK_CRM_PEDIDO_VENDA_TRANSPORTADORA" FromRole="TRANSPORTADORA" ToRole="CRM_PEDIDO_VENDA" />
+          <NavigationProperty Name="CRM" Relationship="ERP_CRMModel.FK_CRM_TRANSPORTADORA" FromRole="TRANSPORTADORA" ToRole="CRM" />
         </EntityType>
         <EntityType Name="TRANSPORTADORA_ANEXO">
           <Key>
@@ -17723,6 +17753,10 @@
             <End Role="CRM_PROPOSTA" EntitySet="CRM_PROPOSTA" />
             <End Role="CONTA_RECEBER" EntitySet="CONTA_RECEBER" />
           </AssociationSet>
+          <AssociationSet Name="FK_CRM_TRANSPORTADORA" Association="ERP_CRMModel.FK_CRM_TRANSPORTADORA">
+            <End Role="TRANSPORTADORA" EntitySet="TRANSPORTADORA" />
+            <End Role="CRM" EntitySet="CRM" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ATENDIMENTO_CRM">
           <Key>
@@ -18731,7 +18765,7 @@
           <NavigationProperty Name="FORMA_FRETE" Relationship="ERP_CRMModel.FK_CRM_PROPOSTA_FORMA_FRETE" FromRole="CRM_PROPOSTA" ToRole="FORMA_FRETE" />
           <Property Name="CRPR_VL_ICMS" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_VL_IPI" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CRPR_VL_TOTAL" Type="Decimal" Precision="22" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CRPR_VL_TOTAL" Type="Decimal" Precision="20" Scale="2" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="CRPR_VL_PESO_BRUTO" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_VL_PESO_LIQUIDO" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="CRPR_IN_GERAR_CR" Type="Int32" />
@@ -19230,6 +19264,18 @@
             </Principal>
             <Dependent Role="CONTA_RECEBER">
               <PropertyRef Name="CRPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRM_TRANSPORTADORA">
+          <End Type="ERP_CRMModel.TRANSPORTADORA" Role="TRANSPORTADORA" Multiplicity="0..1" />
+          <End Type="ERP_CRMModel.CRM" Role="CRM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSPORTADORA">
+              <PropertyRef Name="TRAN_CD_ID" />
+            </Principal>
+            <Dependent Role="CRM">
+              <PropertyRef Name="TRAN_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -20066,6 +20112,12 @@
           <EntitySetMapping Name="CRM">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM">
               <MappingFragment StoreEntitySet="CRM">
+                <ScalarProperty Name="CRM_DS_INFORMACOES_SAIDA" ColumnName="CRM_DS_INFORMACOES_SAIDA" />
+                <ScalarProperty Name="CRM1_IN_ENTREGA_CONFIRMADA" ColumnName="CRM1_IN_ENTREGA_CONFIRMADA" />
+                <ScalarProperty Name="CRM1_DT_DATA_SAIDA" ColumnName="CRM1_DT_DATA_SAIDA" />
+                <ScalarProperty Name="CRM1_IN_AVISO_ENTREGA" ColumnName="CRM1_IN_AVISO_ENTREGA" />
+                <ScalarProperty Name="CRM1_DT_PREVISAO_ENTREGA" ColumnName="CRM1_DT_PREVISAO_ENTREGA" />
+                <ScalarProperty Name="TRAN_CD_ID" ColumnName="TRAN_CD_ID" />
                 <ScalarProperty Name="CRM1_NR_ATRASO" ColumnName="CRM1_NR_ATRASO" />
                 <ScalarProperty Name="CRM1_VL_VALOR_FINAL" ColumnName="CRM1_VL_VALOR_FINAL" />
                 <ScalarProperty Name="CRM1_VL_VALOR_INICIAL" ColumnName="CRM1_VL_VALOR_INICIAL" />

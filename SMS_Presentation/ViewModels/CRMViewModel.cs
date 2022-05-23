@@ -52,12 +52,38 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<decimal> CRM1_VL_VALOR_INICIAL { get; set; }
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<decimal> CRM1_VL_VALOR_FINAL { get; set; }
+        public Nullable<int> CRM1_NR_ATRASO { get; set; }
+        public Nullable<int> TRAN_CD_ID { get; set; }
+        [DataType(DataType.Date, ErrorMessage = "A DATA DE PREVISÃO deve ser uma data válida")]
+        public Nullable<System.DateTime> CRM1_DT_PREVISAO_ENTREGA { get; set; }
+        public Nullable<int> CRM1_IN_AVISO_ENTREGA { get; set; }
+        [DataType(DataType.Date, ErrorMessage = "A DATA DE SAÍDA deve ser uma data válida")]
+        public Nullable<System.DateTime> CRM1_DT_DATA_SAIDA { get; set; }
+        public Nullable<int> CRM1_IN_ENTREGA_CONFIRMADA { get; set; }
+        [StringLength(1000, ErrorMessage = "AS INFORMAÇÕES DE SAÍDA devem conter no máximo 1000 caracteres.")]
+        public string CRM_DS_INFORMACOES_SAIDA { get; set; }
 
         public string NumeroProposta { get; set; }
         public string NomeProposta { get; set; }
         public Nullable<System.DateTime> DataProposta { get; set; }
         public Nullable<System.DateTime> DataAprovacao { get; set; }
         public Nullable<decimal> ValorTotal { get; set; }
+
+        public bool Entrega
+        {
+            get
+            {
+                if (CRM1_IN_ENTREGA_CONFIRMADA == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                CRM1_IN_ENTREGA_CONFIRMADA = (value == true) ? 1 : 0;
+            }
+        }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }
@@ -83,5 +109,8 @@ namespace ERP_CRM_Solution.ViewModels
         public virtual ICollection<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
+        public virtual TRANSPORTADORA TRANSPORTADORA { get; set; }
     }
 }

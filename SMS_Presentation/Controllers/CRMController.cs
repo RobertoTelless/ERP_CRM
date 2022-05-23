@@ -48,6 +48,8 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IProdutotabelaPrecoAppService ptpApp;
         private readonly IContaBancariaAppService cbApp;
         private readonly IContaReceberAppService crApp;
+        private readonly ITransportadoraAppService trApp;
+        private readonly ITemplateAppService tempApp;
 
         private String msg;
         private Exception exception;
@@ -56,7 +58,7 @@ namespace ERP_CRM_Solution.Controllers
         List<CRM> listaMaster = new List<CRM>();
         String extensao;
 
-        public CRMController(ICRMAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps, ITemplateEMailAppService temaApps, IProdutoAppService proApps, IProdutotabelaPrecoAppService ptpApps, IContaBancariaAppService cbApps, IContaReceberAppService crApps)
+        public CRMController(ICRMAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps, ITemplateEMailAppService temaApps, IProdutoAppService proApps, IProdutotabelaPrecoAppService ptpApps, IContaBancariaAppService cbApps, IContaReceberAppService crApps, ITransportadoraAppService trApps, ITemplateAppService tempApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -71,6 +73,8 @@ namespace ERP_CRM_Solution.Controllers
             ptpApp = ptpApps;
             cbApp = cbApps;
             crApp = crApps;
+            trApp = trApps;
+            tempApp = tempApps;
         }
 
         [HttpGet]
@@ -2256,6 +2260,44 @@ namespace ERP_CRM_Solution.Controllers
             }
         }
 
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult EnviarExpedicaoCRM()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM item = (CRM)Session["CRM"];
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    item.CRM1_IN_ATIVO = 7;
+                    Int32 volta = baseApp.ValidateEdit(item, item, usuario);
+
+                    // Verifica retorno
+
+                    // Listas
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+
         [HttpGet]
         public ActionResult IncluirGrupo()
         {
@@ -3011,6 +3053,7 @@ namespace ERP_CRM_Solution.Controllers
             temp.Add(new SelectListItem() { Text = "Quente", Value = "3" });
             temp.Add(new SelectListItem() { Text = "Muito Quente", Value = "4" });
             ViewBag.Temp = new SelectList(temp, "Value", "Text");
+            ViewBag.Transportadoras = new SelectList(trApp.GetAllItens(idAss).OrderBy(p => p.TRAN_NM_NOME), "TRAN_CD_ID", "TRAN_NM_NOME");
 
             Session["IdCRM"] = id;
             CRM item = baseApp.GetItemById(id);
@@ -3157,6 +3200,40 @@ namespace ERP_CRM_Solution.Controllers
         public ActionResult GerarRelatorioDetalheCRM()
         {
             return View();
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult ExpedicaoProcessoCRM(CRMViewModel vm)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    CRM item = Mapper.Map<CRMViewModel, CRM>(vm);
+                    Int32 volta = baseApp.ValidateEdit(item, (CRM)Session["CRM"], usuario);
+
+                    // Verifica retorno
+    
+                    // Sucesso
+                    listaMaster = new List<CRM>();
+                    Session["ListaCRM"] = null;
+                    Session["IncluirCRM"] = 0;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
+                }
+            }
+            else
+            {
+                return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
+            }
         }
 
         [HttpGet]
@@ -4184,6 +4261,74 @@ namespace ERP_CRM_Solution.Controllers
             mensagem.CORPO = emailBody;
             mensagem.DEFAULT_CREDENTIALS = false;
             mensagem.EMAIL_DESTINO = cont.CLIE_NM_EMAIL;
+            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+            mensagem.ENABLE_SSL = true;
+            mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
+            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+            mensagem.IS_HTML = true;
+            mensagem.NETWORK_CREDENTIAL = net;
+
+            // Envia mensagem
+            try
+            {
+                Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+            }
+            catch (Exception ex)
+            {
+                String erro = ex.Message;
+            }
+            return 0;
+        }
+
+        [ValidateInput(false)]
+        public Int32 ProcessaEnvioEMailClienteEntrega(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera cliente
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            CLIENTE cliente = (CLIENTE)Session["Cliente"];
+            CRM crm = (CRM)Session["CRM"];
+            CRM_PROPOSTA prop = (CRM_PROPOSTA)Session["PropAprov"];
+
+            // Processa e-mail
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+            TEMPLATE temp = tempApp.GetByCode("TEMPENTR");
+
+            // Prepara inicial
+            String body = String.Empty;
+            String header = String.Empty;
+            String footer = String.Empty;
+            body = temp.TEMP_TX_CORPO;
+            header = temp.TEMP_TX_CABECALHO;
+            footer = temp.TEMP_TX_DADOS;
+
+            // Prepara cabeçalho
+            header = header.Replace("{Nome}", cliente.CLIE_NM_NOME);
+
+            // Prepara rodape
+            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            footer = footer.Replace("{Assinatura}", assi.ASSI_NM_NOME);
+
+            // Monta corpo
+            body = body.Replace("{Descricao}", prop.CRPR_DS_INFORMACOES);
+            body = body.Replace("{Data}", crm.CRM1_DT_PREVISAO_ENTREGA.Value.ToShortDateString());
+            body = body.Replace("{Transp}", crm.TRANSPORTADORA.TRAN_NM_NOME);
+
+            // Trata corpo
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(body);
+            body = str.ToString();
+            String emailBody = header + body + footer;
+
+            // Monta e-mail
+            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+            Email mensagem = new Email();
+            mensagem.ASSUNTO = "Aviso de Entrega";
+            mensagem.CORPO = emailBody;
+            mensagem.DEFAULT_CREDENTIALS = false;
+            mensagem.EMAIL_DESTINO = cliente.CLIE_NM_EMAIL;
             mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
             mensagem.ENABLE_SSL = true;
             mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
@@ -5302,6 +5447,51 @@ namespace ERP_CRM_Solution.Controllers
 
         [HttpGet]
         [ValidateInput(false)]
+        public ActionResult EnviarEMailAvisoEntrega()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            if (Session["MensMensagem"] != null)
+            {
+                if ((Int32)Session["MensMensagem"] == 66)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0026", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // recupera cliente e assinante
+            CRM crm = baseApp.GetItemById((Int32)Session["CRM"]);
+            CLIENTE cli = cliApp.GetItemById(crm.CLIE_CD_ID);
+            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            Session["Cliente"] = cli;
+            Session["CRM"] = crm;
+
+            // Monta vm
+            MensagemViewModel vm = new MensagemViewModel();
+            vm.ASSI_CD_ID = idAss;
+            vm.MENS_DT_CRIACAO = DateTime.Now;
+            vm.MENS_IN_ATIVO = 1;
+            vm.NOME = cli.CLIE_NM_NOME;
+            vm.ID = crm.CLIE_CD_ID;
+            vm.MODELO = cli.CLIE_NM_EMAIL;
+            vm.USUA_CD_ID = usuario.USUA_CD_ID;
+            vm.MENS_NM_CABECALHO = null;
+            vm.MENS_NM_RODAPE = null;
+            vm.MENS_IN_TIPO = 1;
+            vm.ID = cli.CLIE_CD_ID;
+
+            Int32 volta = ProcessaEnvioEMailClienteEntrega(vm, usuario);
+            return RedirectToAction("AcompanhamentoProcessoCRM", new { id = crm.CRM1_CD_ID });
+
+        }
+
+        [HttpGet]
+        [ValidateInput(false)]
         public ActionResult EnviarEMailCliente(Int32 id)
         {
             if ((String)Session["Ativa"] == null)
@@ -5782,7 +5972,7 @@ namespace ERP_CRM_Solution.Controllers
         public ActionResult MostrarTransportadoras()
         {
             // Prepara grid
-            Session["VoltaTransp"] = 40;
+            Session["VoltaTransportadora"] = 40;
             return RedirectToAction("MontarTelaTransportadora", "Transportadora");
         }
 

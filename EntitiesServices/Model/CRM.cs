@@ -56,6 +56,12 @@ namespace EntitiesServices.Model
         public Nullable<decimal> CRM1_VL_VALOR_INICIAL { get; set; }
         public Nullable<decimal> CRM1_VL_VALOR_FINAL { get; set; }
         public Nullable<int> CRM1_NR_ATRASO { get; set; }
+        public Nullable<int> TRAN_CD_ID { get; set; }
+        public Nullable<System.DateTime> CRM1_DT_PREVISAO_ENTREGA { get; set; }
+        public Nullable<int> CRM1_IN_AVISO_ENTREGA { get; set; }
+        public Nullable<System.DateTime> CRM1_DT_DATA_SAIDA { get; set; }
+        public Nullable<int> CRM1_IN_ENTREGA_CONFIRMADA { get; set; }
+        public string CRM_DS_INFORMACOES_SAIDA { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }
@@ -83,5 +89,6 @@ namespace EntitiesServices.Model
         public virtual ICollection<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
+        public virtual TRANSPORTADORA TRANSPORTADORA { get; set; }
     }
 }

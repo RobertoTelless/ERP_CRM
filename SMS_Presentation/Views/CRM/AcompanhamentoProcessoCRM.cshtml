@@ -156,6 +156,10 @@
                             {
                                 <li class=""><a data-toggle="tab" href="#tab-11">Faturamento</a></li>
                             }
+                            @if (Model.CRM1_IN_STATUS == 5 & Model.CRM1_IN_ATIVO > 6)
+                            {
+                                <li class=""><a data-toggle="tab" href="#tab-12">Expedição</a></li>
+                            }
                         </ul>
                         <div class="tab-content">
                             @*Dados Gerais*@
@@ -172,19 +176,24 @@
                                             @Html.HiddenFor(m => m.CRM1_DS_MOTIVO_CANCELAMENTO)
                                             @Html.HiddenFor(m => m.CRM1_DT_CANCELAMENTO)
                                             @Html.HiddenFor(m => m.CRM1_DT_CRIACAO)
+                                            @Html.HiddenFor(m => m.CRM1_DT_DATA_SAIDA)
                                             @Html.HiddenFor(m => m.CRM1_DT_ENCERRAMENTO)
+                                            @Html.HiddenFor(m => m.CRM1_DT_PREVISAO_ENTREGA)
                                             @Html.HiddenFor(m => m.CRM1_IN_ATIVO)
+                                            @Html.HiddenFor(m => m.CRM1_IN_AVISO_ENTREGA)
                                             @Html.HiddenFor(m => m.CRM1_IN_DUMMY)
+                                            @Html.HiddenFor(m => m.CRM1_IN_ENTREGA_CONFIRMADA)
                                             @Html.HiddenFor(m => m.CRM1_IN_ESTRELA)
                                             @Html.HiddenFor(m => m.CRM1_IN_STATUS)
                                             @Html.HiddenFor(m => m.CRM1_NM_NOME)
+                                            @Html.HiddenFor(m => m.CRM1_NR_ATRASO)
+                                            @Html.HiddenFor(m => m.CRM_DS_INFORMACOES_SAIDA)
                                             @Html.HiddenFor(m => m.MENS_CD_ID)
                                             @Html.HiddenFor(m => m.MOCA_CD_ID)
                                             @Html.HiddenFor(m => m.MOEN_CD_ID)
-                                            @Html.HiddenFor(m => m.ORIG_CD_ID)
-                                            @Html.HiddenFor(m => m.PEVE_CD_ID1)
-                                            @Html.HiddenFor(m => m.PEVE_CD_ID2)
                                             @Html.HiddenFor(m => m.TICR_CD_ID)
+                                            @Html.HiddenFor(m => m.ORIG_CD_ID)
+                                            @Html.HiddenFor(m => m.TRAN_CD_ID)
                                             @Html.HiddenFor(m => m.USUA_CD_ID)
                                             <div class="col-lg-4">
                                                 <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 250px" >
@@ -1465,174 +1474,286 @@
                             }*@
 
                             @*Faturamento*@
-                            @if ((Int32)Session["PermVenda"] == 1)
-                            {
-                                <div id="tab-11" class="tab-pane">
-                                    <div class="panel-body">
-                                        <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
-                                            <div class="ibox-title"  style="color: black">
-                                                <h5>Faturamento</h5>
-                                            </div>
-                                            <div class="ibox-content" style="color: black">
-                                                <div class="row">
-                                                    <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 160px" >
-                                                            <div class="ibox-title">
-                                                                <h5 style="color: green">Proposta Aprovada</h5>
+                            <div id="tab-11" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
+                                        <div class="ibox-title"  style="color: black">
+                                            <h5>Faturamento</h5>
+                                        </div>
+                                        <div class="ibox-content" style="color: black">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 160px" >
+                                                        <div class="ibox-title">
+                                                            <h5 style="color: green">Proposta Aprovada</h5>
+                                                        </div>
+                                                        <div class="ibox-content"  style="color: black">
+                                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                                                    Número
+                                                                    @Html.TextBoxFor(m => m.NumeroProposta, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Emissão
+                                                                    @Html.TextBoxFor(m => m.DataProposta, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Aprovação
+                                                                    @Html.TextBoxFor(m => m.DataAprovacao, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Valor (R$)
+                                                                    @Html.TextBoxFor(m => m.ValorTotal, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                </div>
                                                             </div>
-                                                            <div class="ibox-content"  style="color: black">
-                                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                                    <div class="col-lg-1 col-md-1 col-xs-12">
-                                                                        Número
-                                                                        @Html.TextBoxFor(m => m.NumeroProposta, new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                                    </div>
-                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                        Emissão
-                                                                        @Html.TextBoxFor(m => m.DataProposta, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                                    </div>
-                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                        Aprovação
-                                                                        @Html.TextBoxFor(m => m.DataAprovacao, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                                    </div>
-                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                        Valor (R$)
-                                                                        @Html.TextBoxFor(m => m.ValorTotal, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                                    @Html.ButtonLinkIndex(text: "Consultar Proposta", action: "VerPropostaEdita", controller: "CRM")
-                                                                </div>
+                                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                                @Html.ButtonLinkIndex(text: "Consultar Proposta", action: "VerPropostaEdita", controller: "CRM")
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 500px" >
-                                                            <div class="ibox-title">
-                                                                <h5 style="color: green">Lançamentos a Receber</h5>
-                                                            </div>
-                                                            <div class="ibox-content"  style="color: black">
-                                                                <div class="row">
-                                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                                        <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                            @if ((ViewBag.CR as List<EntitiesServices.Model.CONTA_RECEBER>).Count > 0)
-                                                                            {
-                                                                                <table class="table table-striped table-bordered table-hover dataTables-example1">
-                                                                                    <thead style="background-color:lightsteelblue">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 500px" >
+                                                        <div class="ibox-title">
+                                                            <h5 style="color: green">Lançamentos a Receber</h5>
+                                                        </div>
+                                                        <div class="ibox-content"  style="color: black">
+                                                            <div class="row">
+                                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                        @if ((ViewBag.CR as List<EntitiesServices.Model.CONTA_RECEBER>).Count > 0)
+                                                                        {
+                                                                            <table class="table table-striped table-bordered table-hover dataTables-example1">
+                                                                                <thead style="background-color:lightsteelblue">
+                                                                                    <tr>
+                                                                                        <th>Número</th>
+                                                                                        <th>Cliente</th>
+                                                                                        <th>Plano de Conta</th>
+                                                                                        <th>Emissão</th>
+                                                                                        <th>Valor</th>
+                                                                                        <th>Vencimento</th>
+                                                                                        <th>Saldo</th>
+                                                                                        <th>Valor Recebido</th>
+                                                                                        <th>Status</th>
+                                                                                        <th class="td-one-action">Ações</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @foreach (var cond in ((ViewBag.CR as List<EntitiesServices.Model.CONTA_RECEBER>)))
+                                                                                    {
                                                                                         <tr>
-                                                                                            <th>Número</th>
-                                                                                            <th>Cliente</th>
-                                                                                            <th>Plano de Conta</th>
-                                                                                            <th>Emissão</th>
-                                                                                            <th>Valor</th>
-                                                                                            <th>Vencimento</th>
-                                                                                            <th>Saldo</th>
-                                                                                            <th>Valor Recebido</th>
-                                                                                            <th>Status</th>
-                                                                                            <th class="td-one-action">Ações</th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        @foreach (var cond in ((ViewBag.CR as List<EntitiesServices.Model.CONTA_RECEBER>)))
-                                                                                        {
-                                                                                            <tr>
-                                                                                                <td>@cond.CARE_NR_DOCUMENTO</td>
-                                                                                                @if (cond.CLIENTE != null)
+                                                                                            <td>@cond.CARE_NR_DOCUMENTO</td>
+                                                                                            @if (cond.CLIENTE != null)
+                                                                                            {
+                                                                                                <td>@cond.CLIENTE.CLIE_NM_NOME</td>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <td>-</td>
+                                                                                            }
+                                                                                            @if (cond.CENTRO_CUSTO != null)
+                                                                                            {
+                                                                                                <td>@cond.CENTRO_CUSTO.CECU_NM_NOME</td>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <td>-</td>
+                                                                                            }
+                                                                                            <td>@cond.CARE_DT_LANCAMENTO.Value.ToShortDateString()</td>
+                                                                                            <td>@CrossCutting.Formatters.DecimalFormatter(cond.CARE_VL_VALOR)</td>
+                                                                                            <td>@cond.CARE_DT_VENCIMENTO.Value.ToShortDateString()</td>
+                                                                                            <td>@CrossCutting.Formatters.DecimalFormatter(cond.CARE_VL_SALDO.Value)</td>
+                                                                                            <td>@CrossCutting.Formatters.DecimalFormatter(cond.CARE_VL_VALOR_RECEBIDO != null ? cond.CARE_VL_VALOR_RECEBIDO.Value : 0)</td>
+                                                                                            @if (cond.CARE_IN_LIQUIDADA == 1)
+                                                                                            {
+                                                                                                <td><span class="badge badge-primary">Liquidada</span></td>
+                                                                                            }
+                                                                                            else if (cond.CARE_NR_ATRASO > 0)
+                                                                                            {
+                                                                                                <td><span class="badge badge-danger">Em Atraso</span></td>
+                                                                                            }
+                                                                                            else if (cond.CARE_IN_PARCELADA == 1)
+                                                                                            {
+                                                                                                <td><span class="badge badge-success">Parcelada</span></td>
+                                                                                            }
+                                                                                            else if (cond.CARE_IN_LIQUIDADA == 0)
+                                                                                            {
+                                                                                                <td><span class="badge badge-warning">Em Aberto</span></td>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <td></td>
+                                                                                            }
+                                                                                            <td class="td-one-action">
+                                                                                                @if ((Int32)Session["PermFinanceiro"] == 1)
                                                                                                 {
-                                                                                                    <td>@cond.CLIENTE.CLIE_NM_NOME</td>
+                                                                                                    @Html.TableLinkDetails(cond.CARE_CD_ID, "EditarCR", "fa-edit", "Editar Lançamento")
                                                                                                 }
                                                                                                 else
                                                                                                 {
-                                                                                                    <td>-</td>
+                                                                                                    @Html.TableLinkDetails(cond.CARE_CD_ID, "VerCR", "fa-search", "Ver Lançamento")
                                                                                                 }
-                                                                                                @if (cond.CENTRO_CUSTO != null)
+                                                                                                @if ((Int32)Session["PermVenda"] == 1)
                                                                                                 {
-                                                                                                    <td>@cond.CENTRO_CUSTO.CECU_NM_NOME</td>
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    <td>-</td>
-                                                                                                }
-                                                                                                <td>@cond.CARE_DT_LANCAMENTO.Value.ToShortDateString()</td>
-                                                                                                <td>@CrossCutting.Formatters.DecimalFormatter(cond.CARE_VL_VALOR)</td>
-                                                                                                <td>@cond.CARE_DT_VENCIMENTO.Value.ToShortDateString()</td>
-                                                                                                <td>@CrossCutting.Formatters.DecimalFormatter(cond.CARE_VL_SALDO.Value)</td>
-                                                                                                <td>@CrossCutting.Formatters.DecimalFormatter(cond.CARE_VL_VALOR_RECEBIDO != null ? cond.CARE_VL_VALOR_RECEBIDO.Value : 0)</td>
-                                                                                                @if (cond.CARE_IN_LIQUIDADA == 1)
-                                                                                                {
-                                                                                                    <td><span class="badge badge-primary">Liquidada</span></td>
-                                                                                                }
-                                                                                                else if (cond.CARE_NR_ATRASO > 0)
-                                                                                                {
-                                                                                                    <td><span class="badge badge-danger">Em Atraso</span></td>
-                                                                                                }
-                                                                                                else if (cond.CARE_IN_PARCELADA == 1)
-                                                                                                {
-                                                                                                    <td><span class="badge badge-success">Parcelada</span></td>
-                                                                                                }
-                                                                                                else if (cond.CARE_IN_LIQUIDADA == 0)
-                                                                                                {
-                                                                                                    <td><span class="badge badge-warning">Em Aberto</span></td>
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    <td></td>
-                                                                                                }
-                                                                                                <td class="td-one-action">
-                                                                                                    @if ((Int32)Session["PermFinanceiro"] == 1)
+                                                                                                    if (ViewBag.TemNF == 0)
                                                                                                     {
-                                                                                                        @Html.TableLinkDetails(cond.CARE_CD_ID, "EditarCR", "fa-edit", "Editar Lançamento")
-                                                                                                        if (ViewBag.TemNF == 0)
-                                                                                                        {
-                                                                                                            @Html.TableLinkDetails(cond.CARE_CD_ID, "GerarNFCR", "fa-money", "Gerar Nota Fiscal")
-                                                                                                        }
+                                                                                                        @Html.TableLinkDetails(cond.CARE_CD_ID, "GerarNFCR", "fa-money", "Gerar Nota Fiscal")
                                                                                                     }
                                                                                                     else
                                                                                                     {
-                                                                                                        @Html.TableLinkDetails(cond.CARE_CD_ID, "VerCR", "fa-search", "Ver Lançamento")
+                                                                                                        @Html.TableLinkDetails(cond.CARE_CD_ID, "VerNFCR", "fa-money", "Ver Nota Fiscal")
                                                                                                     }
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        }
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-4 col-md-4 col-xs-2">
+                                                                                                }
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    }
+                                                                                </tbody>
+                                                                            </table>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <div class="row">
+                                                                                <div class="col-lg-4 col-md-4 col-xs-2">
 
-                                                                                    </div>
-                                                                                    <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
-                                                                                        <h2 style="font-weight: bold">Nenhum lançamento criado nessa Proposta</h2>
-                                                                                    </div>
-                                                                                    <div class="col-lg-4 col-md-4 col-xs-2">
-
-                                                                                    </div>
                                                                                 </div>
-                                                                            }
-                                                                        </div>
+                                                                                <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
+                                                                                    <h2 style="font-weight: bold">Nenhum lançamento criado nessa Proposta</h2>
+                                                                                </div>
+                                                                                <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                                                                </div>
+                                                                            </div>
+                                                                        }
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                @Html.ButtonLinkIndex(text: "Enviar Para Expedição", action: "EnviarExpedição", controller: "CRM")
                                                                 @if (ViewBag.TemCR == 0 & (Int32)Session["PermFinanceiro"] == 1)
                                                                 {
-                                                                    <div class="form-group">
-                                                                        @Html.ButtonLinkIndex(text: "Gerar Lançamento a Receber", action: "GerarLancamentoCR", controller: "CRM")
-                                                                    </div>
-                                                                }
+                                                                    @Html.ButtonLinkIndex(text: "Gerar Lançamento a Receber", action: "GerarLancamentoCR", controller: "CRM")
+                                                                }                                                        
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>                                         
+                                                </div>
+                                            </div>                                         
                                             
                                             
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            }
+                            </div>
 
+                            @*Expedição*@
+                            <div id="tab-12" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
+                                        <div class="ibox-title"  style="color: black">
+                                            <h5>Expedição</h5>
+                                        </div>
+                                        <div class="ibox-content" style="color: black">
+                                            @using (Html.BeginForm("ExpedicaoProcessoCRM", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                            {
+                                                <div class="row">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    @Html.HiddenFor(m => m.CRM1_AQ_IMAGEM)
+                                                    @Html.HiddenFor(m => m.CRM1_CD_ID)
+                                                    @Html.HiddenFor(m => m.CRM1_DS_DESCRICAO)
+                                                    @Html.HiddenFor(m => m.CRM1_DS_INFORMACOES_ENCERRAMENTO)
+                                                    @Html.HiddenFor(m => m.CRM1_DS_MOTIVO_CANCELAMENTO)
+                                                    @Html.HiddenFor(m => m.CRM1_DT_CANCELAMENTO)
+                                                    @Html.HiddenFor(m => m.CRM1_DT_CRIACAO)
+                                                    @Html.HiddenFor(m => m.CRM1_DT_ENCERRAMENTO)
+                                                    @Html.HiddenFor(m => m.CRM1_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.CRM1_IN_DUMMY)
+                                                    @Html.HiddenFor(m => m.CRM1_IN_ESTRELA)
+                                                    @Html.HiddenFor(m => m.CRM1_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.CRM1_NM_NOME)
+                                                    @Html.HiddenFor(m => m.CRM1_NR_ATRASO)
+                                                    @Html.HiddenFor(m => m.CRM1_NR_TEMPERATURA)
+                                                    @Html.HiddenFor(m => m.CRM1_TX_INFORMACOES_GERAIS)
+                                                    @Html.HiddenFor(m => m.CRM1_VL_VALOR_FINAL)
+                                                    @Html.HiddenFor(m => m.CRM1_VL_VALOR_INICIAL)
+                                                    @Html.HiddenFor(m => m.MENS_CD_ID)
+                                                    @Html.HiddenFor(m => m.MOCA_CD_ID)
+                                                    @Html.HiddenFor(m => m.MOEN_CD_ID)
+                                                    @Html.HiddenFor(m => m.TICR_CD_ID)
+                                                    @Html.HiddenFor(m => m.ORIG_CD_ID)
+                                                    @Html.HiddenFor(m => m.TRAN_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 160px" >
+                                                            <div class="ibox-title">
+                                                                <h5 style="color: green">Seleciona Transportadora e Data Prevista</h5>
+                                                            </div>
+                                                            <div class="ibox-content"  style="color: black">
+                                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                                                        Transportadora*
+                                                                        <div class="input-group">
+                                                                            @Html.DropDownListFor(m => m.TRAN_CD_ID, (SelectList)ViewBag.Transportadoras, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                                            @Html.ValidationMessageFor(m => m.TRAN_CD_ID, "", new { @style = "color:red" })
+                                                                            <span class="input-group-btn">
+                                                                                @Html.ButtonLinkIndex(text: "Consultar", action: "MostrarTransportadoras", controller: "CRM", buttonClass: "primary")
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>                                            
+                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                        Data Prevista*
+                                                                        @Html.TextBoxFor(m => m.CRM1_DT_PREVISAO_ENTREGA, new { @class = "form-control date-picker", autofocus = true, @id = "dn", @style = "font-weight:bold" })
+                                                                        @Html.ValidationMessageFor(m => m.CRM1_DT_PREVISAO_ENTREGA, "", new { @style = "color:red" })
+                                                                    </div>
+                                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                                        @Html.ButtonLinkIndex(text: "Enviar E-Mail de Aviso", action: "EnviarEMailAvisoEntrega", controller: "CRM")
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>    
+                                                        @if (Model.CRM1_DT_PREVISAO_ENTREGA != null)
+                                                        {
+                                                            <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 160px" >
+                                                                <div class="ibox-title">
+                                                                    <h5 style="color: green">Informa Data de Saída</h5>
+                                                                </div>
+                                                                <div class="ibox-content"  style="color: black">
+                                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                            Data/Hora de Saída
+                                                                            @Html.TextBoxFor(m => m.CRM1_DT_DATA_SAIDA, new { @class = "form-control datetime-picker", autofocus = true, @id = "dc", @style = "font-weight:bold" })
+                                                                            @Html.ValidationMessageFor(m => m.CRM1_DT_DATA_SAIDA, "", new { @style = "color:red" })
+                                                                        </div>
+                                                                        <div class="col-lg-8 col-md-8 col-xs-12">
+                                                                            Informações de Saída
+                                                                            @Html.TextBoxFor(m => m.CRM_DS_INFORMACOES_SAIDA, new { @class = "form-control", autofocus = true, @style = "font-weight:bold" })
+                                                                            @Html.ValidationMessageFor(m => m.CRM_DS_INFORMACOES_SAIDA, "", new { @style = "color:red" })
+                                                                        </div>
+                                                                        <div class="col-lg-2 col-md-2 col-xs-12" id="rec">
+                                                                            Confirma Entrega?
+                                                                            <br />
+                                                                            @Html.CheckBoxFor(m => m.Entrega, new { @class = "checkbox i-checks", autofocus = true })
+                                                                            @Html.ValidationMessageFor(m => m.Entrega, "", new { @style = "color:red" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                              
+                                                        }
+                                                    </div>
+                                                </div>
+                                                if (Model.CRM1_IN_ATIVO == 1)
+                                                {
+                                                    <div class="form-group">
+                                                        @Html.ButtonActionSubmit(text: "Confirma Informações da Expedição", htmlAttributes: new { id = "basictoast" })
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1648,18 +1769,54 @@
 @section Styles {
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @*<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />*@
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
     @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/Content/plugins/summernote/summernote.css")
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/Content/plugins/summernote/summernote.css")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+
 }
 @section Scripts {
+    @*<script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>*@
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.datetimepicker"></script>
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
     @Scripts.Render("~/plugins/toastr")
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
     @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>    
+    <script src="~/Scripts/uploadAnexo.js"></script>
+
+        <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/summernote")
+    @Scripts.Render("~/plugins/touchSpin")
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/uploadAnexo.js"></script>
 
     <script>
         $(function () {
@@ -1780,12 +1937,45 @@
                 });
         });
     </script>
-
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.datetime-picker').datetimepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    controlType: 'select',
+                    showSecond: "false",
+                    timeFormat: 'HH:mm',
+                    locale: 'pt-br',
+                    hourText: 'Hora',
+                    minuteText: 'Minuto',
+                    secondText: 'Segundo',
+                    currentText: 'Agora',
+                    closeText: 'Feito',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
 
     <script type="text/javascript">
         $(function () {
             $("#data1").mask("99/99/9999");
             $("#data2").mask("99/99/9999");
+            $("#dn").mask("99/99/9999");
+            $("#dc").mask("99/99/9999 99:99");
         });
     </script>
 

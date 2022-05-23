@@ -570,6 +570,7 @@
         <AssociationConnector Association="ERP_CRMModel.FK_CRM_PROPOSTA_FORMA_FRETE" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_RECEBER_CRM" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_RECEBER_CRM_PROPOSTA" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CRM_TRANSPORTADORA" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
