@@ -489,4 +489,13 @@
   <data name="M0145" xml:space="preserve">
     <value>Motivo de cancelamento não especificado</value>
   </data>
+  <data name="M0146" xml:space="preserve">
+    <value>Transportadora não especificada</value>
+  </data>
+  <data name="M0147" xml:space="preserve">
+    <value>Data prevista para entrega não especificada</value>
+  </data>
+  <data name="M0148" xml:space="preserve">
+    <value>Data de saida para entrega não especificada</value>
+  </data>
 </root>

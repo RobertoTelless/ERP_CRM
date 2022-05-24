@@ -2262,7 +2262,7 @@ namespace ERP_CRM_Solution.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult EnviarExpedicaoCRM()
+        public ActionResult EnviarParaExpedicaoCRM()
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -2288,6 +2288,78 @@ namespace ERP_CRM_Solution.Controllers
                 catch (Exception ex)
                 {
                     ViewBag.Message = ex.Message;
+                    return View();
+                }
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EnviarExpedicaoCRM()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("MontarTelaCRM", "CRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            CRM item = baseApp.GetItemById((Int32)Session["IdCRM"]);
+
+            CRMViewModel vm = Mapper.Map<CRM, CRMViewModel>(item);
+            vm.CRM1_IN_STATUS = 5;
+            vm.CRM1_IN_ATIVO = 7;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult EnviarExpedicaoCRM(CRMViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];            
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM item = Mapper.Map<CRMViewModel, CRM>(vm);
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = baseApp.ValidateEdit(item, item, usuario);
+
+                    // Verifica retorno
+
+                    // Listas
+                    listaMaster = new List<CRM>();
+                    Session["ListaCRM"] = null;
+                    Session["IncluirCRM"] = 1;
+                    Session["CRMNovo"] = item.CRM1_CD_ID;
+                    Session["IdCRM"] = item.CRM1_CD_ID;
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
                     return View(vm);
                 }
             }
@@ -2296,7 +2368,6 @@ namespace ERP_CRM_Solution.Controllers
                 return View(vm);
             }
         }
-
 
         [HttpGet]
         public ActionResult IncluirGrupo()
@@ -3044,6 +3115,18 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0140", CultureInfo.CurrentCulture));
                 }
+                if ((Int32)Session["MensCRM"] == 91)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0146", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 92)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0147", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 93)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0148", CultureInfo.CurrentCulture));
+                }
             }
 
             // Processa...
@@ -3096,6 +3179,17 @@ namespace ERP_CRM_Solution.Controllers
                 vm.ValorTotal = 0;
             }
 
+            // Verifica expedição
+            if (vm.TRAN_CD_ID == null | vm.TRAN_CD_ID == 0)
+            {
+                Session["FaseExpedicao"] = 1;
+            }
+            else
+            {
+                Session["FaseExpedicao"] = 2;
+            }
+
+            // Sessões
             Session["Acoes"] = acoes;
             Session["Props"] = props;
             Session["Peds"] = peds;
@@ -3211,6 +3305,35 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
+                    // Criticas
+                    if ((Int32)Session["FaseExpedicao"] == 1)
+                    {
+                        if (vm.TRAN_CD_ID == null)
+                        {
+                            Session["MensCRM"] = 91;
+                            return RedirectToAction("VoltarAcompanhamentoCRM");
+                        }
+                        if (vm.CRM1_DT_PREVISAO_ENTREGA == null)
+                        {
+                            Session["MensCRM"] = 92;
+                            return RedirectToAction("VoltarAcompanhamentoCRM");
+                        }
+                    }
+                    else
+                    {
+                        if (vm.CRM1_DT_DATA_SAIDA == null)
+                        {
+                            Session["MensCRM"] = 93;
+                            return RedirectToAction("VoltarAcompanhamentoCRM");
+                        }
+                    }
+
+                    // Confirma entrega
+                    if (vm.Entrega)
+                    {
+                        vm.CRM1_IN_ATIVO = 8;
+                    }
+
                     // Executa a operação
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
                     CRM item = Mapper.Map<CRMViewModel, CRM>(vm);
@@ -3222,6 +3345,7 @@ namespace ERP_CRM_Solution.Controllers
                     listaMaster = new List<CRM>();
                     Session["ListaCRM"] = null;
                     Session["IncluirCRM"] = 0;
+                    Session["FaseExpedicao"] = 2;
                     return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
                 }
                 catch (Exception ex)
@@ -4090,17 +4214,9 @@ namespace ERP_CRM_Solution.Controllers
             // Prepara texto
             String texto = vm.MENS_TX_SMS;
 
-            // Prepara cabeçalho
-            String cab = "Prezado Sr(a). " + cont.CLIE_NM_NOME;
-
-            // Prepara rodape
-            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
-            String rod = assi.ASSI_NM_NOME;
-
             // Prepara corpo do SMS e trata link
-            String corpo = vm.MENS_TX_SMS;
             StringBuilder str = new StringBuilder();
-            str.AppendLine(corpo);
+            str.AppendLine(vm.MENS_TX_SMS);
             if (!String.IsNullOrEmpty(vm.LINK))
             {
                 if (!vm.LINK.Contains("www."))
@@ -4115,7 +4231,7 @@ namespace ERP_CRM_Solution.Controllers
                 texto += "  " + vm.LINK;
             }
             String body = str.ToString();
-            String smsBody = cab + body + rod;
+            String smsBody = body;
             String erro = null;
 
             // inicia processo
@@ -4135,7 +4251,7 @@ namespace ERP_CRM_Solution.Controllers
 
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", smsBody, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
+                    json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
                     streamWriter.Write(json);
                 }
 

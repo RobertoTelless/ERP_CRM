@@ -412,63 +412,60 @@
                                         </div>
                                         <div class="ibox-content" style="color: black">
                                             <div class="row">
-                                                <hr />
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     <div class="form-group">
                                                         @using (Html.BeginForm("UploadFileCRM", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container2" }))
                                                         {
-                                                            <div class="ibox-content">
-                                                                @if (Model.CRM_ANEXO.Count > 0)
-                                                                {
-                                                                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                                                                        <thead style="background-color:lightsteelblue">
+                                                            if (Model.CRM_ANEXO.Count > 0)
+                                                            {
+                                                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                    <thead style="background-color:lightsteelblue">
+                                                                        <tr>
+                                                                            <th>Título</th>
+                                                                            <th>Data</th>
+                                                                            <th>Tipo</th>
+                                                                            <th class="td-one-action">Ações</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach (var cond in (Model.CRM_ANEXO))
+                                                                        {
                                                                             <tr>
-                                                                                <th>Título</th>
-                                                                                <th>Data</th>
-                                                                                <th>Tipo</th>
-                                                                                <th class="td-one-action">Ações</th>
+                                                                                <td>@cond.CRAN_NM_TITULO</td>
+                                                                                <td>@cond.CRAN_DT_ANEXO.Value.ToShortDateString()</td>
+                                                                                @if (cond.CRAN_IN_TIPO == 1)
+                                                                                {
+                                                                                    <td>Imagem</td>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <td>Arquivo</td>
+                                                                                }
+                                                                                <td class="td-one-action">
+                                                                                    @if (cond.CRAN_IN_TIPO == 1 || cond.CRAN_IN_TIPO == 2)
+                                                                                    {
+                                                                                        @Html.TableLinkDetails(cond.CRAN_CD_ID, "VerAnexoCRM", "fa-camera", "Visualizar")
+                                                                                    }
+                                                                                    @if (cond.CRAN_IN_TIPO == 3)
+                                                                                    {
+                                                                                        <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.CRAN_AQ_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank"></a>
+                                                                                    }
+                                                                                    @Html.TableLinkDetails(cond.CRAN_CD_ID, "DownloadCRM", "fa-download", "Download")
+                                                                                </td>
                                                                             </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            @foreach (var cond in (Model.CRM_ANEXO))
-                                                                            {
-                                                                                <tr>
-                                                                                    <td>@cond.CRAN_NM_TITULO</td>
-                                                                                    <td>@cond.CRAN_DT_ANEXO.Value.ToShortDateString()</td>
-                                                                                    @if (cond.CRAN_IN_TIPO == 1)
-                                                                                    {
-                                                                                        <td>Imagem</td>
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        <td>Arquivo</td>
-                                                                                    }
-                                                                                    <td class="td-one-action">
-                                                                                        @if (cond.CRAN_IN_TIPO == 1 || cond.CRAN_IN_TIPO == 2)
-                                                                                        {
-                                                                                            @Html.TableLinkDetails(cond.CRAN_CD_ID, "VerAnexoCRM", "fa-camera", "Visualizar")
-                                                                                        }
-                                                                                        @if (cond.CRAN_IN_TIPO == 3)
-                                                                                        {
-                                                                                            <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.CRAN_AQ_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank"></a>
-                                                                                        }
-                                                                                        @Html.TableLinkDetails(cond.CRAN_CD_ID, "DownloadCRM", "fa-download", "Download")
-                                                                                    </td>
-                                                                                </tr>
-                                                                            }
-                                                                        </tbody>
-                                                                    </table>
-                                                                }
-                                                                @if (Model.CRM1_IN_ATIVO == 1)
-                                                                {
-                                                                    <div class="form-group">
-                                                                        <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                            <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
-                                                                            <input style="float: left; margin-right: 5px;" type="submit" value="Incluir Anexo" class="btn btn-sm btn-success" />
-                                                                        </div>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            }
+                                                            if (Model.CRM1_IN_ATIVO == 1)
+                                                            {
+                                                                <div class="form-group">
+                                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                        <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                                        <input style="float: left; margin-right: 5px;" type="submit" value="Incluir Anexo" class="btn btn-sm btn-success" />
                                                                     </div>
-                                                                }
-                                                            </div>
+                                                                </div>
+                                                            }
                                                         }
                                                     </div>
                                                 </div>
@@ -1630,7 +1627,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                @Html.ButtonLinkIndex(text: "Enviar Para Expedição", action: "EnviarExpedição", controller: "CRM")
+                                                                @Html.ButtonLinkIndex(text: "Enviar Para Expedição", action: "EnviarExpedicaoCRM", controller: "CRM")
                                                                 @if (ViewBag.TemCR == 0 & (Int32)Session["PermFinanceiro"] == 1)
                                                                 {
                                                                     @Html.ButtonLinkIndex(text: "Gerar Lançamento a Receber", action: "GerarLancamentoCR", controller: "CRM")
@@ -1650,7 +1647,7 @@
                             @*Expedição*@
                             <div id="tab-12" class="tab-pane">
                                 <div class="panel-body">
-                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
+                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 1200px" >
                                         <div class="ibox-title"  style="color: black">
                                             <h5>Expedição</h5>
                                         </div>
@@ -1683,10 +1680,9 @@
                                                     @Html.HiddenFor(m => m.MOEN_CD_ID)
                                                     @Html.HiddenFor(m => m.TICR_CD_ID)
                                                     @Html.HiddenFor(m => m.ORIG_CD_ID)
-                                                    @Html.HiddenFor(m => m.TRAN_CD_ID)
                                                     @Html.HiddenFor(m => m.USUA_CD_ID)
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
-                                                        <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 160px" >
+                                                        <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 180px" >
                                                             <div class="ibox-title">
                                                                 <h5 style="color: green">Seleciona Transportadora e Data Prevista</h5>
                                                             </div>
@@ -1694,13 +1690,8 @@
                                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                                     <div class="col-lg-4 col-md-4 col-xs-12">
                                                                         Transportadora*
-                                                                        <div class="input-group">
-                                                                            @Html.DropDownListFor(m => m.TRAN_CD_ID, (SelectList)ViewBag.Transportadoras, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                                            @Html.ValidationMessageFor(m => m.TRAN_CD_ID, "", new { @style = "color:red" })
-                                                                            <span class="input-group-btn">
-                                                                                @Html.ButtonLinkIndex(text: "Consultar", action: "MostrarTransportadoras", controller: "CRM", buttonClass: "primary")
-                                                                            </span>
-                                                                        </div>
+                                                                        @Html.DropDownListFor(m => m.TRAN_CD_ID, (SelectList)ViewBag.Transportadoras, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                                        @Html.ValidationMessageFor(m => m.TRAN_CD_ID, "", new { @style = "color:red" })
                                                                     </div>                                            
                                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                                         Data Prevista*
@@ -1715,7 +1706,7 @@
                                                         </div>    
                                                         @if (Model.CRM1_DT_PREVISAO_ENTREGA != null)
                                                         {
-                                                            <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 160px" >
+                                                            <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 200px" >
                                                                 <div class="ibox-title">
                                                                     <h5 style="color: green">Informa Data de Saída</h5>
                                                                 </div>
@@ -1743,12 +1734,9 @@
                                                         }
                                                     </div>
                                                 </div>
-                                                if (Model.CRM1_IN_ATIVO == 1)
-                                                {
-                                                    <div class="form-group">
-                                                        @Html.ButtonActionSubmit(text: "Confirma Informações da Expedição", htmlAttributes: new { id = "basictoast" })
-                                                    </div>
-                                                }
+                                                <div class="form-group">
+                                                    @Html.ButtonActionSubmit(text: "Confirma Informações da Expedição", htmlAttributes: new { id = "basictoast" })
+                                                </div>
                                             }
                                         </div>
                                     </div>

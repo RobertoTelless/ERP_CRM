@@ -15,7 +15,7 @@
                 <a href="@Url.Action("MontarTelaCRM", "CRM")">Processos</a>
             </li>
             <li class="active">
-                <strong>Processos - Encerramento</strong>
+                <strong>Processos - Expedição</strong>
             </li>
         </ol>
         <br />
@@ -24,7 +24,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Processos - Encerramento</h5>
+                    <h5>Processos - Expedição</h5>
                 </div>
                 <div class="ibox-content">
                     @if (!ViewData.ModelState.IsValid)
@@ -35,25 +35,17 @@
                         </div>
                     }
                     <div class="tabs-container">
-                        @using (Html.BeginForm("EncerrarProcessoCRM", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                        @using (Html.BeginForm("EnviarExpedicaoCRM", "CRM", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                         {
 
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Dados de Encerramento</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Dados da Expedição</a></li>
                             </ul>
 
                             <div class="tab-content">
                                 @*Dados do Encerramento*@
                                 <div id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
-                                        @if ((Int32)Session["TemAcao"] == 1)
-                                        {
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-12 col-md-12 col-xs-12" style="background-color: burlywood; color: green; font-weight: bold">
-                                                    <h4>Este processo tem ação ativa que não foi encerrada. Encerre ou cancele a ação antes de proceder ao encerramento</h4>
-                                                </div>
-                                            </div>
-                                        }
                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                             <div class="col-lg-12 col-md-12 col-xs-12" style="background-color: burlywood; color: red; font-weight: bold">
                                                 <h4>ATENÇÃO - Essa operação não poderá ser revertida</h4>
@@ -66,11 +58,14 @@
                                                     @Html.HiddenFor(m => m.CRM1_AQ_IMAGEM)
                                                     @Html.HiddenFor(m => m.CRM1_CD_ID)
                                                     @Html.HiddenFor(m => m.CRM1_DS_DESCRICAO)
+                                                    @Html.HiddenFor(m => m.CRM1_DS_INFORMACOES_ENCERRAMENTO)
                                                     @Html.HiddenFor(m => m.CRM1_DS_MOTIVO_CANCELAMENTO)
                                                     @Html.HiddenFor(m => m.CRM1_DT_CANCELAMENTO)
                                                     @Html.HiddenFor(m => m.CRM1_DT_CRIACAO)
                                                     @Html.HiddenFor(m => m.CRM1_DT_DATA_SAIDA)
+                                                    @Html.HiddenFor(m => m.CRM1_DT_ENCERRAMENTO)
                                                     @Html.HiddenFor(m => m.CRM1_DT_PREVISAO_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CRM1_IN_ATIVO)
                                                     @Html.HiddenFor(m => m.CRM1_IN_AVISO_ENTREGA)
                                                     @Html.HiddenFor(m => m.CRM1_IN_DUMMY)
                                                     @Html.HiddenFor(m => m.CRM1_IN_ENTREGA_CONFIRMADA)
@@ -84,6 +79,7 @@
                                                     @Html.HiddenFor(m => m.CRM1_VL_VALOR_INICIAL)
                                                     @Html.HiddenFor(m => m.MENS_CD_ID)
                                                     @Html.HiddenFor(m => m.MOCA_CD_ID)
+                                                    @Html.HiddenFor(m => m.MOEN_CD_ID)
                                                     @Html.HiddenFor(m => m.ORIG_CD_ID)
                                                     @Html.HiddenFor(m => m.TICR_CD_ID)
                                                     @Html.HiddenFor(m => m.TRAN_CD_ID)
@@ -102,36 +98,21 @@
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Data Encerramento*
-                                                    @Html.TextBoxFor(m => m.CRM1_DT_ENCERRAMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="data1" })
+                                                    Data Encerramento
+                                                    @Html.TextBoxFor(m => m.CRM1_DT_ENCERRAMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                     @Html.ValidationMessageFor(m => m.CRM1_DT_ENCERRAMENTO, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    Motivo*
-                                                    @Html.DropDownListFor(m => m.MOEN_CD_ID, (SelectList)ViewBag.Motivos, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.MOEN_CD_ID, "", new { @style = "color:red" })
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    Situação*
-                                                    @Html.DropDownListFor(m => m.CRM1_IN_ATIVO, (SelectList)ViewBag.Adic, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.CRM1_IN_ATIVO, "", new { @style = "color:red" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    Informações de Encerramento*
-                                                    @Html.TextAreaFor(m => m.CRM1_DS_INFORMACOES_ENCERRAMENTO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
+                                                <div class="col-lg-10 col-md-10 col-xs-12">
+                                                    Informações de Encerramento
+                                                    @Html.TextAreaFor(m => m.CRM1_DS_INFORMACOES_ENCERRAMENTO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly="readonly" })
                                                     @Html.ValidationMessageFor(m => m.CRM1_DS_INFORMACOES_ENCERRAMENTO, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            @if ((Int32)Session["TemAcao"] == 0)
-                                            {
-                                                @Html.ButtonActionSubmit(text: "Confirma Encerramento do Processo", htmlAttributes: new { id = "basictoast" })
-                                            }
-                                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCRM", controller: "CRM")
-                                            @Html.ButtonLinkIndex(text: "Dashboard Processos", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
+                                            @Html.ButtonActionSubmit(text: "Confirma Envio para Expedição", htmlAttributes: new { id = "basictoast" })
+                                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAcompanhamentoCRM", controller: "CRM")
+                                            @Html.ButtonLinkIndex(text: "Dashboard", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                                         </div>
                                     </div>
                                 </div>
