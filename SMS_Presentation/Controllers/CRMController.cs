@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using CrossCutting;
 using System.Net.Mail;
 using System.Net.Http;
+using HtmlAgilityPack;
 
 
 namespace ERP_CRM_Solution.Controllers
@@ -5075,15 +5076,17 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VoltarAnexoCRM");
         }
 
-        public String GerarRelatorioProposta()
+        public ActionResult GerarRelatorioProposta()
         {
             // Prepara geração
-            CRM_PROPOSTA aten = baseApp.GetPropostaById((Int32)Session["IdProposta"]);
+            CRM_PROPOSTA aten = baseApp.GetPropostaById((Int32)Session["IdCRMProposta"]);
+            CRM crm = baseApp.GetItemById(aten.CRM1_CD_ID);
             String data = DateTime.Today.Date.ToShortDateString();
             data = data.Substring(0, 2) + data.Substring(3, 2) + data.Substring(6, 4);
             String nomeRel = "CRM_Proposta_" + aten.CRPR_NR_NUMERO + "_" + data + ".pdf";
-            CLIENTE cliente = (CLIENTE)Session["Cliente"];
-            
+            CLIENTE cliente = cliApp.GetItemById(crm.CLIE_CD_ID);
+            Session["VoltaCRM"] = 0;
+
             // Define fontes
             Font meuFont = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             Font meuFont1 = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
@@ -5092,6 +5095,7 @@ namespace ERP_CRM_Solution.Controllers
             Font meuFontVerde = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.BOLD, BaseColor.GREEN);
             Font meuFontAzul= FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.BOLD, BaseColor.BLUE);
             Font meuFontVermelho = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.BOLD, BaseColor.RED);
+            Font meuFontOrange = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.ORANGE);
 
             // Cria documento
             Document pdfDoc = new Document(PageSize.A4, 10, 10, 10, 10);
@@ -5140,14 +5144,21 @@ namespace ERP_CRM_Solution.Controllers
             table.SpacingBefore = 1f;
             table.SpacingAfter = 1f;
 
-            cell = new PdfPCell(new Paragraph("Dados do Cliente", meuFontBold));
+            cell = new PdfPCell(new Paragraph("Dados do Cliente", meuFontOrange));
             cell.Border = 0;
             cell.Colspan = 4;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
 
-            cell = new PdfPCell(new Paragraph("Nome: " + cliente.CLIE_NM_NOME, meuFontVerde));
+            cell = new PdfPCell(new Paragraph("    ", meuFontOrange));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Nome: " + cliente.CLIE_NM_NOME, meuFontAzul));
             cell.Border = 0;
             cell.Colspan = 4;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
@@ -5165,7 +5176,7 @@ namespace ERP_CRM_Solution.Controllers
 
                 if (cliente.UF != null)
                 {
-                    cell = new PdfPCell(new Paragraph("          " + cliente.CLIE_NM_BAIRRO + " - " + cliente.CLIE_NM_CIDADE + " - " + cliente.UF.UF_SG_SIGLA + " - " + cliente.CLIE_NR_CEP, meuFont));
+                    cell = new PdfPCell(new Paragraph("                " + cliente.CLIE_NM_BAIRRO + " - " + cliente.CLIE_NM_CIDADE + " - " + cliente.UF.UF_SG_SIGLA + " - " + cliente.CLIE_NR_CEP, meuFont));
                     cell.Border = 0;
                     cell.Colspan = 4;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
@@ -5174,7 +5185,7 @@ namespace ERP_CRM_Solution.Controllers
                 }
                 else
                 {
-                    cell = new PdfPCell(new Paragraph("          " + cliente.CLIE_NM_BAIRRO + " - " + cliente.CLIE_NM_CIDADE + " - " + cliente.CLIE_NR_CEP, meuFont));
+                    cell = new PdfPCell(new Paragraph("                " + cliente.CLIE_NM_BAIRRO + " - " + cliente.CLIE_NM_CIDADE + " - " + cliente.CLIE_NR_CEP, meuFont));
                     cell.Border = 0;
                     cell.Colspan = 4;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
@@ -5216,129 +5227,211 @@ namespace ERP_CRM_Solution.Controllers
             line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
             pdfDoc.Add(line1);
 
-            // Texto da Proposta
+            // Dados da Proposta
             table = new PdfPTable(new float[] { 120f, 120f, 120f, 120f });
             table.WidthPercentage = 100;
             table.HorizontalAlignment = 0;
             table.SpacingBefore = 1f;
             table.SpacingAfter = 1f;
 
-            cell = new PdfPCell(new Paragraph(aten.CRPR_TX_INTRODUCAO, meuFont));
+            cell = new PdfPCell(new Paragraph("Dados da Proposta", meuFontOrange));
             cell.Border = 0;
             cell.Colspan = 4;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
 
-            cell = new PdfPCell(new Paragraph(aten.CRPR_DS_INFORMACOES, meuFont));
+            cell = new PdfPCell(new Paragraph("    ", meuFontOrange));
             cell.Border = 0;
             cell.Colspan = 4;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
 
-            cell = new PdfPCell(new Paragraph(aten.CRPR_TX_CONDICOES_COMERCIAIS, meuFont));
+            cell = new PdfPCell(new Paragraph("Nome: " + aten.CRPR_TX_TEXTO, meuFontBold));
             cell.Border = 0;
-            cell.Colspan = 4;
+            cell.Colspan = 2;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
-            pdfDoc.Add(line1);
+            cell = new PdfPCell(new Paragraph("Número: " + aten.CRPR_NR_NUMERO, meuFontBold));
+            cell.Border = 0;
+            cell.Colspan = 2;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Emissão: " + aten.CRPR_DT_PROPOSTA.ToShortDateString(), meuFont1));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Validade: " + aten.CRPR_DT_VALIDADE.ToShortDateString(), meuFont1));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Responsável: " + aten.USUARIO.USUA_NM_NOME, meuFont1));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Prazo (Dias): " + aten.CRPR_IN_PRAZO_ENTREGA, meuFont1));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            pdfDoc.Add(table);
 
             // Linha Horizontal
             line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
             pdfDoc.Add(line1);
 
-            cell = new PdfPCell(new Paragraph("Dados da Proposta", meuFontBold));
+            // Dados da Financeiros
+            table = new PdfPTable(new float[] { 120f, 120f, 120f, 120f });
+            table.WidthPercentage = 100;
+            table.HorizontalAlignment = 0;
+            table.SpacingBefore = 1f;
+            table.SpacingAfter = 1f;
+
+            cell = new PdfPCell(new Paragraph("Dados Financeiros", meuFontOrange));
             cell.Border = 0;
             cell.Colspan = 4;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
 
-            cell = new PdfPCell(new Paragraph("Nome: " + aten.CRPR_TX_TEXTO, meuFontVerde));
+            cell = new PdfPCell(new Paragraph("    ", meuFontOrange));
             cell.Border = 0;
             cell.Colspan = 4;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
 
-            cell = new PdfPCell(new Paragraph("Número: " + aten.CRPR_NR_NUMERO, meuFontVerde));
-            cell.Border = 0;
-            cell.Colspan = 4;
-            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            table.AddCell(cell);
-
-            cell = new PdfPCell(new Paragraph("Data: " + aten.CRPR_DT_PROPOSTA.ToShortDateString(), meuFont));
+            cell = new PdfPCell(new Paragraph("Valor Base (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_VALOR.Value), meuFontBold));
             cell.Border = 0;
             cell.Colspan = 1;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
-            cell = new PdfPCell(new Paragraph("Validade: " + aten.CRPR_DT_VALIDADE.ToShortDateString(), meuFont));
+            cell = new PdfPCell(new Paragraph("Desconto (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_DESCONTO.Value), meuFontBold));
             cell.Border = 0;
             cell.Colspan = 1;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
-            cell = new PdfPCell(new Paragraph("Responsável: " + aten.USUARIO.USUA_NM_NOME, meuFont));
+            cell = new PdfPCell(new Paragraph("Frete (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_FRETE.Value), meuFontBold));
             cell.Border = 0;
             cell.Colspan = 1;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
-            cell = new PdfPCell(new Paragraph("Envio: " + aten.CRPR_DT_ENVIO.Value.ToShortDateString(), meuFont));
-            cell.Border = 0;
-            cell.Colspan = 2;
-            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            table.AddCell(cell);
-
-            cell = new PdfPCell(new Paragraph("Valor (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_VALOR.Value), meuFont));
-            cell.Border = 0;
-            cell.Colspan = 1;
-            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            table.AddCell(cell);
-            cell = new PdfPCell(new Paragraph("Desconto (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_DESCONTO.Value), meuFont));
-            cell.Border = 0;
-            cell.Colspan = 1;
-            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            table.AddCell(cell);
-            cell = new PdfPCell(new Paragraph("Frete (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_FRETE.Value), meuFont));
-            cell.Border = 0;
-            cell.Colspan = 1;
-            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            table.AddCell(cell);
-            cell = new PdfPCell(new Paragraph("Valor Total (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_TOTAL.Value), meuFont));
+            cell = new PdfPCell(new Paragraph("Total (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_TOTAL.Value), meuFontAzul));
             cell.Border = 0;
             cell.Colspan = 1;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
 
-            cell = new PdfPCell(new Paragraph("Prazo (Dias): " + aten.CRPR_IN_PRAZO_ENTREGA.Value, meuFont));
+            cell = new PdfPCell(new Paragraph("ICMS (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_ICMS.Value), meuFontBold));
             cell.Border = 0;
             cell.Colspan = 1;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
-            cell = new PdfPCell(new Paragraph("Forma de Envio: " + aten.FORMA_ENVIO.FOEN_NM_NOME, meuFont));
+            cell = new PdfPCell(new Paragraph("IPI (R$): " + CrossCutting.Formatters.DecimalFormatter(aten.CRPR_VL_IPI.Value), meuFontBold));
             cell.Border = 0;
-            cell.Colspan = 1;
-            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            table.AddCell(cell);
-            cell = new PdfPCell(new Paragraph("Forma de Frete: " + aten.FORMA_FRETE.FOFR_NM_NOME, meuFont));
-            cell.Border = 0;
-            cell.Colspan = 2;
+            cell.Colspan = 3;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
             pdfDoc.Add(table);
+
+            // Linha Horizontal
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+
+            // Dados de Entrega
+            table = new PdfPTable(new float[] { 120f, 120f, 120f, 120f });
+            table.WidthPercentage = 100;
+            table.HorizontalAlignment = 0;
+            table.SpacingBefore = 1f;
+            table.SpacingAfter = 1f;
+
+            cell = new PdfPCell(new Paragraph("    ", meuFontOrange));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Dados de Entrega", meuFontOrange));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Forma de Envio: " + aten.FORMA_ENVIO.FOEN_NM_NOME, meuFontBold));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Forma de Frete: " + aten.FORMA_FRETE.FOFR_NM_NOME, meuFontBold));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Peso Bruto (Kg): " + aten.CRPR_VL_PESO_BRUTO.Value.ToString(), meuFontBold));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Peso Líquido (Kg): " + aten.CRPR_VL_PESO_LIQUIDO.Value.ToString(), meuFontBold));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            pdfDoc.Add(table);
+
+            // Linha Horizontal
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+
+            // Preparar campos de texto HTML
+            String intro = HtmlToPlainText(aten.CRPR_TX_INTRODUCAO);
+            String corpo = HtmlToPlainText(aten.CRPR_DS_INFORMACOES);
+            String comercial = HtmlToPlainText(aten.CRPR_TX_CONDICOES_COMERCIAIS);
+
+            String intro1 = CrossCutting.HtmlToText.ConvertHtml(aten.CRPR_TX_INTRODUCAO);
+            String corpo1 = CrossCutting.HtmlToText.ConvertHtml(aten.CRPR_DS_INFORMACOES);
+            String comercial1 = CrossCutting.HtmlToText.ConvertHtml(aten.CRPR_TX_CONDICOES_COMERCIAIS);
+
+            // Texto da Proposta
+            Chunk chunk1 = new Chunk(intro1, FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK));
+            pdfDoc.Add(chunk1);
+
+            Chunk chunk2 = new Chunk("Corpo da Proposta", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK));
+            pdfDoc.Add(chunk2);
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.WHITE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+            Chunk chunk21 = new Chunk(corpo1, FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK));
+            pdfDoc.Add(chunk21);
+
+            Chunk chunk3 = new Chunk("Condições Comerciais", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK));
+            pdfDoc.Add(chunk3);
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.WHITE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+            Chunk chunk31 = new Chunk(comercial1, FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK));
+            pdfDoc.Add(chunk31);
 
             // Linha Horizontal
             line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
@@ -5353,7 +5446,28 @@ namespace ERP_CRM_Solution.Controllers
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Write(pdfDoc);
             Response.End();
-            return nomeRel;
+            return RedirectToAction("VoltarAnexoCRMProposta");
+        }
+
+        private static string HtmlToPlainText(string html)
+        {
+            const string tagWhiteSpace = @"(>|$)(\W|\n|\r)+<";//matches one or more (white space or line breaks) between '>' and '<'
+            const string stripFormatting = @"<[^>]*(>|$)";//match any character between '<' and '>', even when end tag is missing
+            const string lineBreak = @"<(br|BR)\s{0,1}\/{0,1}>";//matches: <br>,<br/>,<br />,<BR>,<BR/>,<BR />
+            var lineBreakRegex = new Regex(lineBreak, RegexOptions.Multiline);
+            var stripFormattingRegex = new Regex(stripFormatting, RegexOptions.Multiline);
+            var tagWhiteSpaceRegex = new Regex(tagWhiteSpace, RegexOptions.Multiline);
+
+            var text = html;
+            //Decode html specific characters
+            text = System.Net.WebUtility.HtmlDecode(text);
+            //Remove tag whitespace/line breaks
+            text = tagWhiteSpaceRegex.Replace(text, "><");
+            //Replace <br /> with line breaks
+            text = lineBreakRegex.Replace(text, Environment.NewLine);
+            //Strip formatting
+            text = stripFormattingRegex.Replace(text, string.Empty);
+            return text;
         }
 
         public ActionResult VerCRMExpansao()

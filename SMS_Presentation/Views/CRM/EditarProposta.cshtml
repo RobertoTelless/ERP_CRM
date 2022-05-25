@@ -83,8 +83,9 @@
                     <div class="form-group">
                         @Html.ButtonLinkIndex(text: "Cancelar Proposta", action: "CancelarPropostaEdicao", controller: "CRM")
                         @Html.ButtonLinkIndex(text: "Enviar Proposta", action: "EnviarPropostaEdicao", controller: "CRM")
+                        @Html.ButtonLinkIndex(text: "Gerar Proposta", action: "GerarRelatorioProposta", controller: "CRM")
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAcompanhamentoCRM", controller: "CRM")
-                        @Html.ButtonLinkIndex(text: "Dashboard Processos", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
+                        @Html.ButtonLinkIndex(text: "Dashboard", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                     </div>
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
@@ -287,7 +288,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 230px" >
+                                                <div class="ibox float-e-margins">
                                                     <div class="ibox-title">
                                                         <h5 style="color: black">Introdução</h5>
                                                     </div>
@@ -304,7 +305,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 320px" >
+                                                <div class="ibox float-e-margins">
                                                     <div class="ibox-title">
                                                         <h5 style="color: black">Corpo da Proposta</h5>
                                                     </div>
@@ -321,7 +322,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 320px" >
+                                                <div class="ibox float-e-margins">
                                                     <div class="ibox-title">
                                                         <h5 style="color: black">Condições Comerciais</h5>
                                                     </div>
