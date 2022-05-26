@@ -3778,6 +3778,7 @@
     <Content Include="Views\Transportadora\VerCardsTransportadora.cshtml" />
     <Content Include="Views\Transportadora\VerAnexoTransportadora.cshtml" />
     <Content Include="Views\CRM\EnviarExpedicaoCRM.cshtml" />
+    <Content Include="Views\CRM\AprovarPropostaDireto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -5076,6 +5076,12 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VoltarAnexoCRM");
         }
 
+        public ActionResult GerarPropostaLine(Int32 id)
+        {
+            Session["IdCRMProposta"] = id;
+            return RedirectToAction("GerarRelatorioProposta");
+        }
+
         public ActionResult GerarRelatorioProposta()
         {
             // Prepara geração
@@ -5096,6 +5102,7 @@ namespace ERP_CRM_Solution.Controllers
             Font meuFontAzul= FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.BOLD, BaseColor.BLUE);
             Font meuFontVermelho = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.BOLD, BaseColor.RED);
             Font meuFontOrange = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.ORANGE);
+            Font meuFontTitulo = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
 
             // Cria documento
             Document pdfDoc = new Document(PageSize.A4, 10, 10, 10, 10);
@@ -5120,7 +5127,7 @@ namespace ERP_CRM_Solution.Controllers
             cell.AddElement(image);
             table.AddCell(cell);
 
-            cell = new PdfPCell(new Paragraph("Proposta - Detalhes", meuFont2))
+            cell = new PdfPCell(new Paragraph("Proposta Comercial - Especificações", meuFontTitulo))
             {
                 VerticalAlignment = Element.ALIGN_MIDDLE,
                 HorizontalAlignment = Element.ALIGN_CENTER
@@ -5128,7 +5135,6 @@ namespace ERP_CRM_Solution.Controllers
             cell.Border = 0;
             cell.Colspan = 4;
             table.AddCell(cell);
-
             pdfDoc.Add(table);
 
             // Linha Horizontal
@@ -5362,14 +5368,14 @@ namespace ERP_CRM_Solution.Controllers
             table.SpacingBefore = 1f;
             table.SpacingAfter = 1f;
 
-            cell = new PdfPCell(new Paragraph("    ", meuFontOrange));
+            cell = new PdfPCell(new Paragraph("Dados de Entrega", meuFontOrange));
             cell.Border = 0;
             cell.Colspan = 4;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
             cell.HorizontalAlignment = Element.ALIGN_LEFT;
             table.AddCell(cell);
 
-            cell = new PdfPCell(new Paragraph("Dados de Entrega", meuFontOrange));
+            cell = new PdfPCell(new Paragraph("    ", meuFontOrange));
             cell.Border = 0;
             cell.Colspan = 4;
             cell.VerticalAlignment = Element.ALIGN_MIDDLE;
@@ -5419,6 +5425,8 @@ namespace ERP_CRM_Solution.Controllers
             Chunk chunk1 = new Chunk(intro1, FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK));
             pdfDoc.Add(chunk1);
 
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.WHITE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
             Chunk chunk2 = new Chunk("Corpo da Proposta", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK));
             pdfDoc.Add(chunk2);
             line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.WHITE, Element.ALIGN_LEFT, 1)));
@@ -5426,6 +5434,8 @@ namespace ERP_CRM_Solution.Controllers
             Chunk chunk21 = new Chunk(corpo1, FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK));
             pdfDoc.Add(chunk21);
 
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.WHITE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
             Chunk chunk3 = new Chunk("Condições Comerciais", FontFactory.GetFont("Arial", 8, Font.BOLD, BaseColor.BLACK));
             pdfDoc.Add(chunk3);
             line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.WHITE, Element.ALIGN_LEFT, 1)));
@@ -6197,6 +6207,75 @@ namespace ERP_CRM_Solution.Controllers
             // Prepara grid
             Session["VoltaMensagem"] = 40;
             return RedirectToAction("MontarTelaCliente", "Cliente");
+        }
+
+        [HttpGet]
+        public ActionResult AprovarPropostaDireto(Int32 id)
+        {
+            CRM_PROPOSTA prop = baseApp.GetPropostaById(id);
+            CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(prop);
+            return View(vm);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult AprovarPropostaDireto(CRMPropostaViewModel vm)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            ViewBag.Motivos = new SelectList(baseApp.GetAllMotivoCancelamento(idAss).OrderBy(p => p.MOCA_NM_NOME), "MOCA_CD_ID", "MOCA_NM_NOME");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
+                    USUARIO usuario = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = baseApp.ValidateCancelarProposta(item);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensCRM"] = 30;
+                        return View(vm);
+                    }
+                    if (volta == 2)
+                    {
+                        Session["MensCRM"] = 31;
+                        return View(vm);
+                    }
+                    if (volta == 3)
+                    {
+                        Session["MensCRM"] = 32;
+                        return View(vm);
+                    }
+                    if (volta == 4)
+                    {
+                        Session["MensCRM"] = 33;
+                        return View(vm);
+                    }
+
+                    // Atualiza status do processo
+                    CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
+                    crm.CRM1_IN_STATUS = 2;
+                    Int32 volta1 = baseApp.ValidateEdit(crm, crm);
+                    Session["Cliente"] = crm.CLIENTE;
+
+
+                    // Listas
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
         }
 
         public ActionResult MostrarTransportadoras()
@@ -7108,6 +7187,7 @@ namespace ERP_CRM_Solution.Controllers
             // Prepara listas
             Session["IncluirCRM"] = 0;
             Session["CRM"] = null;
+            Session["PontoProposta"] = 0;
 
             // Recupera
             Session["CRMNovo"] = 0;

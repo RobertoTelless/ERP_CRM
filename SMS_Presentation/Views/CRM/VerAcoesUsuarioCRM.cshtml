@@ -173,6 +173,8 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example1">
                                 <thead style="background-color:lightsteelblue">
                                     <tr>
+                                        <th>Processo</th>
+                                        <th>Cliente</th>
                                         <th>Data Criação</th>
                                         <th>Tipo</th>
                                         <th>Título</th>
@@ -189,6 +191,8 @@
                                         if (cond.CRAC_IN_STATUS == 1)
                                         {
                                             <tr style="background-color:lightyellow; color: green">
+                                                <td>@cond.CRM.CRM1_NM_NOME</td>
+                                                <td>@cond.CRM.CLIENTE.CLIE_NM_NOME</td>
                                                 <td>@cond.CRAC_DT_CRIACAO.Value.ToShortDateString()</td>
                                                 <td>@cond.TIPO_ACAO.TIAC_NM_NOME</td>
                                                 <td>@cond.CRAC_NM_TITULO</td>
@@ -255,6 +259,8 @@
                                         else
                                         {
                                             <tr>
+                                                <td>@cond.CRM.CRM1_NM_NOME</td>
+                                                <td>@cond.CRM.CLIENTE.CLIE_NM_NOME</td>
                                                 <td>@cond.CRAC_DT_CRIACAO.Value.ToShortDateString()</td>
                                                 <td>@cond.TIPO_ACAO.TIAC_NM_NOME</td>
                                                 <td>@cond.CRAC_NM_TITULO</td>
