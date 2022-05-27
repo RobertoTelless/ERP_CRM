@@ -168,6 +168,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["CRMVoltaAtendimento"] = 0;
             Session["VoltaAgenda"] = 11;
             Session["VoltaCRMBase"] = 0;
+            Session["LinkAprova"] = null;
 
             // Indicadores
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
@@ -6214,6 +6215,8 @@ namespace ERP_CRM_Solution.Controllers
         {
             CRM_PROPOSTA prop = baseApp.GetPropostaById(id);
             CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(prop);
+            vm.CRPR_DT_APROVACAO = DateTime.Today.Date;
+            vm.CRPR_DS_APROVACAO = "Aprovação pelo cliente através de link";
             return View(vm);
         }
 
@@ -6232,39 +6235,18 @@ namespace ERP_CRM_Solution.Controllers
                     // Executa a operação
                     CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
-                    Int32 volta = baseApp.ValidateCancelarProposta(item);
+                    Int32 volta = baseApp.ValidateAprovarPropostaDireto(item);
 
                     // Verifica retorno
-                    if (volta == 1)
-                    {
-                        Session["MensCRM"] = 30;
-                        return View(vm);
-                    }
-                    if (volta == 2)
-                    {
-                        Session["MensCRM"] = 31;
-                        return View(vm);
-                    }
-                    if (volta == 3)
-                    {
-                        Session["MensCRM"] = 32;
-                        return View(vm);
-                    }
-                    if (volta == 4)
-                    {
-                        Session["MensCRM"] = 33;
-                        return View(vm);
-                    }
 
                     // Atualiza status do processo
                     CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
-                    crm.CRM1_IN_STATUS = 2;
+                    crm.CRM1_IN_STATUS = 4;
                     Int32 volta1 = baseApp.ValidateEdit(crm, crm);
-                    Session["Cliente"] = crm.CLIENTE;
-
 
                     // Listas
-                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                    Session["Close"] = true;
+                    return RedirectToAction("CarregarLandingPage", "BaseAdmin");
                 }
                 catch (Exception ex)
                 {
@@ -6744,6 +6726,10 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0145", CultureInfo.CurrentCulture));
                 }
+                if ((Int32)Session["MensCRM"] == 81)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0149", CultureInfo.CurrentCulture));
+                }
             }
 
             // Prepara view
@@ -6756,7 +6742,7 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]        
         [ValidateInput(false)]
         public ActionResult CancelarProposta(CRMPropostaViewModel vm)
         {
@@ -6775,6 +6761,11 @@ namespace ERP_CRM_Solution.Controllers
                     if (vm.MOCA_CD_ID == null || vm.MOCA_CD_ID == 0)
                     {
                         Session["MensCRM"] = 80;
+                        return RedirectToAction("CancelarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+                    }
+                    if (vm.CRPR_DS_CANCELAMENTO == null)
+                    {
+                        Session["MensCRM"] = 81;
                         return RedirectToAction("CancelarProposta", new { id = (Int32)Session["IdCRMProposta"] });
                     }
 
@@ -7320,7 +7311,11 @@ namespace ERP_CRM_Solution.Controllers
                     CRM_PROPOSTA item = Mapper.Map<CRMPropostaViewModel, CRM_PROPOSTA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
 
-                    // Checa anexo
+                    // Monta anexo
+                    String link1 = "http://erpsysnet.azurewebsites.net/CRM/AprovarPropostaDireto/" + item.CRPR_CD_ID.ToString();
+                    Session["LinkAprova"] = link1;
+                    
+                    // Processa envio
                     CRM_PROPOSTA pro = baseApp.GetPropostaById(item.CRPR_CD_ID);
                     Int32 volta = baseApp.ValidateEnviarProposta(item);
 
@@ -7413,7 +7408,12 @@ namespace ERP_CRM_Solution.Controllers
             body = temp.TEPR_TX_TEXTO;
             header = temp.TEPR_TX_CABECALHO;
             footer = temp.TEPR_TX_RODAPE;
-            link = vm.MENS_NM_LINK;                    
+            link = vm.MENS_NM_LINK;
+            String linkAprova = null;
+            if ((String)Session["LinkAprova"] != null)
+            {
+                linkAprova = (String)Session["LinkAprova"];
+            }
 
             // Prepara cabeçalho
             header = header.Replace("{Nome}", cliente.CLIE_NM_NOME);
@@ -7448,7 +7448,11 @@ namespace ERP_CRM_Solution.Controllers
             StringBuilder str = new StringBuilder();
             str.AppendLine(body);
 
-            // Trata link
+            // Trata links
+            if (!String.IsNullOrEmpty(linkAprova))
+            {
+                str.AppendLine("<a href='" + linkAprova + "' style='color:green; font-weight:bold'>Clique aqui para aprovar a proposta</a>");
+            }
             if (!String.IsNullOrEmpty(link))
             {
                 if (!link.Contains("www."))

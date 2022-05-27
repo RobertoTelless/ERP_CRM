@@ -741,7 +741,7 @@ namespace ERP_CRM_Solution.Controllers
                     Session["ClienteNovo"] = item.CLIE_CD_ID;
                     Session["Clientes"] = baseApp.GetAllItens(idAss);
 
-                    if (item.TIPE_CD_ID == 2)
+                    if (item.TIPE_CD_ID == 2 & item.CLIE_NR_CNPJ != null)
                     {
                         var lstQs = PesquisaCNPJ(item);
 

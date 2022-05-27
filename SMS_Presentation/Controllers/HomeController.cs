@@ -16,6 +16,7 @@ namespace ERP_CRM_Solution.Controllers
         public ActionResult Index()
         {
             //return RedirectToAction("Login", "ControleAcesso");
+            Session["Close"] = false;
             return RedirectToAction("CarregarLandingPage", "BaseAdmin");
         }
 

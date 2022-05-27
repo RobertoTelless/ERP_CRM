@@ -857,6 +857,56 @@ namespace ApplicationServices.Services
             }
         }
 
+        public Int32 ValidateAprovarPropostaDireto(CRM_PROPOSTA item)
+        {
+            try
+            {
+                // Verificação
+                item.CRPR_IN_STATUS = 5;
+                if (item.CRPR_DT_APROVACAO == null)
+                {
+                    return 1;
+                }
+                if (item.CRPR_DS_APROVACAO == null)
+                {
+                    return 2;
+                }
+                if (item.CRPR_DT_APROVACAO < item.CRPR_DT_PROPOSTA)
+                {
+                    return 3;
+                }
+                if (item.CRPR_DT_APROVACAO > DateTime.Today.Date)
+                {
+                    return 4;
+                }
+
+                // Persiste
+                Int32 volta = _baseService.EditProposta(item);
+
+                // Gera Notificação
+                CRM crm = _baseService.GetItemById(item.CRM1_CD_ID);
+                NOTIFICACAO noti = new NOTIFICACAO();
+                noti.CANO_CD_ID = 1;
+                noti.ASSI_CD_ID = item.ASSI_CD_ID.Value;
+                noti.NOTI_DT_EMISSAO = DateTime.Today;
+                noti.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                noti.NOTI_IN_VISTA = 0;
+                noti.NOTI_NM_TITULO = "Aprovação de Proposta";
+                noti.NOTI_IN_ATIVO = 1;
+                noti.NOTI_TX_TEXTO = "ATENÇÃO: A Proposta " + item.CRPR_NR_NUMERO + " do processo CRM " + crm.CRM1_NM_NOME + " foi aprovada pelo cliente em " + item.CRPR_DT_APROVACAO.Value.ToLongDateString() + ".";
+                noti.USUA_CD_ID = item.USUA_CD_ID;
+                noti.NOTI_IN_STATUS = 1;
+                noti.NOTI_IN_NIVEL = 1;
+                Int32 volta1 = _notiService.Create(noti);
+
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public Int32 ValidateEnviarProposta(CRM_PROPOSTA item)
         {
             try

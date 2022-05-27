@@ -52,6 +52,7 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateReprovarProposta(CRM_PROPOSTA item);
         Int32 ValidateAprovarProposta(CRM_PROPOSTA item);
         Int32 ValidateEnviarProposta(CRM_PROPOSTA item);
+        Int32 ValidateAprovarPropostaDireto(CRM_PROPOSTA item);
         CRM_PROPOSTA_ANEXO GetAnexoPropostaById(Int32 id);
         TEMPLATE_PROPOSTA GetTemplateById(Int32 id);
 

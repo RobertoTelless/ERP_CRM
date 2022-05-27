@@ -644,7 +644,12 @@
     @Scripts.Render("~/plugins/wow")
     @Scripts.Render("~/bundles/inspinia")
    
-
+    @if ((Boolean)Session["Close"] == true) 
+    {
+        <script type="text/javascript">
+            window.close();
+        </script>  
+    }
 
     <script>
 
