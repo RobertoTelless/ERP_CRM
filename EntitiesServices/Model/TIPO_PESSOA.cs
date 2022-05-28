@@ -17,19 +17,12 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TIPO_PESSOA()
         {
-            this.ASSINANTE = new HashSet<ASSINANTE>();
-            this.CLIENTE = new HashSet<CLIENTE>();
             this.FORNECEDOR = new HashSet<FORNECEDOR>();
         }
     
         public int TIPE_CD_ID { get; set; }
         public string TIPE_NM_NOME { get; set; }
-        public int TIPE_IN_ATIVO { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ASSINANTE> ASSINANTE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CLIENTE> CLIENTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FORNECEDOR> FORNECEDOR { get; set; }
     }

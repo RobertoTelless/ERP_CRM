@@ -17,33 +17,35 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UF()
         {
-            this.ASSINANTE = new HashSet<ASSINANTE>();
-            this.CLIENTE = new HashSet<CLIENTE>();
-            this.CLIENTE1 = new HashSet<CLIENTE>();
-            this.FILIAL = new HashSet<FILIAL>();
-            this.FORNECEDOR = new HashSet<FORNECEDOR>();
-            this.TELEFONE = new HashSet<TELEFONE>();
-            this.FORMULARIO_RESPOSTA = new HashSet<FORMULARIO_RESPOSTA>();
+            this.CLIENTE_ENDERECO = new HashSet<CLIENTE_ENDERECO>();
+            this.DESTINADOR = new HashSet<DESTINADOR>();
+            this.LEILOEIRO = new HashSet<LEILOEIRO>();
+            this.PARCEIRO_ENDERECO = new HashSet<PARCEIRO_ENDERECO>();
+            this.PRESTADOR_AJUDANTE = new HashSet<PRESTADOR_AJUDANTE>();
+            this.PRESTADOR_ENDERECO = new HashSet<PRESTADOR_ENDERECO>();
+            this.PRESTADOR_MOTORISTA = new HashSet<PRESTADOR_MOTORISTA>();
+            this.REGIAO_COBERTURA = new HashSet<REGIAO_COBERTURA>();
         }
     
         public int UF_CD_ID { get; set; }
-        public string UF_SG_SIGLA { get; set; }
         public string UF_NM_NOME { get; set; }
-        public Nullable<int> UF_IN_ATIVO { get; set; }
+        public string UF_SG_SIGLA { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ASSINANTE> ASSINANTE { get; set; }
+        public virtual ICollection<CLIENTE_ENDERECO> CLIENTE_ENDERECO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CLIENTE> CLIENTE { get; set; }
+        public virtual ICollection<DESTINADOR> DESTINADOR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CLIENTE> CLIENTE1 { get; set; }
+        public virtual ICollection<LEILOEIRO> LEILOEIRO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FILIAL> FILIAL { get; set; }
+        public virtual ICollection<PARCEIRO_ENDERECO> PARCEIRO_ENDERECO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FORNECEDOR> FORNECEDOR { get; set; }
+        public virtual ICollection<PRESTADOR_AJUDANTE> PRESTADOR_AJUDANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TELEFONE> TELEFONE { get; set; }
+        public virtual ICollection<PRESTADOR_ENDERECO> PRESTADOR_ENDERECO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FORMULARIO_RESPOSTA> FORMULARIO_RESPOSTA { get; set; }
+        public virtual ICollection<PRESTADOR_MOTORISTA> PRESTADOR_MOTORISTA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<REGIAO_COBERTURA> REGIAO_COBERTURA { get; set; }
     }
 }

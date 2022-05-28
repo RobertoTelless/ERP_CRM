@@ -17,22 +17,19 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DEPARTAMENTO()
         {
-            this.ATENDIMENTO = new HashSet<ATENDIMENTO>();
-            this.ORDEM_SERVICO = new HashSet<ORDEM_SERVICO>();
-            this.USUARIO = new HashSet<USUARIO>();
+            this.TICKET_ATENDIMENTO = new HashSet<TICKET_ATENDIMENTO>();
+            this.USUARIO_SUGESTAO = new HashSet<USUARIO_SUGESTAO>();
         }
     
         public int DEPT_CD_ID { get; set; }
-        public int ASSI_CD_ID { get; set; }
         public string DEPT_NM_NOME { get; set; }
+        public string DEPT_SG_SIGLA { get; set; }
+        public string DEPT_DS_DESCRICAO { get; set; }
         public int DEPT_IN_ATIVO { get; set; }
     
-        public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ATENDIMENTO> ATENDIMENTO { get; set; }
+        public virtual ICollection<TICKET_ATENDIMENTO> TICKET_ATENDIMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ORDEM_SERVICO> ORDEM_SERVICO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USUARIO> USUARIO { get; set; }
+        public virtual ICollection<USUARIO_SUGESTAO> USUARIO_SUGESTAO { get; set; }
     }
 }

@@ -17,14 +17,14 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TIPO_VEICULO()
         {
-            this.TRANSPORTADORA = new HashSet<TRANSPORTADORA>();
+            this.PRESTADOR_VEICULO = new HashSet<PRESTADOR_VEICULO>();
         }
     
         public int TIVE_CD_ID { get; set; }
         public string TIVE_NM_NOME { get; set; }
-        public Nullable<int> TIVE_IN_ATIVO { get; set; }
+        public int TIVE_IN_ATIVO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TRANSPORTADORA> TRANSPORTADORA { get; set; }
+        public virtual ICollection<PRESTADOR_VEICULO> PRESTADOR_VEICULO { get; set; }
     }
 }

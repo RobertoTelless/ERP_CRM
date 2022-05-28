@@ -14,14 +14,14 @@ namespace EntitiesServices.Model
     
     public partial class PEDIDO_COMPRA_ACOMPANHAMENTO
     {
-        public int PCAT_CD_ID { get; set; }
-        public int PECO_CD_ID { get; set; }
+        public int PCAT_CD_DID { get; set; }
         public int USUA_CD_ID { get; set; }
+        public int PECO_CD_ID { get; set; }
+        public System.DateTime PCAT_DT_ACOMPANHAMENTO { get; set; }
         public string PCAT_DS_ACOMPANHAMENTO { get; set; }
         public int PCAT_IN_ATIVO { get; set; }
-        public Nullable<System.DateTime> PCAT_DT_ACOMPANHAMENTO { get; set; }
     
         public virtual PEDIDO_COMPRA PEDIDO_COMPRA { get; set; }
-        public virtual USUARIO USUARIO { get; set; }
+        public virtual USUARIO_SUGESTAO USUARIO_SUGESTAO { get; set; }
     }
 }

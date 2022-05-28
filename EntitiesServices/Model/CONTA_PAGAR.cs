@@ -17,67 +17,51 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CONTA_PAGAR()
         {
+            this.CONTA_PAGAR_RATEIO = new HashSet<CONTA_PAGAR_RATEIO>();
             this.CONTA_PAGAR_ANEXO = new HashSet<CONTA_PAGAR_ANEXO>();
             this.CONTA_PAGAR_PARCELA = new HashSet<CONTA_PAGAR_PARCELA>();
-            this.CONTA_PAGAR_RATEIO = new HashSet<CONTA_PAGAR_RATEIO>();
         }
     
         public int CAPA_CD_ID { get; set; }
-        public Nullable<int> USUA_CD_ID { get; set; }
-        public Nullable<int> COBA_CD_ID { get; set; }
-        public Nullable<int> FORN_CD_ID { get; set; }
-        public Nullable<int> FOPA_CD_ID { get; set; }
-        public Nullable<int> PERI_CD_ID { get; set; }
-        public Nullable<int> CECU_CD_ID { get; set; }
-        public Nullable<System.DateTime> CAPA_DT_LANCAMENTO { get; set; }
-        public Nullable<decimal> CAPA_VL_VALOR { get; set; }
-        public string CAPA_DS_DESCRICAO { get; set; }
-        public Nullable<int> CAPA_IN_TIPO_LANCAMENTO { get; set; }
-        public string CAPA_NM_FAVORECIDO { get; set; }
-        public string CAPA_NM_FORMA_PAGAMENTO { get; set; }
-        public Nullable<int> CAPA_IN_LIQUIDADA { get; set; }
-        public Nullable<int> CAPA_IN_ATIVO { get; set; }
-        public Nullable<System.DateTime> CAPA_DT_VENCIMENTO { get; set; }
-        public Nullable<decimal> CAPA_VL_VALOR_PAGO { get; set; }
+        public int USUA_CD_ID { get; set; }
+        public int PRES_CD_ID { get; set; }
+        public int FOPA_CD_ID { get; set; }
+        public int PERI_CD_ID { get; set; }
+        public int ORSE_CD_ID { get; set; }
+        public int CECU_CD_ID { get; set; }
+        public System.DateTime CAPA_DT_LANCAMENTO { get; set; }
+        public System.DateTime CAPA_DT_VENCIMENTO { get; set; }
         public Nullable<System.DateTime> CAPA_DT_LIQUIDACAO { get; set; }
-        public Nullable<int> CAPA_NR_ATRASO { get; set; }
-        public string CAPA_TX_OBSERVACOES { get; set; }
-        public Nullable<int> CAPA_IN_PARCELADA { get; set; }
-        public Nullable<int> CAPA_IN_PARCELAS { get; set; }
         public Nullable<System.DateTime> CAPA_DT_INICIO_PARCELAS { get; set; }
-        public Nullable<decimal> CAPA_VL_PARCELADO { get; set; }
-        public string CAPA_NR_DOCUMENTO { get; set; }
-        public Nullable<System.DateTime> CAPA_DT_COMPETENCIA { get; set; }
+        public System.DateTime CAPA_DT_COMPETENCIA { get; set; }
+        public decimal CAPA_VL_VALOR { get; set; }
+        public Nullable<decimal> CAPA_VL_VALOR_PAGO { get; set; }
         public Nullable<decimal> CAPA_VL_DESCONTO { get; set; }
         public Nullable<decimal> CAPA_VL_JUROS { get; set; }
-        public Nullable<decimal> CAPA_VL_TAXAS { get; set; }
         public Nullable<decimal> CAPA_VL_SALDO { get; set; }
-        public Nullable<int> CAPA_IN_PAGA_PARCIAL { get; set; }
         public Nullable<decimal> CAPA_VL_PARCIAL { get; set; }
-        public Nullable<int> CAPA_IN_ABERTOS { get; set; }
-        public Nullable<int> CAPA_IN_FECHADOS { get; set; }
-        public Nullable<int> ASSI_CD_ID { get; set; }
-        public Nullable<int> PECO_CD_ID { get; set; }
-        public Nullable<int> COBA_CD_ID_1 { get; set; }
+        public string CAPA_DS_DESCRICAO { get; set; }
+        public int CAPA_IN_LIQUIDADA { get; set; }
+        public int CAPA_IN_PARCELADA { get; set; }
+        public int CAPA_IN_PARCIAL { get; set; }
+        public int CAPA_IN_ATIVO { get; set; }
         public Nullable<int> CAPA_IN_CHEQUE { get; set; }
+        public int CAPA_NR_ATRASO { get; set; }
         public string CAPA_NR_CHEQUE { get; set; }
-        public Nullable<int> CAPA_IN_TIPO_DOC { get; set; }
-        public Nullable<System.DateTime> CAPA_DT_FINAL { get; set; }
-        public Nullable<int> CAPA_IN_LIQUIDA_NORMAL { get; set; }
-        public Nullable<int> CAPA_IN_LIQUIDA_PARCELA { get; set; }
+        public string CAPA_NR_DOCUMENTO { get; set; }
+        public byte[] CAPA_TX_OBSERVACAO { get; set; }
     
         public virtual CENTRO_CUSTO CENTRO_CUSTO { get; set; }
-        public virtual CONTA_BANCO CONTA_BANCO { get; set; }
-        public virtual CONTA_BANCO CONTA_BANCO1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_PAGAR_ANEXO> CONTA_PAGAR_ANEXO { get; set; }
-        public virtual FORMA_PAGAMENTO FORMA_PAGAMENTO { get; set; }
-        public virtual FORNECEDOR FORNECEDOR { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_PAGAR_PARCELA> CONTA_PAGAR_PARCELA { get; set; }
-        public virtual PERIODICIDADE PERIODICIDADE { get; set; }
+        public virtual ORDEM_SERVICO ORDEM_SERVICO { get; set; }
+        public virtual USUARIO_SUGESTAO USUARIO_SUGESTAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_PAGAR_RATEIO> CONTA_PAGAR_RATEIO { get; set; }
-        public virtual USUARIO USUARIO { get; set; }
+        public virtual FORM_PAGTO_RECTO FORM_PAGTO_RECTO { get; set; }
+        public virtual PRESTADOR PRESTADOR { get; set; }
+        public virtual PERIODICIDADE PERIODICIDADE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_PAGAR_ANEXO> CONTA_PAGAR_ANEXO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_PAGAR_PARCELA> CONTA_PAGAR_PARCELA { get; set; }
     }
 }

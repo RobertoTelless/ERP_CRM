@@ -16,14 +16,15 @@ namespace EntitiesServices.Model
     {
         public int CBLA_CD_ID { get; set; }
         public int COBA_CD_ID { get; set; }
-        public Nullable<System.DateTime> CBLA_DT_LANCAMENTO { get; set; }
-        public Nullable<int> CBLA_IN_TIPO { get; set; }
+        public System.DateTime CBLA_DT_LANCAMENTO { get; set; }
+        public int CBLA_IN_TIPO { get; set; }
         public string CBLA_DS_DESCRICAO { get; set; }
-        public Nullable<decimal> CBLA_VL_VALOR { get; set; }
-        public Nullable<int> CBLA_IN_ATIVO { get; set; }
+        public decimal CBLA_VL_VALOR { get; set; }
         public string CBLA_NR_NUMERO { get; set; }
-        public Nullable<int> CBLA_IN_ORIGEM { get; set; }
+        public int ORIG_CD_ID { get; set; }
+        public int CBLA_IN_ATIVO { get; set; }
     
         public virtual CONTA_BANCO CONTA_BANCO { get; set; }
+        public virtual ORIGEM ORIGEM { get; set; }
     }
 }

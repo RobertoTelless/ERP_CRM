@@ -18,12 +18,16 @@ namespace EntitiesServices.Model
         public TIPO_CONTA()
         {
             this.CONTA_BANCO = new HashSet<CONTA_BANCO>();
+            this.PRESTADOR_BANCO = new HashSet<PRESTADOR_BANCO>();
         }
     
         public int TICO_CD_ID { get; set; }
         public string TICO_NM_NOME { get; set; }
+        public int TICO_IN_ATIVO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_BANCO> CONTA_BANCO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PRESTADOR_BANCO> PRESTADOR_BANCO { get; set; }
     }
 }

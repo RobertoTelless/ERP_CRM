@@ -17,29 +17,17 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UNIDADE()
         {
-            this.ITEM_PEDIDO_COMPRA = new HashSet<ITEM_PEDIDO_COMPRA>();
-            this.ITEM_PEDIDO_VENDA = new HashSet<ITEM_PEDIDO_VENDA>();
-            this.PRODUTO = new HashSet<PRODUTO>();
-            this.SERVICO = new HashSet<SERVICO>();
-            this.CRM_PEDIDO_VENDA_ITEM = new HashSet<CRM_PEDIDO_VENDA_ITEM>();
+            this.DESTINADOR_ENVIO_PRODUTO = new HashSet<DESTINADOR_ENVIO_PRODUTO>();
+            this.PRODUTO_COMPRA = new HashSet<PRODUTO_COMPRA>();
         }
     
         public int UNID_CD_ID { get; set; }
-        public int ASSI_CD_ID { get; set; }
         public string UNID_NM_NOME { get; set; }
-        public Nullable<int> UNID_IN_ATIVO { get; set; }
-        public string UNID_SG_SIGLA { get; set; }
-        public Nullable<int> UNID_IN_TIPO_UNIDADE { get; set; }
+        public int UNID_IN_ATIVO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ITEM_PEDIDO_COMPRA> ITEM_PEDIDO_COMPRA { get; set; }
+        public virtual ICollection<DESTINADOR_ENVIO_PRODUTO> DESTINADOR_ENVIO_PRODUTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ITEM_PEDIDO_VENDA> ITEM_PEDIDO_VENDA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUTO> PRODUTO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SERVICO> SERVICO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CRM_PEDIDO_VENDA_ITEM> CRM_PEDIDO_VENDA_ITEM { get; set; }
+        public virtual ICollection<PRODUTO_COMPRA> PRODUTO_COMPRA { get; set; }
     }
 }

@@ -14,16 +14,49 @@ namespace EntitiesServices.Model
     
     public partial class ORDEM_SERVICO_PRODUTO
     {
-        public int OSPR_CD_ID { get; set; }
-        public int ORSE_CD_ID { get; set; }
-        public int PROD_CD_ID { get; set; }
-        public Nullable<int> OSPR_IN_QUANTIDADE { get; set; }
-        public Nullable<decimal> OSPR_VL_PRECO_NOVO { get; set; }
-        public Nullable<int> OSPR_IN_ATIVO { get; set; }
-        public string OSPR_DS_OBSERVACAO { get; set; }
-        public Nullable<decimal> OSPR_VL_PRECO_PROMO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ORDEM_SERVICO_PRODUTO()
+        {
+            this.DESTINADOR_ENVIO_PRODUTO = new HashSet<DESTINADOR_ENVIO_PRODUTO>();
+            this.LEILOEIRO_LOTE_ITENS = new HashSet<LEILOEIRO_LOTE_ITENS>();
+            this.PRESTADOR_ENDERECO_ESTOQUE = new HashSet<PRESTADOR_ENDERECO_ESTOQUE>();
+            this.PRODUTOS_RESPOSTA = new HashSet<PRODUTOS_RESPOSTA>();
+            this.TICKET_ATENDIMENTO = new HashSet<TICKET_ATENDIMENTO>();
+        }
     
+        public int OSPD_CD_ID { get; set; }
+        public int ORSE_CD_ID { get; set; }
+        public int LIPR_CD_ID { get; set; }
+        public int TIPR_CD_ID { get; set; }
+        public int PARC_CD_ID { get; set; }
+        public int STCO_CD_ID { get; set; }
+        public string OSPD_NM_APARELHO { get; set; }
+        public string OSPD_NM_FABRICANTE { get; set; }
+        public string OSPD_NM_MODELO { get; set; }
+        public string OSPD_NR_NUMERO_SERIE { get; set; }
+        public Nullable<decimal> OSPD_NR_PESO { get; set; }
+        public Nullable<decimal> OSPD_VL_VALOR { get; set; }
+        public string OSPD_DS_SITUACAO { get; set; }
+        public string OSPD_NR_NUMERO_SINISTRO { get; set; }
+        public string OSPD_NR_NUMERO_LAUDO { get; set; }
+        public Nullable<int> OSPD_IN_ESTOQUE_OK { get; set; }
+        public Nullable<int> OSPD_IN_ENTREGUE { get; set; }
+        public int OSPD_IN_ATIVO { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DESTINADOR_ENVIO_PRODUTO> DESTINADOR_ENVIO_PRODUTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LEILOEIRO_LOTE_ITENS> LEILOEIRO_LOTE_ITENS { get; set; }
+        public virtual LINHA_PRODUTO LINHA_PRODUTO { get; set; }
         public virtual ORDEM_SERVICO ORDEM_SERVICO { get; set; }
-        public virtual PRODUTO PRODUTO { get; set; }
+        public virtual PARCEIRO PARCEIRO { get; set; }
+        public virtual STATUS_COLETA STATUS_COLETA { get; set; }
+        public virtual TIPO_PRODUTO TIPO_PRODUTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PRESTADOR_ENDERECO_ESTOQUE> PRESTADOR_ENDERECO_ESTOQUE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PRODUTOS_RESPOSTA> PRODUTOS_RESPOSTA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TICKET_ATENDIMENTO> TICKET_ATENDIMENTO { get; set; }
     }
 }

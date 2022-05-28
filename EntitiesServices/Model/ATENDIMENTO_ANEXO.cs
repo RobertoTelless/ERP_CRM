@@ -16,12 +16,12 @@ namespace EntitiesServices.Model
     {
         public int ATAN_CD_ID { get; set; }
         public int ATEN_CD_ID { get; set; }
-        public string ATAN_NM_TITULO { get; set; }
         public System.DateTime ATAN_DT_ANEXO { get; set; }
+        public string ATAN_NM_TITULO { get; set; }
         public int ATAN_IN_TIPO { get; set; }
         public string ATAN_AQ_ARQUIVO { get; set; }
         public int ATAN_IN_ATIVO { get; set; }
     
-        public virtual ATENDIMENTO ATENDIMENTO { get; set; }
+        public virtual TICKET_ATENDIMENTO TICKET_ATENDIMENTO { get; set; }
     }
 }

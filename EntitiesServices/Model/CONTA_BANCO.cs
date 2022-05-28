@@ -17,17 +17,13 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CONTA_BANCO()
         {
-            this.CONTA_BANCO_CONTATO = new HashSet<CONTA_BANCO_CONTATO>();
+            this.CONTA_BANCO_ANEXO = new HashSet<CONTA_BANCO_ANEXO>();
             this.CONTA_BANCO_LANCAMENTO = new HashSet<CONTA_BANCO_LANCAMENTO>();
-            this.CONTA_PAGAR = new HashSet<CONTA_PAGAR>();
-            this.CONTA_PAGAR1 = new HashSet<CONTA_PAGAR>();
-            this.CONTA_PAGAR_PARCELA = new HashSet<CONTA_PAGAR_PARCELA>();
-            this.CONTA_RECEBER = new HashSet<CONTA_RECEBER>();
-            this.FORMA_PAGAMENTO = new HashSet<FORMA_PAGAMENTO>();
+            this.CONTA_BANCO_CONTATO = new HashSet<CONTA_BANCO_CONTATO>();
+            this.FORM_PAGTO_RECTO = new HashSet<FORM_PAGTO_RECTO>();
         }
     
         public int COBA_CD_ID { get; set; }
-        public int ASSI_CD_ID { get; set; }
         public int BANC_CD_ID { get; set; }
         public int TICO_CD_ID { get; set; }
         public int COBA_IN_PRINCIPAL { get; set; }
@@ -40,33 +36,20 @@ namespace EntitiesServices.Model
         public string COBA_NM_AGENCIA { get; set; }
         public string COBA_NM_GERENTE { get; set; }
         public string COBA_NR_TELEFONE { get; set; }
-        public Nullable<System.DateTime> COBA_DT_ABERTURA { get; set; }
-        public Nullable<decimal> COBA_VL_SALDO_ATUAL { get; set; }
-        public string COBA_NM_NOME_EXIBE_OLD { get; set; }
-        public Nullable<int> COBA_IN_CONTA_PADRAO { get; set; }
-        public Nullable<int> COBA_IN_CONTA_SELECAO { get; set; }
-        public Nullable<int> COBA_IN_DIAS { get; set; }
-        public Nullable<System.DateTime> COBA_DT_SELECAO { get; set; }
-        public Nullable<int> COBA_IN_TIPO_FILTRO { get; set; }
-        public Nullable<int> COBA_IN_MES { get; set; }
-        public Nullable<System.DateTime> COBA_DT_SELECAO_FINAL { get; set; }
+        public System.DateTime COBA_DT_ABERTURA { get; set; }
+        public decimal COBA_VL_SALDO_ATUAL { get; set; }
+        public string COBA_NM_NOME_EXIBE { get; set; }
+        public byte[] COBA_TX_OBSERVACOES { get; set; }
     
-        public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual BANCO BANCO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_BANCO_ANEXO> CONTA_BANCO_ANEXO { get; set; }
+        public virtual TIPO_CONTA TIPO_CONTA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_BANCO_LANCAMENTO> CONTA_BANCO_LANCAMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_BANCO_CONTATO> CONTA_BANCO_CONTATO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_BANCO_LANCAMENTO> CONTA_BANCO_LANCAMENTO { get; set; }
-        public virtual TIPO_CONTA TIPO_CONTA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_PAGAR> CONTA_PAGAR { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_PAGAR> CONTA_PAGAR1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_PAGAR_PARCELA> CONTA_PAGAR_PARCELA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FORMA_PAGAMENTO> FORMA_PAGAMENTO { get; set; }
+        public virtual ICollection<FORM_PAGTO_RECTO> FORM_PAGTO_RECTO { get; set; }
     }
 }

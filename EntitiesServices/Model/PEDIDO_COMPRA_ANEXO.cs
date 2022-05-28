@@ -14,13 +14,12 @@ namespace EntitiesServices.Model
     
     public partial class PEDIDO_COMPRA_ANEXO
     {
-        public int PECA_CD_ID { get; set; }
+        public int PCAN_CD_ID { get; set; }
         public int PECO_CD_ID { get; set; }
-        public System.DateTime PECA_DT_ANEXO { get; set; }
-        public string PECA_NM_TITULO { get; set; }
-        public int PECA_IN_TIPO { get; set; }
-        public string PECA_AQ_ARQUIVO { get; set; }
-        public int PECA_IN_ATIVO { get; set; }
+        public System.DateTime PCAN_DT_ANEXO { get; set; }
+        public int PCAN_IN_TIPO { get; set; }
+        public string PCAN_AQ_ARQUIVO { get; set; }
+        public int PCAN_IN_ATIVO { get; set; }
     
         public virtual PEDIDO_COMPRA PEDIDO_COMPRA { get; set; }
     }

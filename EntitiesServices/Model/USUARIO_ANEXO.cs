@@ -16,12 +16,12 @@ namespace EntitiesServices.Model
     {
         public int USAN_CD_ID { get; set; }
         public int USUA_CD_ID { get; set; }
+        public System.DateTime USAN_DT_ANEXO { get; set; }
         public string USAN_NM_TITULO { get; set; }
-        public Nullable<System.DateTime> USAN_DT_ANEXO { get; set; }
-        public Nullable<int> USAN_IN_TIPO { get; set; }
-        public int USAN_IN_ATIVO { get; set; }
+        public int USAN_IN_TIPO { get; set; }
         public string USAN_AQ_ARQUIVO { get; set; }
+        public int USAN_IN_ATIVO { get; set; }
     
-        public virtual USUARIO USUARIO { get; set; }
+        public virtual USUARIO_SUGESTAO USUARIO_SUGESTAO { get; set; }
     }
 }

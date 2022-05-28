@@ -16,22 +16,18 @@ namespace EntitiesServices.Model
     {
         public int ITPC_CD_ID { get; set; }
         public int PECO_CD_ID { get; set; }
-        public Nullable<int> PROD_CD_ID { get; set; }
-        public Nullable<int> UNID_CD_ID { get; set; }
+        public int PROD_CD_ID { get; set; }
+        public int FORN_CD_ID { get; set; }
         public int ITPC_QN_QUANTIDADE { get; set; }
-        public Nullable<decimal> ITPC_VL_PRECO_SELECIONADO { get; set; }
-        public Nullable<int> ITPC_NR_QUANTIDADE_REVISADA { get; set; }
-        public string ITPC_TX_OBSERVACOES { get; set; }
-        public int ITPC_IN_ATIVO { get; set; }
-        public Nullable<int> FORN_CD_ID { get; set; }
-        public Nullable<System.DateTime> ITPC_DT_COTACAO { get; set; }
-        public Nullable<int> ITPC_IN_TIPO { get; set; }
+        public Nullable<int> ITPC_QN_QUANTIDADE_REVISADA { get; set; }
+        public Nullable<int> ITPS_QN_QUANTIDADE_RECEBIDA { get; set; }
+        public decimal ITPC_VL_PRECO_UNITARIO { get; set; }
         public string ITPC_DS_JUSTIFICATIVA { get; set; }
-        public Nullable<int> ITPC_NR_QUANTIDADE_RECEBIDA { get; set; }
+        public int ITPC_IN_ATIVO { get; set; }
+        public byte[] ITPC_TX_OBSERVACOES { get; set; }
     
         public virtual FORNECEDOR FORNECEDOR { get; set; }
+        public virtual PRODUTO_COMPRA PRODUTO_COMPRA { get; set; }
         public virtual PEDIDO_COMPRA PEDIDO_COMPRA { get; set; }
-        public virtual PRODUTO PRODUTO { get; set; }
-        public virtual UNIDADE UNIDADE { get; set; }
     }
 }
