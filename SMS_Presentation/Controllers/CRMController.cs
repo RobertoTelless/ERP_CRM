@@ -7227,6 +7227,21 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("EnviarProposta", new { id = (Int32)Session["IdCRMProposta"] });
         }
 
+        public ActionResult EnviarPedidoEdicao()
+        {
+            return RedirectToAction("EnviarPedido", new { id = (Int32)Session["IdCRMPedido"] });
+        }
+
+        public ActionResult CancelarPedidoEdicao()
+        {
+            return RedirectToAction("CancelarPedido", new { id = (Int32)Session["IdCRMPedido"] });
+        }
+
+        public ActionResult CancelarPropostaEdicao()
+        {
+            return RedirectToAction("CancelarProposta", new { id = (Int32)Session["IdCRMProposta"] });
+        }
+
         public ActionResult VerPropostaEdita()
         {
             Session["PontoProposta"] = 77;
@@ -7558,6 +7573,9 @@ namespace ERP_CRM_Solution.Controllers
         [ValidateInput(false)]
         public Int32 ProcessarEnvioPedidoEMail(MensagemViewModel vm, CRM_PEDIDO_VENDA item, USUARIO usuario)
         {
+            // Recarrega proposta
+            item = baseApp.GetPedidoById(item.CRPV_CD_ID);            
+            
             // Recupera contatos
             Int32 idAss = (Int32)Session["IdAssinante"];
             CLIENTE cliente = null;
@@ -7571,7 +7589,7 @@ namespace ERP_CRM_Solution.Controllers
             // Processa e-mail
             CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
             TEMPLATE_PROPOSTA temp = baseApp.GetTemplateById(item.TEPR_CD_ID.Value);
-
+            
             // Prepara inicial
             String body = String.Empty;
             String header = String.Empty;
@@ -7581,19 +7599,50 @@ namespace ERP_CRM_Solution.Controllers
             header = temp.TEPR_TX_CABECALHO;
             footer = temp.TEPR_TX_RODAPE;
             link = vm.MENS_NM_LINK;
+            String linkAprova = null;
+            if ((String)Session["LinkAprova"] != null)
+            {
+                linkAprova = (String)Session["LinkAprova"];
+            }
 
             // Prepara cabeçalho
             header = header.Replace("{Nome}", cliente.CLIE_NM_NOME);
+            header = header.Replace("{Telefone}", cliente.CLIE_NR_TELEFONE);
+            header = header.Replace("{Celular}", cliente.CLIE_NR_CELULAR);
+            header = header.Replace("{Introducao}", item.CRPV_TX_INTRODUCAO);
 
             // Prepara rodape
             ASSINANTE assi = (ASSINANTE)Session["Assinante"];
             footer = footer.Replace("{Assinatura}", assi.ASSI_NM_NOME);
 
+            // Monta corpo
+            body = body.Replace("{Nome}", item.CRPV_NM_NOME);
+            body = body.Replace("{Numero}", item.CRPV_NR_NUMERO);
+            body = body.Replace("{Emissao}", item.CRPV_DT_PEDIDO.ToShortDateString());
+            body = body.Replace("{Validade}", item.CRPV_DT_VALIDADE.ToShortDateString());
+            body = body.Replace("{Conteudo}", item.CRPV_TX_INFORMACOES_GERAIS);
+            body = body.Replace("{Comerciais}", item.CRPV_TX_CONDICOES_COMERCIAIS);
+            body = body.Replace("{Prazo}", item.CRPV_IN_PRAZO_ENTREGA.ToString());
+            body = body.Replace("{ValorBase}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_VALOR.Value));
+            body = body.Replace("{Desconto}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_DESCONTO.Value));
+            body = body.Replace("{Frete}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_FRETE.Value));
+            body = body.Replace("{ICMS}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_ICMS.Value));
+            body = body.Replace("{IPI}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_IPI.Value));
+            body = body.Replace("{ValorTotal}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_TOTAL.Value));
+            body = body.Replace("{FormaEnvio}", item.FORMA_ENVIO.FOEN_NM_NOME);
+            body = body.Replace("{FormaFrete}", item.FORMA_FRETE.FOFR_NM_NOME);
+            body = body.Replace("{Bruto}", item.CRPV_VL_PESO_BRUTO.ToString());
+            body = body.Replace("{Liquido}", item.CRPV_VL_PESO_LIQUIDO.ToString());
+
             // Trata corpo
             StringBuilder str = new StringBuilder();
             str.AppendLine(body);
 
-            // Trata link
+            // Trata links
+            if (!String.IsNullOrEmpty(linkAprova))
+            {
+                str.AppendLine("<a href='" + linkAprova + "' style='color:green; font-weight:bold'>Clique aqui para aprovar a proposta</a>");
+            }
             if (!String.IsNullOrEmpty(link))
             {
                 if (!link.Contains("www."))
@@ -7606,23 +7655,25 @@ namespace ERP_CRM_Solution.Controllers
                 }
                 str.AppendLine("<a href='" + link + "'>Clique aqui para maiores informações</a>");
             }
-            body = str.ToString();
+            body = str.ToString();                  
             String emailBody = header + body + footer;
 
             // Checa e monta anexos
             List<System.Net.Mail.Attachment> listaAnexo = new List<System.Net.Mail.Attachment>();
             if (item.CRM_PEDIDO_VENDA_ANEXO.Count > 0)
             {
-                CRM_PEDIDO_VENDA_ANEXO ane = item.CRM_PEDIDO_VENDA_ANEXO.OrderByDescending(p => p.CRPA_DT_ANEXO).FirstOrDefault();
-                String fn = Server.MapPath(ane.CRPA_AQ_ARQUIVO);
-                System.Net.Mail.Attachment anexo = new System.Net.Mail.Attachment(fn);
-                listaAnexo.Add(anexo);
+                foreach (CRM_PEDIDO_VENDA_ANEXO ane in item.CRM_PEDIDO_VENDA_ANEXO)
+                {
+                    String fn = Server.MapPath(ane.CRPA_AQ_ARQUIVO);
+                    System.Net.Mail.Attachment anexo = new System.Net.Mail.Attachment(fn);
+                    listaAnexo.Add(anexo);
+                }
             }
 
             // Monta e-mail
             NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
             Email mensagem = new Email();
-            mensagem.ASSUNTO = "Pedido - " + cliente.CLIE_NM_NOME;
+            mensagem.ASSUNTO = "Pedido - " + item.CRPV_NR_NUMERO + " - " + cliente.CLIE_NM_NOME;
             mensagem.CORPO = emailBody;
             mensagem.DEFAULT_CREDENTIALS = false;
             mensagem.EMAIL_DESTINO = cliente.CLIE_NM_EMAIL;
@@ -7818,7 +7869,10 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.FormaFrete = new SelectList(baseApp.GetAllFormasFrete(idAss).OrderBy(p => p.FOFR_NM_NOME), "FOFR_CD_ID", "FOFR_NM_NOME");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
 
+            List<PRODUTO> lista = proApp.GetAllItens(idAss).OrderBy(x => x.PROD_NM_NOME).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
+            ViewBag.Produtos = new SelectList(lista, "PROD_CD_ID", "PROD_NM_NOME");
             Session["ListaITPV"] = null;
+
             CRM crm = (CRM)Session["CRM"];
             CRM_PEDIDO_VENDA item = new CRM_PEDIDO_VENDA();
             CRMPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA, CRMPedidoViewModel>(item);
@@ -7859,7 +7913,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
-                    if (Session["ListaITPV"] == null)
+                    if (Session["ListaITPC"] == null)
                     {
                         ModelState.AddModelError("", "Nenhum Item de Pedido cadastrado no pedido");
                         return View(vm);
@@ -7888,7 +7942,7 @@ namespace ERP_CRM_Solution.Controllers
                     }
 
                     //Carrega itens
-                    foreach (var itpc in (List<CRM_PEDIDO_VENDA_ITEM>)Session["ListaITPV"])
+                    foreach (var itpc in (List<CRM_PEDIDO_VENDA_ITEM>)Session["ListaITPC"])
                     {
                         itpc.CRPI_IN_QUANTIDADE_REVISADA = itpc.CRPI_IN_QUANTIDADE;
                         itpc.CRPI_IN_ATIVO = 1;
@@ -8176,7 +8230,7 @@ namespace ERP_CRM_Solution.Controllers
                     // Executa a operação
                     CRM_PEDIDO_VENDA item = Mapper.Map<CRMPedidoViewModel, CRM_PEDIDO_VENDA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
-                    Int32 volta = baseApp.ValidateEditPedido(item);
+                    Int32 volta = baseApp.ValidateReprovarPedido(item);
 
                     // Verifica retorno
                     if (volta == 1)
@@ -8304,7 +8358,7 @@ namespace ERP_CRM_Solution.Controllers
                     // Executa a operação
                     CRM_PEDIDO_VENDA item = Mapper.Map<CRMPedidoViewModel, CRM_PEDIDO_VENDA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
-                    Int32 volta = baseApp.ValidateEditPedido(item);
+                    Int32 volta = baseApp.ValidateAprovarPedido(item);
 
                     // Verifica retorno
                     if (volta == 1)
@@ -8355,14 +8409,14 @@ namespace ERP_CRM_Solution.Controllers
             if (fili != null)
             {
                 var prod = proApp.GetById(id).PRODUTO_TABELA_PRECO.First(x => x.FILI_CD_ID == fili);
-                result.Add("custo", prod.PRTP_VL_CUSTO == null ? 0 : prod.PRTP_VL_CUSTO);
+                result.Add("custo", prod.PRTP_VL_PRECO == null ? 0 : prod.PRTP_VL_PRECO);
                 result.Add("markup", prod.PRTP_NR_MARKUP == null ? 0 : prod.PRTP_NR_MARKUP);
                 result.Add("unidade", prod.PRODUTO.UNIDADE.UNID_NM_NOME);
             }
             else
             {
                 var prod = proApp.GetById(id);
-                result.Add("custo", prod.PROD_VL_CUSTO == null ? 0 : prod.PROD_VL_CUSTO);
+                result.Add("custo", prod.PROD_VL_PRECO_VENDA == null ? 0 : prod.PROD_VL_PRECO_VENDA);
                 result.Add("markup", prod.PROD_VL_MARKUP_PADRAO == null ? 0 : prod.PROD_VL_MARKUP_PADRAO);
                 result.Add("unidade", prod.UNIDADE == null ? "" : prod.UNIDADE.UNID_NM_NOME);
             }
@@ -8501,24 +8555,24 @@ namespace ERP_CRM_Solution.Controllers
                 try
                 {
                     // Checa template
-                    if (vm.TEPR_CD_ID == null)
+                    // Verifica tipo de ação
+                    if (vm.TEPR_CD_ID == null || vm.TEPR_CD_ID == 0)
                     {
-                        Session["MensCRM"] = 77;
-                        return View(vm);
+                        Session["MensCRM"] = 80;
+                        return RedirectToAction("EnviarPedido", new { id = (Int32)Session["IdCRMPedido"] });
                     }
 
                     // Executa a operação
                     CRM_PEDIDO_VENDA item = Mapper.Map<CRMPedidoViewModel, CRM_PEDIDO_VENDA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
 
-                    // Checa anexo
+                    // Monta anexo
+                    String link1 = "http://erpsysnet.azurewebsites.net/CRM/AprovarPropostaDireto/" + item.CRPV_CD_ID.ToString();
+                    Session["LinkAprova"] = link1;
+
+                    // Processa envio
                     CRM_PEDIDO_VENDA pro = baseApp.GetPedidoById(item.CRPV_CD_ID);
-                    if (pro.CRM_PEDIDO_VENDA_ANEXO.Count == 0)
-                    {
-                        Session["MensCRM"] = 76;
-                        return View(vm);
-                    }
-                    Int32 volta = baseApp.ValidateEditPedido(item);
+                    Int32 volta = baseApp.ValidateEnviarPedido(item);
 
                     // Verifica retorno
                     if (volta == 1)
@@ -8613,6 +8667,8 @@ namespace ERP_CRM_Solution.Controllers
             Session["IdCRMPedido"] = item.CRPV_CD_ID;
             ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.FormaEnvio = new SelectList(baseApp.GetAllFormasEnvio(idAss).OrderBy(p => p.FOEN_NM_NOME), "FOEN_CD_ID", "FOEN_NM_NOME");
+            ViewBag.FormaFrete = new SelectList(baseApp.GetAllFormasFrete(idAss).OrderBy(p => p.FOFR_NM_NOME), "FOFR_CD_ID", "FOFR_NM_NOME");
 
             // Processa
             objetoAntes = (CRM)Session["CRM"];
