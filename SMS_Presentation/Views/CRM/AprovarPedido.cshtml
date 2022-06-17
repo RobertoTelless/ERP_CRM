@@ -19,7 +19,7 @@
                 <a href="@Url.Action("AcompanhamentoProcessoCRM", "CRM")">Acompanhamento - Processos</a>
             </li>
             <li class="active">
-                <strong>Proposta - Aprovação</strong>
+                <strong>Pedidos - Aprovação</strong>
             </li>
         </ol>
         <br />
@@ -28,7 +28,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Proposta - Aprovação</h5>
+                    <h5>Pedidos - Aprovação</h5>
                 </div>
                 <div class="ibox-content">
                     @Html.AntiForgeryToken()
@@ -57,9 +57,9 @@
                                     {
                                         <div class="form-group">
                                             @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                            @Html.HiddenFor(m => m.CRM1_CD_ID)
                                             @Html.HiddenFor(m => m.CRPV_DS_APROVACAO)
                                             @Html.HiddenFor(m => m.CRPV_DS_CANCELAMENTO)
-                                            @Html.HiddenFor(m => m.CRPV_DS_REPROVACAO)
                                             @Html.HiddenFor(m => m.CRPV_DT_APROVACAO)
                                             @Html.HiddenFor(m => m.CRPV_DT_CANCELAMENTO)
                                             @Html.HiddenFor(m => m.CRPV_DT_ENVIO)
@@ -67,16 +67,18 @@
                                             @Html.HiddenFor(m => m.CRPV_DT_REPROVACAO)
                                             @Html.HiddenFor(m => m.CRPV_DT_VALIDADE)
                                             @Html.HiddenFor(m => m.CRPV_IN_ATIVO)
+                                            @Html.HiddenFor(m => m.CRPV_IN_GERAR_CR)
+                                            @Html.HiddenFor(m => m.CRPV_IN_GEROU_NF)
                                             @Html.HiddenFor(m => m.CRPV_IN_PRAZO_ENTREGA)
                                             @Html.HiddenFor(m => m.CRPV_IN_STATUS)
                                             @Html.HiddenFor(m => m.CRPV_LK_LINK)
                                             @Html.HiddenFor(m => m.CRPV_NM_NOME)
+                                            @Html.HiddenFor(m => m.CRPV_NR_NOTA_FISCAL)
                                             @Html.HiddenFor(m => m.CRPV_NR_NUMERO)
                                             @Html.HiddenFor(m => m.CRPV_TOTAL_PEDIDO)
                                             @Html.HiddenFor(m => m.CRPV_TX_CONDICOES_COMERCIAIS)
                                             @Html.HiddenFor(m => m.CRPV_TX_INFORMACOES_GERAIS)
                                             @Html.HiddenFor(m => m.CRPV_TX_INTRODUCAO)
-                                            @Html.HiddenFor(m => m.CRM1_CD_ID)
                                             @Html.HiddenFor(m => m.CRPV_TX_OBSERVACAO)
                                             @Html.HiddenFor(m => m.CRPV_TX_OUTROS_ITENS)
                                             @Html.HiddenFor(m => m.CRPV_VL_DESCONTO)
@@ -87,11 +89,13 @@
                                             @Html.HiddenFor(m => m.CRPV_VL_PESO_LIQUIDO)
                                             @Html.HiddenFor(m => m.CRPV_VL_TOTAL_ITENS)
                                             @Html.HiddenFor(m => m.CRPV_VL_TOTAL_OUTROS)
+                                            @Html.HiddenFor(m => m.CRPV_VL_VALOR)
                                             @Html.HiddenFor(m => m.FILI_CD_ID)
                                             @Html.HiddenFor(m => m.FOEN_CD_ID)
                                             @Html.HiddenFor(m => m.FOFR_CD_ID)
                                             @Html.HiddenFor(m => m.USUA_CD_ID)
-                                            @Html.HiddenFor(m => m.CRPV_CD_ID)
+                                            @Html.HiddenFor(m => m.MOCA_CD_ID)
+                                            @Html.HiddenFor(m => m.TEPR_CD_ID)
                                             @Html.ButtonActionSubmit(text: "Confirma Aprovação do Pedido", htmlAttributes: new { id = "basictoast" })
                                         </div>
 
@@ -128,7 +132,7 @@
                                             <div class="col-lg-8">
                                                 <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 250px" >
                                                     <div class="ibox-title" style="color: black">
-                                                        <h5 style="color: black">Dados da Proposta</h5>
+                                                        <h5 style="color: black">Dados do Pedido</h5>
                                                     </div>
                                                     <div class="ibox-content"  style="color: black">
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">

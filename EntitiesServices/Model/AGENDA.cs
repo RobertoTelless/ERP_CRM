@@ -27,6 +27,7 @@ namespace EntitiesServices.Model
         public int USUA_CD_ID { get; set; }
         public int ASSI_CD_ID { get; set; }
         public Nullable<int> CAAG_CD_ID { get; set; }
+        public Nullable<int> CRM1_CD_ID { get; set; }
         public System.DateTime AGEN_DT_DATA { get; set; }
         public System.TimeSpan AGEN_HR_HORA { get; set; }
         public string AGEN_NM_TITULO { get; set; }
@@ -36,12 +37,12 @@ namespace EntitiesServices.Model
         public string AGEN_TX_OBSERVACOES { get; set; }
         public Nullable<int> AGEN_IN_STATUS { get; set; }
         public Nullable<int> AGEN_IN_CORPORATIVA { get; set; }
-        public Nullable<int> CRM1_CD_ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA_ANEXO> AGENDA_ANEXO { get; set; }
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CATEGORIA_AGENDA CATEGORIA_AGENDA { get; set; }
+        public virtual CRM CRM { get; set; }
         public virtual USUARIO USUARIO { get; set; }
         public virtual USUARIO USUARIO1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -50,6 +51,5 @@ namespace EntitiesServices.Model
         public virtual ICollection<ATENDIMENTO_AGENDA> ATENDIMENTO_AGENDA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDEM_SERVICO_AGENDA> ORDEM_SERVICO_AGENDA { get; set; }
-        public virtual CRM CRM { get; set; }
     }
 }

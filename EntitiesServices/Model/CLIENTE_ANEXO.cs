@@ -16,9 +16,9 @@ namespace EntitiesServices.Model
     {
         public int CLAN_CD_ID { get; set; }
         public int CLIE_CD_ID { get; set; }
-        public System.DateTime CLAN_DT_ANEXO { get; set; }
         public string CLAN_NM_TITULO { get; set; }
         public int CLAN_IN_TIPO { get; set; }
+        public System.DateTime CLAN_DT_ANEXO { get; set; }
         public string CLAN_AQ_ARQUIVO { get; set; }
         public int CLAN_IN_ATIVO { get; set; }
     

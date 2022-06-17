@@ -17,16 +17,18 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SUBCATEGORIA_PRODUTO()
         {
-            this.PRODUTO_COMPRA = new HashSet<PRODUTO_COMPRA>();
+            this.PRODUTO = new HashSet<PRODUTO>();
         }
     
         public int SCPR_CD_ID { get; set; }
-        public int CAPR_CD_ID { get; set; }
+        public int ASSI_CD_ID { get; set; }
+        public Nullable<int> CAPR_CD_ID { get; set; }
         public string SCPR_NM_NOME { get; set; }
-        public int SCPR_IN_ATIVO { get; set; }
+        public Nullable<int> SCPR_IN_ATIVO { get; set; }
     
+        public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CATEGORIA_PRODUTO CATEGORIA_PRODUTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUTO_COMPRA> PRODUTO_COMPRA { get; set; }
+        public virtual ICollection<PRODUTO> PRODUTO { get; set; }
     }
 }

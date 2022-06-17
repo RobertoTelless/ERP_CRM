@@ -36,14 +36,21 @@ namespace EntitiesServices.Model
             this.CATEGORIA_SERVICO = new HashSet<CATEGORIA_SERVICO>();
             this.CATEGORIA_TELEFONE = new HashSet<CATEGORIA_TELEFONE>();
             this.CENTRO_CUSTO = new HashSet<CENTRO_CUSTO>();
+            this.CLASSE = new HashSet<CLASSE>();
             this.CLIENTE = new HashSet<CLIENTE>();
             this.CONFIGURACAO = new HashSet<CONFIGURACAO>();
             this.CONTA_BANCO = new HashSet<CONTA_BANCO>();
             this.CONTA_RECEBER = new HashSet<CONTA_RECEBER>();
             this.CRM_ACAO = new HashSet<CRM_ACAO>();
             this.CRM = new HashSet<CRM>();
+            this.CRM_COMERCIAL_ACAO = new HashSet<CRM_COMERCIAL_ACAO>();
+            this.CRM_COMERCIAL = new HashSet<CRM_COMERCIAL>();
             this.CRM_ORIGEM = new HashSet<CRM_ORIGEM>();
+            this.CRM_PEDIDO_VENDA = new HashSet<CRM_PEDIDO_VENDA>();
+            this.CRM_PROPOSTA = new HashSet<CRM_PROPOSTA>();
             this.DEPARTAMENTO = new HashSet<DEPARTAMENTO>();
+            this.DOCUMENTO = new HashSet<DOCUMENTO>();
+            this.DOCUMENTO_HISTORICO = new HashSet<DOCUMENTO_HISTORICO>();
             this.EMAIL_AGENDAMENTO = new HashSet<EMAIL_AGENDAMENTO>();
             this.EQUIPAMENTO = new HashSet<EQUIPAMENTO>();
             this.EQUIPAMENTO_MANUTENCAO = new HashSet<EQUIPAMENTO_MANUTENCAO>();
@@ -55,12 +62,15 @@ namespace EntitiesServices.Model
             this.FORNECEDOR = new HashSet<FORNECEDOR>();
             this.GRUPO = new HashSet<GRUPO>();
             this.GRUPO_CC = new HashSet<GRUPO_CC>();
+            this.GRUPO_DOCUMENTO = new HashSet<GRUPO_DOCUMENTO>();
             this.LOG = new HashSet<LOG>();
             this.MENSAGEM_AUTOMACAO = new HashSet<MENSAGEM_AUTOMACAO>();
             this.MENSAGENS = new HashSet<MENSAGENS>();
+            this.METADADO = new HashSet<METADADO>();
             this.MOTIVO_CANCELAMENTO = new HashSet<MOTIVO_CANCELAMENTO>();
             this.MOTIVO_ENCERRAMENTO = new HashSet<MOTIVO_ENCERRAMENTO>();
             this.MOVIMENTO_ESTOQUE_PRODUTO = new HashSet<MOVIMENTO_ESTOQUE_PRODUTO>();
+            this.NIVEL_SEGURANCA = new HashSet<NIVEL_SEGURANCA>();
             this.NOTICIA = new HashSet<NOTICIA>();
             this.NOTIFICACAO = new HashSet<NOTIFICACAO>();
             this.ORDEM_SERVICO = new HashSet<ORDEM_SERVICO>();
@@ -78,26 +88,16 @@ namespace EntitiesServices.Model
             this.TELEFONE = new HashSet<TELEFONE>();
             this.TEMPLATE = new HashSet<TEMPLATE>();
             this.TEMPLATE_EMAIL = new HashSet<TEMPLATE_EMAIL>();
+            this.TEMPLATE_PROPOSTA = new HashSet<TEMPLATE_PROPOSTA>();
             this.TEMPLATE_SMS = new HashSet<TEMPLATE_SMS>();
             this.TIPO_ACAO = new HashSet<TIPO_ACAO>();
             this.TIPO_CRM = new HashSet<TIPO_CRM>();
+            this.TIPO_DOCUMENTO = new HashSet<TIPO_DOCUMENTO>();
             this.TIPO_GRUPO = new HashSet<TIPO_GRUPO>();
+            this.TIPO_METADADO = new HashSet<TIPO_METADADO>();
             this.TIPO_TAREFA = new HashSet<TIPO_TAREFA>();
             this.TRANSPORTADORA = new HashSet<TRANSPORTADORA>();
             this.USUARIO = new HashSet<USUARIO>();
-            this.CRM_COMERCIAL_ACAO = new HashSet<CRM_COMERCIAL_ACAO>();
-            this.CRM_COMERCIAL = new HashSet<CRM_COMERCIAL>();
-            this.CLASSE = new HashSet<CLASSE>();
-            this.DOCUMENTO = new HashSet<DOCUMENTO>();
-            this.DOCUMENTO_HISTORICO = new HashSet<DOCUMENTO_HISTORICO>();
-            this.GRUPO_DOCUMENTO = new HashSet<GRUPO_DOCUMENTO>();
-            this.METADADO = new HashSet<METADADO>();
-            this.NIVEL_SEGURANCA = new HashSet<NIVEL_SEGURANCA>();
-            this.TIPO_DOCUMENTO = new HashSet<TIPO_DOCUMENTO>();
-            this.TIPO_METADADO = new HashSet<TIPO_METADADO>();
-            this.TEMPLATE_PROPOSTA = new HashSet<TEMPLATE_PROPOSTA>();
-            this.CRM_PROPOSTA = new HashSet<CRM_PROPOSTA>();
-            this.CRM_PEDIDO_VENDA = new HashSet<CRM_PEDIDO_VENDA>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -164,6 +164,8 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CENTRO_CUSTO> CENTRO_CUSTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CLASSE> CLASSE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CLIENTE> CLIENTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONFIGURACAO> CONFIGURACAO { get; set; }
@@ -176,9 +178,21 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM> CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_COMERCIAL_ACAO> CRM_COMERCIAL_ACAO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_COMERCIAL> CRM_COMERCIAL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_ORIGEM> CRM_ORIGEM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DEPARTAMENTO> DEPARTAMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DOCUMENTO> DOCUMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DOCUMENTO_HISTORICO> DOCUMENTO_HISTORICO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EMAIL_AGENDAMENTO> EMAIL_AGENDAMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -202,17 +216,23 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GRUPO_CC> GRUPO_CC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GRUPO_DOCUMENTO> GRUPO_DOCUMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LOG> LOG { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MENSAGEM_AUTOMACAO> MENSAGEM_AUTOMACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MENSAGENS> MENSAGENS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<METADADO> METADADO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOTIVO_CANCELAMENTO> MOTIVO_CANCELAMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOTIVO_ENCERRAMENTO> MOTIVO_ENCERRAMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOVIMENTO_ESTOQUE_PRODUTO> MOVIMENTO_ESTOQUE_PRODUTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NIVEL_SEGURANCA> NIVEL_SEGURANCA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NOTICIA> NOTICIA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -248,44 +268,24 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TEMPLATE_EMAIL> TEMPLATE_EMAIL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TEMPLATE_PROPOSTA> TEMPLATE_PROPOSTA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TEMPLATE_SMS> TEMPLATE_SMS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TIPO_ACAO> TIPO_ACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TIPO_CRM> TIPO_CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TIPO_DOCUMENTO> TIPO_DOCUMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TIPO_GRUPO> TIPO_GRUPO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TIPO_METADADO> TIPO_METADADO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TIPO_TAREFA> TIPO_TAREFA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TRANSPORTADORA> TRANSPORTADORA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USUARIO> USUARIO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CRM_COMERCIAL_ACAO> CRM_COMERCIAL_ACAO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CRM_COMERCIAL> CRM_COMERCIAL { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CLASSE> CLASSE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DOCUMENTO> DOCUMENTO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DOCUMENTO_HISTORICO> DOCUMENTO_HISTORICO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GRUPO_DOCUMENTO> GRUPO_DOCUMENTO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<METADADO> METADADO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NIVEL_SEGURANCA> NIVEL_SEGURANCA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TIPO_DOCUMENTO> TIPO_DOCUMENTO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TIPO_METADADO> TIPO_METADADO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TEMPLATE_PROPOSTA> TEMPLATE_PROPOSTA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
     }
 }

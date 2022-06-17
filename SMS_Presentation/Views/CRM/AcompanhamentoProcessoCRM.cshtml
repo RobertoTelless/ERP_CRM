@@ -148,10 +148,10 @@
                             {
                                 <li class=""><a data-toggle="tab" href="#tab-9">Propostas & Vendas</a></li>
                             }
-                            @*@if ((Int32)Session["PermVenda"] == 1)
+                            @if ((Int32)Session["PermVenda"] == 1)
                             {
                                 <li class=""><a data-toggle="tab" href="#tab-10">Pedidos</a></li>
-                            }*@
+                            }
                             @if (Model.CRM1_IN_STATUS == 5 & Model.CRM1_IN_ATIVO > 5)
                             {
                                 <li class=""><a data-toggle="tab" href="#tab-11">Faturamento</a></li>
@@ -1252,13 +1252,13 @@
                             }
 
                             @*Pedidos*@
-                            @*@if ((Int32)Session["PermVenda"] == 1)
+                            @if ((Int32)Session["PermVenda"] == 1)
                             {
                                 <div id="tab-10" class="tab-pane">
                                     <div class="panel-body">
                                         <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 800px" >
                                             <div class="ibox-title"  style="color: black">
-                                                <h5>Pedidos</h5>
+                                                <h5>Pedidos de Venda</h5>
                                             </div>
                                             <div class="ibox-content" style="color: black">
                                                 <div class="row">
@@ -1274,9 +1274,9 @@
                                                                             <th>Validade</th>
                                                                             <th>Envio</th>
                                                                             <th>Status</th>
-                                                                            <th>Valor</th>
-                                                                            <th>Anexos</th>
-                                                                            <th>Itens</th>
+                                                                            <th>Valor (R$)</th>
+                                                                            <th>Valor Total (R$)</th>
+                                                                            <th>Prazo</th>
                                                                             <th class="td-one-action">Ações</th>
                                                                         </tr>
                                                                     </thead>
@@ -1317,6 +1317,14 @@
                                                                                     {
                                                                                         <td><span class="badge badge-warning">Aprovado</span></td>
                                                                                     }
+                                                                                    @if (cond.CRPV_VL_VALOR != null)
+                                                                                    {
+                                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPV_VL_VALOR.Value)</td>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <td>-</td>
+                                                                                    }
                                                                                     @if (cond.CRPV_VL_TOTAL != null)
                                                                                     {
                                                                                         <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPV_VL_TOTAL.Value)</td>
@@ -1325,39 +1333,54 @@
                                                                                     {
                                                                                         <td>-</td>
                                                                                     }
-                                                                                    <td>@cond.CRM_PEDIDO_VENDA_ANEXO.Count</td>
-                                                                                    <td>@cond.CRM_PEDIDO_VENDA_ITEM.Count</td>
+                                                                                    @if (cond.CRPV_IN_PRAZO_ENTREGA != null)
+                                                                                    {
+                                                                                        <td>@cond.CRPV_IN_PRAZO_ENTREGA</td>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <td>-</td>
+                                                                                    }
                                                                                     <td class="td-one-action">
-                                                                                        @if (cond.CRPV_IN_STATUS == 1)
+                                                                                        @if (Model.CRM1_IN_ATIVO == 1)
                                                                                         {
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "EditarPedido", "fa-edit", "Editar/Consultar")
-                                                                                            if (cond.CRPV_IN_ATIVO == 1)
+                                                                                            if (cond.CRPV_IN_STATUS == 1)
                                                                                             {
-                                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluirPedido('/CRM/ExcluirPedido/@cond.CRPV_CD_ID')" title="Excluir"></span>
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "EditarPedido", "fa-edit", "Editar/Consultar")
+                                                                                                if (cond.CRPV_IN_ATIVO == 1)
+                                                                                                {
+                                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluirProp('/CRM/ExcluirPedido/@cond.CRPV_CD_ID')" title="Excluir"></span>
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativarProp('/CRM/ReativarPedido/@cond.CRPV_CD_ID')" title="Reativar"></span>
+                                                                                                }
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "CancelarPedido", "fa-times", "Cancelar")
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "EnviarPedido", "fa-send-o", "Enviar")   
                                                                                             }
-                                                                                            else
+                                                                                            if (cond.CRPV_IN_STATUS == 2)
                                                                                             {
-                                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativarPedido('/CRM/ReativarPedido/@cond.CRPV_CD_ID')" title="Reativar"></span>
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "ElaborarPedido", "fa-mail-reply", "Elaboração") 
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "CancelarPedido", "fa-times", "Cancelar")
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "AprovarPedido", "fa-check", "Aprovar")   
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "ReprovarPedido", "fa-minus-square-o", "Reprovar")   
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "VerPedido", "fa-search", "Ver")
                                                                                             }
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "CancelarPedido", "fa-times", "Cancelar")
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "EnviarPedido", "fa-send-o", "Enviar")   
+                                                                                            if (cond.CRPV_IN_STATUS == 3 || cond.CRPV_IN_STATUS == 4)
+                                                                                            {
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "VerPedido", "fa-search", "Ver")
+                                                                                            }
+                                                                                            if (cond.CRPV_IN_STATUS == 5)
+                                                                                            {
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "CancelarPedido", "fa-times", "Cancelar")
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "VerPedido", "fa-search", "Ver")
+                                                                                            }
                                                                                         }
-                                                                                        @if (cond.CRPV_IN_STATUS == 2)
-                                                                                        {
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "ElaborarPedido", "fa-mail-reply", "Elaboração")
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "CancelarPedido", "fa-times", "Cancelar")
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "AprovarPedido", "fa-check", "Aprovar")   
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "ReprovarPedido", "fa-minus-square-o", "Reprovar")   
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "VerPedido", "fa-search", "Ver")
-                                                                                        }
-                                                                                        @if (cond.CRPV_IN_STATUS == 3 || cond.CRPV_IN_STATUS == 4)
-                                                                                        {
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "VerPedido", "fa-search", "Ver")
-                                                                                        }
-                                                                                        @if (cond.CRPV_IN_STATUS == 5)
+                                                                                        else
                                                                                         {
                                                                                             @Html.TableLinkDetails(cond.CRPV_CD_ID, "VerPedido", "fa-search", "Ver")
                                                                                         }
+                                                                                        @Html.TableLinkDetails(cond.CRPV_CD_ID, "GerarPropostaLinePedido", "fa-file-text-o", "Gerar PDF")
                                                                                     </td>
                                                                                 </tr>
                                                                             }
@@ -1395,6 +1418,14 @@
                                                                                     {
                                                                                         <td><span class="badge badge-warning">Aprovado</span></td>
                                                                                     }
+                                                                                    @if (cond.CRPV_VL_VALOR != null)
+                                                                                    {
+                                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPV_VL_VALOR.Value)</td>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <td>-</td>
+                                                                                    }
                                                                                     @if (cond.CRPV_VL_TOTAL != null)
                                                                                     {
                                                                                         <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPV_VL_TOTAL.Value)</td>
@@ -1403,39 +1434,54 @@
                                                                                     {
                                                                                         <td>-</td>
                                                                                     }
-                                                                                    <td>@cond.CRM_PEDIDO_VENDA_ANEXO.Count</td>
-                                                                                    <td>@cond.CRM_PEDIDO_VENDA_ITEM.Count</td>
+                                                                                    @if (cond.CRPV_IN_PRAZO_ENTREGA != null)
+                                                                                    {
+                                                                                        <td>@cond.CRPV_IN_PRAZO_ENTREGA</td>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <td>-</td>
+                                                                                    }
                                                                                     <td class="td-one-action">
-                                                                                        @if (cond.CRPV_IN_STATUS == 1)
+                                                                                        @if (Model.CRM1_IN_ATIVO == 1)
                                                                                         {
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "EditarPedido", "fa-edit", "Editar/Consultar")
-                                                                                            if (cond.CRPV_IN_ATIVO == 1)
+                                                                                            if (cond.CRPV_IN_STATUS == 1)
                                                                                             {
-                                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluirPedido('/CRM/ExcluirPedido/@cond.CRPV_CD_ID')" title="Excluir"></span>
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "EditarPedido", "fa-edit", "Editar/Consultar")
+                                                                                                if (cond.CRPV_IN_ATIVO == 1)
+                                                                                                {
+                                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluirProp('/CRM/ExcluirPedido/@cond.CRPV_CD_ID')" title="Excluir"></span>
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativarProp('/CRM/ReativarPedido/@cond.CRPV_CD_ID')" title="Reativar"></span>
+                                                                                                }
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "CancelarPedido", "fa-times", "Cancelar")
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "EnviarPedido", "fa-send-o", "Enviar")   
                                                                                             }
-                                                                                            else
+                                                                                            if (cond.CRPV_IN_STATUS == 2)
                                                                                             {
-                                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativarPedido('/CRM/ReativarPedido/@cond.CRPV_CD_ID')" title="Reativar"></span>
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "ElaborarPedido", "fa-mail-reply", "Elaboração") 
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "CancelarPedido", "fa-times", "Cancelar")
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "AprovarPedido", "fa-check", "Aprovar")   
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "ReprovarPedido", "fa-minus-square-o", "Reprovar")   
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "VerPedido", "fa-search", "Ver")
                                                                                             }
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "CancelarPedido", "fa-times", "Cancelar")
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "EnviarPedido", "fa-send-o", "Enviar")   
+                                                                                            if (cond.CRPV_IN_STATUS == 3 || cond.CRPV_IN_STATUS == 4)
+                                                                                            {
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "VerPedido", "fa-search", "Ver")
+                                                                                            }
+                                                                                            if (cond.CRPV_IN_STATUS == 5)
+                                                                                            {
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "CancelarPedido", "fa-times", "Cancelar")
+                                                                                                @Html.TableLinkDetails(cond.CRPV_CD_ID, "VerPedido", "fa-search", "Ver")
+                                                                                            }
                                                                                         }
-                                                                                        @if (cond.CRPV_IN_STATUS == 2)
-                                                                                        {
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "ElaborarPedido", "fa-mail-reply", "Elaboração")
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "CancelarPedido", "fa-times", "Cancelar")
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "AprovarPedido", "fa-check", "Aprovar")   
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "ReprovarPedido", "fa-minus-square-o", "Reprovar")   
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "VerPedido", "fa-search", "Ver")
-                                                                                        }
-                                                                                        @if (cond.CRPV_IN_STATUS == 3 || cond.CRPV_IN_STATUS == 4)
-                                                                                        {
-                                                                                            @Html.TableLinkDetails(cond.CRPV_CD_ID, "VerPedido", "fa-search", "Ver")
-                                                                                        }
-                                                                                        @if (cond.CRPV_IN_STATUS == 5)
+                                                                                        else
                                                                                         {
                                                                                             @Html.TableLinkDetails(cond.CRPV_CD_ID, "VerPedido", "fa-search", "Ver")
                                                                                         }
+                                                                                        @Html.TableLinkDetails(cond.CRPV_CD_ID, "GerarPropostaLinePedido", "fa-file-text-o", "Gerar PDF")
                                                                                     </td>
                                                                                 </tr>
                                                                             }
@@ -1460,17 +1506,20 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                @if (ViewBag.Prop == null & Model.CRM1_IN_STATUS != 5)
+                                                @if (Model.CRM1_IN_ATIVO == 1)
                                                 {
-                                                    <div class="form-group">
-                                                        @Html.ButtonLinkIndex(text: "Incluir Novo Pedido", action: "IncluirPedido", controller: "CRM")
-                                                    </div>
+                                                    if (ViewBag.Ped == null & Model.CRM1_IN_STATUS != 5)
+                                                    {
+                                                        <div class="form-group">
+                                                            @Html.ButtonLinkIndex(text: "Incluir Novo Pedido", action: "IncluirPedido", controller: "CRM")
+                                                        </div>
+                                                    }
                                                 }
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            }*@
+                            }
 
                             @*Faturamento*@
                             <div id="tab-11" class="tab-pane">

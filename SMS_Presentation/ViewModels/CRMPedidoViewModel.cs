@@ -80,6 +80,31 @@ namespace ERP_CRM_Solution.ViewModels
         public string CRPV_NM_NOME { get; set; }
         public Nullable<int> TEPR_CD_ID { get; set; }
         public Nullable<int> MOCA_CD_ID { get; set; }
+        public Nullable<int> CRPV_IN_GERAR_CR { get; set; }
+        public Nullable<int> CRPV_IN_GEROU_NF { get; set; }
+        public string CRPV_NR_NOTA_FISCAL { get; set; }
+        public Nullable<decimal> CRPV_VL_VALOR { get; set; }
+
+        public string NumeroProposta { get; set; }
+        public string NomeProposta { get; set; }
+        public Nullable<System.DateTime> DataProposta { get; set; }
+        public Nullable<System.DateTime> DataAprovacao { get; set; }
+
+        public bool GeraCR
+        {
+            get
+            {
+                if (CRPV_IN_GERAR_CR == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                CRPV_IN_GERAR_CR = (value == true) ? 1 : 0;
+            }
+        }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CRM CRM { get; set; }
@@ -92,10 +117,12 @@ namespace ERP_CRM_Solution.ViewModels
         public virtual FORMA_FRETE FORMA_FRETE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_PEDIDO_VENDA_ITEM> CRM_PEDIDO_VENDA_ITEM { get; set; }
-        public virtual USUARIO USUARIO { get; set; }
-        public virtual TRANSPORTADORA TRANSPORTADORA { get; set; }
-        public virtual TEMPLATE_PROPOSTA TEMPLATE_PROPOSTA { get; set; }
         public virtual MOTIVO_CANCELAMENTO MOTIVO_CANCELAMENTO { get; set; }
+        public virtual TEMPLATE_PROPOSTA TEMPLATE_PROPOSTA { get; set; }
+        public virtual TRANSPORTADORA TRANSPORTADORA { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
 
 
     }

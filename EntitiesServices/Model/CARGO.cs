@@ -17,14 +17,17 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CARGO()
         {
-            this.USUARIO_SUGESTAO = new HashSet<USUARIO_SUGESTAO>();
+            this.USUARIO = new HashSet<USUARIO>();
         }
     
         public int CARG_CD_ID { get; set; }
+        public Nullable<int> ASSI_CD_ID { get; set; }
         public string CARG_NM_NOME { get; set; }
-        public int CARG_IN_ATIVO { get; set; }
+        public Nullable<int> CARG_IN_ATIVO { get; set; }
+        public Nullable<int> CARG_IN_TIPO { get; set; }
     
+        public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USUARIO_SUGESTAO> USUARIO_SUGESTAO { get; set; }
+        public virtual ICollection<USUARIO> USUARIO { get; set; }
     }
 }

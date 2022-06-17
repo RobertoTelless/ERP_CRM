@@ -17,15 +17,15 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CRM()
         {
+            this.AGENDA = new HashSet<AGENDA>();
+            this.ATENDIMENTO_CRM = new HashSet<ATENDIMENTO_CRM>();
+            this.CONTA_RECEBER = new HashSet<CONTA_RECEBER>();
             this.CRM_ACAO = new HashSet<CRM_ACAO>();
             this.CRM_ANEXO = new HashSet<CRM_ANEXO>();
             this.CRM_COMENTARIO = new HashSet<CRM_COMENTARIO>();
             this.CRM_CONTATO = new HashSet<CRM_CONTATO>();
-            this.ATENDIMENTO_CRM = new HashSet<ATENDIMENTO_CRM>();
-            this.AGENDA = new HashSet<AGENDA>();
-            this.CRM_PROPOSTA = new HashSet<CRM_PROPOSTA>();
             this.CRM_PEDIDO_VENDA = new HashSet<CRM_PEDIDO_VENDA>();
-            this.CONTA_RECEBER = new HashSet<CONTA_RECEBER>();
+            this.CRM_PROPOSTA = new HashSet<CRM_PROPOSTA>();
         }
     
         public int CRM1_CD_ID { get; set; }
@@ -34,18 +34,18 @@ namespace EntitiesServices.Model
         public Nullable<int> TICR_CD_ID { get; set; }
         public Nullable<int> USUA_CD_ID { get; set; }
         public Nullable<int> MENS_CD_ID { get; set; }
+        public Nullable<int> ORIG_CD_ID { get; set; }
+        public Nullable<int> MOCA_CD_ID { get; set; }
+        public Nullable<int> MOEN_CD_ID { get; set; }
         public Nullable<int> CRM1_IN_ATIVO { get; set; }
         public Nullable<System.DateTime> CRM1_DT_CRIACAO { get; set; }
         public string CRM1_NM_NOME { get; set; }
         public string CRM1_DS_DESCRICAO { get; set; }
         public string CRM1_TX_INFORMACOES_GERAIS { get; set; }
         public int CRM1_IN_STATUS { get; set; }
-        public Nullable<int> ORIG_CD_ID { get; set; }
         public Nullable<System.DateTime> CRM1_DT_CANCELAMENTO { get; set; }
-        public Nullable<int> MOCA_CD_ID { get; set; }
         public string CRM1_DS_MOTIVO_CANCELAMENTO { get; set; }
         public Nullable<System.DateTime> CRM1_DT_ENCERRAMENTO { get; set; }
-        public Nullable<int> MOEN_CD_ID { get; set; }
         public string CRM1_DS_INFORMACOES_ENCERRAMENTO { get; set; }
         public Nullable<int> CRM1_IN_ESTRELA { get; set; }
         public Nullable<int> PEVE_CD_ID1 { get; set; }
@@ -63,8 +63,14 @@ namespace EntitiesServices.Model
         public Nullable<int> CRM1_IN_ENTREGA_CONFIRMADA { get; set; }
         public string CRM_DS_INFORMACOES_SAIDA { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AGENDA> AGENDA { get; set; }
         public virtual ASSINANTE ASSINANTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ATENDIMENTO_CRM> ATENDIMENTO_CRM { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_ACAO> CRM_ACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -77,18 +83,12 @@ namespace EntitiesServices.Model
         public virtual MENSAGENS MENSAGENS { get; set; }
         public virtual MOTIVO_CANCELAMENTO MOTIVO_CANCELAMENTO { get; set; }
         public virtual MOTIVO_ENCERRAMENTO MOTIVO_ENCERRAMENTO { get; set; }
-        public virtual TIPO_CRM TIPO_CRM { get; set; }
-        public virtual USUARIO USUARIO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ATENDIMENTO_CRM> ATENDIMENTO_CRM { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AGENDA> AGENDA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
+        public virtual ICollection<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
+        public virtual TIPO_CRM TIPO_CRM { get; set; }
         public virtual TRANSPORTADORA TRANSPORTADORA { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
     }
 }

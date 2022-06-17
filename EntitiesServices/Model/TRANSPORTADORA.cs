@@ -17,9 +17,9 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TRANSPORTADORA()
         {
-            this.TRANSPORTADORA_ANEXO = new HashSet<TRANSPORTADORA_ANEXO>();
-            this.CRM_PEDIDO_VENDA = new HashSet<CRM_PEDIDO_VENDA>();
             this.CRM = new HashSet<CRM>();
+            this.CRM_PEDIDO_VENDA = new HashSet<CRM_PEDIDO_VENDA>();
+            this.TRANSPORTADORA_ANEXO = new HashSet<TRANSPORTADORA_ANEXO>();
         }
     
         public int TRAN_CD_ID { get; set; }
@@ -51,14 +51,14 @@ namespace EntitiesServices.Model
         public string TRAN_DS_SEGURO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM> CRM { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
         public virtual FILIAL FILIAL { get; set; }
         public virtual TIPO_TRANSPORTE TIPO_TRANSPORTE { get; set; }
         public virtual TIPO_VEICULO TIPO_VEICULO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TRANSPORTADORA_ANEXO> TRANSPORTADORA_ANEXO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CRM> CRM { get; set; }
     }
 }

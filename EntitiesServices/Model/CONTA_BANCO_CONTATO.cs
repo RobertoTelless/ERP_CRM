@@ -14,13 +14,13 @@ namespace EntitiesServices.Model
     
     public partial class CONTA_BANCO_CONTATO
     {
-        public int CBCO_CD_ID { get; set; }
+        public int CBCT_CD_ID { get; set; }
         public int COBA_CD_ID { get; set; }
-        public string CBCO_NM_NOME { get; set; }
-        public string CBCO_NM_CARGO { get; set; }
-        public string CBCO_EM_EMAIL { get; set; }
-        public string CBCO_NR_TELEFONE { get; set; }
-        public int CBCO_IN_ATIVO { get; set; }
+        public string CBCT_NM_NOME { get; set; }
+        public string CBCT_NM_EMAIL { get; set; }
+        public string CBCT_NM_CARGO { get; set; }
+        public string CBCT_NR_TELEFONES { get; set; }
+        public int CBCT_IN_ATIVO { get; set; }
     
         public virtual CONTA_BANCO CONTA_BANCO { get; set; }
     }

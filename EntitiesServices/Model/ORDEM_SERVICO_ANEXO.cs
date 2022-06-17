@@ -14,13 +14,13 @@ namespace EntitiesServices.Model
     
     public partial class ORDEM_SERVICO_ANEXO
     {
-        public int OSAN_CD_ID { get; set; }
+        public int ORSX_CD_ID { get; set; }
         public int ORSE_CD_ID { get; set; }
-        public System.DateTime OSAN_DT_ANEXO { get; set; }
-        public string OSAN_NM_TITULO { get; set; }
-        public int OSAN_IN_TIPO { get; set; }
-        public string OSAN_AQ_ARQUIVO { get; set; }
-        public int OSAN_IN_ATIVO { get; set; }
+        public string ORSX_NM_TITULO { get; set; }
+        public System.DateTime ORSX_DT_ANEXO { get; set; }
+        public int ORSX_IN_TIPO { get; set; }
+        public string ORSX_AQ_ARQUIVO { get; set; }
+        public int ORSX_IN_ATIVO { get; set; }
     
         public virtual ORDEM_SERVICO ORDEM_SERVICO { get; set; }
     }

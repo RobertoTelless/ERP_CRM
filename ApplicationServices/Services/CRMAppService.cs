@@ -1043,5 +1043,258 @@ namespace ApplicationServices.Services
             }
         }
 
+        public Int32 ValidateCancelarPedido(CRM_PEDIDO_VENDA item)
+        {
+            try
+            {
+                // Verificação
+                item.CRPV_IN_STATUS = 3;
+                if (item.CRPV_DT_CANCELAMENTO == null)
+                {
+                    return 1;
+                }
+                if (item.CRPV_DS_CANCELAMENTO == null)
+                {
+                    return 2;
+                }
+                if (item.CRPV_DT_CANCELAMENTO < item.CRPV_DT_PEDIDO)
+                {
+                    return 3;
+                }
+                if (item.CRPV_DT_CANCELAMENTO > DateTime.Today.Date)
+                {
+                    return 4;
+                }
+
+                // Persiste
+                Int32 volta = _baseService.EditPedido(item);
+
+                // Gera Notificação
+                CRM crm = _baseService.GetItemById(item.CRM1_CD_ID);
+                NOTIFICACAO noti = new NOTIFICACAO();
+                noti.CANO_CD_ID = 1;
+                noti.ASSI_CD_ID = item.ASSI_CD_ID.Value;
+                noti.NOTI_DT_EMISSAO = DateTime.Today;
+                noti.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                noti.NOTI_IN_VISTA = 0;
+                noti.NOTI_NM_TITULO = "Cancelamento de Pedido";
+                noti.NOTI_IN_ATIVO = 1;
+                noti.NOTI_TX_TEXTO = "ATENÇÃO: O Pedido " + item.CRPV_NR_NUMERO + " do processo CRM " + crm.CRM1_NM_NOME + " foi cancelado em " + item.CRPV_DT_CANCELAMENTO.Value.ToLongDateString() + ".";
+                noti.USUA_CD_ID = item.USUA_CD_ID.Value;
+                noti.NOTI_IN_STATUS = 1;
+                noti.NOTI_IN_NIVEL = 1;
+                Int32 volta1 = _notiService.Create(noti);
+
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ValidateReprovarPedido(CRM_PEDIDO_VENDA item)
+        {
+            try
+            {
+                // Verificação
+                item.CRPV_IN_STATUS = 4;
+                if (item.CRPV_DT_REPROVACAO == null)
+                {
+                    return 1;
+                }
+                if (item.CRPV_DS_REPROVACAO == null)
+                {
+                    return 2;
+                }
+                if (item.CRPV_DT_REPROVACAO < item.CRPV_DT_PEDIDO)
+                {
+                    return 3;
+                }
+                if (item.CRPV_DT_REPROVACAO > DateTime.Today.Date)
+                {
+                    return 4;
+                }
+
+                // Persiste
+                Int32 volta = _baseService.EditPedido(item);
+
+                // Gera Notificação
+                CRM crm = _baseService.GetItemById(item.CRM1_CD_ID);
+                NOTIFICACAO noti = new NOTIFICACAO();
+                noti.CANO_CD_ID = 1;
+                noti.ASSI_CD_ID = item.ASSI_CD_ID.Value;
+                noti.NOTI_DT_EMISSAO = DateTime.Today;
+                noti.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                noti.NOTI_IN_VISTA = 0;
+                noti.NOTI_NM_TITULO = "Reprovação de Pedido";
+                noti.NOTI_IN_ATIVO = 1;
+                noti.NOTI_TX_TEXTO = "ATENÇÃO: P Pedido " + item.CRPV_NR_NUMERO + " do processo CRM " + crm.CRM1_NM_NOME + " foi reprovado pelo cliente em " + item.CRPV_DT_REPROVACAO.Value.ToLongDateString() + ".";
+                noti.USUA_CD_ID = item.USUA_CD_ID.Value;
+                noti.NOTI_IN_STATUS = 1;
+                noti.NOTI_IN_NIVEL = 1;
+                Int32 volta1 = _notiService.Create(noti);
+
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ValidateAprovarPedido(CRM_PEDIDO_VENDA item)
+        {
+            try
+            {
+                // Verificação
+                item.CRPV_IN_STATUS = 5;
+                if (item.CRPV_DT_APROVACAO == null)
+                {
+                    return 1;
+                }
+                if (item.CRPV_DS_APROVACAO == null)
+                {
+                    return 2;
+                }
+                if (item.CRPV_DT_APROVACAO < item.CRPV_DT_PEDIDO)
+                {
+                    return 3;
+                }
+                if (item.CRPV_DT_APROVACAO > DateTime.Today.Date)
+                {
+                    return 4;
+                }
+
+                // Persiste
+                Int32 volta = _baseService.EditPedido(item);
+
+                // Gera Notificação
+                CRM crm = _baseService.GetItemById(item.CRM1_CD_ID);
+                NOTIFICACAO noti = new NOTIFICACAO();
+                noti.CANO_CD_ID = 1;
+                noti.ASSI_CD_ID = item.ASSI_CD_ID.Value;
+                noti.NOTI_DT_EMISSAO = DateTime.Today;
+                noti.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                noti.NOTI_IN_VISTA = 0;
+                noti.NOTI_NM_TITULO = "Aprovação de Pedido";
+                noti.NOTI_IN_ATIVO = 1;
+                noti.NOTI_TX_TEXTO = "ATENÇÃO: O Pedido " + item.CRPV_NR_NUMERO + " do processo CRM " + crm.CRM1_NM_NOME + " foi aprovado pelo cliente em " + item.CRPV_DT_APROVACAO.Value.ToLongDateString() + ".";
+                noti.USUA_CD_ID = item.USUA_CD_ID.Value;
+                noti.NOTI_IN_STATUS = 1;
+                noti.NOTI_IN_NIVEL = 1;
+                Int32 volta1 = _notiService.Create(noti);
+
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ValidateAprovarPedidoDireto(CRM_PEDIDO_VENDA item)
+        {
+            try
+            {
+                // Verificação
+                item.CRPV_IN_STATUS = 5;
+                if (item.CRPV_DT_APROVACAO == null)
+                {
+                    return 1;
+                }
+                if (item.CRPV_DS_APROVACAO == null)
+                {
+                    return 2;
+                }
+                if (item.CRPV_DT_APROVACAO < item.CRPV_DT_PEDIDO)
+                {
+                    return 3;
+                }
+                if (item.CRPV_DT_APROVACAO > DateTime.Today.Date)
+                {
+                    return 4;
+                }
+
+                // Persiste
+                Int32 volta = _baseService.EditPedido(item);
+
+                // Gera Notificação
+                CRM crm = _baseService.GetItemById(item.CRM1_CD_ID);
+                NOTIFICACAO noti = new NOTIFICACAO();
+                noti.CANO_CD_ID = 1;
+                noti.ASSI_CD_ID = item.ASSI_CD_ID.Value;
+                noti.NOTI_DT_EMISSAO = DateTime.Today;
+                noti.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                noti.NOTI_IN_VISTA = 0;
+                noti.NOTI_NM_TITULO = "Aprovação de Pedido";
+                noti.NOTI_IN_ATIVO = 1;
+                noti.NOTI_TX_TEXTO = "ATENÇÃO: O Pedido " + item.CRPV_NR_NUMERO + " do processo CRM " + crm.CRM1_NM_NOME + " foi aprovado pelo cliente em " + item.CRPV_DT_APROVACAO.Value.ToLongDateString() + ".";
+                noti.USUA_CD_ID = item.USUA_CD_ID.Value;
+                noti.NOTI_IN_STATUS = 1;
+                noti.NOTI_IN_NIVEL = 1;
+                Int32 volta1 = _notiService.Create(noti);
+
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ValidateEnviarPedido(CRM_PEDIDO_VENDA item)
+        {
+            try
+            {
+                // Verificação
+                item.CRPV_IN_STATUS = 2;
+                if (item.CRPV_DT_ENVIO == null)
+                {
+                    return 1;
+                }
+                if (item.CRPV_DT_ENVIO < item.CRPV_DT_PEDIDO)
+                {
+                    return 2;
+                }
+                if (item.CRPV_DT_ENVIO > DateTime.Today.Date)
+                {
+                    return 3;
+                }
+                if (item.TEPR_CD_ID == null)
+                {
+                    return 4;
+                }
+                if (item.CRPV_DS_ENVIO == null)
+                {
+                    return 5;
+                }
+
+                // Persiste
+                Int32 volta = _baseService.EditPedido(item);
+
+                // Gera Notificação
+                CRM crm = _baseService.GetItemById(item.CRM1_CD_ID);
+                NOTIFICACAO noti = new NOTIFICACAO();
+                noti.CANO_CD_ID = 1;
+                noti.ASSI_CD_ID = item.ASSI_CD_ID.Value;
+                noti.NOTI_DT_EMISSAO = DateTime.Today;
+                noti.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                noti.NOTI_IN_VISTA = 0;
+                noti.NOTI_NM_TITULO = "Envio de Pedido";
+                noti.NOTI_IN_ATIVO = 1;
+                noti.NOTI_TX_TEXTO = "ATENÇÃO: O Pedido " + item.CRPV_NR_NUMERO + " do processo CRM " + crm.CRM1_NM_NOME + " foi enviado para o cliente em " + item.CRPV_DT_ENVIO.Value.ToLongDateString() + ".";
+                noti.USUA_CD_ID = item.USUA_CD_ID.Value;
+                noti.NOTI_IN_STATUS = 1;
+                noti.NOTI_IN_NIVEL = 1;
+                Int32 volta1 = _notiService.Create(noti);
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
     }
 }

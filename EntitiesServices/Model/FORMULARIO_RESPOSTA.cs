@@ -53,14 +53,14 @@ namespace EntitiesServices.Model
         public Nullable<int> CROR_CD_ID { get; set; }
         public string FORE_DS_DESCRICAO { get; set; }
     
-        public virtual UF UF { get; set; }
+        public virtual CRM_ORIGEM CRM_ORIGEM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FORMULARIO_RESPOSTA_ACAO> FORMULARIO_RESPOSTA_ACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FORMULARIO_RESPOSTA_ANEXO> FORMULARIO_RESPOSTA_ANEXO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FORMULARIO_RESPOSTA_COMENTARIO> FORMULARIO_RESPOSTA_COMENTARIO { get; set; }
+        public virtual UF UF { get; set; }
         public virtual USUARIO USUARIO { get; set; }
-        public virtual CRM_ORIGEM CRM_ORIGEM { get; set; }
     }
 }

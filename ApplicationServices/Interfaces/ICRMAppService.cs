@@ -66,6 +66,11 @@ namespace ApplicationServices.Interfaces
         CRM_PEDIDO_VENDA GetPedidoByNumero(String num, Int32 idAss);
         List<FORMA_ENVIO> GetAllFormasEnvio(Int32 idAss);
         List<FORMA_FRETE> GetAllFormasFrete(Int32 idAss);
+        Int32 ValidateCancelarPedido(CRM_PEDIDO_VENDA item);
+        Int32 ValidateReprovarPedido(CRM_PEDIDO_VENDA item);
+        Int32 ValidateAprovarPedido(CRM_PEDIDO_VENDA item);
+        Int32 ValidateEnviarPedido(CRM_PEDIDO_VENDA item);
+        Int32 ValidateAprovarPedidoDireto(CRM_PEDIDO_VENDA item);
 
         CRM_PEDIDO_VENDA_ITEM GetItemPedidoById(Int32 id);
         Int32 ValidateEditItemPedido(CRM_PEDIDO_VENDA_ITEM item);

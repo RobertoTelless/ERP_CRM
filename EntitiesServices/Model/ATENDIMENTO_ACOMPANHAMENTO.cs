@@ -23,7 +23,7 @@ namespace EntitiesServices.Model
         public Nullable<System.DateTime> ATAC_DT_ENCERRAMENTO { get; set; }
         public string ATAC_DS_ENCERRAMENTO { get; set; }
     
-        public virtual USUARIO_SUGESTAO USUARIO_SUGESTAO { get; set; }
-        public virtual TICKET_ATENDIMENTO TICKET_ATENDIMENTO { get; set; }
+        public virtual ATENDIMENTO ATENDIMENTO { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
     }
 }

@@ -16,19 +16,19 @@ namespace EntitiesServices.Model
     {
         public int CRPA_CD_ID { get; set; }
         public int CARE_CD_ID { get; set; }
+        public Nullable<int> CRPA_IN_PARCELA { get; set; }
+        public Nullable<decimal> CRPA_VL_VALOR { get; set; }
+        public Nullable<System.DateTime> CRPA_DT_VENCIMENTO { get; set; }
         public string CRPA_DS_DESCRICAO { get; set; }
-        public System.DateTime CRPA_DT_VENCIMENTO { get; set; }
+        public Nullable<int> CRPA_IN_ATIVO { get; set; }
         public Nullable<System.DateTime> CRPA_DT_QUITACAO { get; set; }
-        public int CRPA_IN_ATIVO { get; set; }
-        public string CRPA_NR_PARCELAS { get; set; }
-        public int CRPA_NR_ATRASO { get; set; }
-        public int CRPA_IN_PARCELA { get; set; }
-        public int CRPA_IN_QUITADA { get; set; }
-        public decimal CRPA_VL_VALOR { get; set; }
         public Nullable<decimal> CRPA_VL_RECEBIDO { get; set; }
         public Nullable<decimal> CRPA_VL_DESCONTO { get; set; }
         public Nullable<decimal> CRPA_VL_JUROS { get; set; }
         public Nullable<decimal> CRPA_VL_TAXAS { get; set; }
+        public Nullable<int> CRPA_IN_QUITADA { get; set; }
+        public string CRPA_NR_PARCELA { get; set; }
+        public Nullable<int> CRPA_NR_ATRASO { get; set; }
     
         public virtual CONTA_RECEBER CONTA_RECEBER { get; set; }
     }

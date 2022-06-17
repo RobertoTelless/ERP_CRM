@@ -38,6 +38,7 @@ namespace EntitiesServices.Model
         public virtual DbSet<ATENDIMENTO_ACOMPANHAMENTO> ATENDIMENTO_ACOMPANHAMENTO { get; set; }
         public virtual DbSet<ATENDIMENTO_AGENDA> ATENDIMENTO_AGENDA { get; set; }
         public virtual DbSet<ATENDIMENTO_ANEXO> ATENDIMENTO_ANEXO { get; set; }
+        public virtual DbSet<ATENDIMENTO_CRM> ATENDIMENTO_CRM { get; set; }
         public virtual DbSet<BANCO> BANCO { get; set; }
         public virtual DbSet<CARGO> CARGO { get; set; }
         public virtual DbSet<CATEGORIA_AGENDA> CATEGORIA_AGENDA { get; set; }
@@ -52,6 +53,7 @@ namespace EntitiesServices.Model
         public virtual DbSet<CATEGORIA_TELEFONE> CATEGORIA_TELEFONE { get; set; }
         public virtual DbSet<CATEGORIA_USUARIO> CATEGORIA_USUARIO { get; set; }
         public virtual DbSet<CENTRO_CUSTO> CENTRO_CUSTO { get; set; }
+        public virtual DbSet<CLASSE> CLASSE { get; set; }
         public virtual DbSet<CLIENTE> CLIENTE { get; set; }
         public virtual DbSet<CLIENTE_ANEXO> CLIENTE_ANEXO { get; set; }
         public virtual DbSet<CLIENTE_CONTATO> CLIENTE_CONTATO { get; set; }
@@ -75,9 +77,24 @@ namespace EntitiesServices.Model
         public virtual DbSet<CRM_ACAO> CRM_ACAO { get; set; }
         public virtual DbSet<CRM_ANEXO> CRM_ANEXO { get; set; }
         public virtual DbSet<CRM_COMENTARIO> CRM_COMENTARIO { get; set; }
+        public virtual DbSet<CRM_COMERCIAL> CRM_COMERCIAL { get; set; }
+        public virtual DbSet<CRM_COMERCIAL_ACAO> CRM_COMERCIAL_ACAO { get; set; }
+        public virtual DbSet<CRM_COMERCIAL_ANEXO> CRM_COMERCIAL_ANEXO { get; set; }
+        public virtual DbSet<CRM_COMERCIAL_COMENTARIO_NOVA> CRM_COMERCIAL_COMENTARIO_NOVA { get; set; }
+        public virtual DbSet<CRM_COMERCIAL_CONTATO> CRM_COMERCIAL_CONTATO { get; set; }
+        public virtual DbSet<CRM_COMERCIAL_ITEM> CRM_COMERCIAL_ITEM { get; set; }
         public virtual DbSet<CRM_CONTATO> CRM_CONTATO { get; set; }
         public virtual DbSet<CRM_ORIGEM> CRM_ORIGEM { get; set; }
+        public virtual DbSet<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
+        public virtual DbSet<CRM_PEDIDO_VENDA_ACOMPANHAMENTO> CRM_PEDIDO_VENDA_ACOMPANHAMENTO { get; set; }
+        public virtual DbSet<CRM_PEDIDO_VENDA_ANEXO> CRM_PEDIDO_VENDA_ANEXO { get; set; }
+        public virtual DbSet<CRM_PEDIDO_VENDA_ITEM> CRM_PEDIDO_VENDA_ITEM { get; set; }
+        public virtual DbSet<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
+        public virtual DbSet<CRM_PROPOSTA_ACOMPANHAMENTO> CRM_PROPOSTA_ACOMPANHAMENTO { get; set; }
+        public virtual DbSet<CRM_PROPOSTA_ANEXO> CRM_PROPOSTA_ANEXO { get; set; }
         public virtual DbSet<DEPARTAMENTO> DEPARTAMENTO { get; set; }
+        public virtual DbSet<DOCUMENTO> DOCUMENTO { get; set; }
+        public virtual DbSet<DOCUMENTO_HISTORICO> DOCUMENTO_HISTORICO { get; set; }
         public virtual DbSet<EMAIL_AGENDAMENTO> EMAIL_AGENDAMENTO { get; set; }
         public virtual DbSet<EQUIPAMENTO> EQUIPAMENTO { get; set; }
         public virtual DbSet<EQUIPAMENTO_ANEXO> EQUIPAMENTO_ANEXO { get; set; }
@@ -89,6 +106,9 @@ namespace EntitiesServices.Model
         public virtual DbSet<FORMA_FRETE> FORMA_FRETE { get; set; }
         public virtual DbSet<FORMA_PAGAMENTO> FORMA_PAGAMENTO { get; set; }
         public virtual DbSet<FORMULARIO_RESPOSTA> FORMULARIO_RESPOSTA { get; set; }
+        public virtual DbSet<FORMULARIO_RESPOSTA_ACAO> FORMULARIO_RESPOSTA_ACAO { get; set; }
+        public virtual DbSet<FORMULARIO_RESPOSTA_ANEXO> FORMULARIO_RESPOSTA_ANEXO { get; set; }
+        public virtual DbSet<FORMULARIO_RESPOSTA_COMENTARIO> FORMULARIO_RESPOSTA_COMENTARIO { get; set; }
         public virtual DbSet<FORNECEDOR> FORNECEDOR { get; set; }
         public virtual DbSet<FORNECEDOR_ANEXO> FORNECEDOR_ANEXO { get; set; }
         public virtual DbSet<FORNECEDOR_COMENTARIO> FORNECEDOR_COMENTARIO { get; set; }
@@ -98,6 +118,7 @@ namespace EntitiesServices.Model
         public virtual DbSet<GRUPO> GRUPO { get; set; }
         public virtual DbSet<GRUPO_CC> GRUPO_CC { get; set; }
         public virtual DbSet<GRUPO_CLIENTE> GRUPO_CLIENTE { get; set; }
+        public virtual DbSet<GRUPO_DOCUMENTO> GRUPO_DOCUMENTO { get; set; }
         public virtual DbSet<ITEM_PEDIDO_COMPRA> ITEM_PEDIDO_COMPRA { get; set; }
         public virtual DbSet<ITEM_PEDIDO_VENDA> ITEM_PEDIDO_VENDA { get; set; }
         public virtual DbSet<LOG> LOG { get; set; }
@@ -106,9 +127,11 @@ namespace EntitiesServices.Model
         public virtual DbSet<MENSAGEM_AUTOMACAO_DATAS> MENSAGEM_AUTOMACAO_DATAS { get; set; }
         public virtual DbSet<MENSAGENS> MENSAGENS { get; set; }
         public virtual DbSet<MENSAGENS_DESTINOS> MENSAGENS_DESTINOS { get; set; }
+        public virtual DbSet<METADADO> METADADO { get; set; }
         public virtual DbSet<MOTIVO_CANCELAMENTO> MOTIVO_CANCELAMENTO { get; set; }
         public virtual DbSet<MOTIVO_ENCERRAMENTO> MOTIVO_ENCERRAMENTO { get; set; }
         public virtual DbSet<MOVIMENTO_ESTOQUE_PRODUTO> MOVIMENTO_ESTOQUE_PRODUTO { get; set; }
+        public virtual DbSet<NIVEL_SEGURANCA> NIVEL_SEGURANCA { get; set; }
         public virtual DbSet<NOMENCLATURA_BRAS_SERVICOS> NOMENCLATURA_BRAS_SERVICOS { get; set; }
         public virtual DbSet<NOTICIA> NOTICIA { get; set; }
         public virtual DbSet<NOTICIA_COMENTARIO> NOTICIA_COMENTARIO { get; set; }
@@ -161,12 +184,15 @@ namespace EntitiesServices.Model
         public virtual DbSet<TELEFONE> TELEFONE { get; set; }
         public virtual DbSet<TEMPLATE> TEMPLATE { get; set; }
         public virtual DbSet<TEMPLATE_EMAIL> TEMPLATE_EMAIL { get; set; }
+        public virtual DbSet<TEMPLATE_PROPOSTA> TEMPLATE_PROPOSTA { get; set; }
         public virtual DbSet<TEMPLATE_SMS> TEMPLATE_SMS { get; set; }
         public virtual DbSet<TIPO_ACAO> TIPO_ACAO { get; set; }
         public virtual DbSet<TIPO_CONTA> TIPO_CONTA { get; set; }
         public virtual DbSet<TIPO_CONTRIBUINTE> TIPO_CONTRIBUINTE { get; set; }
         public virtual DbSet<TIPO_CRM> TIPO_CRM { get; set; }
+        public virtual DbSet<TIPO_DOCUMENTO> TIPO_DOCUMENTO { get; set; }
         public virtual DbSet<TIPO_GRUPO> TIPO_GRUPO { get; set; }
+        public virtual DbSet<TIPO_METADADO> TIPO_METADADO { get; set; }
         public virtual DbSet<TIPO_PESSOA> TIPO_PESSOA { get; set; }
         public virtual DbSet<TIPO_TAREFA> TIPO_TAREFA { get; set; }
         public virtual DbSet<TIPO_TRANSPORTE> TIPO_TRANSPORTE { get; set; }
@@ -178,31 +204,5 @@ namespace EntitiesServices.Model
         public virtual DbSet<USUARIO> USUARIO { get; set; }
         public virtual DbSet<USUARIO_ANEXO> USUARIO_ANEXO { get; set; }
         public virtual DbSet<USUARIO_FUNCIONARIO> USUARIO_FUNCIONARIO { get; set; }
-        public virtual DbSet<ATENDIMENTO_CRM> ATENDIMENTO_CRM { get; set; }
-        public virtual DbSet<CRM_COMERCIAL> CRM_COMERCIAL { get; set; }
-        public virtual DbSet<CRM_COMERCIAL_ACAO> CRM_COMERCIAL_ACAO { get; set; }
-        public virtual DbSet<CRM_COMERCIAL_ANEXO> CRM_COMERCIAL_ANEXO { get; set; }
-        public virtual DbSet<CRM_COMERCIAL_COMENTARIO_NOVA> CRM_COMERCIAL_COMENTARIO_NOVA { get; set; }
-        public virtual DbSet<CRM_COMERCIAL_CONTATO> CRM_COMERCIAL_CONTATO { get; set; }
-        public virtual DbSet<CRM_COMERCIAL_ITEM> CRM_COMERCIAL_ITEM { get; set; }
-        public virtual DbSet<FORMULARIO_RESPOSTA_ACAO> FORMULARIO_RESPOSTA_ACAO { get; set; }
-        public virtual DbSet<FORMULARIO_RESPOSTA_ANEXO> FORMULARIO_RESPOSTA_ANEXO { get; set; }
-        public virtual DbSet<FORMULARIO_RESPOSTA_COMENTARIO> FORMULARIO_RESPOSTA_COMENTARIO { get; set; }
-        public virtual DbSet<CLASSE> CLASSE { get; set; }
-        public virtual DbSet<DOCUMENTO> DOCUMENTO { get; set; }
-        public virtual DbSet<DOCUMENTO_HISTORICO> DOCUMENTO_HISTORICO { get; set; }
-        public virtual DbSet<GRUPO_DOCUMENTO> GRUPO_DOCUMENTO { get; set; }
-        public virtual DbSet<METADADO> METADADO { get; set; }
-        public virtual DbSet<NIVEL_SEGURANCA> NIVEL_SEGURANCA { get; set; }
-        public virtual DbSet<TIPO_DOCUMENTO> TIPO_DOCUMENTO { get; set; }
-        public virtual DbSet<TIPO_METADADO> TIPO_METADADO { get; set; }
-        public virtual DbSet<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
-        public virtual DbSet<CRM_PROPOSTA_ACOMPANHAMENTO> CRM_PROPOSTA_ACOMPANHAMENTO { get; set; }
-        public virtual DbSet<TEMPLATE_PROPOSTA> TEMPLATE_PROPOSTA { get; set; }
-        public virtual DbSet<CRM_PROPOSTA_ANEXO> CRM_PROPOSTA_ANEXO { get; set; }
-        public virtual DbSet<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
-        public virtual DbSet<CRM_PEDIDO_VENDA_ACOMPANHAMENTO> CRM_PEDIDO_VENDA_ACOMPANHAMENTO { get; set; }
-        public virtual DbSet<CRM_PEDIDO_VENDA_ANEXO> CRM_PEDIDO_VENDA_ANEXO { get; set; }
-        public virtual DbSet<CRM_PEDIDO_VENDA_ITEM> CRM_PEDIDO_VENDA_ITEM { get; set; }
     }
 }

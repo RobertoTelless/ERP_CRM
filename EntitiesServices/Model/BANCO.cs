@@ -18,17 +18,16 @@ namespace EntitiesServices.Model
         public BANCO()
         {
             this.CONTA_BANCO = new HashSet<CONTA_BANCO>();
-            this.PRESTADOR_BANCO = new HashSet<PRESTADOR_BANCO>();
         }
     
         public int BANC_CD_ID { get; set; }
-        public string BANC_NR_CODIGO { get; set; }
+        public Nullable<int> ASSI_CD_ID { get; set; }
+        public string BANC_SG_CODIGO { get; set; }
         public string BANC_NM_NOME { get; set; }
-        public int BANC_IN_ATIVO { get; set; }
+        public Nullable<int> BANC_IN_ATIVO { get; set; }
     
+        public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_BANCO> CONTA_BANCO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRESTADOR_BANCO> PRESTADOR_BANCO { get; set; }
     }
 }

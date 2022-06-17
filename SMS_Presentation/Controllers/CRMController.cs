@@ -3146,14 +3146,17 @@ namespace ERP_CRM_Solution.Controllers
             List<CRM_ACAO> acoes = item.CRM_ACAO.ToList().OrderByDescending(p => p.CRAC_DT_CRIACAO).ToList();
             CRM_ACAO acao = acoes.Where(p => p.CRAC_IN_STATUS == 1).FirstOrDefault();
 
-            List<CRM_PEDIDO_VENDA> peds = item.CRM_PEDIDO_VENDA.ToList().OrderByDescending(p => p.CRPV_DT_PEDIDO).ToList();
-            CRM_PEDIDO_VENDA ped = peds.Where(p => p.CRPV_IN_STATUS == 2 || p.CRPV_IN_STATUS == 1).FirstOrDefault();
-
             List<CRM_PROPOSTA> props = baseApp.GetAllPropostas(idAss).Where(p => p.CRM1_CD_ID == item.CRM1_CD_ID).ToList();
             CRM_PROPOSTA prop = props.Where(p => p.CRPR_IN_STATUS == 2 || p.CRPR_IN_STATUS == 1).FirstOrDefault();
             CRM_PROPOSTA propAprov = props.Where(p => p.CRPR_IN_STATUS == 5).FirstOrDefault();
             Session["PropAprov"] = propAprov;
             ViewBag.PropAprov = propAprov;
+
+            List<CRM_PEDIDO_VENDA> peds = baseApp.GetAllPedidos(idAss).Where(p => p.CRM1_CD_ID == item.CRM1_CD_ID).ToList();
+            CRM_PEDIDO_VENDA ped = peds.Where(p => p.CRPV_IN_STATUS == 2 || p.CRPV_IN_STATUS == 1).FirstOrDefault();
+            CRM_PEDIDO_VENDA pedAprov = peds.Where(p => p.CRPV_IN_STATUS == 5).FirstOrDefault();
+            Session["PedAprov"] = pedAprov;
+            ViewBag.PedAprov = pedAprov;
 
             List<CONTA_RECEBER> cr = new List<CONTA_RECEBER>();
             if (propAprov != null)
@@ -3179,6 +3182,31 @@ namespace ERP_CRM_Solution.Controllers
                 vm.DataAprovacao = null;
                 vm.NomeProposta = "-";
                 vm.ValorTotal = 0;
+            }
+
+            if (pedAprov != null)
+            {
+                Session["IdCRMPedido"] = pedAprov.CRPV_CD_ID;
+                cr = crApp.GetAllItens(idAss).Where(p => p.CRPV_CD_ID == pedAprov.CRPV_CD_ID & p.CARE_IN_ATIVO == 1).ToList();
+                ViewBag.CR1 = cr;
+                ViewBag.TemCR1 = cr.Count > 0 ? 1 : 0;
+                ViewBag.TemNF1 = 0;
+                vm.NumeroPedido = pedAprov.CRPV_NR_NUMERO;
+                vm.DataPedido = pedAprov.CRPV_DT_PEDIDO;
+                vm.DataAprovacaoPedido = pedAprov.CRPV_DT_APROVACAO;
+                vm.NomePedido = pedAprov.CRPV_NM_NOME;
+                vm.ValorTotalpedido = pedAprov.CRPV_VL_TOTAL;
+            }
+            else
+            {
+                ViewBag.CR1 = cr;
+                ViewBag.TemCR1 = 0;
+                ViewBag.TemNF1 = 0;
+                vm.NumeroPedido = "-";
+                vm.DataPedido = null;
+                vm.DataAprovacaoPedido = null;
+                vm.NomePedido = "-";
+                vm.ValorTotalpedido = 0;
             }
 
             // Verifica expedição
@@ -5081,6 +5109,12 @@ namespace ERP_CRM_Solution.Controllers
         {
             Session["IdCRMProposta"] = id;
             return RedirectToAction("GerarRelatorioProposta");
+        }
+
+        public ActionResult GerarPropostaLinePedido(Int32 id)
+        {
+            Session["IdCRMPedido"] = id;
+            return RedirectToAction("GerarRelatorioPedido");
         }
 
         public ActionResult GerarRelatorioProposta()
@@ -7778,6 +7812,7 @@ namespace ERP_CRM_Solution.Controllers
 
             // Prepara view
             CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+            ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
             ViewBag.Filiais = new SelectList(baseApp.GetAllFilial(idAss).OrderBy(p => p.FILI_NM_NOME), "FILI_CD_ID", "FILI_NM_NOME");
             ViewBag.FormaEnvio = new SelectList(baseApp.GetAllFormasEnvio(idAss).OrderBy(p => p.FOEN_NM_NOME), "FOEN_CD_ID", "FOEN_NM_NOME");
             ViewBag.FormaFrete = new SelectList(baseApp.GetAllFormasFrete(idAss).OrderBy(p => p.FOFR_NM_NOME), "FOFR_CD_ID", "FOFR_NM_NOME");
@@ -7793,15 +7828,17 @@ namespace ERP_CRM_Solution.Controllers
             vm.CRPV_DT_PEDIDO = DateTime.Now;
             vm.CRPV_IN_STATUS = 1;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
-            vm.CRPV_DT_VALIDADE = DateTime.Now.AddDays(Convert.ToDouble(conf.CONF_NR_DIAS_PROPOSTA));
-            vm.CLIENTE = (CLIENTE)Session["ClienteCRM"];
-            vm.CRPV_TOTAL_PEDIDO = 0;
+            vm.CRPV_VL_VALOR = 0;
             vm.CRPV_VL_DESCONTO = 0;
             vm.CRPV_VL_FRETE = 0;
             vm.CRPV_VL_ICMS = 0;
             vm.CRPV_VL_IPI = 0;
-            vm.CRPV_VL_TOTAL_ITENS = 0;
-            vm.CRPV_VL_TOTAL_OUTROS = 0;
+            vm.CRPV_IN_PRAZO_ENTREGA = 0;
+            vm.CRPV_VL_PESO_BRUTO = 0;
+            vm.CRPV_VL_PESO_LIQUIDO = 0;
+            vm.CRPV_IN_GERAR_CR = 0;
+            vm.CRPV_DT_VALIDADE = DateTime.Now.AddDays(Convert.ToDouble(conf.CONF_NR_DIAS_PROPOSTA));
+            vm.CLIENTE = (CLIENTE)Session["ClienteCRM"];
             return View(vm);
         }
 
@@ -7813,6 +7850,7 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            ViewBag.Templates = new SelectList(baseApp.GetAllTemplateProposta(idAss).OrderBy(p => p.TEPR_NM_NOME), "TEPR_CD_ID", "TEPR_NM_NOME");
             ViewBag.Filiais = new SelectList(baseApp.GetAllFilial(idAss).OrderBy(p => p.FILI_NM_NOME), "FILI_CD_ID", "FILI_NM_NOME");
             ViewBag.FormaEnvio = new SelectList(baseApp.GetAllFormasEnvio(idAss).OrderBy(p => p.FOEN_NM_NOME), "FOEN_CD_ID", "FOEN_NM_NOME");
             ViewBag.FormaFrete = new SelectList(baseApp.GetAllFormasFrete(idAss).OrderBy(p => p.FOFR_NM_NOME), "FOFR_CD_ID", "FOFR_NM_NOME");
@@ -7827,7 +7865,7 @@ namespace ERP_CRM_Solution.Controllers
                         return View(vm);
                     }
 
-                    // Criticas finanis
+                    // Criticas 
                     if (vm.CRPV_NM_NOME == null)
                     {
                         vm.CRPV_NM_NOME = "Pedido - " + vm.CLIENTE.CLIE_NM_NOME;
@@ -7954,9 +7992,18 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0038", CultureInfo.CurrentCulture));
                 }
+                if ((Int32)Session["MensCRM"] == 80)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0145", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCRM"] == 81)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0149", CultureInfo.CurrentCulture));
+                }
             }
 
             // Prepara view
+            Session["MensCRM"] = 0;
             Session["VoltaComentPedido"] = 2;
             CRMPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA, CRMPedidoViewModel>(item);
             vm.CRPV_DT_CANCELAMENTO = DateTime.Today.Date;
@@ -7979,10 +8026,23 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
+                    // Verifica tipo de ação
+                    if (vm.MOCA_CD_ID == null || vm.MOCA_CD_ID == 0)
+                    {
+                        Session["MensCRM"] = 80;
+                        return RedirectToAction("CancelarPedido", new { id = (Int32)Session["IdCRMPedido"] });
+                    }
+                    if (vm.CRPV_DS_CANCELAMENTO == null)
+                    {
+                        Session["MensCRM"] = 81;
+                        return RedirectToAction("CancelarPedido", new { id = (Int32)Session["IdCRMPedido"] });
+                    }
+
                     // Executa a operação
                     CRM_PEDIDO_VENDA item = Mapper.Map<CRMPedidoViewModel, CRM_PEDIDO_VENDA>(vm);
                     USUARIO usuario = (USUARIO)Session["UserCredentials"];
-                    Int32 volta = baseApp.ValidateEditPedido(item);
+                    Int32 statusAnt = item.CRPV_IN_STATUS;
+                    Int32 volta = baseApp.ValidateCancelarPedido(item);
 
                     // Verifica retorno
                     if (volta == 1)
@@ -8005,6 +8065,12 @@ namespace ERP_CRM_Solution.Controllers
                         Session["MensCRM"] = 33;
                         return View(vm);
                     }
+
+                    // Atualiza status do processo
+                    CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
+                    crm.CRM1_IN_STATUS = 2;
+                    Int32 volta1 = baseApp.ValidateEdit(crm, crm);
+                    Session["Cliente"] = crm.CLIENTE;
 
                     // Listas
                     return RedirectToAction("VoltarAcompanhamentoCRM");

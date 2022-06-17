@@ -16,8 +16,8 @@ namespace EntitiesServices.Model
     {
         public int CRAN_CD_ID { get; set; }
         public int CARE_CD_ID { get; set; }
-        public System.DateTime CRAN_DT_ANEXO { get; set; }
         public string CRAN_NM_TITULO { get; set; }
+        public System.DateTime CRAN_DT_ANEXO { get; set; }
         public int CRAN_IN_TIPO { get; set; }
         public string CRAN_AQ_ARQUIVO { get; set; }
         public int CRAN_IN_ATIVO { get; set; }

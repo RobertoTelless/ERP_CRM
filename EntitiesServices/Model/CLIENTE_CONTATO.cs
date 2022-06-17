@@ -16,11 +16,11 @@ namespace EntitiesServices.Model
     {
         public int CLCO_CD_ID { get; set; }
         public int CLIE_CD_ID { get; set; }
-        public string CLCO_EM_EMAIL { get; set; }
-        public string CLCO_NR_TELEFONE_RESIDENCIAL { get; set; }
-        public string CLCO_NR_TELEFONE_COMERCIAL { get; set; }
-        public string CLCO_NR_CELULAR { get; set; }
-        public string CLCO_NR_WHATSAPP { get; set; }
+        public string CLCO_NM_NOME { get; set; }
+        public string CLCO_NM_CARGO { get; set; }
+        public string CLCO_NM_EMAIL { get; set; }
+        public string CLCO_NM_TELEFONE { get; set; }
+        public string CLCO_DS_OBSERVACOES { get; set; }
         public int CLCO_IN_ATIVO { get; set; }
     
         public virtual CLIENTE CLIENTE { get; set; }

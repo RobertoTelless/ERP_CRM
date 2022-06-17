@@ -21,12 +21,12 @@ namespace EntitiesServices.Model
         }
     
         public int NISE_CD_ID { get; set; }
+        public int ASSI_CD_ID { get; set; }
         public string NISE_NM_NOME { get; set; }
         public int NISE_IN_ATIVO { get; set; }
-        public int ASSI_CD_ID { get; set; }
     
+        public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CLASSE> CLASSE { get; set; }
-        public virtual ASSINANTE ASSINANTE { get; set; }
     }
 }

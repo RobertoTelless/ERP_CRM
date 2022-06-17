@@ -22,6 +22,6 @@ namespace EntitiesServices.Model
         public Nullable<int> NOCO_IN_ATIVO { get; set; }
     
         public virtual NOTICIA NOTICIA { get; set; }
-        public virtual USUARIO_SUGESTAO USUARIO_SUGESTAO { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
     }
 }

@@ -15,12 +15,12 @@ namespace EntitiesServices.Model
     public partial class CONTA_PAGAR_ANEXO
     {
         public int CPAN_CD_ID { get; set; }
-        public int CAPA_CD_ID { get; set; }
-        public System.DateTime CPAN_DT_ANEXO { get; set; }
+        public Nullable<int> CAPA_CD_ID { get; set; }
         public string CPAN_NM_TITULO { get; set; }
-        public int CPAN_IN_TIPO { get; set; }
+        public Nullable<System.DateTime> CPAN_DT_ANEXO { get; set; }
+        public Nullable<int> CPAN_IN_TIPO { get; set; }
         public string CPAN_AQ_ARQUIVO { get; set; }
-        public int CPAN_IN_ATIVO { get; set; }
+        public Nullable<int> CPAN_IN_ATIVO { get; set; }
     
         public virtual CONTA_PAGAR CONTA_PAGAR { get; set; }
     }

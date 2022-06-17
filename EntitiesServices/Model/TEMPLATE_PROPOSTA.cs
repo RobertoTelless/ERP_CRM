@@ -17,23 +17,23 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TEMPLATE_PROPOSTA()
         {
-            this.CRM_PROPOSTA = new HashSet<CRM_PROPOSTA>();
             this.CRM_PEDIDO_VENDA = new HashSet<CRM_PEDIDO_VENDA>();
+            this.CRM_PROPOSTA = new HashSet<CRM_PROPOSTA>();
         }
     
         public int TEPR_CD_ID { get; set; }
+        public Nullable<int> ASSI_CD_ID { get; set; }
+        public string TEPR_SG_SIGLA { get; set; }
         public string TEPR_NM_NOME { get; set; }
         public string TEPR_TX_TEXTO { get; set; }
         public string TEPR_TX_CABECALHO { get; set; }
         public string TEPR_TX_RODAPE { get; set; }
         public int TEPR_IN_ATIVO { get; set; }
-        public string TEPR_SG_SIGLA { get; set; }
-        public Nullable<int> ASSI_CD_ID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_PEDIDO_VENDA> CRM_PEDIDO_VENDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PROPOSTA> CRM_PROPOSTA { get; set; }
     }
 }

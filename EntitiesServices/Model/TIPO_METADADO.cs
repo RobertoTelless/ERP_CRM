@@ -21,14 +21,14 @@ namespace EntitiesServices.Model
         }
     
         public int TIME_CD_ID { get; set; }
+        public int ASSI_CD_ID { get; set; }
         public string TIME_NM_NOME { get; set; }
         public int TIME_IN_DECIMAL { get; set; }
         public string TIME_MS_MASCARA { get; set; }
         public int TIME_IN_ATIVO { get; set; }
-        public int ASSI_CD_ID { get; set; }
     
+        public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<METADADO> METADADO { get; set; }
-        public virtual ASSINANTE ASSINANTE { get; set; }
     }
 }

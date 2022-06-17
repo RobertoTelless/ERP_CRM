@@ -352,12 +352,27 @@
     <Compile Include="Interfaces\Repositories\ICategoriaAtendimentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaOrdemServicoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaServicoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorAjudanteAnotacoesRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorVeiculoAnotacoesRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorVeiculoCertificadoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorVeiculoFuncaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorVeiculoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorMotoristaAnotacoesRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorAnotacoesRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorAjudanteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorMotoristaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorRegiaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorContatoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorBancoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorEnderecoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPedidoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPropostaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPedidoComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPropostaComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPedidoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPropostaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEco-PrestadorRepository.cs" />
     <Compile Include="Interfaces\Repositories\IDocumentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMItemPedidoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMetadadoRepository.cs" />
@@ -499,9 +514,6 @@
     <Compile Include="Interfaces\Repositories\IUnidadeRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioRepository.cs" />
-    <Compile Include="Model\ACONDICIONAMENTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\AGENDA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
@@ -533,34 +545,28 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ATENDIMENTO_ACOMPANHAMENTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ATENDIMENTO_AGENDA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ATENDIMENTO_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ATENDIMENTO_CRM.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ATENDIMENTO_STATUS.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\AUDITORIA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\BANCO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CARGO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_AGENDA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_ATENDIMENTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_CLIENTE.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -569,16 +575,16 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_FORNECEDOR.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_NOTIFICACAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_ORDEM_SERVICO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_PRODUTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_SERVICO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -587,43 +593,25 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_USUARIO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CENTRO_CUSTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CLASSE.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CLIENTE.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CLIENTE_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CLIENTE_APOLICE.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CLIENTE_CONTATO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CLIENTE_ENDERECO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CLIENTE_HISTORICO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CLIENTE_MARKETING_ATIVO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CLIENTE_NEW.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CLIENTE_PERGUNTA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CLIENTE_PERGUNTA_OPCAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CLIENTE_QUADRO_SOCIETARIO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -631,62 +619,44 @@
     <Compile Include="Model\CLIENTE_REFERENCIA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\CLIENTE_RESPOSTA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\CLIENTE_TAG.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CNH_CATEGORIA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONFIGURACAO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_BANCO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CONTA_BANCO_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_BANCO_CONTATO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_BANCO_LANCAMENTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_PAGAR.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_PAGAR_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_PAGAR_PARCELA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_PAGAR_RATEIO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_RECEBER.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_RECEBER_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_RECEBER_PARCELA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_RECEBER_RATEIO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CONTRATO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CONTRATO_ANEXOS.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CONTRATO_ANOTACOES.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CRM.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -746,49 +716,13 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DEPARTAMENTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DESTINADOR.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DESTINADOR_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DESTINADOR_ANOTACOES.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DESTINADOR_ENVIO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DESTINADOR_ENVIO_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DESTINADOR_ENVIO_ANOTACOES.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DESTINADOR_ENVIO_PRODUTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DOCUMENTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DOCUMENTO_HISTORICO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EcoAssist_Model.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EcoAssist_Model.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EcoAssist_Model.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EcoAssist_Model.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EcoAssist_Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\EMAIL_AGENDAMENTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -816,9 +750,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ERPCRM_Model.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ESTADO_FISICO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FICHA_TECNICA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -850,11 +781,8 @@
     <Compile Include="Model\FORMULARIO_RESPOSTA_COMENTARIO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\FORM_PAGTO_RECTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\FORNECEDOR.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FORNECEDOR_ANEXO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -872,7 +800,7 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GRUPO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GRUPO_CC.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -884,28 +812,13 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ITEM_PEDIDO_COMPRA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ITEM_PEDIDO_VENDA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\LEILOEIRO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\LEILOEIRO_LOTE.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\LEILOEIRO_LOTE_ITENS.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\LINHA_PRODUTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\LOG.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\MARCA_VEICULO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MENSAGEM_ANEXO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -925,17 +838,11 @@
     <Compile Include="Model\METADADO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\MODELO_VEICULO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\MOTIVO_CANCELAMENTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MOTIVO_ENCERRAMENTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\MOTIVO_FALHA_ORDEM_SERVICO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MOVIMENTO_ESTOQUE_PRODUTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -947,19 +854,19 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NOTICIA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NOTICIA_COMENTARIO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NOTIFICACAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NOTIFICACAO_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ORDEM_SERVICO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ORDEM_SERVICO_ACOMPANHAMENTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -967,65 +874,26 @@
     <Compile Include="Model\ORDEM_SERVICO_AGENDA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ORDEM_SERVICO_AGENDAMENTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ORDEM_SERVICO_AGENDAMENTO_ANOTACAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\ORDEM_SERVICO_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ORDEM_SERVICO_ANOTACAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ORDEM_SERVICO_COMENTARIOS.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ORDEM_SERVICO_HISTORICO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ORDEM_SERVICO_PRESTADOR.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\ORDEM_SERVICO_PRODUTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ORDEM_SERVICO_PROPOSTA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ORDEM_SERVICO_PROPOSTA_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ORDEM_SERVICO_SERVICO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ORIGEM.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ORIGEM_CLIENTE.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PARCEIRO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PARCEIRO_CONTATO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PARCEIRO_ENDERECO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PARCEIRO_PRECO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\PEDIDO_COMPRA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PEDIDO_COMPRA_ACOMPANHAMENTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PEDIDO_COMPRA_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PEDIDO_VENDA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -1040,31 +908,13 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PERFIL.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PERIODICIDADE.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PERIODICIDADE_TAREFA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PERIODO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PESQUISA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PESQUISA_ITEM.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PESQUISA_ITEM_OPCAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PESQUISA_RESPOSTA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PESQUISA_RESPOSTA_ITEM.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PLANO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -1072,83 +922,20 @@
     <Compile Include="Model\PLANO_PERIODICIDADE.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\PORTE.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\POSICAO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PRECO_PRODUTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\PRESTADOR.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_AJUDANTE.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_AJUDANTE_ANOTACOES.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_ANOTACOES.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_BANCO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_CERTIFICADO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_CONTATO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_ENDERECO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_ENDERECO_ESTOQUE.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_ENDERECO_VERIFICACAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_MOTORISTA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_MOTORISTA_ANOTACOES.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_REGIAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_VEICULO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_VEICULO_ANOTACOES.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_VEICULO_CERTIFICADO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRESTADOR_VEICULO_FUNCAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\PRODUTO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRODUTOS_RESPOSTA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PRODUTO_ANEXO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PRODUTO_BARCODE.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRODUTO_COMPRA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PRODUTO_ESTOQUE_FILIAL.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -1165,23 +952,8 @@
     <Compile Include="Model\PRODUTO_ORIGEM.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\PRODUTO_PERGUNTAS.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PRODUTO_PERGUNTAS_OPCAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\PRODUTO_TABELA_PRECO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PROPOSTA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\REGIAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\REGIAO_COBERTURA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\REGIME_TRIBUTARIO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -1201,17 +973,11 @@
     <Compile Include="Model\SEXO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\STATUS_COLETA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\STATUS_ORDEM_SERVICO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\SUBCATEGORIA_PRODUTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SUBGRUPO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TAMANHO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -1240,38 +1006,17 @@
     <Compile Include="Model\TEMPLATE_EMAIL.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\TEMPLATE_MENSAGEM.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\TEMPLATE_PROPOSTA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TEMPLATE_SMS.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\TICKET_ATENDIMENTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\TIPO_ACAO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\TIPO_CENTRO_CUSTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TIPO_CERTIFICADO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TIPO_CERTIFICADO_VEICULO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TIPO_CLIENTE.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\TIPO_CONTA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TIPO_CONTRATO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_CONTRIBUINTE.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -1285,35 +1030,11 @@
     <Compile Include="Model\TIPO_GRUPO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\TIPO_ITEM_PESQUISA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\TIPO_METADADO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\TIPO_ORDEM_SERVICO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TIPO_PARCEIRO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TIPO_PESQUISA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\TIPO_PESSOA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TIPO_PRODUTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TIPO_RESIDENCIA.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TIPO_RESIDUO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TIPO_SERVICO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_TAREFA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -1322,7 +1043,7 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_VEICULO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TRANSPORTADORA.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
@@ -1330,29 +1051,20 @@
     <Compile Include="Model\TRANSPORTADORA_ANEXO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\TRATAMENTO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\UF.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\UNIDADE.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\USUARIO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\USUARIO_ANEXO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\USUARIO_FUNCIONARIO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\USUARIO_SUGESTAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\VEICULO_FUNCAO.cs">
-      <DependentUpon>EcoAssist_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkClasses\AttachmentCRM.cs" />
@@ -1374,13 +1086,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ERPCRM_Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <EntityDeploy Include="Model\EcoAssist_Model.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EcoAssist_Model.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model\EcoAssist_Model.edmx.diagram">
-      <DependentUpon>EcoAssist_Model.edmx</DependentUpon>
-    </None>
     <None Include="Model\ERPCRM_Model.edmx.diagram">
       <DependentUpon>ERPCRM_Model.edmx</DependentUpon>
     </None>
@@ -1396,16 +1101,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model\EcoAssist_Model.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EcoAssist_Model.edmx</DependentUpon>
-      <LastGenOutput>EcoAssist_Model.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model\EcoAssist_Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EcoAssist_Model.edmx</DependentUpon>
-      <LastGenOutput>EcoAssist_Model.cs</LastGenOutput>
-    </Content>
     <Content Include="Model\ERPCRM_Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ERPCRM_Model.edmx</DependentUpon>

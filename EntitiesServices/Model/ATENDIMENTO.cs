@@ -20,9 +20,9 @@ namespace EntitiesServices.Model
             this.ATENDIMENTO_ACOMPANHAMENTO = new HashSet<ATENDIMENTO_ACOMPANHAMENTO>();
             this.ATENDIMENTO_AGENDA = new HashSet<ATENDIMENTO_AGENDA>();
             this.ATENDIMENTO_ANEXO = new HashSet<ATENDIMENTO_ANEXO>();
+            this.ATENDIMENTO_CRM = new HashSet<ATENDIMENTO_CRM>();
             this.NOTIFICACAO = new HashSet<NOTIFICACAO>();
             this.ORDEM_SERVICO = new HashSet<ORDEM_SERVICO>();
-            this.ATENDIMENTO_CRM = new HashSet<ATENDIMENTO_CRM>();
         }
     
         public int ATEN_CD_ID { get; set; }
@@ -64,6 +64,8 @@ namespace EntitiesServices.Model
         public virtual ICollection<ATENDIMENTO_ANEXO> ATENDIMENTO_ANEXO { get; set; }
         public virtual CATEGORIA_ATENDIMENTO CATEGORIA_ATENDIMENTO { get; set; }
         public virtual CLIENTE CLIENTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ATENDIMENTO_CRM> ATENDIMENTO_CRM { get; set; }
         public virtual DEPARTAMENTO DEPARTAMENTO { get; set; }
         public virtual PEDIDO_VENDA PEDIDO_VENDA { get; set; }
         public virtual PRODUTO PRODUTO { get; set; }
@@ -74,7 +76,5 @@ namespace EntitiesServices.Model
         public virtual ICollection<NOTIFICACAO> NOTIFICACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDEM_SERVICO> ORDEM_SERVICO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ATENDIMENTO_CRM> ATENDIMENTO_CRM { get; set; }
     }
 }

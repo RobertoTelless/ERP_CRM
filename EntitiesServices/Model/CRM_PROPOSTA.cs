@@ -17,21 +17,30 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CRM_PROPOSTA()
         {
+            this.CONTA_RECEBER = new HashSet<CONTA_RECEBER>();
             this.CRM_PROPOSTA_ACOMPANHAMENTO = new HashSet<CRM_PROPOSTA_ACOMPANHAMENTO>();
             this.CRM_PROPOSTA_ANEXO = new HashSet<CRM_PROPOSTA_ANEXO>();
-            this.CONTA_RECEBER = new HashSet<CONTA_RECEBER>();
         }
     
         public int CRPR_CD_ID { get; set; }
         public int CRM1_CD_ID { get; set; }
         public int USUA_CD_ID { get; set; }
+        public Nullable<int> ASSI_CD_ID { get; set; }
+        public Nullable<int> TEPR_CD_ID { get; set; }
+        public Nullable<int> TEEM_CD_ID { get; set; }
+        public Nullable<int> MOCA_CD_ID { get; set; }
+        public Nullable<int> FOEN_CD_ID { get; set; }
+        public Nullable<int> FOFR_CD_D { get; set; }
         public System.DateTime CRPR_DT_PROPOSTA { get; set; }
         public System.DateTime CRPR_DT_VALIDADE { get; set; }
+        public Nullable<System.DateTime> CRPR_DT_ENVIO { get; set; }
+        public string CRPR_DS_ENVIO { get; set; }
+        public string CRPR_LK_LINK { get; set; }
         public string CRPR_DS_INFORMACOES { get; set; }
         public int CRPR_IN_STATUS { get; set; }
+        public Nullable<decimal> CRPR_VL_VALOR { get; set; }
         public string CRPR_TX_TEXTO { get; set; }
         public string CRPR_AQ_ARQUIVO { get; set; }
-        public Nullable<int> TEPR_CD_ID { get; set; }
         public Nullable<System.DateTime> CRPR_DT_CANCELAMENTO { get; set; }
         public string CRPR_DS_CANCELAMENTO { get; set; }
         public Nullable<System.DateTime> CRPR_DT_REPROVACAO { get; set; }
@@ -39,17 +48,8 @@ namespace EntitiesServices.Model
         public Nullable<System.DateTime> CRPR_DT_APROVACAO { get; set; }
         public string CRPR_DS_APROVACAO { get; set; }
         public int CRPR_IN_ATIVO { get; set; }
-        public Nullable<int> ASSI_CD_ID { get; set; }
-        public Nullable<System.DateTime> CRPR_DT_ENVIO { get; set; }
-        public Nullable<decimal> CRPR_VL_VALOR { get; set; }
-        public Nullable<int> MOCA_CD_ID { get; set; }
-        public Nullable<int> TEEM_CD_ID { get; set; }
-        public string CRPR_LK_LINK { get; set; }
-        public string CRPR_DS_ENVIO { get; set; }
         public string CRPR_NR_NUMERO { get; set; }
         public Nullable<int> CRPR_NR_ATRASO { get; set; }
-        public Nullable<int> FOEN_CD_ID { get; set; }
-        public Nullable<int> FOFR_CD_D { get; set; }
         public string CRPR_TX_INTRODUCAO { get; set; }
         public string CRPR_TX_CONDICOES_COMERCIAIS { get; set; }
         public Nullable<int> CRPR_IN_PRAZO_ENTREGA { get; set; }
@@ -64,19 +64,19 @@ namespace EntitiesServices.Model
         public Nullable<int> CRPR_IN_GEROU_NF { get; set; }
         public string CRPR_NR_NOTA_FISCAL { get; set; }
     
+        public virtual ASSINANTE ASSINANTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
         public virtual CRM CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_PROPOSTA_ACOMPANHAMENTO> CRM_PROPOSTA_ACOMPANHAMENTO { get; set; }
-        public virtual TEMPLATE_PROPOSTA TEMPLATE_PROPOSTA { get; set; }
-        public virtual USUARIO USUARIO { get; set; }
-        public virtual ASSINANTE ASSINANTE { get; set; }
-        public virtual MOTIVO_CANCELAMENTO MOTIVO_CANCELAMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_PROPOSTA_ANEXO> CRM_PROPOSTA_ANEXO { get; set; }
-        public virtual TEMPLATE_EMAIL TEMPLATE_EMAIL { get; set; }
         public virtual FORMA_ENVIO FORMA_ENVIO { get; set; }
         public virtual FORMA_FRETE FORMA_FRETE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
+        public virtual MOTIVO_CANCELAMENTO MOTIVO_CANCELAMENTO { get; set; }
+        public virtual TEMPLATE_EMAIL TEMPLATE_EMAIL { get; set; }
+        public virtual TEMPLATE_PROPOSTA TEMPLATE_PROPOSTA { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
     }
 }

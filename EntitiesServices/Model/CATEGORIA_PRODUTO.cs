@@ -17,16 +17,23 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CATEGORIA_PRODUTO()
         {
-            this.PRODUTO_COMPRA = new HashSet<PRODUTO_COMPRA>();
+            this.PRODUTO = new HashSet<PRODUTO>();
             this.SUBCATEGORIA_PRODUTO = new HashSet<SUBCATEGORIA_PRODUTO>();
         }
     
         public int CAPR_CD_ID { get; set; }
+        public Nullable<int> ASSI_CD_ID { get; set; }
         public string CAPR_NM_NOME { get; set; }
-        public int CAPR_IN_ATIVO { get; set; }
+        public Nullable<int> CAPR_IN_ATIVO { get; set; }
+        public Nullable<int> CAPR_IN_EXPEDICAO { get; set; }
+        public Nullable<int> CAPR_IN_FOOD { get; set; }
+        public Nullable<int> CAPR_IN_GRADE { get; set; }
+        public Nullable<int> CAPR_IN_TAMANHO { get; set; }
+        public Nullable<int> CAPR_IN_SEO { get; set; }
     
+        public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUTO_COMPRA> PRODUTO_COMPRA { get; set; }
+        public virtual ICollection<PRODUTO> PRODUTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SUBCATEGORIA_PRODUTO> SUBCATEGORIA_PRODUTO { get; set; }
     }

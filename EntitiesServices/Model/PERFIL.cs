@@ -17,16 +17,14 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PERFIL()
         {
-            this.USUARIO_SUGESTAO = new HashSet<USUARIO_SUGESTAO>();
+            this.USUARIO = new HashSet<USUARIO>();
         }
     
         public int PERF_CD_ID { get; set; }
-        public string PERF_NM_NOME { get; set; }
         public string PERF_SG_SIGLA { get; set; }
-        public string PERF_DS_DESCRICAO { get; set; }
-        public int PERF_IN_ATIVO { get; set; }
+        public string PERF_NM_NOME { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USUARIO_SUGESTAO> USUARIO_SUGESTAO { get; set; }
+        public virtual ICollection<USUARIO> USUARIO { get; set; }
     }
 }

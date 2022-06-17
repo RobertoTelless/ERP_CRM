@@ -80,6 +80,7 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> CARE_VL_PERCENTUAL { get; set; }
         public Nullable<int> CARE_IN_PAGAMENTO { get; set; }
         public Nullable<decimal> CARE_VL_VALOR_RECEBIDO { get; set; }
+        public Nullable<int> CRPV_CD_ID { get; set; }
 
         public bool Liquidada
         {
@@ -133,14 +134,16 @@ namespace ERP_CRM_Solution.ViewModels
         public virtual CONTA_BANCO CONTA_BANCO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_RECEBER_ANEXO> CONTA_RECEBER_ANEXO { get; set; }
+        public virtual CRM CRM { get; set; }
+        public virtual CRM_PROPOSTA CRM_PROPOSTA { get; set; }
         public virtual FILIAL FILIAL { get; set; }
         public virtual FORMA_PAGAMENTO FORMA_PAGAMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_RECEBER_PARCELA> CONTA_RECEBER_PARCELA { get; set; }
-        public virtual PEDIDO_VENDA PEDIDO_VENDA { get; set; }
         public virtual PERIODICIDADE PERIODICIDADE { get; set; }
-        public virtual USUARIO USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_RECEBER_RATEIO> CONTA_RECEBER_RATEIO { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
+        public virtual CRM_PEDIDO_VENDA CRM_PEDIDO_VENDA { get; set; }
     }
 }

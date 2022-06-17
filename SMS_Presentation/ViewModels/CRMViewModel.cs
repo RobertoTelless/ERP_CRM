@@ -69,6 +69,12 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<System.DateTime> DataAprovacao { get; set; }
         public Nullable<decimal> ValorTotal { get; set; }
 
+        public string NumeroPedido{ get; set; }
+        public string NomePedido{ get; set; }
+        public Nullable<System.DateTime> DataPedido { get; set; }
+        public Nullable<System.DateTime> DataAprovacaoPedido { get; set; }
+        public Nullable<decimal> ValorTotalpedido { get; set; }
+
         public bool Entrega
         {
             get
