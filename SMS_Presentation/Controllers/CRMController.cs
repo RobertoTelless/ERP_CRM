@@ -1933,6 +1933,10 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("EditarPedido", new { id = (Int32)Session["IdCRMPedido"] });
         }
 
+        public ActionResult VoltarEditarPedidoCRMDireto()
+        {
+            return RedirectToAction("EditarPedido", new { id = (Int32)Session["IdCRMPedido"] });
+        }
 
         [HttpGet]
         public ActionResult VerAnexoCRM(Int32 id)
@@ -3157,6 +3161,7 @@ namespace ERP_CRM_Solution.Controllers
             CRM_PEDIDO_VENDA pedAprov = peds.Where(p => p.CRPV_IN_STATUS == 5).FirstOrDefault();
             Session["PedAprov"] = pedAprov;
             ViewBag.PedAprov = pedAprov;
+            Session["SegueInclusao"] = 0;
 
             List<CONTA_RECEBER> cr = new List<CONTA_RECEBER>();
             if (propAprov != null)
@@ -7776,7 +7781,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            Int32 id = (Int32)Session["IdCRMProposta"];
+            Int32 id = (Int32)Session["IdCRMPedido"];
             CRM_PEDIDO_VENDA item = baseApp.GetPedidoById(id);
             USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
             CRM_PEDIDO_VENDA_ACOMPANHAMENTO coment = new CRM_PEDIDO_VENDA_ACOMPANHAMENTO();
@@ -7796,7 +7801,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            Int32 idNot = (Int32)Session["IdCRMProposta"];
+            Int32 idNot = (Int32)Session["IdCRMPedido"];
             if (ModelState.IsValid)
             {
                 try
@@ -7913,12 +7918,6 @@ namespace ERP_CRM_Solution.Controllers
             {
                 try
                 {
-                    if (Session["ListaITPC"] == null)
-                    {
-                        ModelState.AddModelError("", "Nenhum Item de Pedido cadastrado no pedido");
-                        return View(vm);
-                    }
-
                     // Criticas 
                     if (vm.CRPV_NM_NOME == null)
                     {
@@ -7941,19 +7940,6 @@ namespace ERP_CRM_Solution.Controllers
                         volta = baseApp.ValidateEditPedido(item);
                     }
 
-                    //Carrega itens
-                    foreach (var itpc in (List<CRM_PEDIDO_VENDA_ITEM>)Session["ListaITPC"])
-                    {
-                        itpc.CRPI_IN_QUANTIDADE_REVISADA = itpc.CRPI_IN_QUANTIDADE;
-                        itpc.CRPI_IN_ATIVO = 1;
-                        itpc.CRPV_CD_ID = item.CRPV_CD_ID;
-
-                        PRODUTO prod = proApp.GetItemById((Int32)itpc.PROD_CD_ID);
-                        itpc.UNID_CD_ID = prod.UNID_CD_ID;
-                        itpc.CRPI_VL_PRECO_AJUSTADO = prod.PRODUTO_TABELA_PRECO.Where(x => x.FILI_CD_ID == item.FILI_CD_ID).Count() > 0 ? prod.PRODUTO_TABELA_PRECO.Where(x => x.FILI_CD_ID == item.FILI_CD_ID).First().PRTP_VL_CUSTO : null;
-                        Int32 voltaItem = baseApp.ValidateCreateItemPedido(itpc);
-                    }
-
                     // Carrega arquivos
                     Session["IdCRMPedido"] = item.CRPV_CD_ID;
                     if (Session["FileQueueCRM"] != null)
@@ -7969,7 +7955,8 @@ namespace ERP_CRM_Solution.Controllers
                     }
 
                     // Verifica retorno
-                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                    Session["SegueInclusao"] = 1;
+                    return RedirectToAction("VoltarEditarPedidoCRMDireto");
                 }
                 catch (Exception ex)
                 {
@@ -8405,10 +8392,13 @@ namespace ERP_CRM_Solution.Controllers
         [HttpPost]
         public JsonResult GetCustoProduto(Int32 id, Int32? fili)
         {
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            Int32? fil = usuario.FILI_CD_ID;
+
             var result = new Hashtable();
-            if (fili != null)
+            if (fil != null)
             {
-                var prod = proApp.GetById(id).PRODUTO_TABELA_PRECO.First(x => x.FILI_CD_ID == fili);
+                var prod = proApp.GetById(id).PRODUTO_TABELA_PRECO.First(x => x.FILI_CD_ID == fil);
                 result.Add("custo", prod.PRTP_VL_PRECO == null ? 0 : prod.PRTP_VL_PRECO);
                 result.Add("markup", prod.PRTP_NR_MARKUP == null ? 0 : prod.PRTP_NR_MARKUP);
                 result.Add("unidade", prod.PRODUTO.UNIDADE.UNID_NM_NOME);
@@ -8669,10 +8659,13 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss).OrderBy(p => p.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
             ViewBag.FormaEnvio = new SelectList(baseApp.GetAllFormasEnvio(idAss).OrderBy(p => p.FOEN_NM_NOME), "FOEN_CD_ID", "FOEN_NM_NOME");
             ViewBag.FormaFrete = new SelectList(baseApp.GetAllFormasFrete(idAss).OrderBy(p => p.FOFR_NM_NOME), "FOFR_CD_ID", "FOFR_NM_NOME");
+            List<PRODUTO> lista = proApp.GetAllItens(idAss).OrderBy(x => x.PROD_NM_NOME).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
+            ViewBag.Produtos = new SelectList(lista, "PROD_CD_ID", "PROD_NM_NOME");
 
             // Processa
             objetoAntes = (CRM)Session["CRM"];
             CRMPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA, CRMPedidoViewModel>(item);
+            vm.CLIENTE = (CLIENTE)Session["ClienteCRM"];
             return View(vm);
         }
 
@@ -8693,6 +8686,22 @@ namespace ERP_CRM_Solution.Controllers
                     // Executa a operação
                     CRM_PEDIDO_VENDA item = Mapper.Map<CRMPedidoViewModel, CRM_PEDIDO_VENDA>(vm);
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+
+                    // Acerta valores
+                    Decimal total = item.CRPV_VL_TOTAL_ITENS.Value;
+                    if (item.CRPV_VL_DESCONTO != null & item.CRPV_VL_DESCONTO > 0)
+                    {
+                        total -= item.CRPV_VL_DESCONTO.Value;
+                    }
+                    if (item.CRPV_VL_FRETE != null & item.CRPV_VL_FRETE > 0)
+                    {
+                        total += item.CRPV_VL_FRETE.Value;
+                    }
+                    if (item.CRPV_VL_TOTAL_OUTROS != null & item.CRPV_VL_TOTAL_OUTROS > 0)
+                    {
+                        total += item.CRPV_VL_TOTAL_OUTROS.Value;
+                    }
+                    item.CRPV_VL_VALOR = total;
                     Int32 volta = baseApp.ValidateEditPedido(item);
 
                     // Verifica retorno
@@ -8875,6 +8884,7 @@ namespace ERP_CRM_Solution.Controllers
             USUARIO usuario = (USUARIO)Session["UserCredentials"];
 
             // Prepara view
+            Session["SegueInclusao"] = 1;
             ViewBag.Produtos = new SelectList(proApp.GetAllItens(idAss).OrderBy(p => p.PROD_NM_NOME), "PROD_CD_ID", "PROD_NM_NOME");
             CRM_PEDIDO_VENDA_ITEM item = baseApp.GetItemPedidoById(id);
             CRMItemPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA_ITEM, CRMItemPedidoViewModel>(item);
@@ -8898,11 +8908,32 @@ namespace ERP_CRM_Solution.Controllers
                 try
                 {
                     // Executa a operação
-                    CRM_PEDIDO_VENDA_ITEM item = Mapper.Map<CRMItemPedidoViewModel, CRM_PEDIDO_VENDA_ITEM>(vm);
+                    vm.CRPI_VL_PRECO_TOTAL = (((vm.CRPI_VL_MARKUP / 100) + 1) * vm.CRPI_VL_PRECO_AJUSTADO) * vm.CRPI_IN_QUANTIDADE;
+                    CRM_PEDIDO_VENDA_ITEM item = Mapper.Map<CRMItemPedidoViewModel, CRM_PEDIDO_VENDA_ITEM>(vm);                
                     Int32 volta = baseApp.ValidateEditItemPedido(item);
 
+                    // Acerta valores no pedido
+                    CRM_PEDIDO_VENDA ped = baseApp.GetPedidoById(item.CRPV_CD_ID);
+                    Decimal soma = ped.CRM_PEDIDO_VENDA_ITEM.Sum(p => p.CRPI_VL_PRECO_TOTAL).Value;
+                    Decimal total = soma;
+                    ped.CRPV_VL_TOTAL_ITENS = soma;
+                    if (ped.CRPV_VL_DESCONTO != null & ped.CRPV_VL_DESCONTO > 0)
+                    {
+                        total -= ped.CRPV_VL_DESCONTO.Value;
+                    }
+                    if (ped.CRPV_VL_FRETE != null & ped.CRPV_VL_FRETE > 0)
+                    {
+                        total += ped.CRPV_VL_FRETE.Value;
+                    }
+                    if (ped.CRPV_VL_TOTAL_OUTROS != null & ped.CRPV_VL_TOTAL_OUTROS > 0)
+                    {
+                        total += ped.CRPV_VL_TOTAL_OUTROS.Value;
+                    }
+                    ped.CRPV_VL_VALOR = total;
+                    volta = baseApp.ValidateEditPedido(ped);
+
                     // Verifica retorno
-                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                    return RedirectToAction("VoltarEditarPedidoCRMDireto");
                 }
                 catch (Exception ex)
                 {
@@ -8973,32 +9004,116 @@ namespace ERP_CRM_Solution.Controllers
                     Int32 a = baseApp.GetPedidoById(vm.CRPV_CD_ID).FILI_CD_ID == null ? (Int32)Session["IdFilial"] : (Int32)baseApp.GetPedidoById(vm.CRPV_CD_ID).FILI_CD_ID;
                     PRODUTO_TABELA_PRECO b = ptpApp.GetByProdFilial((Int32)vm.PROD_CD_ID, a);
                     vm.CRPI_VL_PRECO_AJUSTADO = b == null || b.PRTP_VL_PRECO == null ? 0 : b.PRTP_VL_PRECO;
+                    vm.CRPI_VL_MARKUP = b.PRTP_NR_MARKUP;                    
                     var prod = proApp.GetItemById((Int32)vm.PROD_CD_ID);
                     vm.UNID_CD_ID = prod.UNID_CD_ID;
-                    
+                    vm.CRPI_VL_PRECO_TOTAL = (((vm.CRPI_VL_MARKUP / 100) + 1) * vm.CRPI_VL_PRECO_AJUSTADO) * vm.CRPI_IN_QUANTIDADE;
+
                     // Executa a operação
                     CRM_PEDIDO_VENDA_ITEM item = Mapper.Map<CRMItemPedidoViewModel, CRM_PEDIDO_VENDA_ITEM>(vm);
                     Int32 volta = baseApp.ValidateCreateItemPedido(item);
 
-                    if ((Int32)Session["IdVolta"] == 0)
+                    // Acerta valores no pedido
+                    CRM_PEDIDO_VENDA ped = baseApp.GetPedidoById(item.CRPV_CD_ID);
+                    Decimal soma = ped.CRM_PEDIDO_VENDA_ITEM.Sum(p => p.CRPI_VL_PRECO_TOTAL).Value;
+                    Decimal total = soma;
+                    ped.CRPV_VL_TOTAL_ITENS = soma;
+                    if (ped.CRPV_VL_DESCONTO != null & ped.CRPV_VL_DESCONTO > 0)
                     {
-                        return RedirectToAction("IncluirItemPedido");
+                        total -= ped.CRPV_VL_DESCONTO.Value; 
                     }
+                    if (ped.CRPV_VL_FRETE != null & ped.CRPV_VL_FRETE > 0)
+                    {
+                        total += ped.CRPV_VL_FRETE.Value;
+                    }
+                    if (ped.CRPV_VL_TOTAL_OUTROS != null & ped.CRPV_VL_TOTAL_OUTROS > 0)
+                    {
+                        total += ped.CRPV_VL_TOTAL_OUTROS.Value;
+                    }
+                    ped.CRPV_VL_VALOR = total;
+                    volta = baseApp.ValidateEditPedido(ped);
 
                     // Verifica retorno
-                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                    Session["SegueInclusao"] = 1;
+                    return RedirectToAction("VoltarEditarPedidoCRMDireto");
                 }
                 catch (Exception ex)
                 {
                     ViewBag.Message = ex.Message;
                     ModelState.AddModelError("", ex.Message);
+                    return RedirectToAction("VoltarEditarPedidoCRMDireto");
+                }
+            }
+            else
+            {
+                return RedirectToAction("VoltarEditarPedidoCRMDireto");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ExcluirItemPedido(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("VoltarEditarPedidoCRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Processa
+            CRM_PEDIDO_VENDA_ITEM item = baseApp.GetItemPedidoById(id);
+            item.CRPI_IN_ATIVO = 0;
+            Int32 volta = baseApp.ValidateEditItemPedido(item);
+            return RedirectToAction("VoltarEditarPedidoCRMDireto");
+        }
+
+        [HttpGet]
+        public ActionResult ReativarItemPedido(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
                     return RedirectToAction("VoltarAcompanhamentoCRM");
                 }
             }
             else
             {
-                return RedirectToAction("VoltarAcompanhamentoCRM");
+                return RedirectToAction("Login", "ControleAcesso");
             }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Processa
+            CRM_PEDIDO_VENDA_ITEM item = baseApp.GetItemPedidoById(id);
+            item.CRPI_IN_ATIVO = 1;
+            Int32 volta = baseApp.ValidateEditItemPedido(item);
+            return RedirectToAction("VoltarEditarPedidoCRMDireto");
         }
 
     }

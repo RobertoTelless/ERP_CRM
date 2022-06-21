@@ -1071,6 +1071,7 @@
           <Property Name="CRPV_NR_NOTA_FISCAL" Type="varchar" MaxLength="50" />
           <Property Name="CRPV_VL_VALOR" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPV_VL_TOTAL" Type="decimal" Precision="20" Scale="2" StoreGeneratedPattern="Computed" />
+          <Property Name="MOEN_CD_ID" Type="int" />
         </EntityType>
         <EntityType Name="CRM_PEDIDO_VENDA_ACOMPANHAMENTO">
           <Key>
@@ -1102,15 +1103,16 @@
           <Property Name="CRPI_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CRPV_CD_ID" Type="int" Nullable="false" />
           <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
+          <Property Name="UNID_CD_ID" Type="int" />
           <Property Name="CRPI_IN_QUANTIDADE" Type="int" Nullable="false" />
           <Property Name="CRPI_VL_PRECO_AJUSTADO" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPI_VL_PRECO_TOTAL" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CRPI_VL_MARKUP" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CRPI_TX_OBSERVACAO" Type="text" />
           <Property Name="CRPI_DT_JUSTIFICATIVA" Type="date" />
           <Property Name="CRPI_DS_JUSTIFICATIVA" Type="varchar" MaxLength="1000" />
           <Property Name="CRPI_IN_ATIVO" Type="int" Nullable="false" />
           <Property Name="CRPI_IN_QUANTIDADE_REVISADA" Type="int" />
-          <Property Name="UNID_CD_ID" Type="int" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA">
           <Key>
@@ -10655,6 +10657,7 @@
           <Property Name="CRPV_IN_GEROU_NF" Type="Int32" />
           <Property Name="CRPV_NR_NOTA_FISCAL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CRPV_VL_VALOR" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MOEN_CD_ID" Type="Int32" />
         </EntityType>
         <EntityType Name="CRM_PEDIDO_VENDA_ACOMPANHAMENTO">
           <Key>
@@ -10701,6 +10704,7 @@
           <NavigationProperty Name="CRM_PEDIDO_VENDA" Relationship="Self.FK_CRM_PEDIDO_VENDA_ITEM_CRM_PEDIDO_VENDA" FromRole="CRM_PEDIDO_VENDA_ITEM" ToRole="CRM_PEDIDO_VENDA" />
           <NavigationProperty Name="PRODUTO" Relationship="Self.FK_CRM_PEDIDO_VENDA_ITEM_PRODUTO" FromRole="CRM_PEDIDO_VENDA_ITEM" ToRole="PRODUTO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_CRM_PEDIDO_VENDA_ITEM_UNIDADE" FromRole="CRM_PEDIDO_VENDA_ITEM" ToRole="UNIDADE" />
+          <Property Name="CRPI_VL_MARKUP" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="CRM_PROPOSTA">
           <Key>
@@ -20409,6 +20413,7 @@
           <EntitySetMapping Name="CRM_PEDIDO_VENDA">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_PEDIDO_VENDA">
               <MappingFragment StoreEntitySet="CRM_PEDIDO_VENDA">
+                <ScalarProperty Name="MOEN_CD_ID" ColumnName="MOEN_CD_ID" />
                 <ScalarProperty Name="CRPV_VL_VALOR" ColumnName="CRPV_VL_VALOR" />
                 <ScalarProperty Name="CRPV_NR_NOTA_FISCAL" ColumnName="CRPV_NR_NOTA_FISCAL" />
                 <ScalarProperty Name="CRPV_IN_GEROU_NF" ColumnName="CRPV_IN_GEROU_NF" />
@@ -20485,6 +20490,7 @@
           <EntitySetMapping Name="CRM_PEDIDO_VENDA_ITEM">
             <EntityTypeMapping TypeName="ERP_CRMModel.CRM_PEDIDO_VENDA_ITEM">
               <MappingFragment StoreEntitySet="CRM_PEDIDO_VENDA_ITEM">
+                <ScalarProperty Name="CRPI_VL_MARKUP" ColumnName="CRPI_VL_MARKUP" />
                 <ScalarProperty Name="CRPI_CD_ID" ColumnName="CRPI_CD_ID" />
                 <ScalarProperty Name="CRPV_CD_ID" ColumnName="CRPV_CD_ID" />
                 <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />

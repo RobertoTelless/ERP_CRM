@@ -990,6 +990,17 @@ namespace ApplicationServices.Services
             {
                 item.CRPV_IN_ATIVO = 1;
                 item.CRPV_IN_STATUS = 1;
+                item.CRPV_VL_TOTAL_ITENS = 0;
+                item.CRPV_VL_TOTAL_OUTROS = 0;
+                item.CRPV_VL_TOTAL = 0;
+                item.CRPV_VL_DESCONTO = 0;
+                item.CRPV_VL_FRETE = 0;
+                item.CRPV_VL_ICMS = 0;
+                item.CRPV_VL_IPI = 0;
+                item.CRPV_VL_PESO_BRUTO = 0;    
+                item.CRPV_VL_PESO_LIQUIDO = 0;  
+                item.CRPV_IN_PRAZO_ENTREGA = 0; 
+
 
                 // Recupera CRM
                 CRM crm = _baseService.GetItemById(item.CRM1_CD_ID);

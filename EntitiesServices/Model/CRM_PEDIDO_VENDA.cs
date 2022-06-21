@@ -68,6 +68,7 @@ namespace EntitiesServices.Model
         public Nullable<int> CRPV_IN_GEROU_NF { get; set; }
         public string CRPV_NR_NOTA_FISCAL { get; set; }
         public Nullable<decimal> CRPV_VL_VALOR { get; set; }
+        public Nullable<int> MOEN_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CRM CRM { get; set; }

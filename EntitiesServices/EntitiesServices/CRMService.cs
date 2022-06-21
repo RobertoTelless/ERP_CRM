@@ -507,6 +507,8 @@ namespace ModelServices.EntitiesServices
             {
                 try
                 {
+                    item.PRODUTO = null;
+                    item.UNIDADE = null;    
                     CRM_PEDIDO_VENDA_ITEM obj = _itepeRepository.GetItemById(item.CRPI_CD_ID);
                     _itepeRepository.Detach(obj);
                     _itepeRepository.Update(item);
