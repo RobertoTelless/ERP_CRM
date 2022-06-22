@@ -1274,7 +1274,7 @@
                                                                             <th>Validade</th>
                                                                             <th>Envio</th>
                                                                             <th>Status</th>
-                                                                            <th>Valor (R$)</th>
+                                                                            <th>Valor Itens (R$)</th>
                                                                             <th>Valor Total (R$)</th>
                                                                             <th>Prazo</th>
                                                                             <th class="td-one-action">Ações</th>
@@ -1317,17 +1317,17 @@
                                                                                     {
                                                                                         <td><span class="badge badge-warning">Aprovado</span></td>
                                                                                     }
-                                                                                    @if (cond.CRPV_VL_VALOR != null)
+                                                                                    @if (cond.CRPV_VL_TOTAL_ITENS != null)
                                                                                     {
-                                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPV_VL_VALOR.Value)</td>
+                                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPV_VL_TOTAL_ITENS.Value)</td>
                                                                                     }
                                                                                     else
                                                                                     {
                                                                                         <td>-</td>
                                                                                     }
-                                                                                    @if (cond.CRPV_VL_TOTAL != null)
+                                                                                    @if (cond.CRPV_VL_VALOR != null)
                                                                                     {
-                                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPV_VL_TOTAL.Value)</td>
+                                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPV_VL_VALOR.Value)</td>
                                                                                     }
                                                                                     else
                                                                                     {

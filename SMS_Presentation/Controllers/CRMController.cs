@@ -7621,6 +7621,8 @@ namespace ERP_CRM_Solution.Controllers
             footer = footer.Replace("{Assinatura}", assi.ASSI_NM_NOME);
 
             // Monta corpo
+            FORMA_ENVIO forma = baseApp.GetAllFormasEnvio(idAss).Where(p => p.FOEN_CD_ID == item.FOEN_CD_ID).First();
+            FORMA_FRETE frete = baseApp.GetAllFormasFrete(idAss).Where(p => p.FOFR_CD_ID == item.FOFR_CD_ID).First();
             body = body.Replace("{Nome}", item.CRPV_NM_NOME);
             body = body.Replace("{Numero}", item.CRPV_NR_NUMERO);
             body = body.Replace("{Emissao}", item.CRPV_DT_PEDIDO.ToShortDateString());
@@ -7628,14 +7630,14 @@ namespace ERP_CRM_Solution.Controllers
             body = body.Replace("{Conteudo}", item.CRPV_TX_INFORMACOES_GERAIS);
             body = body.Replace("{Comerciais}", item.CRPV_TX_CONDICOES_COMERCIAIS);
             body = body.Replace("{Prazo}", item.CRPV_IN_PRAZO_ENTREGA.ToString());
-            body = body.Replace("{ValorBase}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_VALOR.Value));
+            body = body.Replace("{ValorBase}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_TOTAL_ITENS.Value));
             body = body.Replace("{Desconto}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_DESCONTO.Value));
             body = body.Replace("{Frete}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_FRETE.Value));
             body = body.Replace("{ICMS}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_ICMS.Value));
             body = body.Replace("{IPI}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_IPI.Value));
-            body = body.Replace("{ValorTotal}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_TOTAL.Value));
-            body = body.Replace("{FormaEnvio}", item.FORMA_ENVIO.FOEN_NM_NOME);
-            body = body.Replace("{FormaFrete}", item.FORMA_FRETE.FOFR_NM_NOME);
+            body = body.Replace("{ValorTotal}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_VALOR.Value));
+            body = body.Replace("{FormaEnvio}", forma.FOEN_NM_NOME);
+            body = body.Replace("{FormaFrete}", frete.FOFR_NM_NOME);
             body = body.Replace("{Bruto}", item.CRPV_VL_PESO_BRUTO.ToString());
             body = body.Replace("{Liquido}", item.CRPV_VL_PESO_LIQUIDO.ToString());
 
@@ -8833,7 +8835,7 @@ namespace ERP_CRM_Solution.Controllers
             item.CRPV_DS_CANCELAMENTO = null;
             item.CRPV_DS_REPROVACAO = null;
             Int32 volta = baseApp.ValidateEditPedido(item);
-            return RedirectToAction("AcompanhamentoProcessoCRM", "CRM");
+            return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
         }
 
         public ActionResult VerPedido(Int32 id)
@@ -8864,6 +8866,7 @@ namespace ERP_CRM_Solution.Controllers
             // Prepara listas
             Session["IncluirCRM"] = 0;
             Session["CRM"] = null;
+            Session["SegueInclusao"] = 0;
 
             // Recupera
             Session["CRMNovo"] = 0;

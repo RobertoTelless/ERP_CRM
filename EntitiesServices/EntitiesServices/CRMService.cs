@@ -463,6 +463,7 @@ namespace ModelServices.EntitiesServices
             {
                 try
                 {
+                    item.FILIAL = null;
                     CRM_PEDIDO_VENDA obj = _pedRepository.GetById(item.CRPV_CD_ID);
                     _pedRepository.Detach(obj);
                     _pedRepository.Update(item);
