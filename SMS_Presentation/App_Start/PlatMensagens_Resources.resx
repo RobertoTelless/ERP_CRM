@@ -501,4 +501,7 @@
   <data name="M0149" xml:space="preserve">
     <value>Descrição do Motivo de cancelamento não especificada</value>
   </data>
+  <data name="M0150" xml:space="preserve">
+    <value>Estoque indisponível para este produto nesta filial</value>
+  </data>
 </root>

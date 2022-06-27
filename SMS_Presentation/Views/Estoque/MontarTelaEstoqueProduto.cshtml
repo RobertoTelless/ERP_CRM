@@ -116,6 +116,7 @@
                                         <th>Marca</th>
                                         <th>Unidade</th>
                                         <th>Estoque</th>
+                                        <th>Reservado</th>
                                         <th>Mínimo</th>
                                         <th></th>
                                         <th class="td-one-action">Ações</th>
@@ -155,7 +156,7 @@
                                         }
 
                                         <td name="estoque">@cond.PREF_QN_ESTOQUE</td>
-
+                                        <td name="estoque">@cond.PREF_QN_QUANTIDADE_RESERVADA</td>
                                         <td>@cond.PRODUTO.PROD_QN_QUANTIDADE_MINIMA</td>
                                         @if (!String.IsNullOrEmpty(cond.PRODUTO.PROD_AQ_FOTO))
                                         {

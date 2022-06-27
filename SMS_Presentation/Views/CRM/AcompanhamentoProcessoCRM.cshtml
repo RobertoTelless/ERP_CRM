@@ -1530,36 +1530,73 @@
                                         </div>
                                         <div class="ibox-content" style="color: black">
                                             <div class="row">
-                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 160px" >
-                                                        <div class="ibox-title">
-                                                            <h5 style="color: green">Proposta Aprovada</h5>
-                                                        </div>
-                                                        <div class="ibox-content"  style="color: black">
-                                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                                <div class="col-lg-1 col-md-1 col-xs-12">
-                                                                    Número
-                                                                    @Html.TextBoxFor(m => m.NumeroProposta, new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                                </div>
-                                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                    Emissão
-                                                                    @Html.TextBoxFor(m => m.DataProposta, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                                </div>
-                                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                    Aprovação
-                                                                    @Html.TextBoxFor(m => m.DataAprovacao, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                                </div>
-                                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                    Valor (R$)
-                                                                    @Html.TextBoxFor(m => m.ValorTotal, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                                </div>
+                                                @if ((EntitiesServices.Model.CRM_PROPOSTA)Session["PropAprov"] != null)
+                                                {
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 160px" >
+                                                            <div class="ibox-title">
+                                                                <h5 style="color: green">Proposta Aprovada</h5>
                                                             </div>
-                                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                                @Html.ButtonLinkIndex(text: "Consultar Proposta", action: "VerPropostaEdita", controller: "CRM")
+                                                            <div class="ibox-content"  style="color: black">
+                                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                                    <div class="col-lg-1 col-md-1 col-xs-12">
+                                                                        Número
+                                                                        @Html.TextBoxFor(m => m.NumeroProposta, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                    </div>
+                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                        Emissão
+                                                                        @Html.TextBoxFor(m => m.DataProposta, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                    </div>
+                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                        Aprovação
+                                                                        @Html.TextBoxFor(m => m.DataAprovacao, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                    </div>
+                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                        Valor (R$)
+                                                                        @Html.TextBoxFor(m => m.ValorTotal, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                                    @Html.ButtonLinkIndex(text: "Consultar Proposta", action: "VerPropostaEdita", controller: "CRM")
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                }
+                                                @if ((EntitiesServices.Model.CRM_PEDIDO_VENDA)Session["PedAprov"] != null)
+                                                {
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 160px" >
+                                                            <div class="ibox-title">
+                                                                <h5 style="color: green">Pedido Aprovado</h5>
+                                                            </div>
+                                                            <div class="ibox-content"  style="color: black">
+                                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                                    <div class="col-lg-1 col-md-1 col-xs-12">
+                                                                        Número
+                                                                        @Html.TextBoxFor(m => m.NumeroPedido, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                    </div>
+                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                        Emissão
+                                                                        @Html.TextBoxFor(m => m.DataPedido, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                    </div>
+                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                        Aprovação
+                                                                        @Html.TextBoxFor(m => m.DataAprovacaoPedido, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                    </div>
+                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                        Valor (R$)
+                                                                        @Html.TextBoxFor(m => m.ValorTotalpedido, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                                    @Html.ButtonLinkIndex(text: "Consultar Pedido", action: "VerPedidoEdita", controller: "CRM")
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
@@ -1667,7 +1704,7 @@
 
                                                                                 </div>
                                                                                 <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
-                                                                                    <h2 style="font-weight: bold">Nenhum lançamento criado nessa Proposta</h2>
+                                                                                    <h2 style="font-weight: bold">Nenhum lançamento criado nessa Proposta/Pedido</h2>
                                                                                 </div>
                                                                                 <div class="col-lg-4 col-md-4 col-xs-2">
 
@@ -1786,7 +1823,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    @Html.ButtonActionSubmit(text: "Confirma Informações da Expedição", htmlAttributes: new { id = "basictoast" })
+                                                    @Html.ButtonActionSubmit(text: "Confirma Expedição", htmlAttributes: new { id = "basictoast" })
                                                 </div>
                                             }
                                         </div>

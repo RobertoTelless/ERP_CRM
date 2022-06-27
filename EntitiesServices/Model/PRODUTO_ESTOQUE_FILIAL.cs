@@ -23,6 +23,7 @@ namespace EntitiesServices.Model
         public Nullable<int> PREF_QN_QUANTIDADE_ALTERADA { get; set; }
         public string PREF_DS_JUSTIFICATIVA { get; set; }
         public Nullable<int> PREF_NR_MARKUP { get; set; }
+        public Nullable<int> PREF_QN_QUANTIDADE_RESERVADA { get; set; }
     
         public virtual FILIAL FILIAL { get; set; }
         public virtual PRODUTO PRODUTO { get; set; }

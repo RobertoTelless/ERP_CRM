@@ -2316,6 +2316,7 @@
           <Property Name="PREF_QN_QUANTIDADE_ALTERADA" Type="int" />
           <Property Name="PREF_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
           <Property Name="PREF_NR_MARKUP" Type="int" />
+          <Property Name="PREF_QN_QUANTIDADE_RESERVADA" Type="int" />
         </EntityType>
         <EntityType Name="PRODUTO_FORNECEDOR">
           <Key>
@@ -12204,6 +12205,7 @@
           <Property Name="PREF_NR_MARKUP" Type="Int32" />
           <NavigationProperty Name="FILIAL" Relationship="Self.FK_PRODUTO_ESTOQUE_FILIAL_FILIAL" FromRole="PRODUTO_ESTOQUE_FILIAL" ToRole="FILIAL" />
           <NavigationProperty Name="PRODUTO" Relationship="Self.FK_PRODUTO_ESTOQUE_FILIAL_PRODUTO" FromRole="PRODUTO_ESTOQUE_FILIAL" ToRole="PRODUTO" />
+          <Property Name="PREF_QN_QUANTIDADE_RESERVADA" Type="Int32" />
         </EntityType>
         <EntityType Name="PRODUTO_FORNECEDOR">
           <Key>
@@ -21770,6 +21772,7 @@
           <EntitySetMapping Name="PRODUTO_ESTOQUE_FILIAL">
             <EntityTypeMapping TypeName="ERP_CRMModel.PRODUTO_ESTOQUE_FILIAL">
               <MappingFragment StoreEntitySet="PRODUTO_ESTOQUE_FILIAL">
+                <ScalarProperty Name="PREF_QN_QUANTIDADE_RESERVADA" ColumnName="PREF_QN_QUANTIDADE_RESERVADA" />
                 <ScalarProperty Name="PREF_CD_ID" ColumnName="PREF_CD_ID" />
                 <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
                 <ScalarProperty Name="FILI_CD_ID" ColumnName="FILI_CD_ID" />

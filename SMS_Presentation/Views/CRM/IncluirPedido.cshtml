@@ -171,6 +171,11 @@
                                                                 @Html.TextBoxFor(m => m.CRPV_DT_VALIDADE, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="data2" })
                                                                 @Html.ValidationMessageFor(m => m.CRPV_DT_VALIDADE, "", new { @style = "color:red" })
                                                             </div>
+                                                            <div class="col-lg-2 col-md-2  col-xs-12">
+                                                                Prazo de Entrega (Dias)
+                                                                @Html.TextBoxFor(m => m.CRPV_IN_PRAZO_ENTREGA, new { @class = "form-control", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.CRPV_IN_PRAZO_ENTREGA, "", new { @style = "color:red" })
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
