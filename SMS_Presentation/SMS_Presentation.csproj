@@ -2387,6 +2387,7 @@
     <Content Include="Imagens\2\CRM\49\Anexos\Busbar_Protection.pdf" />
     <Content Include="Imagens\2\Pedido\19\Anexos\Modern_Control_Systems_ThirTeenTh_ediTio.pdf" />
     <Content Include="Imagens\2\Proposta\60\Arquivo\Busbar_Protection.pdf" />
+    <Content Include="Imagens\2\Tarefa\14\Anexos\Notificacao_90_28062022.pdf" />
     <None Include="Properties\PublishProfiles\ERPCondominio - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ERPMKT - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ERPSysNet - Web Deploy.pubxml" />
@@ -3821,6 +3822,10 @@
     <Folder Include="Imagens\2\Agenda\72\Anexos\" />
     <Folder Include="Imagens\2\Agenda\7\Anexos\" />
     <Folder Include="Imagens\2\Agenda\8\Anexos\" />
+    <Folder Include="Imagens\2\Agenda\95\Anexos\" />
+    <Folder Include="Imagens\2\Agenda\96\Anexos\" />
+    <Folder Include="Imagens\2\Agenda\97\Anexos\" />
+    <Folder Include="Imagens\2\Agenda\98\Anexos\" />
     <Folder Include="Imagens\2\Atendimentos\10\Anexos\" />
     <Folder Include="Imagens\2\Atendimentos\12\Anexos\" />
     <Folder Include="Imagens\2\Atendimentos\13\Anexos\" />
@@ -4104,6 +4109,9 @@
     <Folder Include="Imagens\2\Servicos\4\Anexos\" />
     <Folder Include="Imagens\2\Servicos\5\Anexos\" />
     <Folder Include="Imagens\2\Servicos\6\Anexos\" />
+    <Folder Include="Imagens\2\Tarefa\15\Anexos\" />
+    <Folder Include="Imagens\2\Tarefa\16\Anexos\" />
+    <Folder Include="Imagens\2\Tarefa\17\Anexos\" />
     <Folder Include="Imagens\2\Tarefa\2\Anexos\" />
     <Folder Include="Imagens\2\Tarefa\3\Anexos\" />
     <Folder Include="Imagens\2\Tarefa\8\Anexos\" />

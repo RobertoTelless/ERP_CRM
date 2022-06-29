@@ -263,6 +263,7 @@ namespace ERP_CRM_Solution.Controllers
 
             // Abre view
             Session["MensTarefa"] = 0;
+            Session["VoltaTarefa"] = 0;
             objeto = new TAREFA();
             objeto.TARE_DT_CADASTRO = DateTime.Today.Date;
             return View(objeto);

@@ -231,10 +231,10 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
-            if (Session["FiltroAtendimento"] != null)
-            {
-                FiltrarAtendimento((ATENDIMENTO)Session["FiltroAtendimento"]);
-            }
+            //if (Session["FiltroAtendimento"] != null)
+            //{
+            //    FiltrarAtendimento((ATENDIMENTO)Session["FiltroAtendimento"]);
+            //}
 
             if (Session["IdAtendimento"] != null)
             {
@@ -696,7 +696,7 @@ namespace ERP_CRM_Solution.Controllers
 
                 // Sucesso
                 listaMaster = listaObj;
-                Session["Atendimento"] = listaObj;
+                Session["ListaAtendimento"] = listaObj;
                 return RedirectToAction("MontarTelaAtendimento");
             }
             catch (Exception ex)
