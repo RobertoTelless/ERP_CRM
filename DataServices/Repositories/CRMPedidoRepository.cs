@@ -30,6 +30,13 @@ namespace DataServices.Repositories
         {
             IQueryable<CRM_PEDIDO_VENDA> query = Db.CRM_PEDIDO_VENDA.Where(p => p.CRPV_NR_NUMERO == num);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
+            query = query.Include(p => p.USUARIO);
+            query = query.Include(p => p.FORMA_ENVIO);
+            query = query.Include(p => p.FORMA_FRETE);
+            query = query.Include(p => p.MOTIVO_CANCELAMENTO);
+            query = query.Include(p => p.TEMPLATE_PROPOSTA);
+            query = query.Include(p => p.CRM_PEDIDO_VENDA_ACOMPANHAMENTO);
+            query = query.Include(p => p.CRM_PEDIDO_VENDA_ANEXO);
             return query.FirstOrDefault();
         }
     }

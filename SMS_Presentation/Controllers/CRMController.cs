@@ -2520,6 +2520,8 @@ namespace ERP_CRM_Solution.Controllers
                         CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
                         CRM_PROPOSTA propAprov = crm.CRM_PROPOSTA.Where(p => p.CRPR_IN_STATUS == 5).FirstOrDefault();
                         Int32 idCRM = crm.CRM1_CD_ID;
+                        Session["PropAprov"] = propAprov;
+                        Session["Tipo"] = 1;
 
                         // Verifica se gera CR                    
                         if (propAprov != null)
@@ -2572,13 +2574,15 @@ namespace ERP_CRM_Solution.Controllers
                     if (item.CRM1_IN_ATIVO == 5)
                     {
                         CRM crm = baseApp.GetItemById(item.CRM1_CD_ID);
-                        CRM_PEDIDO_VENDA propAprov = crm.CRM_PEDIDO_VENDA.Where(p => p.CRPV_IN_STATUS == 5).FirstOrDefault();
+                        CRM_PEDIDO_VENDA pedAprov = crm.CRM_PEDIDO_VENDA.Where(p => p.CRPV_IN_STATUS == 5).FirstOrDefault();
                         Int32 idCRM = crm.CRM1_CD_ID;
+                        Session["PedAprov"] = pedAprov;
+                        Session["Tipo"] = 2;
 
                         // Verifica se gera CR                    
-                        if (propAprov != null)
+                        if (pedAprov != null)
                         {
-                            if (propAprov.CRPV_IN_GERAR_CR == 1)
+                            if (pedAprov.CRPV_IN_GERAR_CR == 1)
                             {
                                 // Monta CR
                                 CONTA_RECEBER cr = new CONTA_RECEBER();
@@ -2596,21 +2600,21 @@ namespace ERP_CRM_Solution.Controllers
                                 cr.CARE_IN_PARCELAS = 0;
                                 cr.CARE_IN_PARCIAL = 0;
                                 cr.CARE_IN_TIPO_LANCAMENTO = 1;
-                                cr.CARE_VL_DESCONTO = propAprov.CRPV_VL_DESCONTO;
+                                cr.CARE_VL_DESCONTO = pedAprov.CRPV_VL_DESCONTO;
                                 cr.CARE_VL_JUROS = 0;
                                 cr.CARE_VL_PARCELADO = 0;
                                 cr.CARE_VL_PARCIAL = 0;
-                                cr.CARE_VL_SALDO = (propAprov.CRPV_VL_VALOR.Value + propAprov.CRPV_VL_FRETE.Value) - propAprov.CRPV_VL_DESCONTO.Value;
-                                cr.CARE_VL_TAXAS = propAprov.CRPV_VL_ICMS + propAprov.CRPV_VL_IPI;
-                                cr.CARE_VL_VALOR = (propAprov.CRPV_VL_VALOR.Value + propAprov.CRPV_VL_FRETE.Value) - propAprov.CRPV_VL_DESCONTO.Value;
+                                cr.CARE_VL_SALDO = (pedAprov.CRPV_VL_VALOR.Value + pedAprov.CRPV_VL_FRETE.Value) - pedAprov.CRPV_VL_DESCONTO.Value;
+                                cr.CARE_VL_TAXAS = pedAprov.CRPV_VL_ICMS + pedAprov.CRPV_VL_IPI;
+                                cr.CARE_VL_VALOR = (pedAprov.CRPV_VL_VALOR.Value + pedAprov.CRPV_VL_FRETE.Value) - pedAprov.CRPV_VL_DESCONTO.Value;
                                 cr.CARE_VL_VALOR_LIQUIDADO = 0;
                                 cr.CARE_VL_VALOR_RECEBIDO = 0;
                                 cr.CLIE_CD_ID = crm.CLIE_CD_ID;
                                 cr.COBA_CD_ID = cbApp.GetContaPadrao(idAss).COBA_CD_ID;
                                 cr.USUA_CD_ID = crm.USUA_CD_ID;
-                                cr.CARE_NR_DOCUMENTO = propAprov.CRPV_NR_NUMERO;
+                                cr.CARE_NR_DOCUMENTO = pedAprov.CRPV_NR_NUMERO;
                                 cr.CRM1_CD_ID = idCRM;
-                                cr.CRPV_CD_ID = propAprov.CRPV_CD_ID;
+                                cr.CRPV_CD_ID = pedAprov.CRPV_CD_ID;
 
                                 // Grava CR
                                 Int32 voltaCR = crApp.ValidateCreate(cr, 0, null, usuario);
@@ -2683,6 +2687,54 @@ namespace ERP_CRM_Solution.Controllers
             cr.CARE_NR_DOCUMENTO = propAprov.CRPR_NR_NUMERO;
             cr.CRM1_CD_ID = crm.CRM1_CD_ID;
             cr.CRPR_CD_ID = propAprov.CRPR_CD_ID;
+
+            // Grava CR
+            Int32 voltaCR = crApp.ValidateCreate(cr, 0, null, usuario);
+            return RedirectToAction("VoltaAcompanhamentoCRM");
+        }
+
+        public ActionResult GerarLancamentoCRPedido()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            CRM crm = baseApp.GetItemById((Int32)Session["IdCRM"]);
+            CRM_PEDIDO_VENDA propAprov = (CRM_PEDIDO_VENDA)Session["PedAprov"];
+
+            // Monta CR
+            CONTA_RECEBER cr = new CONTA_RECEBER();
+            cr.ASSI_CD_ID = crm.ASSI_CD_ID;
+            cr.CARE_DS_DESCRICAO = "Lançamento gerado pelo processo " + crm.CRM1_NM_NOME;
+            cr.CARE_DT_COMPETENCIA = DateTime.Today.Date;
+            cr.CARE_DT_LANCAMENTO = DateTime.Today.Date;
+            cr.CARE_DT_VENCIMENTO = DateTime.Today.Date.AddDays(30);
+            cr.CARE_IN_ABERTOS = 0;
+            cr.CARE_IN_ATIVO = 1;
+            cr.CARE_IN_LIQUIDADA = 0;
+            cr.CARE_IN_LIQUIDA_NORMAL = 0;
+            cr.CARE_IN_PAGA_PARCIAL = 0;
+            cr.CARE_IN_PARCELADA = 0;
+            cr.CARE_IN_PARCELAS = 0;
+            cr.CARE_IN_PARCIAL = 0;
+            cr.CARE_IN_TIPO_LANCAMENTO = 1;
+            cr.CARE_VL_DESCONTO = propAprov.CRPV_VL_DESCONTO;
+            cr.CARE_VL_JUROS = 0;
+            cr.CARE_VL_PARCELADO = 0;
+            cr.CARE_VL_PARCIAL = 0;
+            cr.CARE_VL_SALDO = (propAprov.CRPV_VL_VALOR.Value + propAprov.CRPV_VL_FRETE.Value) - propAprov.CRPV_VL_DESCONTO.Value;
+            cr.CARE_VL_TAXAS = propAprov.CRPV_VL_ICMS + propAprov.CRPV_VL_IPI;
+            cr.CARE_VL_VALOR = (propAprov.CRPV_VL_VALOR.Value + propAprov.CRPV_VL_FRETE.Value) - propAprov.CRPV_VL_DESCONTO.Value;
+            cr.CARE_VL_VALOR_LIQUIDADO = 0;
+            cr.CARE_VL_VALOR_RECEBIDO = 0;
+            cr.CLIE_CD_ID = crm.CLIE_CD_ID;
+            cr.COBA_CD_ID = cbApp.GetContaPadrao(idAss).COBA_CD_ID;
+            cr.USUA_CD_ID = crm.USUA_CD_ID;
+            cr.CARE_NR_DOCUMENTO = propAprov.CRPV_NR_NUMERO;
+            cr.CRM1_CD_ID = crm.CRM1_CD_ID;
+            cr.CRPV_CD_ID = propAprov.CRPV_CD_ID;
 
             // Grava CR
             Int32 voltaCR = crApp.ValidateCreate(cr, 0, null, usuario);
@@ -3235,6 +3287,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["PedAprov"] = pedAprov;
             ViewBag.PedAprov = pedAprov;
             Session["SegueInclusao"] = 0;
+            Session["Tipo"] = 0;
 
             List<CONTA_RECEBER> cr = new List<CONTA_RECEBER>();
             if (propAprov != null)
@@ -3266,9 +3319,9 @@ namespace ERP_CRM_Solution.Controllers
             {
                 Session["IdCRMPedido"] = pedAprov.CRPV_CD_ID;
                 cr = crApp.GetAllItens(idAss).Where(p => p.CRPV_CD_ID == pedAprov.CRPV_CD_ID & p.CARE_IN_ATIVO == 1).ToList();
-                ViewBag.CR1 = cr;
-                ViewBag.TemCR1 = cr.Count > 0 ? 1 : 0;
-                ViewBag.TemNF1 = 0;
+                ViewBag.CR = cr;
+                ViewBag.TemCR = cr.Count > 0 ? 1 : 0;
+                ViewBag.TemNF = 0;
                 vm.NumeroPedido = pedAprov.CRPV_NR_NUMERO;
                 vm.DataPedido = pedAprov.CRPV_DT_PEDIDO;
                 vm.DataAprovacaoPedido = pedAprov.CRPV_DT_APROVACAO;
@@ -3277,9 +3330,9 @@ namespace ERP_CRM_Solution.Controllers
             }
             else
             {
-                ViewBag.CR1 = cr;
-                ViewBag.TemCR1 = 0;
-                ViewBag.TemNF1 = 0;
+                ViewBag.CR = cr;
+                ViewBag.TemCR = 0;
+                ViewBag.TemNF = 0;
                 vm.NumeroPedido = "-";
                 vm.DataPedido = null;
                 vm.DataAprovacaoPedido = null;
@@ -3450,9 +3503,10 @@ namespace ERP_CRM_Solution.Controllers
                     if (vm.Entrega)
                     {
                         // Baixa de estoque
-                        if (item.CRM_PEDIDO_VENDA.Count > 0)
+                        List<CRM_PEDIDO_VENDA> listaPed = baseApp.GetAllPedidos(idAss).Where(p => p.CRM1_CD_ID == item.CRM1_CD_ID).ToList();
+                        if (listaPed.Count > 0)
                         {
-                            CRM_PEDIDO_VENDA ped = baseApp.GetPedidoById(item.CRM_PEDIDO_VENDA.Where(p => p.CRPV_IN_STATUS == 5).First().CRPV_CD_ID);
+                            CRM_PEDIDO_VENDA ped = baseApp.GetPedidoById(listaPed.Where(p => p.CRPV_IN_STATUS == 5).First().CRPV_CD_ID);
                             if (ped != null)
                             {
                                 List<CRM_PEDIDO_VENDA_ITEM> prods = ped.CRM_PEDIDO_VENDA_ITEM.ToList();
@@ -3487,6 +3541,10 @@ namespace ERP_CRM_Solution.Controllers
                     Session["ListaCRM"] = null;
                     Session["IncluirCRM"] = 0;
                     Session["FaseExpedicao"] = 2;
+                    if (vm.Entrega)
+                    {
+                        return RedirectToAction("VoltarBaseCRM");
+                    }
                     return RedirectToAction("AcompanhamentoProcessoCRM", new { id = (Int32)Session["IdCRM"] });
                 }
                 catch (Exception ex)
@@ -4099,16 +4157,34 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("VerPropostasUsuarioCRM");
         }
 
+        public ActionResult VerPedidosUsuarioCRMElaboracaoPrevia()
+        {
+            Session["PedidosUsuario"] = 2;
+            return RedirectToAction("VerPedidosUsuarioCRM");
+        }
+
         public ActionResult VerPropostasUsuarioCRMEnviadaPrevia()
         {
             Session["PropostasUsuario"] = 3;
             return RedirectToAction("VerPropostasUsuarioCRM");
         }
 
+        public ActionResult VerPedidosUsuarioCRMEnviadaPrevia()
+        {
+            Session["PedidosUsuario"] = 3;
+            return RedirectToAction("VerPedidosUsuarioCRM");
+        }
+
         public ActionResult VerPropostasUsuarioCRMAprovadaPrevia()
         {
             Session["PropostasUsuario"] = 6;
             return RedirectToAction("VerPropostasUsuarioCRM");
+        }
+
+        public ActionResult VerPedidosUsuarioCRMAprovadaPrevia()
+        {
+            Session["PedidosUsuario"] = 6;
+            return RedirectToAction("VerPedidosUsuarioCRM");
         }
 
         public ActionResult VerPropostasUsuarioCRMReprovadaPrevia()
@@ -6527,6 +6603,91 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         public ActionResult VerPedidosUsuarioCRM()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensCRM"] = 2;
+                    return RedirectToAction("VoltarAcompanhamentoCRM");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Processa
+            List<CRM_PEDIDO_VENDA> lista = baseApp.GetAllPedidos(idAss).Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
+            List<CRM_PEDIDO_VENDA> totalElaboracao = lista.Where(p => p.CRPV_IN_STATUS == 1).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
+            List<CRM_PEDIDO_VENDA> totalEnviado = lista.Where(p => p.CRPV_IN_STATUS == 2).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
+            List<CRM_PEDIDO_VENDA> totalCancelado = lista.Where(p => p.CRPV_IN_STATUS == 3).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
+            List<CRM_PEDIDO_VENDA> totalAprovado = lista.Where(p => p.CRPV_IN_STATUS == 5).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
+            List<CRM_PEDIDO_VENDA> totalReprovado = lista.Where(p => p.CRPV_IN_STATUS == 4).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
+            List<CRM_PEDIDO_VENDA> totalEncerrado = lista.Where(p => p.CRPV_IN_STATUS == 6).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
+            List<CRM_PEDIDO_VENDA> totalValidade = lista.Where(p => p.CRPV_IN_STATUS < 3 & p.CRPV_DT_VALIDADE < DateTime.Today.Date).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
+
+            if ((Int32)Session["PedidosUsuario"] == 1)
+            {
+                ViewBag.Lista = lista;
+                ViewBag.TotalPedidos= lista.Count;
+            }
+            if ((Int32)Session["PedidosUsuario"] == 2)
+            {
+                ViewBag.Lista = totalElaboracao;
+                ViewBag.TotalPedidos = totalElaboracao.Count;
+            }
+            if ((Int32)Session["PedidosUsuario"] == 3)
+            {
+                ViewBag.Lista = totalEnviado;
+                ViewBag.TotalPedidos = totalEnviado.Count;
+            }
+            if ((Int32)Session["PedidosUsuario"] == 4)
+            {
+                ViewBag.Lista = totalCancelado;
+                ViewBag.TotalPedidos = totalCancelado.Count;
+            }
+            if ((Int32)Session["PedidosUsuario"] == 5)
+            {
+                ViewBag.Lista = totalReprovado;
+                ViewBag.TotalPedidos = totalReprovado.Count;
+            }
+            if ((Int32)Session["PedidosUsuario"] == 6)
+            {
+                ViewBag.Lista = totalAprovado;
+                ViewBag.TotalPedidos = totalAprovado.Count;
+            }
+            if ((Int32)Session["PedidosUsuario"] == 7)
+            {
+                ViewBag.Lista = totalEncerrado;
+                ViewBag.TotalPedidos = totalEncerrado.Count;
+            }
+
+            ViewBag.TotalElaboracao = totalElaboracao.Count;
+            ViewBag.TotalEnviado = totalEnviado.Count;
+            ViewBag.TotalAprovado = totalAprovado.Count;
+            ViewBag.TotalReprovado = totalReprovado.Count;
+            ViewBag.TotalEncerrado = totalEncerrado.Count;
+            ViewBag.TotalCancelado = totalCancelado.Count;
+
+            ViewBag.Nome = usuario.USUA_NM_NOME.Substring(0, usuario.USUA_NM_NOME.IndexOf(" "));
+            ViewBag.Foto = usuario.USUA_AQ_FOTO;
+            ViewBag.Cargo = usuario.CARGO.CARG_NM_NOME;
+            Session["PontoPedido"] = 1;
+            return View();
+        }
+
+        public ActionResult VerPedidosUsuarioCRMVelho()
         {
             // Verifica se tem usuario logado
             USUARIO usuario = new USUARIO();
@@ -9019,7 +9180,7 @@ namespace ERP_CRM_Solution.Controllers
             // Prepara listas
             Session["IncluirCRM"] = 0;
             Session["CRM"] = null;
-            Session["SegueInclusao"] = 0;
+            Session["PontoPedido"] = 0;
 
             // Recupera
             Session["CRMNovo"] = 0;

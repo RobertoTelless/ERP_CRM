@@ -103,28 +103,28 @@
                                                 <div class="ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 1px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px; height: 250px" >
                                                     <div class="ibox-title"  style="color: black">
                                                         <h5>Dados do Cliente</h5>
-                                                        <span style="float: right"><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CLIENTE.CLIE_CD_ID})" />Enviar E-Mail</span>
+                                                        <span style="float: right"><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CRM.CLIENTE.CLIE_CD_ID})" />Enviar E-Mail</span>
                                                     </div>
                                                     <div class="ibox-content" style="color: black">
-                                                        <h3 style="color: green"><strong><a href="@Url.Action("EditarCliente", "Cliente", new { id = Model.CLIENTE.CLIE_CD_ID })">@Model.CLIENTE.CLIE_NM_NOME</a></strong></h3>
-                                                        @if (Model.CLIENTE.CLIE_NM_ENDERECO != null)
+                                                        <h3 style="color: green"><strong><a href="@Url.Action("EditarCliente", "Cliente", new { id = Model.CRM.CLIENTE.CLIE_CD_ID })">@Model.CRM.CLIENTE.CLIE_NM_NOME</a></strong></h3>
+                                                        @if (Model.CRM.CLIENTE.CLIE_NM_ENDERECO != null)
                                                         {
                                                             <address>
-                                                                @Model.CLIENTE.CLIE_NM_ENDERECO @Model.CLIENTE.CLIE_NR_NUMERO @Model.CLIENTE.CLIE_NM_COMPLEMENTO<br>
-                                                                @Model.CLIENTE.CLIE_NM_BAIRRO  - @Model.CLIENTE.CLIE_NM_CIDADE - @Model.CLIENTE.UF.UF_SG_SIGLA - @Model.CLIENTE.CLIE_NR_CEP<br>
-                                                                @if (Model.CLIENTE.CLIE_NR_TELEFONE != null)
+                                                                @Model.CRM.CLIENTE.CLIE_NM_ENDERECO @Model.CRM.CLIENTE.CLIE_NR_NUMERO @Model.CRM.CLIENTE.CLIE_NM_COMPLEMENTO<br>
+                                                                @Model.CRM.CLIENTE.CLIE_NM_BAIRRO  - @Model.CRM.CLIENTE.CLIE_NM_CIDADE - @Model.CRM.CLIENTE.UF.UF_SG_SIGLA - @Model.CRM.CLIENTE.CLIE_NR_CEP<br>
+                                                                @if (Model.CRM.CLIENTE.CLIE_NR_TELEFONE != null)
 	                                                            {
-                                                                    <abbr title="Fone">P:</abbr> @Model.CLIENTE.CLIE_NR_TELEFONE
+                                                                    <abbr title="Fone">P:</abbr> @Model.CRM.CLIENTE.CLIE_NR_TELEFONE
                                                                     <br />
 	                                                            }
-                                                                <abbr title="Cel">C:</abbr>@Model.CLIENTE.CLIE_NR_CELULAR
+                                                                <abbr title="Cel">C:</abbr>@Model.CRM.CLIENTE.CLIE_NR_CELULAR
                                                             </address>
                                                         }
                                                         else
                                                         {
                                                             <h5>Não informado</h5>
                                                         }
-                                                        <p><i class="fa fa-envelope"></i><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CLIENTE.CLIE_CD_ID})">@Model.CLIENTE.CLIE_NM_EMAIL</a></p>
+                                                        <p><i class="fa fa-envelope"></i><a href="@Url.Action("EnviarEMailCliente", "CRM", new { id = Model.CRM.CLIENTE.CLIE_CD_ID})">@Model.CRM.CLIENTE.CLIE_NM_EMAIL</a></p>
                                                     </div>
                                                 </div>
                                             </div>

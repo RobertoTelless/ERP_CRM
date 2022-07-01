@@ -119,10 +119,10 @@
                                 @Html.ButtonLinkIndex(text: "Visualização Kanban", controller: "CRM", action: "MontarTelaKanbanCRM")
                                 @Html.ButtonLinkIndex(text: "Ações do Usuário", controller: "CRM", action: "VerAcoesUsuarioCRMPrevia", buttonClass: "primary")
                                 @Html.ButtonLinkIndex(text: "Propostas", action: "VerPropostasUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
-                                @*@if ((Int32)Session["PermVenda"] == 1)
+                                @if ((Int32)Session["PermVenda"] == 1)
                                 {
-                                    @Html.ButtonLinkIndex(text: "Pedidos", action: "VerPedidosUsuarioCRM", controller: "CRM", buttonClass: "primary")
-                                }*@
+                                    @Html.ButtonLinkIndex(text: "Pedidos", action: "VerPedidosUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
+                                }
                                 @Html.ButtonLinkIndex(text: "Dashboard Processos", action: "MontarTelaDashboardCRMNovo", controller: "CRM")                
                             </div>
                         </div>
