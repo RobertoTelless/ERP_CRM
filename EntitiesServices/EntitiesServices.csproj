@@ -352,6 +352,7 @@
     <Compile Include="Interfaces\Repositories\ICategoriaAtendimentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaOrdemServicoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaServicoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAssinanteAnotacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPedidoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPropostaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICRMPedidoComentarioRepository.cs" />
@@ -512,6 +513,9 @@
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ASSINANTE_ANEXO.cs">
+      <DependentUpon>ERPCRM_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ASSINANTE_ANOTACAO.cs">
       <DependentUpon>ERPCRM_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ASSINANTE_CONSUMO.cs">

@@ -372,6 +372,7 @@ namespace Presentation.Start
             kernel.Bind<ITransportadoraAnexoRepository>().To<TransportadoraAnexoRepository>();
             kernel.Bind<ITipoVeiculoRepository>().To<TipoVeiculoRepository>();
             kernel.Bind<ITipoTransporteRepository>().To<TipoTransporteRepository>();
+            kernel.Bind<IAssinanteAnotacaoRepository>().To<AssinanteAnotacaoRepository>();
 
 
         }

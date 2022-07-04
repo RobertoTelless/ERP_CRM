@@ -98,6 +98,7 @@ namespace EntitiesServices.Model
             this.TIPO_TAREFA = new HashSet<TIPO_TAREFA>();
             this.TRANSPORTADORA = new HashSet<TRANSPORTADORA>();
             this.USUARIO = new HashSet<USUARIO>();
+            this.ASSINANTE_ANOTACAO = new HashSet<ASSINANTE_ANOTACAO>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -122,6 +123,8 @@ namespace EntitiesServices.Model
         public string ASSI_AQ_FOTO { get; set; }
         public string ASSI_NR_TELEFONE { get; set; }
         public string ASSIN_NR_CELULAR { get; set; }
+        public string ASSI_NR_CELULAR { get; set; }
+        public Nullable<int> ASSI_IN_BLOQUEADO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA> AGENDA { get; set; }
@@ -287,5 +290,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<TRANSPORTADORA> TRANSPORTADORA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USUARIO> USUARIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ASSINANTE_ANOTACAO> ASSINANTE_ANOTACAO { get; set; }
     }
 }

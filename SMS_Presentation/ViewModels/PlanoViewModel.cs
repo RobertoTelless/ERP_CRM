@@ -78,6 +78,133 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> PLAN_NR_COMPRA { get; set; }
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<int> PLAN_NR_VENDA { get; set; }
+        public Nullable<int> PLAN_NR_SERVICE { get; set; }
+
+        public bool Mensagem
+        {
+            get
+            {
+                if (PLAN_IN_MENSAGENS == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                PLAN_IN_MENSAGENS = (value == true) ? 1 : 0;
+            }
+        }
+        public bool CRM
+        {
+            get
+            {
+                if (PLAN_IN_CRM == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                PLAN_IN_CRM = (value == true) ? 1 : 0;
+            }
+        }
+        public bool Financeiro
+        {
+            get
+            {
+                if (PLAN_IN_FINANCEIRO == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                PLAN_IN_FINANCEIRO = (value == true) ? 1 : 0;
+            }
+        }
+        public bool Patrimonio
+        {
+            get
+            {
+                if (PLAN_IN_PATRIMONIO == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                PLAN_IN_PATRIMONIO = (value == true) ? 1 : 0;
+            }
+        }
+        public bool Compra
+        {
+            get
+            {
+                if (PLAN_IN_COMPRA == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                PLAN_IN_COMPRA = (value == true) ? 1 : 0;
+            }
+        }
+        public bool Estoque
+        {
+            get
+            {
+                if (PLAN_IN_ESTOQUE == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                PLAN_IN_ESTOQUE = (value == true) ? 1 : 0;
+            }
+        }
+        public bool Vendas
+        {
+            get
+            {
+                if (PLAN_IN_VENDAS == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                PLAN_IN_VENDAS = (value == true) ? 1 : 0;
+            }
+        }
+        public bool Service
+        {
+            get
+            {
+                if (PLAN_IN_ATENDIMENTOS == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                PLAN_IN_ATENDIMENTOS = (value == true) ? 1 : 0;
+            }
+        }
+
+
+
+
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ASSINANTE> ASSINANTE { get; set; }

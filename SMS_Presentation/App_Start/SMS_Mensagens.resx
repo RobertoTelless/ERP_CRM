@@ -447,4 +447,7 @@
   <data name="M0125" xml:space="preserve">
     <value>Impossível incluir/reativar Pedido de Compra. O número máximo de pedidos permitido pelo seu plano de assinatura foi atingido</value>
   </data>
+  <data name="M0126" xml:space="preserve">
+    <value>Plano já cadastrado</value>
+  </data>
 </root>

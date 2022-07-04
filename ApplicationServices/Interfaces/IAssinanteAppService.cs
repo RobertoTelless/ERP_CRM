@@ -25,6 +25,7 @@ namespace ApplicationServices.Interfaces
         List<UF> GetAllUF();
         ASSINANTE_ANEXO GetAnexoById(Int32 id);
         UF GetUFBySigla(String sigla);
+        ASSINANTE_ANOTACAO GetAnotacaoById(Int32 id);
 
         ASSINANTE_PAGAMENTO GetPagtoById(Int32 id);
         Int32 ValidateEditPagto(ASSINANTE_PAGAMENTO item);

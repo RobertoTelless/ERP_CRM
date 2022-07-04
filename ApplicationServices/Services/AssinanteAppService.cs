@@ -66,6 +66,11 @@ namespace ApplicationServices.Services
             return _baseService.GetAnexoById(id);
         }
 
+        public ASSINANTE_ANOTACAO GetAnotacaoById(Int32 id)
+        {
+            return _baseService.GetAnotacaoById(id);
+        }
+
         public ASSINANTE_PAGAMENTO GetPagtoById(Int32 id)
         {
             return _baseService.GetPagtoById(id);

@@ -572,6 +572,9 @@
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_ANEXO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_FUNCIONARIO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_RECEBER_CRM_PEDIDO_VENDA" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_ANOTACAO" Width="1.5" PointX="18.75" PointY="238.5" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_ANOTACAO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_ANOTACAO_USUARIO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

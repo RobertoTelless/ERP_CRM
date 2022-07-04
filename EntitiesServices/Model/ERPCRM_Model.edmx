@@ -70,7 +70,8 @@
           <Property Name="ASSI_NR_CEP" Type="varchar" MaxLength="10" />
           <Property Name="ASSI_AQ_FOTO" Type="varchar" MaxLength="250" />
           <Property Name="ASSI_NR_TELEFONE" Type="varchar" MaxLength="50" />
-          <Property Name="ASSIN_NR_CELULAR" Type="varchar" MaxLength="50" />
+          <Property Name="ASSI_NR_CELULAR" Type="varchar" MaxLength="50" />
+          <Property Name="ASSI_IN_BLOQUEADO" Type="int" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -83,6 +84,17 @@
           <Property Name="ASAN_IN_TIPO" Type="int" Nullable="false" />
           <Property Name="ASAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="ASAN_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ASSINANTE_ANOTACAO">
+          <Key>
+            <PropertyRef Name="ASAT_CD_ID" />
+          </Key>
+          <Property Name="ASAT_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="ASAT_DT_ANOTACAO" Type="datetime" Nullable="false" />
+          <Property Name="ASAT_TX_ANOTACAO" Type="text" Nullable="false" />
+          <Property Name="ASAT_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ASSINANTE_CONSUMO">
           <Key>
@@ -105,9 +117,9 @@
           </Key>
           <Property Name="ASPA_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PLAN_CD_ID" Type="int" />
           <Property Name="ASPA_DT_PAGAMENTO" Type="date" />
           <Property Name="ASPA_VL_VALOR" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="PLAN_CD_ID" Type="int" />
           <Property Name="ASPA_DT_PROXIMO" Type="date" />
           <Property Name="ASPA_IN_ATIVO" Type="int" />
         </EntityType>
@@ -2131,21 +2143,14 @@
             <PropertyRef Name="PLAN_CD_ID" />
           </Key>
           <Property Name="PLAN_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PLPE_CD_ID" Type="int" />
           <Property Name="PLAN_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="PLAN_DT_CRIACAO" Type="date" />
           <Property Name="PLAN_IN_ATIVO" Type="int" />
           <Property Name="PLAN_DS_DESCRICAO" Type="varchar" MaxLength="500" />
-          <Property Name="PLAN_NR_USUARIOS" Type="int" />
-          <Property Name="PLAN_NR_CONTATOS" Type="int" />
-          <Property Name="PLAN_NR_EMAIL" Type="int" />
-          <Property Name="PLAN_NR_SMS" Type="int" />
-          <Property Name="PLAN_NR_WHATSAPP" Type="int" />
-          <Property Name="PLAN_NR_PROCESSOS" Type="int" />
-          <Property Name="PLAN_NR_ACOES" Type="int" />
           <Property Name="PLAN_VL_PRECO" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="PLPE_CD_ID" Type="int" />
-          <Property Name="PLAN_DT_VALIDADE" Type="date" />
           <Property Name="PLAN_VL_PROMOCAO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PLAN_DT_VALIDADE" Type="date" />
           <Property Name="PLAN_TX_SITE" Type="varchar" MaxLength="5000" />
           <Property Name="PLAN_IN_BLOCO" Type="int" />
           <Property Name="PLAN_IN_NIVEL" Type="int" />
@@ -2156,16 +2161,24 @@
           <Property Name="PLAN_IN_FATURA" Type="int" />
           <Property Name="PLAN_IN_ESTOQUE" Type="int" />
           <Property Name="PLAN_IN_PATRIMONIO" Type="int" />
-          <Property Name="PLAN_NR_PATRIMONIO" Type="int" />
-          <Property Name="PLAN_NR_PRODUTO" Type="int" />
-          <Property Name="PLAN_NR_FORNECEDOR" Type="int" />
           <Property Name="PLAN_IN_VENDAS" Type="int" />
           <Property Name="PLAN_IN_COMPRA" Type="int" />
           <Property Name="PLAN_IN_SERVICOS" Type="int" />
           <Property Name="PLAN_IN_ATENDIMENTOS" Type="int" />
           <Property Name="PLAN_IN_OS" Type="int" />
+          <Property Name="PLAN_NR_USUARIOS" Type="int" />
+          <Property Name="PLAN_NR_CONTATOS" Type="int" />
+          <Property Name="PLAN_NR_EMAIL" Type="int" />
+          <Property Name="PLAN_NR_SMS" Type="int" />
+          <Property Name="PLAN_NR_WHATSAPP" Type="int" />
+          <Property Name="PLAN_NR_PROCESSOS" Type="int" />
+          <Property Name="PLAN_NR_ACOES" Type="int" />
+          <Property Name="PLAN_NR_PATRIMONIO" Type="int" />
+          <Property Name="PLAN_NR_PRODUTO" Type="int" />
+          <Property Name="PLAN_NR_FORNECEDOR" Type="int" />
           <Property Name="PLAN_NR_COMPRA" Type="int" />
           <Property Name="PLAN_NR_VENDA" Type="int" />
+          <Property Name="PLAN_NR_SERVICE" Type="int" />
         </EntityType>
         <EntityType Name="PLANO_PERIODICIDADE">
           <Key>
@@ -2993,6 +3006,30 @@
             </Principal>
             <Dependent Role="ASSINANTE_ANEXO">
               <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSINANTE_ANOTACAO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="ASSINANTE_ANOTACAO" Type="Self.ASSINANTE_ANOTACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="ASSINANTE_ANOTACAO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSINANTE_ANOTACAO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="ASSINANTE_ANOTACAO" Type="Self.ASSINANTE_ANOTACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ASSINANTE_ANOTACAO">
+              <PropertyRef Name="USUA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7550,6 +7587,7 @@
           <EntitySet Name="AGENDA_VINCULO" EntityType="Self.AGENDA_VINCULO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ASSINANTE" EntityType="Self.ASSINANTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ASSINANTE_ANEXO" EntityType="Self.ASSINANTE_ANEXO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASSINANTE_ANOTACAO" EntityType="Self.ASSINANTE_ANOTACAO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ASSINANTE_CONSUMO" EntityType="Self.ASSINANTE_CONSUMO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ASSINANTE_PAGAMENTO" EntityType="Self.ASSINANTE_PAGAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ASSINANTE_PLANO" EntityType="Self.ASSINANTE_PLANO" Schema="dbo" store:Type="Tables" />
@@ -7759,6 +7797,14 @@
           <AssociationSet Name="FK_ASSINANTE_ANEXO_ASSINANTE" Association="Self.FK_ASSINANTE_ANEXO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="ASSINANTE_ANEXO" EntitySet="ASSINANTE_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSINANTE_ANOTACAO_ASSINANTE" Association="Self.FK_ASSINANTE_ANOTACAO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="ASSINANTE_ANOTACAO" EntitySet="ASSINANTE_ANOTACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSINANTE_ANOTACAO_USUARIO" Association="Self.FK_ASSINANTE_ANOTACAO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ASSINANTE_ANOTACAO" EntitySet="ASSINANTE_ANOTACAO" />
           </AssociationSet>
           <AssociationSet Name="FK_ASSINANTE_CONSUMO_ASSINANTE" Association="Self.FK_ASSINANTE_CONSUMO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -9442,6 +9488,9 @@
           <NavigationProperty Name="TIPO_TAREFA" Relationship="Self.FK_TIPO_TAREFA_ASSINANTE" FromRole="ASSINANTE" ToRole="TIPO_TAREFA" />
           <NavigationProperty Name="TRANSPORTADORA" Relationship="Self.FK_TRANSPORTADORA_ASSINANTE" FromRole="ASSINANTE" ToRole="TRANSPORTADORA" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_ASSINANTE" FromRole="ASSINANTE" ToRole="USUARIO" />
+          <Property Name="ASSI_NR_CELULAR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ASSI_IN_BLOQUEADO" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE_ANOTACAO" Relationship="ERP_CRMModel.FK_ASSINANTE_ANOTACAO_ASSINANTE" FromRole="ASSINANTE" ToRole="ASSINANTE_ANOTACAO" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -12021,6 +12070,7 @@
           <NavigationProperty Name="ASSINANTE_PAGAMENTO" Relationship="Self.FK_ASSINANTE_PAGAMENTO_PLANO" FromRole="PLANO" ToRole="ASSINANTE_PAGAMENTO" />
           <NavigationProperty Name="ASSINANTE_PLANO" Relationship="Self.FK_ASSINANTE_PLANO_PLANO" FromRole="PLANO" ToRole="ASSINANTE_PLANO" />
           <NavigationProperty Name="PLANO_PERIODICIDADE" Relationship="Self.FK_PLANO_PLANO_PERIODICIDADE" FromRole="PLANO" ToRole="PLANO_PERIODICIDADE" />
+          <Property Name="PLAN_NR_SERVICE" Type="Int32" />
         </EntityType>
         <EntityType Name="PLANO_PERIODICIDADE">
           <Key>
@@ -12884,6 +12934,7 @@
           <NavigationProperty Name="TAREFA_VINCULO" Relationship="Self.FK_TAREFA_VINCULO_USUARIO" FromRole="USUARIO" ToRole="TAREFA_VINCULO" />
           <NavigationProperty Name="USUARIO_ANEXO" Relationship="Self.FK_USUARIO_ANEXO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_ANEXO" />
           <NavigationProperty Name="USUARIO_FUNCIONARIO" Relationship="Self.FK_USUARIO_FUNCIONARIO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_FUNCIONARIO" />
+          <NavigationProperty Name="ASSINANTE_ANOTACAO" Relationship="ERP_CRMModel.FK_ASSINANTE_ANOTACAO_USUARIO" FromRole="USUARIO" ToRole="ASSINANTE_ANOTACAO" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -19316,6 +19367,15 @@
             <End Role="CRM_PEDIDO_VENDA" EntitySet="CRM_PEDIDO_VENDA" />
             <End Role="CONTA_RECEBER" EntitySet="CONTA_RECEBER" />
           </AssociationSet>
+          <EntitySet Name="ASSINANTE_ANOTACAO" EntityType="ERP_CRMModel.ASSINANTE_ANOTACAO" />
+          <AssociationSet Name="FK_ASSINANTE_ANOTACAO_ASSINANTE" Association="ERP_CRMModel.FK_ASSINANTE_ANOTACAO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="ASSINANTE_ANOTACAO" EntitySet="ASSINANTE_ANOTACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSINANTE_ANOTACAO_USUARIO" Association="ERP_CRMModel.FK_ASSINANTE_ANOTACAO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ASSINANTE_ANOTACAO" EntitySet="ASSINANTE_ANOTACAO" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_CONTA_RECEBER_CRM_PEDIDO_VENDA">
           <End Type="ERP_CRMModel.CRM_PEDIDO_VENDA" Role="CRM_PEDIDO_VENDA" Multiplicity="0..1" />
@@ -19326,6 +19386,43 @@
             </Principal>
             <Dependent Role="CONTA_RECEBER">
               <PropertyRef Name="CRPV_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ASSINANTE_ANOTACAO">
+          <Key>
+            <PropertyRef Name="ASAT_CD_ID" />
+          </Key>
+          <Property Name="ASAT_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="ASAT_DT_ANOTACAO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ASAT_TX_ANOTACAO" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ASAT_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CRMModel.FK_ASSINANTE_ANOTACAO_ASSINANTE" FromRole="ASSINANTE_ANOTACAO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CRMModel.FK_ASSINANTE_ANOTACAO_USUARIO" FromRole="ASSINANTE_ANOTACAO" ToRole="USUARIO" />
+        </EntityType>
+        <Association Name="FK_ASSINANTE_ANOTACAO_ASSINANTE">
+          <End Type="ERP_CRMModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ASSINANTE_ANOTACAO" Role="ASSINANTE_ANOTACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="ASSINANTE_ANOTACAO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSINANTE_ANOTACAO_USUARIO">
+          <End Type="ERP_CRMModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CRMModel.ASSINANTE_ANOTACAO" Role="ASSINANTE_ANOTACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ASSINANTE_ANOTACAO">
+              <PropertyRef Name="USUA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -19381,6 +19478,8 @@
           <EntitySetMapping Name="ASSINANTE">
             <EntityTypeMapping TypeName="ERP_CRMModel.ASSINANTE">
               <MappingFragment StoreEntitySet="ASSINANTE">
+                <ScalarProperty Name="ASSI_IN_BLOQUEADO" ColumnName="ASSI_IN_BLOQUEADO" />
+                <ScalarProperty Name="ASSI_NR_CELULAR" ColumnName="ASSI_NR_CELULAR" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="TIPE_CD_ID" ColumnName="TIPE_CD_ID" />
                 <ScalarProperty Name="PLAN_CD_ID" ColumnName="PLAN_CD_ID" />
@@ -19402,7 +19501,6 @@
                 <ScalarProperty Name="ASSI_NR_CEP" ColumnName="ASSI_NR_CEP" />
                 <ScalarProperty Name="ASSI_AQ_FOTO" ColumnName="ASSI_AQ_FOTO" />
                 <ScalarProperty Name="ASSI_NR_TELEFONE" ColumnName="ASSI_NR_TELEFONE" />
-                <ScalarProperty Name="ASSIN_NR_CELULAR" ColumnName="ASSIN_NR_CELULAR" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -21588,6 +21686,7 @@
           <EntitySetMapping Name="PLANO">
             <EntityTypeMapping TypeName="ERP_CRMModel.PLANO">
               <MappingFragment StoreEntitySet="PLANO">
+                <ScalarProperty Name="PLAN_NR_SERVICE" ColumnName="PLAN_NR_SERVICE" />
                 <ScalarProperty Name="PLAN_CD_ID" ColumnName="PLAN_CD_ID" />
                 <ScalarProperty Name="PLAN_NM_NOME" ColumnName="PLAN_NM_NOME" />
                 <ScalarProperty Name="PLAN_DT_CRIACAO" ColumnName="PLAN_DT_CRIACAO" />
@@ -22394,6 +22493,18 @@
                 <ScalarProperty Name="USFU_DT_CNH_VALIDADE" ColumnName="USFU_DT_CNH_VALIDADE" />
                 <ScalarProperty Name="USFU_NM_CNH_CATEGORIA" ColumnName="USFU_NM_CNH_CATEGORIA" />
                 <ScalarProperty Name="USFU_NR_CNS" ColumnName="USFU_NR_CNS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASSINANTE_ANOTACAO">
+            <EntityTypeMapping TypeName="ERP_CRMModel.ASSINANTE_ANOTACAO">
+              <MappingFragment StoreEntitySet="ASSINANTE_ANOTACAO">
+                <ScalarProperty Name="ASAT_IN_ATIVO" ColumnName="ASAT_IN_ATIVO" />
+                <ScalarProperty Name="ASAT_TX_ANOTACAO" ColumnName="ASAT_TX_ANOTACAO" />
+                <ScalarProperty Name="ASAT_DT_ANOTACAO" ColumnName="ASAT_DT_ANOTACAO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="ASAT_CD_ID" ColumnName="ASAT_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

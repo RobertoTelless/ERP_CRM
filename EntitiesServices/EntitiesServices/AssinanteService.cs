@@ -25,10 +25,11 @@ namespace ModelServices.EntitiesServices
         private readonly IAssinanteAnexoRepository _anexoRepository;
         private readonly IAssinantePagamentoRepository _pagRepository;
         private readonly IPlanoRepository _plaRepository;
+        private readonly IAssinanteAnotacaoRepository _anoRepository;
 
         protected ERP_CRMEntities Db = new ERP_CRMEntities();
 
-        public AssinanteService(IAssinanteRepository baseRepository, ILogRepository logRepository, ITipoPessoaRepository tpRepository, IUFRepository ufRepository, IAssinanteAnexoRepository anexoRepository, IAssinantePagamentoRepository pagRepository, IPlanoRepository plaRepository) : base(baseRepository)
+        public AssinanteService(IAssinanteRepository baseRepository, ILogRepository logRepository, ITipoPessoaRepository tpRepository, IUFRepository ufRepository, IAssinanteAnexoRepository anexoRepository, IAssinantePagamentoRepository pagRepository, IPlanoRepository plaRepository, IAssinanteAnotacaoRepository anoRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
@@ -37,6 +38,7 @@ namespace ModelServices.EntitiesServices
             _anexoRepository = anexoRepository;
             _pagRepository = pagRepository;
             _plaRepository = plaRepository;
+            _anoRepository = anoRepository;
         }
 
         public ASSINANTE CheckExist(ASSINANTE conta)
@@ -85,6 +87,11 @@ namespace ModelServices.EntitiesServices
         public ASSINANTE_ANEXO GetAnexoById(Int32 id)
         {
             return _anexoRepository.GetItemById(id);
+        }
+
+        public ASSINANTE_ANOTACAO GetAnotacaoById(Int32 id)
+        {
+            return _anoRepository.GetItemById(id);
         }
 
         public List<ASSINANTE> ExecuteFilter(Int32 tipo, String nome, String cpf, String cnpj, Int32 status)
