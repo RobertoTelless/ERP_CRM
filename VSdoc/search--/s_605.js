@@ -1,0 +1,1 @@
+search_result['605']=["topic_0000000000000191.html","CompraController.EnviarCotacaoPedidoCompra (PedidoCompraViewModel, Nullable\u0026lt;Int32\u0026gt;, String) Method",""];

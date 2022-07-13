@@ -17,6 +17,8 @@ namespace ERP_CRM_Solution.ViewModels
         [Required(ErrorMessage = "Campo FORNECEDOR obrigatorio")]
         public int FORN_CD_ID { get; set; }
         public int PRFO_IN_ATIVO { get; set; }
+        [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public Nullable<int> PRFO_NR_DIAS_ENTREGA { get; set; }
 
         public virtual FORNECEDOR FORNECEDOR { get; set; }
         public virtual PRODUTO PRODUTO { get; set; }

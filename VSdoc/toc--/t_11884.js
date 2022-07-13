@@ -1,0 +1,1 @@
+c['11884']=[['11885',"Create(FICHA_TECNICA) Method","topic_0000000000001A5A.html",0],['11886',"Create(FICHA_TECNICA, LOG) Method","topic_0000000000001A59.html",0]];

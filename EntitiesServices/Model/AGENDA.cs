@@ -37,6 +37,7 @@ namespace EntitiesServices.Model
         public string AGEN_TX_OBSERVACOES { get; set; }
         public Nullable<int> AGEN_IN_STATUS { get; set; }
         public Nullable<int> AGEN_IN_CORPORATIVA { get; set; }
+        public string AGEN_LK_REUNIAO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA_ANEXO> AGENDA_ANEXO { get; set; }

@@ -1,0 +1,1 @@
+search_result['12156']=["topic_0000000000002150.html","ICategoriaEquipamentoRepository.GetAllItensAdm Method",""];

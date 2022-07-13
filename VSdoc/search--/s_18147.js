@@ -1,0 +1,1 @@
+search_result['18147']=["topic_000000000000317A_props--.html","ContaBancariaLancamentoRepository Properties",""];

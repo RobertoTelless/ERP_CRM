@@ -1,0 +1,1 @@
+search_result['15497']=["topic_0000000000002A0D.html","EQUIPAMENTO.CATEGORIA_EQUIPAMENTO Property",""];

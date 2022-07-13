@@ -41,7 +41,7 @@ namespace DataServices.Repositories
             query = query.Where(p => p.USUA_CD_ID == user);
             if (tipo == 1)
             {
-                query = query.Where(p => p.TARE_IN_STATUS == 1 | p.TARE_IN_STATUS == 2);
+                query = query.Where(p => p.TARE_IN_STATUS == 1);
             }
             if (tipo == 2)
             {

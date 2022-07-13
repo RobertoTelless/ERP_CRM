@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"SOLUTION-WIDE PROPERTIES Reference","topic_000000000000341C.html"],['14951',"Presentation.Start Namespace","topic_0000000000000005.html"],['14952',"NinjectWebCommons Class","topic_0000000000000006.html"]];

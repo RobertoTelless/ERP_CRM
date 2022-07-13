@@ -13,7 +13,7 @@ namespace DataServices.Repositories
         public PRODUTO CheckExist(PRODUTO conta, Int32 idAss)
         {
             IQueryable<PRODUTO> query = Db.PRODUTO;
-            query = query.Where(p => p.PROD_NM_NOME == conta.PROD_NM_NOME);
+            query = query.Where(p => p.PROD_NM_NOME.ToUpper() == conta.PROD_NM_NOME.ToUpper());
             query = query.Where(p => p.PROD_IN_TIPO_PRODUTO == conta.PROD_IN_TIPO_PRODUTO);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.FirstOrDefault();

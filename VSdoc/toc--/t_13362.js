@@ -1,0 +1,1 @@
+c['13362']=[['13363',"Create(FORNECEDOR) Method","topic_0000000000001F07.html",0],['13364',"Create(FORNECEDOR, LOG) Method","topic_0000000000001F06.html",0]];

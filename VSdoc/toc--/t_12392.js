@@ -1,0 +1,1 @@
+c['12392']=[['12393',"ProdutoTabelaPrecoService Constructor","topic_0000000000001BEC.html",0],['12394',"Methods","topic_0000000000001BEA_methods--.html",1],['12401',"Fields","topic_0000000000001BEA_vars--.html",1]];

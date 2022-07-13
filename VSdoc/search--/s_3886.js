@@ -1,0 +1,1 @@
+search_result['3886']=["topic_0000000000000B47_attached_props--.html","FichaTecnicaDetalheViewModel Attached Properties",""];

@@ -13,7 +13,7 @@ namespace DataServices.Repositories
         public CATEGORIA_PRODUTO CheckExist(CATEGORIA_PRODUTO conta, Int32 idAss)
         {
             IQueryable<CATEGORIA_PRODUTO> query = Db.CATEGORIA_PRODUTO;
-            query = query.Where(p => p.CAPR_NM_NOME == conta.CAPR_NM_NOME);
+            query = query.Where(p => p.CAPR_NM_NOME.ToUpper() == conta.CAPR_NM_NOME.ToUpper());
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.FirstOrDefault();
         }

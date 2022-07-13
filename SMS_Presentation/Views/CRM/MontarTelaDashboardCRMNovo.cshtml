@@ -23,10 +23,10 @@
                         {
                             @Html.ButtonLinkIndex(text: "Propostas & Vendas", action: "VerPropostasUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
                         }
-                        @*@if ((Int32)Session["PermVenda"] == 1)
+                        @if ((Int32)Session["PermVenda"] == 1)
                         {
-                            @Html.ButtonLinkIndex(text: "Pedidos", action: "VerPedidosUsuarioCRM", controller: "CRM", buttonClass: "primary")
-                        }*@
+                            @Html.ButtonLinkIndex(text: "Pedidos", action: "VerPedidosUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
+                        }
                         @Html.ButtonLinkIndex(text: "Dashboard", controller: "Mensagem", action: "Voltar")
                     </div>
                     <br /><br />

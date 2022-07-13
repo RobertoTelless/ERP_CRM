@@ -1,0 +1,1 @@
+search_result['17295']=["topic_0000000000002F5B.html","TEMPLATE_PROPOSTA.TEPR_TX_TEXTO Property",""];

@@ -84,6 +84,7 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> CRPV_IN_GEROU_NF { get; set; }
         public string CRPV_NR_NOTA_FISCAL { get; set; }
         public Nullable<decimal> CRPV_VL_VALOR { get; set; }
+        public Nullable<int> CRPV_IN_NUMERO_GERADO { get; set; }
 
         public string NumeroProposta { get; set; }
         public string NomeProposta { get; set; }

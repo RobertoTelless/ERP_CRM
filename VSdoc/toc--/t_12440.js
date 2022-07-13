@@ -1,0 +1,1 @@
+c['12440']=[['12441',"SubcategoriaProdutoService Constructor","topic_0000000000001C13.html",0],['12442',"Methods","topic_0000000000001C11_methods--.html",1],['12455',"Fields","topic_0000000000001C11_vars--.html",1]];

@@ -1,0 +1,1 @@
+c['4083']=[['4084',"IncluirCompraExpressa() Method","topic_000000000000015B.html",0],['4085',"IncluirCompraExpressa(PedidoCompraViewModel) Method","topic_000000000000015C.html",0]];

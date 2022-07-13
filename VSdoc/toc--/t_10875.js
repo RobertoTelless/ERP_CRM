@@ -1,0 +1,1 @@
+c['10875']=[['10876',"ASSINANTE Property","topic_0000000000002F99.html",0],['10877',"ASSI_CD_ID Property","topic_0000000000002F96.html",0],['10878',"TIGR_CD_ID Property","topic_0000000000002F95.html",0],['10879',"TIGR_IN_ATIVO Property","topic_0000000000002F98.html",0],['10880',"TIGR_NM_NOME Property","topic_0000000000002F97.html",0]];

@@ -1,0 +1,1 @@
+c['12145']=[['12146',"NoticiaService Constructor","topic_0000000000001B26.html",0],['12147',"Methods","topic_0000000000001B24_methods--.html",1],['12161',"Fields","topic_0000000000001B24_vars--.html",1]];

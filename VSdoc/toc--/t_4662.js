@@ -1,0 +1,1 @@
+c['4662']=[['4663',"ExcluirNoticia(int) Method","topic_00000000000004A7.html",0],['4664',"ExcluirNoticia(NoticiaViewModel) Method","topic_00000000000004A8.html",0]];

@@ -1,0 +1,1 @@
+c['4098']=[['4099',"ProcessarCotacaoPedidoCompra(int) Method","topic_000000000000016A.html",0],['4100',"ProcessarCotacaoPedidoCompra(PedidoCompraViewModel) Method","topic_000000000000016B.html",0]];

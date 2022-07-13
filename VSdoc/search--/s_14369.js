@@ -1,0 +1,1 @@
+search_result['14369']=["topic_0000000000002677.html","CLIENTE.TICR_CD_ID Property",""];

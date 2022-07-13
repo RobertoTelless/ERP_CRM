@@ -1,0 +1,1 @@
+c['3422']=[['3423',"ReativarAtendimento(int) Method","topic_0000000000000065.html",0],['3424',"ReativarAtendimento(AtendimentoViewModel) Method","topic_0000000000000066.html",0]];

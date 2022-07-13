@@ -1,0 +1,1 @@
+search_result['17973']=["topic_0000000000003127_methods--.html","CategoriaEquipamentoRepository Methods",""];

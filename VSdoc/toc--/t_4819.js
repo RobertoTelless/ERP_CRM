@@ -1,0 +1,1 @@
+c['4819']=[['4820',"EditarProdutoBarcode(int) Method","topic_000000000000054C.html",0],['4821',"EditarProdutoBarcode(ProdutoBarcodeViewModel) Method","topic_000000000000054D.html",0]];

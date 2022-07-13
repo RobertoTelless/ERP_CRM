@@ -1,0 +1,1 @@
+c['10683']=[['10684',"TAREFA Constructor","topic_0000000000002EE5.html",0],['10685',"Properties","topic_0000000000002EE4_props--.html",1]];

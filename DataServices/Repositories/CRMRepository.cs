@@ -64,6 +64,7 @@ namespace DataServices.Repositories
         public List<CRM> GetAllItens(Int32 idUsu)
         {
             IQueryable<CRM> query = Db.CRM;
+            query = query.Where(p => p.CRM1_IN_ATIVO > 0);
             query = query.Where(p => p.ASSI_CD_ID == idUsu);
             return query.ToList();
         }

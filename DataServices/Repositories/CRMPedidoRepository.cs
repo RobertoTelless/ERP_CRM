@@ -23,6 +23,9 @@ namespace DataServices.Repositories
         public CRM_PEDIDO_VENDA GetItemById(Int32 id)
         {
             IQueryable<CRM_PEDIDO_VENDA> query = Db.CRM_PEDIDO_VENDA.Where(p => p.CRPV_CD_ID == id);
+            query = query.Include(p => p.CRM_PEDIDO_VENDA_ACOMPANHAMENTO);
+            query = query.Include(p => p.CRM_PEDIDO_VENDA_ANEXO);
+            query = query.Include(p => p.CRM_PEDIDO_VENDA_ITEM);
             return query.FirstOrDefault();
         }
 
@@ -37,6 +40,7 @@ namespace DataServices.Repositories
             query = query.Include(p => p.TEMPLATE_PROPOSTA);
             query = query.Include(p => p.CRM_PEDIDO_VENDA_ACOMPANHAMENTO);
             query = query.Include(p => p.CRM_PEDIDO_VENDA_ANEXO);
+            query = query.Include(p => p.CRM_PEDIDO_VENDA_ITEM);
             return query.FirstOrDefault();
         }
     }

@@ -1,0 +1,1 @@
+search_result['10678']=["topic_0000000000001DD3.html","IContaBancariaService.GetTotalReceita Method",""];

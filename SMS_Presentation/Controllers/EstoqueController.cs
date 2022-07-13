@@ -279,6 +279,23 @@ namespace ERP_CRM_Solution.Controllers
             return RedirectToAction("MontarTelaEstoqueProduto");
         }
 
+        public ActionResult VoltarDashEstoque()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaEstoqueCRM"] == 0)
+            {
+                return RedirectToAction("MontarTelaDashboardEstoque");
+            }
+            if ((Int32)Session["VoltaEstoqueCRM"] == 1)
+            {
+                return RedirectToAction("IncluirItemPedido", "CRM");
+            }
+            return RedirectToAction("MontarTelaDashboardEstoque");
+        }
+
         public ActionResult GerarRelatorioEstoqueProduto()
         {
             if ((String)Session["Ativa"] == null)
@@ -2243,6 +2260,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["VoltaDash"] = 3;
             Session["VoltaProdutoDash"] = 5;
             Session["VoltaFTDash"] = 5;
+            Session["VoltaEstoqueCRM"] = 1;
             return View(vm);
         }
 

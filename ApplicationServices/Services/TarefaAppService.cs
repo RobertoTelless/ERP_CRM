@@ -139,6 +139,7 @@ namespace ApplicationServices.Services
 
                 // Completa objeto
                 item.TARE_IN_ATIVO = 1;
+                item.USUA_CD_ID = usuario.USUA_CD_ID;
                 item.TARE_IN_STATUS = 1;
                 item.TARE_IN_AVISA = 1;
 
@@ -332,7 +333,6 @@ namespace ApplicationServices.Services
                 throw;
             }
         }
-
 
     }
 }

@@ -1,0 +1,1 @@
+c['1990']=[['1991',"ValidateEdit(PEDIDO_COMPRA, PEDIDO_COMPRA) Method","topic_00000000000016E9.html",0],['1992',"ValidateEdit(PEDIDO_COMPRA, PEDIDO_COMPRA, USUARIO) Method","topic_00000000000016E8.html",0]];

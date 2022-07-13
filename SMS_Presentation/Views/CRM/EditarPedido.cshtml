@@ -130,6 +130,7 @@
                                                 @Html.HiddenFor(m => m.CRPV_NM_NOME)
                                                 @Html.HiddenFor(m => m.CRPV_NR_NUMERO)
                                                 @Html.HiddenFor(m => m.CRM1_CD_ID)
+                                                @Html.HiddenFor(m => m.CRPV_IN_NUMERO_GERADO)
                                                 @Html.HiddenFor(m => m.FILI_CD_ID)
                                                 @Html.HiddenFor(m => m.USUA_CD_ID)
                                                 @Html.HiddenFor(m => m.CRPV_CD_ID)
@@ -189,9 +190,9 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                <div class="col-lg-1 col-md-1 col-xs-12" style="color:green; font-weight:bold">
                                                                     Número
-                                                                    @Html.TextBoxFor(m => m.CRPV_NR_NUMERO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                    @Html.TextBoxFor(m => m.CRPV_IN_NUMERO_GERADO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                                     Data Pedido
@@ -218,14 +219,14 @@
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                                 Introdução
                                                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                    @Html.TextAreaFor(m => m.CRPV_TX_INTRODUCAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
+                                                                    @Html.TextAreaFor(m => m.CRPV_TX_INTRODUCAO, new { @class = "form-control summernote", style = "width: 100%; height: 100px;", autofocus = true })
                                                                     @Html.ValidationMessageFor(m => m.CRPV_TX_INTRODUCAO, "", new { @style = "color:red" })
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                                 Outros Serviços Adicionais
                                                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                    @Html.TextAreaFor(m => m.CRPV_TX_OUTROS_ITENS, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
+                                                                    @Html.TextAreaFor(m => m.CRPV_TX_OUTROS_ITENS, new { @class = "form-control summernote", style = "width: 100%; height: 200px;", autofocus = true })
                                                                     @Html.ValidationMessageFor(m => m.CRPV_TX_OUTROS_ITENS, "", new { @style = "color:red" })
                                                                 </div>
                                                             </div>
@@ -296,7 +297,7 @@
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                                 Condições Comerciais
                                                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                    @Html.TextAreaFor(m => m.CRPV_TX_CONDICOES_COMERCIAIS, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
+                                                                    @Html.TextAreaFor(m => m.CRPV_TX_CONDICOES_COMERCIAIS, new { @class = "form-control summernote", style = "width: 100%; height: 200px;", autofocus = true })
                                                                     @Html.ValidationMessageFor(m => m.CRPV_TX_CONDICOES_COMERCIAIS, "", new { @style = "color:red" })
                                                                 </div>
                                                             </div>
@@ -392,7 +393,7 @@
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                                     Número
-                                                                    @Html.TextBoxFor(m => m.CRPV_NR_NUMERO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                    @Html.TextBoxFor(m => m.CRPV_IN_NUMERO_GERADO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                                     Data Pedido
@@ -419,14 +420,14 @@
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                                 Introdução
                                                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                    @Html.TextAreaFor(m => m.CRPV_TX_INTRODUCAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
+                                                                    @Html.TextAreaFor(m => m.CRPV_TX_INTRODUCAO, new { @class = "form-control summernote", style = "width: 100%; height: 100px;", autofocus = true })
                                                                     @Html.ValidationMessageFor(m => m.CRPV_TX_INTRODUCAO, "", new { @style = "color:red" })
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                                 Outros Serviços Adicionais
                                                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                    @Html.TextAreaFor(m => m.CRPV_TX_OUTROS_ITENS, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
+                                                                    @Html.TextAreaFor(m => m.CRPV_TX_OUTROS_ITENS, new { @class = "form-control summernote", style = "width: 100%; height: 200px;", autofocus = true })
                                                                     @Html.ValidationMessageFor(m => m.CRPV_TX_OUTROS_ITENS, "", new { @style = "color:red" })
                                                                 </div>
                                                             </div>
@@ -497,7 +498,7 @@
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                                 Condições Comerciais
                                                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                    @Html.TextAreaFor(m => m.CRPV_TX_CONDICOES_COMERCIAIS, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
+                                                                    @Html.TextAreaFor(m => m.CRPV_TX_CONDICOES_COMERCIAIS, new { @class = "form-control summernote", style = "width: 100%; height: 200px;", autofocus = true })
                                                                     @Html.ValidationMessageFor(m => m.CRPV_TX_CONDICOES_COMERCIAIS, "", new { @style = "color:red" })
                                                                 </div>
                                                             </div>
@@ -658,11 +659,11 @@
                                                                         <th>Modelo</th>
                                                                         <th>Marca</th>
                                                                         <th>Fabricante</th>
+                                                                        <th>Código</th>
                                                                         <th>Unidade</th>
                                                                         <th>Quantidade</th>
                                                                         <th>Preço Unitário (R$)</th>
-                                                                        <th>Markup (%)</th>
-                                                                        <th>Preço Venda (R$)</th>
+                                                                        <th>Desconto (R$)</th>
                                                                         <th>Total (R$)</th>
                                                                         <th class="td-one-action">Ações</th>
                                                                     </tr>
@@ -680,6 +681,7 @@
                                                                                     <td>-</td>
                                                                                     <td>-</td>
                                                                                     <td>-</td>
+                                                                                    <td>-</td>
                                                                                 }
                                                                             else
                                                                             {
@@ -688,6 +690,7 @@
                                                                                 <td>@cond.PRODUTO.PROD_NM_MODELO</td>
                                                                                 <td>@cond.PRODUTO.PROD_NM_MARCA</td>
                                                                                 <td>@cond.PRODUTO.PROD_NM_FABRICANTE</td>
+                                                                                <td>@cond.PRODUTO.PROD_CD_CODIGO</td>
                                                                             }
                                                                             if (cond.UNIDADE != null)
                                                                             {
@@ -706,17 +709,16 @@
                                                                             {
                                                                                 <td>-</td>
                                                                             }
-                                                                            if (cond.CRPI_VL_MARKUP != null)
+                                                                            if (cond.CRPI_VL_DESCONTO != null)
                                                                             {
-                                                                                <td>@cond.CRPI_VL_MARKUP.Value</td>
+                                                                                <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPI_VL_DESCONTO.Value)</td>
                                                                             }
                                                                             else
                                                                             {
                                                                                 <td>-</td>
                                                                             }
-                                                                            if (cond.CRPI_VL_MARKUP != null & cond.CRPI_VL_PRECO_AJUSTADO != null)
+                                                                            if (cond.CRPI_VL_PRECO_AJUSTADO != null)
                                                                             {
-                                                                                <td>@CrossCutting.Formatters.DecimalFormatter((((cond.CRPI_VL_MARKUP.Value / 100) + 1) * (cond.CRPI_VL_PRECO_AJUSTADO.Value)))</td>
                                                                                 <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPI_VL_PRECO_TOTAL.Value)</td>
                                                                             }
                                                                             else
@@ -773,11 +775,12 @@
                                                                         <th>Modelo</th>
                                                                         <th>Marca</th>
                                                                         <th>Fabricante</th>
+                                                                        <th>Código</th>
                                                                         <th>Unidade</th>
                                                                         <th>Quantidade</th>
                                                                         <th>Preço Unitário (R$)</th>
-                                                                        <th>Markup (%)</th>
-                                                                        <th>Preço Venda (R$)</th>
+                                                                        <th>Desconto (R$)</th>
+                                                                        <th>Total (R$)</th>
                                                                         <th class="td-one-action">Ações</th>
                                                                     </tr>
                                                                 </thead>
@@ -794,6 +797,7 @@
                                                                                     <td>-</td>
                                                                                     <td>-</td>
                                                                                     <td>-</td>
+                                                                                    <td>-</td>
                                                                                 }
                                                                             else
                                                                             {
@@ -802,6 +806,7 @@
                                                                                 <td>@cond.PRODUTO.PROD_NM_MODELO</td>
                                                                                 <td>@cond.PRODUTO.PROD_NM_MARCA</td>
                                                                                 <td>@cond.PRODUTO.PROD_NM_FABRICANTE</td>
+                                                                                <td>@cond.PRODUTO.PROD_CD_CODIGO</td>
                                                                             }
                                                                             if (cond.UNIDADE != null)
                                                                             {
@@ -820,27 +825,28 @@
                                                                             {
                                                                                 <td>-</td>
                                                                             }
-                                                                            if (cond.CRPI_VL_MARKUP != null)
+                                                                            if (cond.CRPI_VL_DESCONTO != null)
                                                                             {
-                                                                                <td>@cond.CRPI_VL_MARKUP.Value</td>
+                                                                                <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPI_VL_DESCONTO.Value)</td>
                                                                             }
                                                                             else
                                                                             {
                                                                                 <td>-</td>
                                                                             }
-                                                                            if (cond.CRPI_VL_MARKUP != null & cond.CRPI_VL_PRECO_AJUSTADO != null)
+                                                                            if (cond.CRPI_VL_PRECO_AJUSTADO != null)
                                                                             {
-                                                                                <td>@CrossCutting.Formatters.DecimalFormatter((((cond.CRPI_VL_MARKUP.Value / 100) + 1) * (@cond.CRPI_VL_PRECO_AJUSTADO.Value)))</td>
+                                                                                <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPI_VL_PRECO_TOTAL.Value)</td>
                                                                             }
                                                                             else
                                                                             {
+                                                                                <td>-</td>
                                                                                 <td>-</td>
                                                                             }
                                                                             <td class="td-one-action">
                                                                                 @Html.TableLinkDetails(cond.CRPI_CD_ID, "EditarItemPedido","fa-edit", "Editar/Consultar")
                                                                                 @if (cond.CRPI_IN_ATIVO == 1)
 	                                                                            {
-                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalExcluir('/CRM/ExcluirItemPedido/@cond.CRPI_CD_ID')" title="Reativar"></span>
+                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/CRM/ExcluirItemPedido/@cond.CRPI_CD_ID')" title="Reativar"></span>
                                                                                 }
                                                                                 else
                                                                                 {   
@@ -939,18 +945,34 @@
 @section Styles {
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
     @Styles.Render("~/plugins/toastrStyles")
+    @*@Styles.Render("~/Content/plugins/summernote/summernote.css")*@
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+    @Styles.Render("~/plugins/summernoteStyles")
+    @Styles.Render("~/Content/plugins/summernote/summernote.css")
 }
 @section Scripts {
+    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.datetimepicker"></script>
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
     @Scripts.Render("~/plugins/toastr")
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
     @Scripts.Render("~/plugins/sparkline")
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    @*@Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")*@
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>    
+    <script src="~/Scripts/uploadAnexo.js"></script>
+    @Scripts.Render("~/plugins/summernote")
+    @Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")
 
     <script>
         $(function () {
@@ -976,7 +998,22 @@
             $('#modal').modal('show');
         }
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
 
+            $('.summernote').summernote();
+
+        });
+
+        var edit = function () {
+            $('.click2edit').summernote({ focus: true });
+        };
+
+        var save = function () {
+            var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
+            $('.click2edit').destroy();
+        };
+    </script>
     <script>
         function mostrarDesc(desc) {
             $('#modalDescBody').html(desc);

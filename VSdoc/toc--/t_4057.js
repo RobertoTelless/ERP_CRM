@@ -1,0 +1,1 @@
+c['4057']=[['4058',"EditarPedidoCompra(int) Method","topic_000000000000015D.html",0],['4059',"EditarPedidoCompra(PedidoCompraViewModel) Method","topic_000000000000015E.html",0]];

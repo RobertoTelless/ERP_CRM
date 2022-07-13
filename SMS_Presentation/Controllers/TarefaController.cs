@@ -230,11 +230,11 @@ namespace ERP_CRM_Solution.Controllers
 
             if (id == null)
             {
-                ViewBag.Listas = ((List<TAREFA>)Session["ListaTarefa"]).OrderBy(x => x.TARE_DT_CADASTRO).ToList<TAREFA>();
+                ViewBag.Listas = ((List<TAREFA>)Session["ListaTarefa"]).OrderByDescending(x => x.TARE_DT_CADASTRO.Date).ToList<TAREFA>();
             }
             else
             {
-                ViewBag.Listas = baseApp.GetByUser(usuario.USUA_CD_ID).Where(x => x.TARE_DT_REALIZADA == null).OrderBy(x => x.TARE_DT_CADASTRO).ToList<TAREFA>();
+                ViewBag.Listas = baseApp.GetByUser(usuario.USUA_CD_ID).Where(x => x.TARE_DT_REALIZADA == null).OrderByDescending(x => x.TARE_DT_CADASTRO).ToList<TAREFA>();
             }
 
             ViewBag.Title = "Tarefas";
@@ -263,7 +263,6 @@ namespace ERP_CRM_Solution.Controllers
 
             // Abre view
             Session["MensTarefa"] = 0;
-            Session["VoltaTarefa"] = 0;
             objeto = new TAREFA();
             objeto.TARE_DT_CADASTRO = DateTime.Today.Date;
             return View(objeto);
@@ -337,10 +336,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            if ((Int32)Session["VoltaTarefa"] == 10)
-            {
-                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
-            }
+            //if ((Int32)Session["VoltaTarefa"] == 10)
+            //{
+            //    return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
+            //}
             if ((Int32)Session["VoltaKanban"] == 1)
             {
                 Session["VoltaKanban"] = 0;
@@ -462,12 +461,12 @@ namespace ERP_CRM_Solution.Controllers
                                 // Verifica retorno
                                 if (volta == 1)
                                 {
-                                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0058", CultureInfo.CurrentCulture));
+                                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0058", CultureInfo.CurrentCulture));
                                     return View(vm);
                                 }
                                 if (volta == 2)
                                 {
-                                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0094", CultureInfo.CurrentCulture));
+                                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0094", CultureInfo.CurrentCulture));
                                     return View(vm);
                                 }
                             }
@@ -545,7 +544,7 @@ namespace ERP_CRM_Solution.Controllers
                         // Verifica retorno
                         if (volta == 1)
                         {
-                            ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0058", CultureInfo.CurrentCulture));
+                            ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0058", CultureInfo.CurrentCulture));
                             return View(vm);
                         }
 
@@ -636,11 +635,11 @@ namespace ERP_CRM_Solution.Controllers
             // Mensagens
             if ((Int32)Session["MensTarefa"] == 10)
             {
-                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
             }
             if ((Int32)Session["MensTarefa"] == 11)
             {
-                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
             }
 
             TAREFA item = baseApp.GetItemById(id);
@@ -690,12 +689,12 @@ namespace ERP_CRM_Solution.Controllers
                     // Verifica retorno
                     if (volta == 1)
                     {
-                        ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0013", CultureInfo.CurrentCulture));
+                        ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0013", CultureInfo.CurrentCulture));
                         return View(vm);
                     }
                     if (volta == 2)
                     {
-                        ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0014", CultureInfo.CurrentCulture));
+                        ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0014", CultureInfo.CurrentCulture));
                         return View(vm);
                     }
 
@@ -751,11 +750,11 @@ namespace ERP_CRM_Solution.Controllers
                 // Verifica retorno
                 if (volta == 1)
                 {
-                    return Json(PlatMensagens_Resources.ResourceManager.GetString("M0013", CultureInfo.CurrentCulture));
+                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0013", CultureInfo.CurrentCulture));
                 }
                 if (volta == 2)
                 {
-                    return Json(PlatMensagens_Resources.ResourceManager.GetString("M0014", CultureInfo.CurrentCulture));
+                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0014", CultureInfo.CurrentCulture));
                 }
 
                 Session["ListaTarefa"] = null;

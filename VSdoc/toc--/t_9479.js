@@ -1,0 +1,1 @@
+c['9479']=[['9480',"FORMA_FRETE Constructor","topic_0000000000002A7A.html",0],['9481',"Properties","topic_0000000000002A79_props--.html",1]];

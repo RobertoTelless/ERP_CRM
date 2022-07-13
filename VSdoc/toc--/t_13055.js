@@ -1,0 +1,1 @@
+c['13055']=[['13056',"Create(CLIENTE) Method","topic_0000000000001DA2.html",0],['13057',"Create(CLIENTE, LOG) Method","topic_0000000000001DA1.html",0]];

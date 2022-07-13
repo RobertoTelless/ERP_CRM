@@ -165,7 +165,7 @@
                         {
                             @Html.ButtonLinkIndex(text: "Voltar", controller: "CRM", action: "VerAcoesUsuarioCRMPrevia")
                         }
-                        @Html.ButtonLinkIndex(text: "Dashboard CRM", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
+                        @Html.ButtonLinkIndex(text: "Dashboard", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
                     </div>
                     <div class="row">
                         @if ((ViewBag.Lista as List<EntitiesServices.Model.CRM_ACAO>).Count > 0)
@@ -243,6 +243,7 @@
                                                 <td class="td-one-action">
                                                     @if (cond.CRAC_IN_STATUS == 1 || cond.CRAC_IN_STATUS == 2)
                                                     {
+                                                        @Html.TableLinkDetails(cond.CRAC_CD_ID, "EncerrarAcao", "fa-check", "Encerrar")
                                                         @Html.TableLinkDetails(cond.CRAC_CD_ID, "EditarAcao", "fa-edit", "Editar/Consultar")
                                                     }
                                                     else if (cond.CRAC_IN_STATUS == 3)

@@ -1,0 +1,1 @@
+c['524']=[['525',"ValidateEdit(FICHA_TECNICA, FICHA_TECNICA) Method","topic_00000000000011B8.html",0],['526',"ValidateEdit(FICHA_TECNICA, FICHA_TECNICA, USUARIO) Method","topic_00000000000011B7.html",0]];

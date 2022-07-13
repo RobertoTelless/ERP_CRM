@@ -1,0 +1,1 @@
+c['1996']=[['1997',"ValidateEnvioCotacao(PEDIDO_COMPRA, List\u003cAttachmentForn\u003e, string, USUARIO, List\u003cFORNECEDOR\u003e) Method","topic_00000000000016F1.html",0],['1998',"ValidateEnvioCotacao(PEDIDO_COMPRA, string, USUARIO) Method","topic_00000000000016F2.html",0]];

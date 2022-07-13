@@ -1,0 +1,1 @@
+search_result['18496']=["topic_0000000000003227.html","EquipamentoRepository.CalcularDepreciados Method",""];

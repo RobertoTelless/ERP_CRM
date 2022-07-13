@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"SOLUTION-WIDE PROPERTIES Reference","topic_000000000000341C.html"],['11231',"Inspinia_MVC5 Namespace","topic_0000000000000716.html"],['11232',"HMTLHelperExtensions Class","topic_0000000000000717.html"],['11233',"Methods","topic_0000000000000717_methods--.html"],['11234',"IsSelected Method","topic_0000000000000718.html"]];

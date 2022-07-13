@@ -1,0 +1,1 @@
+c['7175']=[['7176',"PRBC_CD_ID Property","topic_0000000000000DE7.html",0],['7177',"PRBC_IN_ATIVO Property","topic_0000000000000DEA.html",0],['7178',"PRBC_NR_BARCODE Property","topic_0000000000000DE9.html",0],['7179',"PRODUTO Property","topic_0000000000000DEB.html",0],['7180',"PROD_CD_ID Property","topic_0000000000000DE8.html",0]];

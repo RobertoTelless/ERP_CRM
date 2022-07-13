@@ -63,6 +63,7 @@ namespace EntitiesServices.Model
         public Nullable<int> CRPR_IN_GERAR_CR { get; set; }
         public Nullable<int> CRPR_IN_GEROU_NF { get; set; }
         public string CRPR_NR_NOTA_FISCAL { get; set; }
+        public Nullable<int> CRPR_IN_NUMERO_GERADO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

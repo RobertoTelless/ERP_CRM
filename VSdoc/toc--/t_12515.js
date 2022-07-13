@@ -1,0 +1,1 @@
+c['12515']=[['12516',"TelefoneService Constructor","topic_0000000000001C4E.html",0],['12517',"Methods","topic_0000000000001C4C_methods--.html",1],['12533',"Fields","topic_0000000000001C4C_vars--.html",1]];

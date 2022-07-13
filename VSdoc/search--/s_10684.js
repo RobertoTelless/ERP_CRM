@@ -1,0 +1,1 @@
+search_result['10684']=["topic_0000000000001DD9.html","IContaBancariaService.GetLancamentosFaixa Method",""];

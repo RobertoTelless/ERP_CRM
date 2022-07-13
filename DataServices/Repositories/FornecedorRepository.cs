@@ -17,7 +17,7 @@ namespace DataServices.Repositories
         public FORNECEDOR CheckExist(FORNECEDOR conta, Int32 idAss)
         {
             IQueryable<FORNECEDOR> query = Db.FORNECEDOR;
-            query = query.Where(p => p.FORN_NM_NOME == conta.FORN_NM_NOME);
+            query = query.Where(p => p.FORN_NM_NOME.ToUpper() == conta.FORN_NM_NOME.ToUpper());
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.FirstOrDefault();
         }

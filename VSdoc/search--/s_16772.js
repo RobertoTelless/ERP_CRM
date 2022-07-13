@@ -1,0 +1,1 @@
+search_result['16772']=["topic_0000000000002DD2.html","PRODUTO.PROD_QN_QUANTIDADE_MINIMA Property",""];

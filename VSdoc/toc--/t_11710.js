@@ -1,0 +1,1 @@
+c['11710']=[['11711',"Create Method","topic_0000000000001960_overloads--.html",1],['11714',"Delete Method","topic_0000000000001964.html",0],['11715',"Edit Method","topic_0000000000001962_overloads--.html",1],['11718',"GetAllItens Method","topic_000000000000195F.html",0],['11719',"GetItemById Method","topic_000000000000195E.html",0]];

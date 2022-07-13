@@ -1,0 +1,1 @@
+search_result['13923']=["topic_0000000000002540.html","ASSINANTE.RESUMO_VENDA Property",""];

@@ -1016,7 +1016,7 @@
                                                                             if (cond.CRPR_IN_STATUS == 2 || cond.CRPR_IN_STATUS == 1)
                                                                             {
                                                                                 <tr style="background-color:lightyellow; color: green">
-                                                                                    <td>@cond.CRPR_NR_NUMERO</td>
+                                                                                    <td>@cond.CRPR_IN_NUMERO_GERADO</td>
                                                                                     <td>@cond.CRPR_DT_PROPOSTA.ToShortDateString()</td>
                                                                                     <td>@cond.CRPR_DT_VALIDADE.ToShortDateString()</td>
                                                                                     @if (cond.CRPR_DT_ENVIO != null)
@@ -1117,7 +1117,7 @@
                                                                             else
                                                                             {
                                                                                 <tr>
-                                                                                    <td>@cond.CRPR_NR_NUMERO</td>
+                                                                                    <td>@cond.CRPR_IN_NUMERO_GERADO</td>
                                                                                     <td>@cond.CRPR_DT_PROPOSTA.ToShortDateString()</td>
                                                                                     <td>@cond.CRPR_DT_VALIDADE.ToShortDateString()</td>
                                                                                     @if (cond.CRPR_DT_ENVIO != null)
@@ -1286,7 +1286,7 @@
                                                                             if (cond.CRPV_IN_STATUS == 2 || cond.CRPV_IN_STATUS == 1)
                                                                             {
                                                                                 <tr style="background-color:lightyellow; color: green">
-                                                                                    <td>@cond.CRPV_NR_NUMERO</td>
+                                                                                    <td>@cond.CRPV_IN_NUMERO_GERADO.ToString()</td>
                                                                                     <td>@cond.CRPV_DT_PEDIDO.ToShortDateString()</td>
                                                                                     <td>@cond.CRPV_DT_VALIDADE.ToShortDateString()</td>
                                                                                     @if (cond.CRPV_DT_ENVIO != null)
@@ -1387,7 +1387,7 @@
                                                                             else
                                                                             {
                                                                                 <tr>
-                                                                                    <td>@cond.CRPV_NR_NUMERO</td>
+                                                                                    <td>@cond.CRPV_IN_NUMERO_GERADO.ToString()</td>
                                                                                     <td>@cond.CRPV_DT_PEDIDO.ToShortDateString()</td>
                                                                                     <td>@cond.CRPV_DT_VALIDADE.ToShortDateString()</td>
                                                                                     @if (cond.CRPV_DT_ENVIO != null)
@@ -1539,7 +1539,7 @@
                                                             </div>
                                                             <div class="ibox-content"  style="color: black">
                                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                                    <div class="col-lg-1 col-md-1 col-xs-12">
+                                                                    <div class="col-lg-1 col-md-1 col-xs-12" style="color:green; font-weight: bold">
                                                                         Número
                                                                         @Html.TextBoxFor(m => m.NumeroProposta, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                                     </div>

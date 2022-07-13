@@ -4,186 +4,187 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0417623c4d6546ab9cb0d0a592d12d75" Name="Diagram1" ZoomLevel="78">
-        <EntityTypeShape EntityType="ERP_CRMModel.AGENDA" Width="1.5" PointX="7.5" PointY="247.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.AGENDA_ANEXO" Width="1.5" PointX="9.75" PointY="236.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.AGENDA_VINCULO" Width="1.5" PointX="15.75" PointY="243.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE" Width="1.5" PointX="3" PointY="247" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_ANEXO" Width="1.5" PointX="5.25" PointY="198.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_CONSUMO" Width="1.5" PointX="5.25" PointY="201.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_PAGAMENTO" Width="1.5" PointX="8.25" PointY="256.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_PLANO" Width="1.5" PointX="5.25" PointY="259.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_QUADRO_SOCIETARIO" Width="1.5" PointX="5.25" PointY="211.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO" Width="1.5" PointX="10.5" PointY="250.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_ACOMPANHAMENTO" Width="1.5" PointX="26.75" PointY="248.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_AGENDA" Width="1.5" PointX="21.75" PointY="241.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_ANEXO" Width="1.5" PointX="12.75" PointY="272.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_CRM" Width="1.5" PointX="24.75" PointY="240.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.BANCO" Width="1.5" PointX="5.25" PointY="225.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CARGO" Width="1.5" PointX="5.25" PointY="228.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_AGENDA" Width="1.5" PointX="5.25" PointY="231.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_ATENDIMENTO" Width="1.5" PointX="5.25" PointY="234.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_CLIENTE" Width="1.5" PointX="5.25" PointY="237.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_EQUIPAMENTO" Width="1.5" PointX="5.25" PointY="240.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_FORNECEDOR" Width="1.5" PointX="5.25" PointY="243.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_NOTIFICACAO" Width="1.5" PointX="25.5" PointY="234.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_ORDEM_SERVICO" Width="1.5" PointX="5.25" PointY="246.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_PRODUTO" Width="1.5" PointX="5.25" PointY="249.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_SERVICO" Width="1.5" PointX="5.25" PointY="253.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_TELEFONE" Width="1.5" PointX="5.25" PointY="256.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_USUARIO" Width="1.5" PointX="11.25" PointY="231.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CENTRO_CUSTO" Width="1.5" PointX="39.25" PointY="273.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLASSE" Width="1.5" PointX="7.5" PointY="276.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE" Width="1.5" PointX="21.5" PointY="270.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_ANEXO" Width="1.5" PointX="23.75" PointY="278.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_CONTATO" Width="1.5" PointX="23.75" PointY="282.25" IsExpanded="true" />
+      <Diagram DiagramId="1f4874d2b87f47afa29bfa132e26f6f9" Name="Diagram1" ZoomLevel="78">
+        <EntityTypeShape EntityType="ERP_CRMModel.AGENDA" Width="1.5" PointX="7.5" PointY="251.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.AGENDA_ANEXO" Width="1.5" PointX="9.75" PointY="237.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.AGENDA_VINCULO" Width="1.5" PointX="27.75" PointY="252" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE" Width="1.5" PointX="3" PointY="249.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_ANEXO" Width="1.5" PointX="5.25" PointY="200.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_ANOTACAO" Width="1.5" PointX="8.25" PointY="259.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_CONSUMO" Width="1.5" PointX="5.25" PointY="207.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_PAGAMENTO" Width="1.5" PointX="8.25" PointY="263" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_PLANO" Width="1.5" PointX="10.25" PointY="255.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_QUADRO_SOCIETARIO" Width="1.5" PointX="5.25" PointY="217.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO" Width="1.5" PointX="10.5" PointY="258.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_ACOMPANHAMENTO" Width="1.5" PointX="21.75" PointY="242.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_AGENDA" Width="1.5" PointX="15.75" PointY="269.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_ANEXO" Width="1.5" PointX="12.75" PointY="278.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ATENDIMENTO_CRM" Width="1.5" PointX="24.75" PointY="271" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.BANCO" Width="1.5" PointX="5.25" PointY="231.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CARGO" Width="1.5" PointX="5.25" PointY="234.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_AGENDA" Width="1.5" PointX="5.25" PointY="237.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_ATENDIMENTO" Width="1.5" PointX="5.25" PointY="240.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_CLIENTE" Width="1.5" PointX="5.25" PointY="243.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_EQUIPAMENTO" Width="1.5" PointX="5.25" PointY="246.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_FORNECEDOR" Width="1.5" PointX="5.25" PointY="249.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_NOTIFICACAO" Width="1.5" PointX="25.5" PointY="233.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_ORDEM_SERVICO" Width="1.5" PointX="5.25" PointY="252.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_PRODUTO" Width="1.5" PointX="5.25" PointY="255.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_SERVICO" Width="1.5" PointX="5.25" PointY="259.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_TELEFONE" Width="1.5" PointX="5.25" PointY="262.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CATEGORIA_USUARIO" Width="1.5" PointX="11.25" PointY="233.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CENTRO_CUSTO" Width="1.5" PointX="32.25" PointY="278.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLASSE" Width="1.5" PointX="7.5" PointY="280.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE" Width="1.5" PointX="15.75" PointY="275" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_ANEXO" Width="1.5" PointX="18" PointY="289.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_CONTATO" Width="1.5" PointX="18" PointY="292.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_NEW" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_QUADRO_SOCIETARIO" Width="1.5" PointX="23.75" PointY="285.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_REFERENCIA" Width="1.5" PointX="23.75" PointY="289.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_TAG" Width="1.5" PointX="23.75" PointY="292.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONFIGURACAO" Width="1.5" PointX="5.25" PointY="263.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_BANCO" Width="1.5" PointX="10.5" PointY="240" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_BANCO_CONTATO" Width="1.5" PointX="12.75" PointY="238.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_BANCO_LANCAMENTO" Width="1.5" PointX="12.75" PointY="235" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR" Width="1.5" PointX="21.75" PointY="249.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR_ANEXO" Width="1.5" PointX="24" PointY="237.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR_PARCELA" Width="1.5" PointX="33" PointY="240.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR_RATEIO" Width="1.5" PointX="35" PointY="253.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER" Width="1.5" PointX="24.5" PointY="248" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER_ANEXO" Width="1.5" PointX="26.75" PointY="237.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER_PARCELA" Width="1.5" PointX="26.75" PointY="270.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER_RATEIO" Width="1.5" PointX="32.75" PointY="247" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM" Width="1.5" PointX="32.75" PointY="290.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_ACAO" Width="1.5" PointX="38" PointY="289" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_ANEXO" Width="1.5" PointX="35" PointY="298" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMENTARIO" Width="1.5" PointX="42" PointY="272.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL" Width="1.5" PointX="28.75" PointY="285.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_ACAO" Width="1.5" PointX="35" PointY="288.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_ANEXO" Width="1.5" PointX="31" PointY="286.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_COMENTARIO_NOVA" Width="1.5" PointX="41" PointY="269.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_CONTATO" Width="1.5" PointX="31" PointY="302.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_ITEM" Width="1.5" PointX="31" PointY="280.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_CONTATO" Width="1.5" PointX="35" PointY="304.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_ORIGEM" Width="1.5" PointX="5.25" PointY="269.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PEDIDO_VENDA" Width="1.5" PointX="41" PointY="279.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PEDIDO_VENDA_ACOMPANHAMENTO" Width="1.5" PointX="43.25" PointY="265.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PEDIDO_VENDA_ANEXO" Width="1.5" PointX="43.25" PointY="286.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PEDIDO_VENDA_ITEM" Width="1.5" PointX="44.25" PointY="271.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PROPOSTA" Width="1.5" PointX="41" PointY="291.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PROPOSTA_ACOMPANHAMENTO" Width="1.5" PointX="46.25" PointY="268.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PROPOSTA_ANEXO" Width="1.5" PointX="43.25" PointY="298.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.DEPARTAMENTO" Width="1.5" PointX="5.25" PointY="272.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.DOCUMENTO" Width="1.5" PointX="23.75" PointY="295.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.DOCUMENTO_HISTORICO" Width="1.5" PointX="34" PointY="280.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.EMAIL_AGENDAMENTO" Width="1.5" PointX="26.75" PointY="276.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.EQUIPAMENTO" Width="1.5" PointX="16.5" PointY="247.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.EQUIPAMENTO_ANEXO" Width="1.5" PointX="18.75" PointY="249.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.EQUIPAMENTO_MANUTENCAO" Width="1.5" PointX="26.75" PointY="256.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FICHA_TECNICA" Width="1.5" PointX="24.75" PointY="265.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FICHA_TECNICA_DETALHE" Width="1.5" PointX="35" PointY="272.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FILIAL" Width="1.5" PointX="19.25" PointY="252.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORMA_ENVIO" Width="1.5" PointX="5.25" PointY="276.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORMA_FRETE" Width="1.5" PointX="5.25" PointY="279.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORMA_PAGAMENTO" Width="1.5" PointX="18.75" PointY="242.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA" Width="1.5" PointX="21.75" PointY="261.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA_ACAO" Width="1.5" PointX="35" PointY="248.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA_ANEXO" Width="1.5" PointX="24" PointY="275.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA_COMENTARIO" Width="1.5" PointX="32" PointY="264.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR" Width="1.5" PointX="7.5" PointY="260.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_ANEXO" Width="1.5" PointX="9.75" PointY="271.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_COMENTARIO" Width="1.5" PointX="18.75" PointY="263.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_CONTATO" Width="1.5" PointX="9.75" PointY="274.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_MENSAGEM" Width="1.5" PointX="24.75" PointY="261.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_QUADRO_SOCIETARIO" Width="1.5" PointX="9.75" PointY="277.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO" Width="1.5" PointX="21.75" PointY="244.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO_CC" Width="1.5" PointX="5.25" PointY="293.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO_CLIENTE" Width="1.5" PointX="32" PointY="272.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO_DOCUMENTO" Width="1.5" PointX="5.25" PointY="296.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ITEM_PEDIDO_COMPRA" Width="1.5" PointX="39.75" PointY="263.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ITEM_PEDIDO_VENDA" Width="1.5" PointX="40" PointY="258.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.LOG" Width="1.5" PointX="24.75" PointY="244.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_ANEXO" Width="1.5" PointX="18" PointY="295.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_AUTOMACAO" Width="1.5" PointX="26" PointY="287.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_AUTOMACAO_DATAS" Width="1.5" PointX="28.25" PointY="297.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGENS" Width="1.5" PointX="15.75" PointY="289.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGENS_DESTINOS" Width="1.5" PointX="32" PointY="275.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.METADADO" Width="1.5" PointX="9.75" PointY="300.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MOTIVO_CANCELAMENTO" Width="1.5" PointX="5.25" PointY="300" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MOTIVO_ENCERRAMENTO" Width="1.5" PointX="5.25" PointY="303.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.MOVIMENTO_ESTOQUE_PRODUTO" Width="1.5" PointX="27.5" PointY="261.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.NIVEL_SEGURANCA" Width="1.5" PointX="5.25" PointY="306.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.NOMENCLATURA_BRAS_SERVICOS" Width="1.5" PointX="11.25" PointY="281.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.NOTICIA" Width="1.5" PointX="5.25" PointY="309.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.NOTICIA_COMENTARIO" Width="1.5" PointX="15.75" PointY="281" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.NOTIFICACAO" Width="1.5" PointX="27.75" PointY="242.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.NOTIFICACAO_ANEXO" Width="1.5" PointX="30" PointY="243.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO" Width="1.5" PointX="29.75" PointY="261.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_ACOMPANHAMENTO" Width="1.5" PointX="37" PointY="257.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_AGENDA" Width="1.5" PointX="15.75" PointY="240.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_ANEXO" Width="1.5" PointX="32" PointY="268.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_COMENTARIOS" Width="1.5" PointX="37" PointY="261.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_PRODUTO" Width="1.5" PointX="37" PointY="265.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_SERVICO" Width="1.5" PointX="38" PointY="269.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_COMPRA" Width="1.5" PointX="32.5" PointY="256.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_COMPRA_ACOMPANHAMENTO" Width="1.5" PointX="37.75" PointY="253" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_COMPRA_ANEXO" Width="1.5" PointX="34.75" PointY="276.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA" Width="1.5" PointX="34.75" PointY="258.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA_ACOMPANHAMENTO" Width="1.5" PointX="40" PointY="254.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA_ANEXO" Width="1.5" PointX="37" PointY="275.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA_PARCELA" Width="1.5" PointX="37" PointY="279.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PERFIL" Width="1.5" PointX="11.25" PointY="228.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PERIODICIDADE" Width="1.5" PointX="32.5" PointY="236.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PERIODICIDADE_TAREFA" Width="1.5" PointX="5.25" PointY="314.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PLANO" Width="1.5" PointX="6" PointY="283.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PLANO_PERIODICIDADE" Width="1.5" PointX="3.75" PointY="286.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.POSICAO" Width="1.5" PointX="5.25" PointY="317.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRECO_PRODUTO" Width="1.5" PointX="27.5" PointY="267" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO" Width="1.5" PointX="16.5" PointY="255.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_ANEXO" Width="1.5" PointX="18.75" PointY="274.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_BARCODE" Width="1.5" PointX="18.75" PointY="278.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_ESTOQUE_FILIAL" Width="1.5" PointX="29.5" PointY="257" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_FORNECEDOR" Width="1.5" PointX="18.75" PointY="267.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_GRADE" Width="1.5" PointX="18.75" PointY="292" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_KIT" Width="1.5" PointX="18.75" PointY="288.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_ORIGEM" Width="1.5" PointX="14.25" PointY="284.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_TABELA_PRECO" Width="1.5" PointX="24.5" PointY="270.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.REGIME_TRIBUTARIO" Width="1.5" PointX="19.25" PointY="284.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.RESUMO_VENDA" Width="1.5" PointX="5.25" PointY="320.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO" Width="1.5" PointX="13.5" PointY="264.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO_ANEXO" Width="1.5" PointX="15.75" PointY="277.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO_TABELA_PRECO" Width="1.5" PointX="27.5" PointY="252.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.SEXO" Width="1.5" PointX="19.25" PointY="298.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.SUBCATEGORIA_PRODUTO" Width="1.5" PointX="10.5" PointY="261.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.SUBGRUPO" Width="1.5" PointX="29" PointY="273.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TAMANHO" Width="1.5" PointX="5.25" PointY="323.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA" Width="1.5" PointX="15.75" PointY="297.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_ACOMPANHAMENTO" Width="1.5" PointX="19" PointY="271" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_ANEXO" Width="1.5" PointX="18" PointY="302.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_NOTIFICACAO" Width="1.5" PointX="26" PointY="280.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_VINCULO" Width="1.5" PointX="18" PointY="281.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TELEFONE" Width="1.5" PointX="10.5" PointY="265.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE" Width="1.5" PointX="5.25" PointY="326.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE_EMAIL" Width="1.5" PointX="5.25" PointY="331" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE_PROPOSTA" Width="1.5" PointX="5.25" PointY="335.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE_SMS" Width="1.5" PointX="5.25" PointY="339.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_ACAO" Width="1.5" PointX="5.25" PointY="343.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_CONTA" Width="1.5" PointX="8.25" PointY="243" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_CONTRIBUINTE" Width="1.5" PointX="19.25" PointY="306.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_CRM" Width="1.5" PointX="5.25" PointY="346.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_DOCUMENTO" Width="1.5" PointX="5.25" PointY="349.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_GRUPO" Width="1.5" PointX="5.25" PointY="352.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_METADADO" Width="1.5" PointX="5.25" PointY="355.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_PESSOA" Width="1.5" PointX="0.75" PointY="252.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_TAREFA" Width="1.5" PointX="5.25" PointY="358.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_TRANSPORTE" Width="1.5" PointX="28.25" PointY="234.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_VEICULO" Width="1.5" PointX="28.25" PointY="231" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TRANSPORTADORA" Width="1.5" PointX="30.5" PointY="247.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.TRANSPORTADORA_ANEXO" Width="1.5" PointX="32.75" PointY="250.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.UF" Width="1.5" PointX="0.75" PointY="256.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.UNIDADE" Width="1.5" PointX="14.25" PointY="230.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.USUARIO" Width="1.5" PointX="13.5" PointY="242.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.USUARIO_ANEXO" Width="1.5" PointX="15.75" PointY="305.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CRMModel.USUARIO_FUNCIONARIO" Width="1.5" PointX="15.75" PointY="308.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_QUADRO_SOCIETARIO" Width="1.5" PointX="18" PointY="296.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_REFERENCIA" Width="1.5" PointX="18" PointY="299.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CLIENTE_TAG" Width="1.5" PointX="18" PointY="302.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONFIGURACAO" Width="1.5" PointX="5.25" PointY="269.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_BANCO" Width="1.5" PointX="10.5" PointY="244.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_BANCO_CONTATO" Width="1.5" PointX="12.75" PointY="244.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_BANCO_LANCAMENTO" Width="1.5" PointX="12.75" PointY="240.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR" Width="1.5" PointX="21.75" PointY="251.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR_ANEXO" Width="1.5" PointX="24" PointY="240.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR_PARCELA" Width="1.5" PointX="33" PointY="256.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_PAGAR_RATEIO" Width="1.5" PointX="33" PointY="250.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER" Width="1.5" PointX="24.75" PointY="248.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER_ANEXO" Width="1.5" PointX="27" PointY="242.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER_PARCELA" Width="1.5" PointX="27" PointY="236.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CONTA_RECEBER_RATEIO" Width="1.5" PointX="33" PointY="253.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM" Width="1.5" PointX="24" PointY="285" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_ACAO" Width="1.5" PointX="29.25" PointY="294.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_ANEXO" Width="1.5" PointX="26.25" PointY="292.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMENTARIO" Width="1.5" PointX="32.25" PointY="271.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL" Width="1.5" PointX="24" PointY="297.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_ACAO" Width="1.5" PointX="29.25" PointY="300.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_ANEXO" Width="1.5" PointX="26.25" PointY="304.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_COMENTARIO_NOVA" Width="1.5" PointX="29.25" PointY="282.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_CONTATO" Width="1.5" PointX="26.25" PointY="311.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_COMERCIAL_ITEM" Width="1.5" PointX="29.25" PointY="286.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_CONTATO" Width="1.5" PointX="26.25" PointY="299.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_ORIGEM" Width="1.5" PointX="5.25" PointY="275.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PEDIDO_VENDA" Width="1.5" PointX="32.25" PointY="284.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PEDIDO_VENDA_ACOMPANHAMENTO" Width="1.5" PointX="39.5" PointY="271" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PEDIDO_VENDA_ANEXO" Width="1.5" PointX="34.5" PointY="292.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PEDIDO_VENDA_ITEM" Width="1.5" PointX="39.5" PointY="275.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PROPOSTA" Width="1.5" PointX="32.25" PointY="297.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PROPOSTA_ACOMPANHAMENTO" Width="1.5" PointX="34.5" PointY="282.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.CRM_PROPOSTA_ANEXO" Width="1.5" PointX="34.5" PointY="305.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.DEPARTAMENTO" Width="1.5" PointX="5.25" PointY="279" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.DOCUMENTO" Width="1.5" PointX="20.75" PointY="301" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.DOCUMENTO_HISTORICO" Width="1.5" PointX="35" PointY="278" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.EMAIL_AGENDAMENTO" Width="1.5" PointX="24" PointY="278.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.EQUIPAMENTO" Width="1.5" PointX="16.5" PointY="251.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.EQUIPAMENTO_ANEXO" Width="1.5" PointX="18.75" PointY="245.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.EQUIPAMENTO_MANUTENCAO" Width="1.5" PointX="27.75" PointY="254.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FICHA_TECNICA" Width="1.5" PointX="30.75" PointY="258.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FICHA_TECNICA_DETALHE" Width="1.5" PointX="38" PointY="262.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FILIAL" Width="1.5" PointX="8.25" PointY="240.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMA_ENVIO" Width="1.5" PointX="5.25" PointY="282.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMA_FRETE" Width="1.5" PointX="5.25" PointY="285.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMA_PAGAMENTO" Width="1.5" PointX="21.75" PointY="263.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA" Width="1.5" PointX="24.75" PointY="262" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA_ACAO" Width="1.5" PointX="36" PointY="258.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA_ANEXO" Width="1.5" PointX="27" PointY="277" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORMULARIO_RESPOSTA_COMENTARIO" Width="1.5" PointX="36" PointY="254.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR" Width="1.5" PointX="16.5" PointY="259.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_ANEXO" Width="1.5" PointX="18.75" PointY="272.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_COMENTARIO" Width="1.5" PointX="27.75" PointY="259.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_CONTATO" Width="1.5" PointX="18.75" PointY="275.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_MENSAGEM" Width="1.5" PointX="27.75" PointY="262.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.FORNECEDOR_QUADRO_SOCIETARIO" Width="1.5" PointX="18.75" PointY="279.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO" Width="1.5" PointX="15.75" PointY="246.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO_CC" Width="1.5" PointX="5.25" PointY="299.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO_CLIENTE" Width="1.5" PointX="24" PointY="274" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.GRUPO_DOCUMENTO" Width="1.5" PointX="5.25" PointY="303" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ITEM_PEDIDO_COMPRA" Width="1.5" PointX="38.25" PointY="253.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ITEM_PEDIDO_VENDA" Width="1.5" PointX="40.25" PointY="263.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.LOG" Width="1.5" PointX="21.75" PointY="247" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_ANEXO" Width="1.5" PointX="18" PointY="306" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_AUTOMACAO" Width="1.5" PointX="21" PointY="293.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGEM_AUTOMACAO_DATAS" Width="1.5" PointX="23.25" PointY="309.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGENS" Width="1.5" PointX="15.75" PointY="295" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MENSAGENS_DESTINOS" Width="1.5" PointX="27" PointY="280.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.METADADO" Width="1.5" PointX="9.75" PointY="304.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MOTIVO_CANCELAMENTO" Width="1.5" PointX="5.25" PointY="306.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MOTIVO_ENCERRAMENTO" Width="1.5" PointX="5.25" PointY="309.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.MOVIMENTO_ESTOQUE_PRODUTO" Width="1.5" PointX="27.75" PointY="245.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NIVEL_SEGURANCA" Width="1.5" PointX="5.25" PointY="312.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NOMENCLATURA_BRAS_SERVICOS" Width="1.5" PointX="8.25" PointY="271.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NOTICIA" Width="1.5" PointX="5.25" PointY="315.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NOTICIA_COMENTARIO" Width="1.5" PointX="18.75" PointY="285.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NOTIFICACAO" Width="1.5" PointX="27.75" PointY="271.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.NOTIFICACAO_ANEXO" Width="1.5" PointX="30" PointY="279.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO" Width="1.5" PointX="30" PointY="267.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_ACOMPANHAMENTO" Width="1.5" PointX="37.25" PointY="266.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_AGENDA" Width="1.5" PointX="17.75" PointY="242.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_ANEXO" Width="1.5" PointX="32.25" PointY="275.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_COMENTARIOS" Width="1.5" PointX="32.25" PointY="268" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_PRODUTO" Width="1.5" PointX="38.25" PointY="258.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.ORDEM_SERVICO_SERVICO" Width="1.5" PointX="37.25" PointY="271.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_COMPRA" Width="1.5" PointX="33" PointY="242.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_COMPRA_ACOMPANHAMENTO" Width="1.5" PointX="38.25" PointY="250" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_COMPRA_ANEXO" Width="1.5" PointX="35.25" PointY="251.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA" Width="1.5" PointX="35" PointY="263.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA_ACOMPANHAMENTO" Width="1.5" PointX="41.25" PointY="259.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA_ANEXO" Width="1.5" PointX="37.25" PointY="276.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PEDIDO_VENDA_PARCELA" Width="1.5" PointX="37.25" PointY="279.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PERFIL" Width="1.5" PointX="11.25" PointY="282.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PERIODICIDADE" Width="1.5" PointX="22.5" PointY="236.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PERIODICIDADE_TAREFA" Width="1.5" PointX="5.25" PointY="320.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PLANO" Width="1.5" PointX="8" PointY="191" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PLANO_PERIODICIDADE" Width="1.5" PointX="5.75" PointY="194.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.POSICAO" Width="1.5" PointX="5.25" PointY="323.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRECO_PRODUTO" Width="1.5" PointX="30.75" PointY="253.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO" Width="1.5" PointX="19.5" PointY="249.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_ANEXO" Width="1.5" PointX="21.75" PointY="269.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_BARCODE" Width="1.5" PointX="21.75" PointY="272.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_ESTOQUE_FILIAL" Width="1.5" PointX="30.75" PointY="249.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_FORNECEDOR" Width="1.5" PointX="27.75" PointY="267.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_GRADE" Width="1.5" PointX="21.75" PointY="289.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_KIT" Width="1.5" PointX="21.75" PointY="283.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_ORIGEM" Width="1.5" PointX="17.25" PointY="234.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.PRODUTO_TABELA_PRECO" Width="1.5" PointX="30.75" PointY="263.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.REGIME_TRIBUTARIO" Width="1.5" PointX="13.5" PointY="282.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.RESUMO_VENDA" Width="1.5" PointX="5.25" PointY="326.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO" Width="1.5" PointX="10.5" PointY="269.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO_ANEXO" Width="1.5" PointX="12.75" PointY="275.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SERVICO_TABELA_PRECO" Width="1.5" PointX="24.75" PointY="244.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SEXO" Width="1.5" PointX="13.5" PointY="285.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SUBCATEGORIA_PRODUTO" Width="1.5" PointX="7.5" PointY="267.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.SUBGRUPO" Width="1.5" PointX="21" PointY="275.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAMANHO" Width="1.5" PointX="5.25" PointY="329.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA" Width="1.5" PointX="15.75" PointY="303.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_ACOMPANHAMENTO" Width="1.5" PointX="27" PointY="285.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_ANEXO" Width="1.5" PointX="18" PointY="309.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_NOTIFICACAO" Width="1.5" PointX="21" PointY="286.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TAREFA_VINCULO" Width="1.5" PointX="27" PointY="289.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TELEFONE" Width="1.5" PointX="13.5" PointY="269.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE" Width="1.5" PointX="5.25" PointY="332.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE_EMAIL" Width="1.5" PointX="5.25" PointY="337" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE_PROPOSTA" Width="1.5" PointX="5.25" PointY="341.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TEMPLATE_SMS" Width="1.5" PointX="5.25" PointY="345.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_ACAO" Width="1.5" PointX="5.25" PointY="349.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_CONTA" Width="1.5" PointX="8.25" PointY="234.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_CONTRIBUINTE" Width="1.5" PointX="13.5" PointY="287.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_CRM" Width="1.5" PointX="5.25" PointY="352.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_DOCUMENTO" Width="1.5" PointX="5.25" PointY="355.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_GRUPO" Width="1.5" PointX="5.25" PointY="358.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_METADADO" Width="1.5" PointX="5.25" PointY="361.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_PESSOA" Width="1.5" PointX="0.75" PointY="255.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_TAREFA" Width="1.5" PointX="5.25" PointY="364.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_TRANSPORTE" Width="1.5" PointX="13.25" PointY="237.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TIPO_VEICULO" Width="1.5" PointX="13.25" PointY="231.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TRANSPORTADORA" Width="1.5" PointX="15.5" PointY="238.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.TRANSPORTADORA_ANEXO" Width="1.5" PointX="17.75" PointY="238.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.UF" Width="1.5" PointX="0.75" PointY="258.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.UNIDADE" Width="1.5" PointX="17.25" PointY="230.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.USUARIO" Width="1.5" PointX="13.5" PointY="247.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.USUARIO_ANEXO" Width="1.5" PointX="15.75" PointY="310.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CRMModel.USUARIO_FUNCIONARIO" Width="1.5" PointX="15.75" PointY="313.5" IsExpanded="true" />
         <AssociationConnector Association="ERP_CRMModel.FK_AGENDA_ANEXO_AGENDA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_AGENDA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_AGENDA_CATEGORIA_AGENDA" ManuallyRouted="false" />
@@ -195,6 +196,7 @@
         <AssociationConnector Association="ERP_CRMModel.FK_ORDEM_SERVICO_AGENDA_AGENDA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_AGENDA_VINCULO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_ANEXO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_ANOTACAO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_CONSUMO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_PAGAMENTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_PLANO_ASSINANTE" ManuallyRouted="false" />
@@ -276,6 +278,7 @@
         <AssociationConnector Association="ERP_CRMModel.FK_TIPO_TAREFA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_TRANSPORTADORA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_ANOTACAO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_PAGAMENTO_PLANO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_PLANO_PLANO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_ATENDIMENTO_ACOMPANHAMENTO_ATENDIMENTO" ManuallyRouted="false" />
@@ -359,6 +362,7 @@
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_PAGAR_PARCELA_FORMA_PAGAMENTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_RECEBER_ANEXO_CONTA_RECEBER" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_RECEBER_CRM" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CRMModel.FK_CONTA_RECEBER_CRM_PEDIDO_VENDA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_RECEBER_CRM_PROPOSTA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_RECEBER_FILIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_CONTA_RECEBER_FORMA_PAGAMENTO" ManuallyRouted="false" />
@@ -571,10 +575,6 @@
         <AssociationConnector Association="ERP_CRMModel.FK_TRANSPORTADORA_ANEXO_TRANSPORTADORA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_ANEXO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CRMModel.FK_USUARIO_FUNCIONARIO_USUARIO" ManuallyRouted="false" />
-        <AssociationConnector Association="ERP_CRMModel.FK_CONTA_RECEBER_CRM_PEDIDO_VENDA" />
-        <EntityTypeShape EntityType="ERP_CRMModel.ASSINANTE_ANOTACAO" Width="1.5" PointX="18.75" PointY="238.5" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_ANOTACAO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CRMModel.FK_ASSINANTE_ANOTACAO_USUARIO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

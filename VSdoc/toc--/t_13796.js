@@ -1,0 +1,1 @@
+c['13796']=[['13797',"Edit(TAMANHO) Method","topic_000000000000206E.html",0],['13798',"Edit(TAMANHO, LOG) Method","topic_000000000000206D.html",0]];

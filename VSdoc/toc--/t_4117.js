@@ -1,0 +1,1 @@
+c['4117']=[['4118',"ReceberPedidoCompra(int) Method","topic_0000000000000172.html",0],['4119',"ReceberPedidoCompra(PedidoCompraViewModel) Method","topic_0000000000000173.html",0]];

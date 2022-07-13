@@ -1,0 +1,1 @@
+search_result['16235']=["topic_0000000000002C36.html","NOTICIA.NOTC_CD_ID Property",""];

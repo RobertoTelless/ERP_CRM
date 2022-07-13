@@ -19,6 +19,7 @@ namespace EntitiesServices.Model
         {
             this.AGENDA = new HashSet<AGENDA>();
             this.ASSINANTE_ANEXO = new HashSet<ASSINANTE_ANEXO>();
+            this.ASSINANTE_ANOTACAO = new HashSet<ASSINANTE_ANOTACAO>();
             this.ASSINANTE_CONSUMO = new HashSet<ASSINANTE_CONSUMO>();
             this.ASSINANTE_PAGAMENTO = new HashSet<ASSINANTE_PAGAMENTO>();
             this.ASSINANTE_PLANO = new HashSet<ASSINANTE_PLANO>();
@@ -98,7 +99,6 @@ namespace EntitiesServices.Model
             this.TIPO_TAREFA = new HashSet<TIPO_TAREFA>();
             this.TRANSPORTADORA = new HashSet<TRANSPORTADORA>();
             this.USUARIO = new HashSet<USUARIO>();
-            this.ASSINANTE_ANOTACAO = new HashSet<ASSINANTE_ANOTACAO>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -122,7 +122,6 @@ namespace EntitiesServices.Model
         public string ASSI_NR_CEP { get; set; }
         public string ASSI_AQ_FOTO { get; set; }
         public string ASSI_NR_TELEFONE { get; set; }
-        public string ASSIN_NR_CELULAR { get; set; }
         public string ASSI_NR_CELULAR { get; set; }
         public Nullable<int> ASSI_IN_BLOQUEADO { get; set; }
     
@@ -130,6 +129,8 @@ namespace EntitiesServices.Model
         public virtual ICollection<AGENDA> AGENDA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ASSINANTE_ANEXO> ASSINANTE_ANEXO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ASSINANTE_ANOTACAO> ASSINANTE_ANOTACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ASSINANTE_CONSUMO> ASSINANTE_CONSUMO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -290,7 +291,5 @@ namespace EntitiesServices.Model
         public virtual ICollection<TRANSPORTADORA> TRANSPORTADORA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USUARIO> USUARIO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ASSINANTE_ANOTACAO> ASSINANTE_ANOTACAO { get; set; }
     }
 }

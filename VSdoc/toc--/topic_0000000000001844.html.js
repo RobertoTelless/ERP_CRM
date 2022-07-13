@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"SOLUTION-WIDE PROPERTIES Reference","topic_000000000000341C.html"],['7740',"EntitiesServices.DTO Namespace","topic_0000000000001840.html"],['7741',"DTO_CR Class","topic_0000000000001841.html"],['7742',"Properties","topic_0000000000001841_props--.html"],['7744',"Parcelamento Property","topic_0000000000001844.html"]];

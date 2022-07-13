@@ -1,0 +1,1 @@
+c['10674']=[['10675',"TAMANHO Constructor","topic_0000000000002EDD.html",0],['10676',"Properties","topic_0000000000002EDC_props--.html",1]];

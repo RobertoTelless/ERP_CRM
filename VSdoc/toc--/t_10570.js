@@ -1,0 +1,1 @@
+c['10570']=[['10571',"REGIME_TRIBUTARIO Constructor","topic_0000000000002E7D.html",0],['10572',"Properties","topic_0000000000002E7C_props--.html",1]];

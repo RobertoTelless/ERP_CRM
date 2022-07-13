@@ -1,0 +1,1 @@
+search_result['5685']=["topic_00000000000010B7.html","IContaBancariaAppService.GetAllTipos Method",""];

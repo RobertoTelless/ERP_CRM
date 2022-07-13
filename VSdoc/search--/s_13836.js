@@ -1,0 +1,1 @@
+search_result['13836']=["topic_00000000000024E9.html","ASSINANTE.TIPE_CD_ID Property",""];

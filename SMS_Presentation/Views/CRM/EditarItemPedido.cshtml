@@ -78,10 +78,6 @@
                                     @Html.TextBoxFor(m => m.CRPI_VL_PRECO_AJUSTADO, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Markup (%)
-                                    @Html.TextBoxFor(m => m.CRPI_VL_MARKUP, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
                                     Unidade
                                     @Html.TextBoxFor(m => m.UNIDADE.UNID_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                 </div>
@@ -89,6 +85,11 @@
                                     Quantidade*
                                     @Html.TextBoxFor(m => m.CRPI_IN_QUANTIDADE, new { @class = "form-control", autofocus = true })
                                     @Html.ValidationMessageFor(m => m.CRPI_IN_QUANTIDADE, "", new { @style = "color:red" })
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                    Desconto
+                                    @Html.TextBoxFor(m => m.CRPI_VL_DESCONTO, new { @class = "form-control", autofocus = true })
+                                    @Html.ValidationMessageFor(m => m.CRPI_VL_DESCONTO, "", new { @style = "color:red" })
                                 </div>
                             </div>
                         </div>

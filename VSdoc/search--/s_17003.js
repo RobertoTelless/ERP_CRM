@@ -1,0 +1,1 @@
+search_result['17003']=["topic_0000000000002E87.html","RESUMO_VENDA.REVE_NR_NUMERO Property",""];

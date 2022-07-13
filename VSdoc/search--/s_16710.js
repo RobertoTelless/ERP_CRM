@@ -1,0 +1,1 @@
+search_result['16710']=["topic_0000000000002DA8.html","PLANO.PLAN_NR_VENDA Property",""];

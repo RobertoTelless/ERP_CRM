@@ -70,6 +70,7 @@
                                             @Html.HiddenFor(m => m.ASSI_CD_ID)
                                             @Html.HiddenFor(m => m.USUA_CD_ID)
                                             @Html.HiddenFor(m => m.CRM1_CD_ID)
+                                            @Html.HiddenFor(m => m.CRPR_IN_NUMERO_GERADO)
                                             @Html.HiddenFor(m => m.CRPR_AQ_ARQUIVO)
                                             @Html.HiddenFor(m => m.CRPR_CD_ID)
                                             @Html.HiddenFor(m => m.CRPR_DS_CANCELAMENTO)
@@ -144,6 +145,10 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                            <div class="col-lg-1 col-md-1 col-xs-12" style="color:green; font-weight:bold">
+                                                                Número
+                                                                @Html.TextBoxFor(m => m.CRPR_IN_NUMERO_GERADO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                            </div>
                                                             <div class="col-lg-2 col-md-2 col-xs-12">
                                                                 Data Proposta
                                                                 @Html.TextBoxFor(m => m.CRPR_DT_PROPOSTA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @id="data1", @readonly="readonly" })

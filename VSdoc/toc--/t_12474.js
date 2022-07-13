@@ -1,0 +1,1 @@
+c['12474']=[['12475',"TamanhoService Constructor","topic_0000000000001C2D.html",0],['12476',"Methods","topic_0000000000001C2B_methods--.html",1],['12488',"Fields","topic_0000000000001C2B_vars--.html",1]];

@@ -76,6 +76,7 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_RECEBER_ANEXO> CONTA_RECEBER_ANEXO { get; set; }
         public virtual CRM CRM { get; set; }
+        public virtual CRM_PEDIDO_VENDA CRM_PEDIDO_VENDA { get; set; }
         public virtual CRM_PROPOSTA CRM_PROPOSTA { get; set; }
         public virtual FILIAL FILIAL { get; set; }
         public virtual FORMA_PAGAMENTO FORMA_PAGAMENTO { get; set; }
@@ -85,6 +86,5 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTA_RECEBER_RATEIO> CONTA_RECEBER_RATEIO { get; set; }
         public virtual USUARIO USUARIO { get; set; }
-        public virtual CRM_PEDIDO_VENDA CRM_PEDIDO_VENDA { get; set; }
     }
 }

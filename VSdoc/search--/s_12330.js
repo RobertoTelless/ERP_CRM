@@ -1,0 +1,1 @@
+search_result['12330']=["topic_00000000000021A4.html","IContaBancariaLancamentoRepository.GetTotalDespesaMes Method",""];

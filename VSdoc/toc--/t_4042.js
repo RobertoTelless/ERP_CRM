@@ -1,0 +1,1 @@
+c['4042']=[['4043',"CompraController Constructor","topic_000000000000014B.html",0],['4044',"Methods","topic_000000000000014A_methods--.html",1]];

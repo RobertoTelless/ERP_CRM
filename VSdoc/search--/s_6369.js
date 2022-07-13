@@ -1,0 +1,1 @@
+search_result['6369']=["topic_00000000000012A2.html","IPedidoCompraAppService.ValidateEdit (PEDIDO_COMPRA, PEDIDO_COMPRA, USUARIO) Method",""];

@@ -17,10 +17,10 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CRM_PEDIDO_VENDA()
         {
+            this.CONTA_RECEBER = new HashSet<CONTA_RECEBER>();
             this.CRM_PEDIDO_VENDA_ACOMPANHAMENTO = new HashSet<CRM_PEDIDO_VENDA_ACOMPANHAMENTO>();
             this.CRM_PEDIDO_VENDA_ANEXO = new HashSet<CRM_PEDIDO_VENDA_ANEXO>();
             this.CRM_PEDIDO_VENDA_ITEM = new HashSet<CRM_PEDIDO_VENDA_ITEM>();
-            this.CONTA_RECEBER = new HashSet<CONTA_RECEBER>();
         }
     
         public int CRPV_CD_ID { get; set; }
@@ -59,7 +59,6 @@ namespace EntitiesServices.Model
         public string CRPV_DS_REPROVACAO { get; set; }
         public Nullable<System.DateTime> CRPV_DT_APROVACAO { get; set; }
         public string CRPV_DS_APROVACAO { get; set; }
-        public Nullable<decimal> CRPV_VL_TOTAL { get; set; }
         public string CRPV_NM_NOME { get; set; }
         public Nullable<int> TRAN_CD_ID { get; set; }
         public Nullable<int> TEPR_CD_ID { get; set; }
@@ -68,9 +67,13 @@ namespace EntitiesServices.Model
         public Nullable<int> CRPV_IN_GEROU_NF { get; set; }
         public string CRPV_NR_NOTA_FISCAL { get; set; }
         public Nullable<decimal> CRPV_VL_VALOR { get; set; }
+        public Nullable<decimal> CRPV_VL_TOTAL { get; set; }
         public Nullable<int> MOEN_CD_ID { get; set; }
+        public Nullable<int> CRPV_IN_NUMERO_GERADO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
         public virtual CRM CRM { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CRM_PEDIDO_VENDA_ACOMPANHAMENTO> CRM_PEDIDO_VENDA_ACOMPANHAMENTO { get; set; }
@@ -85,7 +88,5 @@ namespace EntitiesServices.Model
         public virtual TEMPLATE_PROPOSTA TEMPLATE_PROPOSTA { get; set; }
         public virtual TRANSPORTADORA TRANSPORTADORA { get; set; }
         public virtual USUARIO USUARIO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTA_RECEBER> CONTA_RECEBER { get; set; }
     }
 }

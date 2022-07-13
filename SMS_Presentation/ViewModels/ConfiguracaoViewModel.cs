@@ -38,6 +38,24 @@ namespace ERP_CRM_Solution.ViewModels
         public string CONF_SG_LOGIN_SMS { get; set; }
         [StringLength(50, ErrorMessage = "A SENHA DO SMS deve conter no máximo 50.")]
         public string CONF_SG_SENHA_SMS { get; set; }
+        public string CONF_NM_SENDGRID_LOGIN { get; set; }
+        public string CONF_NM_SENDGRID_PWD { get; set; }
+        public string CONF_NM_SENDGRID_APIKEY { get; set; }
+        public Nullable<int> CONF_IN_RESIDUAL { get; set; }
+        [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
+        public Nullable<int> CONF_NR_DIAS_ATENDIMENTO { get; set; }
+        [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
+        public Nullable<int> CONF_NR_DIAS_ACAO { get; set; }
+        [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
+        public Nullable<int> CONF_NR_DIAS_PROPOSTA { get; set; }
+        [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
+        public Nullable<int> CONF_NR_MARGEM_ATRASO { get; set; }
+        [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
+        public Nullable<int> CONF_IN_DIAS_RESERVA_ESTOQUE { get; set; }
+        [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
+        public Nullable<int> CONF_IN_NUMERO_INICIAL_PROPOSTA { get; set; }
+        [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
+        public Nullable<int> CONF_IN_NUMERO_INICIAL_PEDIDO { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
     }

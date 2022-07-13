@@ -1,0 +1,1 @@
+c['195']=[['196',"ValidateEnvioAprovacao(CRM_COMERCIAL, List\u003cAttachmentForn\u003e, string, USUARIO, List\u003cCLIENTE\u003e) Method","topic_000000000000117A.html",0],['197',"ValidateEnvioAprovacao(CRM_COMERCIAL, string, USUARIO) Method","topic_0000000000001179.html",0]];

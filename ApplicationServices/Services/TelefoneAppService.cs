@@ -140,7 +140,6 @@ namespace ApplicationServices.Services
             }
         }
 
-
         public Int32 ValidateEdit(TELEFONE item, TELEFONE itemAntes, USUARIO usuario)
         {
             try

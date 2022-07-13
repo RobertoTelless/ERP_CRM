@@ -31,7 +31,6 @@ using System.Net.Mail;
 using System.Net.Http;
 using HtmlAgilityPack;
 
-
 namespace ERP_CRM_Solution.Controllers
 {
     public class CRMController : Controller
@@ -3297,7 +3296,7 @@ namespace ERP_CRM_Solution.Controllers
                 ViewBag.CR = cr;
                 ViewBag.TemCR = cr.Count > 0 ? 1 : 0;
                 ViewBag.TemNF = 0;
-                vm.NumeroProposta = propAprov.CRPR_NR_NUMERO;
+                vm.NumeroProposta = propAprov.CRPR_IN_NUMERO_GERADO.ToString();
                 vm.DataProposta = propAprov.CRPR_DT_PROPOSTA;
                 vm.DataAprovacao = propAprov.CRPR_DT_APROVACAO;
                 vm.NomeProposta = propAprov.CRPR_TX_TEXTO;
@@ -3322,7 +3321,7 @@ namespace ERP_CRM_Solution.Controllers
                 ViewBag.CR = cr;
                 ViewBag.TemCR = cr.Count > 0 ? 1 : 0;
                 ViewBag.TemNF = 0;
-                vm.NumeroPedido = pedAprov.CRPV_NR_NUMERO;
+                vm.NumeroPedido = pedAprov.CRPV_IN_NUMERO_GERADO.ToString();
                 vm.DataPedido = pedAprov.CRPV_DT_PEDIDO;
                 vm.DataAprovacaoPedido = pedAprov.CRPV_DT_APROVACAO;
                 vm.NomePedido = pedAprov.CRPV_NM_NOME;
@@ -3974,6 +3973,17 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpGet]
+        public ActionResult ConsultarEstoque()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaEstoqueCRM"] = 1;
+            return RedirectToAction("MontarTelaEstoqueProduto", "Estoque");
+        }
+
+        [HttpGet]
         public ActionResult EncerrarAcaoNova(Int32 id)
         {
             // Verifica se tem usuario logado
@@ -4084,7 +4094,7 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Processa
-            List<CRM_ACAO> lista = baseApp.GetAllAcoes(idAss).Where(p => p.USUA_CD_ID2 == usuario.USUA_CD_ID).OrderByDescending(m => m.CRAC_DT_PREVISTA).ToList();
+            List<CRM_ACAO> lista = baseApp.GetAllAcoes(idAss).Where(p => p.USUA_CD_ID2 == usuario.USUA_CD_ID & p.CRM.CRM1_IN_ATIVO > 0).OrderByDescending(m => m.CRAC_DT_PREVISTA).ToList();
             List<CRM_ACAO> totalPendente = lista.Where(p => p.CRAC_IN_STATUS == 2).OrderByDescending(m => m.CRAC_DT_PREVISTA).ToList();
             List<CRM_ACAO> totalEncerrada = lista.Where(p => p.CRAC_IN_STATUS == 3).OrderByDescending(m => m.CRAC_DT_PREVISTA).ToList();
             List<CRM_ACAO> totalAtrasada= lista.Where(p => p.CRAC_IN_STATUS != 3 & p.CRAC_DT_PREVISTA < DateTime.Today.Date).OrderByDescending(m => m.CRAC_DT_PREVISTA).ToList();
@@ -4149,6 +4159,12 @@ namespace ERP_CRM_Solution.Controllers
         {
             Session["PropostasUsuario"] = 1;
             return RedirectToAction("VerPropostasUsuarioCRM");
+        }
+
+        public ActionResult VerPedidosUsuarioCRMPrevia()
+        {
+            Session["PedidosUsuario"] = 1;
+            return RedirectToAction("VerPedidosUsuarioCRM");
         }
 
         public ActionResult VerPropostasUsuarioCRMElaboracaoPrevia()
@@ -6543,7 +6559,7 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Processa
-            List<CRM_PROPOSTA> lista = baseApp.GetAllPropostas(idAss).Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
+            List<CRM_PROPOSTA> lista = baseApp.GetAllPropostas(idAss).Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID & p.CRM.CRM1_IN_ATIVO > 0).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
             List<CRM_PROPOSTA> totalElaboracao = lista.Where(p => p.CRPR_IN_STATUS == 1).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
             List<CRM_PROPOSTA> totalEnviado = lista.Where(p => p.CRPR_IN_STATUS == 2).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
             List<CRM_PROPOSTA> totalCancelado = lista.Where(p => p.CRPR_IN_STATUS == 3).OrderByDescending(m => m.CRPR_DT_PROPOSTA).ToList();
@@ -6628,7 +6644,7 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Processa
-            List<CRM_PEDIDO_VENDA> lista = baseApp.GetAllPedidos(idAss).Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
+            List<CRM_PEDIDO_VENDA> lista = baseApp.GetAllPedidos(idAss).Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID & p.CRM.CRM1_IN_ATIVO > 0).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
             List<CRM_PEDIDO_VENDA> totalElaboracao = lista.Where(p => p.CRPV_IN_STATUS == 1).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
             List<CRM_PEDIDO_VENDA> totalEnviado = lista.Where(p => p.CRPV_IN_STATUS == 2).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
             List<CRM_PEDIDO_VENDA> totalCancelado = lista.Where(p => p.CRPV_IN_STATUS == 3).OrderByDescending(m => m.CRPV_DT_PEDIDO).ToList();
@@ -6759,6 +6775,20 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.FormaEnvio = new SelectList(baseApp.GetAllFormasEnvio(idAss).OrderBy(p => p.FOEN_NM_NOME), "FOEN_CD_ID", "FOEN_NM_NOME");
             ViewBag.FormaFrete = new SelectList(baseApp.GetAllFormasFrete(idAss).OrderBy(p => p.FOFR_NM_NOME), "FOFR_CD_ID", "FOFR_NM_NOME");
             CRM crm = (CRM)Session["CRM"];
+
+            // Recupera número
+            Int32 num = 0;
+            if (props.Count == 0)
+            {
+                num = conf.CONF_IN_NUMERO_INICIAL_PROPOSTA.Value;
+            }
+            else
+            {
+                num = props.OrderByDescending(p => p.CRPR_IN_NUMERO_GERADO).ToList().First().CRPR_IN_NUMERO_GERADO.Value;
+                num++;
+            }
+
+            // Prepara objeto         
             CRM_PROPOSTA item = new CRM_PROPOSTA();
             CRMPropostaViewModel vm = Mapper.Map<CRM_PROPOSTA, CRMPropostaViewModel>(item);
             vm.CRM1_CD_ID = (Int32)Session["IdCRM"];
@@ -6777,6 +6807,7 @@ namespace ERP_CRM_Solution.Controllers
             vm.CRPR_VL_PESO_LIQUIDO = 0;
             vm.CRPR_IN_GERAR_CR = 0;
             vm.CRPR_DT_VALIDADE = DateTime.Now.AddDays(Convert.ToDouble(conf.CONF_NR_DIAS_PROPOSTA));
+            vm.CRPR_IN_NUMERO_GERADO = num;
             vm.CLIENTE = (CLIENTE)Session["ClienteCRM"];
             return View(vm);
         }
@@ -7918,11 +7949,11 @@ namespace ERP_CRM_Solution.Controllers
             // Monta corpo
             FORMA_ENVIO forma = baseApp.GetAllFormasEnvio(idAss).Where(p => p.FOEN_CD_ID == item.FOEN_CD_ID).First();
             FORMA_FRETE frete = baseApp.GetAllFormasFrete(idAss).Where(p => p.FOFR_CD_ID == item.FOFR_CD_ID).First();
-            body = body.Replace("{Nome}", item.CRPV_NM_NOME);
-            body = body.Replace("{Numero}", item.CRPV_NR_NUMERO);
+            body = body.Replace("{Descricao}", item.CRPV_NM_NOME);
+            body = body.Replace("{Numero}", item.CRPV_IN_NUMERO_GERADO.ToString());
             body = body.Replace("{Emissao}", item.CRPV_DT_PEDIDO.ToShortDateString());
             body = body.Replace("{Validade}", item.CRPV_DT_VALIDADE.ToShortDateString());
-            body = body.Replace("{Conteudo}", item.CRPV_TX_INFORMACOES_GERAIS);
+            body = body.Replace("{Conteudo}", item.CRPV_TX_OUTROS_ITENS);
             body = body.Replace("{Comerciais}", item.CRPV_TX_CONDICOES_COMERCIAIS);
             body = body.Replace("{Prazo}", item.CRPV_IN_PRAZO_ENTREGA.ToString());
             body = body.Replace("{ValorBase}", CrossCutting.Formatters.DecimalFormatter(item.CRPV_VL_TOTAL_ITENS.Value));
@@ -8175,6 +8206,18 @@ namespace ERP_CRM_Solution.Controllers
             ViewBag.Produtos = new SelectList(lista, "PROD_CD_ID", "PROD_NM_NOME");
             Session["ListaITPV"] = null;
 
+            // Recupera número
+            Int32 num = 0;
+            if (peds.Count == 0)
+            {
+                num = conf.CONF_IN_NUMERO_INICIAL_PEDIDO.Value;
+            }
+            else
+            {
+                num = peds.OrderByDescending(p => p.CRPV_IN_NUMERO_GERADO).ToList().First().CRPV_IN_NUMERO_GERADO.Value;
+                num++;
+            }
+
             CRM crm = (CRM)Session["CRM"];
             CRM_PEDIDO_VENDA item = new CRM_PEDIDO_VENDA();
             CRMPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA, CRMPedidoViewModel>(item);
@@ -8194,11 +8237,13 @@ namespace ERP_CRM_Solution.Controllers
             vm.CRPV_VL_PESO_LIQUIDO = 0;
             vm.CRPV_IN_GERAR_CR = 0;
             vm.CRPV_DT_VALIDADE = DateTime.Now.AddDays(Convert.ToDouble(conf.CONF_NR_DIAS_PROPOSTA));
+            vm.CRPV_IN_NUMERO_GERADO = num;
             vm.CLIENTE = (CLIENTE)Session["ClienteCRM"];
             return View(vm);
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult IncluirPedido(CRMPedidoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -8231,11 +8276,11 @@ namespace ERP_CRM_Solution.Controllers
                     Directory.CreateDirectory(Server.MapPath(caminho));
 
                     // Acerta numero do pedido
-                    if (item.CRPV_NR_NUMERO == null)
-                    {
-                        item.CRPV_NR_NUMERO = item.CRPV_CD_ID.ToString();
-                        volta = baseApp.ValidateEditPedido(item);
-                    }
+                    //if (item.CRPV_NR_NUMERO == null)
+                    //{
+                    //    item.CRPV_NR_NUMERO = item.CRPV_CD_ID.ToString();
+                    //    volta = baseApp.ValidateEditPedido(item);
+                    //}
 
                     // Carrega arquivos
                     Session["IdCRMPedido"] = item.CRPV_CD_ID;
@@ -8350,7 +8395,7 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult CancelarPedido(CRMPedidoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -8405,14 +8450,20 @@ namespace ERP_CRM_Solution.Controllers
                     }
 
                     // Baixa de estoque
-                    if (item != null)
-                    {                     
-                        List<CRM_PEDIDO_VENDA_ITEM> prods = item.CRM_PEDIDO_VENDA_ITEM.ToList();
-                        foreach (CRM_PEDIDO_VENDA_ITEM prod in prods)
+                    List<CRM_PEDIDO_VENDA> listaPed = baseApp.GetAllPedidos(idAss).Where(p => p.CRM1_CD_ID == item.CRM1_CD_ID).ToList();
+                    if (listaPed.Count > 0)
+                    {
+                        CRM_PEDIDO_VENDA ped = baseApp.GetPedidoById(item.CRPV_CD_ID);
+                        if (ped != null)
                         {
-                            PRODUTO_ESTOQUE_FILIAL pef = estApp.GetByProdFilial(prod.PROD_CD_ID, item.FILI_CD_ID);
-                            pef.PREF_QN_QUANTIDADE_RESERVADA = pef.PREF_QN_QUANTIDADE_RESERVADA - prod.CRPI_IN_QUANTIDADE;
-                            Int32 volta2 = estApp.ValidateEdit(pef, pef, usuario);
+                            List<CRM_PEDIDO_VENDA_ITEM> prods = ped.CRM_PEDIDO_VENDA_ITEM.ToList();
+                            foreach (CRM_PEDIDO_VENDA_ITEM prod in prods)
+                            {
+                                PRODUTO_ESTOQUE_FILIAL pef = estApp.GetByProdFilial(prod.PROD_CD_ID, ped.FILI_CD_ID);
+                                pef.PREF_QN_QUANTIDADE_RESERVADA = pef.PREF_QN_QUANTIDADE_RESERVADA - prod.CRPI_IN_QUANTIDADE;
+                                pef.PREF_QN_ESTOQUE = pef.PREF_QN_ESTOQUE - prod.CRPI_IN_QUANTIDADE;
+                                Int32 volta2 = estApp.ValidateEdit(pef, pef, usuario);
+                            }
                         }
                     }
 
@@ -8510,7 +8561,7 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult ReprovarPedido(CRMPedidoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -8638,7 +8689,7 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult AprovarPedido(CRMPedidoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -8840,7 +8891,7 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult EnviarPedido(CRMPedidoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -8986,6 +9037,7 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult EditarPedido(CRMPedidoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -9225,7 +9277,7 @@ namespace ERP_CRM_Solution.Controllers
                 try
                 {
                     // Executa a operação
-                    vm.CRPI_VL_PRECO_TOTAL = (((vm.CRPI_VL_MARKUP / 100) + 1) * vm.CRPI_VL_PRECO_AJUSTADO) * vm.CRPI_IN_QUANTIDADE;
+                    vm.CRPI_VL_PRECO_TOTAL = (vm.CRPI_VL_PRECO_AJUSTADO - vm.CRPI_VL_DESCONTO) * vm.CRPI_IN_QUANTIDADE;
                     CRM_PEDIDO_VENDA_ITEM item = Mapper.Map<CRMItemPedidoViewModel, CRM_PEDIDO_VENDA_ITEM>(vm);                
                     Int32 volta = baseApp.ValidateEditItemPedido(item);
 
@@ -9297,6 +9349,7 @@ namespace ERP_CRM_Solution.Controllers
             CRMItemPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA_ITEM, CRMItemPedidoViewModel>(item);
             vm.CRPV_CD_ID = (Int32)Session["IdCRMPedido"];
             vm.CRPI_IN_ATIVO = 1;
+            vm.CRPI_VL_DESCONTO = 0;
             return View(vm);
         }
 
@@ -9331,10 +9384,10 @@ namespace ERP_CRM_Solution.Controllers
                     Int32 a = baseApp.GetPedidoById(vm.CRPV_CD_ID).FILI_CD_ID == null ? (Int32)Session["IdFilial"] : (Int32)baseApp.GetPedidoById(vm.CRPV_CD_ID).FILI_CD_ID;
                     PRODUTO_TABELA_PRECO b = ptpApp.GetByProdFilial((Int32)vm.PROD_CD_ID, a);
                     vm.CRPI_VL_PRECO_AJUSTADO = b == null || b.PRTP_VL_PRECO == null ? 0 : b.PRTP_VL_PRECO;
-                    vm.CRPI_VL_MARKUP = b.PRTP_NR_MARKUP;                    
+                    //vm.CRPI_VL_MARKUP = b.PRTP_NR_MARKUP;                    
                     var prod = proApp.GetItemById((Int32)vm.PROD_CD_ID);
                     vm.UNID_CD_ID = prod.UNID_CD_ID;
-                    vm.CRPI_VL_PRECO_TOTAL = (((vm.CRPI_VL_MARKUP / 100) + 1) * vm.CRPI_VL_PRECO_AJUSTADO) * vm.CRPI_IN_QUANTIDADE;
+                    vm.CRPI_VL_PRECO_TOTAL = (vm.CRPI_VL_PRECO_AJUSTADO - vm.CRPI_VL_DESCONTO) * vm.CRPI_IN_QUANTIDADE;
 
                     // Executa a operação
                     CRM_PEDIDO_VENDA_ITEM item = Mapper.Map<CRMItemPedidoViewModel, CRM_PEDIDO_VENDA_ITEM>(vm);

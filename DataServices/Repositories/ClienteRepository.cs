@@ -17,7 +17,7 @@ namespace DataServices.Repositories
         public CLIENTE CheckExist(CLIENTE conta, Int32 idAss)
         {
             IQueryable<CLIENTE> query = Db.CLIENTE;
-            query = query.Where(p => p.CLIE_NM_NOME == conta.CLIE_NM_NOME);
+            query = query.Where(p => p.CLIE_NM_NOME.ToUpper() == conta.CLIE_NM_NOME.ToUpper());
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.FirstOrDefault();
         }

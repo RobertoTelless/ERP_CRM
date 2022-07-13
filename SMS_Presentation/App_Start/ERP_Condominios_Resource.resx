@@ -303,6 +303,15 @@
   <data name="M0066" xml:space="preserve">
     <value>Número de conselheiros maior que o permitido</value>
   </data>
+  <data name="M0067" xml:space="preserve">
+    <value>Morador inexistente</value>
+  </data>
+  <data name="M0068" xml:space="preserve">
+    <value>Morador sem celular cadastrado</value>
+  </data>
+  <data name="M0069" xml:space="preserve">
+    <value>Código de entrega da encomenda inválido</value>
+  </data>
   <data name="M0073" xml:space="preserve">
     <value>A Senha não pode ficar em branco</value>
   </data>
@@ -313,7 +322,7 @@
     <value>Confirmação da senha não pode ser em branco</value>
   </data>
   <data name="M0076" xml:space="preserve">
-    <value>Informações de entrega/recusa incompletas</value>
+    <value>Informações de entrega incompletas</value>
   </data>
   <data name="M0077" xml:space="preserve">
     <value>Informações de devolução incompletas</value>
@@ -330,6 +339,9 @@
   <data name="M0081" xml:space="preserve">
     <value>Não é possível excluir essa solicitação de reserva. Ela não está mais Em Aprovação</value>
   </data>
+  <data name="M0082" xml:space="preserve">
+    <value>Informações de recusa incompletas</value>
+  </data>
   <data name="M0093" xml:space="preserve">
     <value>Você tem notificações não lidas até esta data</value>
   </data>
@@ -338,5 +350,11 @@
   </data>
   <data name="M0109" xml:space="preserve">
     <value>O login não pode ficar em branco</value>
+  </data>
+  <data name="M0110" xml:space="preserve">
+    <value>E-mail já cadastrado</value>
+  </data>
+  <data name="M0111" xml:space="preserve">
+    <value>Padrão de Mensagem já cadastrado</value>
   </data>
 </root>

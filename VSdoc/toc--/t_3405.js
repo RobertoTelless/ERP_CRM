@@ -1,0 +1,1 @@
+c['3405']=[['3406',"IncluirAcompanhamentoEncerrar(AtendimentoAcompanhamentoViewModel) Method","topic_0000000000000072.html",0],['3407',"IncluirAcompanhamentoEncerrar() Method","topic_0000000000000071.html",0]];

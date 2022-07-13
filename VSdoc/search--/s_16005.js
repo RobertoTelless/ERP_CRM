@@ -1,0 +1,1 @@
+search_result['16005']=["topic_0000000000002B8C.html","LOG.ASSI_CD_ID Property",""];

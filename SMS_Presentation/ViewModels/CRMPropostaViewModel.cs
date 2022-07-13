@@ -71,6 +71,9 @@ namespace ERP_CRM_Solution.ViewModels
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<decimal> CRPR_VL_PESO_LIQUIDO { get; set; }
         public Nullable<int> CRPR_IN_GERAR_CR { get; set; }
+        public Nullable<int> CRPR_IN_GEROU_NF { get; set; }
+        public string CRPR_NR_NOTA_FISCAL { get; set; }
+        public Nullable<int> CRPR_IN_NUMERO_GERADO { get; set; }
 
         public string NumeroProposta { get; set; }
         public string NomeProposta { get; set; }

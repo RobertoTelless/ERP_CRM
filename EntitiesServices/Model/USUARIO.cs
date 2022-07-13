@@ -20,6 +20,7 @@ namespace EntitiesServices.Model
             this.AGENDA = new HashSet<AGENDA>();
             this.AGENDA1 = new HashSet<AGENDA>();
             this.AGENDA_VINCULO = new HashSet<AGENDA_VINCULO>();
+            this.ASSINANTE_ANOTACAO = new HashSet<ASSINANTE_ANOTACAO>();
             this.ATENDIMENTO = new HashSet<ATENDIMENTO>();
             this.ATENDIMENTO1 = new HashSet<ATENDIMENTO>();
             this.ATENDIMENTO_ACOMPANHAMENTO = new HashSet<ATENDIMENTO_ACOMPANHAMENTO>();
@@ -68,7 +69,6 @@ namespace EntitiesServices.Model
             this.TAREFA_VINCULO = new HashSet<TAREFA_VINCULO>();
             this.USUARIO_ANEXO = new HashSet<USUARIO_ANEXO>();
             this.USUARIO_FUNCIONARIO = new HashSet<USUARIO_FUNCIONARIO>();
-            this.ASSINANTE_ANOTACAO = new HashSet<ASSINANTE_ANOTACAO>();
         }
     
         public int USUA_CD_ID { get; set; }
@@ -122,6 +122,8 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA_VINCULO> AGENDA_VINCULO { get; set; }
         public virtual ASSINANTE ASSINANTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ASSINANTE_ANOTACAO> ASSINANTE_ANOTACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ATENDIMENTO> ATENDIMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -223,7 +225,5 @@ namespace EntitiesServices.Model
         public virtual ICollection<USUARIO_ANEXO> USUARIO_ANEXO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USUARIO_FUNCIONARIO> USUARIO_FUNCIONARIO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ASSINANTE_ANOTACAO> ASSINANTE_ANOTACAO { get; set; }
     }
 }

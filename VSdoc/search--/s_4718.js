@@ -1,0 +1,1 @@
+search_result['4718']=["topic_0000000000000DCF.html","PlanoViewModel.PLAN_IN_PATRIMONIO Property",""];

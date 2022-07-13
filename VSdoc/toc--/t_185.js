@@ -1,0 +1,1 @@
+c['185']=[['186',"ValidateEdit(CRM_COMERCIAL, CRM_COMERCIAL) Method","topic_0000000000001152.html",0],['187',"ValidateEdit(CRM_COMERCIAL, CRM_COMERCIAL, USUARIO) Method","topic_0000000000001151.html",0]];

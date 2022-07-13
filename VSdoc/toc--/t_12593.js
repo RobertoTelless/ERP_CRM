@@ -1,0 +1,1 @@
+c['12593']=[['12594',"Create(TIPO_ACAO) Method","topic_0000000000001C8E.html",0],['12595',"Create(TIPO_ACAO, LOG) Method","topic_0000000000001C8D.html",0]];

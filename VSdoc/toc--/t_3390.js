@@ -1,0 +1,1 @@
+c['3390']=[['3391',"ExcluirAtendimento(int) Method","topic_0000000000000063.html",0],['3392',"ExcluirAtendimento(AtendimentoViewModel) Method","topic_0000000000000064.html",0]];

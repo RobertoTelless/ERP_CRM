@@ -68,14 +68,9 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.CAAG_CD_ID == cat);
             }
-            if (corp > 0 & corp != null)
-            {
-                query = query.Where(p => p.AGEN_IN_CORPORATIVA == corp);
-            }
             if (query != null)
             {
                 query = query.Where(p => p.ASSI_CD_ID == idAss);
-                query = query.Where(p => p.AGEN_IN_CORPORATIVA == 0);
                 query = query.OrderByDescending(a => a.AGEN_DT_DATA).ThenByDescending(b => b.AGEN_HR_HORA);
                 lista = query.ToList<AGENDA>();
                 if (data != DateTime.MinValue)

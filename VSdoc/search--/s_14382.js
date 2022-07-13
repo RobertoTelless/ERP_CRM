@@ -1,0 +1,1 @@
+search_result['14382']=["topic_0000000000002684.html","CLIENTE.CLIE_NM_CIDADE Property",""];

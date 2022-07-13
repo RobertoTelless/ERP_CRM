@@ -30,6 +30,7 @@ namespace EntitiesServices.Model
         public virtual DbSet<AGENDA_VINCULO> AGENDA_VINCULO { get; set; }
         public virtual DbSet<ASSINANTE> ASSINANTE { get; set; }
         public virtual DbSet<ASSINANTE_ANEXO> ASSINANTE_ANEXO { get; set; }
+        public virtual DbSet<ASSINANTE_ANOTACAO> ASSINANTE_ANOTACAO { get; set; }
         public virtual DbSet<ASSINANTE_CONSUMO> ASSINANTE_CONSUMO { get; set; }
         public virtual DbSet<ASSINANTE_PAGAMENTO> ASSINANTE_PAGAMENTO { get; set; }
         public virtual DbSet<ASSINANTE_PLANO> ASSINANTE_PLANO { get; set; }
@@ -204,6 +205,5 @@ namespace EntitiesServices.Model
         public virtual DbSet<USUARIO> USUARIO { get; set; }
         public virtual DbSet<USUARIO_ANEXO> USUARIO_ANEXO { get; set; }
         public virtual DbSet<USUARIO_FUNCIONARIO> USUARIO_FUNCIONARIO { get; set; }
-        public virtual DbSet<ASSINANTE_ANOTACAO> ASSINANTE_ANOTACAO { get; set; }
     }
 }

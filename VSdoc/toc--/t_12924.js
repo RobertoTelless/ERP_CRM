@@ -1,0 +1,1 @@
+c['12924']=[['12925',"Create(CATEGORIA_CLIENTE) Method","topic_0000000000001D3C.html",0],['12926',"Create(CATEGORIA_CLIENTE, LOG) Method","topic_0000000000001D3B.html",0]];

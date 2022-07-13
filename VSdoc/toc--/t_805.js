@@ -1,0 +1,1 @@
+c['805']=[['806',"ValidateEdit(PEDIDO_COMPRA, PEDIDO_COMPRA) Method","topic_00000000000012A3.html",0],['807',"ValidateEdit(PEDIDO_COMPRA, PEDIDO_COMPRA, USUARIO) Method","topic_00000000000012A2.html",0]];

@@ -35,6 +35,8 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> AGEN_IN_STATUS { get; set; }
         public Nullable<int> AGEN_IN_CORPORATIVA { get; set; }
         public Nullable<int> CRM1_CD_ID { get; set; }
+        [StringLength(250, ErrorMessage = "O LINK DE REUNIÃO deve conter no máximo 250 caracteres.")]
+        public string AGEN_LK_REUNIAO { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA_ANEXO> AGENDA_ANEXO { get; set; }

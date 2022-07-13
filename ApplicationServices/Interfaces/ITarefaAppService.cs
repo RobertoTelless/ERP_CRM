@@ -28,6 +28,6 @@ namespace ApplicationServices.Interfaces
         TAREFA_ANEXO GetAnexoById(Int32 id);
         List<PERIODICIDADE_TAREFA> GetAllPeriodicidade();
         Int32 ExecuteFilter(Int32? tipoId, String titulo, DateTime? data, Int32 encerrada, Int32 prioridade, Int32? usuario, Int32 idAss, out List<TAREFA> objeto);
-    
+
     }
 }

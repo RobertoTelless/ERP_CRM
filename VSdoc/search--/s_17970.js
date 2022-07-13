@@ -1,0 +1,1 @@
+search_result['17970']=["topic_0000000000003127.html","CategoriaEquipamentoRepository Class",""];

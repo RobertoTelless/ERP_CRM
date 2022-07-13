@@ -1,0 +1,1 @@
+search_result['14539']=["topic_000000000000270D.html","CLIENTE_QUADRO_SOCIETARIO.CLQS_NM_QUALIFICACAO Property",""];

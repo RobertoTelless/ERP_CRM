@@ -1,0 +1,1 @@
+search_result['6399']=["topic_00000000000012BD.html","IPedidoCompraAppService.ValidateEnvioCotacao (PEDIDO_COMPRA, List\u0026lt;AttachmentForn\u0026gt;, String, USUARIO, List\u0026lt;FORNECEDOR\u0026gt;) Method",""];

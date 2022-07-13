@@ -1,0 +1,1 @@
+c['2844']=[['2845',"ExecuteFilter Method","topic_0000000000003251.html",0],['2846',"GetAllItens Method","topic_000000000000324F.html",0],['2847',"GetAllItensTodos Method","topic_0000000000003250.html",0],['2848',"GetItemById Method","topic_000000000000324E.html",0]];

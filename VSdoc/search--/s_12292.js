@@ -1,0 +1,1 @@
+search_result['12292']=["topic_0000000000002192.html","IClienteRepository.GetAllItensAdm Method",""];

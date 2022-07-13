@@ -1,0 +1,1 @@
+c['3377']=[['3378',"CancelarAtendimento(Nullable\u003cInt32\u003e) Method","topic_000000000000005D.html",0],['3379',"CancelarAtendimento(AtendimentoViewModel) Method","topic_000000000000005E.html",0]];

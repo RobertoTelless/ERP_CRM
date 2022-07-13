@@ -303,6 +303,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\ERP_Condominios_Resource.Designer.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\PlatMensagens_Resources.Designer.cs" />
@@ -4202,6 +4203,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="App_Start\ERP_Condominios_Resource.resx" />
     <EmbeddedResource Include="App_Start\PlatMensagens_Resources.resx" />
     <EmbeddedResource Include="App_Start\SMS_Mensagens.resx" />
     <EmbeddedResource Include="App_Start\SystemBR_Resource.resx" />

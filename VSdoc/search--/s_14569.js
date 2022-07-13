@@ -1,0 +1,1 @@
+search_result['14569']=["topic_0000000000002721.html","CLIENTE_TAG.CLTA_IN_TIPO Property",""];

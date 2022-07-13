@@ -1,0 +1,1 @@
+c['811']=[['812',"ValidateEnvioCotacao(PEDIDO_COMPRA, List\u003cAttachmentForn\u003e, string, USUARIO, List\u003cFORNECEDOR\u003e) Method","topic_00000000000012BD.html",0],['813',"ValidateEnvioCotacao(PEDIDO_COMPRA, string, USUARIO) Method","topic_00000000000012BC.html",0]];

@@ -16,9 +16,9 @@ namespace EntitiesServices.Model
     {
         public int ASPA_CD_ID { get; set; }
         public int ASSI_CD_ID { get; set; }
+        public Nullable<int> PLAN_CD_ID { get; set; }
         public Nullable<System.DateTime> ASPA_DT_PAGAMENTO { get; set; }
         public Nullable<decimal> ASPA_VL_VALOR { get; set; }
-        public Nullable<int> PLAN_CD_ID { get; set; }
         public Nullable<System.DateTime> ASPA_DT_PROXIMO { get; set; }
         public Nullable<int> ASPA_IN_ATIVO { get; set; }
     

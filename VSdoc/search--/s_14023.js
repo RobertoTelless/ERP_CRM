@@ -1,0 +1,1 @@
+search_result['14023']=["topic_0000000000002586.html","ASSINANTE_QUADRO_SOCIETARIO.ASQS_NM_PAIS_ORIGEM Property",""];

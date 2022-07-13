@@ -14,7 +14,7 @@ namespace DataServices.Repositories
         {
             IQueryable<SUBCATEGORIA_PRODUTO> query = Db.SUBCATEGORIA_PRODUTO;
             query = query.Where(p => p.CAPR_CD_ID == conta.CAPR_CD_ID);
-            query = query.Where(p => p.SCPR_NM_NOME == conta.SCPR_NM_NOME);
+            query = query.Where(p => p.SCPR_NM_NOME.ToUpper() == conta.SCPR_NM_NOME.ToUpper());
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.FirstOrDefault();
         }

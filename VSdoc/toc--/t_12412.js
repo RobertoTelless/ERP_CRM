@@ -1,0 +1,1 @@
+c['12412']=[['12413',"ServicoService Constructor","topic_0000000000001BFD.html",0],['12414',"Methods","topic_0000000000001BFB_methods--.html",1],['12430',"Fields","topic_0000000000001BFB_vars--.html",1]];
