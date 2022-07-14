@@ -378,6 +378,9 @@
   <data name="M0096" xml:space="preserve">
     <value>E-Mail não cadastrado.</value>
   </data>
+  <data name="M0097" xml:space="preserve">
+    <value>CPF já cadastrado</value>
+  </data>
   <data name="M0109" xml:space="preserve">
     <value>O login não pode ficar em branco</value>
   </data>

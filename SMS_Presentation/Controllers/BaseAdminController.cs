@@ -46,6 +46,7 @@ namespace ERP_CRM_Solution.Controllers
         private Exception exception;
         USUARIO objeto = new USUARIO();
         USUARIO objetoAntes = new USUARIO();
+
         List<USUARIO> listaMaster = new List<USUARIO>();
         FORMULARIO_RESPOSTA objetoFR = new FORMULARIO_RESPOSTA();
         FORMULARIO_RESPOSTA objetoFRAntes = new FORMULARIO_RESPOSTA();
@@ -242,6 +243,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["VoltaAgendaCRMCalend"] = 0;
             Session["VoltaCliGrupo"] = 0;
             Session["VoltaTransp"] = 0;
+            Session["TelefVolta"] = 0;
 
             USUARIO usu = new USUARIO();
             UsuarioViewModel vm = new UsuarioViewModel();

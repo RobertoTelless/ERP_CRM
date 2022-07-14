@@ -70,6 +70,11 @@ namespace ModelServices.EntitiesServices
             return _usuarioRepository.GetByEmail(email, idAss);
         }
 
+        public USUARIO GetByCPF(String cpf, Int32 idAss)
+        {
+            return _usuarioRepository.GetByCPF(cpf, idAss);
+        }
+
         public USUARIO_ANEXO GetAnexoById(Int32 id)
         {
             return _anexoRepository.GetItemById(id);

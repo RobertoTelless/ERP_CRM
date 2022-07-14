@@ -134,6 +134,10 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0111", CultureInfo.CurrentCulture));
                 }
+                if ((Int32)Session["MensUsuario"] == 7)
+                {
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0097", CultureInfo.CurrentCulture));
+                }
                 if ((Int32)Session["MensUsuario"] == 9)
                 {
                     ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0045", CultureInfo.CurrentCulture));
@@ -145,6 +149,7 @@ namespace ERP_CRM_Solution.Controllers
             }
 
             // Abre view
+            Session["MensUsuario"] = 0;
             objeto = new USUARIO();
             return View(objeto);
         }
@@ -165,6 +170,25 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             return RedirectToAction("MontarTelaUsuario");
+        }
+
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("MontarTelaDashboardAdministracao");
+        }
+
+        public ActionResult MontarTelaTelefone()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["TelefVolta"] = 1;
+            return RedirectToAction("MontarTelaTelefone", "Telefone");
         }
 
         [HttpPost]
@@ -384,6 +408,11 @@ namespace ERP_CRM_Solution.Controllers
                     if (volta == 4 )
                     {
                         Session["MensUsuario"] = 6;
+                        return RedirectToAction("MontarTelaUsuario");
+                    }
+                    if (volta == 5)
+                    {
+                        Session["MensUsuario"] = 7;
                         return RedirectToAction("MontarTelaUsuario");
                     }
 
@@ -1714,7 +1743,7 @@ namespace ERP_CRM_Solution.Controllers
             Session["LogMes"] = logMes;
 
             // Resumo Log Diario
-            List<DateTime> datasCR = listaLog.Where(m => m.LOG_DT_DATA != null).Select(p => p.LOG_DT_DATA.Value.Date).Distinct().ToList();
+            List<DateTime> datasCR = listaLog.Where(m => m.LOG_DT_DATA != null & m.LOG_DT_DATA.Value.Month == DateTime.Today.Date.Month & m.LOG_DT_DATA.Value.Year == DateTime.Today.Date.Year).Select(p => p.LOG_DT_DATA.Value.Date).Distinct().ToList();
             List<ModeloViewModel> listaLogDia = new List<ModeloViewModel>();
             foreach (DateTime item in datasCR)
             {
@@ -1786,7 +1815,7 @@ namespace ERP_CRM_Solution.Controllers
 
         public JsonResult GetDadosGraficoOperacao()
         {
-            List<ModeloViewModel> listaCP1 = (List<ModeloViewModel>)Session["ListaOpLog"];
+            List<ModeloViewModel> listaCP1 = (List<ModeloViewModel>)Session["ListaLogOp"];
             List<String> op = new List<String>();
             List<Int32> valor = new List<Int32>();
             op.Add(" ");

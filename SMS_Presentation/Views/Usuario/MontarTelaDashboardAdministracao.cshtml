@@ -18,7 +18,11 @@
                         @Html.ButtonLinkIndex(text: "Notificações", action: "MontarTelaNotificacaoGeral", controller: "Notificacao", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "Notícias", action: "MontarTelaNoticia", controller: "Noticia", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "Filiais", action: "MontarTelaFilial", controller: "Filial", buttonClass: "primary")
-                        @Html.ButtonLinkIndex(text: "Telefones", action: "MontarTelaTelefone", controller: "Telefone", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Telefones", action: "MontarTelaTelefone", controller: "Usuario", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Modelos E-Mail", action: "MontarTelaTemplateEMail", controller: "TemplateEmail", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Modelos SMS", action: "MontarTelaTemplateSMS", controller: "TemplateSMS", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Modelos Propostas", action: "MontarTelaTemplatePropostas", controller: "TemplateProposta", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Configuração", action: "MontarTelaConfiguracao", controller: "Configuracao", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Dashboard", controller: "Usuario", action: "Voltar")
                     </div>
                     <br /><br />
@@ -220,7 +224,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach (var cond in (ViewBag.ListaLogOp as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).OrderBy(p => p.Nome))
+                                                            @foreach (var cond in (ViewBag.ListaLogOp as List<ERP_CRM_Solution.ViewModels.ModeloViewModel>).OrderBy(p => p.Valor).Take(10))
                                                             {
                                                                 <tr>
                                                                     <td>@cond.Nome</td>
@@ -351,29 +355,6 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: '../ContaPagar/GetDadosGraficoCPSituacao'
-                , type: 'POST'
-                , success: function (result) {
-                var doughnutData = {
-                   labels: result.labels,
-                   datasets: [{
-                     data: result.valores,
-                     backgroundColor: result.cores
-                   }]
-                };
-                var doughnutOptions = {
-                   responsive: true
-                };
-                var ctx4 = document.getElementById("doughnutChartCP").getContext("2d");
-                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
-              }
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $.ajax({
                 url: '../Usuario/GetDadosGraficoDia'
                 , type: 'POST'
                 , success: function (result) {
@@ -452,58 +433,6 @@
                 };
 
                 var ctx2 = document.getElementById("barChartFilial").getContext("2d");
-                new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
-              }
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $.ajax({
-                url: '../ContaPagar/GetDadosGraficoCRSituacao'
-                , type: 'POST'
-                , success: function (result) {
-                var doughnutData = {
-                   labels: result.labels,
-                   datasets: [{
-                     data: result.valores,
-                     backgroundColor: result.cores
-                   }]
-                };
-                var doughnutOptions = {
-                   responsive: true
-                };
-                var ctx4 = document.getElementById("doughnutChartCR").getContext("2d");
-                new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
-              }
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $.ajax({
-                url: '../ContaPagar/GetDadosGraficoCR'
-                , type: 'POST'
-                , success: function (result) {
-                var barData = {
-                    labels: result.dias,
-                    datasets: [
-                        {
-                            label: "Recebimentos por Dia",
-                            backgroundColor: 'rgba(26,179,148,0.5)',
-                            pointBorderColor: "#fff",
-                            data: result.valores
-                        }
-                    ]
-                };
-
-                var barOptions = {
-                    responsive: true
-                };
-
-                var ctx2 = document.getElementById("barChartCR").getContext("2d");
                 new Chart(ctx2, { type: 'bar', data: barData, options: barOptions });
               }
             });

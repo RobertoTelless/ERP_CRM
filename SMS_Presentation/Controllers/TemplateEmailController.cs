@@ -63,8 +63,20 @@ namespace SMS_Presentation.Controllers
 
         public ActionResult Voltar()
         {
-
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
             return RedirectToAction("MontarTelaDashboardMensagens", "Mensagem");
+        }
+
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("MontarTelaDashboardAdministracao", "Usuario");
         }
 
         [HttpGet]

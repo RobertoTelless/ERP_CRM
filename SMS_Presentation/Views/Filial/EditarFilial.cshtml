@@ -76,7 +76,7 @@
                                         </div>
                                         <div class="col-md-10">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                     @Html.HiddenFor(m => m.FILI_DT_CADASTRO)
                                                     @Html.HiddenFor(m => m.FILI_IN_ATIVO)
@@ -145,7 +145,7 @@
                                         </div>
 
                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                            <div class="col-lg-2 col-md-2 col-xs-12">
                                                 CEP
                                                 <div class="input-group">
                                                     @Html.TextBoxFor(m => m.FILI_NR_CEP, new { @class = "form-control", @id = "cep", autofocus = true })
@@ -180,9 +180,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                        <div class="form-group">
+                                        @*<div class="form-group">
                                             @Html.ButtonActionSubmit(text: "Confirma Edição de Filial", htmlAttributes: new { id = "basictoast" })
-                                        </div>
+                                        </div>*@
                                 }
                             </div>
                         </div>
@@ -220,12 +220,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <br />
                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFilial", controller: "Filial")
+                </div>*@
                 </div>
-                </div>
-            </div>
+            </div>  
         </div>
     </div>
 </div>

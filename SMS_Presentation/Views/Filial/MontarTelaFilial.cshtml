@@ -47,13 +47,13 @@
                 <div class="ibox-content">
                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                         <div class="col-lg-8 col-md-8 col-xs-12">
-                            @Html.ButtonLinkIndex(text: "Ver Ativas", controller: "Filial", action: "RetirarFiltroFilial")
-                            @Html.ButtonLinkIndex(text: "Exibir Todas", controller: "Filial", action: "MostrarTudoFilial")
                             @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
                             {
-                                @Html.ButtonLinkIndex(text: "Nova Filial", controller: "Filial", action: "IncluirFilial")
+                                @Html.ButtonLinkIndex(text: "Nova Filial", controller: "Filial", action: "IncluirFilial", buttonClass: "primary")
                             }
-                            @Html.ButtonLinkIndex(text: "Voltar", controller: "Filial", action: "Voltar")
+                            @Html.ButtonLinkIndex(text: "Ver Ativas", controller: "Filial", action: "RetirarFiltroFilial")
+                            @Html.ButtonLinkIndex(text: "Exibir Todas", controller: "Filial", action: "MostrarTudoFilial")
+                            @Html.ButtonLinkIndex(text: "Voltar", controller: "Filial", action: "VoltarDash")
                         </div>
                     </div>
                     <div class="row">
@@ -66,6 +66,7 @@
                                             <th>E-Mail</th>
                                             <th>Contato</th>
                                             <th>Telefone</th>
+                                            <th>Celular</th>
                                             <th>Cidade</th>
                                             <th>UF</th>
                                             <th></th>
@@ -78,9 +79,10 @@
                                             <tr>
                                                 <td>@cond.FILI_NM_NOME</td>
                                                 <td>@cond.FILI_NR_CNPJ</td>
-                                                <td>@cond.FILI_NM_EMAIL</td>
+                                                <td><a href="@Url.Action("EnviarEMailFilial", "Filial", new { id = cond.FILI_CD_ID })" />@cond.FILI_NM_EMAIL</td>
                                                 <td>@cond.FILI_NM_CONTATOS</td>
                                                 <td>@cond.FILI_NM_TELEFONES</td>
+                                                <td><a href="@Url.Action("EnviarSMSFilial", "Filial", new { id = cond.FILI_CD_ID })" />@cond.FILI_NR_CELULAR</td>
                                                 <td>@cond.FILI_NM_CIDADE</td>
                                                 @if (cond.UF != null)
                                                 {

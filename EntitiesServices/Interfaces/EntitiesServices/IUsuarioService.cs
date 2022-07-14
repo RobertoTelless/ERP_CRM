@@ -12,6 +12,7 @@ namespace ModelServices.Interfaces.EntitiesServices
     {
         Boolean VerificarCredenciais(String senha, USUARIO usuario);
         USUARIO GetByEmail(String email, Int32 idAss);
+        USUARIO GetByCPF(String cpf, Int32 idAss);
         USUARIO GetByLogin(String login, Int32 idAss);
         USUARIO RetriveUserByEmail(String email);
         Int32 VerifyUserSubscription(USUARIO usuario);

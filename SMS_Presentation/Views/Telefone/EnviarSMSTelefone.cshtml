@@ -1,21 +1,21 @@
 ﻿@using Presentation.Extensions
-@model ERP_CRM_Solution.ViewModels.NoticiaViewModel
+@model ERP_CRM_Solution.ViewModels.MensagemViewModel
 @{
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="page-title"> 
-        <h3 class="title">Notícias</h3> 
+    <div class="page-title">
+        <h3 class="title">Telefones</h3>
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
             </li>
             <li>
-                <a href="@Url.Action("MontarTelaNoticia", "Noticia")">Notícias</a>
+                <a href="@Url.Action("MontarTelaTelefone", "Telefone")">Telefones</a>
             </li>
             <li class="active">
-                <strong>Notícias - Inclusão</strong>
+                <strong>Telefone - SMS</strong>
             </li>
         </ol>
         <br />
@@ -24,80 +24,40 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Notícias - Inclusão</h5>
+                    <h5>Telefone - SMS</h5>
                 </div>
-                @using (Html.BeginForm("IncluirNoticia", "Noticia", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                @using (Html.BeginForm("EnviarSMSTelefone", "Telefone", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
                 {
                     <div class="ibox-content">
-                        @Html.AntiForgeryToken()
-                        @if (!ViewData.ModelState.IsValid)
-                        {
-                            <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert">Fechar</button>
-                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                            </div>
-                        }
                         <div class="row">
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                <div class="col-lg-8 col-md-8 col-xs-12">
-                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                    @Html.HiddenFor(m => m.NOTC_IN_ATIVO)
-                                    @Html.HiddenFor(m => m.NOTC_NR_ACESSO)
-                                    Título*
-                                    @Html.TextBoxFor(m => m.NOTC_NM_TITULO, new { @class = "form-control", autofocus = true })
-                                    @Html.ValidationMessageFor(m => m.NOTC_NM_TITULO, "",new { @style="color:red" })
-                                </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12">
-                                    Autor*
-                                    @Html.TextBoxFor(m => m.NOTC_NM_AUTOR, new { @class = "form-control", autofocus = true })
-                                    @Html.ValidationMessageFor(m => m.NOTC_NM_AUTOR, "",new { @style="color:red" })
+                                    @Html.HiddenFor(m => m.ID)
+                                    @Html.HiddenFor(m => m.MENS_DT_CRIACAO)
+                                    @Html.HiddenFor(m => m.MENS_IN_TIPO)
+                                    Nome do Contato
+                                    @Html.TextBoxFor(m => m.NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Celular
+                                    @Html.TextBoxFor(m => m.MODELO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Link a Anexar
+                                    @Html.TextBoxFor(m => m.LINK, new { @class = "form-control", autofocus = true })
                                 </div>
                             </div>
-                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Data Emissão*
-                                    @Html.TextBoxFor(m => m.NOTC_DT_EMISSAO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
-                                    @Html.ValidationMessageFor(m => m.NOTC_DT_EMISSAO, "",new { @style="color:red" })
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Data Validade*
-                                    @Html.TextBoxFor(m => m.NOTC_DT_VALIDADE, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
-                                    @Html.ValidationMessageFor(m => m.NOTC_DT_VALIDADE, "",new { @style="color:red" })
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Data Autoria*
-                                    @Html.TextBoxFor(m => m.NOTC_DT_DATA_AUTOR, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
-                                    @Html.ValidationMessageFor(m => m.NOTC_DT_DATA_AUTOR, "",new { @style="color:red" })
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-xs-12">
-                                    Link Externo
-                                    @Html.TextBoxFor(m => m.NOTC_LK_LINK, new { @class = "form-control", autofocus = true })
-                                    @Html.ValidationMessageFor(m => m.NOTC_LK_LINK, "",new { @style="color:red" })
-                                </div>
-                            </div>
-                            @*<div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                <div class="col-lg-6 col-md-6 col-xs-12">
-                                    Arquivo
-                                    @Html.TextBoxFor(m => m.NOTC_AQ_ARQUIVO, new { @class = "form-control", autofocus = true })
-                                    @Html.ValidationMessageFor(m => m.NOTC_AQ_ARQUIVO, "",new { @style="color:red" })
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-xs-12">
-                                    Link Externo
-                                    @Html.TextBoxFor(m => m.NOTC_LK_LINK, new { @class = "form-control", autofocus = true })
-                                    @Html.ValidationMessageFor(m => m.NOTC_LK_LINK, "",new { @style="color:red" })
-                                </div>
-                            </div>*@
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                    Conteúdo da Notícia
-                                    @Html.TextAreaFor(m => m.NOTC_TX_TEXTO, new { @class = "form-control", style = "width: 100%; height: 500px;", autofocus = true})
-                                    @Html.ValidationMessageFor(m => m.NOTC_TX_TEXTO, "",new { @style="color:red" })
+                                    Mensagem*
+                                    @Html.TextAreaFor(m => m.MENS_TX_SMS, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
+                                    @Html.ValidationMessageFor(m => m.MENS_TX_SMS, "", new { @style = "color:red" })
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.ButtonActionSubmit(text: "Confirma Inclusão da Notícia", htmlAttributes: new { id = "basictoast" })
-                            @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseNoticia", controller: "Noticia")
+                            @Html.ButtonActionSubmit(text: "Confirma Envio de SMS", htmlAttributes: new { id = "basictoast" })
+                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseTelefone", controller: "Telefone")
                         </div>
                     </div>
                 }
@@ -107,16 +67,14 @@
 </div>
 
 @section Styles {
-    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
     @Styles.Render("~/plugins/toastrStyles")
 }
 @section Scripts {
     @Scripts.Render("~/plugins/toastr")
-    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
-    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
@@ -124,50 +82,10 @@
 
     <script type="text/javascript">
         $(function () {
-            $("#cpf").mask("999.999.999-99");
-            $("#cnpj").mask("99.999.999/9999-99");
-            $("#cep").mask("99999-999");
+            $("#tel").mask("(99)9999-9999");
+            $("#cel").mask("(99)99999-9999");
         });
     </script>
-    <script type="text/javascript" language="javascript">
-        $(function () {
-            $('.date-picker').datepicker(
-                {
-                    dateFormat: 'dd/mm/yy',
-                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                    nextText: 'Proximo',
-                    prevText: 'Anterior',
-                    showOn: "focus"
-                }
-            )
-            .css("display", "normal")
-            .next("button").button({
-                icons: { primary: "ui-icon-calendar" },
-                label: "Selecione uma data",
-                text: false 
-            });
-        });
-    </script>  
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $('body').addClass('light-navbar');
-
-            $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 52], {
-                type: 'line',
-                width: '100%',
-                height: '60',
-                lineColor: '#1ab394',
-                fillColor: "#ffffff"
-            });
-
-        });
-    </script>
-
     @Scripts.Render("~/plugins/iCheck")
 
     <script type="text/javascript">
@@ -193,7 +111,7 @@
 
             $('#basictoast').click(function () {
                 // Display a success toast, with a title
-                toastr.success('Inclusão com sucesso!')
+                toastr.success('Envio em andamento!')
             });
             $('#showtoast').click(function () {
                 var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
@@ -281,6 +199,7 @@
 
         });
     </script>
+
     @if (ViewBag.Message != null)
     {
         <script type="text/javascript">
@@ -290,4 +209,6 @@
         </script>
     }
 }
+
+
 

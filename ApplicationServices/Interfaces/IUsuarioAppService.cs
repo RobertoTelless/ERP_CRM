@@ -11,6 +11,7 @@ namespace ApplicationServices.Interfaces
     {
         USUARIO GetByEmail(String email, Int32 idAss);
         USUARIO GetByLogin(String login, Int32 idAss);
+        USUARIO GetByCPF(String cpf, Int32 idAss);
         List<USUARIO> GetAllUsuariosAdm(Int32 idAss);
         USUARIO GetItemById(Int32 id);
         List<USUARIO> GetAllUsuarios(Int32 idAss);

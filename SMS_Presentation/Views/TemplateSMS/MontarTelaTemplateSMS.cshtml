@@ -87,13 +87,13 @@
                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                             <div class="col-lg-12 col-md-12 col-xs-12">
                                 @Html.ButtonActionSubmit(text: "Filtrar")
-                                @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "TemplateSMS", action: "RetirarFiltroTemplateSMS")
-                                @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "TemplateSMS", action: "MostrarTudoTemplateSMS")
                                 @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
                                 {
-                                    @Html.ButtonLinkIndex(text: "Novo Modelo", controller: "TemplateSMS", action: "IncluirTemplateSMS")
+                                    @Html.ButtonLinkIndex(text: "Novo Modelo", controller: "TemplateSMS", action: "IncluirTemplateSMS", buttonClass: "primary")
                                 }
-                                @Html.ButtonLinkIndex(text: "Dashboard", action: "MontarTelaDashboardMensagens", controller: "Mensagem")
+                                @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "TemplateSMS", action: "RetirarFiltroTemplateSMS")
+                                @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "TemplateSMS", action: "MostrarTudoTemplateSMS")
+                                @Html.ButtonLinkIndex(text: "Dashboard", action: "VoltarDash", controller: "TemplateSMS")
                             </div>
                         </div>
                     </div>

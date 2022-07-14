@@ -82,17 +82,13 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            if ((Int32)Session["VoltaUnidade"] == 1)
+            if ((Int32)Session["TelefVolta"] == 1)
             {
-                return RedirectToAction("MontarTelaDashboardAdministracao", "BaseAdmin");
+                return RedirectToAction("MontarTelaDashboardAdministracao", "Usuario");
             }
-            if ((Int32)Session["VoltaUnidade"] == 2)
+            if ((Int32)Session["TelefVolta"] == 0)
             {
-                return RedirectToAction("CarregarPortaria", "BaseAdmin");
-            }
-            if ((Int32)Session["VoltaUnidade"] == 3)
-            {
-                return RedirectToAction("CarregarSindico", "BaseAdmin");
+                return RedirectToAction("CarregarBase", "BaseAdmin");
             }
             return RedirectToAction("CarregarBase", "BaseAdmin");
         }

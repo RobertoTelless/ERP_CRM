@@ -72,7 +72,7 @@ namespace DataServices.Repositories
             IQueryable<LOG> query = Db.LOG;
             if (!String.IsNullOrEmpty(operacao))
             {
-                query = query.Where(p => p.LOG_NM_OPERACAO == operacao);
+                query = query.Where(p => p.LOG_NM_OPERACAO.Contains(operacao));
             }
             if (usuId != 0)
             {

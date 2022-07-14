@@ -31,6 +31,11 @@ namespace ApplicationServices.Services
             return _usuarioService.GetByEmail(email, idAss);
         }
 
+        public USUARIO GetByCPF(String cpf, Int32 idAss)
+        {
+            return _usuarioService.GetByCPF(cpf, idAss);
+        }
+
         public USUARIO GetByLogin(String login, Int32 idAss)
         {
             return _usuarioService.GetByLogin(login, idAss);
@@ -140,6 +145,10 @@ namespace ApplicationServices.Services
                 if (_usuarioService.GetByLogin(usuario.USUA_NM_LOGIN, usuarioLogado.ASSI_CD_ID) != null)
                 {
                     return 4;
+                }
+                if (_usuarioService.GetByCPF(usuario.USUA_NR_CPF, usuarioLogado.ASSI_CD_ID) != null)
+                {
+                    return 5;
                 }
 
                 //Completa campos de usuários

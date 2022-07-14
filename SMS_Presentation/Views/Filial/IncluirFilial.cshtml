@@ -37,10 +37,11 @@
                     <div class="tabs-container">
                         @using (Html.BeginForm("IncluirFilial", "Filial", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                         {
-            <div class="form-group">
-                <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Inclusão de Filial</button>
-                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFilial", controller: "Filial")
-            </div>
+                            <div class="form-group">
+                                @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
+                                <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Inclusão de Filial</button>
+                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFilial", controller: "Filial")
+                            </div>
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
                                 <li class=""><a data-toggle="tab" href="#tab-2">Imagens</a></li>
@@ -52,7 +53,7 @@
                                                     <div class="panel-body">
                                                         <div class="row">
                                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                                                    <div class="col-lg-3 col-md-3 col-xs-12">
                                                                         CNPJ
                                                                         @Html.HiddenFor(m => m.FILI_DT_CADASTRO)
                                                                         @Html.HiddenFor(m => m.FILI_IN_ATIVO)
@@ -64,12 +65,12 @@
                                                                             </span>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
                                                                         Inscrição Municipal
                                                                         @Html.TextBoxFor(m => m.FILI_NR_INSCRICAO_ESTADUAL, new { @class = "form-control", autofocus = true, @id = "ie" })
                                                                         @Html.ValidationMessageFor(m => m.FILI_NR_INSCRICAO_ESTADUAL, "", new { @style = "color:red" })
                                                                     </div>
-                                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
                                                                         Inscrição Estadual
                                                                         @Html.TextBoxFor(m => m.FILI_NR_INSCRICAO_MUNICIPAL, new { @class = "form-control", autofocus = true, @id = "im" })
                                                                         @Html.ValidationMessageFor(m => m.FILI_NR_INSCRICAO_MUNICIPAL, "", new { @style = "color:red" })
@@ -117,7 +118,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                                     CEP
                                                                     <div class="input-group">
                                                                         @Html.TextBoxFor(m => m.FILI_NR_CEP, new { @class = "form-control", @id = "cep", autofocus = true })
@@ -189,12 +190,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
+                                                @*<div class="form-group">
                                                     <br />
                                                     @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
                                                     <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Inclusão de Filial</button>
                                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFilial", controller: "Filial")
-                                                </div>
+                                                </div>*@
                                             </div>}
                     </div>
                 </div>

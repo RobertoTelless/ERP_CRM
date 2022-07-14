@@ -63,8 +63,20 @@ namespace ERP_CRM_Solution.Controllers
 
         public ActionResult Voltar()
         {
-
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
             return RedirectToAction("CarregarBase", "BaseAdmin");
+        }
+
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("MontarTelaDashboardAdministracao", "Usuario");
         }
 
         [HttpGet]

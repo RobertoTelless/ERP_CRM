@@ -26,6 +26,14 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
+        public USUARIO GetByCPF(String cpf, Int32 idAss)
+        {
+            IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
+            query = query.Where(p => p.USUA_NR_CPF == cpf);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
+            return query.FirstOrDefault();
+        }
+
         public USUARIO GetByLogin(String login, Int32 idAss)
         {
             IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
