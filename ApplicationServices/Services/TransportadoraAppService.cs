@@ -261,7 +261,7 @@ namespace ApplicationServices.Services
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelTRAN",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<TRANSPORTADORA>(item)
+                    LOG_TX_REGISTRO = "Nome: " + item.TRAN_NM_NOME
                 };
 
                 // Persiste
@@ -290,7 +290,7 @@ namespace ApplicationServices.Services
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatTRAN",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<TRANSPORTADORA>(item)
+                    LOG_TX_REGISTRO = "Nome: " + item.TRAN_NM_NOME
                 };
 
                 // Persiste

@@ -846,6 +846,8 @@
     <Content Include="Imagens\2\FichaTecnica\4\Apresentacao\KS4GAQG0YPlimonada_jarra.jpg" />
     <Content Include="Imagens\2\Filial\1\Foto\FotoBase.jpg" />
     <Content Include="Imagens\2\Filial\1\Foto\Logo_RTI.png" />
+    <Content Include="Imagens\2\Filial\5\Logo\ECM-enterprise-content-management-content-services_0.png" />
+    <Content Include="Imagens\2\Filial\6\Logo\ecm1.jpg" />
     <Content Include="Imagens\2\FormResposta\1\Anexos\teste_1.jpg" />
     <Content Include="Imagens\2\FormResposta\4\Anexos\Imagem_Teste.jpg" />
     <Content Include="Imagens\2\FormResposta\4\Anexos\Tela_Kanban.jpg" />
@@ -860,6 +862,7 @@
     <Content Include="Imagens\2\Mensagem\70\Anexos\Imagem_Teste.jpg" />
     <Content Include="Imagens\2\Noticias\1\Fotos\bolsonaro-hospital.jpg" />
     <Content Include="Imagens\2\Noticias\1\Fotos\_99523487_gettyimages-823350988.jpg" />
+    <Content Include="Imagens\2\Noticias\20\Fotos\_120487823_bolsonaro.jpg" />
     <Content Include="Imagens\2\Noticias\3\Fotos\pizza.jpg" />
     <Content Include="Imagens\2\PedidoCompra\22\Anexos\RTelles_Assinatura.jpg" />
     <Content Include="Imagens\2\PedidoCompra\28\Anexos\1200px-Rothenburg_BW_4.jpeg" />
@@ -891,6 +894,8 @@
     <Content Include="Imagens\2\TemplatesHTML\15\Arquivos\modelo.html" />
     <Content Include="Imagens\2\TemplatesHTML\22\Arquivos\modelo.html" />
     <Content Include="Imagens\2\Usuario\15\Fotos\a4.jpg" />
+    <Content Include="Imagens\2\Usuario\17\Fotos\a4.jpg" />
+    <Content Include="Imagens\2\Usuario\18\Fotos\a1.jpg" />
     <Content Include="Imagens\2\Usuario\1\Foto\FotoBase.jpg" />
     <Content Include="Imagens\2\Usuario\1\Foto\FotoOficial_2.jpeg" />
     <Content Include="Imagens\2\Usuario\2\Anexos\full_height.jpg" />
@@ -2406,6 +2411,7 @@
     <Content Include="Imagens\2\Pedido\28\Anexos\UnidadesLista_12072022 %282%29.pdf" />
     <Content Include="Imagens\2\Proposta\63\Arquivo\TelefoneLista_12072022.pdf" />
     <Content Include="Imagens\2\Proposta\64\Arquivo\UnidadesLista_12072022.pdf" />
+    <Content Include="Imagens\2\Agenda\115\Anexos\Unidade_10_12072022 %283%29.pdf" />
     <None Include="Properties\PublishProfiles\ERPCondominio - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ERPMKT - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ERPSysNet - Web Deploy.pubxml" />
@@ -3835,10 +3841,15 @@
     <Content Include="Views\Telefone\EnviarSMSTelefone.cshtml" />
     <Content Include="Views\Filial\EnviarEMailFilial.cshtml" />
     <Content Include="Views\Filial\EnviarSMSFilial.cshtml" />
+    <Content Include="Views\Cliente\EnviarEMailCliente.cshtml" />
+    <Content Include="Views\Cliente\EnviarSMSCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
+    <Folder Include="Imagens\2\Agenda\116\Anexos\" />
+    <Folder Include="Imagens\2\Agenda\117\Anexos\" />
+    <Folder Include="Imagens\2\Agenda\119\Anexos\" />
     <Folder Include="Imagens\2\Agenda\2\Anexos\" />
     <Folder Include="Imagens\2\Agenda\3\Anexos\" />
     <Folder Include="Imagens\2\Agenda\40\Anexos\" />
@@ -4033,6 +4044,8 @@
     <Folder Include="Imagens\2\Notificacao\3\Anexos\" />
     <Folder Include="Imagens\2\Notificacao\4\Anexos\" />
     <Folder Include="Imagens\2\Notificacao\5\Anexos\" />
+    <Folder Include="Imagens\2\Notificacao\669\Anexos\" />
+    <Folder Include="Imagens\2\Notificacao\670\Anexos\" />
     <Folder Include="Imagens\2\Notificacao\6\Anexos\" />
     <Folder Include="Imagens\2\Notificacao\7\Anexos\" />
     <Folder Include="Imagens\2\Notificacao\8\Anexos\" />
@@ -4151,6 +4164,8 @@
     <Folder Include="Imagens\2\TemplatesHTML\21\Arquivos\" />
     <Folder Include="Imagens\2\TemplatesHTML\4\Arquivos\" />
     <Folder Include="Imagens\2\Usuario\15\Anexos\" />
+    <Folder Include="Imagens\2\Usuario\17\Anexos\" />
+    <Folder Include="Imagens\2\Usuario\18\Anexos\" />
     <Folder Include="Imagens\2\Usuario\1\Anexos\" />
     <Folder Include="Imagens\2\Usuario\3\Anexos\" />
     <Folder Include="Imagens\2\Usuario\4\Anexos\" />

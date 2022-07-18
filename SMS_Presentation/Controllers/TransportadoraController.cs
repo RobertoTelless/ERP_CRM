@@ -973,7 +973,7 @@ namespace ERP_CRM_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Imagens/Base/favicon_SystemBR.jpg"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.jpg"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);
@@ -1228,7 +1228,7 @@ namespace ERP_CRM_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Imagens/Base/favicon_SystemBR.jpg"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.jpg"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);

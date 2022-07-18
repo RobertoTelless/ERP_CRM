@@ -83,14 +83,13 @@
                     <div class="form-group">
                         @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Servico")
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseServico", controller: "Servico")
-                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "Servico", action: "MontarTelaDashboardServiceDesk")
                     </div>
 
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2">Anexos</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-3">Custos & Prazos</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-3">Preços & Prazos</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-4">Observações</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-5">Indicadores</a></li>
                         </ul>
@@ -231,7 +230,7 @@ else if (cond.SEAN_IN_TIPO == 3)
                                         @using (Html.BeginForm("EditarServico", "Servico", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                         {
                                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-1 col-md-1 col-xs-12">
                                                     @Html.HiddenFor(m => m.SERV_CD_CODIGO)
                                                     @Html.HiddenFor(m => m.SERV_CD_ID)
                                                     @Html.HiddenFor(m => m.SERV_DS_DESCRICAO)
@@ -249,13 +248,13 @@ else if (cond.SEAN_IN_TIPO == 3)
                                                     @Html.TextBoxFor(m => m.SERV_NR_DURACAO, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.SERV_NR_DURACAO, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-1 col-md-1 col-xs-12">
                                                     Prazo Expresso
                                                     @Html.TextBoxFor(m => m.SERV_NR_DURACAO_EXPRESSA, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.SERV_NR_DURACAO_EXPRESSA, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Valor da Visita
+                                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                                    Visita (R$)
                                                     @Html.TextBoxFor(m => m.SERV_VL_VISITA, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.SERV_VL_VISITA, "", new { @style = "color:red" })
                                                 </div>
@@ -277,20 +276,20 @@ else if (cond.SEAN_IN_TIPO == 3)
                                     Filial
                                     @Html.DropDownListFor(m => m.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", autofocus = true, id = "fili" })
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Custo
+                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                    Custo (R$)
                                     @Html.TextBox("SETP_VL_CUSTO", null, new { @class = "form-control", autofocus = true, id = "custo", onfocusout = "CalculaPreco()" })
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Markup
+                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                    Markup (%)
                                     @Html.TextBox("SETP_NR_MARKUP", null, new { @class = "form-control", autofocus = true, id = "markup", onfocusout = "CalculaPreco()" })
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                <div class="col-lg-1 col-md-1 col-xs-12">
                                     Preço (R$)
                                     @Html.TextBox("SETP_VL_PRECO", null, new { @class = "form-control", autofocus = true, id = "preco" })
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                    Preço Promoção (R$)
+                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                    Promoção (R$)
                                     @Html.TextBox("SETP_VL_PRECO_PROMOCAO", null, new { @class = "form-control", autofocus = true })
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-xs-12">
@@ -308,10 +307,10 @@ else if (cond.SEAN_IN_TIPO == 3)
                                         <thead style="background-color:lightsteelblue">
                                             <tr>
                                                 <th>Filial</th>
-                                                <th>Custo</th>
-                                                <th>Markup</th>
-                                                <th>Preço</th>
-                                                <th>Preço Promoção</th>
+                                                <th>Custo (R$)</th>
+                                                <th>Markup (%)</th>
+                                                <th>Preço (R$)</th>
+                                                <th>Preço Promoção (R$)</th>
                                                 @*<th>Desconto Máximo</th>*@
                                                 <th>Data</th>
                                                 <th class="td-one-action">Ações</th>

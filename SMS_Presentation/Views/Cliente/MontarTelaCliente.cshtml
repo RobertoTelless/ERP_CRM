@@ -5,7 +5,26 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
-
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*Titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="limpaModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @using (Html.BeginForm("EnviarSmsCliente", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
     { 
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -47,7 +66,7 @@
     @if (ViewBag.Perfil == "ADM")
     {
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-primary pull-right">Hoje</span>
@@ -63,7 +82,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-primary pull-right">Hoje</span>
@@ -78,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-primary pull-right">Hoje</span>
@@ -93,7 +112,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-primary pull-right">Hoje</span>
@@ -150,11 +169,11 @@
                                 Cidade
                                 @Html.TextBoxFor(m => m.CLIE_NM_CIDADE, new { @class = "form-control", autofocus = true })
                             </div>
-                            <div class="col-lg-3 col-md-3 col-xs-12">
+                            <div class="col-lg-2 col-md-2 col-xs-12">
                                 UF
                                 @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control" })
                             </div>
-                            <div class="col-lg-2 col-md-2 col-xs-12">
+                            <div class="col-lg-1 col-md-1 col-xs-12">
                                 Ativo?
                                 @Html.DropDownListFor(m => m.CLIE_IN_ATIVO, (SelectList)ViewBag.Ativos, new { @class = "form-control" })
                             </div>
@@ -162,10 +181,10 @@
                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                             <div class="col-lg-12 col-md-12 col-xs-12">
                                 @Html.ButtonActionSubmit(text: "Filtrar")
+                                @Html.ButtonLinkIndex(text: "Novo Cliente", controller: "Cliente", action: "IncluirCliente", buttonClass: "primary")
+                                @Html.ButtonLinkIndex(text: "Inclusão Rápida", action: "IncluirClienteRapido", controller: "Cliente", buttonClass: "primary")
                                 @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Cliente", action: "RetirarFiltroCliente")
                                 @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Cliente", action: "MostrarTudoCliente")
-                                @Html.ButtonLinkIndex(text: "Novo Cliente", controller: "Cliente", action: "IncluirCliente")
-                                @Html.ButtonLinkIndex(text: "Inclusão Rápida", action: "IncluirClienteRapido", controller: "Cliente")
                                 @Html.ButtonLinkIndex(text: "Importar Planilha", action: "IncluirClientePlanilha", controller: "Cliente")
                                 @Html.ButtonLinkIndex(text: "Exibir Cards", controller: "Cliente", action: "VerCardsCliente")
                                 @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Cliente", action: "GerarRelatorioLista")
@@ -225,8 +244,8 @@
                                                 }
                                                 <td style="width: auto">@cond.CLIE_NR_CPF</td>
                                                 <td>@cond.CLIE_NR_CNPJ</td>
-                                                <td>@cond.CLIE_NM_EMAIL</td>
-                                                <td>@cond.CLIE_NR_CELULAR</td>
+                                                <td><a href="@Url.Action("EnviarEMailCliente", "Cliente", new { id = cond.CLIE_CD_ID })" />@cond.CLIE_NM_EMAIL</td>
+                                                <td><a href="@Url.Action("EnviarSMSCliente", "Cliente", new { id = cond.CLIE_CD_ID })" />@cond.CLIE_NR_CELULAR</td>
                                                 <td>@cond.CLIE_NM_CIDADE</td>
                                                 @if (cond.UF != null)
                                                 {
@@ -246,14 +265,13 @@
                                                 }
                                                 <td class="td-one-action">
                                                     @Html.TableLinkDetails(cond.CLIE_CD_ID, "EditarCliente", "fa-edit", "Editar/Consultar")
-                                                    <span style="cursor: pointer; color: #337ab7;" class="fa fa-send" onclick="MudaIdCliente('@cond.CLIE_CD_ID')" data-toggle="modal" data-target="#exampleModal" title="Enviar SMS"> </span>
                                                     @if (cond.CLIE_IN_ATIVO == 1)
                                                     {
-                                                        @Html.TableLinkDetails(cond.CLIE_CD_ID, "ExcluirCliente", "fa-trash-o", "Desativar")
+                                                        <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Cliente/ExcluirCliente/@cond.CLIE_CD_ID')" title="Excluir"></span>
                                                     }
                                                     else
                                                     {
-                                                        @Html.TableLinkDetails(cond.CLIE_CD_ID, "ReativarCliente", "fa-refresh", "Reativar")
+                                                        <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Cliente/ReativarCliente/@cond.CLIE_CD_ID')" title="Reativar"></span>
                                                     }
                                                 </td>
                                             </tr>
@@ -271,8 +289,8 @@
                                                 }
                                                 <td style="width: auto">@cond.CLIE_NR_CPF</td>
                                                 <td>@cond.CLIE_NR_CNPJ</td>
-                                                <td>@cond.CLIE_NM_EMAIL</td>
-                                                <td>@cond.CLIE_NR_CELULAR</td>
+                                                <td><a href="@Url.Action("EnviarEMailCliente", "Cliente", new { id = cond.CLIE_CD_ID })" />@cond.CLIE_NM_EMAIL</td>
+                                                <td><a href="@Url.Action("EnviarSMSCliente", "Cliente", new { id = cond.CLIE_CD_ID })" />@cond.CLIE_NR_CELULAR</td>
                                                 <td>@cond.CLIE_NM_CIDADE</td>
                                                 @if (cond.UF != null)
                                                 {
@@ -292,14 +310,13 @@
                                                 }
                                                 <td class="td-one-action">
                                                     @Html.TableLinkDetails(cond.CLIE_CD_ID, "EditarCliente", "fa-edit", "Editar/Consultar")
-                                                    <span style="cursor: pointer; color: #337ab7;" class="fa fa-send" onclick="MudaIdCliente('@cond.CLIE_CD_ID')" data-toggle="modal" data-target="#exampleModal" title="Enviar SMS"> </span>
                                                     @if (cond.CLIE_IN_ATIVO == 1)
                                                     {
-                                                        @Html.TableLinkDetails(cond.CLIE_CD_ID, "ExcluirCliente", "fa-trash-o", "Desativar")
+                                                        <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Cliente/ExcluirCliente/@cond.CLIE_CD_ID')" title="Excluir"></span>
                                                     }
                                                     else
                                                     {
-                                                        @Html.TableLinkDetails(cond.CLIE_CD_ID, "ReativarCliente", "fa-refresh", "Reativar")
+                                                        <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Cliente/ReativarCliente/@cond.CLIE_CD_ID')" title="Reativar"></span>
                                                     }
                                                 </td>
                                             </tr>
@@ -329,7 +346,30 @@
     @Scripts.Render("~/plugins/jasnyBootstrap")
 <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
-    
+    <script>
+        $(function () {
+            limpaModal();
+        });
+
+        function limpaModal() {
+            $('#btnModal').remove();
+            $('#modalTitle').remove();
+        }
+
+        function ShowModalExcluir(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma exclusão de Cliente?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativar(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação de Cliente?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+    </script>
      <script>
         $("#lstCliente").select2({
             //data: filterSelect,

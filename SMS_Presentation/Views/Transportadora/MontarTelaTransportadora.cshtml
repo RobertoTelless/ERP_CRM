@@ -111,12 +111,12 @@
                         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                             <div class="col-lg-12 col-md-12 col-xs-12">
                                 @Html.ButtonActionSubmit(text: "Filtrar")
-                                @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Transportadora", action: "RetirarFiltroTransportadora")
-                                @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Transportadora", action: "MostrarTudoTransportadora")
                                 @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
                                 {
-                                    @Html.ButtonLinkIndex(text: "Nova Transportadora", controller: "Transportadora", action: "IncluirTransportadora")
+                                    @Html.ButtonLinkIndex(text: "Nova Transportadora", controller: "Transportadora", action: "IncluirTransportadora", buttonClass: "primary")
                                 }
+                                @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Transportadora", action: "RetirarFiltroTransportadora")
+                                @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Transportadora", action: "MostrarTudoTransportadora")
                                 @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Transportadora", action: "GerarRelatorioLista")
                                 @Html.ButtonLinkIndex(text: "Dashboard", controller: "Transportadora", action: "Voltar")
                             </div>
@@ -164,7 +164,7 @@
                                         <tr>
                                             <td>@cond.TRAN_NM_NOME</td>
                                             <td>@CrossCutting.Formatters.CNPJFormatter(cond.TRAN_NR_CNPJ)</td>
-                                            <td>@cond.TRAN_NM_EMAIL</td>
+                                            <td><a href="@Url.Action("EnviarEMailTransportadora", "Transportadora", new { id = cond.TRAN_CD_ID })" />@cond.TRAN_NM_EMAIL</td>
                                             <td>@cond.TRAN_NR_TELEFONES</td>
                                             <td>@cond.TRAN_NM_CIDADE</td>
                                             <td>@cond.TRAN_SG_UF</td>
@@ -188,7 +188,6 @@
                                                 @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
                                                 {
                                                     @Html.TableLinkDetails(cond.TRAN_CD_ID, "EditarTransportadora", "fa-edit", "Editar/Consultar Transportadora")
-                                                    <span style="cursor: pointer; color: #337ab7;" class="fa fa-send" onclick="MudaIdTrans('@cond.TRAN_CD_ID')" data-toggle="modal" data-target="#exampleModal" title="Enivar SMS"> </span>
                                                     if (cond.TRAN_IN_ATIVO == 1)
                                                     {
                                                         <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Transportadora/ExcluirTransportadora/@cond.TRAN_CD_ID')" title="Desativar"></span>

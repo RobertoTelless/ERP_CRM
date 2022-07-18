@@ -54,7 +54,7 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                     @Html.HiddenFor(m => m.CLIE_DT_CADASTRO)
                                                     @Html.HiddenFor(m => m.CLIE_IN_ATIVO)
@@ -77,7 +77,7 @@
                                                         @Html.ValidationMessageFor(m => m.FILI_CD_ID, "", new { @style = "color:red" })
                                                     </div>
                                                 }
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Tipo de Contribuinte
                                                     @Html.DropDownListFor(m => m.TICO_CD_ID, (SelectList)ViewBag.TiposCont, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.TICO_CD_ID, "", new { @style = "color:red" })
@@ -89,7 +89,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="PF">
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     CPF
                                                     @Html.TextBoxFor(m => m.CLIE_NR_CPF, new { @class = "form-control", @id = "cpf", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.CLIE_NR_CPF, "", new { @style = "color:red" })
@@ -111,7 +111,7 @@
                                                     @Html.TextBoxFor(m => m.CLIE_NR_INSCRICAO_ESTADUAL, new { @class = "form-control", autofocus = true, id = "ie" })
                                                     @Html.ValidationMessageFor(m => m.CLIE_NR_INSCRICAO_ESTADUAL, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Insc. Municipal
                                                     @Html.TextBoxFor(m => m.CLIE_NR_INSCRICAO_MUNICIPAL, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.CLIE_NR_INSCRICAO_MUNICIPAL, "", new { @style = "color:red" })
@@ -145,7 +145,7 @@
                                                     @Html.DropDownListFor(m => m.RETR_CD_ID, (SelectList)ViewBag.Regimes, "Selecionar", new { @class = "form-control", autofocus = true, @id = "rt" })
                                                     @Html.ValidationMessageFor(m => m.RETR_CD_ID, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Inscrição SUFRAMA
                                                     @Html.TextBoxFor(m => m.CLIE_NR_SUFRAMA, new { @class = "form-control", autofocus = true, @id = "is" })
                                                     @Html.ValidationMessageFor(m => m.CLIE_NR_SUFRAMA, "", new { @style = "color:red" })
@@ -213,7 +213,7 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     <h4>Endereço Principal</h4>
                                                     <br />
                                                     CEP
@@ -262,7 +262,7 @@
                                         <div class="row">
                                             <hr />
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     <h4>Endereço de Entrega</h4>
                                                     <br />
                                                     CEP Entrega
@@ -316,34 +316,34 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
                                                     E-Mail*
                                                     @Html.TextBoxFor(m => m.CLIE_NM_EMAIL, new { @class = "form-control", autofocus = true, id = "email" })
                                                     @Html.ValidationMessageFor(m => m.CLIE_NM_EMAIL, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
                                                     E-Mail DANFE
                                                     @Html.TextBoxFor(m => m.CLIE_NM_EMAIL_DANFE, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.CLIE_NM_EMAIL_DANFE, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Redes Sociais
                                                     @Html.TextBoxFor(m => m.CLIE_NM_REDES_SOCIAIS, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.CLIE_NM_REDES_SOCIAIS, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Telefone
                                                     @Html.TextBoxFor(m => m.CLIE_NR_TELEFONE, new { @class = "form-control", autofocus = true, @id = "tel" })
                                                     @Html.ValidationMessageFor(m => m.CLIE_NR_TELEFONE, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Celular
                                                     @Html.TextBoxFor(m => m.CLIE_NR_CELULAR, new { @class = "form-control", autofocus = true, @id = "cel" })
                                                     @Html.ValidationMessageFor(m => m.CLIE_NR_CELULAR, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Telefone Adicional
                                                     @Html.TextBoxFor(m => m.CLIE_NR_TELEFONE_ADICIONAL, new { @class = "form-control", autofocus = true, @id = "alt_tel" })
                                                     @Html.ValidationMessageFor(m => m.CLIE_NR_TELEFONE_ADICIONAL, "", new { @style = "color:red" })
@@ -374,13 +374,13 @@
                                                     @Html.ValidationMessageFor(m => m.CLIE_DT_NASCIMENTO, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Sexo
+                                                    Gênero
                                                     @Html.DropDownListFor(m => m.SEXO_CD_ID, (SelectList)ViewBag.Sexo, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.SEXO_CD_ID, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Naturalidade
                                                     @Html.TextBoxFor(m => m.CLIE_NM_NATURALIDADE, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.CLIE_NM_NATURALIDADE, "", new { @style = "color:red" })
@@ -405,7 +405,7 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Vendedor
                                                     @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })

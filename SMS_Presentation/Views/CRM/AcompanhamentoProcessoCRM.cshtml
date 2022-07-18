@@ -144,10 +144,10 @@
                             <li class=""><a data-toggle="tab" href="#tab-4">Comentários - Follow-Up</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2">Imagem & Anexos</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-3">Contatos</a></li>
-                            @if ((Int32)Session["PermCRM"] == 1)
+                            @*@if ((Int32)Session["PermCRM"] == 1)
                             {
                                 <li class=""><a data-toggle="tab" href="#tab-9">Propostas & Vendas</a></li>
-                            }
+                            }*@
                             @if ((Int32)Session["PermVenda"] == 1)
                             {
                                 <li class=""><a data-toggle="tab" href="#tab-10">Pedidos & Vendas</a></li>
@@ -982,7 +982,7 @@
                             </div>
 
                             @*Propostas*@
-                            @if ((Int32)Session["PermCRM"] == 1)
+                            @*@if ((Int32)Session["PermCRM"] == 1)
                             {
                                 <div id="tab-9" class="tab-pane">
                                     <div class="panel-body">
@@ -1249,7 +1249,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            }
+                            }*@
 
                             @*Pedidos*@
                             @if ((Int32)Session["PermVenda"] == 1)

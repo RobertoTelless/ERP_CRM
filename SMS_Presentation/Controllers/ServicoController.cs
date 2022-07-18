@@ -85,6 +85,11 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            if ((Int32)Session["VoltaServico"] == 40)
+            {
+                Session["VoltaServico"] = 1;
+                return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
+            }
             return RedirectToAction("CarregarBase", "BaseAdmin");
         }
 
@@ -95,6 +100,15 @@ namespace ERP_CRM_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             return RedirectToAction("CarregarBase", "BaseAdmin");
+        }
+
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("MontarTelaDashboardCRMNovo", "CRM");
         }
 
         [HttpPost]
@@ -188,6 +202,7 @@ namespace ERP_CRM_Solution.Controllers
 
             // Abre view
             Session["MensServico"] = 0;
+            Session["VoltaServico"] = 1;
             objetoServ = new SERVICO();
             return View(objetoServ);
         }
@@ -1115,7 +1130,7 @@ namespace ERP_CRM_Solution.Controllers
                     };
                     table.AddCell(cell);
                 }
-                else if (item.SERV_IN_LOCAL == 2)
+                if (item.SERV_IN_LOCAL == 2)
                 {
                     cell = new PdfPCell(new Paragraph("Externo", meuFont))
                     {
@@ -1124,7 +1139,7 @@ namespace ERP_CRM_Solution.Controllers
                     };
                     table.AddCell(cell);
                 }
-                else
+                if (item.SERV_IN_LOCAL == 3)
                 {
                     cell = new PdfPCell(new Paragraph("Interno/Externo", meuFont))
                     {
@@ -1133,9 +1148,8 @@ namespace ERP_CRM_Solution.Controllers
                     };
                     table.AddCell(cell);
                 }
-                if (item.SERV_VL_VISITA != null & item.SERV_IN_LOCAL != 1 )
+                if (item.SERV_VL_VISITA != null & item.SERV_IN_LOCAL > 1 )
                 {
-                    table.AddCell(cell);
                     cell = new PdfPCell(new Paragraph(CrossCutting.Formatters.DecimalFormatter(item.SERV_VL_VISITA.Value), meuFont))
                     {
                         VerticalAlignment = Element.ALIGN_MIDDLE,
@@ -1143,9 +1157,8 @@ namespace ERP_CRM_Solution.Controllers
                     };
                     table.AddCell(cell);
                 }
-                else if (item.SERV_VL_VISITA == null & item.SERV_IN_LOCAL != 1 )
+                if (item.SERV_VL_VISITA == null & item.SERV_IN_LOCAL > 1 )
                 {
-                    table.AddCell(cell);
                     cell = new PdfPCell(new Paragraph("Não Definido", meuFont))
                     {
                         VerticalAlignment = Element.ALIGN_MIDDLE,
@@ -1153,9 +1166,8 @@ namespace ERP_CRM_Solution.Controllers
                     };
                     table.AddCell(cell);
                 }
-                else if (item.SERV_IN_LOCAL == 2)
+                if (item.SERV_IN_LOCAL == 1)
                 {
-                    table.AddCell(cell);
                     cell = new PdfPCell(new Paragraph("Não se Aplica", meuFont))
                     {
                         VerticalAlignment = Element.ALIGN_MIDDLE,

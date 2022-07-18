@@ -505,6 +505,7 @@ namespace ERP_CRM_Solution.Controllers
             // Abre view
             Session["MensCliente"] = 0;
             Session["VoltaCliente"] = 1;
+            Session["VoltaClienteCRM"] = 0;
             objeto = new CLIENTE();
             if (Session["FiltroCliente"] != null)
             {
@@ -585,6 +586,14 @@ namespace ERP_CRM_Solution.Controllers
 
         public ActionResult VoltarBaseCliente()
         {
+            if ((Int32)Session["VoltaClienteCRM"] == 0)
+            {
+                return RedirectToAction("MontarTelaCliente");
+            }
+            if ((Int32)Session["VoltaClienteCRM"] == 1)
+            {
+                return RedirectToAction("IncluirProcessoCRM", "CRM");
+            }
             if ((Int32)Session["VoltaCliente"] == 2)
             {
                 return RedirectToAction("VerCardsCliente");
@@ -780,15 +789,10 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         return RedirectToAction("IncluirOrdemServico", "OrdemServico");
                     }
-                    if ((Int32)Session["VoltaCliente"] == 8)
+                    if ((Int32)Session["VoltaClienteCRM"] == 1)
                     {
                         return RedirectToAction("IncluirProcessoCRM", "CRM");
                     }
-                    //if (SessionMocks.ClienteToCr)
-                    //{
-                    //    SessionMocks.ClienteToCr = false;
-                    //    return RedirectToAction("IncluirCR", "ContaReceber");
-                    //}
                     if ((Int32)Session["VoltaCliente"] == 3)
                     {
                         Session["VoltaCliente"] = 0;
@@ -971,7 +975,7 @@ namespace ERP_CRM_Solution.Controllers
         [HttpGet]
         public ActionResult ExcluirCliente(Int32 id)
         {
-            // Verifica se tem usuario logado
+            // Valida acesso
             USUARIO usuario = new USUARIO();
             if ((String)Session["Ativa"] == null)
             {
@@ -980,8 +984,7 @@ namespace ERP_CRM_Solution.Controllers
             if ((USUARIO)Session["UserCredentials"] != null)
             {
                 usuario = (USUARIO)Session["UserCredentials"];
-
-                // Verfifica permissão
+                //Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "VIS")
                 {
                     Session["MensCliente"] = 2;
@@ -994,49 +997,26 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
-            // Prepara view
+            // Executar
             CLIENTE item = baseApp.GetItemById(id);
-            ClienteViewModel vm = Mapper.Map<CLIENTE, ClienteViewModel>(item);
-            return View(vm);
-        }
-
-        [HttpPost]
-        public ActionResult ExcluirCliente(ClienteViewModel vm)
-        {
-            if ((String)Session["Ativa"] == null)
+            objetoAntes = (CLIENTE)Session["Cliente"];
+            item.CLIE_IN_ATIVO = 0;
+            Int32 volta = baseApp.ValidateDelete(item, usuario);
+            if (volta == 1)
             {
-                return RedirectToAction("Login", "ControleAcesso");
+                Session["MensCliente"] = 4;
+                return RedirectToAction("MontarTelaCliente", "Cliente");
             }
-            try
-            {
-                // Executa a operação
-                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                CLIENTE item = Mapper.Map<ClienteViewModel, CLIENTE>(vm);
-                Int32 volta = baseApp.ValidateDelete(item, usuarioLogado);
-
-                // Verifica retorno
-                if (volta == 1)
-                {
-                    Session["MensCliente"] = 4;
-                    return RedirectToAction("MontarTelaCliente", "Cliente");
-                }
-
-                // Sucesso
-                listaMaster = new List<CLIENTE>();
-                Session["ListaCliente"] = null;
-                return RedirectToAction("MontarTelaCliente");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View(objeto);
-            }
+            listaMaster = new List<CLIENTE>();
+            Session["ListaCliente"] = null;
+            Session["FiltroCliente"] = null;
+            return RedirectToAction("MontarTelaCliente");
         }
 
         [HttpGet]
         public ActionResult ReativarCliente(Int32 id)
         {
-            // Verifica se tem usuario logado
+            // Valida acesso
             USUARIO usuario = new USUARIO();
             if ((String)Session["Ativa"] == null)
             {
@@ -1045,8 +1025,7 @@ namespace ERP_CRM_Solution.Controllers
             if ((USUARIO)Session["UserCredentials"] != null)
             {
                 usuario = (USUARIO)Session["UserCredentials"];
-
-                // Verfifica permissão
+                //Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "VIS")
                 {
                     Session["MensCliente"] = 2;
@@ -1059,47 +1038,150 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
-            // Verifica possibilidade
-            Int32 num = baseApp.GetAllItens(idAss).Count;
-            if ((Int32)Session["NumClientes"] <= num)
-            {
-                Session["MensCliente"] = 50;
-                return RedirectToAction("MontarTelaCliente", "Cliente");
-            }
-
-            // Prepara view
+            // Executar
             CLIENTE item = baseApp.GetItemById(id);
-            ClienteViewModel vm = Mapper.Map<CLIENTE, ClienteViewModel>(item);
-            return View(vm);
+            objetoAntes = (CLIENTE)Session["Cliente"];
+            item.CLIE_IN_ATIVO = 1;
+            Int32 volta = baseApp.ValidateReativar(item, usuario);
+            listaMaster = new List<CLIENTE>();
+            Session["ListaCliente"] = null;
+            Session["FiltroCliente"] = null;
+            return RedirectToAction("MontarTelaCliente");
         }
 
-        [HttpPost]
-        public ActionResult ReativarCliente(ClienteViewModel vm)
-        {
-            if ((String)Session["Ativa"] == null)
-            {
-                return RedirectToAction("Login", "ControleAcesso");
-            }
-            try
-            {
-                // Executa a operação
-                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                CLIENTE item = Mapper.Map<ClienteViewModel, CLIENTE>(vm);
-                Int32 volta = baseApp.ValidateReativar(item, usuarioLogado);
 
-                // Verifica retorno
+        //[HttpGet]
+        //public ActionResult ExcluirCliente(Int32 id)
+        //{
+        //    Verifica se tem usuario logado
+        //   USUARIO usuario = new USUARIO();
+        //    if ((String)Session["Ativa"] == null)
+        //    {
+        //        return RedirectToAction("Login", "ControleAcesso");
+        //    }
+        //    if ((USUARIO)Session["UserCredentials"] != null)
+        //    {
+        //        usuario = (USUARIO)Session["UserCredentials"];
 
-                // Sucesso
-                listaMaster = new List<CLIENTE>();
-                Session["ListaCliente"] = null;
-                return RedirectToAction("MontarTelaCliente");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View(objeto);
-            }
-        }
+        //        Verfifica permissão
+        //        if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+        //        {
+        //            Session["MensCliente"] = 2;
+        //            return RedirectToAction("MontarTelaCliente");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Login", "ControleAcesso");
+        //    }
+        //    Int32 idAss = (Int32)Session["IdAssinante"];
+
+        //    Prepara view
+        //    CLIENTE item = baseApp.GetItemById(id);
+        //    ClienteViewModel vm = Mapper.Map<CLIENTE, ClienteViewModel>(item);
+        //    return View(vm);
+        //}
+
+        //[HttpPost]
+        //public ActionResult ExcluirCliente(ClienteViewModel vm)
+        //{
+        //    if ((String)Session["Ativa"] == null)
+        //    {
+        //        return RedirectToAction("Login", "ControleAcesso");
+        //    }
+        //    try
+        //    {
+        //        Executa a operação
+        //       USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+        //        CLIENTE item = Mapper.Map<ClienteViewModel, CLIENTE>(vm);
+        //        Int32 volta = baseApp.ValidateDelete(item, usuarioLogado);
+
+        //        Verifica retorno
+        //        if (volta == 1)
+        //        {
+        //            Session["MensCliente"] = 4;
+        //            return RedirectToAction("MontarTelaCliente", "Cliente");
+        //        }
+
+        //        Sucesso
+        //       listaMaster = new List<CLIENTE>();
+        //        Session["ListaCliente"] = null;
+        //        return RedirectToAction("MontarTelaCliente");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.Message = ex.Message;
+        //        return View(objeto);
+        //    }
+        //}
+
+        //[HttpGet]
+        //public ActionResult ReativarCliente(Int32 id)
+        //{
+        //    Verifica se tem usuario logado
+        //   USUARIO usuario = new USUARIO();
+        //    if ((String)Session["Ativa"] == null)
+        //    {
+        //        return RedirectToAction("Login", "ControleAcesso");
+        //    }
+        //    if ((USUARIO)Session["UserCredentials"] != null)
+        //    {
+        //        usuario = (USUARIO)Session["UserCredentials"];
+
+        //        Verfifica permissão
+        //        if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+        //        {
+        //            Session["MensCliente"] = 2;
+        //            return RedirectToAction("MontarTelaCliente");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Login", "ControleAcesso");
+        //    }
+        //    Int32 idAss = (Int32)Session["IdAssinante"];
+
+        //    Verifica possibilidade
+        //    Int32 num = baseApp.GetAllItens(idAss).Count;
+        //    if ((Int32)Session["NumClientes"] <= num)
+        //    {
+        //        Session["MensCliente"] = 50;
+        //        return RedirectToAction("MontarTelaCliente", "Cliente");
+        //    }
+
+        //    Prepara view
+        //    CLIENTE item = baseApp.GetItemById(id);
+        //    ClienteViewModel vm = Mapper.Map<CLIENTE, ClienteViewModel>(item);
+        //    return View(vm);
+        //}
+
+        //[HttpPost]
+        //public ActionResult ReativarCliente(ClienteViewModel vm)
+        //{
+        //    if ((String)Session["Ativa"] == null)
+        //    {
+        //        return RedirectToAction("Login", "ControleAcesso");
+        //    }
+        //    try
+        //    {
+        //        Executa a operação
+        //       USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+        //        CLIENTE item = Mapper.Map<ClienteViewModel, CLIENTE>(vm);
+        //        Int32 volta = baseApp.ValidateReativar(item, usuarioLogado);
+
+        //        Verifica retorno
+
+        //         Sucesso
+        //        listaMaster = new List<CLIENTE>();
+        //        Session["ListaCliente"] = null;
+        //        return RedirectToAction("MontarTelaCliente");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.Message = ex.Message;
+        //        return View(objeto);
+        //    }
+        //}
 
         public ActionResult VerCardsCliente()
         {
@@ -2305,12 +2387,12 @@ namespace ERP_CRM_Solution.Controllers
             table.SpacingBefore = 1f;
             table.SpacingAfter = 1f;
 
-            cell = new PdfPCell(new Paragraph("Foto", meuFontBold));
-            cell.Border = 0;
-            cell.Colspan = 4;
-            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            table.AddCell(cell);
+            //cell = new PdfPCell(new Paragraph("Foto", meuFontBold));
+            //cell.Border = 0;
+            //cell.Colspan = 4;
+            //cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            //cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            //table.AddCell(cell);
 
             try
             {
@@ -3417,5 +3499,287 @@ namespace ERP_CRM_Solution.Controllers
                 return View(vm);
             }
         }
+
+        [HttpGet]
+        public ActionResult EnviarEMailClienteForm()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("EnviarEMailCliente", new { id = (Int32)Session["IdCliente"] });
+        }
+
+        [HttpGet]
+        public ActionResult EnviarSMSClienteForm()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("EnviarSMSCliente", new { id = (Int32)Session["IdCliente"] });
+        }
+
+
+        [HttpGet]
+        public ActionResult EnviarEMailCliente(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            CLIENTE cont = baseApp.GetItemById(id);
+            Session["Cliente"] = cont;
+            ViewBag.Cliente = cont;
+            MensagemViewModel mens = new MensagemViewModel();
+            mens.NOME = cont.CLIE_NM_NOME;
+            mens.ID = id;
+            mens.MODELO = cont.CLIE_NM_EMAIL;
+            mens.MENS_DT_CRIACAO = DateTime.Today.Date;
+            mens.MENS_IN_TIPO = 1;
+            return View(mens);
+        }
+
+        [HttpPost]
+        public ActionResult EnviarEMailCliente(MensagemViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = ProcessaEnvioEMailCliente(vm, usuarioLogado);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+
+                    }
+
+                    // Sucesso
+                    return RedirectToAction("VoltarBaseCliente");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [ValidateInput(false)]
+        public Int32 ProcessaEnvioEMailCliente(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera usuario
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            CLIENTE cont = (CLIENTE)Session["Cliente"];
+
+            // Processa e-mail
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+
+            // Prepara cabeçalho
+            String cab = "Prezado Sr(a). <b>" + cont.CLIE_NM_NOME + "</b>";
+
+            // Prepara rodape
+            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            String rod = "<b>" + assi.ASSI_NM_NOME + "</b>";
+
+            // Prepara corpo do e-mail e trata link
+            String corpo = vm.MENS_TX_TEXTO + "<br /><br />";
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(corpo);
+            if (!String.IsNullOrEmpty(vm.MENS_NM_LINK))
+            {
+                if (!vm.MENS_NM_LINK.Contains("www."))
+                {
+                    vm.MENS_NM_LINK = "www." + vm.MENS_NM_LINK;
+                }
+                if (!vm.MENS_NM_LINK.Contains("http://"))
+                {
+                    vm.MENS_NM_LINK = "http://" + vm.MENS_NM_LINK;
+                }
+                str.AppendLine("<a href='" + vm.MENS_NM_LINK + "'>Clique aqui para maiores informações</a>");
+            }
+            String body = str.ToString();
+            String emailBody = cab + "<br /><br />" + body + "<br /><br />" + rod;
+
+            // Monta e-mail
+            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+            Email mensagem = new Email();
+            mensagem.ASSUNTO = "Contato Cliente";
+            mensagem.CORPO = emailBody;
+            mensagem.DEFAULT_CREDENTIALS = false;
+            mensagem.EMAIL_DESTINO = cont.CLIE_NM_EMAIL;
+            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+            mensagem.ENABLE_SSL = true;
+            mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
+            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+            mensagem.IS_HTML = true;
+            mensagem.NETWORK_CREDENTIAL = net;
+
+            // Envia mensagem
+            try
+            {
+                Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+            }
+            catch (Exception ex)
+            {
+                String erro = ex.Message;
+            }
+            return 0;
+        }
+
+        [HttpGet]
+        public ActionResult EnviarSMSCliente(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            CLIENTE item = baseApp.GetItemById(id);
+            Session["Cliente"] = item;
+            ViewBag.Cliente = item;
+            MensagemViewModel mens = new MensagemViewModel();
+            mens.NOME = item.CLIE_NM_NOME;
+            mens.ID = id;
+            mens.MODELO = item.CLIE_NR_CELULAR;
+            mens.MENS_DT_CRIACAO = DateTime.Today.Date;
+            mens.MENS_IN_TIPO = 2;
+            return View(mens);
+        }
+
+        [HttpPost]
+        public ActionResult EnviarSMSCliente(MensagemViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    Int32 volta = ProcessaEnvioSMSCliente(vm, usuarioLogado);
+
+                    // Verifica retorno
+                    if (volta == 1)
+                    {
+
+                    }
+
+                    // Sucesso
+                    return RedirectToAction("VoltarBaseCliente");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [ValidateInput(false)]
+        public Int32 ProcessaEnvioSMSCliente(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera contatos
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            CLIENTE cont = (CLIENTE)Session["Cliente"];
+
+            // Prepara cabeçalho
+            String cab = "Prezado Sr(a)." + cont.CLIE_NM_NOME;
+
+            // Prepara rodape
+            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            String rod = assi.ASSI_NM_NOME;
+
+            // Processa SMS
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+
+            // Monta token
+            String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
+            byte[] textBytes = Encoding.UTF8.GetBytes(text);
+            String token = Convert.ToBase64String(textBytes);
+            String auth = "Basic " + token;
+
+            // Prepara texto
+            String texto = cab + vm.MENS_TX_SMS + rod;
+
+            // Prepara corpo do SMS e trata link
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(vm.MENS_TX_SMS);
+            if (!String.IsNullOrEmpty(vm.LINK))
+            {
+                if (!vm.LINK.Contains("www."))
+                {
+                    vm.LINK = "www." + vm.LINK;
+                }
+                if (!vm.LINK.Contains("http://"))
+                {
+                    vm.LINK = "http://" + vm.LINK;
+                }
+                str.AppendLine("<a href='" + vm.LINK + "'>Clique aqui para maiores informações</a>");
+                texto += "  " + vm.LINK;
+            }
+            String body = str.ToString();
+            String smsBody = body;
+            String erro = null;
+
+            // inicia processo
+            String resposta = String.Empty;
+
+            // Monta destinatarios
+            try
+            {
+                String listaDest = "55" + Regex.Replace(cont.CLIE_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
+                httpWebRequest.Headers["Authorization"] = auth;
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+                String customId = Cryptography.GenerateRandomPassword(8);
+                String data = String.Empty;
+                String json = String.Empty;
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
+                    streamWriter.Write(json);
+                }
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    resposta = result;
+                }
+            }
+            catch (Exception ex)
+            {
+                erro = ex.Message;
+            }
+            return 0;
+        }
+
+
+
+
+
+
     }
 }

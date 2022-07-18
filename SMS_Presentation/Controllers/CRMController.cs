@@ -238,6 +238,16 @@ namespace ERP_CRM_Solution.Controllers
             return View(objeto);
         }
 
+        public ActionResult IncluirCliente()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaClienteCRM"] = 1;
+            return RedirectToAction("IncluirCliente", "Cliente");
+        }
+
         [HttpGet]
         public ActionResult MontarTelaKanbanCRM()
         {
@@ -6524,6 +6534,21 @@ namespace ERP_CRM_Solution.Controllers
             // Prepara grid
             Session["VoltaTransportadora"] = 40;
             return RedirectToAction("MontarTelaTransportadora", "Transportadora");
+        }
+
+
+        public ActionResult MostrarServicos()
+        {
+            // Prepara grid
+            Session["VoltaServico"] = 40;
+            return RedirectToAction("MontarTelaServico", "Servico");
+        }
+
+        public ActionResult MostrarProdutos()
+        {
+            // Prepara grid
+            Session["VoltaProduto"] = 40;
+            return RedirectToAction("MontarTelaProduto", "Produto");
         }
 
         public ActionResult IncluirClienteRapido()

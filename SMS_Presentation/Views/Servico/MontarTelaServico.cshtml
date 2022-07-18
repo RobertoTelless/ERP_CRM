@@ -86,15 +86,14 @@
         <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
             <div class="col-lg-12 col-md-12 col-xs-12">
                 @Html.ButtonActionSubmit(text: "Filtrar")
-                @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Servico", action: "RetirarFiltroServico")
-                @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Servico", action: "MostrarTudoServico")
                 @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER" )
                 {
-                    @Html.ButtonLinkIndex(text: "Novo Serviço", controller: "Servico", action: "IncluirServico")
+                    @Html.ButtonLinkIndex(text: "Novo Serviço", controller: "Servico", action: "IncluirServico", buttonClass: "primary")
                 }
+                @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Servico", action: "RetirarFiltroServico")
+                @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Servico", action: "MostrarTudoServico")
                 @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Servico", action: "GerarRelatorioLista")
-                @Html.ButtonLinkIndex(text: "Voltar", controller: "Servico", action: "Voltar")
-                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Servico", action: "MontarTelaDashboardServiceDesk")
+                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Servico", action: "VoltarDash")
             </div>
         </div>
     </div>}
