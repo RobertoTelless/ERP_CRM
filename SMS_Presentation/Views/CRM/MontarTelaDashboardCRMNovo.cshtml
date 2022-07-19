@@ -21,13 +21,13 @@
                         @Html.ButtonLinkIndex(text: "Central de Processos", action: "MontarTelaCRM", controller: "CRM", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "Processos - Kanban", action: "MontarTelaKanbanCRM", controller: "CRM", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "Ações", action: "VerAcoesUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
-                        @if ((Int32)Session["PermCRM"] == 1)
+                        @*@if ((Int32)Session["PermCRM"] == 1)
                         {
                             @Html.ButtonLinkIndex(text: "Propostas & Vendas", action: "VerPropostasUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
-                        }
+                        }*@
                         @if ((Int32)Session["PermVenda"] == 1)
                         {
-                            @Html.ButtonLinkIndex(text: "Pedidos", action: "VerPedidosUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
+                            @Html.ButtonLinkIndex(text: "Pedidos de Venda", action: "VerPedidosUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
                         }
                         @Html.ButtonLinkIndex(text: "Dashboard", controller: "Mensagem", action: "Voltar")
                     </div>

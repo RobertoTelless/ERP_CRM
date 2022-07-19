@@ -8212,7 +8212,7 @@ namespace ERP_CRM_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Verifica se pode incluir pedido
-            List<CRM_PEDIDO_VENDA> peds = (List<CRM_PEDIDO_VENDA>)Session["Peds"];
+            List<CRM_PEDIDO_VENDA> peds = baseApp.GetAllPedidos(idAss).Where(p => p.CRM1_CD_ID == (Int32)Session["IdCRM"]).ToList();
             if (peds.Where(p => p.CRPV_IN_STATUS == 1 || p.CRPV_IN_STATUS == 2).ToList().Count > 0)
             {
                 Session["MensCRM"] = 82;
@@ -8233,13 +8233,14 @@ namespace ERP_CRM_Solution.Controllers
 
             // Recupera número
             Int32 num = 0;
-            if (peds.Count == 0)
+            List<CRM_PEDIDO_VENDA> ped1 = baseApp.GetAllPedidos(idAss).ToList();
+            if (ped1.Count == 0)
             {
                 num = conf.CONF_IN_NUMERO_INICIAL_PEDIDO.Value;
             }
             else
             {
-                num = peds.OrderByDescending(p => p.CRPV_IN_NUMERO_GERADO).ToList().First().CRPV_IN_NUMERO_GERADO.Value;
+                num = ped1.OrderByDescending(p => p.CRPV_IN_NUMERO_GERADO).ToList().First().CRPV_IN_NUMERO_GERADO.Value;
                 num++;
             }
 
@@ -9419,6 +9420,7 @@ namespace ERP_CRM_Solution.Controllers
                     Int32 volta = baseApp.ValidateCreateItemPedido(item);
 
                     // Acerta valores no pedido
+                    ped = baseApp.GetPedidoById(vm.CRPV_CD_ID);
                     Decimal soma = ped.CRM_PEDIDO_VENDA_ITEM.Sum(p => p.CRPI_VL_PRECO_TOTAL).Value;
                     Decimal total = soma;
                     ped.CRPV_VL_TOTAL_ITENS = soma;

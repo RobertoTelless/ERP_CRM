@@ -832,11 +832,13 @@
     <Content Include="Imagens\2\CRM\51\Fotos\image_2021-04-08_13-28-54.png" />
     <Content Include="Imagens\2\CRM\56\Fotos\ecm1.jpg" />
     <Content Include="Imagens\2\CRM\57\Fotos\ecm_favicon.png" />
+    <Content Include="Imagens\2\CRM\59\Fotos\FotoNova1.jpeg" />
     <Content Include="Imagens\2\CRM\5\Anexos\264253616_4830205337032161_5377507829950371279_n.jpg" />
     <Content Include="Imagens\2\CRM\5\Anexos\pizza.jpg" />
     <Content Include="Imagens\2\CRM\5\Fotos\icone_imagem.jpg" />
     <Content Include="Imagens\2\CRM\5\Fotos\icon_material.jpg" />
     <Content Include="Imagens\2\CRM\5\Fotos\icon_vaga.png" />
+    <Content Include="Imagens\2\CRM\60\Fotos\image_2021-04-08_13-28-54.png" />
     <Content Include="Imagens\2\Equipamento\2\Fotos\071002161052748.jpg" />
     <Content Include="Imagens\2\Equipamento\3\Fotos\HP3700.jpg" />
     <Content Include="Imagens\2\Equipamento\4\Fotos\332633-328734-1785646-vendo-burro-com-carroca.jpg" />
@@ -2412,6 +2414,11 @@
     <Content Include="Imagens\2\Proposta\63\Arquivo\TelefoneLista_12072022.pdf" />
     <Content Include="Imagens\2\Proposta\64\Arquivo\UnidadesLista_12072022.pdf" />
     <Content Include="Imagens\2\Agenda\115\Anexos\Unidade_10_12072022 %283%29.pdf" />
+    <Content Include="Imagens\2\Transportadoras\2\Anexos\ClienteLista_18072022.pdf" />
+    <Content Include="Imagens\2\CRM\59\Anexos\Cliente43_18072022.pdf" />
+    <Content Include="Imagens\2\CRM\60\Anexos\Applications_of_PSCAD_EMTDC.pdf" />
+    <Content Include="Imagens\2\Servicos\8\Anexos\Cliente43_18072022.pdf" />
+    <Content Include="Imagens\2\Servicos\9\Anexos\Applications_of_PSCAD_EMTDC.pdf" />
     <None Include="Properties\PublishProfiles\ERPCondominio - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ERPMKT - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ERPSysNet - Web Deploy.pubxml" />
@@ -4163,6 +4170,7 @@
     <Folder Include="Imagens\2\Tarefa\8\Anexos\" />
     <Folder Include="Imagens\2\TemplatesHTML\21\Arquivos\" />
     <Folder Include="Imagens\2\TemplatesHTML\4\Arquivos\" />
+    <Folder Include="Imagens\2\Transportadoras\2\Logos\" />
     <Folder Include="Imagens\2\Usuario\15\Anexos\" />
     <Folder Include="Imagens\2\Usuario\17\Anexos\" />
     <Folder Include="Imagens\2\Usuario\18\Anexos\" />
