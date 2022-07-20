@@ -35,7 +35,7 @@ namespace ERP_CRM_Solution.ViewModels
         [StringLength(5000, ErrorMessage = "OUTROS ITENS deve conter no máximo 5000 caracteres.")]
         public string CRPV_TX_OUTROS_ITENS { get; set; }
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
-        public Nullable<decimal> CRPV_VL_TOTAL_OUTROS { get; set; }
+        public Nullable<decimal> CRPV_VL_TOTAL_SERVICOS { get; set; }
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<decimal> CRPV_VL_DESCONTO { get; set; }
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]

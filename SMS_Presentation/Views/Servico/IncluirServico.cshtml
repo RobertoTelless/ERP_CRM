@@ -87,7 +87,7 @@
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-xs-12">
                                                 Local do Serviço*
-                                                @Html.DropDownListFor(m => m.SERV_IN_LOCAL, (SelectList)ViewBag.Local, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                @Html.DropDownListFor(m => m.SERV_IN_LOCAL, (SelectList)ViewBag.Local, "Selecionar", new { @class = "form-control", autofocus = true, @id = "local", onchange = "ValidaDiv($(this).val())" })
                                                 @Html.ValidationMessageFor(m => m.SERV_IN_LOCAL, "", new { @style = "color:red" })
                                             </div> 
                                         </div>
@@ -163,7 +163,7 @@
                                                 @Html.TextBoxFor(m => m.SERV_NR_DURACAO_EXPRESSA, new { @class = "form-control", autofocus = true })
                                                 @Html.ValidationMessageFor(m => m.SERV_NR_DURACAO_EXPRESSA, "", new { @style = "color:red" })
                                             </div>
-                                            <div class="col-lg-1 col-md-1 col-xs-12">
+                                            <div class="col-lg-1 col-md-1 col-xs-12" id="visita">
                                                 Visita (R$)
                                                 @Html.TextBoxFor(m => m.SERV_VL_VISITA, new { @class = "form-control", autofocus = true })
                                                 @Html.ValidationMessageFor(m => m.SERV_VL_VISITA, "", new { @style = "color:red" })
@@ -364,7 +364,23 @@
 
         });
     </script>
+    <script type="text/javascript">
+        function ValidaDiv(valLocal)
+        {
+            if (valLocal == '1') {
+                $("#visita").hide();
+            } else if (valLocal == '2') { 
+                $("#visita").show();
+            } else if (valLocal == '3') { 
+                $("#visita").show();
+            }
+        }
 
+        $(document).ready(function () {
+            ValidaDiv($('#local').val());
+        });
+
+    </script>
     <script>
         function incluirPrecoServico(cdFilial, nmFilial, custo, markup, preco, precoPromo) {
             var data = {

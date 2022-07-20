@@ -18,6 +18,7 @@ namespace EntitiesServices.Model
         public SERVICO()
         {
             this.ATENDIMENTO = new HashSet<ATENDIMENTO>();
+            this.CRM_PEDIDO_VENDA_ITEM = new HashSet<CRM_PEDIDO_VENDA_ITEM>();
             this.ORDEM_SERVICO = new HashSet<ORDEM_SERVICO>();
             this.ORDEM_SERVICO_SERVICO = new HashSet<ORDEM_SERVICO_SERVICO>();
             this.SERVICO_ANEXO = new HashSet<SERVICO_ANEXO>();
@@ -47,6 +48,8 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ATENDIMENTO> ATENDIMENTO { get; set; }
         public virtual CATEGORIA_SERVICO CATEGORIA_SERVICO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CRM_PEDIDO_VENDA_ITEM> CRM_PEDIDO_VENDA_ITEM { get; set; }
         public virtual FILIAL FILIAL { get; set; }
         public virtual NOMENCLATURA_BRAS_SERVICOS NOMENCLATURA_BRAS_SERVICOS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

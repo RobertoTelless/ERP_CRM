@@ -14,10 +14,17 @@ namespace DataServices.Repositories
 {
     public class ClienteRepository : RepositoryBase<CLIENTE>, IClienteRepository
     {
-        public CLIENTE CheckExist(CLIENTE conta, Int32 idAss)
+        public CLIENTE CheckExist(CLIENTE cliente, Int32 idAss)
         {
             IQueryable<CLIENTE> query = Db.CLIENTE;
-            query = query.Where(p => p.CLIE_NM_NOME.ToUpper() == conta.CLIE_NM_NOME.ToUpper());
+            if (cliente.CLIE_NR_CPF != null)
+            {
+                query = query.Where(p => p.CLIE_NR_CPF == cliente.CLIE_NR_CPF);
+            }
+            if (cliente.CLIE_NR_CNPJ != null)
+            {
+                query = query.Where(p => p.CLIE_NR_CNPJ == cliente.CLIE_NR_CNPJ);
+            }
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.FirstOrDefault();
         }

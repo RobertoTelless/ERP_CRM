@@ -33,9 +33,12 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> UNID_CD_ID { get; set; }
         public Nullable<decimal> CRPI_VL_MARKUP { get; set; }
         public Nullable<decimal> CRPI_VL_DESCONTO { get; set; }
+        public Nullable<int> CRPI_IN_TIPO_ITEM { get; set; }
+        public Nullable<int> SERV_CD_ID { get; set; }
 
         public virtual CRM_PEDIDO_VENDA CRM_PEDIDO_VENDA { get; set; }
         public virtual PRODUTO PRODUTO { get; set; }
+        public virtual SERVICO SERVICO { get; set; }
         public virtual UNIDADE UNIDADE { get; set; }
     }
 }

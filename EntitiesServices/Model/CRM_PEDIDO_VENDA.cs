@@ -37,7 +37,7 @@ namespace EntitiesServices.Model
         public int CRPV_IN_STATUS { get; set; }
         public string CRPV_TX_INFORMACOES_GERAIS { get; set; }
         public string CRPV_TX_OUTROS_ITENS { get; set; }
-        public Nullable<decimal> CRPV_VL_TOTAL_OUTROS { get; set; }
+        public Nullable<decimal> CRPV_VL_TOTAL_SERVICOS { get; set; }
         public Nullable<decimal> CRPV_VL_DESCONTO { get; set; }
         public Nullable<decimal> CRPV_VL_FRETE { get; set; }
         public Nullable<decimal> CRPV_VL_PESO_BRUTO { get; set; }

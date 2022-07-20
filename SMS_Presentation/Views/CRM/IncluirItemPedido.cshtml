@@ -59,13 +59,25 @@
                             </div>
                         }
                         <div class="row">
+                            @Html.HiddenFor(m => m.CRPV_CD_ID)
+                            @Html.HiddenFor(m => m.CRPI_IN_ATIVO)
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div id="tipo" class="col-lg-2 col-md-2 col-xs-12">
+                                    Tipo de Item*
+                                    @Html.DropDownListFor(m => m.CRPI_IN_TIPO_ITEM, (SelectList)ViewBag.TipoItem, "Selecionar", new { @class = "form-control", @id = "tipo", onchange = "ValidaDiv($(this).val())" })
+                                    @Html.ValidationMessageFor(m => m.CRPI_IN_TIPO_ITEM, "", new { @style = "color:red" })
+                                </div>
+                            </div>
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                 <div id="prodContainer" class="col-lg-5 col-md-5 col-xs-12">
-                                    @Html.HiddenFor(m => m.CRPV_CD_ID)
-                                    @Html.HiddenFor(m => m.CRPI_IN_ATIVO)
                                     Produto*
                                     @Html.DropDownListFor(m => m.PROD_CD_ID, (SelectList)ViewBag.Produtos, "Selecionar", new { @class = "form-control", @id = "prod", onchange = "DesativaInsumo()" })
                                     @Html.ValidationMessageFor(m => m.PROD_CD_ID, "", new { @style = "color:red" })
+                                </div>
+                                <div id="servContainer" class="col-lg-5 col-md-5 col-xs-12">
+                                    Serviço*
+                                    @Html.DropDownListFor(m => m.SERV_CD_ID, (SelectList)ViewBag.Servicos, "Selecionar", new { @class = "form-control", @id = "serv", onchange = "TrataServico()" })
+                                    @Html.ValidationMessageFor(m => m.SERV_CD_ID, "", new { @style = "color:red" })
                                 </div>
                                 <div class="col-lg-1 col-md-1 col-xs-12">
                                     Preço (R$)
@@ -297,6 +309,47 @@
                 $('#insContainer').css("display", "block");
             }
         }
+    </script>
+    <script>
+        function TrataServico() {
+            var optProd = $('#serv option:selected').val();
+
+            $.ajax({
+                url: '../CRM/GetCustoServico'
+                , type: 'POST'
+                , data: {
+                    id: $('#serv option:selected').val()
+                }
+                , async: false
+                , success: function (r) {
+                    $('#custo').val(r.custo == null ? "-" : r.custo);
+                    $('#unidade').val(r.unidade == null ? "-" : r.unidade);
+                }
+            });
+
+            if (optProd != "") {
+                $('#insContainer').css("display", "none");
+            } else {
+                $('#insContainer').css("display", "block");
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function ValidaDiv(valTipo)
+        {
+            if (valTipo == '1') {
+                $("#prodContainer").show();
+                $("#servContainer").hide();
+            } else if (valTipo == '2') { 
+                $("#prodContainer").hide();
+                $("#servContainer").show();
+            } 
+        }
+
+        $(document).ready(function () {
+            ValidaDiv($('#tipo').val());
+        });
+
     </script>
 
     @if (ViewBag.Message != null)

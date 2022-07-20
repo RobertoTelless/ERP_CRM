@@ -8,7 +8,7 @@
                 @using (Html.BeginForm("EditarServico", "Servico", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                 {
                     <div class="modal-header">
-                        <h5 class="modal-title">Editar custo</h5>
+                        <h5 class="modal-title">Editar Preço do Serviço</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -19,7 +19,6 @@
                             <input id="prtpCd" type="hidden" name="id" />
                             <div class="col-lg-3 col-md-3 col-xs-12">
                                 Filial
-                                @*@Html.DropDownListFor(m => m.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", autofocus = true, id = "filialModal" })*@
                                 @Html.TextBoxFor(m => m.FILIAL.FILI_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                             </div>
                             <div class="col-lg-2 col-md-2 col-xs-12">
@@ -40,10 +39,10 @@
                             </div>
                         </div>
                     </div>
-                                    <div class="modal-footer">
-                                        @Html.ButtonActionSubmit(text: "Confirma edição", htmlAttributes: new { id = "basictoast" })
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                    </div>}
+                    <div class="modal-footer">
+                        @Html.ButtonActionSubmit(text: "Confirma edição", htmlAttributes: new { id = "basictoast" })
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>}
             </div>
         </div>
     </div>
@@ -133,7 +132,7 @@
         </div>
     <div class="col-lg-3 col-md-3 col-xs-12">
         Local do Serviço*
-        @Html.DropDownListFor(m => m.SERV_IN_LOCAL, (SelectList)ViewBag.Local, "Selecionar", new { @class = "form-control", autofocus = true })
+        @Html.DropDownListFor(m => m.SERV_IN_LOCAL, (SelectList)ViewBag.Local, "Selecionar", new { @class = "form-control", autofocus = true, @id = "local", onchange = "ValidaDiv($(this).val())" })
         @Html.ValidationMessageFor(m => m.SERV_IN_LOCAL, "", new { @style = "color:red" })
     </div> 
     </div>
@@ -253,7 +252,7 @@ else if (cond.SEAN_IN_TIPO == 3)
                                                     @Html.TextBoxFor(m => m.SERV_NR_DURACAO_EXPRESSA, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.SERV_NR_DURACAO_EXPRESSA, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                                <div class="col-lg-1 col-md-1 col-xs-12" id="visita">
                                                     Visita (R$)
                                                     @Html.TextBoxFor(m => m.SERV_VL_VISITA, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.SERV_VL_VISITA, "", new { @style = "color:red" })
@@ -447,17 +446,6 @@ else if (cond.SEAN_IN_TIPO == 3)
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="ibox float-e-margins">
-                                                <div class="ibox-title">
-                                                    <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5>Últimas Propostas Emitidas</h5>
-                                                </div>
-                                                <div class="ibox-content">
-                                                    <h1 class="no-margins">Em definição</h1>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -491,7 +479,23 @@ else if (cond.SEAN_IN_TIPO == 3)
             });
         });
     </script>
+    <script type="text/javascript">
+        function ValidaDiv(valLocal)
+        {
+            if (valLocal == '1') {
+                $("#visita").hide();
+            } else if (valLocal == '2') { 
+                $("#visita").show();
+            } else if (valLocal == '3') { 
+                $("#visita").show();
+            }
+        }
 
+        $(document).ready(function () {
+            ValidaDiv($('#local').val());
+        });
+
+    </script>
     @*<script type="text/javascript">
         $(document).ready(function () {
 

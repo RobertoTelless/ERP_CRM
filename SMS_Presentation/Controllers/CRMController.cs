@@ -52,6 +52,8 @@ namespace ERP_CRM_Solution.Controllers
         private readonly ITemplateAppService tempApp;
         private readonly IProdutoEstoqueFilialAppService estApp;
         private readonly IMovimentoEstoqueProdutoAppService meApp;
+        private readonly IServicoAppService servApp;
+        private readonly IServicoTabelaPrecoAppService stpApp;
 
         private String msg;
         private Exception exception;
@@ -60,7 +62,7 @@ namespace ERP_CRM_Solution.Controllers
         List<CRM> listaMaster = new List<CRM>();
         String extensao;
 
-        public CRMController(ICRMAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps, ITemplateEMailAppService temaApps, IProdutoAppService proApps, IProdutotabelaPrecoAppService ptpApps, IContaBancariaAppService cbApps, IContaReceberAppService crApps, ITransportadoraAppService trApps, ITemplateAppService tempApps, IProdutoEstoqueFilialAppService estApps, IMovimentoEstoqueProdutoAppService meApps)
+        public CRMController(ICRMAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IMensagemAppService menApps, IAgendaAppService ageApps, IClienteAppService cliApps, IAtendimentoAppService ateApps, ITemplateEMailAppService temaApps, IProdutoAppService proApps, IProdutotabelaPrecoAppService ptpApps, IContaBancariaAppService cbApps, IContaReceberAppService crApps, ITransportadoraAppService trApps, ITemplateAppService tempApps, IProdutoEstoqueFilialAppService estApps, IMovimentoEstoqueProdutoAppService meApps, IServicoAppService servApps, IServicoTabelaPrecoAppService stpApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -79,6 +81,8 @@ namespace ERP_CRM_Solution.Controllers
             tempApp = tempApps;
             estApp = estApps;
             meApp = meApps;
+            servApp = servApps;
+            stpApp = stpApps;
         }
 
         [HttpGet]
@@ -2268,7 +2272,7 @@ namespace ERP_CRM_Solution.Controllers
                             List<CRM_PEDIDO_VENDA_ITEM> prods = ped.CRM_PEDIDO_VENDA_ITEM.ToList();
                             foreach (CRM_PEDIDO_VENDA_ITEM prod in prods)
                             {
-                                PRODUTO_ESTOQUE_FILIAL pef = estApp.GetByProdFilial(prod.PROD_CD_ID, ped.FILI_CD_ID);
+                                PRODUTO_ESTOQUE_FILIAL pef = estApp.GetByProdFilial(prod.PROD_CD_ID.Value, ped.FILI_CD_ID);
                                 pef.PREF_QN_QUANTIDADE_RESERVADA = pef.PREF_QN_QUANTIDADE_RESERVADA - prod.CRPI_IN_QUANTIDADE;
                                 Int32 volta1 = estApp.ValidateEdit(pef, pef, usuario);
                             }
@@ -3521,7 +3525,7 @@ namespace ERP_CRM_Solution.Controllers
                                 List<CRM_PEDIDO_VENDA_ITEM> prods = ped.CRM_PEDIDO_VENDA_ITEM.ToList();
                                 foreach (CRM_PEDIDO_VENDA_ITEM prod in prods)
                                 {
-                                    PRODUTO_ESTOQUE_FILIAL pef = estApp.GetByProdFilial(prod.PROD_CD_ID, ped.FILI_CD_ID);
+                                    PRODUTO_ESTOQUE_FILIAL pef = estApp.GetByProdFilial(prod.PROD_CD_ID.Value, ped.FILI_CD_ID);
                                     pef.PREF_QN_QUANTIDADE_RESERVADA = pef.PREF_QN_QUANTIDADE_RESERVADA - prod.CRPI_IN_QUANTIDADE;
                                     pef.PREF_QN_ESTOQUE = pef.PREF_QN_ESTOQUE - prod.CRPI_IN_QUANTIDADE;
                                     Int32 volta1 = estApp.ValidateEdit(pef, pef, usuario);
@@ -3530,7 +3534,7 @@ namespace ERP_CRM_Solution.Controllers
                                     MOVIMENTO_ESTOQUE_PRODUTO mov = new MOVIMENTO_ESTOQUE_PRODUTO();
                                     mov.ASSI_CD_ID = usuario.ASSI_CD_ID;
                                     mov.FILI_CD_ID = ped.FILI_CD_ID;
-                                    mov.PROD_CD_ID = prod.PROD_CD_ID;
+                                    mov.PROD_CD_ID = prod.PROD_CD_ID.Value;
                                     mov.USUA_CD_ID = usuario.USUA_CD_ID;
                                     mov.MOEP_DT_MOVIMENTO = DateTime.Today.Date;
                                     mov.MOEP_DS_JUSTIFICATIVA = "Venda Pedido Número; " + ped.CRPV_NR_NUMERO;
@@ -8485,7 +8489,7 @@ namespace ERP_CRM_Solution.Controllers
                             List<CRM_PEDIDO_VENDA_ITEM> prods = ped.CRM_PEDIDO_VENDA_ITEM.ToList();
                             foreach (CRM_PEDIDO_VENDA_ITEM prod in prods)
                             {
-                                PRODUTO_ESTOQUE_FILIAL pef = estApp.GetByProdFilial(prod.PROD_CD_ID, ped.FILI_CD_ID);
+                                PRODUTO_ESTOQUE_FILIAL pef = estApp.GetByProdFilial(prod.PROD_CD_ID.Value, ped.FILI_CD_ID);
                                 pef.PREF_QN_QUANTIDADE_RESERVADA = pef.PREF_QN_QUANTIDADE_RESERVADA - prod.CRPI_IN_QUANTIDADE;
                                 pef.PREF_QN_ESTOQUE = pef.PREF_QN_ESTOQUE - prod.CRPI_IN_QUANTIDADE;
                                 Int32 volta2 = estApp.ValidateEdit(pef, pef, usuario);
@@ -8800,6 +8804,28 @@ namespace ERP_CRM_Solution.Controllers
         }
 
         [HttpPost]
+        public JsonResult GetCustoServico(Int32 id, Int32? fili)
+        {
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+            Int32? fil = usuario.FILI_CD_ID;
+
+            var result = new Hashtable();
+            if (fil != null)
+            {
+                var prod = servApp.GetById(id).SERVICO_TABELA_PRECO.First(x => x.FILI_CD_ID == fil);
+                result.Add("custo", prod.SETP_VL_PRECO == null ? 0 : prod.SETP_VL_PRECO);
+                result.Add("unidade", prod.SERVICO.UNIDADE.UNID_NM_NOME);
+            }
+            else
+            {
+                var prod = servApp.GetById(id);
+                result.Add("custo", prod.SERV_VL_PRECO == null ? 0 : prod.SERV_VL_PRECO);
+                result.Add("unidade", prod.UNIDADE == null ? "" : prod.UNIDADE.UNID_NM_NOME);
+            }
+            return Json(result);
+        }
+
+        [HttpPost]
         public void MontaListaItemPedido(CRM_PEDIDO_VENDA_ITEM item)
         {
             if (Session["ListaITPC"] == null)
@@ -9091,10 +9117,6 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         total += item.CRPV_VL_FRETE.Value;
                     }
-                    if (item.CRPV_VL_TOTAL_OUTROS != null & item.CRPV_VL_TOTAL_OUTROS > 0)
-                    {
-                        total += item.CRPV_VL_TOTAL_OUTROS.Value;
-                    }
                     item.CRPV_VL_VALOR = total;
                     Int32 volta = baseApp.ValidateEditPedido(item);
 
@@ -9320,10 +9342,6 @@ namespace ERP_CRM_Solution.Controllers
                     {
                         total += ped.CRPV_VL_FRETE.Value;
                     }
-                    if (ped.CRPV_VL_TOTAL_OUTROS != null & ped.CRPV_VL_TOTAL_OUTROS > 0)
-                    {
-                        total += ped.CRPV_VL_TOTAL_OUTROS.Value;
-                    }
                     ped.CRPV_VL_VALOR = total;
                     volta = baseApp.ValidateEditPedido(ped);
 
@@ -9370,6 +9388,12 @@ namespace ERP_CRM_Solution.Controllers
             // Prepara view
             List<PRODUTO> lista = proApp.GetAllItens(idAss).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
             ViewBag.Produtos = new SelectList(proApp.GetAllItens(idAss).OrderBy(p => p.PROD_NM_NOME), "PROD_CD_ID", "PROD_NM_NOME");
+            List<SERVICO> listaServ = servApp.GetAllItens(idAss).ToList();
+            ViewBag.Servicos = new SelectList(servApp.GetAllItens(idAss).OrderBy(p => p.SERV_NM_NOME), "SERV_CD_ID", "SERV_NM_NOME");
+            List<SelectListItem> tipo = new List<SelectListItem>();
+            tipo.Add(new SelectListItem() { Text = "Produto", Value = "1" });
+            tipo.Add(new SelectListItem() { Text = "Serviço", Value = "2" });
+            ViewBag.TipoServico = new SelectList(tipo, "Value", "Text");
 
             CRM_PEDIDO_VENDA_ITEM item = new CRM_PEDIDO_VENDA_ITEM();
             CRMItemPedidoViewModel vm = Mapper.Map<CRM_PEDIDO_VENDA_ITEM, CRMItemPedidoViewModel>(item);
@@ -9391,6 +9415,12 @@ namespace ERP_CRM_Solution.Controllers
 
             List<PRODUTO> lista = proApp.GetAllItens(idAss).Where(p => p.PROD_IN_COMPOSTO == 0).ToList();
             ViewBag.Produtos = new SelectList(proApp.GetAllItens(idAss).OrderBy(p => p.PROD_NM_NOME), "PROD_CD_ID", "PROD_NM_NOME");
+            List<SERVICO> listaServ = servApp.GetAllItens(idAss).ToList();
+            ViewBag.Servicos = new SelectList(servApp.GetAllItens(idAss).OrderBy(p => p.SERV_NM_NOME), "SERV_CD_ID", "SERV_NM_NOME");
+            List<SelectListItem> tipo = new List<SelectListItem>();
+            tipo.Add(new SelectListItem() { Text = "Produto", Value = "1" });
+            tipo.Add(new SelectListItem() { Text = "Serviço", Value = "2" });
+            ViewBag.TipoServico = new SelectList(tipo, "Value", "Text");
 
             if (ModelState.IsValid)
             {
@@ -9398,51 +9428,80 @@ namespace ERP_CRM_Solution.Controllers
                 {
                     // Verifica estoque
                     CRM_PEDIDO_VENDA ped = baseApp.GetPedidoById(vm.CRPV_CD_ID);
-                    PRODUTO_ESTOQUE_FILIAL pef = estApp.GetByProdFilial(vm.PROD_CD_ID, ped.FILI_CD_ID);
-                    if ((pef.PREF_QN_ESTOQUE - pef.PREF_QN_QUANTIDADE_RESERVADA) < vm.CRPI_IN_QUANTIDADE)
+                    PRODUTO_ESTOQUE_FILIAL pef = new PRODUTO_ESTOQUE_FILIAL();
+                    if (vm.CRPI_IN_TIPO_ITEM ==1)
                     {
-                        Session["MensCRM"] = 99;
-                        return RedirectToAction("VoltarEditarPedidoCRM");
+                        pef = estApp.GetByProdFilial(vm.PROD_CD_ID, ped.FILI_CD_ID);
+                        if ((pef.PREF_QN_ESTOQUE - pef.PREF_QN_QUANTIDADE_RESERVADA) < vm.CRPI_IN_QUANTIDADE)
+                        {
+                            Session["MensCRM"] = 99;
+                            return RedirectToAction("VoltarEditarPedidoCRM");
+                        }
                     }
 
                     // Executa calculos
                     vm.CRPI_IN_QUANTIDADE_REVISADA = vm.CRPI_IN_QUANTIDADE;
                     Int32 a = baseApp.GetPedidoById(vm.CRPV_CD_ID).FILI_CD_ID == null ? (Int32)Session["IdFilial"] : (Int32)baseApp.GetPedidoById(vm.CRPV_CD_ID).FILI_CD_ID;
-                    PRODUTO_TABELA_PRECO b = ptpApp.GetByProdFilial((Int32)vm.PROD_CD_ID, a);
-                    vm.CRPI_VL_PRECO_AJUSTADO = b == null || b.PRTP_VL_PRECO == null ? 0 : b.PRTP_VL_PRECO;
-                    //vm.CRPI_VL_MARKUP = b.PRTP_NR_MARKUP;                    
-                    var prod = proApp.GetItemById((Int32)vm.PROD_CD_ID);
-                    vm.UNID_CD_ID = prod.UNID_CD_ID;
-                    vm.CRPI_VL_PRECO_TOTAL = (vm.CRPI_VL_PRECO_AJUSTADO - vm.CRPI_VL_DESCONTO) * vm.CRPI_IN_QUANTIDADE;
+                    if (vm.CRPI_IN_TIPO_ITEM == 1)
+                    {
+                        PRODUTO_TABELA_PRECO b = ptpApp.GetByProdFilial((Int32)vm.PROD_CD_ID, a);
+                        vm.CRPI_VL_PRECO_AJUSTADO = b == null || b.PRTP_VL_PRECO == null ? 0 : b.PRTP_VL_PRECO;
+                        var prod = proApp.GetItemById((Int32)vm.PROD_CD_ID);
+                        vm.UNID_CD_ID = prod.UNID_CD_ID;
+                        vm.CRPI_VL_PRECO_TOTAL = (vm.CRPI_VL_PRECO_AJUSTADO - vm.CRPI_VL_DESCONTO) * vm.CRPI_IN_QUANTIDADE;
+                    }
+                    else
+                    {
+                        SERVICO_TABELA_PRECO b = stpApp.GetByServFilial((Int32)vm.SERV_CD_ID, a, idAss);
+                        vm.CRPI_VL_PRECO_AJUSTADO = b == null || b.SETP_VL_PRECO == null ? 0 : b.SETP_VL_PRECO;
+                        var serv = servApp.GetItemById((Int32)vm.SERV_CD_ID);
+                        vm.UNID_CD_ID = serv.UNID_CD_ID;
+                        vm.CRPI_VL_PRECO_TOTAL = (vm.CRPI_VL_PRECO_AJUSTADO - vm.CRPI_VL_DESCONTO) * vm.CRPI_IN_QUANTIDADE;
+                    }
 
                     // Executa a operação
                     CRM_PEDIDO_VENDA_ITEM item = Mapper.Map<CRMItemPedidoViewModel, CRM_PEDIDO_VENDA_ITEM>(vm);
                     Int32 volta = baseApp.ValidateCreateItemPedido(item);
 
                     // Acerta valores no pedido
+                    Decimal soma = 0;
+                    Decimal totalProd = 0;
+                    Decimal totalServ = 0;
+                    Decimal total = 0;
                     ped = baseApp.GetPedidoById(vm.CRPV_CD_ID);
-                    Decimal soma = ped.CRM_PEDIDO_VENDA_ITEM.Sum(p => p.CRPI_VL_PRECO_TOTAL).Value;
-                    Decimal total = soma;
-                    ped.CRPV_VL_TOTAL_ITENS = soma;
+                    if (item.CRPI_IN_TIPO_ITEM == 1)
+                    {
+                        soma = ped.CRM_PEDIDO_VENDA_ITEM.Where(m => m.CRPI_IN_TIPO_ITEM == 1).Sum(p => p.CRPI_VL_PRECO_TOTAL).Value;
+                        totalProd = soma;
+                        ped.CRPV_VL_TOTAL_ITENS = soma;
+                    }
+                    else
+                    {
+                        soma = ped.CRM_PEDIDO_VENDA_ITEM.Where(m => m.CRPI_IN_TIPO_ITEM == 2).Sum(p => p.CRPI_VL_PRECO_TOTAL).Value;
+                        totalServ = soma;
+                        ped.CRPV_VL_TOTAL_SERVICOS = soma;
+                    }
+
+                    // Acerta valores
+                    total = totalProd + totalServ;
                     if (ped.CRPV_VL_DESCONTO != null & ped.CRPV_VL_DESCONTO > 0)
                     {
-                        total -= ped.CRPV_VL_DESCONTO.Value; 
+                        total -= ped.CRPV_VL_DESCONTO.Value;
                     }
                     if (ped.CRPV_VL_FRETE != null & ped.CRPV_VL_FRETE > 0)
                     {
                         total += ped.CRPV_VL_FRETE.Value;
                     }
-                    if (ped.CRPV_VL_TOTAL_OUTROS != null & ped.CRPV_VL_TOTAL_OUTROS > 0)
-                    {
-                        total += ped.CRPV_VL_TOTAL_OUTROS.Value;
-                    }
                     ped.CRPV_VL_VALOR = total;
                     volta = baseApp.ValidateEditPedido(ped);
 
                     // Acerta reserva no estoque
-                    Int32? quant = pef.PREF_QN_QUANTIDADE_RESERVADA + item.CRPI_IN_QUANTIDADE;
-                    pef.PREF_QN_QUANTIDADE_RESERVADA = quant;
-                    Int32 volta1 = estApp.ValidateEdit(pef, pef, usuario);
+                    if (item.CRPI_IN_TIPO_ITEM == 1)
+                    {
+                        Int32? quant = pef.PREF_QN_QUANTIDADE_RESERVADA + item.CRPI_IN_QUANTIDADE;
+                        pef.PREF_QN_QUANTIDADE_RESERVADA = quant;
+                        Int32 volta1 = estApp.ValidateEdit(pef, pef, usuario);
+                    }
 
                     // Verifica retorno
                     Session["SegueInclusao"] = 1;

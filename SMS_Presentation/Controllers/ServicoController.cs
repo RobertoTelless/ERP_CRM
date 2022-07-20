@@ -349,7 +349,10 @@ namespace ERP_CRM_Solution.Controllers
                 {                    
                     listaPr = new List<SERVICO_TABELA_PRECO>();
                 }
-                listaPr = (List<SERVICO_TABELA_PRECO>)Session["ListaPrecoServico"];
+                else
+                {
+                    listaPr = (List<SERVICO_TABELA_PRECO>)Session["ListaPrecoServico"];
+                }
                 item.SETP_IN_ATIVO = 1;
                 item.SETP_DT_DATA_REAJUSTE = DateTime.Now;
                 listaPr.Add(item);
@@ -1348,7 +1351,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 cell = new PdfPCell(new Paragraph("Unidade: " + serv.UNIDADE.UNID_NM_NOME, meuFont));
                 cell.Border = 0;
-                cell.Colspan = 1;
+                cell.Colspan = 2;
                 cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 cell.HorizontalAlignment = Element.ALIGN_LEFT;
                 table.AddCell(cell);
@@ -1357,7 +1360,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 cell = new PdfPCell(new Paragraph("Unidade: -", meuFont));
                 cell.Border = 0;
-                cell.Colspan = 1;
+                cell.Colspan = 2;
                 cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 cell.HorizontalAlignment = Element.ALIGN_LEFT;
                 table.AddCell(cell);
@@ -1367,7 +1370,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 cell = new PdfPCell(new Paragraph("Cod.NBS: " + serv.NOMENCLATURA_BRAS_SERVICOS.NBSE_NM_NOME, meuFont));
                 cell.Border = 0;
-                cell.Colspan = 2;
+                cell.Colspan = 1;
                 cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 cell.HorizontalAlignment = Element.ALIGN_LEFT;
                 table.AddCell(cell);
@@ -1376,7 +1379,7 @@ namespace ERP_CRM_Solution.Controllers
             {
                 cell = new PdfPCell(new Paragraph("Cod.NBS: -", meuFont));
                 cell.Border = 0;
-                cell.Colspan = 2;
+                cell.Colspan = 1;
                 cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 cell.HorizontalAlignment = Element.ALIGN_LEFT;
                 table.AddCell(cell);
@@ -1444,6 +1447,7 @@ namespace ERP_CRM_Solution.Controllers
                 cell.HorizontalAlignment = Element.ALIGN_LEFT;
                 table.AddCell(cell);
             }
+            pdfDoc.Add(table);
 
             //Descirição
             Chunk chunk = new Chunk("Descrição: " + serv.SERV_DS_DESCRICAO, FontFactory.GetFont("Arial", 8, Font.NORMAL, BaseColor.BLACK));

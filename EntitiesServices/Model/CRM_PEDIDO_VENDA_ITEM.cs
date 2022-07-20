@@ -16,7 +16,7 @@ namespace EntitiesServices.Model
     {
         public int CRPI_CD_ID { get; set; }
         public int CRPV_CD_ID { get; set; }
-        public int PROD_CD_ID { get; set; }
+        public Nullable<int> PROD_CD_ID { get; set; }
         public Nullable<int> UNID_CD_ID { get; set; }
         public int CRPI_IN_QUANTIDADE { get; set; }
         public Nullable<decimal> CRPI_VL_PRECO_AJUSTADO { get; set; }
@@ -28,9 +28,12 @@ namespace EntitiesServices.Model
         public int CRPI_IN_ATIVO { get; set; }
         public Nullable<int> CRPI_IN_QUANTIDADE_REVISADA { get; set; }
         public Nullable<decimal> CRPI_VL_DESCONTO { get; set; }
+        public Nullable<int> CRPI_IN_TIPO_ITEM { get; set; }
+        public Nullable<int> SERV_CD_ID { get; set; }
     
         public virtual CRM_PEDIDO_VENDA CRM_PEDIDO_VENDA { get; set; }
         public virtual PRODUTO PRODUTO { get; set; }
+        public virtual SERVICO SERVICO { get; set; }
         public virtual UNIDADE UNIDADE { get; set; }
     }
 }

@@ -158,11 +158,31 @@ namespace ApplicationServices.Services
         {
             try
             {
-                var conf = _confService.GetItemById(usuario.ASSI_CD_ID);
+                // Recupera flag de duplicidade
+                CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
+                Int32? dup = conf.CONF_IN_CNPJ_DUPLICADO;
+
+                // Verifica Existencia
+                if (item.TIPE_CD_ID == 1)
+                {
+                    if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
+                    {
+                        return 1;
+                    }
+                }
+                if (item.TIPE_CD_ID == 2)
+                {
+                    if (dup == 0)
+                    {
+                        if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
+                        {
+                            return 1;
+                        }
+                    }
+                }
 
                 // Completa objeto
                 item.CLIE_IN_ATIVO = 1;
-
 
                 // Monta Log
                 LOG log = new LOG

@@ -34,16 +34,12 @@ namespace ERP_CRM_Solution.Controllers
         private readonly IConfiguracaoAppService baseApp;
         private readonly ILogAppService logApp;
         private readonly IUsuarioAppService usuApp;
-        //private readonly ICategoriaClienteAppService catApp;
 
         private String msg;
         private Exception exception;
         CONFIGURACAO objeto = new CONFIGURACAO();
         CONFIGURACAO objetoAntes = new CONFIGURACAO();
         List<CONFIGURACAO> listaMaster = new List<CONFIGURACAO>();
-        //CATEGORIA_CLIENTE objetoCat = new CATEGORIA_CLIENTE();
-        //CATEGORIA_CLIENTE objetoCatAntes = new CATEGORIA_CLIENTE();
-        //List<CATEGORIA_CLIENTE> listaMasterCat = new List<CATEGORIA_CLIENTE>();
         String extensao;
 
         public ConfiguracaoController(IConfiguracaoAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps)
@@ -51,8 +47,6 @@ namespace ERP_CRM_Solution.Controllers
             baseApp = baseApps;
             logApp = logApps;
             usuApp = usuApps;
-            //catApp = catApps;
-            //posApp = posApps;
         }
 
         [HttpGet]
@@ -145,6 +139,10 @@ namespace ERP_CRM_Solution.Controllers
             listaGrid.Add(new SelectListItem() { Text = "50", Value = "50" });
             listaGrid.Add(new SelectListItem() { Text = "100", Value = "100" });
             ViewBag.ListaGrid = new SelectList(listaGrid, "Value", "Text");
+            var cnpj = new List<SelectListItem>();
+            cnpj.Add(new SelectListItem() { Text = "1", Value = "Sim" });
+            cnpj.Add(new SelectListItem() { Text = "0", Value = "Não" });
+            ViewBag.CNPJ = new SelectList(cnpj, "Value", "Text");
 
             // Indicadores
 
@@ -177,6 +175,10 @@ namespace ERP_CRM_Solution.Controllers
             listaGrid.Add(new SelectListItem() { Text = "50", Value = "50" });
             listaGrid.Add(new SelectListItem() { Text = "100", Value = "100" });
             ViewBag.ListaGrid = new SelectList(listaGrid, "Value", "Text");
+            var cnpj = new List<SelectListItem>();
+            cnpj.Add(new SelectListItem() { Text = "1", Value = "Sim" });
+            cnpj.Add(new SelectListItem() { Text = "0", Value = "Não" });
+            ViewBag.CNPJ = new SelectList(cnpj, "Value", "Text");
             if (ModelState.IsValid)
             {
                 try

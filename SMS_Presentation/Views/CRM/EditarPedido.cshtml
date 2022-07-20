@@ -244,22 +244,21 @@
                                                             </div>
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                                 <div class="col-lg-2 col-md-2 col-xs-12" style="color:green; font-weight:bold">
-                                                                    Total Itens (R$)
+                                                                    Total Produtos (R$)
                                                                     @Html.TextBoxFor(m => m.CRPV_VL_TOTAL_ITENS, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                                 </div>
-                                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                    Total Outros Serviços (R$)
-                                                                    @Html.TextBoxFor(m => m.CRPV_VL_TOTAL_OUTROS, new { @class = "form-control", autofocus = true })
-                                                                    @Html.ValidationMessageFor(m => m.CRPV_VL_TOTAL_OUTROS, "",new { @style="color:red" })
+                                                                <div class="col-lg-2 col-md-2 col-xs-12"  style="color:steelblue; font-weight:bold">
+                                                                    Total Serviços (R$)
+                                                                    @Html.TextBoxFor(m => m.CRPV_VL_TOTAL_SERVICOS, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                                     Desconto (R$)
-                                                                    @Html.TextBoxFor(m => m.CRPV_VL_DESCONTO, new { @class = "form-control", autofocus = true })
+                                                                    @Html.TextBoxFor(m => m.CRPV_VL_DESCONTO, new { @class = "form-control", autofocus = true, onfocusout = "CalculaTotal()" })
                                                                     @Html.ValidationMessageFor(m => m.CRPV_VL_DESCONTO, "", new { @style = "color:red" })
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-2  col-xs-12">
                                                                     Frete (R$)
-                                                                    @Html.TextBoxFor(m => m.CRPV_VL_FRETE, new { @class = "form-control", autofocus = true })
+                                                                    @Html.TextBoxFor(m => m.CRPV_VL_FRETE, new { @class = "form-control", autofocus = true, onfocusout = "CalculaTotal()" })
                                                                     @Html.ValidationMessageFor(m => m.CRPV_VL_FRETE, "", new { @style = "color:red" })
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-2  col-xs-12">
@@ -291,7 +290,7 @@
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-2  col-xs-12" style="color:brown; font-weight:bold">
                                                                     Total Pedido (R$)
-                                                                    @Html.TextBoxFor(m => m.CRPV_VL_VALOR, new { @class = "form-control", autofocus = true, @readonly="readonly"  })
+                                                                    @Html.TextBoxFor(m => m.CRPV_VL_VALOR, new { @class = "form-control", autofocus = true, @readonly="readonly", @id = "total" })
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
@@ -445,22 +444,22 @@
                                                             </div>
                                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                                 <div class="col-lg-2 col-md-2 col-xs-12" style="color:green; font-weight:bold">
-                                                                    Total Itens (R$)
-                                                                    @Html.TextBoxFor(m => m.CRPV_VL_TOTAL_ITENS, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                                    Total Produtos (R$)
+                                                                    @Html.TextBoxFor(m => m.CRPV_VL_TOTAL_ITENS, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly", @id = "prods" })
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                    Total Outros Serviços (R$)
-                                                                    @Html.TextBoxFor(m => m.CRPV_VL_TOTAL_OUTROS, new { @class = "form-control", autofocus = true })
-                                                                    @Html.ValidationMessageFor(m => m.CRPV_VL_TOTAL_OUTROS, "",new { @style="color:red" })
+                                                                    Total Serviços (R$)
+                                                                    @Html.TextBoxFor(m => m.CRPV_VL_TOTAL_SERVICOS, new { @class = "form-control", autofocus = true, @id = "servs" })
+                                                                    @Html.ValidationMessageFor(m => m.CRPV_VL_TOTAL_SERVICOS, "",new { @style="color:red" })
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                                     Desconto(-) (R$)
-                                                                    @Html.TextBoxFor(m => m.CRPV_VL_DESCONTO, new { @class = "form-control", autofocus = true })
+                                                                    @Html.TextBoxFor(m => m.CRPV_VL_DESCONTO, new { @class = "form-control", autofocus = true, @id = "desc", onfocusout = "CalculaTotal()" })
                                                                     @Html.ValidationMessageFor(m => m.CRPV_VL_DESCONTO, "", new { @style = "color:red" })
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-2  col-xs-12">
                                                                     Frete(+) (R$)
-                                                                    @Html.TextBoxFor(m => m.CRPV_VL_FRETE, new { @class = "form-control", autofocus = true })
+                                                                    @Html.TextBoxFor(m => m.CRPV_VL_FRETE, new { @class = "form-control", autofocus = true, @id = "frete", onfocusout = "CalculaTotal()" })
                                                                     @Html.ValidationMessageFor(m => m.CRPV_VL_FRETE, "", new { @style = "color:red" })
                                                                 </div>
                                                                 <div class="col-lg-2 col-md-2  col-xs-12" style="color:steelblue; font-weight:bold">
@@ -655,10 +654,11 @@
                                                             <table class="table table-striped table-bordered table-hover dataTables-example">
                                                                 <thead style ="background-color:lightsteelblue">
                                                                     <tr>
+                                                                        <th>Tipo</th>
                                                                         <th>Produto</th>
+                                                                        <th>Serviço</th>
                                                                         <th>Modelo</th>
                                                                         <th>Marca</th>
-                                                                        <th>Fabricante</th>
                                                                         <th>Código</th>
                                                                         <th>Unidade</th>
                                                                         <th>Quantidade</th>
@@ -672,36 +672,42 @@
                                                                     @foreach (var cond in (Model.CRM_PEDIDO_VENDA_ITEM))
                                                                     {
                                                                         <tr>
-                                                                            @if (cond.PRODUTO != null)
+                                                                            @if (cond.CRPI_IN_TIPO_ITEM == 1)
                                                                             {
-                                                                                if (cond.PRODUTO == null)
-                                                                                {
-                                                                                    <td>-</td>
-                                                                                    <td>-</td>
-                                                                                    <td>-</td>
-                                                                                    <td>-</td>
-                                                                                    <td>-</td>
-                                                                                    <td>-</td>
-                                                                                }
-                                                                            else
-                                                                            {
-                                                                                <td style="display: none;"><input type="text" name="codProd" value="@cond.PROD_CD_ID" /></td>
+                                                                                <td>Produto</td>
                                                                                 <td>@cond.PRODUTO.PROD_NM_NOME</td>
+                                                                                <td>-</td>
                                                                                 <td>@cond.PRODUTO.PROD_NM_MODELO</td>
                                                                                 <td>@cond.PRODUTO.PROD_NM_MARCA</td>
-                                                                                <td>@cond.PRODUTO.PROD_NM_FABRICANTE</td>
                                                                                 <td>@cond.PRODUTO.PROD_CD_CODIGO</td>
-                                                                            }
-                                                                            if (cond.UNIDADE != null)
-                                                                            {
-                                                                                <td>@cond.UNIDADE.UNID_NM_NOME</td>
+                                                                                if (cond.UNIDADE != null)
+                                                                                {
+                                                                                    <td>@cond.UNIDADE.UNID_NM_NOME</td>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <td>-</td>
+                                                                                }
                                                                             }
                                                                             else
                                                                             {
+                                                                                <td>Serviço</td>
                                                                                 <td>-</td>
+                                                                                <td>@cond.SERVICO.SERV_NM_NOME</td>
+                                                                                <td>-</td>
+                                                                                <td>-</td>
+                                                                                <td>@cond.SERVICO.SERV_CD_CODIGO</td>
+                                                                                if (cond.UNIDADE != null)
+                                                                                {
+                                                                                    <td>@cond.UNIDADE.UNID_NM_NOME</td>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <td>-</td>
+                                                                                }
                                                                             }
                                                                             <td>@cond.CRPI_IN_QUANTIDADE</td>
-                                                                            if (cond.CRPI_VL_PRECO_AJUSTADO != null)
+                                                                            @if (cond.CRPI_VL_PRECO_AJUSTADO != null)
                                                                             {
                                                                                 <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPI_VL_PRECO_AJUSTADO.Value)</td>
                                                                             }
@@ -709,7 +715,7 @@
                                                                             {
                                                                                 <td>-</td>
                                                                             }
-                                                                            if (cond.CRPI_VL_DESCONTO != null)
+                                                                            @if (cond.CRPI_VL_DESCONTO != null)
                                                                             {
                                                                                 <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPI_VL_DESCONTO.Value)</td>
                                                                             }
@@ -717,7 +723,7 @@
                                                                             {
                                                                                 <td>-</td>
                                                                             }
-                                                                            if (cond.CRPI_VL_PRECO_AJUSTADO != null)
+                                                                            @if (cond.CRPI_VL_PRECO_AJUSTADO != null)
                                                                             {
                                                                                 <td>@CrossCutting.Formatters.DecimalFormatter(cond.CRPI_VL_PRECO_TOTAL.Value)</td>
                                                                             }
@@ -1023,6 +1029,38 @@
     <script>
         function MudaIdCliente(id) {
             $('#idClie').val(id);
+        }
+    </script>
+     <script>
+        function CalculaTotal() {
+            var prod = $('#prods').val() == "" ? 0 : $('#prods').val();
+            var serv = $('#servs').val() == "" ? 0 : $('#servs').val();
+            var desc = $('#desc').val() == "" ? 0 : $('#desc').val();
+            var frete = $('#frete').val() == "" ? 0 : $('#frete').val();
+
+            prod = (parseFloat(prod.replace(',', '.')));
+            serv = (parseFloat(serv.replace(',', '.')));
+            desc = (parseFloat(desc.replace(',', '.')));
+            frete = (parseFloat(frete.replace(',', '.')));
+
+            var tot = 0;
+            if (prod != "")
+            {
+                tot = tot + prod;
+            }
+            if (serv != "")
+            {
+                tot = tot + serv;
+            }
+            if (desc != "")
+            {
+                tot = tot - desc;
+            }
+            if (frete != "")
+            {
+                tot = tot + frete;
+            }
+            $('#total').val(parseFloat(tot).toFixed(2).replace('.', ','));
         }
     </script>
     <script type="text/javascript">

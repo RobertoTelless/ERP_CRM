@@ -121,13 +121,13 @@
                                                         @Html.TextBoxFor(m => m.CONF_NR_DIAS_ACAO, new { @class = "form-control touchspin5", autofocus = true })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Num.Dias Validade Proposta
+                                                        Num.Dias Validade Pedido
                                                         @Html.TextBoxFor(m => m.CONF_NR_DIAS_PROPOSTA, new { @class = "form-control touchspin6", autofocus = true })
                                                     </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    @*<div class="col-lg-2 col-md-2 col-xs-12">
                                                         Número Inicial Propostas
                                                         @Html.TextBoxFor(m => m.CONF_IN_NUMERO_INICIAL_PROPOSTA, new { @class = "form-control", autofocus = true })
-                                                    </div>
+                                                    </div>*@
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Número Inicial Pedidos
                                                         @Html.TextBoxFor(m => m.CONF_IN_NUMERO_INICIAL_PEDIDO, new { @class = "form-control", autofocus = true })
@@ -138,6 +138,13 @@
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Num.Dias Atraso
                                                         @Html.TextBoxFor(m => m.CONF_NR_DIAS_ACAO, new { @class = "form-control touchspin7", autofocus = true })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h4 style="margin-left: 15px;">Clientes</h4>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Permite CNPJ Duplicado
+                                                        @Html.DropDownListFor(m => m.CONF_IN_CNPJ_DUPLICADO, (SelectList)ViewBag.CNPJ, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     </div>
                                                 </div>
                                             </div>

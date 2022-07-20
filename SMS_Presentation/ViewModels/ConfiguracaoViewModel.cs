@@ -56,6 +56,8 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> CONF_IN_NUMERO_INICIAL_PROPOSTA { get; set; }
         [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
         public Nullable<int> CONF_IN_NUMERO_INICIAL_PEDIDO { get; set; }
+        [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
+        public Nullable<int> CONF_IN_CNPJ_DUPLICADO { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
     }
