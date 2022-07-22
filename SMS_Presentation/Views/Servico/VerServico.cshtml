@@ -222,6 +222,14 @@ else if (cond.SEAN_IN_TIPO == 3)
                                                     Valor da Visita
                                                     @Html.TextBoxFor(m => m.SERV_VL_VISITA, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
+                                                <div class="col-lg-1 col-md-1 col-xs-12" id="visita">
+                                                    Valor Base (R$)
+                                                    @Html.TextBoxFor(m => m.SERV_VL_PRECO, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12" id="visita">
+                                                    Valor Expresso Base (R$)
+                                                    @Html.TextBoxFor(m => m.SERV_VL_VALOR_EXPRESSO, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
                                             </div>
                                         }
                                     </div>

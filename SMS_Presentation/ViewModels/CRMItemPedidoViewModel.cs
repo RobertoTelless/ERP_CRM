@@ -13,8 +13,7 @@ namespace ERP_CRM_Solution.ViewModels
         [Key]
         public int CRPI_CD_ID { get; set; }
         public int CRPV_CD_ID { get; set; }
-        [Required(ErrorMessage = "Campo PRODUTO obrigatorio")]
-        public int PROD_CD_ID { get; set; }
+        public Nullable<int> PROD_CD_ID { get; set; }
         [Required(ErrorMessage = "Campo QUANTIDADE obrigatorio")]
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public int CRPI_IN_QUANTIDADE { get; set; }
@@ -33,6 +32,7 @@ namespace ERP_CRM_Solution.ViewModels
         public Nullable<int> UNID_CD_ID { get; set; }
         public Nullable<decimal> CRPI_VL_MARKUP { get; set; }
         public Nullable<decimal> CRPI_VL_DESCONTO { get; set; }
+        [Required(ErrorMessage = "Campo TIPO DE ITEM obrigatorio")]
         public Nullable<int> CRPI_IN_TIPO_ITEM { get; set; }
         public Nullable<int> SERV_CD_ID { get; set; }
 

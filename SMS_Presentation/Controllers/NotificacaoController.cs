@@ -526,6 +526,7 @@ namespace ERP_CRM_Solution.Controllers
             vm.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
             vm.NOTI_IN_NIVEL = 1;
             vm.NOTI_IN_VISTA = 0;
+            vm.NOTI_IN_ANEXOS = 1;
             return View(vm);
         }
 
@@ -665,6 +666,7 @@ namespace ERP_CRM_Solution.Controllers
         [HttpGet]
         public ActionResult ExcluirNotificacao(Int32 id)
         {
+            // Valida acesso
             USUARIO usuario = new USUARIO();
             if ((String)Session["Ativa"] == null)
             {
@@ -674,12 +676,6 @@ namespace ERP_CRM_Solution.Controllers
             {
                 usuario = (USUARIO)Session["UserCredentials"];
 
-                // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
-                {
-                    Session["MensPermissao"] = 2;
-                    return RedirectToAction("MontarTelaNotificacaoGeral", "Notificacao");
-                }
             }
             else
             {
@@ -687,47 +683,21 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
-            // Prepara view
+            // Executar
             NOTIFICACAO item = baseApp.GetItemById(id);
-            NotificacaoViewModel vm = Mapper.Map<NOTIFICACAO, NotificacaoViewModel>(item);
-            vm.NOTI_IN_ATIVO = 0;
-            return View(vm);
-        }
-
-        [HttpPost]
-        public ActionResult ExcluirNotificacao(NotificacaoViewModel vm)
-        {
-            try
-            {
-                if ((String)Session["Ativa"] == null)
-                {
-                    return RedirectToAction("Login", "ControleAcesso");
-                }
-                Int32 idAss = (Int32)Session["IdAssinante"];
-
-                // Executa a operação
-                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                NOTIFICACAO item = Mapper.Map<NotificacaoViewModel, NOTIFICACAO>(vm);
-                Int32 volta = baseApp.ValidateDelete(item, usuarioLogado);
-
-                // Verifica retorno
-
-                // Sucesso
-                listaMaster = new List<NOTIFICACAO>();
-                Session["ListaNotificacao"] = null;
-                Session["MensNotificacao"] = 0;
-                return RedirectToAction("MontarTelaNotificacaoGeral");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View(vm);
-            }
+            objetoAntes = (NOTIFICACAO)Session["Notificacao"];
+            item.NOTI_IN_ATIVO = 0;
+            Int32 volta = baseApp.ValidateDelete(item, usuario);
+            listaMaster = new List<NOTIFICACAO>();
+            Session["ListaNotificacao"] = null;
+            Session["FiltroNotificacao"] = null;
+            return RedirectToAction("MontarTelaNotificacaoGeral");
         }
 
         [HttpGet]
         public ActionResult ReativarNotificacao(Int32 id)
         {
+            // Valida acesso
             USUARIO usuario = new USUARIO();
             if ((String)Session["Ativa"] == null)
             {
@@ -737,12 +707,6 @@ namespace ERP_CRM_Solution.Controllers
             {
                 usuario = (USUARIO)Session["UserCredentials"];
 
-                // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
-                {
-                    Session["MensPermissao"] = 2;
-                    return RedirectToAction("MontarTelaNotificacaoGeral", "Notificacao");
-                }
             }
             else
             {
@@ -750,42 +714,15 @@ namespace ERP_CRM_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
-            // Prepara view
+            // Executar
             NOTIFICACAO item = baseApp.GetItemById(id);
-            NotificacaoViewModel vm = Mapper.Map<NOTIFICACAO, NotificacaoViewModel>(item);
-            vm.NOTI_IN_ATIVO = 1;
-            return View(vm);
-        }
-
-        [HttpPost]
-        public ActionResult ReativarNotificacao(NotificacaoViewModel vm)
-        {
-            try
-            {
-                if ((String)Session["Ativa"] == null)
-                {
-                    return RedirectToAction("Login", "ControleAcesso");
-                }
-                Int32 idAss = (Int32)Session["IdAssinante"];
-
-                // Executa a operação
-                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                NOTIFICACAO item = Mapper.Map<NotificacaoViewModel, NOTIFICACAO>(vm);
-                Int32 volta = baseApp.ValidateReativar(item, usuarioLogado);
-
-                // Verifica retorno
-
-                // Sucesso
-                listaMaster = new List<NOTIFICACAO>();
-                Session["ListaNotificacao"] = null;
-                Session["MensNotificacao"] = 0;
-                return RedirectToAction("MontarTelaNotificacaoGeral");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View(vm);
-            }
+            objetoAntes = (NOTIFICACAO)Session["Notificacao"];
+            item.NOTI_IN_ATIVO = 1;
+            Int32 volta = baseApp.ValidateDelete(item, usuario);
+            listaMaster = new List<NOTIFICACAO>();
+            Session["ListaNotificacao"] = null;
+            Session["FiltroNotificacao"] = null;
+            return RedirectToAction("MontarTelaNotificacaoGeral");
         }
 
         [HttpGet]

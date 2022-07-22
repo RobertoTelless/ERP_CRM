@@ -594,6 +594,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("IncluirProcessoCRM", "CRM");
             }
+            if ((Int32)Session["VoltaClienteCRM"] == 2)
+            {
+                return RedirectToAction("VoltarBaseCRM", "CRM");
+            }
             if ((Int32)Session["VoltaCliente"] == 2)
             {
                 return RedirectToAction("VerCardsCliente");
@@ -1048,140 +1052,6 @@ namespace ERP_CRM_Solution.Controllers
             Session["FiltroCliente"] = null;
             return RedirectToAction("MontarTelaCliente");
         }
-
-
-        //[HttpGet]
-        //public ActionResult ExcluirCliente(Int32 id)
-        //{
-        //    Verifica se tem usuario logado
-        //   USUARIO usuario = new USUARIO();
-        //    if ((String)Session["Ativa"] == null)
-        //    {
-        //        return RedirectToAction("Login", "ControleAcesso");
-        //    }
-        //    if ((USUARIO)Session["UserCredentials"] != null)
-        //    {
-        //        usuario = (USUARIO)Session["UserCredentials"];
-
-        //        Verfifica permissão
-        //        if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "VIS")
-        //        {
-        //            Session["MensCliente"] = 2;
-        //            return RedirectToAction("MontarTelaCliente");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Login", "ControleAcesso");
-        //    }
-        //    Int32 idAss = (Int32)Session["IdAssinante"];
-
-        //    Prepara view
-        //    CLIENTE item = baseApp.GetItemById(id);
-        //    ClienteViewModel vm = Mapper.Map<CLIENTE, ClienteViewModel>(item);
-        //    return View(vm);
-        //}
-
-        //[HttpPost]
-        //public ActionResult ExcluirCliente(ClienteViewModel vm)
-        //{
-        //    if ((String)Session["Ativa"] == null)
-        //    {
-        //        return RedirectToAction("Login", "ControleAcesso");
-        //    }
-        //    try
-        //    {
-        //        Executa a operação
-        //       USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-        //        CLIENTE item = Mapper.Map<ClienteViewModel, CLIENTE>(vm);
-        //        Int32 volta = baseApp.ValidateDelete(item, usuarioLogado);
-
-        //        Verifica retorno
-        //        if (volta == 1)
-        //        {
-        //            Session["MensCliente"] = 4;
-        //            return RedirectToAction("MontarTelaCliente", "Cliente");
-        //        }
-
-        //        Sucesso
-        //       listaMaster = new List<CLIENTE>();
-        //        Session["ListaCliente"] = null;
-        //        return RedirectToAction("MontarTelaCliente");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ViewBag.Message = ex.Message;
-        //        return View(objeto);
-        //    }
-        //}
-
-        //[HttpGet]
-        //public ActionResult ReativarCliente(Int32 id)
-        //{
-        //    Verifica se tem usuario logado
-        //   USUARIO usuario = new USUARIO();
-        //    if ((String)Session["Ativa"] == null)
-        //    {
-        //        return RedirectToAction("Login", "ControleAcesso");
-        //    }
-        //    if ((USUARIO)Session["UserCredentials"] != null)
-        //    {
-        //        usuario = (USUARIO)Session["UserCredentials"];
-
-        //        Verfifica permissão
-        //        if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "VIS")
-        //        {
-        //            Session["MensCliente"] = 2;
-        //            return RedirectToAction("MontarTelaCliente");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Login", "ControleAcesso");
-        //    }
-        //    Int32 idAss = (Int32)Session["IdAssinante"];
-
-        //    Verifica possibilidade
-        //    Int32 num = baseApp.GetAllItens(idAss).Count;
-        //    if ((Int32)Session["NumClientes"] <= num)
-        //    {
-        //        Session["MensCliente"] = 50;
-        //        return RedirectToAction("MontarTelaCliente", "Cliente");
-        //    }
-
-        //    Prepara view
-        //    CLIENTE item = baseApp.GetItemById(id);
-        //    ClienteViewModel vm = Mapper.Map<CLIENTE, ClienteViewModel>(item);
-        //    return View(vm);
-        //}
-
-        //[HttpPost]
-        //public ActionResult ReativarCliente(ClienteViewModel vm)
-        //{
-        //    if ((String)Session["Ativa"] == null)
-        //    {
-        //        return RedirectToAction("Login", "ControleAcesso");
-        //    }
-        //    try
-        //    {
-        //        Executa a operação
-        //       USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-        //        CLIENTE item = Mapper.Map<ClienteViewModel, CLIENTE>(vm);
-        //        Int32 volta = baseApp.ValidateReativar(item, usuarioLogado);
-
-        //        Verifica retorno
-
-        //         Sucesso
-        //        listaMaster = new List<CLIENTE>();
-        //        Session["ListaCliente"] = null;
-        //        return RedirectToAction("MontarTelaCliente");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ViewBag.Message = ex.Message;
-        //        return View(objeto);
-        //    }
-        //}
 
         public ActionResult VerCardsCliente()
         {
@@ -1901,8 +1771,6 @@ namespace ERP_CRM_Solution.Controllers
 
             // Indicadores
             ViewBag.Clientes = ((List<CLIENTE>)Session["ListaInativos"]).Count;
-            //SessionMocks.listaCR = crApp.GetItensAtrasoCliente().ToList();
-            //ViewBag.Atrasos = SessionMocks.listaCR.Select(x => x.CLIE_CD_ID).Distinct().ToList().Count;
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             if (Session["MensClienteInativos"] != null)
@@ -2386,13 +2254,6 @@ namespace ERP_CRM_Solution.Controllers
             table.HorizontalAlignment = 0;
             table.SpacingBefore = 1f;
             table.SpacingAfter = 1f;
-
-            //cell = new PdfPCell(new Paragraph("Foto", meuFontBold));
-            //cell.Border = 0;
-            //cell.Colspan = 4;
-            //cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            //cell.HorizontalAlignment = Element.ALIGN_LEFT;
-            //table.AddCell(cell);
 
             try
             {

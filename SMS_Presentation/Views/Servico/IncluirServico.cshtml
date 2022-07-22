@@ -168,6 +168,16 @@
                                                 @Html.TextBoxFor(m => m.SERV_VL_VISITA, new { @class = "form-control", autofocus = true })
                                                 @Html.ValidationMessageFor(m => m.SERV_VL_VISITA, "", new { @style = "color:red" })
                                             </div>
+                                            <div class="col-lg-1 col-md-1 col-xs-12" id="visita">
+                                                Valor Base (R$)*
+                                                @Html.TextBoxFor(m => m.SERV_VL_PRECO, new { @class = "form-control", autofocus = true })
+                                                @Html.ValidationMessageFor(m => m.SERV_VL_PRECO, "", new { @style = "color:red" })
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-xs-12" id="visita">
+                                                Valor Expresso Base (R$)
+                                                @Html.TextBoxFor(m => m.SERV_VL_VALOR_EXPRESSO, new { @class = "form-control", autofocus = true })
+                                                @Html.ValidationMessageFor(m => m.SERV_VL_VALOR_EXPRESSO, "", new { @style = "color:red" })
+                                            </div>
                                         </div>
                                     </div>
                                     <hr />

@@ -27,7 +27,7 @@
                         }*@
                         @if ((Int32)Session["PermVenda"] == 1)
                         {
-                            @Html.ButtonLinkIndex(text: "Pedidos de Venda", action: "VerPedidosUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
+                            @Html.ButtonLinkIndex(text: "Propostas & Pedidos de Venda", action: "VerPedidosUsuarioCRMPrevia", controller: "CRM", buttonClass: "primary")
                         }
                         @Html.ButtonLinkIndex(text: "Dashboard", controller: "Mensagem", action: "Voltar")
                     </div>
@@ -205,54 +205,36 @@
                             </div>
                         
                             <div class="row">
-                                @if ((Int32)Session["PermCRM"] == 1)
+                                @if ((Int32)Session["PermVenda"] == 1)
                                 {
-                                <div class="col-lg-6 col-md-6 col-xs-12">
-                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
-                                        <div class="ibox-title">
-                                            <h4>Propostas por Status</h4>
-                                        </div>
-                                        <div class="ibox-content">
-                                            <div class="row">
-                                                <canvas id="doughnutChartProp" height="150"></canvas>
+                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                        <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                            <div class="ibox-title">
+                                                <h4>Pedidos por Status</h4>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <div class="row">
+                                                    <canvas id="doughnutChartPed" height="150"></canvas>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                        <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
+                                            <div class="ibox-title">
+                                                <h4>Pedidos/Dia</h4>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <div class="form-group">
+                                                    @Html.ButtonLinkIndex(text: "Ver Todos os Meses", action: "VerCRMPedidosTodos", controller: "CRM")
+                                                </div>
+                                                <div class="row">
+                                                    <canvas id="barChartProposta" height="150"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
-                                @*@if ((Int32)Session["PermVenda"] == 1)
-                                {
-                                <div class="col-lg-6 col-md-6 col-xs-12">
-                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
-                                        <div class="ibox-title">
-                                            <h4>Pedidos por Status</h4>
-                                        </div>
-                                        <div class="ibox-content">
-                                            <div class="row">
-                                                <canvas id="doughnutChartPed" height="150"></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                }*@
-                            </div>
-                        
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-xs-12">
-                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
-                                        <div class="ibox-title">
-                                            <h4>Propostas/Dia</h4>
-                                        </div>
-                                        <div class="ibox-content">
-                                            <div class="form-group">
-                                                @Html.ButtonLinkIndex(text: "Ver Todos os Meses", action: "VerCRMPropostasTodos", controller: "CRM")
-                                            </div>
-                                            <div class="row">
-                                                <canvas id="barChartProposta" height="150"></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -294,36 +276,6 @@
             $('#modalDesc').modal('show');
         }
     </script>
-    @*<script type="text/javascript">
-            $(document).ready(function () {
-
-                $('.dataTables-example').DataTable({
-                    pageLength: 25,
-                    dom: '<"html5buttons"B>lTfgitp',
-                    buttons: [
-                        { extend: 'excel', title: 'Excel' },
-                        { extend: 'pdf', title: 'PDF' },
-
-                        {
-                            extend: 'print',
-                            customize: function (win) {
-                                $(win.document.body).addClass('white-bg');
-                                $(win.document.body).css('font-size', '10px');
-
-                                $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
-                            }
-                        }
-                    ]
-
-                });
-
-
-
-            });
-        </script>*@
-
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -522,7 +474,7 @@
                 var doughnutOptions = {
                    responsive: true
                 };
-                var ctx4 = document.getElementById("doughnutChartProp").getContext("2d");
+                var ctx4 = document.getElementById("doughnutChartPed").getContext("2d");
                 new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
               }
             });

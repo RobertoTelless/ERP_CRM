@@ -337,6 +337,9 @@ namespace ERP_CRM_Solution.Controllers
             vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
             vm.SERV_DT_CADASTRO = DateTime.Today.Date;
             vm.SERV_IN_ATIVO = 1;
+            vm.SERV_VL_PRECO = 0;
+            vm.SERV_VL_VALOR_EXPRESSO = 0;
+            vm.SERV_VL_VISITA = 0;
             return View(vm);
         }
 
@@ -1916,7 +1919,5 @@ namespace ERP_CRM_Solution.Controllers
             result.Add("cores", cor);
             return Json(result);
         }
-
-
     }
 }

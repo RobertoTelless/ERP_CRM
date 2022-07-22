@@ -553,6 +553,7 @@ namespace ERP_CRM_Solution.Controllers
         [HttpGet]
         public ActionResult ExcluirNoticia(Int32 id)
         {
+            // Valida acesso
             USUARIO usuario = new USUARIO();
             if ((String)Session["Ativa"] == null)
             {
@@ -562,56 +563,28 @@ namespace ERP_CRM_Solution.Controllers
             {
                 usuario = (USUARIO)Session["UserCredentials"];
 
-                // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
-                {
-                    Session["MensPermissao"] = 2;
-                    return RedirectToAction("MontarTelaNoticia", "Noticia");
-                }
             }
             else
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            Int32 idAss = (Int32)Session["IdAssinante"];
 
-            // Prepara view
+            // Executar
             NOTICIA item = baseApp.GetItemById(id);
-            NoticiaViewModel vm = Mapper.Map<NOTICIA, NoticiaViewModel>(item);
-            return View(vm);
-        }
-
-        [HttpPost]
-        public ActionResult ExcluirNoticia(NoticiaViewModel vm)
-        {
-            if ((String)Session["Ativa"] == null)
-            {
-                return RedirectToAction("Login", "ControleAcesso");
-            }
-            try
-            {
-                // Executa a operação
-                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                NOTICIA item = Mapper.Map<NoticiaViewModel, NOTICIA>(vm);
-                Int32 volta = baseApp.ValidateDelete(item, usuarioLogado);
-
-                // Verifica retorno
-
-                // Sucesso
-                listaMaster = new List<NOTICIA>();
-                Session["ListaNoticia"] = null;
-                Session["MensNoticia"] = 0;
-                return RedirectToAction("MontarTelaNoticia");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View(objeto);
-            }
+            objetoAntes = (NOTICIA)Session["Noticia"];
+            item.NOTC_IN_ATIVO = 0;
+            Int32 volta = baseApp.ValidateDelete(item, usuario);
+            listaMaster = new List<NOTICIA>();
+            Session["ListaNoticia"] = null;
+            Session["FiltroNoticia"] = null;
+            return RedirectToAction("MontarTelaNoticia");
         }
 
         [HttpGet]
         public ActionResult ReativarNoticia(Int32 id)
         {
+            // Valida acesso
             USUARIO usuario = new USUARIO();
             if ((String)Session["Ativa"] == null)
             {
@@ -621,47 +594,22 @@ namespace ERP_CRM_Solution.Controllers
             {
                 usuario = (USUARIO)Session["UserCredentials"];
 
-                // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
-                {
-                    Session["MensPermissao"] = 2;
-                    return RedirectToAction("MontarTelaNoticia", "Noticia");
-                }
             }
             else
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            Int32 idAss = (Int32)Session["IdAssinante"];
 
-            // Prepara view
+            // Executar
             NOTICIA item = baseApp.GetItemById(id);
-            NoticiaViewModel vm = Mapper.Map<NOTICIA, NoticiaViewModel>(item);
-            return View(vm);
-        }
-
-        [HttpPost]
-        public ActionResult ReativarNoticia(NoticiaViewModel vm)
-        {
-            try
-            {
-                // Executa a operação
-                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                NOTICIA item = Mapper.Map<NoticiaViewModel, NOTICIA>(vm);
-                Int32 volta = baseApp.ValidateReativar(item, usuarioLogado);
-
-                // Verifica retorno
-
-                // Sucesso
-                listaMaster = new List<NOTICIA>();
-                Session["ListaNoticia"] = null;
-                Session["MensNoticia"] = 0;
-                return RedirectToAction("MontarTelaNoticia");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View(objeto);
-            }
+            objetoAntes = (NOTICIA)Session["Noticia"];
+            item.NOTC_IN_ATIVO = 1;
+            Int32 volta = baseApp.ValidateDelete(item, usuario);
+            listaMaster = new List<NOTICIA>();
+            Session["ListaNoticia"] = null;
+            Session["FiltroNoticia"] = null;
+            return RedirectToAction("MontarTelaNoticia");
         }
 
         [HttpPost]

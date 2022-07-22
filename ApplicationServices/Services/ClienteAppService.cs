@@ -133,27 +133,6 @@ namespace ApplicationServices.Services
             }
         }
 
-        //public Int32 ExecuteFilterSemPedido(String nome, String cidade, Int32? uf, out List<CLIENTE> objeto)
-        //{
-        //    try
-        //    {
-        //        objeto = new List<CLIENTE>();
-        //        Int32 volta = 0;
-
-        //        // Processa filtro
-        //        objeto = _baseService.ExecuteFilterSemPedido(nome, cidade, uf);
-        //        if (objeto.Count == 0)
-        //        {
-        //            volta = 1;
-        //        }
-        //        return volta;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-        //}
-
         public Int32 ValidateCreate(CLIENTE item, USUARIO usuario)
         {
             try

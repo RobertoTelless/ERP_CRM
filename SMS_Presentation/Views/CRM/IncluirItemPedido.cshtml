@@ -64,7 +64,7 @@
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                 <div id="tipo" class="col-lg-2 col-md-2 col-xs-12">
                                     Tipo de Item*
-                                    @Html.DropDownListFor(m => m.CRPI_IN_TIPO_ITEM, (SelectList)ViewBag.TipoItem, "Selecionar", new { @class = "form-control", @id = "tipo", onchange = "ValidaDiv($(this).val())" })
+                                    @Html.DropDownListFor(m => m.CRPI_IN_TIPO_ITEM, (SelectList)ViewBag.TipoServico, "Selecionar", new { @class = "form-control", @id = "tipo", onchange = "ValidaDiv($(this).val())" })
                                     @Html.ValidationMessageFor(m => m.CRPI_IN_TIPO_ITEM, "", new { @style = "color:red" })
                                 </div>
                             </div>

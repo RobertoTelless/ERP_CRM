@@ -354,15 +354,15 @@ namespace ApplicationServices.Services
                 usuario.USUA_IN_ATIVO = 0;
 
                 // Monta Log
-                //LOG log = new LOG
-                //{
-                //    LOG_DT_DATA = DateTime.Now,
-                //    USUA_CD_ID = usuarioLogado.USUA_CD_ID,
-                //    ASSI_CD_ID = SessionMocks.IdAssinante,
-                //    LOG_NM_OPERACAO = "DelUSUA",
-                //    LOG_TX_REGISTRO = Serialization.SerializeJSON<USUARIO>(usuario),
-                //    LOG_IN_ATIVO = 1
-                //};
+                LOG log = new LOG
+                {
+                    LOG_DT_DATA = DateTime.Now,
+                    USUA_CD_ID = usuarioLogado.USUA_CD_ID,
+                    ASSI_CD_ID = usuarioLogado.ASSI_CD_ID,
+                    LOG_NM_OPERACAO = "DelUSUA",
+                    LOG_TX_REGISTRO = usuario.USUA_NM_NOME,
+                    LOG_IN_ATIVO = 1
+                };
 
                 // Persiste
                 return _usuarioService.EditUser(usuario);
@@ -384,15 +384,15 @@ namespace ApplicationServices.Services
                 usuario.USUA_IN_ATIVO = 1;
 
                 // Monta Log
-                //LOG log = new LOG
-                //{
-                //    LOG_DT_DATA = DateTime.Now,
-                //    USUA_CD_ID = usuarioLogado.USUA_CD_ID,
-                //    ASSI_CD_ID = SessionMocks.IdAssinante,
-                //    LOG_NM_OPERACAO = "ReatUSUA",
-                //    LOG_TX_REGISTRO = Serialization.SerializeJSON<USUARIO>(usuario),
-                //    LOG_IN_ATIVO = 1
-                //};
+                LOG log = new LOG
+                {
+                    LOG_DT_DATA = DateTime.Now,
+                    USUA_CD_ID = usuarioLogado.USUA_CD_ID,
+                    ASSI_CD_ID = usuarioLogado.ASSI_CD_ID,
+                    LOG_NM_OPERACAO = "DelUSUA",
+                    LOG_TX_REGISTRO = usuario.USUA_NM_NOME,
+                    LOG_IN_ATIVO = 1
+                };
 
                 // Persiste
                 return _usuarioService.EditUser(usuario);
@@ -621,6 +621,7 @@ namespace ApplicationServices.Services
                 noti.USUA_CD_ID = usuario.USUA_CD_ID;
                 noti.NOTI_IN_STATUS = 1;
                 noti.NOTI_IN_NIVEL = 1;
+                noti.NOTI_IN_ANEXOS = 0;
                 Int32 volta1 = _notiService.Create(noti);
 
 
@@ -700,6 +701,7 @@ namespace ApplicationServices.Services
             noti.USUA_CD_ID = usuario.USUA_CD_ID;
             noti.NOTI_IN_STATUS = 1;
             noti.NOTI_IN_NIVEL = 1;
+            noti.NOTI_IN_ANEXOS = 0;
             Int32 volta1 = _notiService.Create(noti);
 
             // Recupera template e-mail

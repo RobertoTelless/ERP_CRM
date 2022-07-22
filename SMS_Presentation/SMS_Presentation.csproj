@@ -3405,8 +3405,6 @@
     <Content Include="Views\Notificacao\MontarTelaNotificacaoGeral.cshtml" />
     <Content Include="Views\Notificacao\IncluirNotificacao.cshtml" />
     <Content Include="Views\Notificacao\EditarNotificacao.cshtml" />
-    <Content Include="Views\Notificacao\ExcluirNotificacao.cshtml" />
-    <Content Include="Views\Notificacao\ReativarNotificacao.cshtml" />
     <Content Include="Views\Notificacao\VerAnexoNotificacaoGeral.cshtml" />
     <Content Include="Views\Noticia\VerNoticia.cshtml" />
     <Content Include="Views\Noticia\IncluirComentario.cshtml" />
@@ -3414,8 +3412,6 @@
     <Content Include="Views\Noticia\MontarTelaNoticia.cshtml" />
     <Content Include="Views\Noticia\IncluirNoticia.cshtml" />
     <Content Include="Views\Noticia\EditarNoticia.cshtml" />
-    <Content Include="Views\Noticia\ExcluirNoticia.cshtml" />
-    <Content Include="Views\Noticia\ReativarNoticia.cshtml" />
     <Content Include="Views\Agenda\MontarTelaAgendaCalendario.cshtml" />
     <Content Include="Views\Agenda\MontarTelaAgenda.cshtml" />
     <Content Include="Views\Agenda\IncluirAgenda.cshtml" />

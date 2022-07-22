@@ -43,6 +43,7 @@ namespace DataServices.Repositories
             query = query.Include(p => p.CRM_PEDIDO_VENDA_ITEM);
             return query.FirstOrDefault();
         }
+
     }
 }
  

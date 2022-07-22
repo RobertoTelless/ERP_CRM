@@ -99,16 +99,16 @@ namespace ApplicationServices.Services
                 ///
                 item.USUARIO = null;
                 item.CLIENTE = null;
-                //LOG log = new LOG
-                //{
-                //    LOG_DT_DATA = DateTime.Now,
-                //    USUA_CD_ID = usuario.USUA_CD_ID,
-                //    ASSI_CD_ID = usuario.ASSI_CD_ID,
-                //    LOG_NM_OPERACAO = "EditFILI",
-                //    LOG_IN_ATIVO = 1,
-                //    LOG_TX_REGISTRO = Serialization.SerializeJSON<FILIAL>(item),
-                //    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<FILIAL>(itemAntes)
-                //};
+                LOG log = new LOG
+                {
+                    LOG_DT_DATA = DateTime.Now,
+                    USUA_CD_ID = usuario.USUA_CD_ID,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
+                    LOG_NM_OPERACAO = "EditFILI",
+                    LOG_IN_ATIVO = 1,
+                    LOG_TX_REGISTRO = item.FILI_NM_NOME,
+                    LOG_TX_REGISTRO_ANTES = itemAntes.FILI_NM_NOME
+                };
 
                 // Persiste
                 return _baseService.Edit(item);

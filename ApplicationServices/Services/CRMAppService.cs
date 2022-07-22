@@ -991,7 +991,7 @@ namespace ApplicationServices.Services
                 item.CRPV_IN_ATIVO = 1;
                 item.CRPV_IN_STATUS = 1;
                 item.CRPV_VL_TOTAL_ITENS = 0;
-                item.CRPV_VL_TOTAL_OUTROS = 0;
+                item.CRPV_VL_TOTAL_SERVICOS = 0;
                 item.CRPV_VL_TOTAL = 0;
                 item.CRPV_VL_DESCONTO = 0;
                 item.CRPV_VL_FRETE = 0;

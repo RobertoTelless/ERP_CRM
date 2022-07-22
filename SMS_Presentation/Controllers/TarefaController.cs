@@ -336,10 +336,10 @@ namespace ERP_CRM_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            //if ((Int32)Session["VoltaTarefa"] == 10)
-            //{
-            //    return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
-            //}
+            if ((Int32)Session["VoltaTarefa"] == 10)
+            {
+                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
+            }
             if ((Int32)Session["VoltaKanban"] == 1)
             {
                 Session["VoltaKanban"] = 0;
@@ -1016,7 +1016,7 @@ namespace ERP_CRM_Solution.Controllers
                 }
             }
 
-            return Json("1"); // VoltarAnexoCliente
+            return Json("1"); 
         }
 
         public ActionResult VoltarAnexoTarefa()

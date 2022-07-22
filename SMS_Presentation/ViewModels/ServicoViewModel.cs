@@ -24,8 +24,9 @@ namespace ERP_CRM_Solution.ViewModels
         public string SERV_NM_NOME { get; set; }
         public System.DateTime SERV_DT_CADASTRO { get; set; }
         [Required(ErrorMessage = "Campo DESCRIÇÃO obrigatorio")]
-        [StringLength(5000, MinimumLength = 1, ErrorMessage = "A DESCRIÇÃO deve conter no máximo 5000 caracteres.")]
+        [StringLength(5000, MinimumLength = 1,  ErrorMessage = "A DESCRIÇÃO deve conter no máximo 5000 caracteres.")]
         public string SERV_DS_DESCRICAO { get; set; }
+        [Required(ErrorMessage = "Campo PREÇO BASE obrigatorio")]
         [RegularExpression(@"^[0-9]+([,][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<decimal> SERV_VL_PRECO { get; set; }
         [StringLength(10, ErrorMessage = "O CÓDIGO deve conter no máximo 10.")]

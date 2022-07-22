@@ -161,11 +161,7 @@
                 </div>
                 <div class="ibox-content">
                     <div class="form-group">
-                        @if ((Int32)Session["AcoesUsuario"] > 1)
-                        {
-                            @Html.ButtonLinkIndex(text: "Voltar", controller: "CRM", action: "VerAcoesUsuarioCRMPrevia")
-                        }
-                        @Html.ButtonLinkIndex(text: "Dashboard", action: "MontarTelaDashboardCRMNovo", controller: "CRM", buttonClass: "primary")                
+                        @Html.ButtonLinkIndex(text: "Voltar", controller: "CRM", action: "VoltarAcaoCRM")
                     </div>
                     <div class="row">
                         @if ((ViewBag.Lista as List<EntitiesServices.Model.CRM_ACAO>).Count > 0)
